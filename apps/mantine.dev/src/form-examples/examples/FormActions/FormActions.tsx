@@ -1,5 +1,5 @@
 import { Button, Group, NumberInput, Stack, TextInput } from '@mantine/core';
-import { isEmail, isInRange, isNotEmpty, useForm } from '@mantine/form';
+import { FormErrors, isEmail, isInRange, isNotEmpty, useForm } from '@mantine/form';
 import { notifications } from '@mantine/notifications';
 import { ExternalControls } from './ExternalControls';
 import { DemoFormValues } from './form-actions';
@@ -27,8 +27,12 @@ function DemoForm() {
     });
   };
 
+  const handleErrors = (errors: FormErrors) => {
+    form.getInputNode(Object.keys(errors)[0])?.focus();
+  };
+
   return (
-    <form onSubmit={form.onSubmit(handleSubmit)}>
+    <form onSubmit={form.onSubmit(handleSubmit, handleErrors)}>
       <Stack>
         <TextInput
           size="md"

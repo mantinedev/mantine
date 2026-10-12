@@ -1,5 +1,5 @@
 import { Button, Checkbox, Group, Stack } from '@mantine/core';
-import { isNotEmpty, matches, useForm } from '@mantine/form';
+import { FormErrors, isNotEmpty, matches, useForm } from '@mantine/form';
 import { notifications } from '@mantine/notifications';
 import { AddressFields } from './AddressFields';
 import { Address, AddressValues } from './types';
@@ -64,8 +64,12 @@ export function SameAsBilling() {
     });
   };
 
+  const handleErrors = (errors: FormErrors) => {
+    form.getInputNode(Object.keys(errors)[0])?.focus();
+  };
+
   return (
-    <form onSubmit={form.onSubmit(handleSubmit)}>
+    <form onSubmit={form.onSubmit(handleSubmit, handleErrors)}>
       <Stack>
         <AddressFields form={form} prefix="billing" legend="Billing address" />
 

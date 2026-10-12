@@ -1,5 +1,5 @@
 import { Button, Checkbox, Group, Stack, TextInput } from '@mantine/core';
-import { isNotEmpty, useForm } from '@mantine/form';
+import { FormErrors, isNotEmpty, useForm } from '@mantine/form';
 import { notifications } from '@mantine/notifications';
 import { permissions } from './data';
 
@@ -41,8 +41,13 @@ export function SelectAll() {
     });
   };
 
+  const handleErrors = (errors: FormErrors) => {
+    const node = form.getInputNode(Object.keys(errors)[0]);
+    (node?.querySelector('input') ?? node)?.focus();
+  };
+
   return (
-    <form onSubmit={form.onSubmit(handleSubmit)}>
+    <form onSubmit={form.onSubmit(handleSubmit, handleErrors)}>
       <Stack>
         <TextInput
           size="md"

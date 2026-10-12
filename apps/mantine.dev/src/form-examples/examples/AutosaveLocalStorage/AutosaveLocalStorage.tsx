@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { Button, Group, Stack, Text, Textarea, TextInput } from '@mantine/core';
-import { hasLength, isNotEmpty, useForm } from '@mantine/form';
+import { FormErrors, hasLength, isNotEmpty, useForm } from '@mantine/form';
 import {
   readLocalStorageValue,
   useDebouncedCallback,
@@ -70,8 +70,12 @@ export function AutosaveLocalStorage() {
     discardDraft();
   };
 
+  const handleErrors = (errors: FormErrors) => {
+    form.getInputNode(Object.keys(errors)[0])?.focus();
+  };
+
   return (
-    <form onSubmit={form.onSubmit(handleSubmit)}>
+    <form onSubmit={form.onSubmit(handleSubmit, handleErrors)}>
       <Stack>
         <TextInput
           size="md"

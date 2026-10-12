@@ -229,13 +229,6 @@ export const FORM_EXAMPLES_DATA: FormExample[] = [
     features: ['insertListItem', 'removeListItem', 'formRootRule'],
   },
   {
-    id: 'TagsAndKeywords',
-    name: 'Tags and keywords',
-    description: 'Array values with TagsInput and Chip.Group',
-    type: 'lists',
-    features: ['TagsInput', 'Chip.Group', 'array values'],
-  },
-  {
     id: 'StepperWizard',
     name: 'Stepper wizard',
     description: 'Form split across steps, each step validates its own fields',

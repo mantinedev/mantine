@@ -156,6 +156,27 @@ Native inputs and third-party components that are not subscribed still receive t
 controlled mode. To subscribe a custom component to its field, see
 [custom inputs](/form/get-input-props/#custom-inputs).
 
-Bind each path to a single input. When the same path is spread to a subscribed input (any Mantine
-input) and to a component that is not subscribed, the second one is not updated while the user
-types in the first. Use controlled mode or `use-form-field` in both components instead.
+## One input per field path
+
+Uncontrolled mode has a limitation: bind each field path to a single input. When the same path
+is passed to a Mantine input and to a component that is not subscribed (a native input or a
+third-party component), the second one is not updated while the user types in the first. If
+you need several inputs for the same field, either subscribe every component to the field with
+the [use-form-field](/hooks/use-form-field) hook or switch the form to controlled mode:
+
+```tsx
+import { TextInput } from '@mantine/core';
+import { useForm } from '@mantine/form';
+
+function Demo() {
+  const form = useForm({ initialValues: { email: '' } });
+
+  return (
+    <>
+      <TextInput {...form.getInputProps('email')} />
+      {/* Not updated while the user types in TextInput */}
+      <input {...form.getInputProps('email')} />
+    </>
+  );
+}
+```

@@ -1,5 +1,5 @@
 import { Button, Group, SimpleGrid, Stack } from '@mantine/core';
-import { isEmail, isNotEmpty, matches } from '@mantine/form';
+import { FormErrors, isEmail, isNotEmpty, matches } from '@mantine/form';
 import { notifications } from '@mantine/notifications';
 import { SelectField, TextField } from './fields';
 import { ProfileFormProvider, ProfileValues, useProfileForm } from './form-context';
@@ -31,9 +31,13 @@ export function ReusableFields() {
     });
   };
 
+  const handleErrors = (errors: FormErrors) => {
+    form.getInputNode(Object.keys(errors)[0])?.focus();
+  };
+
   return (
     <ProfileFormProvider form={form}>
-      <form onSubmit={form.onSubmit(handleSubmit)}>
+      <form onSubmit={form.onSubmit(handleSubmit, handleErrors)}>
         <Stack>
           <TextField name="fullName" label="Full name" placeholder="Jane Doe" withAsterisk />
 

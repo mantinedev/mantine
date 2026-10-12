@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { Badge, Button, Group, Stack, Textarea, TextInput } from '@mantine/core';
-import { isEmail, isNotEmpty, useForm } from '@mantine/form';
+import { FormErrors, isEmail, isNotEmpty, useForm } from '@mantine/form';
 import { useDisclosure } from '@mantine/hooks';
 import { notifications } from '@mantine/notifications';
 import { DiscardChangesModal } from './DiscardChangesModal';
@@ -74,11 +74,15 @@ export function UnsavedChangesPrompt() {
     });
   };
 
+  const handleErrors = (errors: FormErrors) => {
+    form.getInputNode(Object.keys(errors)[0])?.focus();
+  };
+
   return (
     <>
       <DiscardChangesModal opened={opened} onDiscard={discardAndNavigate} onKeepEditing={close} />
 
-      <form onSubmit={form.onSubmit(handleSubmit)}>
+      <form onSubmit={form.onSubmit(handleSubmit, handleErrors)}>
         <Stack>
           <Group justify="space-between">
             <Badge color={dirty ? 'orange' : 'teal'}>

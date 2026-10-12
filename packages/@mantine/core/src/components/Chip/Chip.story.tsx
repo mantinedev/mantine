@@ -107,3 +107,38 @@ export function Unstyled() {
     </div>
   );
 }
+
+export function States() {
+  const variants = ['filled', 'light', 'outline'] as const;
+
+  const rows = (background: string) =>
+    variants.map((variant) => (
+      <div
+        key={variant}
+        data-variant-row={variant}
+        style={{ display: 'flex', gap: 8, padding: 12, background }}
+      >
+        <Chip variant={variant} data-state="unchecked">
+          Unchecked
+        </Chip>
+        <Chip variant={variant} defaultChecked data-state="checked">
+          Checked
+        </Chip>
+        <Chip variant={variant} disabled data-state="disabled">
+          Disabled
+        </Chip>
+        <Chip variant={variant} disabled defaultChecked data-state="disabled-checked">
+          Disabled checked
+        </Chip>
+      </div>
+    ));
+
+  return (
+    <div style={{ padding: 40 }}>
+      <div data-surface="body">{rows('var(--mantine-color-body)')}</div>
+      <div data-surface="demo">
+        {rows('light-dark(var(--mantine-color-gray-0), var(--mantine-color-dark-8))')}
+      </div>
+    </div>
+  );
+}

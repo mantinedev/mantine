@@ -1,0 +1,73 @@
+import { SubmitClickValidateOnBlur } from '@/demos/SubmitClickValidateOnBlur.demo';
+import { Layout } from '@/layout';
+
+export const meta = {
+  title:
+    'Why does the first click on the submit button not work in a form with validation on blur?',
+  description:
+    'Learn why validation on blur can swallow the submit button click and how to fix it',
+  slug: 'submit-click-lost-validate-on-blur',
+  category: 'forms',
+  tags: ['form', 'use-form', 'useForm', 'validation', 'blur', 'submit', 'click', 'focus'],
+  created_at: 'October 12, 2026',
+  last_updated_at: 'October 12, 2026',
+};
+
+export default Layout(meta);
+
+## Why the click is lost
+
+When a form validates inputs on blur (`validateInputOnBlur` option of `use-form`), the first
+click on the submit button may do nothing. It happens when the focused input holds an invalid
+value and the button is below it:
+
+- The browser fires the `click` event only when `mousedown` and `mouseup` happen on the same element.
+- `mousedown` on the button moves focus away from the input, the input fires `blur`.
+- Validation on blur renders an error message under the input. Everything below the input,
+  including the submit button, moves down.
+- `mouseup` happens on another element. The browser does not fire `click`, the form is not
+  submitted. The user has to click the button again.
+
+The same happens on touch devices: the tap is converted to mouse events after the touch ends.
+
+## Keep focus in the input while the button is pressed
+
+The recommended fix is to call `event.preventDefault()` in the `onMouseDown` handler of the
+submit button. The input keeps focus, does not blur and the layout does not change until
+the click is complete. Validation is not skipped: `form.onSubmit` validates all fields
+anyway and displays all errors.
+
+```tsx
+<Button type="submit" onMouseDown={(event) => event.preventDefault()}>
+  Submit
+</Button>
+```
+
+Keyboard users are not affected. `Enter` submits the form from the input, and pressing `Tab`
+to move to the button blurs the input before the button is activated.
+
+## Focus the first invalid input after a failed submit
+
+Since the button does not take focus on press, move focus to the first input with an error
+in the second callback of `form.onSubmit`. It is a good practice for every form, see
+[how to focus the first input with error](/q/focus-first-input-with-error) for details.
+
+In the demo below, type an invalid email and click the submit button right away. The error
+is displayed after the first click, and the email input stays focused:
+
+<Demo data={SubmitClickValidateOnBlur} />
+
+## Alternatives
+
+If you cannot change the submit button, use one of these options:
+
+- Reserve space for error messages under inputs (for example, with a fixed `min-height` of the
+  error element), so validation on blur does not move the button.
+- Validate on blur only inputs that the user has changed. Inputs that were focused and left
+  empty are validated on submit.
+
+## Do not disable the submit button
+
+Do not disable the submit button while the form is invalid. A disabled button does not
+explain what is wrong, cannot be focused with the keyboard and is skipped by screen readers.
+Keep the button enabled, validate on submit and focus the first invalid input.

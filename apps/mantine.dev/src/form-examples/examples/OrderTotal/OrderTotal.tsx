@@ -1,5 +1,5 @@
 import { Button, Group, NumberInput, Select, SimpleGrid, Stack } from '@mantine/core';
-import { isInRange, isNotEmpty, useForm } from '@mantine/form';
+import { FormErrors, isInRange, isNotEmpty, useForm } from '@mantine/form';
 import { notifications } from '@mantine/notifications';
 import { products } from './data';
 import { currency, OrderSummary } from './OrderSummary';
@@ -52,8 +52,12 @@ export function OrderTotal() {
     });
   };
 
+  const handleErrors = (errors: FormErrors) => {
+    form.getInputNode(Object.keys(errors)[0])?.focus();
+  };
+
   return (
-    <form onSubmit={form.onSubmit(handleSubmit)}>
+    <form onSubmit={form.onSubmit(handleSubmit, handleErrors)}>
       <Stack>
         <Select
           size="md"

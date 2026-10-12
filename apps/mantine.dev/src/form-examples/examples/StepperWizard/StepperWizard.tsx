@@ -38,8 +38,10 @@ export function StepperWizard() {
 
   const nextStep = () => {
     // Validate every field of the current step so all errors are shown at once
-    const results = STEP_FIELDS[active].map((field) => form.validateField(field));
-    if (!results.some((result) => result.hasError)) {
+    const invalidFields = STEP_FIELDS[active].filter((field) => form.validateField(field).hasError);
+    if (invalidFields.length > 0) {
+      form.getInputNode(invalidFields[0])?.focus();
+    } else {
       setActive((current) => current + 1);
     }
   };

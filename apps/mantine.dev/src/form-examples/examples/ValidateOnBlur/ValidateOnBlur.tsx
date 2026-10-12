@@ -105,7 +105,7 @@ export function ValidateOnBlur() {
         {showSummary && <ErrorSummary form={form} labels={LABELS} />}
 
         <Group justify="flex-end">
-          <Button size="md" type="submit">
+          <Button size="md" type="submit" onMouseDown={(event) => event.preventDefault()}>
             Save profile
           </Button>
         </Group>

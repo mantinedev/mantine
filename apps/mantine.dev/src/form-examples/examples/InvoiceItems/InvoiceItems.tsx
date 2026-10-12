@@ -1,6 +1,7 @@
+import { useRef } from 'react';
 import { PlusIcon } from '@phosphor-icons/react';
 import { Button, Group, Stack, TextInput } from '@mantine/core';
-import { formRootRule, isNotEmpty, useForm } from '@mantine/form';
+import { FormErrors, formRootRule, isNotEmpty, useForm } from '@mantine/form';
 import { randomId } from '@mantine/hooks';
 import { notifications } from '@mantine/notifications';
 import { formatMoney, getTotal, InvoiceItem, InvoiceItemsTable } from './InvoiceItemsTable';
@@ -11,6 +12,8 @@ interface InvoiceValues {
 }
 
 export function InvoiceItems() {
+  const addItemRef = useRef<HTMLButtonElement>(null);
+
   const form = useForm<InvoiceValues>({
     initialValues: {
       customer: '',
@@ -46,8 +49,13 @@ export function InvoiceItems() {
     });
   };
 
+  const handleErrors = (errors: FormErrors) => {
+    const path = Object.keys(errors)[0];
+    (path === 'items' ? addItemRef.current : form.getInputNode(path))?.focus();
+  };
+
   return (
-    <form onSubmit={form.onSubmit(handleSubmit)}>
+    <form onSubmit={form.onSubmit(handleSubmit, handleErrors)}>
       <Stack>
         <TextInput
           size="md"
@@ -61,6 +69,7 @@ export function InvoiceItems() {
 
         <Group>
           <Button
+            ref={addItemRef}
             variant="default"
             leftSection={<PlusIcon size={16} />}
             onClick={() =>

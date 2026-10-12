@@ -1,5 +1,6 @@
-import { Badge, ScrollArea, Stack, Table, Text } from '@mantine/core';
+import { Badge, Stack, Table, Text } from '@mantine/core';
 import { Product } from './data';
+import classes from './ProductsTable.module.css';
 
 interface ProductsTableProps {
   products: Product[];
@@ -26,8 +27,12 @@ export function ProductsTable({ products, total }: ProductsTableProps) {
         {products.length} of {total} products
       </Text>
 
-      <ScrollArea h={360} type="auto">
-        <Table verticalSpacing="xs" layout="fixed" miw={480}>
+      <Table.ScrollContainer
+        minWidth={480}
+        classNames={{ scrollContainer: classes.scrollContainer }}
+        scrollAreaProps={{ type: 'auto' }}
+      >
+        <Table verticalSpacing="xs" layout="fixed">
           <Table.Thead>
             <Table.Tr>
               <Table.Th>Name</Table.Th>
@@ -50,7 +55,7 @@ export function ProductsTable({ products, total }: ProductsTableProps) {
             )}
           </Table.Tbody>
         </Table>
-      </ScrollArea>
+      </Table.ScrollContainer>
     </Stack>
   );
 }

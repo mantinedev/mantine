@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Button, Modal } from '@mantine/core';
-import { isEmail, isNotEmpty, useForm } from '@mantine/form';
+import { FormErrors, isEmail, isNotEmpty, useForm } from '@mantine/form';
 import { useDisclosure } from '@mantine/hooks';
 import { notifications } from '@mantine/notifications';
 import { User, UserValues } from './types';
@@ -50,6 +50,10 @@ export function FormInModal() {
     handleClose();
   };
 
+  const handleErrors = (errors: FormErrors) => {
+    form.getInputNode(Object.keys(errors)[0])?.focus();
+  };
+
   return (
     <>
       <Modal
@@ -60,7 +64,7 @@ export function FormInModal() {
         closeOnEscape={!form.submitting}
         withCloseButton={!form.submitting}
       >
-        <form onSubmit={form.onSubmit(handleSubmit)}>
+        <form onSubmit={form.onSubmit(handleSubmit, handleErrors)}>
           <UserForm form={form} onCancel={handleClose} />
         </form>
       </Modal>

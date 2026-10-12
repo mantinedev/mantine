@@ -61,6 +61,7 @@ import { meta as selectAutocompleteDifference } from './pages/q/select-autocompl
 import { meta as selectFuzzy } from './pages/q/select-fuzzy.mdx';
 import { meta as serverComponents } from './pages/q/server-components.mdx';
 import { meta as stylesOrder } from './pages/q/styles-order.mdx';
+import { meta as submitClickLostValidateOnBlur } from './pages/q/submit-click-lost-validate-on-blur.mdx';
 import { meta as submitTemplate } from './pages/q/submit-template.mdx';
 import { meta as tabsBorderColor } from './pages/q/tabs-border-color.mdx';
 import { meta as templatesUsage } from './pages/q/templates-usage.mdx';
@@ -135,6 +136,7 @@ export const MDX_DATA = [
   selectFuzzy,
   serverComponents,
   stylesOrder,
+  submitClickLostValidateOnBlur,
   submitTemplate,
   tabsBorderColor,
   templatesUsage,

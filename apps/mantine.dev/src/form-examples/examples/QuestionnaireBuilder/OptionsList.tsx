@@ -5,9 +5,10 @@ import { QuestionnaireForm, createOption } from './types';
 interface OptionsListProps {
   form: QuestionnaireForm;
   questionIndex: number;
+  addOptionRef?: React.Ref<HTMLButtonElement>;
 }
 
-export function OptionsList({ form, questionIndex }: OptionsListProps) {
+export function OptionsList({ form, questionIndex, addOptionRef }: OptionsListProps) {
   const options = form.useWatchValue(`questions.${questionIndex}.options`);
 
   return (
@@ -39,6 +40,7 @@ export function OptionsList({ form, questionIndex }: OptionsListProps) {
 
       <Group>
         <Button
+          ref={addOptionRef}
           size="compact-sm"
           variant="default"
           leftSection={<PlusIcon size={14} />}

@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { Badge, Button, Group, Select, Stack, Textarea, TextInput } from '@mantine/core';
-import { isEmail, isNotEmpty, useForm } from '@mantine/form';
+import { FormErrors, isEmail, isNotEmpty, useForm } from '@mantine/form';
 import { notifications } from '@mantine/notifications';
 
 interface UserRecord {
@@ -65,8 +65,12 @@ export function EditRecord() {
     });
   };
 
+  const handleErrors = (errors: FormErrors) => {
+    form.getInputNode(Object.keys(errors)[0])?.focus();
+  };
+
   return (
-    <form onSubmit={form.onSubmit(handleSubmit)}>
+    <form onSubmit={form.onSubmit(handleSubmit, handleErrors)}>
       <Stack>
         <Group>
           <Badge

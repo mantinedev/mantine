@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from 'react';
 import { ImageIcon, UploadSimpleIcon, XIcon } from '@phosphor-icons/react';
 import { Button, Group, Input, Progress, Stack, Text, TextInput } from '@mantine/core';
 import { Dropzone, FileRejection, IMAGE_MIME_TYPE } from '@mantine/dropzone';
-import { isNotEmpty, useForm } from '@mantine/form';
+import { FormErrors, isNotEmpty, useForm } from '@mantine/form';
 import { notifications } from '@mantine/notifications';
 import { FilesList, formatSize } from './FilesList';
 
@@ -35,6 +35,7 @@ function showRejectedFiles(rejections: FileRejection[]) {
 export function FileUpload() {
   const [progress, setProgress] = useState(0);
   const uploadInterval = useRef<number>(undefined);
+  const dropzoneRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => () => window.clearInterval(uploadInterval.current), []);
 
@@ -80,8 +81,13 @@ export function FileUpload() {
     });
   };
 
+  const handleErrors = (errors: FormErrors) => {
+    const path = Object.keys(errors)[0];
+    (path === 'files' ? dropzoneRef.current : form.getInputNode(path))?.focus();
+  };
+
   return (
-    <form onSubmit={form.onSubmit(handleSubmit)}>
+    <form onSubmit={form.onSubmit(handleSubmit, handleErrors)}>
       <Stack>
         <TextInput
           size="md"
@@ -99,6 +105,7 @@ export function FileUpload() {
           error={form.errors.files}
         >
           <Dropzone
+            ref={dropzoneRef}
             mt={5}
             accept={IMAGE_MIME_TYPE}
             maxSize={MAX_FILE_SIZE}

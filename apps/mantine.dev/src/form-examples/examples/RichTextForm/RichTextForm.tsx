@@ -1,5 +1,5 @@
 import { Button, Group, Stack, TextInput } from '@mantine/core';
-import { isNotEmpty, isNotEmptyHTML, useForm } from '@mantine/form';
+import { FormErrors, isNotEmpty, isNotEmptyHTML, useForm } from '@mantine/form';
 import { notifications } from '@mantine/notifications';
 import { ContentEditor } from './ContentEditor';
 
@@ -27,8 +27,12 @@ export function RichTextForm() {
     });
   };
 
+  const handleErrors = (errors: FormErrors) => {
+    form.getInputNode(Object.keys(errors)[0])?.focus();
+  };
+
   return (
-    <form onSubmit={form.onSubmit(handleSubmit)}>
+    <form onSubmit={form.onSubmit(handleSubmit, handleErrors)}>
       <Stack>
         <TextInput
           size="md"

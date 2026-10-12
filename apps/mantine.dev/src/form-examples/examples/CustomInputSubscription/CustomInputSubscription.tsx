@@ -1,6 +1,6 @@
 import { useRef } from 'react';
 import { Badge, Button, Group, Stack } from '@mantine/core';
-import { useForm } from '@mantine/form';
+import { FormErrors, useForm } from '@mantine/form';
 import { notifications } from '@mantine/notifications';
 import { NativeTextInput } from './NativeTextInput';
 import { StarRating } from './StarRating';
@@ -34,8 +34,12 @@ export function CustomInputSubscription() {
     });
   };
 
+  const handleErrors = (errors: FormErrors) => {
+    form.getInputNode(Object.keys(errors)[0])?.focus();
+  };
+
   return (
-    <form onSubmit={form.onSubmit(handleSubmit)}>
+    <form onSubmit={form.onSubmit(handleSubmit, handleErrors)}>
       <Stack>
         <Group>
           <RenderCount />

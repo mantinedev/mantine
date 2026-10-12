@@ -1,0 +1,5 @@
+.scrollContainer {
+  @media (min-width: $mantine-breakpoint-sm) {
+    height: 360px;
+  }
+}

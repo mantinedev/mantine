@@ -1,7 +1,7 @@
 import dayjs from 'dayjs';
 import { Button, Group, SimpleGrid, Stack, Text } from '@mantine/core';
 import { DatePickerInput } from '@mantine/dates';
-import { useForm } from '@mantine/form';
+import { FormErrors, useForm } from '@mantine/form';
 import { notifications } from '@mantine/notifications';
 
 interface BookingValues {
@@ -91,8 +91,12 @@ export function DateRange() {
     });
   };
 
+  const handleErrors = (errors: FormErrors) => {
+    form.getInputNode(Object.keys(errors)[0])?.focus();
+  };
+
   return (
-    <form onSubmit={form.onSubmit(handleSubmit)}>
+    <form onSubmit={form.onSubmit(handleSubmit, handleErrors)}>
       <Stack>
         <SimpleGrid cols={{ base: 1, sm: 2 }}>
           <DatePickerInput

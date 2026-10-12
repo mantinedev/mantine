@@ -807,6 +807,12 @@ form.setValues(data);
 argument: `UseFieldReturnType<string, 'input', 'uncontrolled'>` becomes
 `UseFieldReturnType<string, 'input'>`.
 
+## Removed @mantine/form types
+
+`ClearFieldDirty`, `SetFieldTouched`, `SetFieldDirty` and `SetCalculatedFieldDirty` types are no
+longer exported. If you imported them, use the form methods types instead, for example
+`UseFormReturnType<Values>['setTouched']`.
+
 ## v9 opt-out
 
 If your application cannot be migrated immediately, restore 9.x colors, variants

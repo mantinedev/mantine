@@ -386,19 +386,26 @@ export function createFormStore(input: UseFormInput<any, any>) {
     return applyFieldValidationResult(key, signal, result);
   };
 
+  const runFieldCheck = (path: string) => {
+    const result = validateField(path);
+
+    if (result instanceof Promise) {
+      clearFieldError(path);
+    } else {
+      setFieldValidating(path, false);
+    }
+  };
+
   const debouncedValidateField = (path: string) => {
     clearTimeout(timers[path]);
 
     if (options.validateDebounce > 0) {
       abortControllers[path]?.abort();
+      clearFieldError(path);
       setFieldValidating(path, true);
-      timers[path] = setTimeout(() => {
-        const result = validateField(path);
-        !(result instanceof Promise) && setFieldValidating(path, false);
-      }, options.validateDebounce);
+      timers[path] = setTimeout(() => runFieldCheck(path), options.validateDebounce);
     } else {
-      const result = validateField(path);
-      !(result instanceof Promise) && setFieldValidating(path, false);
+      runFieldCheck(path);
     }
   };
 

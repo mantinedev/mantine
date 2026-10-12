@@ -179,9 +179,10 @@ function Demo() {
 }
 ```
 
-In uncontrolled mode, bind each path to a single input. A component that is not subscribed is not
-updated while the user types in a subscribed input of the same path. Call `use-form-field` in both
-components or use controlled mode.
+In uncontrolled mode, bind each field path to a single input. A component that is not subscribed
+is not updated while the user types in a subscribed input of the same path. Call `use-form-field`
+in every component bound to that path or switch the form to controlled mode, see
+[one input per field path](/form/uncontrolled#one-input-per-field-path).
 
 See the [custom input](/form/examples?e=CustomInputSubscription) and
 [rich text](/form/examples?e=RichTextForm) form examples, and the

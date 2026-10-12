@@ -6,9 +6,10 @@ import { QuestionnaireForm } from './types';
 interface QuestionCardProps {
   form: QuestionnaireForm;
   index: number;
+  addOptionRef?: React.Ref<HTMLButtonElement>;
 }
 
-export function QuestionCard({ form, index }: QuestionCardProps) {
+export function QuestionCard({ form, index, addOptionRef }: QuestionCardProps) {
   return (
     <Surface level={0} withBorder p="md">
       <Stack gap="sm">
@@ -33,7 +34,7 @@ export function QuestionCard({ form, index }: QuestionCardProps) {
           </ActionIcon>
         </Group>
 
-        <OptionsList form={form} questionIndex={index} />
+        <OptionsList form={form} questionIndex={index} addOptionRef={addOptionRef} />
       </Stack>
     </Surface>
   );

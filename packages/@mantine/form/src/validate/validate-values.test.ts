@@ -254,4 +254,17 @@ describe('@mantine/form/validate-values', () => {
     await validateValues({ a: { [formRootRule]: asyncRootRule } }, { a: [{ b: 0 }] });
     expect(asyncRootRule).toHaveBeenCalledTimes(1);
   });
+
+  it('keeps errors of async rules in rule order', async () => {
+    const result = await validateValues(
+      {
+        username: async () => 'Username is taken',
+        email: () => 'Invalid email',
+        items: { name: async () => 'Required' },
+      },
+      { username: 'admin', email: '', items: [{ name: '' }] }
+    );
+
+    expect(Object.keys(result.errors)).toStrictEqual(['username', 'email', 'items.0.name']);
+  });
 });

@@ -1,5 +1,5 @@
 import { Stack, Switch, Textarea, TextInput } from '@mantine/core';
-import { isEmail, isNotEmpty, useForm } from '@mantine/form';
+import { FormErrors, isEmail, isNotEmpty, useForm } from '@mantine/form';
 import { notifications } from '@mantine/notifications';
 import { SaveBar } from './SaveBar';
 
@@ -43,8 +43,12 @@ export function SettingsSaveBar() {
     });
   };
 
+  const handleErrors = (errors: FormErrors) => {
+    form.getInputNode(Object.keys(errors)[0])?.focus();
+  };
+
   return (
-    <form onSubmit={form.onSubmit(handleSubmit)}>
+    <form onSubmit={form.onSubmit(handleSubmit, handleErrors)}>
       <Stack>
         <TextInput
           size="md"

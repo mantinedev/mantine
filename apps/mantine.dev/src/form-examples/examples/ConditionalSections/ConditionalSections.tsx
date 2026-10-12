@@ -1,6 +1,6 @@
 import { ReactNode } from 'react';
 import { Button, Group, Radio, Stack } from '@mantine/core';
-import { isNotEmpty, matches, useForm } from '@mantine/form';
+import { FormErrors, isNotEmpty, matches, useForm } from '@mantine/form';
 import { notifications } from '@mantine/notifications';
 import { CompanyFields } from './CompanyFields';
 import { PersonalFields } from './PersonalFields';
@@ -66,8 +66,13 @@ export function ConditionalSections() {
     });
   };
 
+  const handleErrors = (errors: FormErrors) => {
+    const node = form.getInputNode(Object.keys(errors)[0]);
+    (node?.querySelector('input') ?? node)?.focus();
+  };
+
   return (
-    <form onSubmit={form.onSubmit(handleSubmit)}>
+    <form onSubmit={form.onSubmit(handleSubmit, handleErrors)}>
       <Stack>
         <Radio.Group
           size="md"

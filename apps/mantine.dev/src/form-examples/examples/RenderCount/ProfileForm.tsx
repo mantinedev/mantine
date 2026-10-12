@@ -1,5 +1,5 @@
 import { Badge, Button, Group, Surface, SimpleGrid, Stack, TextInput } from '@mantine/core';
-import { FormMode, isEmail, isNotEmpty, useForm } from '@mantine/form';
+import { FormErrors, FormMode, isEmail, isNotEmpty, useForm } from '@mantine/form';
 import { notifications } from '@mantine/notifications';
 import { CurrentName } from './CurrentName';
 import { ExpensiveChild } from './ExpensiveChild';
@@ -16,6 +16,7 @@ interface ProfileFormProps {
 
 export function ProfileForm({ mode }: ProfileFormProps) {
   const form = useForm<ProfileValues>({
+    name: `${mode}-profile`,
     mode,
     initialValues: {
       name: '',
@@ -34,9 +35,13 @@ export function ProfileForm({ mode }: ProfileFormProps) {
     });
   };
 
+  const handleErrors = (errors: FormErrors) => {
+    form.getInputNode(Object.keys(errors)[0])?.focus();
+  };
+
   return (
     <Surface level={0} withBorder p="md">
-      <form onSubmit={form.onSubmit(handleSubmit)}>
+      <form onSubmit={form.onSubmit(handleSubmit, handleErrors)}>
         <Stack>
           <Group>
             <Badge variant="default">{mode}</Badge>

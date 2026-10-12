@@ -77,8 +77,6 @@ import SubscribeInputCode from './SubscribeInput/code.json';
 import { SubscribeInput } from './SubscribeInput/SubscribeInput';
 import TabsWithErrorCountCode from './TabsWithErrorCount/code.json';
 import { TabsWithErrorCount } from './TabsWithErrorCount/TabsWithErrorCount';
-import TagsAndKeywordsCode from './TagsAndKeywords/code.json';
-import { TagsAndKeywords } from './TagsAndKeywords/TagsAndKeywords';
 import TypedFormCode from './TypedForm/code.json';
 import { TypedForm } from './TypedForm/TypedForm';
 import UnitConverterCode from './UnitConverter/code.json';
@@ -140,7 +138,6 @@ export const FORM_EXAMPLES_COMPONENTS = {
   NestedAddresses: example(NestedAddresses, NestedAddressesCode),
   EditableTable: example(EditableTable, EditableTableCode),
   QuestionnaireBuilder: example(QuestionnaireBuilder, QuestionnaireBuilderCode),
-  TagsAndKeywords: example(TagsAndKeywords, TagsAndKeywordsCode),
   StepperWizard: example(StepperWizard, StepperWizardCode),
   FormInModal: example(FormInModal, FormInModalCode),
   TabsWithErrorCount: example(TabsWithErrorCount, TabsWithErrorCountCode),

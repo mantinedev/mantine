@@ -160,6 +160,41 @@ describe('schemaResolver with Zod', () => {
       });
     });
   });
+  it('orders errors by field order in values when async checks resolve last', async () => {
+    const schema = z.object({
+      username: z
+        .string()
+        .refine(
+          (value) =>
+            new Promise<boolean>((resolve) => setTimeout(() => resolve(value !== 'admin'), 10)),
+          { message: 'Username is taken' }
+        ),
+      email: z.email({ message: 'Invalid email' }),
+      items: z.array(z.object({ name: z.string().min(1, { message: 'Required' }) })),
+    });
+
+    const errors = await schemaResolver(schema)({
+      username: 'admin',
+      email: '',
+      items: [{ name: '' }],
+    });
+
+    expect(Object.keys(errors)).toStrictEqual(['username', 'email', 'items.0.name']);
+  });
+
+  it('orders errors with circular values and errors of missing fields', async () => {
+    const metadata: Record<string, unknown> = {};
+    metadata.self = metadata;
+    const schema = z.object({
+      name: z.string().min(1, { message: 'Required' }),
+      metadata: z.any(),
+      items: z.array(z.object({ title: z.string({ message: 'Title is required' }) })),
+    });
+
+    const errors = await schemaResolver(schema)({ name: '', metadata, items: [{}, {}] });
+
+    expect(Object.keys(errors)).toStrictEqual(['name', 'items.0.title', 'items.1.title']);
+  });
 });
 
 describe('schemaResolver with mock Standard Schema', () => {

@@ -39,6 +39,7 @@ function validateRulesRecord<T>(
     if (typeof rule === 'function') {
       const result = rule(value, values, rulePath, signal);
       if (result instanceof Promise) {
+        errors[rulePath] = null;
         asyncTasks.push({ rulePath, promise: result });
       } else {
         errors[rulePath] = result;
@@ -64,6 +65,7 @@ function validateRulesRecord<T>(
       if (formRootRule in rule) {
         const rootResult = (rule as any)[formRootRule](value, values, rulePath, signal);
         if (rootResult instanceof Promise) {
+          errors[rulePath] = null;
           asyncTasks.push({ rulePath, promise: rootResult });
         } else {
           errors[rulePath] = rootResult;
@@ -89,6 +91,7 @@ function validateRulesRecord<T>(
       if (!arrayValidation && formRootRule in rule) {
         const rootResult = (rule as any)[formRootRule](value, values, rulePath, signal);
         if (rootResult instanceof Promise) {
+          errors[rulePath] = null;
           asyncTasks.push({ rulePath, promise: rootResult });
         } else {
           errors[rulePath] = rootResult;

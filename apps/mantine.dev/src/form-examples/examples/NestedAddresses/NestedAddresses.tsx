@@ -1,6 +1,7 @@
+import { useRef } from 'react';
 import { PlusIcon } from '@phosphor-icons/react';
 import { Button, Group, Input, Stack, Text, TextInput } from '@mantine/core';
-import { formRootRule, isNotEmpty, useForm } from '@mantine/form';
+import { FormErrors, formRootRule, isNotEmpty, useForm } from '@mantine/form';
 import { randomId } from '@mantine/hooks';
 import { notifications } from '@mantine/notifications';
 import { Address, AddressCard } from './AddressCard';
@@ -11,6 +12,9 @@ interface ContactValues {
 }
 
 export function NestedAddresses() {
+  const firstSetPrimaryRef = useRef<HTMLButtonElement>(null);
+  const addAddressRef = useRef<HTMLButtonElement>(null);
+
   const form = useForm<ContactValues>({
     initialValues: {
       name: '',
@@ -54,8 +58,17 @@ export function NestedAddresses() {
     });
   };
 
+  const handleErrors = (errors: FormErrors) => {
+    const path = Object.keys(errors)[0];
+    const node =
+      path === 'addresses'
+        ? (firstSetPrimaryRef.current ?? addAddressRef.current)
+        : form.getInputNode(path);
+    node?.focus();
+  };
+
   return (
-    <form onSubmit={form.onSubmit(handleSubmit)}>
+    <form onSubmit={form.onSubmit(handleSubmit, handleErrors)}>
       <Stack>
         <TextInput
           size="md"
@@ -66,7 +79,12 @@ export function NestedAddresses() {
         />
 
         {addresses.map((address, index) => (
-          <AddressCard key={address.key} form={form} index={index} />
+          <AddressCard
+            key={address.key}
+            form={form}
+            index={index}
+            setPrimaryRef={index === 0 ? firstSetPrimaryRef : undefined}
+          />
         ))}
 
         {addresses.length === 0 && (
@@ -79,6 +97,7 @@ export function NestedAddresses() {
 
         <Group>
           <Button
+            ref={addAddressRef}
             variant="default"
             leftSection={<PlusIcon size={16} />}
             onClick={() =>

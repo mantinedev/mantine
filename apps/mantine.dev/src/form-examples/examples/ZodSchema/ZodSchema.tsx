@@ -1,6 +1,7 @@
+import { useRef } from 'react';
 import { z } from 'zod';
 import { Button, Group, Input, NumberInput, SimpleGrid, Stack, TextInput } from '@mantine/core';
-import { schemaResolver, useForm } from '@mantine/form';
+import { FormErrors, schemaResolver, useForm } from '@mantine/form';
 import { randomId } from '@mantine/hooks';
 import { notifications } from '@mantine/notifications';
 import { Ticket, TicketsList } from './TicketsList';
@@ -34,6 +35,8 @@ const schema = z.object({
 });
 
 export function ZodSchema() {
+  const addTicketRef = useRef<HTMLButtonElement>(null);
+
   const form = useForm<RegistrationValues>({
     initialValues: {
       name: '',
@@ -60,8 +63,13 @@ export function ZodSchema() {
     });
   };
 
+  const handleErrors = (errors: FormErrors) => {
+    const path = Object.keys(errors)[0];
+    (path === 'tickets' ? addTicketRef.current : form.getInputNode(path))?.focus();
+  };
+
   return (
-    <form onSubmit={form.onSubmit(handleSubmit)}>
+    <form onSubmit={form.onSubmit(handleSubmit, handleErrors)}>
       <Stack>
         <TextInput
           size="md"
@@ -113,7 +121,7 @@ export function ZodSchema() {
             Tickets
           </Input.Label>
 
-          <TicketsList form={form} />
+          <TicketsList form={form} addTicketRef={addTicketRef} />
         </div>
 
         <Group justify="flex-end">

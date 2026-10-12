@@ -1,6 +1,7 @@
+import { useRef } from 'react';
 import { PlusIcon, TrashIcon } from '@phosphor-icons/react';
 import { ActionIcon, Button, Group, Input, Stack, Text, TextInput } from '@mantine/core';
-import { FORM_INDEX, formRootRule, isNotEmpty, useForm } from '@mantine/form';
+import { FORM_INDEX, FormErrors, formRootRule, isNotEmpty, useForm } from '@mantine/form';
 import { randomId } from '@mantine/hooks';
 import { notifications } from '@mantine/notifications';
 
@@ -24,6 +25,8 @@ function validateSkills(skills: Skill[]) {
 }
 
 export function ListMinimum() {
+  const addSkillRef = useRef<HTMLButtonElement>(null);
+
   const form = useForm<ProjectValues>({
     initialValues: {
       projectName: '',
@@ -58,6 +61,15 @@ export function ListMinimum() {
     });
   };
 
+  const handleErrors = (errors: FormErrors) => {
+    const path = Object.keys(errors)[0];
+    const node =
+      path === 'skills'
+        ? (form.getInputNode('skills.0.name') ?? addSkillRef.current)
+        : form.getInputNode(path);
+    node?.focus();
+  };
+
   const skills = form.getValues().skills.map((skill, index) => (
     <Group key={skill.id} align="flex-start" wrap="nowrap">
       <TextInput
@@ -80,7 +92,7 @@ export function ListMinimum() {
   ));
 
   return (
-    <form onSubmit={form.onSubmit(handleSubmit)}>
+    <form onSubmit={form.onSubmit(handleSubmit, handleErrors)}>
       <Stack>
         <TextInput
           size="md"
@@ -98,6 +110,7 @@ export function ListMinimum() {
 
           <Group>
             <Button
+              ref={addSkillRef}
               variant="default"
               leftSection={<PlusIcon size={16} />}
               onClick={() =>

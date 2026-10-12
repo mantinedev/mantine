@@ -1,5 +1,5 @@
 import { Stack, TextInput } from '@mantine/core';
-import { isNotEmpty, matches, TransformedValues, useForm } from '@mantine/form';
+import { FormErrors, isNotEmpty, matches, TransformedValues, useForm } from '@mantine/form';
 import { notifications } from '@mantine/notifications';
 import { ErrorSummary } from './ErrorSummary';
 import { SubmitBar } from './SubmitBar';
@@ -44,8 +44,12 @@ export function TypedForm() {
     });
   };
 
+  const handleErrors = (errors: FormErrors) => {
+    form.getInputNode(Object.keys(errors)[0])?.focus();
+  };
+
   return (
-    <form onSubmit={form.onSubmit(handleSubmit)}>
+    <form onSubmit={form.onSubmit(handleSubmit, handleErrors)}>
       <Stack>
         <TextInput
           size="md"

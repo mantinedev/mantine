@@ -23,9 +23,10 @@ export interface Address {
 interface AddressCardProps {
   form: UseFormReturnType<{ addresses: Address[] }>;
   index: number;
+  setPrimaryRef?: React.Ref<HTMLButtonElement>;
 }
 
-export function AddressCard({ form, index }: AddressCardProps) {
+export function AddressCard({ form, index, setPrimaryRef }: AddressCardProps) {
   const isPrimary = form.useWatchValue(`addresses.${index}.isPrimary`);
 
   const setPrimary = () => {
@@ -57,7 +58,7 @@ export function AddressCard({ form, index }: AddressCardProps) {
           </Group>
 
           <Group gap="xs" wrap="nowrap">
-            <Button variant="default" disabled={isPrimary} onClick={setPrimary}>
+            <Button ref={setPrimaryRef} variant="default" disabled={isPrimary} onClick={setPrimary}>
               Set as primary
             </Button>
 

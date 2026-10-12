@@ -14,6 +14,7 @@ interface ContentEditorProps {
   label?: ReactNode;
   placeholder?: string;
   withAsterisk?: boolean;
+  'data-path'?: string;
 }
 
 export function ContentEditor({
@@ -24,6 +25,7 @@ export function ContentEditor({
   label,
   placeholder,
   withAsterisk,
+  'data-path': dataPath,
 }: ContentEditorProps) {
   const id = useId();
   const onChangeRef = useRef(onChange);
@@ -39,6 +41,7 @@ export function ContentEditor({
     editorProps: {
       attributes: {
         'aria-labelledby': `${id}-label`,
+        ...(dataPath ? { 'data-path': dataPath } : {}),
       },
     },
     onUpdate: ({ editor }) => onChangeRef.current?.(editor.getHTML()),

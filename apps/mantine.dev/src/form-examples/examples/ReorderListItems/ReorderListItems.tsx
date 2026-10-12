@@ -1,6 +1,6 @@
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import { Button, Group, Stack, TextInput } from '@mantine/core';
-import { formRootRule, isNotEmpty, useForm } from '@mantine/form';
+import { FormErrors, formRootRule, isNotEmpty, useForm } from '@mantine/form';
 import { randomId } from '@mantine/hooks';
 import { notifications } from '@mantine/notifications';
 import { TasksList } from './TasksList';
@@ -8,6 +8,7 @@ import { TasksValues } from './types';
 
 export function ReorderListItems() {
   const [draft, setDraft] = useState('');
+  const newTaskRef = useRef<HTMLInputElement>(null);
 
   const form = useForm<TasksValues>({
     initialValues: {
@@ -56,8 +57,13 @@ export function ReorderListItems() {
     });
   };
 
+  const handleErrors = (errors: FormErrors) => {
+    const path = Object.keys(errors)[0];
+    (path === 'items' ? newTaskRef.current : form.getInputNode(path))?.focus();
+  };
+
   return (
-    <form onSubmit={form.onSubmit(handleSubmit)}>
+    <form onSubmit={form.onSubmit(handleSubmit, handleErrors)}>
       <Stack>
         <Group gap="xs" wrap="nowrap" align="flex-end">
           <TextInput
@@ -65,6 +71,7 @@ export function ReorderListItems() {
             label="New task"
             placeholder="Buy milk"
             style={{ flex: 1 }}
+            ref={newTaskRef}
             value={draft}
             onChange={(event) => setDraft(event.currentTarget.value)}
             onKeyDown={(event) => {

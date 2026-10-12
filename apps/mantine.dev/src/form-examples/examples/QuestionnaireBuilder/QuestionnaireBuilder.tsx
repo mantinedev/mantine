@@ -1,12 +1,16 @@
+import { useRef } from 'react';
 import { PlusIcon } from '@phosphor-icons/react';
 import { Button, Group, Input, Stack, Text, TextInput } from '@mantine/core';
-import { formRootRule, isNotEmpty, useForm } from '@mantine/form';
+import { FormErrors, formRootRule, isNotEmpty, useForm } from '@mantine/form';
 import { randomId } from '@mantine/hooks';
 import { notifications } from '@mantine/notifications';
 import { QuestionCard } from './QuestionCard';
 import { createOption, createQuestion, QuestionnaireValues } from './types';
 
 export function QuestionnaireBuilder() {
+  const addQuestionRef = useRef<HTMLButtonElement>(null);
+  const addOptionRefs = useRef<(HTMLButtonElement | null)[]>([]);
+
   const form = useForm<QuestionnaireValues>({
     initialValues: {
       title: 'Customer satisfaction',
@@ -40,8 +44,21 @@ export function QuestionnaireBuilder() {
     });
   };
 
+  const getErrorNode = (path: string) => {
+    if (path === 'questions') {
+      return addQuestionRef.current;
+    }
+
+    const optionsList = path.match(/^questions\.(\d+)\.options$/);
+    return optionsList ? addOptionRefs.current[Number(optionsList[1])] : form.getInputNode(path);
+  };
+
+  const handleErrors = (errors: FormErrors) => {
+    getErrorNode(Object.keys(errors)[0])?.focus();
+  };
+
   return (
-    <form onSubmit={form.onSubmit(handleSubmit)}>
+    <form onSubmit={form.onSubmit(handleSubmit, handleErrors)}>
       <Stack>
         <TextInput
           size="md"
@@ -52,7 +69,14 @@ export function QuestionnaireBuilder() {
         />
 
         {questions.map((question, index) => (
-          <QuestionCard key={question.key} form={form} index={index} />
+          <QuestionCard
+            key={question.key}
+            form={form}
+            index={index}
+            addOptionRef={(node) => {
+              addOptionRefs.current[index] = node;
+            }}
+          />
         ))}
 
         {questions.length === 0 && (
@@ -65,6 +89,7 @@ export function QuestionnaireBuilder() {
 
         <Group>
           <Button
+            ref={addQuestionRef}
             variant="default"
             leftSection={<PlusIcon size={16} />}
             onClick={() => form.insertListItem('questions', createQuestion())}

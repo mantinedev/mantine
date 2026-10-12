@@ -1,3 +1,5 @@
+import { useRef } from 'react';
+import { flushSync } from 'react-dom';
 import { Accordion, Button, Group, useAccordion } from '@mantine/core';
 import { FormErrors, isEmail, isNotEmpty, isUrl, useForm } from '@mantine/form';
 import { notifications } from '@mantine/notifications';
@@ -18,6 +20,8 @@ export function AccordionSections() {
     multiple: true,
     defaultValue: ['personal'],
   });
+
+  const pendingFocusPath = useRef<string | null>(null);
 
   const form = useForm<OnboardingValues>({
     initialValues: {
@@ -65,7 +69,22 @@ export function AccordionSections() {
   };
 
   const handleErrors = (errors: FormErrors) => {
-    Object.keys(errors).forEach((path) => accordion.expand(path.split('.')[0]));
+    const paths = Object.keys(errors);
+    flushSync(() => paths.forEach((path) => accordion.expand(path.split('.')[0])));
+
+    const node = form.getInputNode(paths[0]);
+    node?.focus();
+
+    if (node && document.activeElement !== node) {
+      pendingFocusPath.current = paths[0];
+    }
+  };
+
+  const focusPendingField = () => {
+    if (pendingFocusPath.current) {
+      form.getInputNode(pendingFocusPath.current)?.focus();
+      pendingFocusPath.current = null;
+    }
   };
 
   return (
@@ -75,7 +94,7 @@ export function AccordionSections() {
           <Accordion.Control>
             <SectionControl label="Personal" valid={form.isValid('personal')} />
           </Accordion.Control>
-          <Accordion.Panel>
+          <Accordion.Panel onTransitionEnd={focusPendingField}>
             <PersonalSection form={form} />
           </Accordion.Panel>
         </Accordion.Item>
@@ -84,7 +103,7 @@ export function AccordionSections() {
           <Accordion.Control>
             <SectionControl label="Company" valid={form.isValid('company')} />
           </Accordion.Control>
-          <Accordion.Panel>
+          <Accordion.Panel onTransitionEnd={focusPendingField}>
             <CompanySection form={form} />
           </Accordion.Panel>
         </Accordion.Item>
@@ -93,7 +112,7 @@ export function AccordionSections() {
           <Accordion.Control>
             <SectionControl label="Preferences" valid={form.isValid('preferences')} />
           </Accordion.Control>
-          <Accordion.Panel>
+          <Accordion.Panel onTransitionEnd={focusPendingField}>
             <PreferencesSection form={form} />
           </Accordion.Panel>
         </Accordion.Item>

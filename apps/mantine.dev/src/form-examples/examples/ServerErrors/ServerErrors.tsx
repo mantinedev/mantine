@@ -1,5 +1,5 @@
 import { Alert, Button, Group, PasswordInput, Stack, TextInput } from '@mantine/core';
-import { hasLength, isEmail, isNotEmpty, useForm } from '@mantine/form';
+import { FormErrors, hasLength, isEmail, isNotEmpty, useForm } from '@mantine/form';
 import { notifications } from '@mantine/notifications';
 
 interface SignUpValues {
@@ -48,6 +48,10 @@ export function ServerErrors() {
     onValuesChange: () => form.clearFieldError('root'),
   });
 
+  const handleErrors = (errors: FormErrors) => {
+    form.getInputNode(Object.keys(errors)[0])?.focus();
+  };
+
   const handleSubmit = async (values: SignUpValues) => {
     const response = await signUp(values);
 
@@ -58,11 +62,12 @@ export function ServerErrors() {
       });
     } else {
       form.setErrors(response.errors);
+      handleErrors(response.errors);
     }
   };
 
   return (
-    <form onSubmit={form.onSubmit(handleSubmit)}>
+    <form onSubmit={form.onSubmit(handleSubmit, handleErrors)}>
       <Stack maw={420} mx="auto">
         <TextInput
           size="md"

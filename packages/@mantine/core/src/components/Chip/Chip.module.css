@@ -102,6 +102,16 @@
     }
   }
 
+  @mixin where-light {
+    background-color: var(--mantine-color-neutral-3);
+
+    @mixin hover {
+      &:where(:not([data-disabled])) {
+        background-color: var(--mantine-color-neutral-4);
+      }
+    }
+  }
+
   &:where([data-checked]) {
     --chip-icon-color: var(--chip-color);
     color: var(--chip-color);

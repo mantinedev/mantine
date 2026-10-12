@@ -1,6 +1,6 @@
 import { z } from 'zod';
 import { Button, Group, PasswordInput, Stack, TextInput } from '@mantine/core';
-import { schemaResolver, useForm } from '@mantine/form';
+import { FormErrors, schemaResolver, useForm } from '@mantine/form';
 import { notifications } from '@mantine/notifications';
 
 interface SignUpValues {
@@ -76,8 +76,12 @@ export function ZodAsyncSchema() {
     });
   };
 
+  const handleErrors = (errors: FormErrors) => {
+    form.getInputNode(Object.keys(errors)[0])?.focus();
+  };
+
   return (
-    <form onSubmit={form.onSubmit(handleSubmit)}>
+    <form onSubmit={form.onSubmit(handleSubmit, handleErrors)}>
       <Stack>
         <TextInput
           size="md"
@@ -87,7 +91,6 @@ export function ZodAsyncSchema() {
           loading={usernameValidating}
           success={usernameAvailable ? 'Username is available' : null}
           {...form.getInputProps('username')}
-          error={usernameValidating ? null : form.errors.username}
         />
 
         <TextInput
@@ -98,7 +101,6 @@ export function ZodAsyncSchema() {
           loading={emailValidating}
           success={emailAvailable ? 'Email is available' : null}
           {...form.getInputProps('email')}
-          error={emailValidating ? null : form.errors.email}
         />
 
         <PasswordInput

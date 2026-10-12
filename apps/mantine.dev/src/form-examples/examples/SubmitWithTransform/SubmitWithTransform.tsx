@@ -10,7 +10,7 @@ import {
   TextInput,
 } from '@mantine/core';
 import { DateInput } from '@mantine/dates';
-import { isNotEmpty, TransformedValues, useForm } from '@mantine/form';
+import { FormErrors, isNotEmpty, TransformedValues, useForm } from '@mantine/form';
 import { notifications } from '@mantine/notifications';
 
 interface EventValues {
@@ -60,6 +60,10 @@ export function SubmitWithTransform() {
     });
   };
 
+  const handleErrors = (errors: FormErrors) => {
+    form.getInputNode(Object.keys(errors)[0])?.focus();
+  };
+
   const showPreview = () => {
     notifications.show({
       title: 'Payload preview',
@@ -68,7 +72,7 @@ export function SubmitWithTransform() {
   };
 
   return (
-    <form onSubmit={form.onSubmit(handleSubmit)}>
+    <form onSubmit={form.onSubmit(handleSubmit, handleErrors)}>
       <Stack>
         <TextInput
           size="md"

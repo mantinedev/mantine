@@ -1,5 +1,5 @@
 import { Button, Group, Select, Stack, Text, Textarea, TextInput } from '@mantine/core';
-import { isEmail, isNotEmpty, useForm } from '@mantine/form';
+import { FormErrors, isEmail, isNotEmpty, useForm } from '@mantine/form';
 import { notifications } from '@mantine/notifications';
 
 const MAX_LENGTH = 500;
@@ -48,18 +48,22 @@ export function ContactForm() {
     });
   };
 
+  const handleErrors = (errors: FormErrors) => {
+    form.getInputNode(Object.keys(errors)[0])?.focus();
+  };
+
   const handleKeyDown = (event: React.KeyboardEvent<HTMLTextAreaElement>) => {
     if (event.key === 'Enter' && (event.ctrlKey || event.metaKey)) {
       event.preventDefault();
 
       if (!form.submitting) {
-        form.onSubmit(handleSubmit)();
+        form.onSubmit(handleSubmit, handleErrors)();
       }
     }
   };
 
   return (
-    <form onSubmit={form.onSubmit(handleSubmit)}>
+    <form onSubmit={form.onSubmit(handleSubmit, handleErrors)}>
       <Stack maw={420} mx="auto">
         <Select
           size="md"

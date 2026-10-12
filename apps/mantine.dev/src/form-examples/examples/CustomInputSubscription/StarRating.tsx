@@ -9,9 +9,18 @@ interface StarRatingProps {
   onFocus?: () => void;
   onBlur?: () => void;
   error?: React.ReactNode;
+  'data-path'?: string;
 }
 
-export function StarRating({ label, value, onChange, onFocus, onBlur, error }: StarRatingProps) {
+export function StarRating({
+  label,
+  value,
+  onChange,
+  onFocus,
+  onBlur,
+  error,
+  'data-path': dataPath,
+}: StarRatingProps) {
   const id = useId();
   const field = useFormField<number>(onChange);
   const current = (field.subscribed ? field.value : value) ?? 0;
@@ -24,6 +33,7 @@ export function StarRating({ label, value, onChange, onFocus, onBlur, error }: S
         type="button"
         aria-label={`${star} ${star === 1 ? 'star' : 'stars'}`}
         display="flex"
+        data-path={star === 1 ? dataPath : undefined}
         onClick={() => onChange?.(star)}
         onFocus={onFocus}
         onBlur={onBlur}

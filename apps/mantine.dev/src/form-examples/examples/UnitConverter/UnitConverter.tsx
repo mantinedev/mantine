@@ -1,5 +1,5 @@
 import { Button, Group, NumberInput, Select, SimpleGrid, Stack } from '@mantine/core';
-import { useForm } from '@mantine/form';
+import { FormErrors, useForm } from '@mantine/form';
 import { notifications } from '@mantine/notifications';
 
 type Temperature = number | string;
@@ -72,8 +72,12 @@ export function UnitConverter() {
     });
   };
 
+  const handleErrors = (errors: FormErrors) => {
+    form.getInputNode(Object.keys(errors)[0])?.focus();
+  };
+
   return (
-    <form onSubmit={form.onSubmit(handleSubmit)}>
+    <form onSubmit={form.onSubmit(handleSubmit, handleErrors)}>
       <Stack>
         <Select
           size="md"

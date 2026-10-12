@@ -1,5 +1,5 @@
 import { Button, Group, Stack, TextInput } from '@mantine/core';
-import { useForm } from '@mantine/form';
+import { FormErrors, useForm } from '@mantine/form';
 import { notifications } from '@mantine/notifications';
 
 interface PageValues {
@@ -55,8 +55,12 @@ export function GeneratedSlug() {
     });
   };
 
+  const handleErrors = (errors: FormErrors) => {
+    form.getInputNode(Object.keys(errors)[0])?.focus();
+  };
+
   return (
-    <form onSubmit={form.onSubmit(handleSubmit)}>
+    <form onSubmit={form.onSubmit(handleSubmit, handleErrors)}>
       <Stack maw={420} mx="auto">
         <TextInput
           size="md"

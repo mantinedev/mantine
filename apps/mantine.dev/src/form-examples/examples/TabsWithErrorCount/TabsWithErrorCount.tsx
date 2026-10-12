@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { flushSync } from 'react-dom';
 import { Badge, Button, Group, Tabs } from '@mantine/core';
 import { FormErrors, hasLength, isEmail, isNotEmpty, matchesField, useForm } from '@mantine/form';
 import { notifications } from '@mantine/notifications';
@@ -63,7 +64,12 @@ export function TabsWithErrorCount() {
   const handleErrors = (errors: FormErrors) => {
     const firstTabWithError = TABS.find((tab) => countErrors(errors, TAB_FIELDS[tab.value]) > 0);
     if (firstTabWithError) {
-      setActiveTab(firstTabWithError.value);
+      flushSync(() => setActiveTab(firstTabWithError.value));
+      const firstField = TAB_FIELDS[firstTabWithError.value].find((field) => field in errors);
+
+      if (firstField) {
+        form.getInputNode(firstField)?.focus();
+      }
     }
   };
 

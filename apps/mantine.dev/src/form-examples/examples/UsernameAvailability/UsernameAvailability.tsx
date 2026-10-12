@@ -1,5 +1,5 @@
 import { Button, Group, Stack, TextInput } from '@mantine/core';
-import { isEmail, useForm } from '@mantine/form';
+import { FormErrors, isEmail, useForm } from '@mantine/form';
 import { notifications } from '@mantine/notifications';
 
 interface SignUpValues {
@@ -80,8 +80,12 @@ export function UsernameAvailability() {
     });
   };
 
+  const handleErrors = (errors: FormErrors) => {
+    form.getInputNode(Object.keys(errors)[0])?.focus();
+  };
+
   return (
-    <form onSubmit={form.onSubmit(handleSubmit)}>
+    <form onSubmit={form.onSubmit(handleSubmit, handleErrors)}>
       <Stack maw={420} mx="auto">
         <TextInput
           size="md"
@@ -91,7 +95,6 @@ export function UsernameAvailability() {
           loading={usernameValidating}
           success={usernameAvailable ? 'Username is available' : null}
           {...form.getInputProps('username')}
-          error={usernameValidating ? null : form.errors.username}
         />
 
         <TextInput

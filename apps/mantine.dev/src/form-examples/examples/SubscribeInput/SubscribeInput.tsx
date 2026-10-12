@@ -1,3 +1,4 @@
+import { useRef } from 'react';
 import { Button, Group, TextInput } from '@mantine/core';
 import { emailRegexp, useField } from '@mantine/form';
 import { notifications } from '@mantine/notifications';
@@ -18,6 +19,8 @@ function checkSubscription(email: string) {
 }
 
 export function SubscribeInput() {
+  const inputRef = useRef<HTMLInputElement>(null);
+
   const field = useField({
     initialValue: '',
     validate: checkSubscription,
@@ -28,7 +31,9 @@ export function SubscribeInput() {
     const email = field.getValue();
     const error = await field.validate();
 
-    if (!error) {
+    if (error) {
+      inputRef.current?.focus();
+    } else {
       field.reset();
       notifications.show({
         title: 'Subscribed',
@@ -49,6 +54,7 @@ export function SubscribeInput() {
           style={{ flex: 1 }}
           classNames={classes}
           readOnly={field.isValidating}
+          ref={inputRef}
           {...field.getInputProps()}
         />
 

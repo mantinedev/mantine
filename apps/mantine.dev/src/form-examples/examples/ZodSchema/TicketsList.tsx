@@ -10,9 +10,10 @@ export interface Ticket {
 
 interface TicketsListProps {
   form: UseFormReturnType<{ tickets: Ticket[] }>;
+  addTicketRef?: React.Ref<HTMLButtonElement>;
 }
 
-export function TicketsList({ form }: TicketsListProps) {
+export function TicketsList({ form, addTicketRef }: TicketsListProps) {
   const tickets = form.getValues().tickets.map((ticket, index) => (
     <Group key={ticket.key} align="flex-start" wrap="nowrap">
       <TextInput
@@ -41,6 +42,7 @@ export function TicketsList({ form }: TicketsListProps) {
 
       <Group>
         <Button
+          ref={addTicketRef}
           variant="default"
           leftSection={<PlusIcon size={16} />}
           onClick={() =>

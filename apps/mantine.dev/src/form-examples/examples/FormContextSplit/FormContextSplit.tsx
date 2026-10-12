@@ -1,5 +1,5 @@
 import { Button, Group, Stack } from '@mantine/core';
-import { isEmail, isNotEmpty } from '@mantine/form';
+import { FormErrors, isEmail, isNotEmpty } from '@mantine/form';
 import { notifications } from '@mantine/notifications';
 import { AddressFields } from './AddressFields';
 import { AccountValues, FormProvider, useForm } from './form-context';
@@ -33,9 +33,13 @@ export function FormContextSplit() {
     });
   };
 
+  const handleErrors = (errors: FormErrors) => {
+    form.getInputNode(Object.keys(errors)[0])?.focus();
+  };
+
   return (
     <FormProvider form={form}>
-      <form onSubmit={form.onSubmit(handleSubmit)}>
+      <form onSubmit={form.onSubmit(handleSubmit, handleErrors)}>
         <Stack>
           <PersonalFields />
 

@@ -9,7 +9,15 @@ import {
   Textarea,
   TextInput,
 } from '@mantine/core';
-import { hasLength, isEmail, isInRange, isNotEmpty, matches, useForm } from '@mantine/form';
+import {
+  FormErrors,
+  hasLength,
+  isEmail,
+  isInRange,
+  isNotEmpty,
+  matches,
+  useForm,
+} from '@mantine/form';
 import { notifications } from '@mantine/notifications';
 
 const MIN_COVER_LETTER_LENGTH = 50;
@@ -75,8 +83,12 @@ export function JobApplication() {
     });
   };
 
+  const handleErrors = (errors: FormErrors) => {
+    form.getInputNode(Object.keys(errors)[0])?.focus();
+  };
+
   return (
-    <form onSubmit={form.onSubmit(handleSubmit)}>
+    <form onSubmit={form.onSubmit(handleSubmit, handleErrors)}>
       <Stack>
         <SimpleGrid cols={{ base: 1, sm: 2 }}>
           <TextInput
@@ -160,7 +172,12 @@ export function JobApplication() {
         />
 
         <Group justify="flex-end">
-          <Button size="md" type="submit" loading={form.submitting}>
+          <Button
+            size="md"
+            type="submit"
+            loading={form.submitting}
+            onMouseDown={(event) => event.preventDefault()}
+          >
             Send application
           </Button>
         </Group>
