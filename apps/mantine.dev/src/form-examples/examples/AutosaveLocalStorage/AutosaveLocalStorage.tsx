@@ -1,6 +1,12 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { Button, Group, Stack, Text, Textarea, TextInput } from '@mantine/core';
 import { hasLength, isNotEmpty, useForm } from '@mantine/form';
+import {
+  readLocalStorageValue,
+  useDebouncedCallback,
+  useLocalStorage,
+  useWindowEvent,
+} from '@mantine/hooks';
 import { notifications } from '@mantine/notifications';
 
 interface PostValues {
@@ -8,57 +14,55 @@ interface PostValues {
   body: string;
 }
 
-const STORAGE_KEY = 'mantine-form-example-post-draft';
-
-function readDraft(): Partial<PostValues> | null {
-  const stored = window.localStorage.getItem(STORAGE_KEY);
-  if (!stored) {
-    return null;
-  }
-
-  try {
-    const parsed: unknown = JSON.parse(stored);
-    return typeof parsed === 'object' && parsed !== null ? (parsed as Partial<PostValues>) : null;
-  } catch {
-    window.localStorage.removeItem(STORAGE_KEY);
-    return null;
-  }
+interface Draft {
+  values: PostValues;
+  savedAt: string;
 }
 
+const STORAGE_KEY = 'mantine-form-examples-post-draft';
+
+const initialValues: PostValues = {
+  title: '',
+  body: '',
+};
+
 export function AutosaveLocalStorage() {
-  const [savedAt, setSavedAt] = useState<string | null>(null);
+  const [draft, setDraft, removeDraft] = useLocalStorage<Draft | null>({
+    key: STORAGE_KEY,
+    defaultValue: null,
+  });
+
+  const saveDraft = useDebouncedCallback(
+    (values: PostValues) => setDraft({ values, savedAt: new Date().toLocaleTimeString() }),
+    { delay: 1000, flushOnUnmount: true }
+  );
 
   const form = useForm<PostValues>({
-    initialValues: {
-      title: '',
-      body: '',
-    },
+    initialValues,
     validate: {
       title: isNotEmpty('Title is required'),
       body: hasLength({ min: 10 }, 'Body must be at least 10 characters'),
     },
-    onValuesChange: (values) => {
-      window.localStorage.setItem(STORAGE_KEY, JSON.stringify(values));
-      setSavedAt(new Date().toLocaleTimeString());
-    },
+    onValuesChange: saveDraft,
   });
 
+  // Restore the draft once on mount, setValues schedules a save that is not needed
   useEffect(() => {
-    const draft = readDraft();
-    if (draft) {
-      form.setValues(draft);
+    const stored = readLocalStorageValue<Draft | null>({ key: STORAGE_KEY, defaultValue: null });
+    if (stored) {
+      form.setValues(stored.values);
+      saveDraft.cancel();
     }
   }, []);
 
-  const clearDraft = () => {
-    window.localStorage.removeItem(STORAGE_KEY);
-    setSavedAt(null);
-  };
+  // Reloading or closing the tab does not unmount the form, flush the pending save
+  useWindowEvent('pagehide', () => saveDraft.flush());
 
   const discardDraft = () => {
-    // reset triggers onValuesChange, the draft is removed after it
+    // reset triggers onValuesChange, cancel the save it scheduled
     form.reset();
-    clearDraft();
+    saveDraft.cancel();
+    removeDraft();
   };
 
   const handleSubmit = (values: PostValues) => {
@@ -89,7 +93,7 @@ export function AutosaveLocalStorage() {
         />
 
         <Group justify="space-between">
-          <Text size="sm">{savedAt ? `Draft saved at ${savedAt}` : 'No draft saved'}</Text>
+          <Text size="sm">{draft ? `Draft saved at ${draft.savedAt}` : 'No draft saved'}</Text>
 
           <Group>
             <Button size="md" variant="default" onClick={discardDraft}>

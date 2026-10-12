@@ -315,10 +315,10 @@ export const FORM_EXAMPLES_DATA: FormExample[] = [
   {
     id: 'AutosaveLocalStorage',
     name: 'Autosave to local storage',
-    description: 'Draft saved on every change and restored on mount',
+    description: 'Draft saved a second after the last change and restored on mount',
     type: 'data',
     mode: 'uncontrolled',
-    features: ['onValuesChange', 'setValues', 'localStorage'],
+    features: ['onValuesChange', 'setValues', 'useLocalStorage', 'useDebouncedCallback'],
   },
   {
     id: 'AutosaveServer',

@@ -111,6 +111,7 @@ export function SubmitWithTransform() {
           label="Invite emails"
           placeholder="Type an email and press Enter"
           description="Invitations are sent when the event is created"
+          splitChars={[',', ' ']}
           {...form.getInputProps('emails')}
         />
 

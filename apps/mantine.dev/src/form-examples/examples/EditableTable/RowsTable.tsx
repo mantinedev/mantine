@@ -1,4 +1,4 @@
-import { NumberInput, ScrollArea, Table, TextInput } from '@mantine/core';
+import { NumberInput, Table, TextInput } from '@mantine/core';
 import { UseFormReturnType } from '@mantine/form';
 import { TableRow } from './data';
 import { RowResetButton } from './RowResetButton';
@@ -46,14 +46,16 @@ export function RowsTable({ form }: RowsTableProps) {
   ));
 
   return (
-    <ScrollArea h={400} type="auto" offsetScrollbars>
-      <Table layout="fixed" miw={560} verticalSpacing={2} stickyHeader>
+    <Table.ScrollContainer minWidth={500} maxHeight={400}>
+      <Table layout="fixed" verticalSpacing={2} stickyHeader>
         <Table.Thead>
           <Table.Tr>
             <Table.Th w={40} py="sm">
               #
             </Table.Th>
-            <Table.Th py="sm">Name</Table.Th>
+            <Table.Th w={140} py="sm">
+              Name
+            </Table.Th>
             <Table.Th py="sm">Email</Table.Th>
             <Table.Th w={90} py="sm">
               Qty
@@ -63,6 +65,6 @@ export function RowsTable({ form }: RowsTableProps) {
         </Table.Thead>
         <Table.Tbody>{rows}</Table.Tbody>
       </Table>
-    </ScrollArea>
+    </Table.ScrollContainer>
   );
 }
