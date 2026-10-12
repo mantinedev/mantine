@@ -65,8 +65,9 @@ Some components keep state that the value cannot express, for example a date inp
 partially entered date reports `null` until the date is complete. When the store writes `null`
 again, the value does not change and the component cannot know that it has to clear the entry.
 `onExternalWrite` is called with the field value on every write that comes from the store rather
-than from the component. The callback must update the internal state only and must not call
-`onChange`:
+than from the component, and once with the current value when the component is bound to another
+field, for example when list items are reordered or removed. The callback must update the
+internal state only and must not call `onChange`:
 
 ```tsx
 import { useState } from 'react';
@@ -123,7 +124,7 @@ interface UseFormFieldOptions<Value = any> {
   /** If set, the component is subscribed to the field value and must render the returned `value` instead of the `value` prop, `true` by default */
   subscribe?: boolean;
 
-  /** Called with the field value when the store writes it. Not called for changes reported by the component itself. Must not call `onChange`. */
+  /** Called with the field value when the store writes it and when the component is bound to another field. Not called for changes reported by the component itself. Must not call `onChange`. */
   onExternalWrite?: (value: Value) => void;
 }
 
@@ -177,6 +178,10 @@ function Demo() {
   return <CustomInput {...form.getInputProps('name')} />;
 }
 ```
+
+In uncontrolled mode, bind each path to a single input. A component that is not subscribed is not
+updated while the user types in a subscribed input of the same path. Call `use-form-field` in both
+components or use controlled mode.
 
 See the [custom input](/form/examples?e=CustomInputSubscription) and
 [rich text](/form/examples?e=RichTextForm) form examples, and the

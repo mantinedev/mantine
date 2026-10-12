@@ -82,9 +82,10 @@ export function ZodSchema() {
         <NumberInput
           size="md"
           label="Age"
-          placeholder="18"
+          placeholder="Your age"
           withAsterisk
-          min={0}
+          allowNegative={false}
+          allowDecimal={false}
           max={120}
           {...form.getInputProps('age')}
         />

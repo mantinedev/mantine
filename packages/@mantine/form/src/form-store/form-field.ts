@@ -1,4 +1,4 @@
-export const FORM_FIELD = Symbol.for('mantine-form-field');
+const FORM_FIELD = Symbol.for('mantine-form-field');
 
 export interface FormField<Value = any> {
   /** Path of the field in form values */
@@ -20,14 +20,6 @@ export function setFormField<Handler extends (...args: any[]) => any>(
 ): Handler {
   (handler as any)[FORM_FIELD] = field;
   return handler;
-}
-
-export function getFormField<Value = any>(handler: unknown): FormField<Value> | null {
-  if (typeof handler !== 'function') {
-    return null;
-  }
-
-  return (handler as any)[FORM_FIELD] || null;
 }
 
 interface FormFieldListeners<Value> {

@@ -20,9 +20,12 @@ export function Dirty() {
     },
   });
 
+  const dirty = form.useDirty();
+  const formArray = form.useWatchValue('formArray');
+
   return (
     <>
-      {form.values.formArray.map((_item, index) => (
+      {form.getValues().formArray.map((_item, index) => (
         <Group key={index}>
           <ActionIcon onClick={() => form.removeListItem('formArray', index)}>
             <TrashIcon size={16} />
@@ -34,8 +37,8 @@ export function Dirty() {
       <Button onClick={() => form.insertListItem('formArray', { one: '', two: '' })}>
         Add item
       </Button>
-      <Text>{form.isDirty() ? 'Dirty' : 'Not Dirty'}</Text>
-      <Code block>{JSON.stringify(form.values, null, 2)}</Code>
+      <Text>{dirty ? 'Dirty' : 'Not Dirty'}</Text>
+      <Code block>{JSON.stringify(formArray, null, 2)}</Code>
     </>
   );
 }
@@ -48,12 +51,14 @@ export function DirtyUncontrolled() {
     },
   });
 
+  const dirty = form.useDirty();
+
   console.log('render');
 
   return (
     <div style={{ maxWidth: 500, margin: 'auto', padding: 40 }}>
       <TextInput {...form.getInputProps('text')} />
-      <div>{form.isDirty() ? 'Dirty' : 'Not dirty'}</div>
+      <div>{dirty ? 'Dirty' : 'Not dirty'}</div>
     </div>
   );
 }

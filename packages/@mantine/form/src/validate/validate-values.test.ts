@@ -243,4 +243,15 @@ describe('@mantine/form/validate-values', () => {
       errors: {},
     });
   });
+
+  it('calls list formRootRule once per validation', async () => {
+    const rootRule = jest.fn(() => null);
+    const asyncRootRule = jest.fn(async () => null);
+
+    validateValues({ a: { [formRootRule]: rootRule } }, { a: [{ b: 0 }, { b: 1 }] });
+    expect(rootRule).toHaveBeenCalledTimes(1);
+
+    await validateValues({ a: { [formRootRule]: asyncRootRule } }, { a: [{ b: 0 }] });
+    expect(asyncRootRule).toHaveBeenCalledTimes(1);
+  });
 });

@@ -1,20 +1,27 @@
 import { useState } from 'react';
-import { Button, Code, Group, NumberInput, Stack, Text, TextInput } from '@mantine/core';
+import { Button, Group, NumberInput, Stack, Text, TextInput } from '@mantine/core';
 import { useForm } from '@mantine/form';
 import { randomId } from '@mantine/hooks';
 import { MantineDemo } from '@mantinex/demo';
 
 const code = `
 import { useState } from 'react';
-import { Button, Code, Group, NumberInput, Stack, Text, TextInput } from '@mantine/core';
+import { Button, Group, NumberInput, Stack, Text, TextInput } from '@mantine/core';
 import { useForm } from '@mantine/form';
 import { randomId } from '@mantine/hooks';
 
-function Demo() {
-  const [total, setTotal] = useState(0);
+interface Product {
+  name: string;
+  price: number;
+  quantity: number;
+  key: string;
+}
 
-  const form = useForm({
-    mode: 'uncontrolled',
+const getTotal = (products: Product[]) =>
+  products.reduce((acc, item) => acc + item.price * item.quantity, 0);
+
+function Demo() {
+  const form = useForm<{ products: Product[] }>({
     initialValues: {
       products: [
         { name: 'Apple', price: 2, quantity: 3, key: randomId() },
@@ -23,9 +30,9 @@ function Demo() {
     },
   });
 
-  form.watch('products', ({ value }) => {
-    setTotal(value.reduce((acc, item) => acc + item.price * item.quantity, 0));
-  });
+  const [total, setTotal] = useState(() => getTotal(form.getValues().products));
+
+  form.watch('products', ({ value }) => setTotal(getTotal(value)));
 
   return (
     <Stack>
@@ -69,17 +76,23 @@ function Demo() {
           Add product
         </Button>
       </Group>
-      <Code block>{JSON.stringify(form.getValues(), null, 2)}</Code>
     </Stack>
   );
 }
 `;
 
-function Demo() {
-  const [total, setTotal] = useState(0);
+interface Product {
+  name: string;
+  price: number;
+  quantity: number;
+  key: string;
+}
 
-  const form = useForm({
-    mode: 'uncontrolled',
+const getTotal = (products: Product[]) =>
+  products.reduce((acc, item) => acc + item.price * item.quantity, 0);
+
+function Demo() {
+  const form = useForm<{ products: Product[] }>({
     initialValues: {
       products: [
         { name: 'Apple', price: 2, quantity: 3, key: randomId() },
@@ -88,15 +101,9 @@ function Demo() {
     },
   });
 
-  form.watch('products', ({ value }) => {
-    setTotal(
-      value.reduce(
-        (acc: number, item: { price: number; quantity: number }) =>
-          acc + item.price * item.quantity,
-        0
-      )
-    );
-  });
+  const [total, setTotal] = useState(() => getTotal(form.getValues().products));
+
+  form.watch('products', ({ value }) => setTotal(getTotal(value)));
 
   return (
     <Stack>
@@ -137,7 +144,6 @@ function Demo() {
           Add product
         </Button>
       </Group>
-      <Code block>{JSON.stringify(form.getValues(), null, 2)}</Code>
     </Stack>
   );
 }

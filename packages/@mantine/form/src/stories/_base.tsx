@@ -1,6 +1,23 @@
 import { useState } from 'react';
 import { Box, Button, Code, Group, rem } from '@mantine/core';
 
+function WatchedValue({ form, path }: { form: any; path: string }) {
+  const value = form.useWatchValue(path);
+  return <div>{`${path}: ${JSON.stringify(value)}`}</div>;
+}
+
+function FormValues({ form }: { form: any }) {
+  const [paths] = useState(() => Object.keys(form.getValues()));
+
+  return (
+    <Code block mt={5}>
+      {paths.map((path) => (
+        <WatchedValue key={path} form={form} path={path} />
+      ))}
+    </Code>
+  );
+}
+
 export function FormBase({ children, form }: any) {
   const [values, setValues] = useState({});
   return (
@@ -24,9 +41,7 @@ export function FormBase({ children, form }: any) {
       </Code>
 
       <Box mt="md">Form values:</Box>
-      <Code block mt={5}>
-        {JSON.stringify(form.values, null, 2)}
-      </Code>
+      <FormValues form={form} />
     </form>
   );
 }

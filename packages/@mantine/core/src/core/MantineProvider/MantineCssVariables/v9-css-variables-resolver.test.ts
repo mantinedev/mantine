@@ -18,7 +18,7 @@ describe('v9CssVariablesResolver', () => {
     expect(result.dark['--mantine-color-blue-light-color']).toBe('var(--mantine-color-blue-0)');
   });
 
-  it('v9 and v10 resolvers differ only in the light/dark light-hover and light-color vars', () => {
+  it('v9 and v10 resolvers differ only in the light vars and the dark error/success colors', () => {
     const v9 = v9CssVariablesResolver(DEFAULT_THEME);
     const v10 = defaultCssVariablesResolver(DEFAULT_THEME);
 
@@ -28,9 +28,16 @@ describe('v9CssVariablesResolver', () => {
     const v10Dark = v10.dark as Record<string, string>;
     const allDarkKeys = new Set([...Object.keys(v9Dark), ...Object.keys(v10Dark)]);
     const darkDiffKeys = [...allDarkKeys].filter((k) => v9Dark[k] !== v10Dark[k]);
+    const expectedDarkKeys = ['--mantine-color-error', '--mantine-color-success'];
     darkDiffKeys.forEach((k) => {
-      expect(expectedSuffixes.some((suffix) => k.endsWith(suffix))).toBe(true);
+      expect(
+        expectedDarkKeys.includes(k) || expectedSuffixes.some((suffix) => k.endsWith(suffix))
+      ).toBe(true);
     });
+    expect(v9Dark['--mantine-color-error']).toBe('var(--mantine-color-red-8)');
+    expect(v10Dark['--mantine-color-error']).toBe('var(--mantine-color-red-7)');
+    expect(v9Dark['--mantine-color-success']).toBe('var(--mantine-color-teal-8)');
+    expect(v10Dark['--mantine-color-success']).toBe('var(--mantine-color-teal-7)');
 
     const v9Light = v9.light as Record<string, string>;
     const v10Light = v10.light as Record<string, string>;

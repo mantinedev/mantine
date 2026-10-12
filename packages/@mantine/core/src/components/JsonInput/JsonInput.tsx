@@ -61,7 +61,7 @@ export const JsonInput = factory<JsonInputFactory>((props) => {
     ...others
   } = useProps(['Input', 'InputWrapper', 'JsonInput'], defaultProps, props);
 
-  const [_value, setValue] = useUncontrolled({
+  const [_value, setValue, controlled] = useUncontrolled({
     value,
     defaultValue,
     finalValue: '',
@@ -71,11 +71,13 @@ export const JsonInput = factory<JsonInputFactory>((props) => {
   const [valid, setValid] = useState(validateJson(_value, deserialize));
   const focusedRef = useRef(false);
 
+  const controlledValue = controlled ? _value : undefined;
+
   useDidUpdate(() => {
-    if (value !== undefined && !focusedRef.current) {
-      setValid(validateJson(value, deserialize));
+    if (controlledValue !== undefined && !focusedRef.current) {
+      setValid(validateJson(controlledValue, deserialize));
     }
-  }, [value]);
+  }, [controlledValue]);
 
   const handleFocus = (event: React.FocusEvent<HTMLTextAreaElement>) => {
     onFocus?.(event);

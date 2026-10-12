@@ -5,3 +5,4 @@ export { insertPath } from './insert-path';
 export { removePath } from './remove-path';
 export { getDataPath } from './get-data-path';
 export { replacePath } from './replace-path';
+export { isChildPath, isSameOrChildPath } from './is-path-within';

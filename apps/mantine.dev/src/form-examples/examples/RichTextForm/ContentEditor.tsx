@@ -3,7 +3,7 @@ import Placeholder from '@tiptap/extension-placeholder';
 import { useEditor } from '@tiptap/react';
 import StarterKit from '@tiptap/starter-kit';
 import { Input } from '@mantine/core';
-import { useFormField } from '@mantine/hooks';
+import { useFormField, useId } from '@mantine/hooks';
 import { RichTextEditor } from '@mantine/tiptap';
 
 interface ContentEditorProps {
@@ -25,6 +25,7 @@ export function ContentEditor({
   placeholder,
   withAsterisk,
 }: ContentEditorProps) {
+  const id = useId();
   const onChangeRef = useRef(onChange);
 
   useEffect(() => {
@@ -35,6 +36,11 @@ export function ContentEditor({
     immediatelyRender: false,
     extensions: [StarterKit, Placeholder.configure({ placeholder })],
     content: value ?? defaultValue ?? '',
+    editorProps: {
+      attributes: {
+        'aria-labelledby': `${id}-label`,
+      },
+    },
     onUpdate: ({ editor }) => onChangeRef.current?.(editor.getHTML()),
   });
 
@@ -45,7 +51,14 @@ export function ContentEditor({
   });
 
   return (
-    <Input.Wrapper size="md" label={label} withAsterisk={withAsterisk} error={error}>
+    <Input.Wrapper
+      id={id}
+      size="md"
+      label={label}
+      labelElement="div"
+      withAsterisk={withAsterisk}
+      error={error}
+    >
       <RichTextEditor editor={editor} mb={error ? 5 : 0}>
         <RichTextEditor.Toolbar>
           <RichTextEditor.ControlsGroup>

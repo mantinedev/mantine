@@ -259,11 +259,13 @@ export const DateInput = factory<DateInputFactory>((_props) => {
     disabled: cannotOpen,
   });
 
+  const controlledValue = controlled ? _value : undefined;
+
   useEffect(() => {
-    if (controlled && value != null && toDateString(value) !== controller.getDate()) {
-      controller.setDate(value);
+    if (controlledValue != null && toDateString(controlledValue) !== controller.getDate()) {
+      controller.setDate(controlledValue);
     }
-  }, [controlled, value, controller.setDate]);
+  }, [controlledValue, controller.setDate]);
 
   const [inputValue, setInputValue] = useState(formatValue(_value));
 

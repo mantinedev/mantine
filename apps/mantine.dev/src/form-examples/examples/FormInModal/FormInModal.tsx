@@ -9,7 +9,12 @@ import { UsersTable } from './UsersTable';
 
 function createUser(values: UserValues) {
   return new Promise<User>((resolve) => {
-    setTimeout(() => resolve({ ...values, id: Date.now() }), 1000);
+    setTimeout(() => {
+      resolve({
+        ...values,
+        id: Date.now(),
+      });
+    }, 1000);
   });
 }
 
@@ -38,7 +43,10 @@ export function FormInModal() {
   const handleSubmit = async (values: UserValues) => {
     const user = await createUser(values);
     setUsers((current) => [...current, user]);
-    notifications.show({ title: 'User added', message: `${user.name} added as ${user.role}` });
+    notifications.show({
+      title: 'User added',
+      message: `${user.name} added as ${user.role}`,
+    });
     handleClose();
   };
 
@@ -58,6 +66,7 @@ export function FormInModal() {
       </Modal>
 
       <Button onClick={open}>Add user</Button>
+
       <UsersTable users={users} />
     </>
   );

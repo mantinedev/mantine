@@ -20,7 +20,7 @@ export interface UseFormFieldOptions<Value = any> {
   /** If set, the component is subscribed to the field value and must render the returned `value` instead of the `value` prop, `true` by default */
   subscribe?: boolean;
 
-  /** Called with the field value when the form writes it with `form.setFieldValue`, `form.setValues`, `form.reset`, `form.resetField`, `form.initialize` or list handlers. Not called for changes reported by the component itself. Must not call `onChange`. */
+  /** Called with the field value when the form writes it with `form.setFieldValue`, `form.setValues`, `form.reset`, `form.resetField`, `form.initialize` or list handlers, and with the current value when the component is bound to another field after mount (list items reordered or removed, or an unbound handler replaced with a bound one). Not called for changes reported by the component itself. Must not call `onChange`. */
   onExternalWrite?: (value: Value) => void;
 }
 
@@ -72,6 +72,7 @@ export function useFormField<Value = any>(
   const result = useFormFieldValue<Value>(onChange, subscribe);
   const field = getFormField<Value>(onChange);
   const onExternalWriteRef = useRef(onExternalWrite);
+  const boundFieldRef = useRef(field);
   const hasExternalWrite = typeof onExternalWrite === 'function';
 
   useEffect(() => {
@@ -79,8 +80,15 @@ export function useFormField<Value = any>(
   });
 
   useEffect(() => {
+    const previousField = boundFieldRef.current;
+    boundFieldRef.current = field;
+
     if (!field || !hasExternalWrite) {
       return undefined;
+    }
+
+    if (previousField !== field) {
+      onExternalWriteRef.current?.(field.getSnapshot());
     }
 
     return field.subscribeExternalWrite((external) => onExternalWriteRef.current?.(external));

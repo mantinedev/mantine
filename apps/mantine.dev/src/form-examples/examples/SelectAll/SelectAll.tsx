@@ -37,7 +37,7 @@ export function SelectAll() {
   const handleSubmit = (values: RoleValues) => {
     notifications.show({
       title: 'Role created',
-      message: `Role ${values.name} created with ${values.permissions.length} permissions`,
+      message: `Role ${values.name} created with ${values.permissions.length} ${values.permissions.length === 1 ? 'permission' : 'permissions'}`,
     });
   };
 

@@ -251,11 +251,27 @@ describe('@mantine/form/watch', () => {
     });
   });
 
-  it('cascadeUpdates notifies child watcher on setValues', () => {
+  it('notifies child watcher on setFieldValue of the parent only with cascadeUpdates', () => {
+    const setup = (cascadeUpdates: boolean) => {
+      const hook = renderHook(() =>
+        useForm({ mode: 'uncontrolled', cascadeUpdates, initialValues: { person: { name: '' } } })
+      );
+      const nameSpy = jest.fn();
+      act(() => renderHook(() => hook.result.current.watch('person.name', nameSpy)));
+      act(() => hook.result.current.setFieldValue('person', { name: 'jane doe' }));
+      return nameSpy;
+    };
+
+    expect(setup(false)).not.toHaveBeenCalled();
+    expect(setup(true)).toHaveBeenCalledWith(
+      expect.objectContaining({ previousValue: '', value: 'jane doe' })
+    );
+  });
+
+  it('notifies child watcher on setValues without cascadeUpdates', () => {
     const hook = renderHook(() =>
       useForm({
         mode: 'uncontrolled',
-        cascadeUpdates: true,
         initialValues: { person: { name: '' } },
       })
     );
@@ -272,11 +288,10 @@ describe('@mantine/form/watch', () => {
     );
   });
 
-  it('cascadeUpdates notifies child watcher on initialize', () => {
+  it('notifies child watcher on initialize without cascadeUpdates', () => {
     const hook = renderHook(() =>
       useForm({
         mode: 'uncontrolled',
-        cascadeUpdates: true,
         initialValues: { person: { name: '' } },
       })
     );
@@ -360,11 +375,10 @@ describe('@mantine/form/watch', () => {
     expect(spy).not.toHaveBeenCalled();
   });
 
-  it('cascadeUpdates notifies child watcher on list operations', () => {
+  it('notifies child watcher on list operations without cascadeUpdates', () => {
     const hook = renderHook(() =>
       useForm({
         mode: 'uncontrolled',
-        cascadeUpdates: true,
         initialValues: { products: [{ name: 'phone' }] },
       })
     );

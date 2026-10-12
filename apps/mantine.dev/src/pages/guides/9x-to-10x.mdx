@@ -746,7 +746,7 @@ not the field path:
 <TextInput {...form.getInputProps('name')} />
 ```
 
-`useField` no longer returns `key`, remove `key={field.key}` the same way.
+`useField` no longer returns `key`, remove `key={field.key}` the same way. The `Key` type is no longer exported, remove its imports.
 
 ## Uncontrolled form inputs receive value
 
@@ -785,6 +785,21 @@ Calls outside of render, for example in `form.onSubmit` or event handlers, do no
 
 `form.getValues()` and `form.values` keep the same object references for values that did not
 change. Do not mutate the returned object, use `form.setFieldValue` or `form.setValues` instead.
+
+## form.setValues clears only errors of changed fields
+
+`form.setValues` now clears errors only of the fields it sets and their nested fields, other
+errors stay. If you load data with `form.setValues` after a failed submit and expect all errors
+to disappear, call `form.clearErrors()` before it:
+
+```tsx
+// 9.x
+form.setValues(data);
+
+// 10.x
+form.clearErrors();
+form.setValues(data);
+```
 
 ## UseFieldReturnType type parameters
 

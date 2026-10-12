@@ -4,17 +4,17 @@ import { notifications } from '@mantine/notifications';
 import { products } from './data';
 import { currency, OrderSummary } from './OrderSummary';
 
-interface Values {
+interface OrderValues {
   product: string | null;
   quantity: number | string;
   discount: number | string;
 }
 
-interface OrderPayload extends Values {
+interface OrderPayload extends OrderValues {
   total: number;
 }
 
-function calculateTotal({ product, quantity, discount }: Values) {
+function calculateTotal({ product, quantity, discount }: OrderValues) {
   const price = products.find((item) => item.value === product)?.price ?? 0;
   const count = typeof quantity === 'number' ? quantity : 0;
   const percent = typeof discount === 'number' ? discount : 0;
@@ -22,7 +22,7 @@ function calculateTotal({ product, quantity, discount }: Values) {
 }
 
 export function OrderTotal() {
-  const form = useForm<Values, OrderPayload>({
+  const form = useForm<OrderValues, OrderPayload>({
     initialValues: {
       product: null,
       quantity: 1,
@@ -33,7 +33,10 @@ export function OrderTotal() {
       quantity: isInRange({ min: 1 }, 'Quantity must be at least 1'),
       discount: isInRange({ min: 0, max: 100 }, 'Discount must be between 0% and 100%'),
     },
-    transformValues: (values) => ({ ...values, total: calculateTotal(values) }),
+    transformValues: (values) => ({
+      ...values,
+      total: calculateTotal(values),
+    }),
   });
 
   const product = form.useWatchValue('product');
@@ -68,19 +71,21 @@ export function OrderTotal() {
           <NumberInput
             size="md"
             label="Quantity"
-            placeholder="1"
+            placeholder="Number of items"
             withAsterisk
+            allowNegative={false}
+            allowDecimal={false}
             min={1}
             max={1000}
-            allowDecimal={false}
             {...form.getInputProps('quantity')}
           />
 
           <NumberInput
             size="md"
             label="Discount"
-            placeholder="0"
+            placeholder="Percent off"
             suffix="%"
+            allowNegative={false}
             min={0}
             max={100}
             {...form.getInputProps('discount')}

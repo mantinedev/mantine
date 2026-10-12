@@ -87,6 +87,7 @@ export function ZodAsyncSchema() {
           loading={usernameValidating}
           success={usernameAvailable ? 'Username is available' : null}
           {...form.getInputProps('username')}
+          error={usernameValidating ? null : form.errors.username}
         />
 
         <TextInput
@@ -97,6 +98,7 @@ export function ZodAsyncSchema() {
           loading={emailValidating}
           success={emailAvailable ? 'Email is available' : null}
           {...form.getInputProps('email')}
+          error={emailValidating ? null : form.errors.email}
         />
 
         <PasswordInput

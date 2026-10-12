@@ -4,17 +4,17 @@ import { isNotEmpty, matches, useForm } from '@mantine/form';
 import { notifications } from '@mantine/notifications';
 import { CompanyFields } from './CompanyFields';
 import { PersonalFields } from './PersonalFields';
-import { AccountType, Values } from './types';
+import { AccountType, AccountValues } from './types';
 
 const personalFields = ['firstName', 'lastName', 'birthDate'] as const;
 const companyFields = ['name', 'vatNumber', 'contactPerson'] as const;
 
 function whenType<T>(type: AccountType, rule: (value: T) => ReactNode) {
-  return (value: T, values: Values) => (values.accountType === type ? rule(value) : null);
+  return (value: T, values: AccountValues) => (values.accountType === type ? rule(value) : null);
 }
 
 export function ConditionalSections() {
-  const form = useForm<Values>({
+  const form = useForm<AccountValues>({
     initialValues: {
       accountType: 'personal',
       personal: {
@@ -49,18 +49,21 @@ export function ConditionalSections() {
 
   form.watch('accountType', ({ value }) => {
     if (value === 'personal') {
-      companyFields.forEach((field) => form.resetField(`company.${field}`));
+      companyFields.forEach((field) => form.clearFieldError(`company.${field}`));
     } else {
-      personalFields.forEach((field) => form.resetField(`personal.${field}`));
+      personalFields.forEach((field) => form.clearFieldError(`personal.${field}`));
     }
   });
 
-  const handleSubmit = (values: Values) => {
+  const handleSubmit = (values: AccountValues) => {
     const name =
       values.accountType === 'personal'
         ? `${values.personal.firstName} ${values.personal.lastName}`
         : values.company.name;
-    notifications.show({ title: 'Account created', message: `Account created for ${name}` });
+    notifications.show({
+      title: 'Account created',
+      message: `Account created for ${name}`,
+    });
   };
 
   return (

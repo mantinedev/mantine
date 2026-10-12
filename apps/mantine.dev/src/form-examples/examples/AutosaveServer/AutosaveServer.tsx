@@ -29,15 +29,18 @@ export function AutosaveServer() {
 
   const dirty = form.useDirty();
 
-  const save = useDebouncedCallback(async (values: NoteValues) => {
-    setStatus('saving');
-    await saveNote(values);
-    // Saved values become the new baseline, the form is no longer dirty
-    form.setInitialValues(values);
-    form.resetDirty(values);
-    setStatus('saved');
-    setSavedAt(new Date().toLocaleTimeString());
-  }, 800);
+  const save = useDebouncedCallback(
+    async (values: NoteValues) => {
+      setStatus('saving');
+      await saveNote(values);
+      // Saved values become the new baseline, the form is no longer dirty
+      form.setInitialValues(values);
+      form.resetDirty(values);
+      setStatus('saved');
+      setSavedAt(new Date().toLocaleTimeString());
+    },
+    { delay: 800, flushOnUnmount: true }
+  );
 
   const saveNow = () => {
     save(form.getValues());
@@ -49,7 +52,7 @@ export function AutosaveServer() {
       <Group justify="space-between">
         <SaveStatus status={status} savedAt={savedAt} dirty={dirty} />
 
-        <Button variant="default" size="xs" onClick={saveNow} disabled={!dirty}>
+        <Button variant="default" onClick={saveNow} disabled={!dirty || status === 'saving'}>
           Save now
         </Button>
       </Group>

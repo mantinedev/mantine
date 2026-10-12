@@ -10,7 +10,6 @@ import { TextInput, Box } from '@mantine/core';
 
 function Demo() {
   const form = useForm({
-    mode: 'uncontrolled',
     initialValues: { name: '', occupation: '' },
     onValuesChange: (values) => {
       window.localStorage.setItem('user-form', JSON.stringify(values));
@@ -48,7 +47,6 @@ function Demo() {
 
 function Demo() {
   const form = useForm({
-    mode: 'uncontrolled',
     initialValues: { name: '', occupation: '' },
     onValuesChange: (values) => {
       window.localStorage.setItem('user-form', JSON.stringify(values));

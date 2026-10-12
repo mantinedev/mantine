@@ -63,7 +63,7 @@ export function ServerErrors() {
 
   return (
     <form onSubmit={form.onSubmit(handleSubmit)}>
-      <Stack>
+      <Stack maw={420} mx="auto">
         <TextInput
           size="md"
           label="Username"
@@ -87,11 +87,13 @@ export function ServerErrors() {
           withAsterisk
           {...form.getInputProps('password')}
         />
+
         {form.errors.root && (
           <Alert color="red" title="Sign-up failed">
             {form.errors.root}
           </Alert>
         )}
+
         <Group justify="flex-end">
           <Button size="md" type="submit" loading={form.submitting}>
             Create account

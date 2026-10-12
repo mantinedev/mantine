@@ -15,7 +15,6 @@ interface OrderSummaryProps {
 
 export function OrderSummary({ product, quantity, discount, total }: OrderSummaryProps) {
   const item = products.find((entry) => entry.value === product);
-  const count = typeof quantity === 'number' ? quantity : 0;
   const percent = typeof discount === 'number' ? discount : 0;
 
   return (
@@ -23,7 +22,11 @@ export function OrderSummary({ product, quantity, discount, total }: OrderSummar
       <Stack gap="xs">
         <Group justify="space-between">
           <Text size="sm">{item ? item.label : 'No product selected'}</Text>
-          <Text size="sm">{item ? `${count} × ${currency.format(item.price)}` : '—'}</Text>
+          <Text size="sm">
+            {item && typeof quantity === 'number'
+              ? `${quantity} × ${currency.format(item.price)}`
+              : '—'}
+          </Text>
         </Group>
 
         <Group justify="space-between">

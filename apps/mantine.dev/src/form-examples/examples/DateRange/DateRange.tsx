@@ -1,3 +1,4 @@
+import dayjs from 'dayjs';
 import { Button, Group, SimpleGrid, Stack, Text } from '@mantine/core';
 import { DatePickerInput } from '@mantine/dates';
 import { useForm } from '@mantine/form';
@@ -10,6 +11,10 @@ interface BookingValues {
 
 const MAX_NIGHTS = 30;
 const DAY_MS = 24 * 60 * 60 * 1000;
+
+function formatDate(date: string | null) {
+  return dayjs(date).format('MMMM D, YYYY');
+}
 
 // Values are YYYY-MM-DD strings, Date.parse treats them as UTC midnight
 function getNights(checkIn: string | null, checkOut: string | null) {
@@ -26,7 +31,6 @@ export function DateRange() {
       checkIn: null,
       checkOut: null,
     },
-    validateInputOnChange: ['checkIn', 'checkOut'],
     validate: {
       checkIn: (value, values) => {
         if (!value) {
@@ -57,9 +61,11 @@ export function DateRange() {
   });
 
   form.watch('checkIn', ({ value }) => {
-    if (form.getValues().checkOut) {
+    if (form.errors.checkOut) {
       form.validateField('checkOut');
-    } else if (value) {
+    }
+
+    if (value && !form.getValues().checkOut) {
       // Move on to check-out as soon as check-in is picked
       const node = form.getInputNode('checkOut');
       node?.focus();
@@ -68,7 +74,7 @@ export function DateRange() {
   });
 
   form.watch('checkOut', () => {
-    if (form.getValues().checkIn) {
+    if (form.errors.checkIn) {
       form.validateField('checkIn');
     }
   });
@@ -81,7 +87,7 @@ export function DateRange() {
     const bookedNights = getNights(values.checkIn, values.checkOut);
     notifications.show({
       title: 'Booking confirmed',
-      message: `Booked ${bookedNights} ${bookedNights === 1 ? 'night' : 'nights'} from ${values.checkIn} to ${values.checkOut}`,
+      message: `Booked ${bookedNights} ${bookedNights === 1 ? 'night' : 'nights'} from ${formatDate(values.checkIn)} to ${formatDate(values.checkOut)}`,
     });
   };
 
@@ -95,6 +101,7 @@ export function DateRange() {
             placeholder="Pick a date"
             withAsterisk
             clearable
+            minDate={dayjs().format('YYYY-MM-DD')}
             {...form.getInputProps('checkIn')}
           />
 
@@ -104,15 +111,17 @@ export function DateRange() {
             placeholder="Pick a date"
             withAsterisk
             clearable
-            minDate={checkIn ?? undefined}
+            minDate={checkIn ? dayjs(checkIn).add(1, 'day').format('YYYY-MM-DD') : undefined}
             {...form.getInputProps('checkOut')}
           />
         </SimpleGrid>
+
         {nights !== null && nights > 0 && (
           <Text size="sm">
             {nights} {nights === 1 ? 'night' : 'nights'}
           </Text>
         )}
+
         <Group justify="flex-end">
           <Button size="md" variant="default" onClick={form.reset}>
             Reset

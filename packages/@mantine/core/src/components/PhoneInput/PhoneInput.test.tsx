@@ -1,4 +1,6 @@
-import { fireEvent } from '@testing-library/react';
+import { useState } from 'react';
+import { act, fireEvent } from '@testing-library/react';
+import { FormMode, useForm, UseFormReturnType } from '@mantine/form';
 import {
   inputDefaultProps,
   inputStylesApiSelectors,
@@ -530,5 +532,99 @@ describe('@mantine/core/PhoneInput', () => {
 
     rerender(<PhoneInput {...testProps} withChevron />);
     expect(container.querySelector('[data-combobox-chevron]')).not.toBe(null);
+  });
+
+  describe('country detection follows the resolved value', () => {
+    it.each<FormMode>(['uncontrolled', 'controlled'])(
+      'restores country and formatting after form.reset() in %s form mode',
+      (mode) => {
+        let form!: UseFormReturnType<{ phone: string }>;
+        const onCountryChange = jest.fn();
+
+        function Wrapper() {
+          form = useForm({ mode, initialValues: { phone: '+12025550123' } });
+          return (
+            <PhoneInput
+              {...testProps}
+              defaultCountry="us"
+              withCountryAutoDetect
+              onCountryChange={onCountryChange}
+              {...form.getInputProps('phone')}
+            />
+          );
+        }
+
+        render(<Wrapper />);
+        const input = screen.getByRole('textbox') as HTMLInputElement;
+        const initialDisplay = input.value;
+        expect(screen.getByRole('button', { name: /United States/ })).toBeInTheDocument();
+
+        fireEvent.change(input, { target: { value: '' } });
+        fireEvent.change(input, { target: { value: '+442071234567' } });
+        expect(form.getValues().phone).toBe('+442071234567');
+        expect(screen.getByRole('button', { name: /United Kingdom/ })).toBeInTheDocument();
+        expect(onCountryChange).toHaveBeenCalledTimes(1);
+
+        act(() => form.reset());
+        expect(screen.getByRole('button', { name: /United States/ })).toBeInTheDocument();
+        expect(input.value).toBe(initialDisplay);
+        expect(onCountryChange).toHaveBeenCalledTimes(2);
+      }
+    );
+
+    it('detects country from the form value when remounted after a user change', () => {
+      let form!: UseFormReturnType<{ phone: string }>;
+
+      function Wrapper({ mounted }: { mounted: boolean }) {
+        form = useForm({ initialValues: { phone: '+12025550123' } });
+        return mounted ? (
+          <PhoneInput {...testProps} withCountryAutoDetect {...form.getInputProps('phone')} />
+        ) : null;
+      }
+
+      const { rerender } = render(<Wrapper mounted />);
+      fireEvent.change(screen.getByRole('textbox'), { target: { value: '+442071234567' } });
+      rerender(<Wrapper mounted={false} />);
+      rerender(<Wrapper mounted />);
+      expect(form.getValues().phone).toBe('+442071234567');
+      expect(screen.getByRole('button', { name: /United Kingdom/ })).toBeInTheDocument();
+
+      act(() => form.reset());
+      expect(screen.getByRole('button', { name: /United States/ })).toBeInTheDocument();
+    });
+
+    it('keeps detection unchanged for non-form controlled and uncontrolled callers', () => {
+      function Controlled() {
+        const [value, setValue] = useState('+12025550123');
+        return (
+          <>
+            <PhoneInput {...testProps} withCountryAutoDetect value={value} onChange={setValue} />
+            <button type="button" onClick={() => setValue('+12025550123')}>
+              reset
+            </button>
+          </>
+        );
+      }
+
+      const { unmount } = render(<Controlled />);
+      fireEvent.change(screen.getByRole('textbox'), { target: { value: '+442071234567' } });
+      expect(screen.getByRole('button', { name: /United Kingdom/ })).toBeInTheDocument();
+      fireEvent.click(screen.getByRole('button', { name: 'reset' }));
+      expect(screen.getByRole('button', { name: /United States/ })).toBeInTheDocument();
+      unmount();
+
+      const onCountryChange = jest.fn();
+      render(
+        <PhoneInput
+          {...testProps}
+          defaultValue="+12025550123"
+          withCountryAutoDetect
+          onCountryChange={onCountryChange}
+        />
+      );
+      fireEvent.change(screen.getByRole('textbox'), { target: { value: '+442071234567' } });
+      expect(screen.getByRole('button', { name: /United Kingdom/ })).toBeInTheDocument();
+      expect(onCountryChange).toHaveBeenCalledTimes(1);
+    });
   });
 });

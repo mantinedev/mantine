@@ -50,7 +50,7 @@ export function NestedAddresses() {
     const primary = values.addresses.find((address) => address.isPrimary);
     notifications.show({
       title: 'Contact saved',
-      message: `${values.name}: ${values.addresses.length} addresses, primary is ${primary?.label}`,
+      message: `${values.name}: ${values.addresses.length} ${values.addresses.length === 1 ? 'address' : 'addresses'}, primary is ${primary?.label}`,
     });
   };
 

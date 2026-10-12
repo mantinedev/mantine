@@ -1,6 +1,6 @@
 import { StarIcon } from '@phosphor-icons/react';
 import { Group, Input, UnstyledButton } from '@mantine/core';
-import { useFormField } from '@mantine/hooks';
+import { useFormField, useId } from '@mantine/hooks';
 
 interface StarRatingProps {
   label?: string;
@@ -12,6 +12,7 @@ interface StarRatingProps {
 }
 
 export function StarRating({ label, value, onChange, onFocus, onBlur, error }: StarRatingProps) {
+  const id = useId();
   const field = useFormField<number>(onChange);
   const current = (field.subscribed ? field.value : value) ?? 0;
 
@@ -37,8 +38,8 @@ export function StarRating({ label, value, onChange, onFocus, onBlur, error }: S
   });
 
   return (
-    <Input.Wrapper size="md" label={label} error={error} withAsterisk>
-      <Group gap={2} mt={4} mb={error ? 6 : 0}>
+    <Input.Wrapper id={id} size="md" label={label} labelElement="div" error={error} withAsterisk>
+      <Group role="group" aria-labelledby={`${id}-label`} gap={2} mt={4} mb={error ? 6 : 0}>
         {stars}
       </Group>
     </Input.Wrapper>

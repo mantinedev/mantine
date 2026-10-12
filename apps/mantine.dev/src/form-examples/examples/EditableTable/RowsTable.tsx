@@ -1,10 +1,9 @@
 import { NumberInput, Table, TextInput } from '@mantine/core';
-import { UseFormReturnType } from '@mantine/form';
-import { TableRow } from './data';
 import { RowResetButton } from './RowResetButton';
+import { TableForm } from './types';
 
 interface RowsTableProps {
-  form: UseFormReturnType<{ rows: TableRow[] }>;
+  form: TableForm;
 }
 
 export function RowsTable({ form }: RowsTableProps) {
@@ -34,6 +33,8 @@ export function RowsTable({ form }: RowsTableProps) {
           hideControls
           min={0}
           max={10000}
+          allowNegative={false}
+          allowDecimal={false}
           w={70}
           aria-label="Quantity"
           {...form.getInputProps(`rows.${index}.quantity`)}

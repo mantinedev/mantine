@@ -30,7 +30,10 @@ export function SubscribeInput() {
 
     if (!error) {
       field.reset();
-      notifications.show({ title: 'Subscribed', message: `${email} is now subscribed` });
+      notifications.show({
+        title: 'Subscribed',
+        message: `${email} is now subscribed`,
+      });
     }
   };
 

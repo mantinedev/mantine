@@ -103,6 +103,24 @@ function tests(mode: FormMode) {
     act(() => hook.result.current.insertListItem('skills', { name: '' }));
     expect(hook.result.current.errors).toStrictEqual({});
   });
+
+  it('calls list root rule once per form.validate', async () => {
+    const rootRule = jest.fn(async (value: Values['skills']) =>
+      value.length === 0 ? 'Add at least one skill' : null
+    );
+    const hook = renderHook(() =>
+      useForm<Values>({
+        mode,
+        initialValues: { skills: [{ name: 'react' }] },
+        validate: { skills: { [formRootRule]: rootRule } },
+      })
+    );
+
+    await act(async () => {
+      await hook.result.current.validate();
+    });
+    expect(rootRule).toHaveBeenCalledTimes(1);
+  });
 }
 
 describe('@mantine/form/list-without-root-rule', () => {

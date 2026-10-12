@@ -33,7 +33,7 @@ All options are optional. Options are read on every render, you can pass values 
 - `transformValues` – transforms values before they are passed to the submit handler, see [Form submission](/form/submission/)
 - `onSubmitPreventDefault` – `always` (default), `never` or `validation-failed`
 - `onValuesChange` – called with new and previous values on every change, see [Watching values](/form/watch/)
-- `cascadeUpdates` – notify nested field watchers when a parent value is set, `false` by default
+- `cascadeUpdates` – notify nested field watchers when `form.setFieldValue` or an input sets a parent path, `false` by default
 - `enhanceGetInputProps` – adds props to the object returned by `form.getInputProps`, see [getInputProps](/form/get-input-props/)
 - `touchTrigger` – `change` (default) or `focus`, see [Form status](/form/status/)
 - `name` – form name for [form actions](/form/actions/)

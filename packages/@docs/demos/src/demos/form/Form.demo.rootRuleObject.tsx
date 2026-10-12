@@ -8,7 +8,6 @@ import { formRootRule, isNotEmpty, useForm } from '@mantine/form';
 
 function Demo() {
   const form = useForm({
-    mode: 'uncontrolled',
     initialValues: {
       user: {
         firstName: '',
@@ -56,7 +55,6 @@ function Demo() {
 
 function Demo() {
   const form = useForm({
-    mode: 'uncontrolled',
     initialValues: {
       user: {
         firstName: '',

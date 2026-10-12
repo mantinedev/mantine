@@ -206,4 +206,101 @@ describe('@mantine/core/MaskInput', () => {
       expect(handleSubmit.mock.calls[0][0]).toStrictEqual({ phone: '' });
     }
   );
+
+  it.each(['controlled', 'uncontrolled'] as const)(
+    'keeps row values after list reindexing with stable keys in %s mode',
+    (mode) => {
+      let form: any;
+
+      function TestForm() {
+        form = useForm({
+          mode,
+          initialValues: {
+            rows: [
+              { id: 'a', phone: '1111111111' },
+              { id: 'b', phone: '2222222222' },
+            ],
+          },
+        });
+
+        return form
+          .getValues()
+          .rows.map((row: any, index: number) => (
+            <MaskInput
+              key={row.id}
+              mask="(999) 999-9999"
+              aria-label={row.id}
+              {...form.getInputProps(`rows.${index}.phone`)}
+            />
+          ));
+      }
+
+      render(<TestForm />);
+
+      act(() => form.insertListItem('rows', { id: 'c', phone: '' }, 0));
+      expect(screen.getByLabelText('a')).toHaveValue('(111) 111-1111');
+      expect(screen.getByLabelText('b')).toHaveValue('(222) 222-2222');
+      expect(screen.getByLabelText('c')).toHaveValue('');
+
+      act(() => form.removeListItem('rows', 0));
+      act(() => form.removeListItem('rows', 0));
+      expect(screen.getByLabelText('b')).toHaveValue('(222) 222-2222');
+      expect(form.getValues().rows).toStrictEqual([{ id: 'b', phone: '2222222222' }]);
+    }
+  );
+
+  it.each(['controlled', 'uncontrolled'] as const)(
+    'displays masked value written with forceUpdate: false in %s mode',
+    (mode) => {
+      let form: any;
+
+      function TestForm() {
+        form = useForm({ mode, initialValues: { phone: '' } });
+        return <MaskInput mask="(999) 999-9999" label="Phone" {...form.getInputProps('phone')} />;
+      }
+
+      render(<TestForm />);
+      act(() => form.setFieldValue('phone', '1234567890', { forceUpdate: false }));
+      expect(screen.getByLabelText('Phone')).toHaveValue('(123) 456-7890');
+    }
+  );
+
+  it.each(['controlled', 'uncontrolled'] as const)(
+    'discards undo history on a form write of the same value in %s mode',
+    async (mode) => {
+      let form: any;
+      const onValuesChange = jest.fn();
+
+      function TestForm() {
+        form = useForm({ mode, initialValues: { phone: '' }, onValuesChange });
+        return <MaskInput mask="(999) 999-9999" label="Phone" {...form.getInputProps('phone')} />;
+      }
+
+      render(<TestForm />);
+      const input = screen.getByLabelText('Phone') as HTMLInputElement;
+      await userEvent.click(input);
+      await userEvent.keyboard('123');
+      input.setSelectionRange(0, input.value.length);
+      await userEvent.keyboard('{Backspace}');
+      expect(form.getValues().phone).toBe('');
+
+      act(() => form.reset());
+      onValuesChange.mockClear();
+      await userEvent.keyboard('{Control>}z{/Control}');
+      expect(form.getValues().phone).toBe('');
+      expect(input.value.replace(/[^0-9]/g, '')).toBe('');
+      expect(onValuesChange).not.toHaveBeenCalled();
+
+      await userEvent.keyboard('45');
+      expect(form.getValues().phone).toBe('45');
+      expect(onValuesChange).toHaveBeenCalledTimes(2);
+
+      onValuesChange.mockClear();
+      act(() => form.setFieldValue('phone', '5551234567'));
+      expect(input).toHaveValue('(555) 123-4567');
+      expect(onValuesChange).toHaveBeenCalledTimes(1);
+      await userEvent.keyboard('{Control>}z{/Control}');
+      expect(form.getValues().phone).toBe('5551234567');
+    }
+  );
 });

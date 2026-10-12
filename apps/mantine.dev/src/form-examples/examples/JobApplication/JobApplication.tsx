@@ -123,6 +123,8 @@ export function JobApplication() {
             thousandSeparator=","
             allowNegative={false}
             allowDecimal={false}
+            max={1_000_000}
+            clampBehavior="strict"
             step={1000}
             {...form.getInputProps('salary')}
           />

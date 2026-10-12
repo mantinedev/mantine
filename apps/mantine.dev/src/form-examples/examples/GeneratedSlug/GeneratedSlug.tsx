@@ -9,9 +9,11 @@ interface PageValues {
 
 function slugify(value: string) {
   return value
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '')
     .toLowerCase()
-    .replace(/\s+/g, '-')
-    .replace(/[^a-z0-9-]/g, '');
+    .replace(/[^a-z0-9]+/g, '-')
+    .replace(/^-+|-+$/g, '');
 }
 
 export function GeneratedSlug() {
@@ -24,7 +26,10 @@ export function GeneratedSlug() {
     },
     validate: {
       name: (value) => (value.trim().length === 0 ? 'Name is required' : null),
-      slug: (value) => (/^[a-z0-9-]+$/.test(value) ? null : 'Slug can contain only a-z, 0-9 and -'),
+      slug: (value) =>
+        /^[a-z0-9]+(-[a-z0-9]+)*$/.test(value)
+          ? null
+          : 'Slug can contain only a-z, 0-9 and single hyphens between words',
     },
   });
 
@@ -44,12 +49,15 @@ export function GeneratedSlug() {
   };
 
   const handleSubmit = (values: PageValues) => {
-    notifications.show({ title: 'Page created', message: `Page ${values.slug} created` });
+    notifications.show({
+      title: 'Page created',
+      message: `Page ${values.slug} created`,
+    });
   };
 
   return (
     <form onSubmit={form.onSubmit(handleSubmit)}>
-      <Stack>
+      <Stack maw={420} mx="auto">
         <TextInput
           size="md"
           label="Name"

@@ -12,7 +12,6 @@ const [Provider, usePersonFormContext, usePersonForm] = createFormContext<{ pers
 
 function Demo() {
   const form = usePersonForm({
-    mode: 'uncontrolled',
     cascadeUpdates: true,
     initialValues: {
       person: { name: "" }
@@ -37,8 +36,8 @@ function Demo() {
 function Watcher() {
   const form = usePersonFormContext();
 
-  const [person, setPerson] = useState<{ name: string }>();
-  const [name, setName] = useState<string>();
+  const [person, setPerson] = useState(() => form.getValues().person);
+  const [name, setName] = useState(() => form.getValues().person.name);
 
   form.watch('person', ({ value }) => setPerson(value));
   form.watch("person.name", ({ value }) => setName(value));
@@ -53,7 +52,6 @@ const [Provider, usePersonFormContext, usePersonForm] = createFormContext<{
 
 function Demo() {
   const form = usePersonForm({
-    mode: 'uncontrolled',
     cascadeUpdates: true,
     initialValues: {
       person: { name: '' },
@@ -76,8 +74,8 @@ function Demo() {
 function Watcher() {
   const form = usePersonFormContext();
 
-  const [person, setPerson] = useState<{ name: string }>();
-  const [name, setName] = useState<string>();
+  const [person, setPerson] = useState(() => form.getValues().person);
+  const [name, setName] = useState(() => form.getValues().person.name);
 
   form.watch('person', ({ value }) => setPerson(value));
   form.watch('person.name', ({ value }) => setName(value));

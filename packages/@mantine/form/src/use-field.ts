@@ -1,8 +1,8 @@
 import { useCallback, useMemo, useRef, useState } from 'react';
 import { createFormField, setFormField } from './form-store/form-field';
 import { getInputOnChange } from './get-input-on-change';
+import { getInputValueProps } from './get-input-value-props';
 import { FormMode, GetInputPropsType } from './types';
-import { shouldValidateOnChange } from './validate';
 
 type UseFieldErrorResolver = (error: unknown) => React.ReactNode;
 
@@ -219,14 +219,7 @@ export function useField<
       payload.error = error;
     }
 
-    if (type === 'checkbox') {
-      payload.checked = valueRef.current;
-    } else if (type === 'radio') {
-      payload.checked = valueRef.current === otherOptions.value;
-      payload.value = otherOptions.value;
-    } else {
-      payload.value = valueRef.current;
-    }
+    Object.assign(payload, getInputValueProps(type, valueRef.current, otherOptions.value));
 
     if (withFocus) {
       payload.onFocus = () => {
@@ -234,7 +227,7 @@ export function useField<
       };
 
       payload.onBlur = () => {
-        if (shouldValidateOnChange('', !!validateOnBlur)) {
+        if (validateOnBlur) {
           _validate();
         }
       };

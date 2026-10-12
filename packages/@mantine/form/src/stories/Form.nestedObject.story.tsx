@@ -24,7 +24,7 @@ export function NestedObject() {
 
       users: {
         tags: {
-          tag: (_value, _values) => (_values ? 'Required' : null),
+          tag: (value) => (value.length === 0 ? 'Required' : null),
         },
       },
     },

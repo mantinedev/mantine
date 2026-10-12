@@ -44,14 +44,17 @@ export function ContactForm() {
     const response = await sendMessage(values);
     notifications.show({
       title: 'Message sent',
-      message: `Message sent, we will reply to ${response.email}`,
+      message: `We will reply to ${response.email}`,
     });
   };
 
   const handleKeyDown = (event: React.KeyboardEvent<HTMLTextAreaElement>) => {
     if (event.key === 'Enter' && (event.ctrlKey || event.metaKey)) {
       event.preventDefault();
-      form.onSubmit(handleSubmit)();
+
+      if (!form.submitting) {
+        form.onSubmit(handleSubmit)();
+      }
     }
   };
 

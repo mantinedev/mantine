@@ -42,7 +42,7 @@ export function InvoiceItems() {
   const handleSubmit = (values: InvoiceValues) => {
     notifications.show({
       title: 'Invoice created',
-      message: `Invoice for ${values.customer}: ${values.items.length} items, total ${formatMoney(getTotal(values.items))}`,
+      message: `Invoice for ${values.customer}: ${values.items.length} ${values.items.length === 1 ? 'item' : 'items'}, total ${formatMoney(getTotal(values.items))}`,
     });
   };
 

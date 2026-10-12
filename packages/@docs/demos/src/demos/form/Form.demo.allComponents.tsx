@@ -39,7 +39,6 @@ import { useForm } from '@mantine/form';
 
 function Demo() {
   const form = useForm({
-    mode: 'uncontrolled',
     initialValues: {
       email: '',
     },
@@ -68,7 +67,6 @@ function Demo() {
 
 function DemoTextInput() {
   const form = useForm({
-    mode: 'uncontrolled',
     initialValues: {
       email: '',
     },
@@ -106,7 +104,6 @@ import { useForm } from '@mantine/form';
 
 function Demo() {
   const form = useForm({
-    mode: 'uncontrolled',
     initialValues: {
       angle: 0,
     },
@@ -129,7 +126,6 @@ function Demo() {
 
 function DemoAngleSlider() {
   const form = useForm({
-    mode: 'uncontrolled',
     initialValues: {
       angle: 0,
     },
@@ -158,7 +154,6 @@ import { useForm } from '@mantine/form';
 
 function Demo() {
   const form = useForm({
-    mode: 'uncontrolled',
     initialValues: {
       termsParams: false,
     },
@@ -185,7 +180,6 @@ function Demo() {
 
 function DemoCheckbox() {
   const form = useForm({
-    mode: 'uncontrolled',
     initialValues: {
       termsParams: false,
     },
@@ -221,7 +215,6 @@ import { useForm } from '@mantine/form';
 
 function Demo() {
   const form = useForm({
-    mode: 'uncontrolled',
     initialValues: {
       favFrameworks: [],
     },
@@ -252,7 +245,6 @@ function Demo() {
 
 function DemoCheckboxGroup() {
   const form = useForm({
-    mode: 'uncontrolled',
     initialValues: {
       favFrameworks: [],
     },
@@ -292,7 +284,6 @@ import { useForm } from '@mantine/form';
 
 function Demo() {
   const form = useForm({
-    mode: 'uncontrolled',
     initialValues: {
       awesome: false,
     },
@@ -316,7 +307,6 @@ function Demo() {
 
 function DemoChip() {
   const form = useForm({
-    mode: 'uncontrolled',
     initialValues: {
       awesome: false,
     },
@@ -345,7 +335,6 @@ import { useForm } from '@mantine/form';
 
 function Demo() {
   const form = useForm({
-    mode: 'uncontrolled',
     initialValues: {
       color: '',
     },
@@ -369,7 +358,6 @@ function Demo() {
 
 function DemoColorInput() {
   const form = useForm({
-    mode: 'uncontrolled',
     initialValues: {
       color: '',
     },
@@ -402,7 +390,6 @@ import { useForm } from '@mantine/form';
 
 function Demo() {
   const form = useForm({
-    mode: 'uncontrolled',
     initialValues: {
       color: '#000000',
     },
@@ -426,7 +413,6 @@ function Demo() {
 
 function DemoColorPicker() {
   const form = useForm({
-    mode: 'uncontrolled',
     initialValues: {
       color: '#000000',
     },
@@ -458,7 +444,6 @@ import { useForm } from '@mantine/form';
 
 function Demo() {
   const form = useForm({
-    mode: 'uncontrolled',
     initialValues: {
       name: '',
       email: '',
@@ -491,7 +476,6 @@ function Demo() {
 
 function DemoFieldset() {
   const form = useForm({
-    mode: 'uncontrolled',
     initialValues: {
       name: '',
       email: '',
@@ -529,7 +513,6 @@ import { useForm } from '@mantine/form';
 
 function Demo() {
   const form = useForm({
-    mode: 'uncontrolled',
     initialValues: {
       avatar: null,
     },
@@ -553,7 +536,6 @@ function Demo() {
 
 function DemoFileInput() {
   const form = useForm<{ avatar: File | null }>({
-    mode: 'uncontrolled',
     initialValues: {
       avatar: null,
     },
@@ -582,7 +564,6 @@ import { useForm } from '@mantine/form';
 
 function Demo() {
   const form = useForm({
-    mode: 'uncontrolled',
     initialValues: {
       phone: '',
     },
@@ -608,7 +589,6 @@ function Demo() {
 
 function DemoInput() {
   const form = useForm({
-    mode: 'uncontrolled',
     initialValues: {
       phone: '',
     },
@@ -639,7 +619,6 @@ import { useForm } from '@mantine/form';
 
 function Demo() {
   const form = useForm({
-    mode: 'uncontrolled',
     initialValues: {
       packageJson: '{"name": "mantine"}',
     },
@@ -666,7 +645,6 @@ function Demo() {
 
 function DemoJsonInput() {
   const form = useForm({
-    mode: 'uncontrolled',
     initialValues: {
       packageJson: '{"name": "mantine"}',
     },
@@ -702,7 +680,6 @@ import { useForm } from '@mantine/form';
 
 function Demo() {
   const form = useForm({
-    mode: 'uncontrolled',
     initialValues: {
       framewrok: 'react',
     },
@@ -726,7 +703,6 @@ function Demo() {
 
 function DemoNativeSelect() {
   const form = useForm({
-    mode: 'uncontrolled',
     initialValues: {
       framewrok: 'react',
     },
@@ -759,7 +735,6 @@ import { useForm } from '@mantine/form';
 
 function Demo() {
   const form = useForm({
-    mode: 'uncontrolled',
     initialValues: {
       age: 18,
     },
@@ -785,7 +760,6 @@ function Demo() {
 
 function DemoNumberInput() {
   const form = useForm({
-    mode: 'uncontrolled',
     initialValues: {
       age: 18,
     },
@@ -820,7 +794,6 @@ import { useForm } from '@mantine/form';
 
 function Demo() {
   const form = useForm({
-    mode: 'uncontrolled',
     initialValues: {
       password: '',
     },
@@ -844,7 +817,6 @@ function Demo() {
 
 function DemoPasswordInput() {
   const form = useForm({
-    mode: 'uncontrolled',
     initialValues: {
       password: '',
     },
@@ -877,7 +849,6 @@ import { useForm } from '@mantine/form';
 
 function Demo() {
   const form = useForm({
-    mode: 'uncontrolled',
     initialValues: {
       pin: '',
     },
@@ -900,7 +871,6 @@ function Demo() {
 
 function DemoPinInput() {
   const form = useForm({
-    mode: 'uncontrolled',
     initialValues: {
       pin: '',
     },
@@ -932,7 +902,6 @@ import { useForm } from '@mantine/form';
 
 function Demo() {
   const form = useForm({
-    mode: 'uncontrolled',
     initialValues: {
       framework: 'react',
     },
@@ -962,7 +931,6 @@ function Demo() {
 
 function DemoRadioGroup() {
   const form = useForm({
-    mode: 'uncontrolled',
     initialValues: {
       framework: 'react',
     },
@@ -1001,7 +969,6 @@ import { useForm } from '@mantine/form';
 
 function Demo() {
   const form = useForm({
-    mode: 'uncontrolled',
     initialValues: {
       range: [20, 80] as [number, number],
     },
@@ -1024,7 +991,6 @@ function Demo() {
 
 function DemoRangeSlider() {
   const form = useForm({
-    mode: 'uncontrolled',
     initialValues: {
       range: [20, 80] as [number, number],
     },
@@ -1056,7 +1022,6 @@ import { useForm } from '@mantine/form';
 
 function Demo() {
   const form = useForm({
-    mode: 'uncontrolled',
     initialValues: {
       rating: 0,
     },
@@ -1079,7 +1044,6 @@ function Demo() {
 
 function DemoRating() {
   const form = useForm({
-    mode: 'uncontrolled',
     initialValues: {
       rating: 0,
     },
@@ -1111,7 +1075,6 @@ import { useForm } from '@mantine/form';
 
 function Demo() {
   const form = useForm({
-    mode: 'uncontrolled',
     initialValues: {
       framewrok: 'react',
     },
@@ -1135,7 +1098,6 @@ function Demo() {
 
 function DemoSegmentedControl() {
   const form = useForm({
-    mode: 'uncontrolled',
     initialValues: {
       framewrok: 'react',
     },
@@ -1170,7 +1132,6 @@ import { useForm } from '@mantine/form';
 
 function Demo() {
   const form = useForm({
-    mode: 'uncontrolled',
     initialValues: {
       value: 40,
     },
@@ -1193,7 +1154,6 @@ function Demo() {
 
 function DemoSlider() {
   const form = useForm({
-    mode: 'uncontrolled',
     initialValues: {
       value: 40,
     },
@@ -1225,7 +1185,6 @@ import { useForm } from '@mantine/form';
 
 function Demo() {
   const form = useForm({
-    mode: 'uncontrolled',
     initialValues: {
       notifications: false,
     },
@@ -1248,7 +1207,6 @@ function Demo() {
 
 function DemoSwitch() {
   const form = useForm({
-    mode: 'uncontrolled',
     initialValues: {
       notifications: false,
     },
@@ -1280,7 +1238,6 @@ import { useForm } from '@mantine/form';
 
 function Demo() {
   const form = useForm({
-    mode: 'uncontrolled',
     initialValues: {
       favFrameworks: [],
     },
@@ -1310,7 +1267,6 @@ function Demo() {
 
 function DemoSwitchGroup() {
   const form = useForm({
-    mode: 'uncontrolled',
     initialValues: {
       favFrameworks: [],
     },
@@ -1349,7 +1305,6 @@ import { useForm } from '@mantine/form';
 
 function Demo() {
   const form = useForm({
-    mode: 'uncontrolled',
     initialValues: {
       message: '',
     },
@@ -1373,7 +1328,6 @@ function Demo() {
 
 function DemoTextarea() {
   const form = useForm({
-    mode: 'uncontrolled',
     initialValues: {
       message: '',
     },
@@ -1406,7 +1360,6 @@ import { useForm } from '@mantine/form';
 
 function Demo() {
   const form = useForm({
-    mode: 'uncontrolled',
     initialValues: {
       framework: '',
     },
@@ -1431,7 +1384,6 @@ function Demo() {
 
 function DemoAutocomplete() {
   const form = useForm({
-    mode: 'uncontrolled',
     initialValues: {
       framework: '',
     },
@@ -1465,7 +1417,6 @@ import { useForm } from '@mantine/form';
 
 function Demo() {
   const form = useForm({
-    mode: 'uncontrolled',
     initialValues: {
       frameworks: [],
     },
@@ -1490,7 +1441,6 @@ function Demo() {
 
 function DemoMultiSelect() {
   const form = useForm({
-    mode: 'uncontrolled',
     initialValues: {
       frameworks: [],
     },
@@ -1524,7 +1474,6 @@ import { useForm } from '@mantine/form';
 
 function Demo() {
   const form = useForm({
-    mode: 'uncontrolled',
     initialValues: {
       framework: '',
     },
@@ -1549,7 +1498,6 @@ function Demo() {
 
 function DemoSelect() {
   const form = useForm({
-    mode: 'uncontrolled',
     initialValues: {
       framework: '',
     },
@@ -1583,7 +1531,6 @@ import { useForm } from '@mantine/form';
 
 function Demo() {
   const form = useForm({
-    mode: 'uncontrolled',
     initialValues: {
       frameworks: [],
     },
@@ -1607,7 +1554,6 @@ function Demo() {
 
 function DemoTagsInput() {
   const form = useForm({
-    mode: 'uncontrolled',
     initialValues: {
       frameworks: [],
     },
@@ -1640,7 +1586,6 @@ import { useForm } from '@mantine/form';
 
 function Demo() {
   const form = useForm({
-    mode: 'uncontrolled',
     initialValues: {
       phone: '',
     },
@@ -1665,7 +1610,6 @@ function Demo() {
 
 function DemoMaskInput() {
   const form = useForm({
-    mode: 'uncontrolled',
     initialValues: {
       phone: '',
     },

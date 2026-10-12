@@ -17,7 +17,6 @@ import { Button, Group, TextInput, NumberInput, NativeSelect } from '@mantine/co
 
 function Demo() {
   const form = useForm({
-    mode: 'uncontrolled',
     initialValues: {
       name: '',
       job: '',
@@ -100,7 +99,6 @@ function Demo() {
 
 function Demo() {
   const form = useForm({
-    mode: 'uncontrolled',
     initialValues: {
       name: '',
       job: '',

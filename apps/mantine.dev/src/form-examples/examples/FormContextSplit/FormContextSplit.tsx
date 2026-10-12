@@ -38,6 +38,7 @@ export function FormContextSplit() {
       <form onSubmit={form.onSubmit(handleSubmit)}>
         <Stack>
           <PersonalFields />
+
           <AddressFields />
 
           <Group justify="flex-end">

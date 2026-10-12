@@ -85,7 +85,7 @@ export function UnsavedChangesPrompt() {
               {dirty ? 'Unsaved changes' : 'All changes saved'}
             </Badge>
 
-            <Button variant="default" size="xs" onClick={handleNavigate}>
+            <Button variant="default" onClick={handleNavigate}>
               Go to dashboard
             </Button>
           </Group>

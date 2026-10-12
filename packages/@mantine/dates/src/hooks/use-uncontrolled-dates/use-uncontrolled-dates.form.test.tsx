@@ -109,6 +109,34 @@ describe.each(['controlled', 'uncontrolled'] as const)(
       expect(getForm().isDirty()).toBe(false);
     });
 
+    it('replaces partial TimePicker and MaskedDateInput entries written by the form', async () => {
+      const { getForm } = setup(mode);
+      await userEvent.type(getInput('hours'), '12');
+      await userEvent.type(getInput('day'), '15');
+
+      act(() => getForm().setFieldValue('time', ''));
+      act(() => getForm().setFieldValue('masked', null));
+      expect(getInput('hours')).toHaveValue('');
+      expect(getInput('day')).toHaveValue('');
+
+      await userEvent.type(getInput('hours'), '12');
+      await userEvent.type(getInput('day'), '15');
+
+      act(() => getForm().setFieldValue('time', '08:15'));
+      act(() => getForm().setFieldValue('masked', '2026-03-04'));
+      expect(getInput('hours')).toHaveValue('08');
+      expect(getInput('minutes')).toHaveValue('15');
+      expect(getInput('day')).toHaveValue('04');
+      expect(getInput('month')).toHaveValue('03');
+      expect(getInput('year')).toHaveValue('2026');
+      expect(getForm().getValues()).toMatchObject({ time: '08:15', masked: '2026-03-04' });
+
+      act(() => getForm().reset());
+      expect(getInput('hours')).toHaveValue('');
+      expect(getInput('minutes')).toHaveValue('');
+      expect(getInput('year')).toHaveValue('');
+    });
+
     it('displays TimePicker value written by the form', () => {
       const { getForm } = setup(mode);
       act(() => getForm().setFieldValue('time', '10:30'));
@@ -160,3 +188,97 @@ describe('@mantine/dates inputs with @mantine/form (subscription)', () => {
     expect(getInput('year')).toHaveValue('2024');
   });
 });
+
+interface Row {
+  id: string;
+  time: string;
+  masked: string | null;
+}
+
+function ListForm({
+  mode,
+  onForm,
+}: {
+  mode: FormMode;
+  onForm: (form: UseFormReturnType<{ rows: Row[] }>) => void;
+}) {
+  const form = useForm<{ rows: Row[] }>({
+    mode,
+    initialValues: {
+      rows: [
+        { id: 'a', time: '10:00', masked: '2026-01-01' },
+        { id: 'b', time: '12:30', masked: '2026-02-02' },
+      ],
+    },
+  });
+  onForm(form);
+
+  return (
+    <>
+      {form.getValues().rows.map((row, index) => (
+        <div key={row.id}>
+          <TimePicker
+            hoursInputLabel={`hours-${row.id}`}
+            minutesInputLabel={`minutes-${row.id}`}
+            {...form.getInputProps(`rows.${index}.time`)}
+          />
+          <MaskedDateInput
+            dayInputLabel={`day-${row.id}`}
+            monthInputLabel={`month-${row.id}`}
+            yearInputLabel={`year-${row.id}`}
+            {...form.getInputProps(`rows.${index}.masked`)}
+          />
+        </div>
+      ))}
+    </>
+  );
+}
+
+describe.each(['controlled', 'uncontrolled'] as const)(
+  '@mantine/dates inputs in form lists with stable keys (%s)',
+  (mode) => {
+    const setupList = () => {
+      let form!: UseFormReturnType<{ rows: Row[] }>;
+      render(<ListForm mode={mode} onForm={(current) => (form = current)} />);
+      return () => form;
+    };
+
+    const expectRow = (id: string, hours: string, minutes: string, day: string, month: string) => {
+      expect(getInput(`hours-${id}`)).toHaveValue(hours);
+      expect(getInput(`minutes-${id}`)).toHaveValue(minutes);
+      expect(getInput(`day-${id}`)).toHaveValue(day);
+      expect(getInput(`month-${id}`)).toHaveValue(month);
+    };
+
+    it('keeps surviving row values after removeListItem', () => {
+      const getForm = setupList();
+      act(() => getForm().removeListItem('rows', 0));
+      expect(getForm().getValues().rows).toStrictEqual([
+        { id: 'b', time: '12:30', masked: '2026-02-02' },
+      ]);
+      expectRow('b', '12', '30', '02', '02');
+    });
+
+    it('keeps row values after reorderListItem', () => {
+      const getForm = setupList();
+      act(() => getForm().reorderListItem('rows', { from: 0, to: 1 }));
+      expectRow('a', '10', '00', '01', '01');
+      expectRow('b', '12', '30', '02', '02');
+    });
+
+    it('keeps row values after insertListItem at the start', () => {
+      const getForm = setupList();
+      act(() => getForm().insertListItem('rows', { id: 'c', time: '', masked: null }, 0));
+      expectRow('a', '10', '00', '01', '01');
+      expectRow('b', '12', '30', '02', '02');
+      expectRow('c', '', '', '', '');
+    });
+
+    it('displays a value written by the form to a surviving row after removeListItem', async () => {
+      const getForm = setupList();
+      act(() => getForm().removeListItem('rows', 0));
+      act(() => getForm().setFieldValue('rows.0.time', '08:15'));
+      expectRow('b', '08', '15', '02', '02');
+    });
+  }
+);

@@ -12,7 +12,6 @@ function Demo() {
   const [submittedValues, setSubmittedValues] = useState('');
 
   const form = useForm({
-    mode: 'uncontrolled',
     initialValues: {
       firstName: 'Jane',
       lastName: 'Doe',
@@ -67,7 +66,6 @@ function Demo() {
   const [submittedValues, setSubmittedValues] = useState('');
 
   const form = useForm({
-    mode: 'uncontrolled',
     initialValues: {
       firstName: 'Jane',
       lastName: 'Doe',

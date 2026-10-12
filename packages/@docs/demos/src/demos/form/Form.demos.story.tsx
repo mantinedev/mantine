@@ -158,6 +158,11 @@ export const Demo_watch = {
   render: renderDemo(demos.watch),
 };
 
+export const Demo_watchList = {
+  name: '⭐ Demo: watchList',
+  render: renderDemo(demos.watchList),
+};
+
 export const Demo_watchValue = {
   name: '⭐ Demo: watchValue',
   render: renderDemo(demos.watchValue),

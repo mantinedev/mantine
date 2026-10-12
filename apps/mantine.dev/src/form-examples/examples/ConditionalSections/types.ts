@@ -1,3 +1,5 @@
+import { UseFormReturnType } from '@mantine/form';
+
 export type AccountType = 'personal' | 'company';
 
 export interface PersonalValues {
@@ -12,8 +14,10 @@ export interface CompanyValues {
   contactPerson: string;
 }
 
-export interface Values {
+export interface AccountValues {
   accountType: AccountType;
   personal: PersonalValues;
   company: CompanyValues;
 }
+
+export type AccountForm = UseFormReturnType<AccountValues>;

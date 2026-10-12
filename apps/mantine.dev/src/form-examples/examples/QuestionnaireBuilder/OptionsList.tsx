@@ -9,7 +9,6 @@ interface OptionsListProps {
 
 export function OptionsList({ form, questionIndex }: OptionsListProps) {
   const options = form.useWatchValue(`questions.${questionIndex}.options`);
-  const error = form.errors[`questions.${questionIndex}.options`];
 
   return (
     <Stack gap="xs" pl="xl">
@@ -34,7 +33,9 @@ export function OptionsList({ form, questionIndex }: OptionsListProps) {
         </Group>
       ))}
 
-      {error && <Input.Error size="md">{error}</Input.Error>}
+      {form.errors[`questions.${questionIndex}.options`] && (
+        <Input.Error size="md">{form.errors[`questions.${questionIndex}.options`]}</Input.Error>
+      )}
 
       <Group>
         <Button

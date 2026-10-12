@@ -12,9 +12,11 @@ interface Product {
   key: string;
 }
 
+const getTotal = (products: Product[]) =>
+  products.reduce((acc, item) => acc + item.price * item.quantity, 0);
+
 export function WatchArrays() {
   const [watchLog, setWatchLog] = useState<{ previous: Product[]; current: Product[] }[]>([]);
-  const [total, setTotal] = useState(0);
 
   const form = useForm({
     mode: 'uncontrolled',
@@ -26,9 +28,11 @@ export function WatchArrays() {
     },
   });
 
+  const [total, setTotal] = useState(() => getTotal(form.getValues().products));
+
   form.watch('products', ({ previousValue, value }) => {
     setWatchLog((log) => [...log, { previous: previousValue, current: value }]);
-    setTotal(value.reduce((acc: number, item: Product) => acc + item.price * item.quantity, 0));
+    setTotal(getTotal(value));
   });
 
   return (

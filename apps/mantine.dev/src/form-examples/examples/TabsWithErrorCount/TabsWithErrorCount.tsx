@@ -40,6 +40,18 @@ export function TabsWithErrorCount() {
     },
   });
 
+  form.watch('password', () => {
+    if (form.errors.confirmPassword) {
+      form.validateField('confirmPassword');
+    }
+  });
+
+  form.watch('emailNotifications', () => {
+    if (form.errors.pushNotifications) {
+      form.validateField('pushNotifications');
+    }
+  });
+
   const handleSubmit = async (values: SettingsValues) => {
     const settings = await saveSettings(values);
     notifications.show({

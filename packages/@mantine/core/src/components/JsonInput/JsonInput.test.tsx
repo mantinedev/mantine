@@ -1,5 +1,7 @@
 import { useState } from 'react';
+import { act } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
+import { FormMode, useForm, UseFormReturnType } from '@mantine/form';
 import {
   inputDefaultProps,
   inputStylesApiSelectors,
@@ -342,5 +344,64 @@ describe('@mantine/core/JsonInput', () => {
     const input = container.querySelector('textarea')!;
 
     expect(input).toHaveAttribute('autocomplete', 'off');
+  });
+
+  describe('validity follows the resolved value', () => {
+    it.each<FormMode>(['uncontrolled', 'controlled'])(
+      'clears invalid state after form.reset() in %s form mode',
+      async (mode) => {
+        let form!: UseFormReturnType<{ json: string }>;
+
+        function Wrapper() {
+          form = useForm({ mode, initialValues: { json: '{}' } });
+          return <JsonInput aria-label="json" {...form.getInputProps('json')} />;
+        }
+
+        render(<Wrapper />);
+        const textarea = screen.getByRole('textbox');
+        await userEvent.clear(textarea);
+        await userEvent.type(textarea, 'invalid');
+        await userEvent.tab();
+        expect(form.getValues().json).toBe('invalid');
+        expect(textarea).toHaveAttribute('aria-invalid', 'true');
+
+        act(() => form.reset());
+        expect(textarea).toHaveValue('{}');
+        expect(textarea).not.toHaveAttribute('aria-invalid');
+
+        act(() => form.setFieldValue('json', 'also invalid'));
+        expect(textarea).toHaveAttribute('aria-invalid', 'true');
+      }
+    );
+
+    it('keeps validity unchanged for non-form controlled and uncontrolled callers', async () => {
+      function Controlled() {
+        const [value, setValue] = useState('{}');
+        return (
+          <>
+            <JsonInput aria-label="json" value={value} onChange={setValue} />
+            <button type="button" onClick={() => setValue('{}')}>
+              reset
+            </button>
+          </>
+        );
+      }
+
+      const { unmount } = render(<Controlled />);
+      await userEvent.clear(screen.getByRole('textbox'));
+      await userEvent.type(screen.getByRole('textbox'), 'invalid');
+      await userEvent.tab();
+      expect(screen.getByRole('textbox')).toHaveAttribute('aria-invalid', 'true');
+      await userEvent.click(screen.getByRole('button', { name: 'reset' }));
+      expect(screen.getByRole('textbox')).not.toHaveAttribute('aria-invalid');
+      unmount();
+
+      render(<JsonInput aria-label="json" defaultValue="{}" />);
+      await userEvent.clear(screen.getByRole('textbox'));
+      await userEvent.type(screen.getByRole('textbox'), 'invalid');
+      expect(screen.getByRole('textbox')).not.toHaveAttribute('aria-invalid');
+      await userEvent.tab();
+      expect(screen.getByRole('textbox')).toHaveAttribute('aria-invalid', 'true');
+    });
   });
 });

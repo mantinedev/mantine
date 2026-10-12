@@ -106,6 +106,67 @@ describe('@mantine/hooks/use-form-field', () => {
     hook.unmount();
     expect(writeListeners.size).toBe(0);
   });
+
+  it('calls onExternalWrite with the new field value when the handler is bound to another field', () => {
+    const first = createField('first');
+    const second = createField('second');
+    const onExternalWrite = jest.fn();
+    const hook = renderHook(({ onChange }) => useFormField<string>(onChange, { onExternalWrite }), {
+      initialProps: { onChange: first.onChange },
+    });
+
+    expect(onExternalWrite).not.toHaveBeenCalled();
+
+    hook.rerender({ onChange: first.onChange });
+    expect(onExternalWrite).not.toHaveBeenCalled();
+
+    hook.rerender({ onChange: second.onChange });
+    expect(onExternalWrite).toHaveBeenCalledTimes(1);
+    expect(onExternalWrite).toHaveBeenCalledWith('second');
+    expect(first.writeListeners.size).toBe(0);
+    expect(second.writeListeners.size).toBe(1);
+
+    hook.rerender({ onChange: second.onChange });
+    expect(onExternalWrite).toHaveBeenCalledTimes(1);
+  });
+
+  it('calls onExternalWrite when an unbound handler is replaced with a bound one after mount', () => {
+    const field = createField('bound');
+    const plain = jest.fn();
+    const onExternalWrite = jest.fn();
+    const hook = renderHook(
+      ({ onChange }: { onChange: any }) => useFormField<string>(onChange, { onExternalWrite }),
+      { initialProps: { onChange: plain as any } }
+    );
+
+    expect(onExternalWrite).not.toHaveBeenCalled();
+
+    hook.rerender({ onChange: field.onChange });
+    expect(onExternalWrite).toHaveBeenCalledTimes(1);
+    expect(onExternalWrite).toHaveBeenCalledWith('bound');
+
+    hook.rerender({ onChange: plain });
+    hook.rerender({ onChange: field.onChange });
+    expect(onExternalWrite).toHaveBeenCalledTimes(2);
+  });
+
+  it('does not call onExternalWrite for a field bound while onExternalWrite was not set', () => {
+    const first = createField('first');
+    const second = createField('second');
+    const onExternalWrite = jest.fn();
+    const hook = renderHook(
+      ({ onChange, withCallback }: { onChange: any; withCallback: boolean }) =>
+        useFormField<string>(onChange, {
+          onExternalWrite: withCallback ? onExternalWrite : undefined,
+        }),
+      { initialProps: { onChange: first.onChange, withCallback: false } }
+    );
+
+    hook.rerender({ onChange: second.onChange, withCallback: false });
+    hook.rerender({ onChange: second.onChange, withCallback: true });
+    expect(onExternalWrite).not.toHaveBeenCalled();
+    expect(second.writeListeners.size).toBe(1);
+  });
 });
 
 describe('@mantine/hooks/use-uncontrolled with form field', () => {

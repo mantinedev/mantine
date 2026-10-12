@@ -1,10 +1,9 @@
 import { SimpleGrid, TextInput } from '@mantine/core';
 import { MaskedDateInput } from '@mantine/dates';
-import { UseFormReturnType } from '@mantine/form';
-import { PersonalValues } from './types';
+import { AccountForm } from './types';
 
 interface PersonalFieldsProps {
-  form: UseFormReturnType<{ personal: PersonalValues }>;
+  form: AccountForm;
 }
 
 export function PersonalFields({ form }: PersonalFieldsProps) {

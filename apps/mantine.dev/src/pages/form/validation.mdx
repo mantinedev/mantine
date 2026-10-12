@@ -235,14 +235,13 @@ finishes, use it to show a loader while the field waits for validation.
 
 ## Validating state
 
-`form.validating` is `true` while any async validation is in progress. This applies to `form.validate()`,
-`form.validateField()`, `form.isValid()` and the validation triggered by `form.onSubmit`.
-The state is never set for forms with only synchronous rules.
+`form.validating` is `true` while async validation started by `form.validate()`, `form.onSubmit`
+or field validation is in progress, and while a field waits for [debounced validation](#async-validation-with-debounce).
+`form.isValid()` only returns the result and does not change the validating state.
 
-`form.isValidating(path)` returns `true` if a specific field is currently being
-validated. When `form.validate()` or `form.onSubmit` runs all rules, every field
-with a rule is considered validating. When `form.validateField(path)` is called,
-only the targeted field is considered validating.
+`form.isValidating(path)` returns `true` while a specific field is validated by `form.validateField(path)`,
+`validateInputOnChange`/`validateInputOnBlur` or waits for debounced validation. `form.validate()` and
+`form.onSubmit` set only `form.validating`, `form.isValidating(path)` stays `false` for each field.
 
 ```tsx
 import { useForm } from '@mantine/form';
@@ -260,7 +259,7 @@ const form = useForm({
 });
 
 form.validating; // -> false while idle, true during validation
-form.isValidating('username'); // -> true while `username` rule is running
+form.isValidating('username'); // -> true while form.validateField('username') is running
 ```
 
 ## Validation errors on submit

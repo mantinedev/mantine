@@ -10,7 +10,6 @@ import { useForm } from '@mantine/form';
 
 function Demo() {
   const form = useForm({
-    mode: 'uncontrolled',
     initialValues: {
       name: '',
       email: '',
@@ -40,7 +39,6 @@ function Demo() {
 
 function Demo() {
   const form = useForm({
-    mode: 'uncontrolled',
     initialValues: {
       name: '',
       email: '',

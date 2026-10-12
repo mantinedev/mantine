@@ -54,7 +54,6 @@ function SortableItem({ id, index, form }) {
 
 function Demo() {
   const form = useForm({
-    mode: 'uncontrolled',
     initialValues: {
       employees: [
         { name: 'John Doe', email: 'john@mantine.dev', key: randomId() },
@@ -125,7 +124,6 @@ function SortableItem({ id, index, form }: any) {
 
 function Demo() {
   const form = useForm({
-    mode: 'uncontrolled',
     initialValues: {
       employees: [
         { name: 'John Doe', email: 'john@mantine.dev', key: randomId() },

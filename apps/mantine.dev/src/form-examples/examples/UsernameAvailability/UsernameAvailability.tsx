@@ -91,6 +91,7 @@ export function UsernameAvailability() {
           loading={usernameValidating}
           success={usernameAvailable ? 'Username is available' : null}
           {...form.getInputProps('username')}
+          error={usernameValidating ? null : form.errors.username}
         />
 
         <TextInput

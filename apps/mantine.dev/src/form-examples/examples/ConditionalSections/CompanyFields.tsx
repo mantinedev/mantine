@@ -1,9 +1,8 @@
 import { TextInput } from '@mantine/core';
-import { UseFormReturnType } from '@mantine/form';
-import { CompanyValues } from './types';
+import { AccountForm } from './types';
 
 interface CompanyFieldsProps {
-  form: UseFormReturnType<{ company: CompanyValues }>;
+  form: AccountForm;
 }
 
 export function CompanyFields({ form }: CompanyFieldsProps) {

@@ -103,8 +103,9 @@ are performed:
 ## form.watch cascade
 
 By default, `form.watch` notifies parent watchers when nested fields change
-(upward cascade). To also enable downward cascade (notifying nested field
-watchers when a parent is set directly), set `cascadeUpdates: true`:
+(upward cascade). `form.setValues`, `form.initialize`, `form.reset` and list handlers
+always notify watchers of every changed nested field. To also notify nested field watchers
+when `form.setFieldValue` sets a parent path, set `cascadeUpdates: true`:
 
 <Demo data={FormDemos.cascadeUpdates} />
 

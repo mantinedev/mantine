@@ -4,7 +4,7 @@ import { notifications } from '@mantine/notifications';
 import { AddressFields } from './AddressFields';
 import { Address, AddressValues } from './types';
 
-interface Values extends AddressValues {
+interface CheckoutValues extends AddressValues {
   sameAsBilling: boolean;
 }
 
@@ -21,7 +21,7 @@ const addressRules = {
 };
 
 export function SameAsBilling() {
-  const form = useForm<Values>({
+  const form = useForm<CheckoutValues>({
     // Watchers of nested shipping fields are notified when the whole shipping object is set
     cascadeUpdates: true,
     initialValues: {
@@ -56,7 +56,7 @@ export function SameAsBilling() {
     }
   });
 
-  const handleSubmit = (values: Values) => {
+  const handleSubmit = (values: CheckoutValues) => {
     const { shipping } = values;
     notifications.show({
       title: 'Addresses saved',

@@ -14,10 +14,7 @@ export interface FormExample extends ExampleItem {
     | 'architecture'
     | 'inputs';
 
-  /** Form mode used in the example, displayed as a badge */
-  mode: 'uncontrolled' | 'controlled';
-
-  /** use-form APIs used in the example, displayed as badges and used in search */
+  /** use-form APIs used in the example, used in search */
   features: string[];
 
   /** Removes the max-width limit of the preview, for examples with tables and multi-column layouts */
@@ -42,7 +39,6 @@ export const FORM_EXAMPLES_DATA: FormExample[] = [
     name: 'Login form',
     description: 'Email and password with validators and submitting state',
     type: 'basic',
-    mode: 'uncontrolled',
     features: ['isEmail', 'hasLength', 'onSubmit', 'submitting'],
   },
   {
@@ -50,7 +46,6 @@ export const FORM_EXAMPLES_DATA: FormExample[] = [
     name: 'Registration form',
     description: 'Password requirements shown in a popover while typing',
     type: 'basic',
-    mode: 'uncontrolled',
     features: ['matchesField', 'useWatchValue', 'getInputProps'],
   },
   {
@@ -58,7 +53,6 @@ export const FORM_EXAMPLES_DATA: FormExample[] = [
     name: 'Contact form',
     description: 'Textarea with character counter, Ctrl + Enter submits the form',
     type: 'basic',
-    mode: 'uncontrolled',
     features: ['useWatchValue', 'onSubmit'],
   },
   {
@@ -66,7 +60,6 @@ export const FORM_EXAMPLES_DATA: FormExample[] = [
     name: 'Filters form',
     description: 'Filters applied on every change without a submit button',
     type: 'basic',
-    mode: 'uncontrolled',
     features: ['onValuesChange', 'useDirty', 'reset'],
     fullWidth: true,
   },
@@ -75,7 +68,6 @@ export const FORM_EXAMPLES_DATA: FormExample[] = [
     name: 'Subscribe input',
     description: 'Single email field with async validation built with use-field',
     type: 'basic',
-    mode: 'uncontrolled',
     features: ['useField', 'async validation'],
   },
   {
@@ -83,7 +75,6 @@ export const FORM_EXAMPLES_DATA: FormExample[] = [
     name: 'OTP form',
     description: 'PinInput verification code, submitted when all digits are entered',
     type: 'basic',
-    mode: 'uncontrolled',
     features: ['watch', 'PinInput'],
   },
   {
@@ -91,7 +82,6 @@ export const FORM_EXAMPLES_DATA: FormExample[] = [
     name: 'Username availability',
     description: 'Async validation with debounce and a loading indicator',
     type: 'validation',
-    mode: 'uncontrolled',
     features: ['async validation', 'validateDebounce', 'isValidating', 'resolveValidationError'],
   },
   {
@@ -99,7 +89,6 @@ export const FORM_EXAMPLES_DATA: FormExample[] = [
     name: 'Validate on blur',
     description: 'Fields validated on blur, error summary and focus on the first invalid field',
     type: 'validation',
-    mode: 'uncontrolled',
     features: ['validateInputOnBlur', 'onSubmit', 'getInputNode'],
   },
   {
@@ -107,15 +96,13 @@ export const FORM_EXAMPLES_DATA: FormExample[] = [
     name: 'Date range',
     description: 'Cross-field validation of start and end dates',
     type: 'validation',
-    mode: 'uncontrolled',
-    features: ['validateField', 'watch', 'validateInputOnChange', 'DateInput'],
+    features: ['validateField', 'watch', 'useWatchValue', 'DatePickerInput'],
   },
   {
     id: 'ZodSchema',
     name: 'Zod schema',
     description: 'Schema validation with nested object and array errors',
     type: 'validation',
-    mode: 'uncontrolled',
     features: ['schemaResolver', 'zod', 'nested errors'],
   },
   {
@@ -123,7 +110,6 @@ export const FORM_EXAMPLES_DATA: FormExample[] = [
     name: 'Zod async validation',
     description: 'Schema with async refinements checked against the backend',
     type: 'validation',
-    mode: 'uncontrolled',
     features: ['schemaResolver', 'zod', 'async validation', 'validateDebounce'],
   },
   {
@@ -131,15 +117,13 @@ export const FORM_EXAMPLES_DATA: FormExample[] = [
     name: 'Server errors',
     description: 'Field and form-level errors returned from the backend',
     type: 'validation',
-    mode: 'uncontrolled',
-    features: ['setErrors', 'setFieldError', 'clearErrors', 'submitting'],
+    features: ['setErrors', 'clearFieldError', 'submitting'],
   },
   {
     id: 'ConditionalValidation',
     name: 'Conditional validation',
     description: 'Fields rendered and validated only when a checkbox is checked',
     type: 'validation',
-    mode: 'uncontrolled',
     features: ['validate', 'useWatchValue', 'Collapse'],
   },
   {
@@ -147,7 +131,6 @@ export const FORM_EXAMPLES_DATA: FormExample[] = [
     name: 'List validation',
     description: 'List must have at least one item, item rules with FORM_INDEX',
     type: 'validation',
-    mode: 'uncontrolled',
     features: ['formRootRule', 'FORM_INDEX', 'insertListItem'],
   },
   {
@@ -155,7 +138,6 @@ export const FORM_EXAMPLES_DATA: FormExample[] = [
     name: 'Job application',
     description: 'Single-value inputs validated on blur, phone and cover letter on submit',
     type: 'validation',
-    mode: 'uncontrolled',
     features: ['validateInputOnBlur', 'isInRange', 'matches', 'PhoneInput', 'NumberInput'],
   },
   {
@@ -165,15 +147,13 @@ export const FORM_EXAMPLES_DATA: FormExample[] = [
     fullDescription:
       'The slug is generated from the name until the user focuses the slug input. The form component does not rerender while typing: the slug input is updated with forceUpdate: false.',
     type: 'dependent',
-    mode: 'uncontrolled',
-    features: ['watch', 'touchTrigger', 'forceUpdate', 'useTouched', 'isTouched'],
+    features: ['watch', 'touchTrigger', 'forceUpdate', 'isTouched', 'setFieldValue'],
   },
   {
     id: 'DependentSelects',
     name: 'Dependent selects',
     description: 'City options depend on the selected country',
     type: 'dependent',
-    mode: 'uncontrolled',
     features: ['watch', 'useWatchValue', 'setFieldValue', 'Select'],
   },
   {
@@ -181,7 +161,6 @@ export const FORM_EXAMPLES_DATA: FormExample[] = [
     name: 'Order total',
     description: 'Total calculated from quantity, price and discount',
     type: 'dependent',
-    mode: 'uncontrolled',
     features: ['useWatchValue', 'transformValues', 'NumberInput'],
   },
   {
@@ -189,7 +168,6 @@ export const FORM_EXAMPLES_DATA: FormExample[] = [
     name: 'Same as billing',
     description: 'Shipping address copied from billing address with a checkbox',
     type: 'dependent',
-    mode: 'uncontrolled',
     features: ['setFieldValue', 'enhanceGetInputProps', 'nested objects', 'useWatchValue'],
   },
   {
@@ -197,7 +175,6 @@ export const FORM_EXAMPLES_DATA: FormExample[] = [
     name: 'Unit converter',
     description: 'Two inputs that update each other',
     type: 'dependent',
-    mode: 'uncontrolled',
     features: ['watch', 'forceUpdate', 'setFieldValue'],
   },
   {
@@ -205,15 +182,13 @@ export const FORM_EXAMPLES_DATA: FormExample[] = [
     name: 'Conditional sections',
     description: 'Different fields for personal and company accounts',
     type: 'dependent',
-    mode: 'uncontrolled',
-    features: ['useWatchValue', 'resetField', 'Radio'],
+    features: ['useWatchValue', 'clearFieldError', 'Radio'],
   },
   {
     id: 'SelectAll',
     name: 'Select all checkbox',
     description: 'Select all checkbox with indeterminate state for a checkbox group',
     type: 'dependent',
-    mode: 'uncontrolled',
     features: ['useWatchValue', 'setFieldValue', 'Checkbox.Group'],
   },
   {
@@ -221,15 +196,14 @@ export const FORM_EXAMPLES_DATA: FormExample[] = [
     name: 'Invoice items',
     description: 'Line items with add, remove and calculated totals',
     type: 'lists',
-    mode: 'uncontrolled',
     features: ['insertListItem', 'removeListItem', 'useWatchValue', 'randomId'],
+    fullWidth: true,
   },
   {
     id: 'ReorderListItems',
     name: 'Reorder list items',
     description: 'Drag and drop reordering with dnd-kit',
     type: 'lists',
-    mode: 'uncontrolled',
     features: ['reorderListItem', 'insertListItem', 'removeListItem', 'dnd-kit'],
   },
   {
@@ -237,7 +211,6 @@ export const FORM_EXAMPLES_DATA: FormExample[] = [
     name: 'Nested addresses',
     description: 'List of address objects with a primary address',
     type: 'lists',
-    mode: 'uncontrolled',
     features: ['replaceListItem', 'insertListItem', 'removeListItem', 'nested arrays'],
   },
   {
@@ -245,23 +218,21 @@ export const FORM_EXAMPLES_DATA: FormExample[] = [
     name: 'Editable table',
     description: 'Table with an input in every cell, only edited cell rerenders',
     type: 'lists',
-    mode: 'uncontrolled',
     features: ['resetField', 'getInputProps', 'Table'],
+    fullWidth: true,
   },
   {
     id: 'QuestionnaireBuilder',
     name: 'Questionnaire builder',
     description: 'Questions with their own options lists, two nesting levels',
     type: 'lists',
-    mode: 'uncontrolled',
-    features: ['insertListItem', 'removeListItem', 'FORM_INDEX', 'formRootRule'],
+    features: ['insertListItem', 'removeListItem', 'formRootRule'],
   },
   {
     id: 'TagsAndKeywords',
     name: 'Tags and keywords',
     description: 'Array values with TagsInput and Chip.Group',
     type: 'lists',
-    mode: 'uncontrolled',
     features: ['TagsInput', 'Chip.Group', 'array values'],
   },
   {
@@ -269,7 +240,6 @@ export const FORM_EXAMPLES_DATA: FormExample[] = [
     name: 'Stepper wizard',
     description: 'Form split across steps, each step validates its own fields',
     type: 'layout',
-    mode: 'uncontrolled',
     features: ['validate', 'Stepper'],
   },
   {
@@ -277,7 +247,6 @@ export const FORM_EXAMPLES_DATA: FormExample[] = [
     name: 'Form in modal',
     description: 'Form opened in a modal, reset when the modal is closed',
     type: 'layout',
-    mode: 'uncontrolled',
     features: ['reset', 'submitting', 'Modal'],
   },
   {
@@ -285,7 +254,6 @@ export const FORM_EXAMPLES_DATA: FormExample[] = [
     name: 'Tabs with error count',
     description: 'Fields split across tabs, each tab shows its number of errors',
     type: 'layout',
-    mode: 'uncontrolled',
     features: ['errors', 'onSubmit', 'Tabs'],
   },
   {
@@ -293,7 +261,6 @@ export const FORM_EXAMPLES_DATA: FormExample[] = [
     name: 'Settings save bar',
     description: 'Unsaved changes bar driven by dirty state',
     type: 'layout',
-    mode: 'uncontrolled',
     features: ['useDirty', 'setInitialValues', 'resetDirty', 'reset'],
   },
   {
@@ -301,7 +268,6 @@ export const FORM_EXAMPLES_DATA: FormExample[] = [
     name: 'Accordion sections',
     description: 'Long form in accordion sections with completion indicators',
     type: 'layout',
-    mode: 'uncontrolled',
     features: ['isValid', 'useWatchValue', 'Accordion'],
   },
   {
@@ -309,7 +275,6 @@ export const FORM_EXAMPLES_DATA: FormExample[] = [
     name: 'Edit record',
     description: 'Record loaded from the backend, inputs read-only until loaded',
     type: 'data',
-    mode: 'uncontrolled',
     features: ['initialize', 'initialized', 'enhanceGetInputProps'],
   },
   {
@@ -317,7 +282,6 @@ export const FORM_EXAMPLES_DATA: FormExample[] = [
     name: 'Autosave to local storage',
     description: 'Draft saved a second after the last change and restored on mount',
     type: 'data',
-    mode: 'uncontrolled',
     features: ['onValuesChange', 'setValues', 'useLocalStorage', 'useDebouncedCallback'],
   },
   {
@@ -325,7 +289,6 @@ export const FORM_EXAMPLES_DATA: FormExample[] = [
     name: 'Autosave to server',
     description: 'Debounced save with saving indicator',
     type: 'data',
-    mode: 'uncontrolled',
     features: ['onValuesChange', 'useDebouncedCallback', 'setInitialValues'],
   },
   {
@@ -333,7 +296,6 @@ export const FORM_EXAMPLES_DATA: FormExample[] = [
     name: 'Unsaved changes prompt',
     description: 'Confirmation before leaving the page with unsaved changes',
     type: 'data',
-    mode: 'uncontrolled',
     features: ['useDirty', 'isDirty', 'beforeunload'],
   },
   {
@@ -341,7 +303,6 @@ export const FORM_EXAMPLES_DATA: FormExample[] = [
     name: 'File upload',
     description: 'Files from Dropzone with size validation and upload progress',
     type: 'data',
-    mode: 'uncontrolled',
     features: ['Dropzone', 'submitting', 'validate'],
   },
   {
@@ -349,7 +310,6 @@ export const FORM_EXAMPLES_DATA: FormExample[] = [
     name: 'Submit with transform',
     description: 'Values transformed into an API payload before submit',
     type: 'data',
-    mode: 'uncontrolled',
     features: ['transformValues', 'getTransformedValues', 'TransformedValues'],
   },
   {
@@ -357,7 +317,6 @@ export const FORM_EXAMPLES_DATA: FormExample[] = [
     name: 'Render count',
     description: 'Controlled and uncontrolled modes compared with render counters',
     type: 'uncontrolled',
-    mode: 'uncontrolled',
     features: ['mode', 'useWatchValue'],
   },
   {
@@ -365,7 +324,6 @@ export const FORM_EXAMPLES_DATA: FormExample[] = [
     name: 'Large form',
     description: '200 fields in uncontrolled mode',
     type: 'uncontrolled',
-    mode: 'uncontrolled',
     features: ['validate', 'getInputProps', 'performance'],
   },
   {
@@ -373,7 +331,6 @@ export const FORM_EXAMPLES_DATA: FormExample[] = [
     name: 'Custom input subscription',
     description: 'Custom input subscribed to its field with useFormField',
     type: 'uncontrolled',
-    mode: 'uncontrolled',
     features: ['useFormField', 'custom inputs', 'getInputProps'],
   },
   {
@@ -381,7 +338,6 @@ export const FORM_EXAMPLES_DATA: FormExample[] = [
     name: 'Form context',
     description: 'Fields in separate components connected with form context',
     type: 'architecture',
-    mode: 'uncontrolled',
     features: ['createFormContext', 'useFormContext'],
   },
   {
@@ -389,15 +345,13 @@ export const FORM_EXAMPLES_DATA: FormExample[] = [
     name: 'Reusable fields',
     description: 'Typed field components that read the form from context',
     type: 'architecture',
-    mode: 'uncontrolled',
-    features: ['useFormContext', 'LooseKeys', 'TypeScript'],
+    features: ['createFormContext', 'LooseKeys', 'TypeScript'],
   },
   {
     id: 'FormActions',
     name: 'Form actions',
     description: 'Form updated from a component outside the form tree',
     type: 'architecture',
-    mode: 'uncontrolled',
     features: ['createFormActions', 'name'],
   },
   {
@@ -405,15 +359,13 @@ export const FORM_EXAMPLES_DATA: FormExample[] = [
     name: 'Typed form',
     description: 'Explicit generics and form object passed as a prop',
     type: 'architecture',
-    mode: 'uncontrolled',
-    features: ['UseFormReturnType', 'TransformedValues', 'FormErrors', 'TypeScript'],
+    features: ['UseFormReturnType', 'TransformedValues', 'TypeScript'],
   },
   {
     id: 'RichTextForm',
     name: 'Rich text form',
     description: 'Tiptap editor bound to a form field',
     type: 'inputs',
-    mode: 'uncontrolled',
-    features: ['isNotEmptyHTML', 'RichTextEditor', 'setFieldValue'],
+    features: ['isNotEmptyHTML', 'RichTextEditor', 'useFormField'],
   },
 ];

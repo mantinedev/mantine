@@ -129,9 +129,6 @@ input is subscribed to its own field and rerenders alone: the component that cal
 remount. `key={form.key()}` is no longer needed and `form.key` has been removed.
 `form.getInputProps` returns `value` and `checked` in both modes. New `form.useDirty` and
 `form.useTouched` hooks subscribe a component to [dirty and touched state](/form/status#usedirty-and-usetouched-hooks).
-`form.validateField`, `form.isValid` and `validateInputOnChange` now run the
-[formRootRule](/form/validation#formrootrule) of a list, list handlers and `form.resetField` clear
-related errors, and `form.isValidating` is `true` while a debounced validation is pending.
 
 Custom inputs subscribe to a field with the new [use-form-field](/hooks/use-form-field) hook,
 components built with [use-uncontrolled](/hooks/use-uncontrolled) are subscribed automatically.
@@ -143,7 +140,7 @@ the form resets the value:
 
 ## Form examples
 
-A new [form examples](/form/examples?e=LoginForm) section contains 50 complete forms
+A new [form examples](/form/examples?e=LoginForm) section contains complete forms
 built with `useForm`: login and registration, async and schema validation, dependent fields,
 lists with calculated totals, multi-step forms, autosave, form context and input integrations.
 Every example is a self-contained component with full code, examples are searchable by the

@@ -12,13 +12,12 @@ import { randomId } from '@mantine/hooks';
 
 function Demo() {
   const form = useForm({
-    mode: 'uncontrolled',
     initialValues: {
       employees: [{ name: '', active: false, key: randomId() }],
     },
     validate: {
       employees: {
-        [formRootRule]: isNotEmpty('AtIcon least one employee is required'),
+        [formRootRule]: isNotEmpty('At least one employee is required'),
         name: isNotEmpty('Name is required'),
       },
     },
@@ -86,13 +85,12 @@ function Demo() {
 
 function Demo() {
   const form = useForm({
-    mode: 'uncontrolled',
     initialValues: {
       employees: [{ name: '', active: false, key: randomId() }],
     },
     validate: {
       employees: {
-        [formRootRule]: isNotEmpty('AtIcon least one employee is required'),
+        [formRootRule]: isNotEmpty('At least one employee is required'),
         name: isNotEmpty('Name is required'),
       },
     },

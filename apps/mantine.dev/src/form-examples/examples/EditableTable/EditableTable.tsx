@@ -1,12 +1,9 @@
 import { Button, Group, Stack } from '@mantine/core';
 import { isEmail, isNotEmpty, useForm } from '@mantine/form';
 import { notifications } from '@mantine/notifications';
-import { ROWS, TableRow } from './data';
+import { ROWS } from './data';
 import { RowsTable } from './RowsTable';
-
-interface TableValues {
-  rows: TableRow[];
-}
+import { TableValues } from './types';
 
 export function EditableTable() {
   const form = useForm<TableValues>({
@@ -17,7 +14,7 @@ export function EditableTable() {
       rows: {
         name: isNotEmpty('Required'),
         email: isEmail('Invalid email'),
-        quantity: (value) => (Number(value) >= 0 ? null : 'Must be positive'),
+        quantity: (value) => (typeof value === 'number' && value >= 0 ? null : 'Must be 0 or more'),
       },
     },
   });
@@ -26,9 +23,11 @@ export function EditableTable() {
 
   const handleSubmit = (values: TableValues) => {
     const changedRows = values.rows.filter((_, index) => form.isDirty(`rows.${index}`)).length;
+    form.setInitialValues(values);
+    form.resetDirty(values);
     notifications.show({
       title: 'Changes saved',
-      message: `${changedRows} rows changed`,
+      message: `${changedRows} ${changedRows === 1 ? 'row' : 'rows'} changed`,
     });
   };
 

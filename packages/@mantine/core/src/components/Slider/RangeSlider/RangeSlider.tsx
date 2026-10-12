@@ -260,7 +260,7 @@ export const RangeSlider = factory<RangeSliderFactory>((_props) => {
   const { dir } = useDirection();
   const [focused, setFocused] = useState(-1);
   const [hovered, setHovered] = useState(false);
-  const [_value, setValue] = useUncontrolled<RangeSliderValue>({
+  const [_value, setValue, controlled] = useUncontrolled<RangeSliderValue>({
     value,
     defaultValue,
     finalValue: [min, max],
@@ -284,13 +284,15 @@ export const RangeSlider = factory<RangeSliderFactory>((_props) => {
     valueRef.current = val;
   };
 
+  const controlledValue = controlled ? _value : undefined;
+
   useEffect(
     () => {
-      if (Array.isArray(value)) {
-        valueRef.current = value;
+      if (Array.isArray(controlledValue)) {
+        valueRef.current = controlledValue;
       }
     },
-    Array.isArray(value) ? [value[0], value[1]] : [null, null]
+    Array.isArray(controlledValue) ? [controlledValue[0], controlledValue[1]] : [null, null]
   );
 
   const setRangedValue = (val: number, index: number, triggerChangeEnd: boolean) => {

@@ -1,4 +1,5 @@
-import { clearListState } from './clear-list-state';
+import { isChildPath } from '../paths';
+import { clearChildKeys } from './clear-child-keys';
 
 /**
  * Gets the part of the key after the path which can be an index
@@ -25,7 +26,7 @@ export function changeErrorIndices<T extends Record<PropertyKey, any>>(
   let clearedErrors = errors;
   // Remove all errors if the corresponding item was removed
   if (change === -1) {
-    clearedErrors = clearListState(`${pathString}.${index}`, clearedErrors);
+    clearedErrors = clearChildKeys(`${pathString}.${index}`, clearedErrors);
     delete clearedErrors[`${pathString}.${index}`];
   }
 
@@ -33,7 +34,7 @@ export function changeErrorIndices<T extends Record<PropertyKey, any>>(
   const changedKeys = new Set<string>();
   Object.entries(clearedErrors)
     .filter(([key]) => {
-      if (!key.startsWith(`${pathString}.`)) {
+      if (!isChildPath(key, pathString)) {
         return false;
       }
       const currIndex = getIndexFromKeyAfterPath(key, pathString);

@@ -28,11 +28,8 @@ export function Usage() {
     validate: {
       name: (value) => (value.length === 0 ? 'Required' : null),
       nested: {
-        field: (value) => (value === 'test' ? 'Invalid' : null),
-        [formRootRule]: (value) => {
-          console.log('validate nested', value);
-          return 'error';
-        },
+        field: (value) => (value.length === 0 ? 'Required' : null),
+        [formRootRule]: (value) => (value.field.length === 0 ? 'Nested field is required' : null),
       },
 
       nestList: {
@@ -52,7 +49,7 @@ export function Usage() {
       <Textarea label="area" {...form.getInputProps('area')} />
       <NativeSelect
         label="native select"
-        data={['React', 'Angular']}
+        data={[{ value: '', label: 'Pick framework' }, 'React', 'Angular']}
         {...form.getInputProps('select')}
       />
 
@@ -111,7 +108,7 @@ export function Initialize() {
       <Textarea label="area" {...form.getInputProps('area')} />
       <NativeSelect
         label="native select"
-        data={['React', 'Angular']}
+        data={[{ value: '', label: 'Pick framework' }, 'React', 'Angular']}
         {...form.getInputProps('select')}
       />
 
@@ -219,7 +216,7 @@ export function FocusOnError() {
       <Textarea label="area" {...form.getInputProps('area')} />
       <NativeSelect
         label="native select"
-        data={['React', 'Angular']}
+        data={[{ value: '', label: 'Pick framework' }, 'React', 'Angular']}
         {...form.getInputProps('select')}
       />
 

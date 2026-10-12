@@ -1,10 +1,9 @@
 import { ArrowCounterClockwiseIcon } from '@phosphor-icons/react';
 import { ActionIcon } from '@mantine/core';
-import { UseFormReturnType } from '@mantine/form';
-import { TableRow } from './data';
+import { TableForm } from './types';
 
 interface RowResetButtonProps {
-  form: UseFormReturnType<{ rows: TableRow[] }>;
+  form: TableForm;
   index: number;
 }
 

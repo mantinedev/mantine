@@ -14,7 +14,10 @@ export function ErrorSummary<Values>({ form, labels }: ErrorSummaryProps<Values>
   }
 
   return (
-    <Alert color="red" title={`Please fix ${entries.length} field(s)`}>
+    <Alert
+      color="red"
+      title={`Please fix ${entries.length} ${entries.length === 1 ? 'field' : 'fields'}`}
+    >
       <List size="sm">
         {entries.map(([path, error]) => (
           <List.Item key={path}>

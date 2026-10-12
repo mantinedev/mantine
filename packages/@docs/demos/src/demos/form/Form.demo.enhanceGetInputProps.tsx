@@ -13,7 +13,6 @@ interface FormValues {
 
 function Demo() {
   const form = useForm<FormValues>({
-    mode: 'uncontrolled',
     initialValues: { name: '', age: '' },
     enhanceGetInputProps: (payload) => ({
       disabled: payload.field === 'name',
@@ -45,7 +44,6 @@ interface FormValues {
 
 function Demo() {
   const form = useForm<FormValues>({
-    mode: 'uncontrolled',
     initialValues: { name: '', age: '' },
     enhanceGetInputProps: (payload) => ({
       disabled: payload.field === 'name',

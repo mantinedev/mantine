@@ -1,7 +1,7 @@
-import { useState } from 'react';
-import { Alert, List, Stack, TextInput } from '@mantine/core';
-import { FormErrors, isNotEmpty, matches, TransformedValues, useForm } from '@mantine/form';
+import { Stack, TextInput } from '@mantine/core';
+import { isNotEmpty, matches, TransformedValues, useForm } from '@mantine/form';
 import { notifications } from '@mantine/notifications';
+import { ErrorSummary } from './ErrorSummary';
 import { SubmitBar } from './SubmitBar';
 import { ProfilePayload, ProfileValues } from './types';
 
@@ -12,8 +12,6 @@ function sendPayload(payload: ProfilePayload) {
 }
 
 export function TypedForm() {
-  const [errorList, setErrorList] = useState<string[]>([]);
-
   const form = useForm<ProfileValues, ProfilePayload>({
     initialValues: {
       name: '',
@@ -38,20 +36,16 @@ export function TypedForm() {
   type SubmitValues = TransformedValues<typeof form>;
 
   const handleSubmit = async (values: SubmitValues) => {
-    setErrorList([]);
     const payload = await sendPayload(values);
+    const tags = payload.tags.length > 0 ? `, tags: ${payload.tags.join(', ')}` : '';
     notifications.show({
       title: 'Profile saved',
-      message: `${payload.name}, age ${payload.age}, tags ${payload.tags.join(', ')}`,
+      message: `${payload.name}, age ${payload.age}${tags}`,
     });
   };
 
-  const showErrors = (errors: FormErrors) => {
-    setErrorList(Object.entries(errors).map(([path, error]) => `${path}: ${error}`));
-  };
-
   return (
-    <form onSubmit={form.onSubmit(handleSubmit, showErrors)}>
+    <form onSubmit={form.onSubmit(handleSubmit)}>
       <Stack>
         <TextInput
           size="md"
@@ -77,15 +71,7 @@ export function TypedForm() {
           {...form.getInputProps('tags')}
         />
 
-        {errorList.length > 0 && (
-          <Alert color="red" title="Fix the following errors">
-            <List size="sm">
-              {errorList.map((error) => (
-                <List.Item key={error}>{error}</List.Item>
-              ))}
-            </List>
-          </Alert>
-        )}
+        <ErrorSummary form={form} />
 
         <SubmitBar form={form} />
       </Stack>

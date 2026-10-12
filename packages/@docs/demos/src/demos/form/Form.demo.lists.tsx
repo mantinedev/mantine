@@ -12,7 +12,6 @@ import { TrashIcon } from '@phosphor-icons/react';
 
 function Demo() {
   const form = useForm({
-    mode: 'uncontrolled',
     initialValues: {
       employees: [{ name: '', active: false, key: randomId() }],
     },
@@ -71,7 +70,6 @@ function Demo() {
 
 function Demo() {
   const form = useForm({
-    mode: 'uncontrolled',
     initialValues: {
       employees: [{ name: '', active: false, key: randomId() }],
     },

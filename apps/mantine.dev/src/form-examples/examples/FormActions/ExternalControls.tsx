@@ -6,7 +6,6 @@ export function ExternalControls() {
     <Surface level={0} withBorder p="md">
       <Group gap="xs">
         <Button
-          size="xs"
           variant="default"
           onClick={() =>
             demoFormActions.setValues({
@@ -20,18 +19,17 @@ export function ExternalControls() {
         </Button>
 
         <Button
-          size="xs"
           variant="default"
           onClick={() => demoFormActions.setFieldError('email', 'This email is already taken')}
         >
           Set error
         </Button>
 
-        <Button size="xs" variant="default" onClick={() => demoFormActions.validate()}>
+        <Button variant="default" onClick={() => demoFormActions.validate()}>
           Validate
         </Button>
 
-        <Button size="xs" variant="default" onClick={() => demoFormActions.reset()}>
+        <Button variant="default" onClick={() => demoFormActions.reset()}>
           Clear
         </Button>
       </Group>

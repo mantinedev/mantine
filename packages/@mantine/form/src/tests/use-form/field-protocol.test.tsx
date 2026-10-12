@@ -1,10 +1,23 @@
-import { useEffect, useState } from 'react';
+import { Activity, memo, StrictMode, useEffect, useState } from 'react';
 import { act, render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { useFormField } from '@mantine/hooks';
+import { hydrateRoot } from 'react-dom/client';
+import { renderToString } from 'react-dom/server';
+import { useFormField, type FormField as HooksFormField } from '@mantine/hooks';
+import type { FormField } from '../../form-store/form-field';
 import { FormMode, UseFormReturnType } from '../../types';
 import { useField, UseFieldReturnType } from '../../use-field';
 import { useForm } from '../../use-form';
+
+type MutuallyAssignable<A, B> = [A] extends [B] ? ([B] extends [A] ? true : false) : false;
+
+function expectType<T extends true>(value?: T) {
+  return value;
+}
+
+expectType<MutuallyAssignable<FormField, HooksFormField>>();
+expectType<MutuallyAssignable<FormField<string>, HooksFormField<string>>>();
+expectType<MutuallyAssignable<FormField<{ a: number[] }>, HooksFormField<{ a: number[] }>>>();
 
 interface Values {
   plain: string;
@@ -474,5 +487,285 @@ describe('@mantine/form/use-field field protocol', () => {
 
     act(() => getField().setValue('programmatic'));
     expect(onExternalWrite).toHaveBeenCalledTimes(2);
+  });
+});
+
+describe('@mantine/form/field-protocol status hooks on nested paths', () => {
+  interface StatusValues {
+    user: { name: string };
+    rows: { name: string }[];
+  }
+
+  function setupStatus(mode: FormMode) {
+    let form!: UseFormReturnType<StatusValues>;
+
+    const Status = memo(({ path }: { path: string }) => (
+      <span data-testid={path}>
+        {String(form.useDirty(path as any))}/{String(form.useTouched(path as any))}
+      </span>
+    ));
+
+    function Demo() {
+      form = useForm<StatusValues>({
+        mode,
+        initialValues: { user: { name: '' }, rows: [{ name: 'a' }, { name: 'b' }] },
+      });
+
+      return (
+        <>
+          <BoundInput label="user.name" {...form.getInputProps('user.name')} />
+          <BoundInput label="rows.0.name" {...form.getInputProps('rows.0.name')} />
+          <BoundInput label="rows.1.name" {...form.getInputProps('rows.1.name')} />
+          {['user.name', 'user', 'rows.0', 'rows.1', 'rows'].map((path) => (
+            <Status key={path} path={path} />
+          ))}
+        </>
+      );
+    }
+
+    render(<Demo />);
+    return { getForm: () => form, read: (path: string) => screen.getByTestId(path).textContent };
+  }
+
+  (['uncontrolled', 'controlled'] as const).forEach((mode) => {
+    it(`updates useDirty and useTouched for nested and parent paths when the input changes (${mode})`, async () => {
+      const { getForm, read } = setupStatus(mode);
+      await userEvent.type(getInput('user.name'), 'x');
+      expect(getForm().isDirty('user.name')).toBe(true);
+      expect(read('user.name')).toBe('true/true');
+      expect(read('user')).toBe('true/true');
+
+      await userEvent.clear(getInput('user.name'));
+      expect(read('user.name')).toBe('false/true');
+      expect(read('user')).toBe('false/true');
+    });
+
+    it(`updates useDirty for every edited row (${mode})`, async () => {
+      const { read } = setupStatus(mode);
+      await userEvent.type(getInput('rows.0.name'), 'x');
+      await userEvent.type(getInput('rows.1.name'), 'y');
+      expect(read('rows.0')).toBe('true/true');
+      expect(read('rows.1')).toBe('true/true');
+      expect(read('rows')).toBe('true/true');
+    });
+
+    it(`updates useDirty for nested and parent paths on setFieldValue and setValues (${mode})`, () => {
+      const { getForm, read } = setupStatus(mode);
+      act(() => getForm().setFieldValue('user.name', 'x'));
+      expect(read('user.name')).toBe('true/true');
+      expect(read('user')).toBe('true/true');
+
+      act(() => getForm().reset());
+      expect(read('user')).toBe('false/false');
+
+      act(() => getForm().setValues({ user: { name: 'y' } }));
+      expect(read('user.name')).toBe('true/false');
+      expect(read('user')).toBe('true/false');
+
+      act(() => getForm().setValues({ user: { name: '' } }));
+      expect(read('user.name')).toBe('false/false');
+      expect(read('user')).toBe('false/false');
+    });
+  });
+});
+
+describe('@mantine/form/field-protocol uncontrolled form render isolation', () => {
+  it('does not rerender an uncontrolled form from a child rendered twice by StrictMode', async () => {
+    const onRender = jest.fn();
+
+    function Child({ form }: { form: UseFormReturnType<{ a: string }> }) {
+      return <BoundInput label="a" {...form.getInputProps('a')} />;
+    }
+
+    function App() {
+      const form = useForm({ initialValues: { a: '' } });
+      onRender();
+      return <Child form={form} />;
+    }
+
+    render(
+      <StrictMode>
+        <App />
+      </StrictMode>
+    );
+    onRender.mockClear();
+    await userEvent.type(getInput('a'), 'abcdef');
+    expect(getInput('a')).toHaveValue('abcdef');
+    expect(onRender).not.toHaveBeenCalled();
+  });
+
+  it('does not rerender an uncontrolled form from a child that rerenders on its own', async () => {
+    const onRender = jest.fn();
+
+    function Child({ form }: { form: UseFormReturnType<{ a: string }> }) {
+      const value = form.useWatchValue('a');
+      return (
+        <>
+          <span data-testid="watched">{value}</span>
+          <BoundInput label="a" {...form.getInputProps('a')} />
+        </>
+      );
+    }
+
+    function App() {
+      const form = useForm({ initialValues: { a: '' } });
+      onRender();
+      return <Child form={form} />;
+    }
+
+    render(<App />);
+    onRender.mockClear();
+    await userEvent.type(getInput('a'), 'abcdef');
+    expect(getInput('a')).toHaveValue('abcdef');
+    expect(screen.getByTestId('watched')).toHaveTextContent('abcdef');
+    expect(onRender).not.toHaveBeenCalled();
+  });
+
+  it('does not rerender the form when every consumer of the path is subscribed', async () => {
+    const onRender = jest.fn();
+
+    function Demo() {
+      const form = useForm({ mode: 'uncontrolled', initialValues: { name: '' } });
+      onRender();
+      return (
+        <>
+          <BoundInput label="first" {...form.getInputProps('name')} />
+          <BoundInput label="second" {...form.getInputProps('name')} />
+        </>
+      );
+    }
+
+    render(<Demo />);
+    onRender.mockClear();
+    await userEvent.type(getInput('first'), 'ab');
+    expect(getInput('second')).toHaveValue('ab');
+    expect(onRender).not.toHaveBeenCalled();
+  });
+});
+
+describe('@mantine/form/field-protocol status hooks and Activity lifecycle', () => {
+  interface RowsValues {
+    rows: { name: string }[];
+  }
+
+  it('keeps useDirty consistent with form.isDirty after list operations and two writes in one handler', async () => {
+    let form!: UseFormReturnType<RowsValues>;
+    const paths = ['rows.0', 'rows.1', 'rows.2', 'rows'];
+
+    const Status = memo(({ path }: { path: string }) => (
+      <span data-testid={path}>{String(form.useDirty(path as any))}</span>
+    ));
+
+    function Demo() {
+      form = useForm<RowsValues>({
+        initialValues: { rows: [{ name: 'a' }, { name: 'b' }, { name: 'c' }] },
+      });
+
+      return (
+        <>
+          {form.getValues().rows.map((_, index) => (
+            <BoundInput
+              key={index}
+              label={`rows.${index}`}
+              {...form.getInputProps(`rows.${index}.name`)}
+            />
+          ))}
+          {paths.map((path) => (
+            <Status key={path} path={path} />
+          ))}
+        </>
+      );
+    }
+
+    render(<Demo />);
+    const expectConsistent = () =>
+      paths.forEach((path) =>
+        expect([path, screen.getByTestId(path).textContent]).toStrictEqual([
+          path,
+          String(form.isDirty(path as any)),
+        ])
+      );
+
+    await userEvent.type(getInput('rows.1'), 'x');
+    expect(screen.getByTestId('rows.1')).toHaveTextContent('true');
+    expectConsistent();
+
+    act(() => form.removeListItem('rows', 0));
+    expectConsistent();
+
+    act(() => form.insertListItem('rows', { name: 'a' }, 0));
+    expectConsistent();
+
+    act(() => form.reorderListItem('rows', { from: 0, to: 2 }));
+    expectConsistent();
+
+    act(() => {
+      form.setFieldValue('rows.0.name', 'first');
+      expect(form.isDirty('rows.0')).toBe(true);
+      form.setFieldValue('rows.0.name', 'a');
+      expect(form.getValues().rows[0].name).toBe('a');
+    });
+    expectConsistent();
+  });
+
+  it('updates useDirty after renderToString and hydrateRoot', async () => {
+    let form!: UseFormReturnType<{ user: { name: string } }>;
+
+    function Status() {
+      return <span data-testid="status">{String(form.useDirty('user'))}</span>;
+    }
+
+    function Demo() {
+      form = useForm({ initialValues: { user: { name: '' } } });
+      return (
+        <>
+          <BoundInput label="user.name" {...form.getInputProps('user.name')} />
+          <Status />
+        </>
+      );
+    }
+
+    const container = document.createElement('div');
+    document.body.appendChild(container);
+    container.innerHTML = renderToString(<Demo />);
+    const errors = jest.spyOn(console, 'error').mockImplementation(() => {});
+    let root!: ReturnType<typeof hydrateRoot>;
+    act(() => {
+      root = hydrateRoot(container, <Demo />);
+    });
+    expect(errors).not.toHaveBeenCalled();
+    errors.mockRestore();
+
+    await userEvent.type(getInput('user.name'), 'x');
+    expect(screen.getByTestId('status')).toHaveTextContent('true');
+    act(() => root.unmount());
+    container.remove();
+  });
+
+  function ActivityForm({ hidden, onRender }: { hidden?: boolean; onRender: () => void }) {
+    const form = useForm({ initialValues: { name: '' } });
+    onRender();
+    return (
+      <>
+        <BoundInput label="bound" {...form.getInputProps('name')} />
+        <Activity mode={hidden ? 'hidden' : 'visible'}>
+          <BoundInput label="hidden-bound" {...form.getInputProps('name')} />
+        </Activity>
+      </>
+    );
+  }
+
+  it('keeps consumers hidden by Activity in sync when they are shown again', async () => {
+    const onRender = jest.fn();
+    const view = render(<ActivityForm hidden onRender={onRender} />);
+
+    await userEvent.type(getInput('bound'), 'ab');
+    view.rerender(<ActivityForm onRender={onRender} />);
+    expect(getInput('hidden-bound')).toHaveValue('ab');
+
+    onRender.mockClear();
+    await userEvent.type(getInput('bound'), 'c');
+    expect(getInput('hidden-bound')).toHaveValue('abc');
+    expect(onRender).not.toHaveBeenCalled();
   });
 });

@@ -46,6 +46,12 @@ export function RegistrationForm() {
     },
   });
 
+  form.watch('password', () => {
+    if (form.errors.confirmPassword) {
+      form.validateField('confirmPassword');
+    }
+  });
+
   const handleSubmit = async (values: RegistrationValues) => {
     const user = await register(values);
     notifications.show({

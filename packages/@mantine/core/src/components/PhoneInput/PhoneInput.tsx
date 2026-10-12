@@ -220,7 +220,7 @@ export const PhoneInput = factory<PhoneInputFactory>((_props) => {
   );
   const [search, setSearch] = useState('');
 
-  const [_value, setValue] = useUncontrolled({
+  const [_value, setValue, controlled] = useUncontrolled({
     value,
     defaultValue,
     finalValue: initialCountry && international ? `+${initialCountry.dialCode}` : '',
@@ -252,11 +252,13 @@ export const PhoneInput = factory<PhoneInputFactory>((_props) => {
     detected.iso2 !== current?.iso2 &&
     (detected.dialCode !== current?.dialCode || matchesAreaCode(detected, rawValue));
 
+  const controlledValue = controlled ? _value : undefined;
+
   useEffect(() => {
-    const detected = value ? guessCountry(value, filteredCountries) : undefined;
+    const detected = controlledValue ? guessCountry(controlledValue, filteredCountries) : undefined;
 
     if (detected) {
-      if (isDetectedCountryDifferent(detected, selectedCountry, value ?? '')) {
+      if (isDetectedCountryDifferent(detected, selectedCountry, controlledValue ?? '')) {
         setSelectedCountry(detected);
         onCountryChange?.(detected);
       }
@@ -270,7 +272,7 @@ export const PhoneInput = factory<PhoneInputFactory>((_props) => {
         onCountryChange?.(fallback);
       }
     }
-  }, [value, filteredCountries]);
+  }, [controlledValue, filteredCountries]);
 
   const toDisplayValue = (formatted: string, country: PhoneInputCountryData | null) =>
     international || !country ? formatted : formatted.replace(`+${country.dialCode} `, '');

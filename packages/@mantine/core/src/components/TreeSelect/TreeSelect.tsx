@@ -435,7 +435,7 @@ export const TreeSelect = genericFactory<TreeSelectFactory>((_props) => {
     store.resetSelectedOption();
   };
 
-  const [_value, setValue] = useUncontrolled({
+  const [_value, setValue, controlled] = useUncontrolled({
     value: value as any,
     defaultValue: defaultValue as any,
     finalValue: isMulti ? [] : null,
@@ -697,16 +697,18 @@ export const TreeSelect = genericFactory<TreeSelectFactory>((_props) => {
     }
   };
 
+  const controlledValue = controlled ? _value : undefined;
+
   useEffect(() => {
     if (mode !== 'single' || !searchable) {
       return;
     }
-    if (value === null) {
+    if (controlledValue === null) {
       handleSearchChange('');
-    } else if (typeof value === 'string') {
-      handleSearchChange(getNodeLabel(value));
+    } else if (typeof controlledValue === 'string') {
+      handleSearchChange(getNodeLabel(controlledValue));
     }
-  }, [value]);
+  }, [controlledValue]);
 
   const prevDropdownOpenedRef = useRef(false);
   useEffect(() => {

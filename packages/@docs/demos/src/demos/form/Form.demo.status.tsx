@@ -10,7 +10,6 @@ import { TextInput, Button } from '@mantine/core';
 
 function Demo() {
   const form = useForm({
-    mode: 'uncontrolled',
     initialValues: { text: 'initial value' },
   });
 
@@ -23,6 +22,7 @@ function Demo() {
       />
 
       <Button
+        mt="md"
         onClick={() =>
           console.log({ touched: form.isTouched('text'), dirty: form.isDirty('text') })
         }
@@ -36,7 +36,6 @@ function Demo() {
 
 function Demo() {
   const form = useForm({
-    mode: 'uncontrolled',
     initialValues: { text: 'initial value' },
   });
 

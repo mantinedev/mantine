@@ -1,4 +1,6 @@
+import { useState } from 'react';
 import { act } from '@testing-library/react';
+import { FormMode, useForm, UseFormReturnType } from '@mantine/form';
 import { render, screen, tests, userEvent } from '@mantine-tests/core';
 import { SliderStylesNames } from '../Slider.context';
 import { RangeSlider, RangeSliderProps } from './RangeSlider';
@@ -477,5 +479,89 @@ describe('@mantine/core/RangeSlider', () => {
     const sliders = getSliders();
     expect(sliders[0]).toHaveAttribute('aria-label', 'Min');
     expect(sliders[1]).toHaveAttribute('aria-label', 'Max');
+  });
+
+  describe('keyboard steps from the resolved value', () => {
+    it.each<FormMode>(['uncontrolled', 'controlled'])(
+      'steps from the reset value after form.reset() in %s form mode',
+      async (mode) => {
+        let form!: UseFormReturnType<{ range: [number, number] }>;
+
+        function Wrapper() {
+          form = useForm({ mode, initialValues: { range: [10, 50] } });
+          return <RangeSlider {...form.getInputProps('range')} />;
+        }
+
+        render(<Wrapper />);
+        act(() => getSliders()[0].focus());
+        await userEvent.keyboard('{ArrowRight}{ArrowRight}{ArrowRight}{ArrowRight}{ArrowRight}');
+        expect(form.getValues().range).toStrictEqual([15, 50]);
+
+        act(() => form.reset());
+        expect(getSliders()[0]).toHaveAttribute('aria-valuenow', '10');
+
+        await userEvent.keyboard('{ArrowRight}');
+        expect(form.getValues().range).toStrictEqual([11, 50]);
+
+        act(() => form.setFieldValue('range', [30, 40]));
+        await userEvent.keyboard('{ArrowLeft}');
+        expect(form.getValues().range).toStrictEqual([29, 40]);
+      }
+    );
+
+    it('steps from the reset value inside a wrapper that spreads getInputProps', async () => {
+      let form!: UseFormReturnType<{ range: [number, number] }>;
+
+      function PriceRange(props: RangeSliderProps) {
+        return <RangeSlider min={0} max={100} {...props} />;
+      }
+
+      function Wrapper() {
+        form = useForm({ initialValues: { range: [10, 50] } });
+        return <PriceRange {...form.getInputProps('range')} />;
+      }
+
+      render(<Wrapper />);
+      act(() => getSliders()[0].focus());
+      await userEvent.keyboard('{ArrowRight}{ArrowRight}');
+      act(() => {
+        form.setFieldValue('range', [20, 50]);
+        form.reset();
+      });
+      expect(getSliders()[0]).toHaveAttribute('aria-valuenow', '10');
+      await userEvent.keyboard('{ArrowRight}');
+      expect(form.getValues().range).toStrictEqual([11, 50]);
+    });
+
+    it('steps from the current value for non-form controlled and uncontrolled callers', async () => {
+      function Controlled() {
+        const [value, setValue] = useState<[number, number]>([10, 50]);
+        return (
+          <>
+            <RangeSlider value={value} onChange={setValue} />
+            <button type="button" onClick={() => setValue([10, 50])}>
+              reset
+            </button>
+          </>
+        );
+      }
+
+      const { unmount } = render(<Controlled />);
+      act(() => getSliders()[0].focus());
+      await userEvent.keyboard('{ArrowRight}{ArrowRight}');
+      expect(getSliders()[0]).toHaveAttribute('aria-valuenow', '12');
+      await userEvent.click(screen.getByRole('button', { name: 'reset' }));
+      act(() => getSliders()[0].focus());
+      await userEvent.keyboard('{ArrowRight}');
+      expect(getSliders()[0]).toHaveAttribute('aria-valuenow', '11');
+      unmount();
+
+      const spy = jest.fn();
+      render(<RangeSlider defaultValue={[10, 50]} onChange={spy} />);
+      act(() => getSliders()[1].focus());
+      await userEvent.keyboard('{ArrowLeft}{ArrowLeft}');
+      expect(spy).toHaveBeenLastCalledWith([10, 48]);
+      expect(getSliders()[1]).toHaveAttribute('aria-valuenow', '48');
+    });
   });
 });

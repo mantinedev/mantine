@@ -48,12 +48,12 @@ export function SubmitWithTransform() {
     }),
   });
 
-  type Payload = TransformedValues<typeof form>;
+  type EventPayload = TransformedValues<typeof form>;
 
-  const describePayload = (payload: Payload) =>
-    `${payload.date ?? 'no date'}, ${payload.capacity} seats, tags: ${payload.tags.join(', ') || 'none'}, ${payload.emails.length} invites`;
+  const describePayload = (payload: EventPayload) =>
+    `${payload.date ?? 'no date'}, ${payload.capacity} ${payload.capacity === 1 ? 'seat' : 'seats'}, tags: ${payload.tags.join(', ') || 'none'}, ${payload.emails.length} ${payload.emails.length === 1 ? 'invite' : 'invites'}`;
 
-  const handleSubmit = (payload: Payload) => {
+  const handleSubmit = (payload: EventPayload) => {
     notifications.show({
       title: 'Event created',
       message: `${payload.title}: ${describePayload(payload)}`,
@@ -92,6 +92,8 @@ export function SubmitWithTransform() {
             label="Capacity"
             placeholder="Number of seats"
             withAsterisk
+            allowNegative={false}
+            allowDecimal={false}
             min={1}
             max={100000}
             {...form.getInputProps('capacity')}

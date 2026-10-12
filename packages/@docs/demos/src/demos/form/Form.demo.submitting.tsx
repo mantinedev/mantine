@@ -13,7 +13,6 @@ const asyncSubmit = (values: any) =>
 
 function Demo() {
   const form = useForm({
-    mode: 'uncontrolled',
     initialValues: { name: 'John' },
   });
 
@@ -58,7 +57,6 @@ const asyncSubmit = (values: any) =>
 
 function Demo() {
   const form = useForm({
-    mode: 'uncontrolled',
     initialValues: { name: 'John' },
   });
 

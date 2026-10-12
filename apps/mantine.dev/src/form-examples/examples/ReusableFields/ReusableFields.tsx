@@ -36,7 +36,9 @@ export function ReusableFields() {
       <form onSubmit={form.onSubmit(handleSubmit)}>
         <Stack>
           <TextField name="fullName" label="Full name" placeholder="Jane Doe" withAsterisk />
+
           <TextField name="username" label="Username" placeholder="jane_doe" withAsterisk />
+
           <TextField name="email" label="Email" placeholder="jane@mantine.dev" withAsterisk />
 
           <SimpleGrid cols={{ base: 1, sm: 2 }}>

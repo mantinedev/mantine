@@ -50,7 +50,8 @@ function DemoForm() {
           size="md"
           label="Age"
           placeholder="Your age"
-          min={0}
+          allowNegative={false}
+          allowDecimal={false}
           max={120}
           withAsterisk
           {...form.getInputProps('age')}
@@ -70,6 +71,7 @@ export function FormActions() {
   return (
     <Stack>
       <ExternalControls />
+
       <DemoForm />
     </Stack>
   );

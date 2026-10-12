@@ -1,4 +1,3 @@
-import { filterErrors } from '../form-store/filter-errors/filter-errors';
 import { getPath } from '../paths';
 import {
   FormErrors,
@@ -7,6 +6,7 @@ import {
   FormValidateInput,
   FormValidationResult,
 } from '../types';
+import { filterErrors } from './filter-errors/filter-errors';
 
 export const formRootRule = Symbol('root-rule');
 
@@ -86,7 +86,7 @@ function validateRulesRecord<T>(
         }
       }
 
-      if (formRootRule in rule) {
+      if (!arrayValidation && formRootRule in rule) {
         const rootResult = (rule as any)[formRootRule](value, values, rulePath, signal);
         if (rootResult instanceof Promise) {
           asyncTasks.push({ rulePath, promise: rootResult });
@@ -120,13 +120,13 @@ function validateRulesRecord<T>(
   })();
 }
 
-const defaultResolveError = (err: unknown): React.ReactNode =>
+export const defaultResolveValidationError = (err: unknown): React.ReactNode =>
   err instanceof Error ? err.message : String(err);
 
 export function validateValues<T>(
   validate: FormValidateInput<T> | undefined,
   values: T,
-  resolveValidationError: (error: unknown) => React.ReactNode = defaultResolveError,
+  resolveValidationError: (error: unknown) => React.ReactNode = defaultResolveValidationError,
   signal: AbortSignal = new AbortController().signal
 ): FormValidationResult | Promise<FormValidationResult> {
   if (typeof validate === 'function') {

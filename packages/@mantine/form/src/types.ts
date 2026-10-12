@@ -120,9 +120,6 @@ export type SetFieldValue<out Values> = <TValues extends Values, Field extends L
 export type ClearFieldError<Values = unknown> = <Field extends LooseKeys<Values>>(
   path: Field
 ) => void;
-export type ClearFieldDirty<Values = unknown> = <Field extends LooseKeys<Values>>(
-  path: Field
-) => void;
 export type ClearErrors = () => void;
 export type Reset = () => void;
 
@@ -173,25 +170,6 @@ export type ValidateField<Values, Rules = any> = <Field extends LooseKeys<Values
 export type SetFieldError<Values> = <Field extends LooseKeys<Values>>(
   path: Field,
   error: React.ReactNode
-) => void;
-
-export type SetFieldTouched<Values> = <Field extends LooseKeys<Values>>(
-  path: Field,
-  touched: boolean
-) => void;
-
-export type SetFieldDirty<Values> = <Field extends LooseKeys<Values>>(
-  path: Field,
-  dirty: boolean,
-  forceUpdate?: boolean
-) => void;
-
-export type SetCalculatedFieldDirty<out Values> = <
-  TValues extends Values,
-  Field extends LooseKeys<Values>,
->(
-  path: Field,
-  value: FormPathValue<TValues, Field>
 ) => void;
 
 export type ReorderListItem<out Values> = <Field extends LooseKeys<Values>>(

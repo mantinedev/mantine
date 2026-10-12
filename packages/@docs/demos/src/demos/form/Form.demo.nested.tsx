@@ -8,7 +8,6 @@ import { Box, Checkbox, TextInput } from '@mantine/core';
 
 function Demo() {
   const form = useForm({
-    mode: 'uncontrolled',
     initialValues: {
       terms: false,
       user: {
@@ -43,7 +42,6 @@ function Demo() {
 
 function Demo() {
   const form = useForm({
-    mode: 'uncontrolled',
     initialValues: {
       terms: false,
       user: {

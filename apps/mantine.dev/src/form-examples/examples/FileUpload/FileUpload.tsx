@@ -1,7 +1,7 @@
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { ImageIcon, UploadSimpleIcon, XIcon } from '@phosphor-icons/react';
 import { Button, Group, Input, Progress, Stack, Text, TextInput } from '@mantine/core';
-import { Dropzone, IMAGE_MIME_TYPE } from '@mantine/dropzone';
+import { Dropzone, FileRejection, IMAGE_MIME_TYPE } from '@mantine/dropzone';
 import { isNotEmpty, useForm } from '@mantine/form';
 import { notifications } from '@mantine/notifications';
 import { FilesList, formatSize } from './FilesList';
@@ -16,12 +16,27 @@ const MAX_TOTAL_SIZE = 10 * 1024 ** 2;
 const UPLOAD_DURATION = 2000;
 const UPLOAD_TICK = 100;
 
+function pluralizeFiles(count: number) {
+  return `${count} ${count === 1 ? 'file' : 'files'}`;
+}
+
 function totalSize(files: File[]) {
   return files.reduce((sum, file) => sum + file.size, 0);
 }
 
+function showRejectedFiles(rejections: FileRejection[]) {
+  notifications.show({
+    color: 'red',
+    title: `${pluralizeFiles(rejections.length)} rejected`,
+    message: `${rejections.map((rejection) => rejection.file.name).join(', ')}: only images up to 5 MB are accepted`,
+  });
+}
+
 export function FileUpload() {
   const [progress, setProgress] = useState(0);
+  const uploadInterval = useRef<number>(undefined);
+
+  useEffect(() => () => window.clearInterval(uploadInterval.current), []);
 
   const form = useForm<UploadValues>({
     initialValues: {
@@ -48,15 +63,15 @@ export function FileUpload() {
     // form.submitting stays true until the returned promise settles
     return new Promise<void>((resolve) => {
       let elapsed = 0;
-      const interval = window.setInterval(() => {
+      uploadInterval.current = window.setInterval(() => {
         elapsed += UPLOAD_TICK;
         setProgress(Math.min(100, (elapsed / UPLOAD_DURATION) * 100));
 
         if (elapsed >= UPLOAD_DURATION) {
-          window.clearInterval(interval);
+          window.clearInterval(uploadInterval.current);
           notifications.show({
             title: 'Upload complete',
-            message: `${values.files.length} files uploaded to "${values.title}"`,
+            message: `${pluralizeFiles(values.files.length)} uploaded to "${values.title}"`,
           });
           form.reset();
           resolve();
@@ -91,6 +106,7 @@ export function FileUpload() {
             onDrop={(dropped) =>
               form.setFieldValue('files', [...form.getValues().files, ...dropped])
             }
+            onReject={showRejectedFiles}
           >
             <Group justify="center" gap="md" mih={100} style={{ pointerEvents: 'none' }}>
               <Dropzone.Accept>
@@ -111,7 +127,7 @@ export function FileUpload() {
                 <Text size="sm">
                   {files.length === 0
                     ? 'No files selected'
-                    : `${files.length} file(s), ${formatSize(totalSize(files))}`}
+                    : `${pluralizeFiles(files.length)}, ${formatSize(totalSize(files))}`}
                 </Text>
               </div>
             </Group>

@@ -25,7 +25,6 @@ function checkUsernameAvailability(username: string, signal?: AbortSignal): Prom
 
 function Demo() {
   const form = useForm({
-    mode: 'uncontrolled',
     initialValues: { username: '', email: '' },
 
     // Debounce async validation by 500ms – prevents firing
@@ -91,7 +90,6 @@ function checkUsernameAvailability(username: string, signal?: AbortSignal): Prom
 
 function Demo() {
   const form = useForm({
-    mode: 'uncontrolled',
     initialValues: { username: '', email: '' },
 
     // Debounce async validation by 500ms – prevents firing

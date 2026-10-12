@@ -9,6 +9,7 @@ import {
   TextInput,
 } from '@mantine/core';
 import { isNotEmpty, useForm } from '@mantine/form';
+import { useId } from '@mantine/hooks';
 import { notifications } from '@mantine/notifications';
 import { CATEGORIES, COLLABORATORS, SUGGESTED_TAGS } from './data';
 
@@ -20,6 +21,7 @@ interface PostValues {
 }
 
 export function TagsAndKeywords() {
+  const categoriesId = useId();
   const form = useForm<PostValues>({
     initialValues: {
       title: '',
@@ -37,7 +39,7 @@ export function TagsAndKeywords() {
   const handleSubmit = (values: PostValues) => {
     notifications.show({
       title: 'Post published',
-      message: `${values.title} published in ${values.categories.join(', ')} with ${values.tags.length} tags`,
+      message: `${values.title} published in ${values.categories.join(', ')} with ${values.tags.length} ${values.tags.length === 1 ? 'tag' : 'tags'}`,
     });
   };
 
@@ -64,12 +66,20 @@ export function TagsAndKeywords() {
           placeholder="Press Enter to add a tag"
           description="Up to 5 tags"
           data={SUGGESTED_TAGS}
+          splitChars={[',', ' ']}
           {...form.getInputProps('tags')}
         />
 
-        <Input.Wrapper size="md" label="Categories" withAsterisk error={form.errors.categories}>
+        <Input.Wrapper
+          id={categoriesId}
+          size="md"
+          label="Categories"
+          labelElement="div"
+          withAsterisk
+          error={form.errors.categories}
+        >
           <Chip.Group multiple {...form.getInputProps('categories')}>
-            <Group gap="xs" mt={4} mb={4}>
+            <Group role="group" aria-labelledby={`${categoriesId}-label`} gap="xs" mt={4} mb={4}>
               {categoryChips}
             </Group>
           </Chip.Group>

@@ -10,7 +10,6 @@ import { PasswordInput, Group, Button, Box } from '@mantine/core';
 
 function Demo() {
   const form = useForm({
-    mode: 'uncontrolled',
     initialValues: {
       password: 'secret',
       confirmPassword: 'sevret',
@@ -49,7 +48,6 @@ function Demo() {
 
 function Demo() {
   const form = useForm({
-    mode: 'uncontrolled',
     initialValues: {
       password: 'secret',
       confirmPassword: 'sevret',

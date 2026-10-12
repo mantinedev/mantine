@@ -34,7 +34,7 @@ export function FormActions() {
       <Textarea label="area" {...form.getInputProps('area')} />
       <NativeSelect
         label="native select"
-        data={['React', 'Angular']}
+        data={[{ value: '', label: 'Pick framework' }, 'React', 'Angular']}
         {...form.getInputProps('select')}
       />
 

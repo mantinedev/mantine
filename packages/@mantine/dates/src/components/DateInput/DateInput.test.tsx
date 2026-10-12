@@ -1,4 +1,7 @@
+import { useState } from 'react';
+import { act } from '@testing-library/react';
 import { __InputStylesNames } from '@mantine/core';
+import { FormMode, useForm, UseFormReturnType } from '@mantine/form';
 import {
   inputDefaultProps,
   inputStylesApiSelectors,
@@ -509,5 +512,66 @@ describe('@mantine/dates/DateInput', () => {
 
     await userEvent.click(days[10]);
     expect(getInput(container)).toHaveFocus();
+  });
+
+  describe('calendar month follows the resolved value', () => {
+    const getLevelControl = () => screen.getByRole('button', { name: 'level-control' });
+
+    it.each<FormMode>(['uncontrolled', 'controlled'])(
+      'shows the month of the reset value after form.reset() in %s form mode',
+      async (mode) => {
+        let form!: UseFormReturnType<{ date: string | null }>;
+
+        function Wrapper() {
+          form = useForm({ mode, initialValues: { date: '2024-01-15' as string | null } });
+          return <DateInput {...defaultProps} {...form.getInputProps('date')} />;
+        }
+
+        const { container } = render(<Wrapper />);
+        await userEvent.tab();
+        expect(getLevelControl()).toHaveTextContent('January 2024');
+
+        await userEvent.clear(getInput(container));
+        await userEvent.type(getInput(container), 'March 10, 2024');
+        expect(form.getValues().date).toBe('2024-03-10');
+        expect(getLevelControl()).toHaveTextContent('March 2024');
+        await userEvent.tab();
+
+        act(() => form.reset());
+        expectValue(container, 'January 15, 2024');
+        act(() => (getInput(container) as HTMLInputElement).focus());
+        expect(getLevelControl()).toHaveTextContent('January 2024');
+      }
+    );
+
+    it('keeps month sync unchanged for non-form controlled and uncontrolled callers', async () => {
+      function Controlled() {
+        const [value, setValue] = useState<string | null>('2024-01-15');
+        return (
+          <>
+            <DateInput {...defaultProps} value={value} onChange={setValue} />
+            <button type="button" onClick={() => setValue('2024-01-15')}>
+              reset
+            </button>
+          </>
+        );
+      }
+
+      const { container, unmount } = render(<Controlled />);
+      await userEvent.tab();
+      await userEvent.clear(getInput(container));
+      await userEvent.type(getInput(container), 'March 10, 2024');
+      expect(getLevelControl()).toHaveTextContent('March 2024');
+      await userEvent.click(screen.getByRole('button', { name: 'reset' }));
+      act(() => (getInput(container) as HTMLInputElement).focus());
+      expect(getLevelControl()).toHaveTextContent('January 2024');
+      unmount();
+
+      const uncontrolled = render(<DateInput {...defaultProps} defaultValue="2024-01-15" />);
+      await userEvent.tab();
+      await userEvent.clear(getInput(uncontrolled.container));
+      await userEvent.type(getInput(uncontrolled.container), 'March 10, 2024');
+      expect(getLevelControl()).toHaveTextContent('March 2024');
+    });
   });
 });

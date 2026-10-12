@@ -8,7 +8,6 @@ import { TextInput, Button, Group } from '@mantine/core';
 
 function Demo() {
   const form = useForm({
-    mode: 'uncontrolled',
     initialValues: {
       name: '',
       email: '',
@@ -39,7 +38,6 @@ function Demo() {
 
 function Demo() {
   const form = useForm({
-    mode: 'uncontrolled',
     initialValues: {
       name: '',
       email: '',

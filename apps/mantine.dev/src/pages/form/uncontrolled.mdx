@@ -8,8 +8,8 @@ export default Layout(MDX_DATA.formUncontrolled);
 
 Uncontrolled mode is the default mode. Form values are stored outside of React state.
 The component that calls `useForm` does not rerender when the user types: each input
-is subscribed to its own field and rerenders alone. `form.values` is not updated, read
-values with `form.getValues()`.
+is subscribed to its own field and rerenders alone. `form.values` is a snapshot from the
+last render of the form component, read current values with `form.getValues()`.
 
 The form component still rerenders when:
 
@@ -18,7 +18,7 @@ The form component still rerenders when:
 - a field changes and its input is not subscribed, for example a native `input` element
 - `form.submitting` or `form.validating` changes
 
-Example of uncontrolled mode, note that `form.values` in the code block is not updated:
+Example of uncontrolled mode, note that `form.values` in the code block is updated only when the form component rerenders, for example on submit:
 
 <Demo data={FormDemos.uncontrolled} />
 
@@ -34,8 +34,8 @@ Both modes have the same API, set `mode: 'controlled'` for small forms when you 
 ## form.getValues
 
 `form.getValues()` returns the current values in both modes. `form.values` is a snapshot
-from the last render: it is stale until the next render in controlled mode and is not
-updated at all in uncontrolled mode.
+from the last render of the form component: in uncontrolled mode it is not updated while
+the user types, only when the form rerenders.
 
 ```tsx
 import { useForm } from '@mantine/form';
@@ -155,3 +155,7 @@ Native inputs and third-party components that are not subscribed still receive t
 `value`: the form component rerenders when their field changes, the same way as in
 controlled mode. To subscribe a custom component to its field, see
 [custom inputs](/form/get-input-props/#custom-inputs).
+
+Bind each path to a single input. When the same path is spread to a subscribed input (any Mantine
+input) and to a component that is not subscribed, the second one is not updated while the user
+types in the first. Use controlled mode or `use-form-field` in both components instead.

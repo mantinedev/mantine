@@ -230,11 +230,17 @@ export const ColorPicker = factory<ColorPickerFactory>((_props) => {
     setValue(valueRef.current);
   };
 
+  const controlledValue = controlled ? _value : undefined;
+
   useDidUpdate(() => {
-    if (typeof value === 'string' && isColorValid(value) && !isScrubbingRef.current) {
-      setParsed(parseColor(value));
+    if (
+      typeof controlledValue === 'string' &&
+      isColorValid(controlledValue) &&
+      !isScrubbingRef.current
+    ) {
+      setParsed(parseColor(controlledValue));
     }
-  }, [value]);
+  }, [controlledValue]);
 
   useDidUpdate(() => {
     formatRef.current = format || 'hex';

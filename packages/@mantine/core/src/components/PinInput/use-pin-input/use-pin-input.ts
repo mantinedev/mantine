@@ -74,10 +74,14 @@ export interface PinInputController {
 
 export function usePinInput(options: PinInputControllerOptions = {}): PinInputController {
   const { length = 4, value: valueOption, defaultValue, onChange, onComplete } = options;
-  const formField = useFormField<string>(onChange);
+  const completedRef = useRef(false);
+  const formField = useFormField<string>(onChange, {
+    onExternalWrite: () => {
+      completedRef.current = false;
+    },
+  });
   const valueProp = formField.subscribed ? formField.value : valueOption;
 
-  const completedRef = useRef(false);
   const lastFocusedIndexRef = useRef(-1);
   const inputsRef = useRef<(HTMLInputElement | null)[]>([]);
 

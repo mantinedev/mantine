@@ -15,6 +15,13 @@ function CustomField() {
   return <TextInput {...form.getInputProps('b')} />;
 }
 
+function ValuesPreview() {
+  const form = useFormContext();
+  const a = form.useWatchValue('a');
+  const b = form.useWatchValue('b');
+  return <div>{JSON.stringify({ a, b })}</div>;
+}
+
 export function Context() {
   const form = useForm({
     initialValues: {
@@ -27,7 +34,7 @@ export function Context() {
     <div style={{ padding: 40 }}>
       <FormProvider form={form}>
         <CustomField />
-        {JSON.stringify(form.values)}
+        <ValuesPreview />
       </FormProvider>
     </div>
   );

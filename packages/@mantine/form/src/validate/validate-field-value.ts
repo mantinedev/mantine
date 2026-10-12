@@ -1,10 +1,7 @@
-import { getPath } from '../paths';
+import { getPath, isSameOrChildPath } from '../paths';
 import { FormFieldValidationResult, FormValidateInput } from '../types';
 import { getRuleForPath } from './get-rule-for-path';
-import { validateValues } from './validate-values';
-
-const defaultResolveError = (err: unknown): React.ReactNode =>
-  err instanceof Error ? err.message : String(err);
+import { defaultResolveValidationError, validateValues } from './validate-values';
 
 function fieldResultFromErrors(
   path: string,
@@ -13,9 +10,7 @@ function fieldResultFromErrors(
   const pathInError =
     path in errors
       ? path
-      : Object.keys(errors).find((errorKey) =>
-          path.split('.').every((pathPart, i) => pathPart === errorKey.split('.')[i])
-        );
+      : Object.keys(errors).find((errorKey) => isSameOrChildPath(errorKey, path));
   return { hasError: !!pathInError, error: pathInError ? errors[pathInError] : null };
 }
 
@@ -23,7 +18,7 @@ export function validateFieldValue<T>(
   path: unknown,
   rules: FormValidateInput<T> | undefined,
   values: T,
-  resolveValidationError: (error: unknown) => React.ReactNode = defaultResolveError,
+  resolveValidationError: (error: unknown) => React.ReactNode = defaultResolveValidationError,
   signal: AbortSignal = new AbortController().signal
 ): FormFieldValidationResult | Promise<FormFieldValidationResult> {
   if (typeof path !== 'string') {

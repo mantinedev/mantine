@@ -1,5 +1,6 @@
-import { fireEvent } from '@testing-library/react';
+import { act, fireEvent } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
+import { FormMode, useForm, UseFormReturnType } from '@mantine/form';
 import { render, screen, tests } from '@mantine-tests/core';
 import { PinInput, PinInputProps, PinInputStylesNames } from './PinInput';
 
@@ -613,5 +614,98 @@ describe('@mantine/core/PinInput', () => {
 
     await userEvent.keyboard('{ArrowLeft}');
     expect(inputs[1]).toHaveFocus();
+  });
+
+  describe.each(['controlled', 'uncontrolled'] as const)('with @mantine/form (%s)', (mode) => {
+    function setup(initialPin = '') {
+      let form!: UseFormReturnType<{ pin: string }>;
+      const onComplete = jest.fn();
+
+      function TestForm({ formMode }: { formMode: FormMode }) {
+        form = useForm({ mode: formMode, initialValues: { pin: initialPin } });
+        return <PinInput length={4} onComplete={onComplete} {...form.getInputProps('pin')} />;
+      }
+
+      const { container } = render(<TestForm formMode={mode} />);
+      const paste = (value: string) =>
+        fireEvent.paste(getInputs(container)[0], { clipboardData: { getData: () => value } });
+
+      return { getForm: () => form, onComplete, container, paste };
+    }
+
+    it('calls onComplete again after form.reset', () => {
+      const { getForm, onComplete, container, paste } = setup();
+      paste('1234');
+      expect(onComplete).toHaveBeenCalledTimes(1);
+
+      act(() => getForm().reset());
+      expect(getInputValues(container)).toEqual(['', '', '', '']);
+
+      paste('5678');
+      expect(onComplete).toHaveBeenCalledTimes(2);
+      expect(onComplete).toHaveBeenLastCalledWith('5678');
+      expect(getForm().getValues().pin).toBe('5678');
+    });
+
+    it('calls onComplete again after the form writes the value', () => {
+      const { getForm, onComplete, container, paste } = setup();
+      paste('1234');
+      expect(onComplete).toHaveBeenCalledTimes(1);
+
+      act(() => getForm().setFieldValue('pin', '9999'));
+      expect(getInputValues(container)).toEqual(['9', '9', '9', '9']);
+      expect(onComplete).toHaveBeenCalledTimes(1);
+
+      paste('5678');
+      expect(onComplete).toHaveBeenCalledTimes(2);
+    });
+
+    it('replaces a partial entry on form.reset and form.setFieldValue', async () => {
+      const { getForm, container } = setup('12');
+      await userEvent.click(getInputs(container)[2]);
+      await userEvent.keyboard('3');
+      expect(getInputValues(container)).toEqual(['1', '2', '3', '']);
+
+      act(() => getForm().reset());
+      expect(getInputValues(container)).toEqual(['1', '2', '', '']);
+
+      await userEvent.click(getInputs(container)[2]);
+      await userEvent.keyboard('7');
+      act(() => getForm().setFieldValue('pin', '4'));
+      expect(getInputValues(container)).toEqual(['4', '', '', '']);
+      expect(getForm().getValues().pin).toBe('4');
+    });
+
+    it('keeps row values after list reindexing with stable keys', () => {
+      let form!: UseFormReturnType<{ rows: { id: string; pin: string }[] }>;
+
+      function ListForm() {
+        form = useForm({
+          mode,
+          initialValues: {
+            rows: [
+              { id: 'a', pin: '1111' },
+              { id: 'b', pin: '22' },
+            ],
+          },
+        });
+
+        return form.getValues().rows.map((row, index) => (
+          <div key={row.id} data-row={row.id}>
+            <PinInput length={4} {...form.getInputProps(`rows.${index}.pin`)} />
+          </div>
+        ));
+      }
+
+      const { container } = render(<ListForm />);
+      const getRow = (id: string) => container.querySelector<HTMLElement>(`[data-row="${id}"]`)!;
+
+      act(() => form.removeListItem('rows', 0));
+      expect(getInputValues(getRow('b'))).toEqual(['2', '2', '', '']);
+
+      act(() => form.insertListItem('rows', { id: 'c', pin: '3' }, 0));
+      expect(getInputValues(getRow('b'))).toEqual(['2', '2', '', '']);
+      expect(getInputValues(getRow('c'))).toEqual(['3', '', '', '']);
+    });
   });
 });

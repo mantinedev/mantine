@@ -25,7 +25,6 @@ function checkUsernameAvailability(username: string, signal?: AbortSignal): Prom
 
 function Demo() {
   const form = useForm({
-    mode: 'uncontrolled',
     initialValues: { username: '', email: '' },
     validate: {
       username: async (value, _values, _path, signal) => {
@@ -84,7 +83,6 @@ function checkUsernameAvailability(username: string, signal?: AbortSignal): Prom
 
 function Demo() {
   const form = useForm({
-    mode: 'uncontrolled',
     initialValues: { username: '', email: '' },
     validate: {
       username: async (value, _values, _path, signal) => {

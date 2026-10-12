@@ -12,7 +12,6 @@ import { notifications } from '@mantine/notifications';
 
 function Demo() {
   const form = useForm({
-    mode: 'uncontrolled',
     initialValues: { name: '', email: '' },
     validate: {
       name: (value) => (value.length < 2 ? 'Name must have at least 2 letters' : null),
@@ -51,7 +50,6 @@ function Demo() {
 
 function Demo() {
   const form = useForm({
-    mode: 'uncontrolled',
     initialValues: { name: '', email: '' },
     validate: {
       name: (value) => (value.length < 2 ? 'Name must have at least 2 letters' : null),

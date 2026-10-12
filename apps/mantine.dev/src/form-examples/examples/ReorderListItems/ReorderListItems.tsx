@@ -41,7 +41,10 @@ export function ReorderListItems() {
   const addItem = () => {
     const title = draft.trim();
     if (title.length > 0) {
-      form.insertListItem('items', { key: randomId(), title });
+      form.insertListItem('items', {
+        key: randomId(),
+        title,
+      });
       setDraft('');
     }
   };
@@ -49,7 +52,7 @@ export function ReorderListItems() {
   const handleSubmit = (values: TasksValues) => {
     notifications.show({
       title: 'Tasks saved',
-      message: `${values.items.length} tasks saved`,
+      message: `${values.items.length} ${values.items.length === 1 ? 'task' : 'tasks'} saved`,
     });
   };
 

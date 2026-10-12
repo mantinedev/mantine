@@ -19,8 +19,6 @@ const moneyFormatter = new Intl.NumberFormat('en-US', {
 const numericCellStyle = {
   fontVariantNumeric: 'tabular-nums',
   whiteSpace: 'nowrap',
-  overflow: 'hidden',
-  textOverflow: 'ellipsis',
 } as const;
 
 export function getSubtotal(item: InvoiceItem) {
@@ -55,6 +53,8 @@ export function InvoiceItemsTable({ form }: InvoiceItemsTableProps) {
       <Table.Td>
         <NumberInput
           size="md"
+          allowNegative={false}
+          allowDecimal={false}
           min={1}
           max={1000}
           clampBehavior="strict"
@@ -65,8 +65,9 @@ export function InvoiceItemsTable({ form }: InvoiceItemsTableProps) {
       <Table.Td>
         <NumberInput
           size="md"
+          allowNegative={false}
           min={0}
-          max={1_000_000}
+          max={100_000}
           clampBehavior="strict"
           prefix="$"
           decimalScale={2}
@@ -95,14 +96,14 @@ export function InvoiceItemsTable({ form }: InvoiceItemsTableProps) {
 
   return (
     <div>
-      <Table.ScrollContainer minWidth={500}>
+      <Table.ScrollContainer minWidth={720}>
         <Table layout="fixed" verticalSpacing="xs">
           <Table.Thead>
             <Table.Tr>
               <Table.Th>Description</Table.Th>
-              <Table.Th w={90}>Qty</Table.Th>
-              <Table.Th w={120}>Price</Table.Th>
-              <Table.Th w={110} ta="right">
+              <Table.Th w={110}>Qty</Table.Th>
+              <Table.Th w={180}>Price</Table.Th>
+              <Table.Th w={170} ta="right">
                 Subtotal
               </Table.Th>
               <Table.Th w={56} />

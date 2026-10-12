@@ -1,4 +1,4 @@
-import { clearListState } from './clear-list-state';
+import { clearChildKeys } from './clear-child-keys';
 
 const TEST_ERRORS = {
   name: 'name-error',
@@ -20,7 +20,7 @@ const TEST_ERRORS = {
   'nested.0.inner.5.check': 'nested-error-4',
 };
 
-describe('@mantine/form/clear-list-state', () => {
+describe('@mantine/form/clear-child-keys', () => {
   it('does not clear state of unrelated fields with matching path suffixes', () => {
     const state = {
       items: true,
@@ -30,7 +30,7 @@ describe('@mantine/form/clear-list-state', () => {
       'itemsExtra.0.name': true,
     };
 
-    expect(clearListState('items', state)).toStrictEqual({
+    expect(clearChildKeys('items', state)).toStrictEqual({
       items: true,
       'lineitems.0.name': true,
       'billing.items.0.name': true,
@@ -39,7 +39,7 @@ describe('@mantine/form/clear-list-state', () => {
   });
 
   it('clears list errors of given field', () => {
-    expect(clearListState('fruits', TEST_ERRORS)).toStrictEqual({
+    expect(clearChildKeys('fruits', TEST_ERRORS)).toStrictEqual({
       name: 'name-error',
       'nested.0.inner.1.name': 'nested-error-1',
       'nested.0.inner.2.name': 'nested-error-2',
@@ -52,7 +52,7 @@ describe('@mantine/form/clear-list-state', () => {
   });
 
   it('clears deeply nested errors', () => {
-    expect(clearListState('nested.0.inner', TEST_ERRORS)).toStrictEqual({
+    expect(clearChildKeys('nested.0.inner', TEST_ERRORS)).toStrictEqual({
       name: 'name-error',
 
       'fruits.0.name': 'fruit-error-1',

@@ -32,7 +32,7 @@ To change values after the form was created, use one of the handlers below:
 
 `form.getValues()` returns the current values. Use it in event handlers and callbacks.
 `form.values` is a snapshot from the last render, it is outdated in handlers and is not
-updated at all in [uncontrolled mode](/form/uncontrolled/#formgetvalues):
+updated while the user types in [uncontrolled mode](/form/uncontrolled/#formgetvalues):
 
 ```tsx
 import { useForm } from '@mantine/form';

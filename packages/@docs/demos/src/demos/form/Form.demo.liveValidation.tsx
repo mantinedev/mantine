@@ -6,11 +6,10 @@ import { MantineDemo } from '@mantinex/demo';
 
 const code = `
 import { useForm } from '@mantine/form';
-import { NumberInput, TextInput, Button, } from '@mantine/core';
+import { NumberInput, TextInput, Button } from '@mantine/core';
 
 function Demo() {
   const form = useForm({
-    mode: 'uncontrolled',
     validateInputOnChange: true,
     initialValues: { name: '', email: '', age: 0 },
 
@@ -53,7 +52,6 @@ function Demo() {
 
 function Demo() {
   const form = useForm({
-    mode: 'uncontrolled',
     validateInputOnChange: true,
     initialValues: { name: '', email: '', age: 0 },
 

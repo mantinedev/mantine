@@ -1,4 +1,5 @@
 import { Input } from '@mantine/core';
+import { useId } from '@mantine/hooks';
 import classes from './NativeTextInput.module.css';
 
 interface NativeTextInputProps {
@@ -12,9 +13,11 @@ interface NativeTextInputProps {
 }
 
 export function NativeTextInput({ label, error, ...inputProps }: NativeTextInputProps) {
+  const id = useId();
+
   return (
-    <Input.Wrapper size="md" label={label} error={error}>
-      <input className={classes.nativeInput} aria-invalid={!!error} {...inputProps} />
+    <Input.Wrapper id={id} size="md" label={label} error={error}>
+      <input id={id} className={classes.nativeInput} aria-invalid={!!error} {...inputProps} />
     </Input.Wrapper>
   );
 }

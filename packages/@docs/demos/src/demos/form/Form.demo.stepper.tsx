@@ -12,7 +12,6 @@ function Demo() {
   const [active, setActive] = useState(0);
 
   const form = useForm({
-    mode: 'uncontrolled',
     initialValues: {
       username: '',
       password: '',
@@ -123,7 +122,6 @@ function Demo() {
   const [active, setActive] = useState(0);
 
   const form = useForm({
-    mode: 'uncontrolled',
     initialValues: {
       username: '',
       password: '',

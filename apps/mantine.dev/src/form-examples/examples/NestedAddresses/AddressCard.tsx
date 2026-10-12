@@ -39,7 +39,10 @@ export function AddressCard({ form, index }: AddressCardProps) {
       });
     }
 
-    form.replaceListItem('addresses', index, { ...current[index], isPrimary: true });
+    form.replaceListItem('addresses', index, {
+      ...current[index],
+      isPrimary: true,
+    });
   };
 
   return (
@@ -54,12 +57,13 @@ export function AddressCard({ form, index }: AddressCardProps) {
           </Group>
 
           <Group gap="xs" wrap="nowrap">
-            <Button size="compact-xs" variant="default" disabled={isPrimary} onClick={setPrimary}>
+            <Button variant="default" disabled={isPrimary} onClick={setPrimary}>
               Set as primary
             </Button>
 
             <ActionIcon
               variant="default"
+              size="lg"
               aria-label="Remove address"
               onClick={() => form.removeListItem('addresses', index)}
             >

@@ -14,7 +14,7 @@ You can pass the following options to `form.getInputProps` as the second argumen
 
 - `type`: default `input`. Must be set to `checkbox` if the input requires `checked` prop instead of `value`. Set to `radio` for radio inputs – requires `value` option.
 - `value`: required when `type` is `radio`. Specifies the value of the individual radio option.
-- `withError`: default `type === 'input'`. Determines whether the returned object should contain an `error` property with
+- `withError`: default `true`. Determines whether the returned object should contain an `error` property with
   `form.errors[path]` value.
 - `withFocus`: default `true` (`false` for `type: 'radio'`). Determines whether the returned object should contain an `onFocus` handler. If disabled, the touched
   state will only change if the value of the field has been changed.

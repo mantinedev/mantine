@@ -92,8 +92,10 @@ export function ListMinimum() {
 
         <Stack gap="xs">
           <Input.Label size="md">Skills</Input.Label>
+
           {skills.length > 0 ? skills : <Text size="sm">No skills added</Text>}
           {form.errors.skills && <Input.Error size="md">{form.errors.skills}</Input.Error>}
+
           <Group>
             <Button
               variant="default"

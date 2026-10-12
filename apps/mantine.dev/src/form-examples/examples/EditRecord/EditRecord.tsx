@@ -69,7 +69,10 @@ export function EditRecord() {
     <form onSubmit={form.onSubmit(handleSubmit)}>
       <Stack>
         <Group>
-          <Badge color={loading ? 'gray' : dirty ? 'orange' : 'teal'}>
+          <Badge
+            variant={loading ? 'default' : 'filled'}
+            color={loading ? undefined : dirty ? 'orange' : 'teal'}
+          >
             {loading ? 'Loading record' : dirty ? 'Unsaved changes' : 'No changes'}
           </Badge>
         </Group>

@@ -1,4 +1,6 @@
 import { useState } from 'react';
+import { act } from '@testing-library/react';
+import { FormMode, useForm, UseFormReturnType } from '@mantine/form';
 import {
   externalInputFill,
   inputDefaultProps,
@@ -1110,6 +1112,75 @@ describe('@mantine/core/TreeSelect', () => {
       await userEvent.click(screen.getByLabelText('Clear value'));
       rerender(<TreeSelect data={treeData} {...clearProps} />);
       expect(screen.getByRole('combobox')).toHaveValue('');
+    });
+  });
+
+  describe('searchable single mode label follows the resolved value', () => {
+    it.each<FormMode>(['uncontrolled', 'controlled'])(
+      'restores label after form.reset() in %s form mode',
+      async (mode) => {
+        let form!: UseFormReturnType<{ food: string | null }>;
+
+        function Wrapper() {
+          form = useForm({ mode, initialValues: { food: 'milk' as string | null } });
+          return (
+            <TreeSelect
+              data={treeData}
+              searchable
+              defaultExpandAll
+              {...form.getInputProps('food')}
+            />
+          );
+        }
+
+        render(<Wrapper />);
+        const input = screen.getByRole('combobox');
+        expect(input).toHaveValue('Milk');
+
+        await userEvent.click(input);
+        await userEvent.click(screen.getByRole('option', { name: 'Apple' }));
+        expect(form.getValues().food).toBe('apple');
+        expect(input).toHaveValue('Apple');
+
+        act(() => form.reset());
+        expect(input).toHaveValue('Milk');
+
+        act(() => form.setFieldValue('food', null));
+        expect(input).toHaveValue('');
+      }
+    );
+
+    it('keeps label sync unchanged for non-form controlled and uncontrolled callers', async () => {
+      function Controlled() {
+        const [value, setValue] = useState<string | null>('milk');
+        return (
+          <>
+            <TreeSelect
+              data={treeData}
+              searchable
+              defaultExpandAll
+              value={value}
+              onChange={setValue}
+            />
+            <button type="button" onClick={() => setValue('milk')}>
+              reset
+            </button>
+          </>
+        );
+      }
+
+      const { unmount } = render(<Controlled />);
+      await userEvent.click(screen.getByRole('combobox'));
+      await userEvent.click(screen.getByRole('option', { name: 'Apple' }));
+      expect(screen.getByRole('combobox')).toHaveValue('Apple');
+      await userEvent.click(screen.getByRole('button', { name: 'reset' }));
+      expect(screen.getByRole('combobox')).toHaveValue('Milk');
+      unmount();
+
+      render(<TreeSelect data={treeData} searchable defaultExpandAll defaultValue="milk" />);
+      await userEvent.click(screen.getByRole('combobox'));
+      await userEvent.click(screen.getByRole('option', { name: 'Banana' }));
+      expect(screen.getByRole('combobox')).toHaveValue('Banana');
     });
   });
 });

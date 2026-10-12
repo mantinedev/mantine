@@ -4,7 +4,7 @@ import { isNotEmpty, useForm } from '@mantine/form';
 import { notifications } from '@mantine/notifications';
 import { cities, countries } from './data';
 
-interface Values {
+interface LocationValues {
   country: string | null;
   city: string | null;
 }
@@ -19,7 +19,7 @@ export function DependentSelects() {
   const [cityOptions, setCityOptions] = useState<string[]>([]);
   const [loading, setLoading] = useState(false);
 
-  const form = useForm<Values>({
+  const form = useForm<LocationValues>({
     initialValues: {
       country: null,
       city: null,
@@ -58,7 +58,7 @@ export function DependentSelects() {
     };
   }, [country]);
 
-  const handleSubmit = (values: Values) => {
+  const handleSubmit = (values: LocationValues) => {
     const countryName = countries.find((item) => item.value === values.country)?.label;
     notifications.show({
       title: 'Shipping address saved',

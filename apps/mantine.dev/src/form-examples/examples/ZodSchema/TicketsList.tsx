@@ -38,6 +38,7 @@ export function TicketsList({ form }: TicketsListProps) {
     <Stack gap="xs">
       {tickets.length > 0 ? tickets : <Text size="sm">No tickets yet</Text>}
       {form.errors.tickets && <Input.Error size="md">{form.errors.tickets}</Input.Error>}
+
       <Group>
         <Button
           variant="default"

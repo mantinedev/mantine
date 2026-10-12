@@ -1,11 +1,14 @@
 import isEqual from 'fast-deep-equal';
 import { getInputOnChange } from '../get-input-on-change';
+import { getInputValueProps } from '../get-input-value-props';
 import { getStatus } from '../get-status';
-import { changeErrorIndices, clearListState, reorderErrors } from '../lists';
+import { changeErrorIndices, clearChildKeys, reorderErrors } from '../lists';
 import {
   getDataPath,
   getPath,
   insertPath,
+  isChildPath,
+  isSameOrChildPath,
   removePath,
   reorderPath,
   replacePath,
@@ -22,21 +25,19 @@ import {
   UseFormInput,
 } from '../types';
 import {
+  defaultResolveValidationError,
+  filterErrors,
   getRuleForPath,
   shouldValidateOnChange,
   validateFieldValue,
   validateValues,
 } from '../validate';
-import { filterErrors } from './filter-errors/filter-errors';
 import { createFormField, setFormField } from './form-field';
-
-const defaultResolveValidationError = (err: unknown) =>
-  err instanceof Error ? err.message : String(err);
 
 const identity = (values: unknown) => values;
 
 function isRelatedPath(a: string, b: string) {
-  return a === b || a.startsWith(`${b}.`) || b.startsWith(`${a}.`);
+  return isSameOrChildPath(a, b) || isSameOrChildPath(b, a);
 }
 
 function resolveOptions(input: UseFormInput<any, any>) {
@@ -176,7 +177,7 @@ export function createFormStore(input: UseFormInput<any, any>) {
   const clearFieldErrorTree = (path: unknown | unknown[]) => {
     const roots = (Array.isArray(path) ? path : [path]).map(String);
     const keys = Object.keys(errors).filter((item) =>
-      roots.some((root) => item === root || item.startsWith(`${root}.`))
+      roots.some((root) => isSameOrChildPath(item, root))
     );
 
     if (keys.length === 0) {
@@ -228,7 +229,7 @@ export function createFormStore(input: UseFormInput<any, any>) {
   };
 
   const setCalculatedFieldDirty = (path: unknown, value: unknown) => {
-    const cleared = clearListState(path as PropertyKey, dirty);
+    const cleared = clearChildKeys(path as PropertyKey, dirty);
     cleared[path as string] = !isEqual(getPath(path, valuesSnapshot), value);
     setDirty(cleared);
   };
@@ -239,7 +240,7 @@ export function createFormStore(input: UseFormInput<any, any>) {
         return current;
       }
 
-      const result = clearListState(path, current);
+      const result = clearChildKeys(path, current);
       delete result[path];
       return isEqual(result, current) ? current : result;
     });
@@ -324,9 +325,8 @@ export function createFormStore(input: UseFormInput<any, any>) {
   const notifyFieldWatchers = (path: string, previousValues: unknown) => {
     const watchedPaths = Object.keys(watchers).filter(
       (watchedPath) =>
-        watchedPath === path ||
-        path.startsWith(`${watchedPath}.`) ||
-        (options.cascadeUpdates && watchedPath.startsWith(`${path}.`))
+        isSameOrChildPath(path, watchedPath) ||
+        (options.cascadeUpdates && isChildPath(watchedPath, path))
     );
 
     callWatchers(path, previousValues);
@@ -458,15 +458,18 @@ export function createFormStore(input: UseFormInput<any, any>) {
     const shouldValidate = shouldValidateOnChange(path, options.validateInputOnChange);
     const currentValue = getPath(path, values);
     const resolvedValue = value instanceof Function ? value(currentValue) : value;
+    const changed = currentValue !== resolvedValue;
+    const previousValues = values;
+
+    if (changed) {
+      values = setPath(path, resolvedValue, values);
+    }
 
     setCalculatedFieldDirty(path, resolvedValue);
     options.touchTrigger === 'change' && setFieldTouched(path, true);
     !shouldValidate && options.clearInputErrorOnChange && clearFieldErrorTree(path);
 
-    if (currentValue !== resolvedValue) {
-      const previousValues = values;
-      values = setPath(path, resolvedValue, values);
-
+    if (changed) {
       if (isControlled() || source === 'form' || hasUnsubscribedField(key)) {
         render();
       }
@@ -493,11 +496,12 @@ export function createFormStore(input: UseFormInput<any, any>) {
     const previousValues = values;
     const resolvedValues = typeof payload === 'function' ? payload(previousValues) : payload;
 
+    values = { ...previousValues, ...resolvedValues };
+
     Object.keys(resolvedValues).forEach((key) => {
       setCalculatedFieldDirty(key, resolvedValues[key]);
     });
 
-    values = { ...previousValues, ...resolvedValues };
     options.onValuesChange?.(values, previousValues);
     options.clearInputErrorOnChange && clearFieldErrorTree(Object.keys(resolvedValues));
     render();
@@ -724,14 +728,7 @@ export function createFormStore(input: UseFormInput<any, any>) {
       payload.error = errors[path as string];
     }
 
-    if (type === 'checkbox') {
-      payload.checked = value;
-    } else if (type === 'radio') {
-      payload.checked = value === otherOptions.value;
-      payload.value = otherOptions.value;
-    } else {
-      payload.value = value;
-    }
+    Object.assign(payload, getInputValueProps(type, value, otherOptions.value));
 
     if (resolvedWithFocus) {
       payload.onFocus = entry.onFocus;

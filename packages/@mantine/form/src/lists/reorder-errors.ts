@@ -1,8 +1,5 @@
+import { isSameOrChildPath } from '../paths';
 import { ReorderPayload } from '../types';
-
-function isItemKey(key: string, keyStart: string) {
-  return key === keyStart || key.startsWith(`${keyStart}.`);
-}
 
 export function reorderErrors<T>(path: unknown, { from, to }: ReorderPayload, errors: T): T {
   const oldKeyStart = `${path}.${from}`;
@@ -19,10 +16,10 @@ export function reorderErrors<T>(path: unknown, { from, to }: ReorderPayload, er
     let oldKey;
     let newKey;
 
-    if (isItemKey(key, oldKeyStart)) {
+    if (isSameOrChildPath(key, oldKeyStart)) {
       oldKey = key;
       newKey = key.replace(oldKeyStart, newKeyStart);
-    } else if (isItemKey(key, newKeyStart)) {
+    } else if (isSameOrChildPath(key, newKeyStart)) {
       oldKey = key.replace(newKeyStart, oldKeyStart);
       newKey = key;
     }

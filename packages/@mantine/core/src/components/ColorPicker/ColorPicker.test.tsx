@@ -1,3 +1,6 @@
+import { useState } from 'react';
+import { act } from '@testing-library/react';
+import { FormMode, useForm, UseFormReturnType } from '@mantine/form';
 import { render, screen, tests, userEvent } from '@mantine-tests/core';
 import { ColorPicker, ColorPickerProps, ColorPickerStylesNames } from './ColorPicker';
 
@@ -192,5 +195,109 @@ describe('@mantine/core/ColorPicker', () => {
     const hueText = screen.getByRole('slider', { name: 'Hue' }).getAttribute('aria-valuetext');
     expect(hueText).toMatch(/^\d+°$/);
     expect(screen.getByRole('slider', { name: 'Alpha' })).toHaveAttribute('aria-valuetext', '43%');
+  });
+
+  describe('picker state follows the resolved value', () => {
+    const getHue = () => screen.getByRole('slider', { name: 'Hue' });
+    const swatches = ['#00ff00', '#0000ff'];
+
+    it.each<FormMode>(['uncontrolled', 'controlled'])(
+      'moves the picker after swatch click and form.reset() in %s form mode',
+      async (mode) => {
+        let form!: UseFormReturnType<{ color: string }>;
+
+        function Wrapper() {
+          form = useForm({ mode, initialValues: { color: '#ff0000' } });
+          return (
+            <ColorPicker
+              format="hex"
+              hueLabel="Hue"
+              swatches={swatches}
+              {...form.getInputProps('color')}
+            />
+          );
+        }
+
+        render(<Wrapper />);
+        expect(getHue()).toHaveAttribute('aria-valuenow', '0');
+
+        await userEvent.click(screen.getByRole('button', { name: '#00ff00' }));
+        expect(form.getValues().color).toBe('#00ff00');
+        expect(getHue()).toHaveAttribute('aria-valuenow', '120');
+
+        act(() => form.reset());
+        expect(getHue()).toHaveAttribute('aria-valuenow', '0');
+
+        act(() => form.setFieldValue('color', '#0000ff'));
+        expect(getHue()).toHaveAttribute('aria-valuenow', '240');
+      }
+    );
+
+    it('follows the last of two form writes in the same handler', async () => {
+      let form!: UseFormReturnType<{ color: string }>;
+
+      function Wrapper() {
+        form = useForm({ initialValues: { color: '#ff0000' } });
+        return (
+          <ColorPicker
+            format="hex"
+            hueLabel="Hue"
+            swatches={swatches}
+            {...form.getInputProps('color')}
+          />
+        );
+      }
+
+      render(<Wrapper />);
+      await userEvent.click(screen.getByRole('button', { name: '#00ff00' }));
+      expect(getHue()).toHaveAttribute('aria-valuenow', '120');
+      act(() => {
+        form.setFieldValue('color', '#0000ff');
+        form.reset();
+      });
+      expect(form.getValues().color).toBe('#ff0000');
+      expect(getHue()).toHaveAttribute('aria-valuenow', '0');
+    });
+
+    it('keeps picker state in sync for non-form controlled and uncontrolled callers', async () => {
+      function Controlled() {
+        const [value, setValue] = useState('#ff0000');
+        return (
+          <>
+            <ColorPicker
+              format="hex"
+              hueLabel="Hue"
+              swatches={swatches}
+              value={value}
+              onChange={setValue}
+            />
+            <button type="button" onClick={() => setValue('#ff0000')}>
+              reset
+            </button>
+          </>
+        );
+      }
+
+      const { unmount } = render(<Controlled />);
+      await userEvent.click(screen.getByRole('button', { name: '#00ff00' }));
+      expect(getHue()).toHaveAttribute('aria-valuenow', '120');
+      await userEvent.click(screen.getByRole('button', { name: 'reset' }));
+      expect(getHue()).toHaveAttribute('aria-valuenow', '0');
+      unmount();
+
+      const spy = jest.fn();
+      render(
+        <ColorPicker
+          format="hex"
+          hueLabel="Hue"
+          swatches={swatches}
+          defaultValue="#ff0000"
+          onChange={spy}
+        />
+      );
+      await userEvent.click(screen.getByRole('button', { name: '#0000ff' }));
+      expect(spy).toHaveBeenLastCalledWith('#0000ff');
+      expect(getHue()).toHaveAttribute('aria-valuenow', '240');
+    });
   });
 });

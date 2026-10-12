@@ -10,7 +10,6 @@ import { NumberInput, TextInput, Button } from '@mantine/core';
 
 function Demo() {
   const form = useForm({
-    mode: 'uncontrolled',
     validateInputOnBlur: [
       'email',
       'name',
@@ -73,7 +72,6 @@ function Demo() {
 
 function Demo() {
   const form = useForm({
-    mode: 'uncontrolled',
     validateInputOnBlur: [
       'email',
       'name',

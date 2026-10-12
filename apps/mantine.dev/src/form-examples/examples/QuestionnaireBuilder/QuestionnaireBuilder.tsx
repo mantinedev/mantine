@@ -1,6 +1,6 @@
 import { PlusIcon } from '@phosphor-icons/react';
 import { Button, Group, Input, Stack, Text, TextInput } from '@mantine/core';
-import { FORM_INDEX, formRootRule, isNotEmpty, useForm } from '@mantine/form';
+import { formRootRule, isNotEmpty, useForm } from '@mantine/form';
 import { randomId } from '@mantine/hooks';
 import { notifications } from '@mantine/notifications';
 import { QuestionCard } from './QuestionCard';
@@ -18,10 +18,6 @@ export function QuestionnaireBuilder() {
         },
       ],
     },
-    validateInputOnChange: [
-      `questions.${FORM_INDEX}.options`,
-      `questions.${FORM_INDEX}.options.${FORM_INDEX}.label`,
-    ],
     validate: {
       title: isNotEmpty('Title is required'),
       questions: {
@@ -40,7 +36,7 @@ export function QuestionnaireBuilder() {
   const handleSubmit = (values: QuestionnaireValues) => {
     notifications.show({
       title: 'Questionnaire saved',
-      message: `${values.title}: ${values.questions.length} questions saved`,
+      message: `${values.title}: ${values.questions.length} ${values.questions.length === 1 ? 'question' : 'questions'} saved`,
     });
   };
 

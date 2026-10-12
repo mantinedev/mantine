@@ -64,6 +64,7 @@ export function ProfileForm({ mode }: ProfileFormProps) {
 
           <Group justify="space-between">
             <CurrentName form={form} />
+
             <Button size="md" type="submit">
               Save profile
             </Button>

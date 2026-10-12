@@ -3,13 +3,13 @@ import { isNotEmpty, isNotEmptyHTML, useForm } from '@mantine/form';
 import { notifications } from '@mantine/notifications';
 import { ContentEditor } from './ContentEditor';
 
-interface Values {
+interface ArticleValues {
   title: string;
   content: string;
 }
 
 export function RichTextForm() {
-  const form = useForm<Values>({
+  const form = useForm<ArticleValues>({
     initialValues: {
       title: '',
       content: '',
@@ -20,7 +20,7 @@ export function RichTextForm() {
     },
   });
 
-  const handleSubmit = (values: Values) => {
+  const handleSubmit = (values: ArticleValues) => {
     notifications.show({
       title: 'Article published',
       message: `Article ${values.title} published`,

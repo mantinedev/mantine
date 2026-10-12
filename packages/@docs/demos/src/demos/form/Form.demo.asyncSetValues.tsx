@@ -22,7 +22,6 @@ function loadInitialValues(): Promise<FormValues> {
 
 function Demo() {
   const form = useForm<FormValues>({
-    mode: 'uncontrolled',
     initialValues: { email: '', terms: false },
   });
 
@@ -63,7 +62,6 @@ function loadInitialValues(): Promise<FormValues> {
 
 function Demo() {
   const form = useForm<FormValues>({
-    mode: 'uncontrolled',
     initialValues: { email: '', terms: false },
   });
 

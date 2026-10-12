@@ -10,7 +10,6 @@ import { randomId } from '@mantine/hooks';
 
 function Demo() {
   const form = useForm({
-    mode: 'uncontrolled',
     initialValues: {
       name: '',
       email: '',
@@ -44,7 +43,6 @@ function Demo() {
 
 function Demo() {
   const form = useForm({
-    mode: 'uncontrolled',
     initialValues: {
       name: '',
       email: '',

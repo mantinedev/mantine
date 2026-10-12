@@ -1,3 +1,5 @@
+import { UseFormReturnType } from '@mantine/form';
+
 export interface ProfileValues {
   name: string;
   age: string;
@@ -9,3 +11,5 @@ export interface ProfilePayload {
   age: number;
   tags: string[];
 }
+
+export type ProfileForm = UseFormReturnType<ProfileValues, ProfilePayload>;

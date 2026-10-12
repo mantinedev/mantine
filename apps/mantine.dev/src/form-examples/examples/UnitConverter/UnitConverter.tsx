@@ -4,7 +4,7 @@ import { notifications } from '@mantine/notifications';
 
 type Temperature = number | string;
 
-interface Values {
+interface TemperatureValues {
   defaultUnit: 'celsius' | 'fahrenheit';
   celsius: Temperature;
   fahrenheit: Temperature;
@@ -22,13 +22,13 @@ function isSynced(value: Temperature, other: Temperature, otherToValue: (value: 
   return convert(other, otherToValue) === (typeof value === 'number' ? round(value) : '');
 }
 
-function requiredWhenDefault(unit: Values['defaultUnit']) {
-  return (value: Temperature, values: Values) =>
+function requiredWhenDefault(unit: TemperatureValues['defaultUnit']) {
+  return (value: Temperature, values: TemperatureValues) =>
     values.defaultUnit === unit && typeof value !== 'number' ? 'Temperature is required' : null;
 }
 
 export function UnitConverter() {
-  const form = useForm<Values>({
+  const form = useForm<TemperatureValues>({
     initialValues: {
       defaultUnit: 'celsius',
       celsius: '',
@@ -41,6 +41,16 @@ export function UnitConverter() {
   });
 
   const defaultUnit = form.useWatchValue('defaultUnit');
+
+  form.watch('defaultUnit', () => {
+    if (form.errors.celsius) {
+      form.validateField('celsius');
+    }
+
+    if (form.errors.fahrenheit) {
+      form.validateField('fahrenheit');
+    }
+  });
 
   form.watch('celsius', ({ value }) => {
     // Skip when fahrenheit already matches, otherwise the two watchers call each other forever
@@ -55,7 +65,7 @@ export function UnitConverter() {
     }
   });
 
-  const handleSubmit = (values: Values) => {
+  const handleSubmit = (values: TemperatureValues) => {
     notifications.show({
       title: 'Temperature saved',
       message: `${values.celsius} °C is ${values.fahrenheit} °F`,
@@ -81,7 +91,7 @@ export function UnitConverter() {
           <NumberInput
             size="md"
             label="Celsius"
-            placeholder="20"
+            placeholder="Degrees Celsius"
             suffix=" °C"
             decimalScale={1}
             min={-273.15}
@@ -93,7 +103,7 @@ export function UnitConverter() {
           <NumberInput
             size="md"
             label="Fahrenheit"
-            placeholder="68"
+            placeholder="Degrees Fahrenheit"
             suffix=" °F"
             decimalScale={1}
             min={-459.67}

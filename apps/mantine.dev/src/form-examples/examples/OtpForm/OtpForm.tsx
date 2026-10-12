@@ -40,7 +40,10 @@ export function OtpForm() {
 
     if (valid) {
       form.reset();
-      notifications.show({ title: 'Code verified', message: 'Your phone number is confirmed' });
+      notifications.show({
+        title: 'Code verified',
+        message: 'Your phone number is confirmed',
+      });
     } else {
       form.setFieldValue('code', '');
       form.setFieldError('code', `Invalid code, enter ${VALID_CODE}`);
