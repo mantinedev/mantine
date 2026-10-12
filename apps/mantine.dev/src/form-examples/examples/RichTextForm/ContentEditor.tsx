@@ -1,4 +1,5 @@
 import { ReactNode, useEffect, useRef } from 'react';
+import Placeholder from '@tiptap/extension-placeholder';
 import { useEditor } from '@tiptap/react';
 import StarterKit from '@tiptap/starter-kit';
 import { Input } from '@mantine/core';
@@ -11,6 +12,7 @@ interface ContentEditorProps {
   onChange?: (value: string) => void;
   error?: ReactNode;
   label?: ReactNode;
+  placeholder?: string;
   withAsterisk?: boolean;
 }
 
@@ -20,6 +22,7 @@ export function ContentEditor({
   onChange,
   error,
   label,
+  placeholder,
   withAsterisk,
 }: ContentEditorProps) {
   const onChangeRef = useRef(onChange);
@@ -30,7 +33,7 @@ export function ContentEditor({
 
   const editor = useEditor({
     immediatelyRender: false,
-    extensions: [StarterKit],
+    extensions: [StarterKit, Placeholder.configure({ placeholder })],
     content: value ?? defaultValue ?? '',
     onUpdate: ({ editor }) => onChangeRef.current?.(editor.getHTML()),
   });

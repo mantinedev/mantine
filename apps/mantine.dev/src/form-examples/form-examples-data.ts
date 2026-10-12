@@ -377,14 +377,6 @@ export const FORM_EXAMPLES_DATA: FormExample[] = [
     features: ['useFormField', 'custom inputs', 'getInputProps'],
   },
   {
-    id: 'ConditionalFields',
-    name: 'Conditional fields',
-    description: 'Fields shown based on another field value',
-    type: 'uncontrolled',
-    mode: 'uncontrolled',
-    features: ['useWatchValue', 'getValues'],
-  },
-  {
     id: 'FormContextSplit',
     name: 'Form context',
     description: 'Fields in separate components connected with form context',
@@ -417,27 +409,11 @@ export const FORM_EXAMPLES_DATA: FormExample[] = [
     features: ['UseFormReturnType', 'TransformedValues', 'FormErrors', 'TypeScript'],
   },
   {
-    id: 'DatesForm',
-    name: 'Dates form',
-    description: 'Booking form with date, date range and time inputs',
-    type: 'inputs',
-    mode: 'uncontrolled',
-    features: ['DateInput', 'DatePickerInput', 'DateTimePicker', 'TimeInput'],
-  },
-  {
     id: 'RichTextForm',
     name: 'Rich text form',
     description: 'Tiptap editor bound to a form field',
     type: 'inputs',
     mode: 'uncontrolled',
     features: ['isNotEmptyHTML', 'RichTextEditor', 'setFieldValue'],
-  },
-  {
-    id: 'PickersForm',
-    name: 'Pickers form',
-    description: 'Preferences form with color, slider, rating and chips',
-    type: 'inputs',
-    mode: 'uncontrolled',
-    features: ['ColorInput', 'Slider', 'Rating', 'Chip.Group', 'Switch'],
   },
 ];

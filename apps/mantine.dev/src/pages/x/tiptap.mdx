@@ -83,6 +83,84 @@ export function RichTextEditor({
 }
 ```
 
+## Usage with use-form
+
+The editor does not accept `value` and `onChange` props, so it cannot be bound to a
+[use-form](/form/use-form/) field directly. Create a wrapper component that reports the HTML
+content with `onChange` and subscribes to the field with the
+[use-form-field](/hooks/use-form-field/) hook: `onExternalWrite` writes the field value back into
+the editor when the form calls `form.reset` or `form.setFieldValue`, so the form does not need to
+rerender on every keystroke. Validate the content with the
+[isNotEmptyHTML](/form/validators/#isnotemptyhtml) validator:
+
+```tsx
+import { ReactNode, useEffect, useRef } from 'react';
+import { useEditor } from '@tiptap/react';
+import StarterKit from '@tiptap/starter-kit';
+import { Input } from '@mantine/core';
+import { isNotEmptyHTML, useForm } from '@mantine/form';
+import { useFormField } from '@mantine/hooks';
+import { RichTextEditor } from '@mantine/tiptap';
+
+interface ContentEditorProps {
+  value?: string;
+  defaultValue?: string;
+  onChange?: (value: string) => void;
+  error?: ReactNode;
+  label?: ReactNode;
+}
+
+function ContentEditor({ value, defaultValue, onChange, error, label }: ContentEditorProps) {
+  const onChangeRef = useRef(onChange);
+
+  useEffect(() => {
+    onChangeRef.current = onChange;
+  });
+
+  const editor = useEditor({
+    immediatelyRender: false,
+    extensions: [StarterKit],
+    content: value ?? defaultValue ?? '',
+    onUpdate: ({ editor }) => onChangeRef.current?.(editor.getHTML()),
+  });
+
+  useFormField<string>(onChange, {
+    onExternalWrite: (content) => editor?.commands.setContent(content, { emitUpdate: false }),
+  });
+
+  return (
+    <Input.Wrapper label={label} error={error}>
+      <RichTextEditor editor={editor}>
+        <RichTextEditor.Toolbar>
+          <RichTextEditor.ControlsGroup>
+            <RichTextEditor.Bold />
+            <RichTextEditor.Italic />
+          </RichTextEditor.ControlsGroup>
+        </RichTextEditor.Toolbar>
+
+        <RichTextEditor.Content />
+      </RichTextEditor>
+    </Input.Wrapper>
+  );
+}
+
+function Demo() {
+  const form = useForm({
+    initialValues: { content: '' },
+    validate: { content: isNotEmptyHTML('Content is required') },
+  });
+
+  return (
+    <form onSubmit={form.onSubmit(console.log)}>
+      <ContentEditor label="Content" {...form.getInputProps('content')} />
+    </form>
+  );
+}
+```
+
+See the [rich text form example](/form/examples?e=RichTextForm) for a complete form with a
+placeholder and a reset button.
+
 ## Controls and extensions
 
 Some controls require installation of additional [Tiptap extensions](https://tiptap.dev/extensions).

@@ -38,7 +38,12 @@ export function RichTextForm() {
           {...form.getInputProps('title')}
         />
 
-        <ContentEditor label="Content" withAsterisk {...form.getInputProps('content')} />
+        <ContentEditor
+          label="Content"
+          placeholder="Write your article"
+          withAsterisk
+          {...form.getInputProps('content')}
+        />
 
         <Group justify="flex-end">
           <Button size="md" variant="default" onClick={form.reset}>

@@ -6,6 +6,7 @@ import { DemoFormValues } from './form-actions';
 
 function DemoForm() {
   const form = useForm<DemoFormValues>({
+    // Required for createFormActions('demo-form') to reach this form
     name: 'demo-form',
     initialValues: {
       name: '',

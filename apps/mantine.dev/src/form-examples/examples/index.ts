@@ -5,8 +5,6 @@ import { AutosaveLocalStorage } from './AutosaveLocalStorage/AutosaveLocalStorag
 import AutosaveLocalStorageCode from './AutosaveLocalStorage/code.json';
 import { AutosaveServer } from './AutosaveServer/AutosaveServer';
 import AutosaveServerCode from './AutosaveServer/code.json';
-import ConditionalFieldsCode from './ConditionalFields/code.json';
-import { ConditionalFields } from './ConditionalFields/ConditionalFields';
 import ConditionalSectionsCode from './ConditionalSections/code.json';
 import { ConditionalSections } from './ConditionalSections/ConditionalSections';
 import ConditionalValidationCode from './ConditionalValidation/code.json';
@@ -17,8 +15,6 @@ import CustomInputSubscriptionCode from './CustomInputSubscription/code.json';
 import { CustomInputSubscription } from './CustomInputSubscription/CustomInputSubscription';
 import DateRangeCode from './DateRange/code.json';
 import { DateRange } from './DateRange/DateRange';
-import DatesFormCode from './DatesForm/code.json';
-import { DatesForm } from './DatesForm/DatesForm';
 import DependentSelectsCode from './DependentSelects/code.json';
 import { DependentSelects } from './DependentSelects/DependentSelects';
 import EditableTableCode from './EditableTable/code.json';
@@ -53,8 +49,6 @@ import OrderTotalCode from './OrderTotal/code.json';
 import { OrderTotal } from './OrderTotal/OrderTotal';
 import OtpFormCode from './OtpForm/code.json';
 import { OtpForm } from './OtpForm/OtpForm';
-import PickersFormCode from './PickersForm/code.json';
-import { PickersForm } from './PickersForm/PickersForm';
 import QuestionnaireBuilderCode from './QuestionnaireBuilder/code.json';
 import { QuestionnaireBuilder } from './QuestionnaireBuilder/QuestionnaireBuilder';
 import RegistrationFormCode from './RegistrationForm/code.json';
@@ -161,14 +155,11 @@ export const FORM_EXAMPLES_COMPONENTS = {
   RenderCount: example(RenderCount, RenderCountCode),
   LargeForm: example(LargeForm, LargeFormCode),
   CustomInputSubscription: example(CustomInputSubscription, CustomInputSubscriptionCode),
-  ConditionalFields: example(ConditionalFields, ConditionalFieldsCode),
   FormContextSplit: example(FormContextSplit, FormContextSplitCode),
   ReusableFields: example(ReusableFields, ReusableFieldsCode),
   FormActions: example(FormActions, FormActionsCode),
   TypedForm: example(TypedForm, TypedFormCode),
-  DatesForm: example(DatesForm, DatesFormCode),
   RichTextForm: example(RichTextForm, RichTextFormCode),
-  PickersForm: example(PickersForm, PickersFormCode),
 };
 
 export type FormExampleId = keyof typeof FORM_EXAMPLES_COMPONENTS;

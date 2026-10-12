@@ -3,10 +3,10 @@ import { Alert, List, Stack, TextInput } from '@mantine/core';
 import { FormErrors, isNotEmpty, matches, TransformedValues, useForm } from '@mantine/form';
 import { notifications } from '@mantine/notifications';
 import { SubmitBar } from './SubmitBar';
-import { Payload, Values } from './types';
+import { ProfilePayload, ProfileValues } from './types';
 
-function sendPayload(payload: Payload) {
-  return new Promise<Payload>((resolve) => {
+function sendPayload(payload: ProfilePayload) {
+  return new Promise<ProfilePayload>((resolve) => {
     setTimeout(() => resolve(payload), 800);
   });
 }
@@ -14,7 +14,7 @@ function sendPayload(payload: Payload) {
 export function TypedForm() {
   const [errorList, setErrorList] = useState<string[]>([]);
 
-  const form = useForm<Values, Payload>({
+  const form = useForm<ProfileValues, ProfilePayload>({
     initialValues: {
       name: '',
       age: '',
@@ -34,7 +34,7 @@ export function TypedForm() {
     }),
   });
 
-  // Same type as Payload, derived from the form instead of declared by hand
+  // Same type as ProfilePayload, derived from the form instead of declared by hand
   type SubmitValues = TransformedValues<typeof form>;
 
   const handleSubmit = async (values: SubmitValues) => {

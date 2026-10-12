@@ -1,9 +1,9 @@
 import { Button, Group } from '@mantine/core';
 import { UseFormReturnType } from '@mantine/form';
-import { Payload, Values } from './types';
+import { ProfilePayload, ProfileValues } from './types';
 
 interface SubmitBarProps {
-  form: UseFormReturnType<Values, Payload>;
+  form: UseFormReturnType<ProfileValues, ProfilePayload>;
 }
 
 export function SubmitBar({ form }: SubmitBarProps) {
