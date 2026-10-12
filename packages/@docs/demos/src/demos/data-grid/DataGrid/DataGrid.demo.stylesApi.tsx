@@ -21,7 +21,7 @@ function Demo() {
         thead: { backgroundColor: 'var(--mantine-color-blue-light)' },
         th: { fontWeight: 700 },
         td: { fontSize: 'var(--mantine-font-size-sm)' },
-        tr: { borderBottom: '1px solid var(--mantine-color-gray-3)' },
+        tr: { borderBottom: '1px solid var(--mantine-color-border)' },
       }}
     />
   );
@@ -43,7 +43,7 @@ function Demo() {
         thead: { backgroundColor: 'var(--mantine-color-blue-light)' },
         th: { fontWeight: 700 },
         td: { fontSize: 'var(--mantine-font-size-sm)' },
-        tr: { borderBottom: '1px solid var(--mantine-color-gray-3)' },
+        tr: { borderBottom: '1px solid var(--mantine-color-border)' },
       }}
     />
   );

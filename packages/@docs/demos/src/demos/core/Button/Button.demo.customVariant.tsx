@@ -29,7 +29,7 @@ function Demo() {
 const cssCode = `
 .root {
   &[data-variant='danger'] {
-    background-color: var(--mantine-color-red-9);
+    background-color: var(--mantine-color-red-8);
     color: var(--mantine-color-red-0);
   }
 

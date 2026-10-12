@@ -10,7 +10,7 @@ function Demo() {
       <Progress value={80} orientation="vertical" h={200} />
       <Progress value={60} color="orange" size="xl" orientation="vertical" h={200} animated />
 
-      <Progress.Root size="xl" autoContrast orientation="vertical" h={200}>
+      <Progress.Root size="xl" orientation="vertical" h={200}>
         <Progress.Section value={40} color="lime.4">
           <Progress.Label>Documents</Progress.Label>
         </Progress.Section>
@@ -32,7 +32,7 @@ function Demo() {
       <Progress value={80} orientation="vertical" h={200} />
       <Progress value={60} color="orange" size="xl" orientation="vertical" h={200} animated />
 
-      <Progress.Root size="xl" autoContrast orientation="vertical" h={200}>
+      <Progress.Root size="xl" orientation="vertical" h={200}>
         <Progress.Section value={40} color="lime.4">
           <Progress.Label>Documents</Progress.Label>
         </Progress.Section>

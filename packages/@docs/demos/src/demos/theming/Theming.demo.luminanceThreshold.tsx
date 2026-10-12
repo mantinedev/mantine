@@ -12,7 +12,6 @@ const code = (props: Record<string, any>) => `
 import { Button, createTheme, MantineProvider, Stack } from '@mantine/core';
 
 const theme = createTheme({
-  autoContrast: true,
   luminanceThreshold: ${props.luminanceThreshold},
 });
 
@@ -62,7 +61,6 @@ function Wrapper(props: any) {
     <MantineThemeProvider
       inherit
       theme={{
-        autoContrast: true,
         luminanceThreshold: props.luminanceThreshold,
       }}
     >

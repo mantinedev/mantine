@@ -21,7 +21,7 @@ const cssCode = `.separator {
 
 .stepIcon {
   border-color: transparent;
-  background-color: light-dark(var(--mantine-color-gray-0), var(--mantine-color-dark-4));
+  background-color: light-dark(var(--mantine-color-gray-1), var(--mantine-color-dark-4));
   border-width: 0;
 
   &[data-completed] {

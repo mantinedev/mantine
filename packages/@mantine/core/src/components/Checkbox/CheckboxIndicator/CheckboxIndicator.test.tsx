@@ -17,6 +17,12 @@ describe('@mantine/core/CheckboxIndicator', () => {
     stylesApiSelectors: ['indicator', 'icon'],
   });
 
+  it('does not override outline variant icon color with auto contrast color', () => {
+    const { container } = render(<CheckboxIndicator variant="outline" checked />);
+    const root = container.querySelector('.mantine-CheckboxIndicator-indicator') as HTMLElement;
+    expect(root.style.getPropertyValue('--checkbox-icon-color')).toBe('');
+  });
+
   it('resolves light variant colors for theme colors', () => {
     const { container } = render(<CheckboxIndicator variant="light" color="blue" />);
     const root = container.querySelector('.mantine-CheckboxIndicator-indicator') as HTMLElement;

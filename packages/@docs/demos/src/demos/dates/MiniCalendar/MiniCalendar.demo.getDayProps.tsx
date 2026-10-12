@@ -12,7 +12,7 @@ function Demo() {
       numberOfDays={6}
       getDayProps={(date) => ({
         style: {
-          color: [0, 6].includes(dayjs(date).day()) ? 'var(--mantine-color-red-8)' : undefined,
+          color: [0, 6].includes(dayjs(date).day()) ? 'var(--mantine-color-red-text)' : undefined,
         },
       })}
     />
@@ -26,7 +26,7 @@ function Demo() {
       numberOfDays={6}
       getDayProps={(date) => ({
         style: {
-          color: [0, 6].includes(dayjs(date).day()) ? 'var(--mantine-color-red-8)' : undefined,
+          color: [0, 6].includes(dayjs(date).day()) ? 'var(--mantine-color-red-text)' : undefined,
         },
       })}
     />

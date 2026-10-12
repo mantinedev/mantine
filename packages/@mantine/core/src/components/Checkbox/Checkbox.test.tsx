@@ -129,6 +129,12 @@ describe('@mantine/core/Checkbox', () => {
     );
   });
 
+  it('does not override outline variant icon color with auto contrast color', () => {
+    const { container } = render(<Checkbox variant="outline" checked onChange={() => {}} />);
+    const root = container.querySelector('.mantine-Checkbox-root') as HTMLElement;
+    expect(root.style.getPropertyValue('--checkbox-icon-color')).toBe('');
+  });
+
   it('has aria-describedby attribute with id of description element', () => {
     render(<Checkbox description="test-description" />);
     expect(screen.getByRole('checkbox')).toHaveAttribute(

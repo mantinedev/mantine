@@ -16,7 +16,7 @@ function Demo() {
       series={[
         { name: 'Tomatoes', color: 'rgba(18, 120, 255, 0.2)', type: 'bar' },
         { name: 'Apples', color: 'red.8', type: 'line' },
-        { name: 'Oranges', color: 'yellow.8', type: 'area' },
+        { name: 'Oranges', color: 'orange.6', type: 'area' },
       ]}
     />
   );
@@ -34,7 +34,7 @@ function Demo() {
       series={[
         { name: 'Tomatoes', color: 'rgba(18, 120, 255, 0.2)', type: 'bar' },
         { name: 'Apples', color: 'red.8', type: 'line' },
-        { name: 'Oranges', color: 'yellow.8', type: 'area' },
+        { name: 'Oranges', color: 'orange.6', type: 'area' },
       ]}
     />
   );

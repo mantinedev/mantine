@@ -12,9 +12,9 @@ const renderTreeNode: TreeSelectProps['renderNode'] = ({ node, hasChildren, expa
   <Group gap="xs">
     {hasChildren ? (
       expanded ? (
-        <FolderOpenIcon color="var(--mantine-color-yellow-9)" size={16} />
+        <FolderOpenIcon color="var(--mantine-color-yellow-7)" size={16} />
       ) : (
-        <FolderSimpleIcon color="var(--mantine-color-yellow-9)" size={16} />
+        <FolderSimpleIcon color="var(--mantine-color-yellow-7)" size={16} />
       )
     ) : (
       <FileTextIcon size={16} />
@@ -40,9 +40,9 @@ const renderTreeNode: TreeSelectProps['renderNode'] = ({ node, hasChildren, expa
   <Group gap="xs">
     {hasChildren ? (
       expanded ? (
-        <FolderOpenIcon color="var(--mantine-color-yellow-9)" size={16} />
+        <FolderOpenIcon color="var(--mantine-color-yellow-7)" size={16} />
       ) : (
-        <FolderSimpleIcon color="var(--mantine-color-yellow-9)" size={16} />
+        <FolderSimpleIcon color="var(--mantine-color-yellow-7)" size={16} />
       )
     ) : (
       <FileTextIcon size={16} />

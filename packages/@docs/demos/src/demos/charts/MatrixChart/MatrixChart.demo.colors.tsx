@@ -17,7 +17,7 @@ function Demo() {
         'var(--mantine-color-orange-2)',
         'var(--mantine-color-orange-4)',
         'var(--mantine-color-orange-6)',
-        'var(--mantine-color-orange-9)',
+        'var(--mantine-color-orange-8)',
       ]}
     />
   );
@@ -36,7 +36,7 @@ function Demo() {
         'var(--mantine-color-orange-2)',
         'var(--mantine-color-orange-4)',
         'var(--mantine-color-orange-6)',
-        'var(--mantine-color-orange-9)',
+        'var(--mantine-color-orange-8)',
       ]}
     />
   );

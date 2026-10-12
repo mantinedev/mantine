@@ -57,9 +57,9 @@ function FileIcon({ name, isFolder, expanded }: FileIconProps) {
 
   if (isFolder) {
     return expanded ? (
-      <FolderOpenIcon color="var(--mantine-color-yellow-9)" size={14} />
+      <FolderOpenIcon color="var(--mantine-color-yellow-7)" size={14} />
     ) : (
-      <FolderSimpleIcon color="var(--mantine-color-yellow-9)" size={14} />
+      <FolderSimpleIcon color="var(--mantine-color-yellow-7)" size={14} />
     );
   }
 
@@ -110,9 +110,9 @@ function FileIcon({ name, isFolder, expanded }: FileIconProps) {
 
   if (isFolder) {
     return expanded ? (
-      <FolderOpenIcon color="var(--mantine-color-yellow-9)" size={14} />
+      <FolderOpenIcon color="var(--mantine-color-yellow-7)" size={14} />
     ) : (
-      <FolderSimpleIcon color="var(--mantine-color-yellow-9)" size={14} />
+      <FolderSimpleIcon color="var(--mantine-color-yellow-7)" size={14} />
     );
   }
 

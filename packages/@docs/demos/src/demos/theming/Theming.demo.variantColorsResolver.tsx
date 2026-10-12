@@ -51,8 +51,8 @@ const variantColorResolver: VariantColorsResolver = (input) => {
   // Add new variants support
   if (input.variant === 'danger') {
     return {
-      background: 'var(--mantine-color-red-9)',
-      hover: 'var(--mantine-color-red-8)',
+      background: 'var(--mantine-color-red-8)',
+      hover: 'var(--mantine-color-red-9)',
       color: 'var(--mantine-color-white)',
       border: 'none',
     };
@@ -109,8 +109,8 @@ const variantColorResolver: VariantColorsResolver = (input) => {
   // Add new variants support
   if (input.variant === 'danger') {
     return {
-      background: 'var(--mantine-color-red-9)',
-      hover: 'var(--mantine-color-red-8)',
+      background: 'var(--mantine-color-red-8)',
+      hover: 'var(--mantine-color-red-9)',
       color: 'var(--mantine-color-white)',
       border: 'none',
     };

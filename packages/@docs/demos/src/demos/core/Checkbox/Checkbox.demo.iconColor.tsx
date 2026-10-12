@@ -9,7 +9,7 @@ function Demo() {
     <Checkbox
       defaultChecked
       color="lime.4"
-      iconColor="dark.8"
+      iconColor="lime.9"
       size="md"
       label="Bright lime checkbox"
     />
@@ -22,7 +22,7 @@ function Demo() {
     <Checkbox
       defaultChecked
       color="lime.4"
-      iconColor="dark.8"
+      iconColor="lime.9"
       size="md"
       label="Bright lime checkbox"
     />

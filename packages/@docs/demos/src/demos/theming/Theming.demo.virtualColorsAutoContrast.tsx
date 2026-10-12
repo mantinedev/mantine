@@ -6,7 +6,7 @@ import { Button } from '@mantine/core';
 
 export function Demo() {
   return (
-    <Button color="adaptive" autoContrast>
+    <Button color="adaptive">
       Button
     </Button>
   );
@@ -39,11 +39,7 @@ function App() {
 `;
 
 function Demo() {
-  return (
-    <Button color="adaptive" autoContrast>
-      Button
-    </Button>
-  );
+  return <Button color="adaptive">Button</Button>;
 }
 
 export const virtualColorsAutoContrast: MantineDemo = {

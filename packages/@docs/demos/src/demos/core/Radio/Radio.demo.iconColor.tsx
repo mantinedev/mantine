@@ -7,7 +7,7 @@ import { Radio } from '@mantine/core';
 function Demo() {
   return (
     <Radio
-      iconColor="dark.8"
+      iconColor="lime.9"
       color="lime.4"
       label="Custom icon color"
       name="check"
@@ -21,7 +21,7 @@ function Demo() {
 function Demo() {
   return (
     <Radio
-      iconColor="dark.8"
+      iconColor="lime.9"
       color="lime.4"
       label="Custom icon color"
       name="check"

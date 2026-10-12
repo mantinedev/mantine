@@ -23,7 +23,7 @@ function Demo() {
           type: 'bar',
         },
         { name: 'Apples', label: 'Apples sales', color: 'red.8', type: 'line' },
-        { name: 'Oranges', label: 'Oranges sales', color: 'yellow.8', type: 'area' },
+        { name: 'Oranges', label: 'Oranges sales', color: 'orange.6', type: 'area' },
       ]}
     />
   );
@@ -47,7 +47,7 @@ function Demo() {
           type: 'bar',
         },
         { name: 'Apples', label: 'Apples sales', color: 'red.8', type: 'line' },
-        { name: 'Oranges', label: 'Oranges sales', color: 'yellow.8', type: 'area' },
+        { name: 'Oranges', label: 'Oranges sales', color: 'orange.6', type: 'area' },
       ]}
     />
   );

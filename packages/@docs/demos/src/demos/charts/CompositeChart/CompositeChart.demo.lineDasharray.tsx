@@ -19,7 +19,7 @@ function Demo() {
       series={[
         { name: 'Tomatoes', color: 'rgba(18, 120, 255, 0.2)', type: 'bar' },
         { name: 'Apples', color: 'red.8', type: 'line', strokeDasharray: '5 5' },
-        { name: 'Oranges', color: 'yellow.8', type: 'area', strokeDasharray: '5 5' },
+        { name: 'Oranges', color: 'orange.6', type: 'area', strokeDasharray: '5 5' },
       ]}
     />
   );
@@ -39,7 +39,7 @@ function Demo() {
       series={[
         { name: 'Tomatoes', color: 'rgba(18, 120, 255, 0.2)', type: 'bar' },
         { name: 'Apples', color: 'red.8', type: 'line', strokeDasharray: '5 5' },
-        { name: 'Oranges', color: 'yellow.8', type: 'area', strokeDasharray: '5 5' },
+        { name: 'Oranges', color: 'orange.6', type: 'area', strokeDasharray: '5 5' },
       ]}
     />
   );
