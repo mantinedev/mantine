@@ -48,6 +48,7 @@ describe('@mantine/core/Chip', () => {
       </Chip>
     );
     const input = screen.getByRole('checkbox') as HTMLInputElement;
+    expect(input).toHaveAttribute('readonly');
 
     await userEvent.click(input);
     expect(input.checked).toBe(false);

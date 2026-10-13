@@ -217,6 +217,7 @@ export const Chip = factory<ChipFactory>((_props) => {
         onChange={(event) => !readOnly && setValue(event.currentTarget.checked)}
         id={uuid}
         disabled={disabled}
+        readOnly={readOnly}
         value={value}
         {...contextProps}
         {...rest}

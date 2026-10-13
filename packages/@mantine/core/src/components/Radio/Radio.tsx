@@ -273,6 +273,7 @@ export const Radio = factory<RadioFactory>((_props) => {
           mod={{ error: !!error, 'with-error-styles': withErrorStyles }}
           id={uuid}
           type="radio"
+          readOnly={readOnly}
           aria-describedby={describedBy}
           onClick={(event) => {
             if (readOnly && withContextProps.checked === undefined) {

@@ -149,6 +149,7 @@ describe('@mantine/core/Radio', () => {
     const spy = jest.fn();
     render(<Radio checked={false} readOnly onChange={spy} value="a" aria-label="readonly" />);
     const input = screen.getByLabelText('readonly') as HTMLInputElement;
+    expect(input).toHaveAttribute('readonly');
 
     await userEvent.click(input);
     expect(input.checked).toBe(false);

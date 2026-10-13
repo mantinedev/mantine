@@ -27,10 +27,9 @@ function Demo() {
 
 ## Read only
 
-Set the `readOnly` prop to prevent the chip value from being changed by user
-interaction. The chip still displays its current value and reflects programmatic
-updates to the `checked` prop, but clicking it (or pressing <kbd>Space</kbd>) does not
-change its state and does not call the `onChange` handler:
+Set `readOnly` prop to prevent the chip from being changed by the user. The chip
+still reflects `checked` prop updates, but clicking it or pressing <kbd>Space</kbd> does not
+change its state and does not call `onChange`:
 
 ```tsx
 import { useState } from 'react';
