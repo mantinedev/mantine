@@ -12,9 +12,7 @@ export default Layout(MDX_DATA.Drawer);
 
 `useDrawer` hook opens a drawer from any component without rendering `Drawer` in JSX.
 It accepts [Drawer](/core/drawer) props and returns an object with `open`, `close`, `toggle`
-and `isOpened` functions. The drawer is rendered by `MantineProvider`, and all props,
-including `children`, are updated every time the component that called the hook renders.
-The hook works the same way as [useModal](/core/modal/#usemodal-hook), see the Modal
+and `isOpened` functions. The hook works the same way as [useModal](/core/modal/#usemodal-hook), see the Modal
 documentation for shared and confirm examples.
 
 `useDrawer` accepts the following options in addition to `Drawer` props:
@@ -24,11 +22,19 @@ documentation for shared and confirm examples.
 - `onOpen` – called when the drawer is opened
 - `onClose` – called when the drawer is closed with `drawer.close()`, close button, overlay click, Escape key or swipe
 
-Drawers opened with `useDrawer` are rendered in a [Drawer.Stack](#drawerstack), or join the
-[shared stack](#shared-stack) when `theme.overlayStack` is set. Drawer content is rendered
-inside `MantineProvider` and does not have access to contexts provided below it.
-Render `Drawer.Outlet` anywhere in your application to render managed drawers inside
-the providers your drawer content depends on.
+Drawers opened with `useDrawer` and modals opened with `useModal` are rendered in one stack,
+a modal opened from a drawer is displayed above it. They join the [shared stack](#shared-stack)
+when `theme.overlayStack` is set on the `MantineProvider` theme. An inline `Modal` or `Drawer`
+rendered in the component that calls `useDrawer` is displayed below managed drawers: render it inside the
+drawer content, open it with `useModal`/`useDrawer` or set `theme.overlayStack`.
+
+Drawer content is rendered inside `MantineProvider` and does not have access to contexts provided
+below it. Render one `Drawer.Outlet` inside your application providers to render managed drawers
+there. Modals opened with `useModal` stay in the automatic outlet and are stacked separately from
+drawers rendered by `Drawer.Outlet`, so a managed drawer and a managed modal opened from it may be displayed
+in the wrong order. To keep
+them in one stack, render `Modal.Outlet` next to `Drawer.Outlet` inside a provider that sets
+`theme.overlayStack`, or do not render outlets.
 
 `drawer.open` accepts props that are applied on top of the hook options until the next
 `drawer.open` call, for example, to open the drawer on a different side:

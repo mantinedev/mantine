@@ -20,6 +20,7 @@ export interface OverlayStackContextValue {
   isActive: (id: string) => boolean;
   hasAnyOtherEntry: (id: string) => boolean;
   hasSameKindSiblings: (id: string) => boolean;
+  isRegistered: (id: string) => boolean;
   currentId: string | undefined;
   shared: boolean;
   reportDrag: (id: string, progress: number) => void;

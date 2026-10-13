@@ -1,23 +1,25 @@
-import { use, useEffect } from 'react';
+import { use, useEffect, useId } from 'react';
 import { useProviderOutletStore } from '../MantineProvider/ProviderOutlets';
+import { useProps } from '../MantineProvider/use-props/use-props';
 import { OverlayStackContextType } from '../OverlayStack';
 import {
   createManagedOverlayStore,
   ManagedOverlayStore,
-  useExplicitManagedOverlayOutlets,
+  useActiveExplicitManagedOverlayOutlet,
   useManagedOverlayEntry,
   useManagedOverlayIds,
 } from './managed-overlay.store';
+import { ManagedOverlayStacks } from './ManagedOverlayStacks';
 
 export interface ManagedOverlayOutletConfig {
   /** Key of the store in the provider scope, `modal` or `drawer` */
   storeKey: string;
 
+  /** Theme component name, `Modal` or `Drawer` */
+  name: string;
+
   /** Overlay component, `Modal` or `Drawer`. Defined as a getter so the component is not read before its module is initialized */
   readonly component: React.ComponentType<any>;
-
-  /** Stack component used when no stack context is found in the tree, `Modal.Stack` or `Drawer.Stack`. Defined as a getter for the same reason as `component` */
-  readonly stack: React.ComponentType<{ children: React.ReactNode }>;
 
   /** Stack context, `ModalStackContext` or `DrawerStackContext` */
   stackContext: OverlayStackContextType;
@@ -42,6 +44,7 @@ function ManagedOverlay({
   id,
 }: ConfigProps & { store: ManagedOverlayStore<any>; id: string }) {
   const entry = useManagedOverlayEntry(store, id);
+  const { keepMounted } = useProps(config.name, null, { ...entry?.props, ...entry?.overrides });
 
   if (!entry) {
     return null;
@@ -50,20 +53,48 @@ function ManagedOverlay({
   const { component: Component } = config;
 
   return (
-    <Component
-      {...entry.props}
-      {...entry.overrides}
+    <ManagedOverlayStackGate
+      context={config.stackContext}
       id={entry.id}
-      stackId={entry.id}
-      opened={entry.opened}
-      onClose={entry.onClose}
-    />
+      keepInStack={entry.opened || !!keepMounted}
+    >
+      <Component
+        {...entry.props}
+        {...entry.overrides}
+        id={entry.id}
+        stackId={entry.id}
+        opened={entry.opened}
+        onClose={entry.onClose}
+      />
+    </ManagedOverlayStackGate>
   );
 }
 
-function ManagedOverlays({ config, store }: ConfigProps & { store: ManagedOverlayStore<any> }) {
+interface ManagedOverlayStackGateProps {
+  context: OverlayStackContextType;
+  id: string;
+  keepInStack: boolean;
+  children: React.ReactNode;
+}
+
+function ManagedOverlayStackGate({
+  context: Context,
+  id,
+  keepInStack,
+  children,
+}: ManagedOverlayStackGateProps) {
+  const stack = use(Context);
+  const inStack = keepInStack || !!stack?.isRegistered(id);
+  return <Context value={inStack ? stack : null}>{children}</Context>;
+}
+
+interface ManagedOverlaysProps extends ConfigProps {
+  store: ManagedOverlayStore<any>;
+  withStacks?: boolean;
+}
+
+function ManagedOverlays({ config, store, withStacks }: ManagedOverlaysProps) {
   const ids = useManagedOverlayIds(store);
-  const stackCtx = use(config.stackContext);
 
   if (ids.length === 0) {
     return null;
@@ -73,26 +104,25 @@ function ManagedOverlays({ config, store }: ConfigProps & { store: ManagedOverla
     <ManagedOverlay key={id} config={config} store={store} id={id} />
   ));
 
-  if (stackCtx) {
-    return overlays;
-  }
-
-  const { stack: Stack } = config;
-  return <Stack>{overlays}</Stack>;
+  return withStacks ? <ManagedOverlayStacks>{overlays}</ManagedOverlayStacks> : overlays;
 }
 
 export function ManagedOverlayAutoOutlet({ config }: ConfigProps) {
   const store = useManagedOverlayOutletStore(config);
-  const explicitOutlets = useExplicitManagedOverlayOutlets(store);
-  return explicitOutlets > 0 ? null : <ManagedOverlays config={config} store={store} />;
+  const activeExplicitOutlet = useActiveExplicitManagedOverlayOutlet(store);
+  return activeExplicitOutlet === null ? <ManagedOverlays config={config} store={store} /> : null;
 }
 
 ManagedOverlayAutoOutlet.displayName = '@mantine/core/ManagedOverlayAutoOutlet';
 
 export function ManagedOverlayOutlet({ config }: ConfigProps) {
   const store = useManagedOverlayOutletStore(config);
-  useEffect(() => store.registerExplicitOutlet(), [store]);
-  return <ManagedOverlays config={config} store={store} />;
+  const outletId = useId();
+  const activeExplicitOutlet = useActiveExplicitManagedOverlayOutlet(store);
+  useEffect(() => store.registerExplicitOutlet(outletId), [store, outletId]);
+  return activeExplicitOutlet === outletId ? (
+    <ManagedOverlays config={config} store={store} withStacks />
+  ) : null;
 }
 
 ManagedOverlayOutlet.displayName = '@mantine/core/ManagedOverlayOutlet';

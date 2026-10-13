@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { fireEvent, screen, waitFor } from '@testing-library/react';
+import { act, fireEvent, screen, waitFor } from '@testing-library/react';
 import { render, userEvent } from '@mantine-tests/core';
 import { Drawer } from '../Drawer';
 import { useDrawer, UseDrawerOptions } from './use-drawer';
@@ -137,5 +137,39 @@ describe('@mantine/core/useDrawer', () => {
     render(<Caller options={{ title: 'Drawer only', defaultOpened: true }} />);
     expect(getDrawers()).toHaveLength(1);
     expect(document.querySelectorAll('.mantine-Modal-root')).toHaveLength(0);
+  });
+
+  it('keeps keepMounted content state and calls theme onExitTransitionEnd once per close', async () => {
+    const onExitTransitionEnd = jest.fn();
+    render(
+      <Caller
+        options={{
+          title: 'Kept',
+          transitionProps: { duration: 10 },
+          children: <input data-testid="kept-input" />,
+        }}
+      />,
+      {
+        components: {
+          Drawer: Drawer.extend({ defaultProps: { keepMounted: true, onExitTransitionEnd } }),
+        },
+      },
+      { env: 'default' }
+    );
+
+    fireEvent.click(screen.getByText('open'));
+    await waitFor(() => expect(screen.getByTestId('kept-input')).toBeVisible());
+    fireEvent.change(screen.getByTestId('kept-input'), { target: { value: 'typed' } });
+    const input = screen.getByTestId('kept-input');
+
+    fireEvent.click(screen.getByText('close open'));
+    await waitFor(() => expect(screen.getByTestId('kept-input')).not.toBeVisible());
+    await act(() => new Promise((resolve) => setTimeout(resolve, 50)));
+    expect(onExitTransitionEnd).toHaveBeenCalledTimes(1);
+
+    fireEvent.click(screen.getByText('open'));
+    await waitFor(() => expect(screen.getByTestId('kept-input')).toBeVisible());
+    expect(screen.getByTestId('kept-input')).toBe(input);
+    expect(screen.getByTestId('kept-input')).toHaveValue('typed');
   });
 });

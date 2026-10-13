@@ -1,7 +1,6 @@
 import { ManagedOverlayOutlet, ManagedOverlayOutletConfig } from '../../../core/ManagedOverlay';
 import { DrawerStackContext } from '../../../core/OverlayStack';
 import { Drawer, DrawerProps } from '../Drawer';
-import { DrawerStack } from '../DrawerStack';
 
 export type ManagedDrawerProps = Partial<
   Omit<DrawerProps, 'opened' | 'onClose' | 'stackId' | 'id'>
@@ -9,11 +8,9 @@ export type ManagedDrawerProps = Partial<
 
 export const drawerOutletConfig: ManagedOverlayOutletConfig = {
   storeKey: 'drawer',
+  name: 'Drawer',
   get component() {
     return Drawer;
-  },
-  get stack() {
-    return DrawerStack;
   },
   stackContext: DrawerStackContext,
 };

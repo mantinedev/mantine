@@ -1,4 +1,5 @@
 import { createContext, Fragment, use, useState, useSyncExternalStore } from 'react';
+import { ManagedOverlayStacks } from '../../ManagedOverlay/ManagedOverlayStacks';
 
 export interface ProviderOutletsScope {
   outlets: [string, React.ReactNode][];
@@ -62,12 +63,16 @@ export function ProviderOutlets() {
     () => scope.outlets
   );
 
+  if (registered.length === 0) {
+    return null;
+  }
+
   return (
-    <>
+    <ManagedOverlayStacks>
       {registered.map(([key, element]) => (
         <Fragment key={key}>{element}</Fragment>
       ))}
-    </>
+    </ManagedOverlayStacks>
   );
 }
 

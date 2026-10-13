@@ -1,23 +1,20 @@
-import { createContext, use, useState } from 'react';
-import { Button, Group, Text, useModal, UseModalReturnValue } from '@mantine/core';
+import { createContext, use } from 'react';
+import {
+  Button,
+  Group,
+  Modal,
+  PasswordInput,
+  TextInput,
+  useModal,
+  UseModalReturnValue,
+} from '@mantine/core';
 import { MantineDemo } from '@mantinex/demo';
-import { AuthenticationForm } from '../../../shared/AuthenticationForm/AuthenticationForm';
 
 const code = `
 import { createContext, use } from 'react';
-import { Button, Group, useModal, UseModalReturnValue } from '@mantine/core';
-import { AuthenticationForm } from './AuthenticationForm';
+import { Button, Group, Modal, PasswordInput, TextInput, useModal, UseModalReturnValue } from '@mantine/core';
 
 const AuthModalContext = createContext<UseModalReturnValue | null>(null);
-
-function AuthModalProvider({ children }: { children: React.ReactNode }) {
-  const modal = useModal({
-    title: 'Sign in',
-    children: <AuthenticationForm />,
-  });
-
-  return <AuthModalContext value={modal}>{children}</AuthModalContext>;
-}
 
 function useAuthModal() {
   const ctx = use(AuthModalContext);
@@ -27,7 +24,39 @@ function useAuthModal() {
   return ctx;
 }
 
-// Any component in the application, no matter how deep
+function SignInForm() {
+  const authModal = useAuthModal();
+
+  return (
+    <form
+      onSubmit={(event) => {
+        event.preventDefault();
+        authModal.close();
+      }}
+    >
+      <TextInput data-autofocus label="Email" placeholder="you@example.com" required />
+      <PasswordInput label="Password" placeholder="Your password" required mt="md" />
+      <Button type="submit" fullWidth mt="xl">
+        Sign in
+      </Button>
+    </form>
+  );
+}
+
+function AuthModalProvider({ children }: { children: React.ReactNode }) {
+  const modal = useModal({
+    title: 'Sign in',
+    children: <SignInForm />,
+  });
+
+  return (
+    <AuthModalContext value={modal}>
+      {children}
+      <Modal.Outlet />
+    </AuthModalContext>
+  );
+}
+
 function Header() {
   const authModal = useAuthModal();
   return <Button onClick={() => authModal.open()}>Sign in</Button>;
@@ -56,30 +85,45 @@ function Demo() {
 
 const AuthModalContext = createContext<UseModalReturnValue | null>(null);
 
-function AuthModalProvider({ children }: { children: React.ReactNode }) {
-  const [submitted, setSubmitted] = useState(0);
-  const modal = useModal({
-    title: 'Sign in',
-    children: (
-      <>
-        <AuthenticationForm noShadow noPadding />
-        <Text size="xs" c="dimmed" mt="md">
-          Opened from {submitted === 0 ? 'nowhere yet' : `${submitted} place(s)`}
-        </Text>
-      </>
-    ),
-    onOpen: () => setSubmitted((c) => c + 1),
-  });
-
-  return <AuthModalContext value={modal}>{children}</AuthModalContext>;
-}
-
 function useAuthModal() {
   const ctx = use(AuthModalContext);
   if (!ctx) {
     throw new Error('useAuthModal must be used within AuthModalProvider');
   }
   return ctx;
+}
+
+function SignInForm() {
+  const authModal = useAuthModal();
+
+  return (
+    <form
+      onSubmit={(event) => {
+        event.preventDefault();
+        authModal.close();
+      }}
+    >
+      <TextInput data-autofocus label="Email" placeholder="you@example.com" required />
+      <PasswordInput label="Password" placeholder="Your password" required mt="md" />
+      <Button type="submit" fullWidth mt="xl">
+        Sign in
+      </Button>
+    </form>
+  );
+}
+
+function AuthModalProvider({ children }: { children: React.ReactNode }) {
+  const modal = useModal({
+    title: 'Sign in',
+    children: <SignInForm />,
+  });
+
+  return (
+    <AuthModalContext value={modal}>
+      {children}
+      <Modal.Outlet />
+    </AuthModalContext>
+  );
 }
 
 function Header() {

@@ -13,13 +13,13 @@ type Listener = () => void;
 export interface ManagedOverlayStore<Props extends Record<string, any>> {
   setEntry: (entry: ManagedOverlayEntry<Props>) => void;
   removeEntry: (id: string) => void;
-  registerExplicitOutlet: () => () => void;
+  registerExplicitOutlet: (outletId: string) => () => void;
   subscribeIds: (listener: Listener) => () => void;
   getIds: () => string[];
   subscribeEntry: (id: string, listener: Listener) => () => void;
   getEntry: (id: string) => ManagedOverlayEntry<Props> | undefined;
   subscribeOutlets: (listener: Listener) => () => void;
-  getExplicitOutlets: () => number;
+  getActiveExplicitOutlet: () => string | null;
 }
 
 export function createManagedOverlayStore<
@@ -30,7 +30,8 @@ export function createManagedOverlayStore<
   const idsListeners = new Set<Listener>();
   const outletListeners = new Set<Listener>();
   let ids: string[] = [];
-  let explicitOutlets = 0;
+  let explicitOutlets: string[] = [];
+  let activeExplicitOutlet: string | null = null;
 
   const notifyIds = () => {
     ids = Array.from(entries.keys());
@@ -55,13 +56,18 @@ export function createManagedOverlayStore<
       }
     },
 
-    registerExplicitOutlet() {
-      explicitOutlets += 1;
-      outletListeners.forEach((listener) => listener());
+    registerExplicitOutlet(outletId) {
+      const notifyOutlets = () => {
+        activeExplicitOutlet = explicitOutlets[explicitOutlets.length - 1] ?? null;
+        outletListeners.forEach((listener) => listener());
+      };
+
+      explicitOutlets = [...explicitOutlets.filter((item) => item !== outletId), outletId];
+      notifyOutlets();
 
       return () => {
-        explicitOutlets -= 1;
-        outletListeners.forEach((listener) => listener());
+        explicitOutlets = explicitOutlets.filter((item) => item !== outletId);
+        notifyOutlets();
       };
     },
 
@@ -92,7 +98,7 @@ export function createManagedOverlayStore<
       return () => outletListeners.delete(listener);
     },
 
-    getExplicitOutlets: () => explicitOutlets,
+    getActiveExplicitOutlet: () => activeExplicitOutlet,
   };
 }
 
@@ -111,10 +117,10 @@ export function useManagedOverlayEntry<Props extends Record<string, any>>(
   );
 }
 
-export function useExplicitManagedOverlayOutlets(store: ManagedOverlayStore<any>) {
+export function useActiveExplicitManagedOverlayOutlet(store: ManagedOverlayStore<any>) {
   return useSyncExternalStore(
     store.subscribeOutlets,
-    store.getExplicitOutlets,
-    store.getExplicitOutlets
+    store.getActiveExplicitOutlet,
+    store.getActiveExplicitOutlet
   );
 }

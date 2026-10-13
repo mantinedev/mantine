@@ -32,6 +32,28 @@ function getOverlayKey(kind: OverlayStackKind, id: string) {
 const matches = (entry: OverlayEntry, kind: OverlayStackKind, id: string) =>
   entry.kind === kind && entry.id === id;
 
+export function getBaseZIndex(entries: { zIndex: number | string }[]): number | string {
+  let max: number = getDefaultZIndex('modal');
+  const values: string[] = [];
+
+  entries.forEach(({ zIndex }) => {
+    const value = typeof zIndex === 'string' ? zIndex.trim() : zIndex;
+    const numeric = Number(value);
+
+    if (value === '') {
+      return;
+    }
+
+    if (Number.isFinite(numeric)) {
+      max = Math.max(max, numeric);
+    } else if (!values.includes(value as string)) {
+      values.push(value as string);
+    }
+  });
+
+  return values.length === 0 ? max : `max(${[max, ...values].join(', ')})`;
+}
+
 export function useOverlayRegistry(): OverlayRegistry {
   const [entries, setEntries] = useState<OverlayEntry[]>([]);
   const [rects, setRects] = useState<Record<string, OverlayStackRect>>({});
@@ -217,13 +239,7 @@ export function useOverlayStackValue(
     const topEntry = openEntries[openEntries.length - 1];
     const kindIds = kindEntries.map((entry) => entry.id);
 
-    const baseZIndex = entries.reduce<number | string>(
-      (max, entry) =>
-        typeof entry.zIndex === 'number' && typeof max === 'number'
-          ? Math.max(max, entry.zIndex)
-          : max,
-      getDefaultZIndex('modal')
-    );
+    const baseZIndex = getBaseZIndex(entries);
 
     const getDepth = (id: string) => {
       const entry = kindEntries.find((item) => item.id === id);
@@ -272,6 +288,7 @@ export function useOverlayStackValue(
       isActive: (id: string) => !!topEntry && matches(topEntry, kind, id),
       hasAnyOtherEntry: (id: string) => entries.some((entry) => !matches(entry, kind, id)),
       hasSameKindSiblings: (id: string) => kindEntries.some((entry) => entry.id !== id),
+      isRegistered: (id: string) => kindIds.includes(id),
       currentId,
       shared,
       reportDrag,
@@ -360,6 +377,7 @@ export function useScopedOverlayStackValue(
       isActive: (id) => parent.isActive(toId(id)),
       hasAnyOtherEntry: (id) => parent.hasAnyOtherEntry(toId(id)),
       hasSameKindSiblings: (id) => parent.hasSameKindSiblings(toId(id)),
+      isRegistered: (id) => parent.isRegistered(toId(id)),
       reportDrag: (id, progress) => parent.reportDrag(toId(id), progress),
     };
   }, [parent, toId, callbacks]);

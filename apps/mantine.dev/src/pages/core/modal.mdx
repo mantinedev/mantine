@@ -22,9 +22,7 @@ Use it to open the same modal with different content:
 
 <Demo data={ModalDemos.useModalOverrides} />
 
-`useModal` can be called in list items, for example, to render a delete confirmation for each table row.
-Closed modals are not updated when their parent component re-renders, so a table with hundreds of rows,
-each with its own `useModal`, re-renders at about the same cost as a table without modals:
+`useModal` can be called in list items, for example, to render a delete confirmation for each table row:
 
 <Demo data={ModalDemos.useModalTable} />
 
@@ -35,22 +33,32 @@ each with its own `useModal`, re-renders at about the same cost as a table witho
 - `onOpen` – called when the modal is opened
 - `onClose` – called when the modal is closed with `modal.close()`, close button, overlay click or Escape key
 
-Modals opened with `useModal` are rendered in a [Modal.Stack](#modalstack), or join the
-[shared stack](#shared-stack) when `theme.overlayStack` is set. Modal content is rendered
-inside `MantineProvider` and does not have access to contexts provided below it.
-Render `Modal.Outlet` anywhere in your application to render managed modals inside
-the providers your modal content depends on:
+Modals opened with `useModal` and drawers opened with `useDrawer` are rendered in one stack,
+a modal opened from a drawer is displayed above it. They join the [shared stack](#shared-stack)
+when `theme.overlayStack` is set on the `MantineProvider` theme. An inline `Modal` or `Drawer`
+rendered in the component that calls `useModal` is displayed below managed modals: render it inside the
+modal content, open it with `useModal`/`useDrawer` or set `theme.overlayStack`.
+
+Modal content is rendered inside `MantineProvider` and does not have access to contexts provided
+below it. Render one `Modal.Outlet` inside your application providers to render managed modals
+there. Drawers opened with `useDrawer` stay in the automatic outlet and are stacked separately from
+modals rendered by `Modal.Outlet`, so a modal opened from a managed drawer may be displayed below it. To keep
+them in one stack, render `Drawer.Outlet` next to `Modal.Outlet` inside a provider that sets
+`theme.overlayStack`, or do not render outlets:
 
 ```tsx
-import { MantineProvider, Modal } from '@mantine/core';
+import { createTheme, Drawer, MantineProvider, Modal } from '@mantine/core';
+
+const theme = createTheme({ overlayStack: true });
 
 function App() {
   return (
-    <MantineProvider>
+    <MantineProvider theme={theme}>
       <RouterProvider>
         <QueryClientProvider>
           {/* Your app here */}
           <Modal.Outlet />
+          <Drawer.Outlet />
         </QueryClientProvider>
       </RouterProvider>
     </MantineProvider>
@@ -62,8 +70,8 @@ function App() {
 
 To open the same modal from different parts of the application, for example, an authentication
 modal, call `useModal` once in a provider component and share the returned object with context.
-`Modal.Outlet` rendered inside the provider keeps the modal content within your application
-providers:
+`Modal.Outlet` renders all modals opened with `useModal`: render it once, inside every provider
+the modal content uses, including the shared modal context:
 
 <Demo data={ModalDemos.useModalShared} />
 

@@ -3,7 +3,7 @@ import { Button, Group, Text, useModal, UseModalOptions } from '@mantine/core';
 import { MantineDemo } from '@mantinex/demo';
 
 const code = `
-import { useRef } from 'react';
+import { useRef, useState } from 'react';
 import { Button, Group, Text, useModal, UseModalOptions } from '@mantine/core';
 
 interface ConfirmOptions extends UseModalOptions {

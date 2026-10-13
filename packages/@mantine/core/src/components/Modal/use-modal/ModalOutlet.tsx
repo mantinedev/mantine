@@ -1,17 +1,14 @@
 import { ManagedOverlayOutlet, ManagedOverlayOutletConfig } from '../../../core/ManagedOverlay';
 import { ModalStackContext } from '../../../core/OverlayStack';
 import { Modal, ModalProps } from '../Modal';
-import { ModalStack } from '../ModalStack';
 
 export type ManagedModalProps = Partial<Omit<ModalProps, 'opened' | 'onClose' | 'stackId' | 'id'>>;
 
 export const modalOutletConfig: ManagedOverlayOutletConfig = {
   storeKey: 'modal',
+  name: 'Modal',
   get component() {
     return Modal;
-  },
-  get stack() {
-    return ModalStack;
   },
   stackContext: ModalStackContext,
 };

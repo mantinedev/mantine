@@ -7,7 +7,7 @@ import { ColorPicker } from '../ColorPicker';
 import { ColorWheel } from '../ColorWheel';
 import { CompareSlider } from '../CompareSlider';
 import { Group } from '../Group';
-import { Modal, useModalsStack } from '../Modal';
+import { Modal, useModal, useModalsStack } from '../Modal';
 import { ScrollArea } from '../ScrollArea';
 import { RangeSlider, Slider } from '../Slider';
 import { Stack as MantineStack } from '../Stack';
@@ -552,6 +552,7 @@ export function UseDrawerSharedStack() {
   const [opened, { open, close }] = useDisclosure(false);
   return (
     <MantineThemeProvider theme={{ overlayStack: true }}>
+      <Drawer.Outlet />
       <div style={{ padding: 40 }}>
         <MantineStack align="flex-start">
           <Button onClick={open}>Open regular drawer</Button>
@@ -562,5 +563,39 @@ export function UseDrawerSharedStack() {
         </Drawer>
       </div>
     </MantineThemeProvider>
+  );
+}
+
+function InlineModalButton() {
+  const [opened, { open, close }] = useDisclosure(false);
+  return (
+    <>
+      <Button variant="default" onClick={open}>
+        Open inline modal
+      </Button>
+      <Modal opened={opened} onClose={close} title="Inline modal">
+        Inline modal rendered in managed drawer content
+      </Modal>
+    </>
+  );
+}
+
+export function UseDrawerWithModal() {
+  const confirm = useModal({ title: 'Confirm', children: 'Managed modal opened from a drawer' });
+  const drawer = useDrawer({
+    title: 'Managed drawer',
+    position: 'right',
+    children: (
+      <MantineStack>
+        <Button onClick={() => confirm.open()}>Open managed modal</Button>
+        <InlineModalButton />
+      </MantineStack>
+    ),
+  });
+
+  return (
+    <div style={{ padding: 40 }}>
+      <Button onClick={() => drawer.open()}>Open managed drawer</Button>
+    </div>
   );
 }

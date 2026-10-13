@@ -6,17 +6,9 @@ export default Layout(MDX_DATA.Modals);
 
 ## useModal hook
 
-Before using this package, consider the [useModal](/core/modal/#usemodal-hook) and
-[useDrawer](/core/drawer/#usedrawer-hook) hooks from `@mantine/core`. They cover the same use case –
-opening a modal from any component without rendering it in JSX – with several advantages over the
-modals manager:
-
-- Modal props and content are updated every time the component that called the hook renders. Modals opened with this package receive a snapshot of props and must be updated manually with `modals.updateModal`.
-- No `ModalsProvider` is required, modals are rendered by `MantineProvider`.
-- Each modal is rendered as a separate `Modal` in a `Modal.Stack`, modals below the top one keep their state when another modal is opened.
-- The [Modal](/core/modal/#shared-modal) documentation includes examples of a shared authentication modal and a confirm modal built with `useModal`.
-
-Use `@mantine/modals` when you need to open modals from code that is not rendered by React, for example,
+Consider the [useModal](/core/modal/#usemodal-hook) and [useDrawer](/core/drawer/#usedrawer-hook)
+hooks from `@mantine/core` for modals that need live props and access to your application contexts (with `Modal.Outlet` or `Drawer.Outlet` rendered inside them).
+Use `@mantine/modals` to open modals from code that is not rendered by React, for example,
 from an API client or a router loader.
 
 ## Installation

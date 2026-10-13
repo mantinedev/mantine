@@ -623,6 +623,20 @@ export function UseModalHook() {
   );
 }
 
+export function UseModalKeepMounted() {
+  const modal = useModal({
+    title: 'Kept mounted',
+    keepMounted: true,
+    children: <TextInput label="Name" placeholder="Type, close, reopen" data-autofocus />,
+  });
+
+  return (
+    <div style={{ padding: 40 }}>
+      <Button onClick={() => modal.open()}>Open keepMounted modal</Button>
+    </div>
+  );
+}
+
 function UseModalStackedItem({ label }: { label: string }) {
   const modal = useModal({
     title: label,
@@ -661,6 +675,7 @@ export function UseModalSharedStack() {
   const [opened, { open, close }] = useDisclosure(false);
   return (
     <MantineThemeProvider theme={{ overlayStack: true }}>
+      <Modal.Outlet />
       <div style={{ padding: 40 }}>
         <Stack align="flex-start">
           <Button onClick={open}>Open regular modal</Button>

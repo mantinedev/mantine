@@ -61,15 +61,20 @@ export interface SharedOverlayStacksProps extends OverlayStackOptions {
   children: React.ReactNode;
 }
 
-export function SharedOverlayStacks({
+interface UseOverlayStackContextsInput extends SharedOverlayStacksProps {
+  shared: boolean;
+}
+
+export function useOverlayStackContexts({
   withModalStack,
   withDrawerStack,
   maxDepth = DEFAULT_OVERLAY_STACK_MAX_DEPTH,
   withStackTransform = true,
+  shared,
   children,
-}: SharedOverlayStacksProps) {
+}: UseOverlayStackContextsInput) {
   const registry = useOverlayRegistry();
-  const options = { maxDepth, withStackTransform, shared: true };
+  const options = { maxDepth, withStackTransform, shared };
   const modalValue = useOverlayStackValue(registry, 'modal', options);
   const drawerValue = useOverlayStackValue(registry, 'drawer', options);
 
@@ -83,5 +88,9 @@ export function SharedOverlayStacks({
     content = <ModalStackContext value={modalValue}>{content}</ModalStackContext>;
   }
 
-  return <>{content}</>;
+  return content;
+}
+
+export function SharedOverlayStacks(props: SharedOverlayStacksProps) {
+  return <>{useOverlayStackContexts({ ...props, shared: true })}</>;
 }
