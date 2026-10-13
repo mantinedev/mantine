@@ -3,6 +3,7 @@ import { act, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import {
   externalInputFill,
+  focusedAutofill,
   inputDefaultProps,
   inputStylesApiSelectors,
   render,
@@ -450,6 +451,65 @@ describe('@mantine/core/TagsInput', () => {
       await userEvent.type(screen.getByRole('combobox'), 'new-tag{enter}');
       expect(screen.getByRole('combobox')).toHaveValue('');
       expect(document.querySelector('input[name="test"]')).toHaveValue('new-tag');
+    });
+
+    it('does not add a tag while typing without submitting', async () => {
+      render(<TagsInput {...defaultProps} name="test" />);
+      await userEvent.type(screen.getByRole('combobox'), 'new-tag');
+      expect(screen.getByRole('combobox')).toHaveValue('new-tag');
+      expect(document.querySelector('input[name="test"]')).toHaveValue('');
+    });
+  });
+
+  describe('autofill suggestion picked in the focused input', () => {
+    const autofill = (value: string, inputType?: string) =>
+      focusedAutofill(screen.getByRole('combobox'), value, inputType);
+
+    it('adds a tag from an input event without inputType (Chrome, Safari)', async () => {
+      const spy = jest.fn();
+      render(<TagsInput {...defaultProps} name="test" onChange={spy} />);
+      await autofill('user@example.com');
+      expect(spy).toHaveBeenLastCalledWith(['user@example.com']);
+      expect(screen.getByRole('combobox')).toHaveValue('');
+      expect(document.querySelector('input[name="test"]')).toHaveValue('user@example.com');
+    });
+
+    it('adds a tag from an insertReplacementText input event (Firefox, datalist)', async () => {
+      render(<TagsInput {...defaultProps} name="test" />);
+      await autofill('user@example.com', 'insertReplacementText');
+      expect(screen.getByRole('combobox')).toHaveValue('');
+      expect(document.querySelector('input[name="test"]')).toHaveValue('user@example.com');
+    });
+
+    it('splits the autofilled value with splitChars', async () => {
+      render(<TagsInput {...defaultProps} name="test" splitChars={[',', ' ']} />);
+      await autofill('a@example.com b@example.com');
+      expect(document.querySelector('input[name="test"]')).toHaveValue(
+        'a@example.com,b@example.com'
+      );
+    });
+
+    it('does not add a duplicate or exceed maxTags', async () => {
+      render(
+        <TagsInput {...defaultProps} name="test" defaultValue={['user@example.com']} maxTags={1} />
+      );
+      await autofill('other@example.com');
+      expect(document.querySelector('input[name="test"]')).toHaveValue('user@example.com');
+    });
+
+    it('does not add a tag when spellcheck replaces a word in the typed text', async () => {
+      render(<TagsInput {...defaultProps} name="test" />);
+      await userEvent.type(screen.getByRole('combobox'), 'New Yrok');
+      await autofill('New York', 'insertReplacementText');
+      expect(screen.getByRole('combobox')).toHaveValue('New York');
+      expect(document.querySelector('input[name="test"]')).toHaveValue('');
+    });
+
+    it('does not add a tag from a regular typing input event', async () => {
+      render(<TagsInput {...defaultProps} name="test" />);
+      await autofill('user@example.com', 'insertText');
+      expect(screen.getByRole('combobox')).toHaveValue('user@example.com');
+      expect(document.querySelector('input[name="test"]')).toHaveValue('');
     });
   });
 

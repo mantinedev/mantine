@@ -29,6 +29,7 @@ import {
 } from '../Combobox';
 import { getComboboxLabelId } from '../Combobox/get-combobox-label-id/get-combobox-label-id';
 import { getOptionByLabel } from '../Combobox/get-options-lockup/get-option-by-label';
+import { isAutofillInputChange } from '../Combobox/is-autofill-input-change/is-autofill-input-change';
 import { isExternalInputChange } from '../Combobox/is-external-input-change/is-external-input-change';
 import {
   __BaseInputProps,
@@ -593,6 +594,27 @@ export const MultiSelect = genericFactory<MultiSelectFactory>((_props) => {
                         }
                       }
 
+                      return;
+                    }
+
+                    const autofillOption =
+                      isAutofillInputChange(event) && !readOnly
+                        ? getOptionByLabel(optionsLockup, event.currentTarget.value)
+                        : undefined;
+
+                    if (autofillOption) {
+                      const selected = _value.includes(autofillOption.value as any);
+
+                      if (!selected && _value.length >= maxValues) {
+                        onMaxValues?.();
+                        return;
+                      }
+
+                      if (!selected) {
+                        setValue([..._value, autofillOption.value] as any);
+                      }
+
+                      handleSearchChange(clearSearchOnChange ? '' : event.currentTarget.value);
                       return;
                     }
 

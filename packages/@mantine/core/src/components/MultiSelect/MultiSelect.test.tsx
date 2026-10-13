@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import {
   externalInputFill,
+  focusedAutofill,
   inputDefaultProps,
   inputStylesApiSelectors,
   render,
@@ -610,6 +611,71 @@ describe('@mantine/core/MultiSelect', () => {
       expect(screen.getByRole('combobox')).toHaveValue('Germ');
       expect(screen.getByRole('option', { name: 'Germany' })).toBeVisible();
       expect(screen.queryByRole('option', { name: 'Armenia' })).toBe(null);
+      expect(getHiddenInput()).toHaveValue('');
+    });
+  });
+
+  describe('autofill suggestion picked in the focused input', () => {
+    const autofillProps: MultiSelectProps = {
+      ...defaultProps,
+      searchable: true,
+      name: 'test-multi-select',
+      data: ['Germany', 'Armenia'],
+    };
+
+    const getHiddenInput = () => document.querySelector('input[name="test-multi-select"]');
+    const autofill = (value: string, inputType?: string) =>
+      focusedAutofill(screen.getByRole('combobox'), value, inputType);
+
+    it('adds the option with a matching label (Chrome, Safari)', async () => {
+      const spy = jest.fn();
+      render(<MultiSelect {...autofillProps} defaultValue={['Armenia']} onChange={spy} />);
+      await autofill('  gERMANY ');
+      expect(spy).toHaveBeenLastCalledWith(['Armenia', 'Germany']);
+      expect(screen.getByRole('combobox')).toHaveValue('');
+      expect(getHiddenInput()).toHaveValue('Armenia,Germany');
+    });
+
+    it('adds the option with a matching label (Firefox, datalist)', async () => {
+      render(<MultiSelect {...autofillProps} />);
+      await autofill('Germany', 'insertReplacementText');
+      expect(getHiddenInput()).toHaveValue('Germany');
+    });
+
+    it('does not deselect an option that is already selected', async () => {
+      render(<MultiSelect {...autofillProps} defaultValue={['Germany']} />);
+      await autofill('Germany');
+      expect(screen.getByRole('combobox')).toHaveValue('');
+      expect(getHiddenInput()).toHaveValue('Germany');
+    });
+
+    it('does not select more options than maxValues allows', async () => {
+      const spy = jest.fn();
+      render(
+        <MultiSelect
+          {...autofillProps}
+          defaultValue={['Armenia']}
+          maxValues={1}
+          onMaxValues={spy}
+        />
+      );
+      await autofill('Germany');
+      expect(spy).toHaveBeenCalled();
+      expect(getHiddenInput()).toHaveValue('Armenia');
+    });
+
+    it('keeps the filled in value as search when the label does not match', async () => {
+      render(<MultiSelect {...autofillProps} />);
+      await autofill('Germ');
+      expect(screen.getByRole('combobox')).toHaveValue('Germ');
+      expect(screen.getByRole('option', { name: 'Germany' })).toBeVisible();
+      expect(getHiddenInput()).toHaveValue('');
+    });
+
+    it('does not add an option from a regular typing input event', async () => {
+      render(<MultiSelect {...autofillProps} />);
+      await autofill('Germany', 'insertText');
+      expect(screen.getByRole('combobox')).toHaveValue('Germany');
       expect(getHiddenInput()).toHaveValue('');
     });
   });

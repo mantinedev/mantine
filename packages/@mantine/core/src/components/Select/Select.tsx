@@ -25,6 +25,7 @@ import {
 } from '../Combobox';
 import { getComboboxLabelId } from '../Combobox/get-combobox-label-id/get-combobox-label-id';
 import { getOptionByLabel } from '../Combobox/get-options-lockup/get-option-by-label';
+import { isAutofillInputChange } from '../Combobox/is-autofill-input-change/is-autofill-input-change';
 import { isExternalInputChange } from '../Combobox/is-external-input-change/is-external-input-change';
 import {
   __BaseInputProps,
@@ -360,16 +361,21 @@ export const Select = genericFactory<SelectFactory>((_props) => {
             readOnly={readOnly || !searchable}
             value={search}
             onChange={(event) => {
-              if (isExternalInputChange(event)) {
-                if (!readOnly) {
-                  const externalOption = getOptionByLabel(optionsLockup, event.currentTarget.value);
+              const external = isExternalInputChange(event);
 
-                  if (externalOption && `${externalOption.value}` !== `${_value}`) {
-                    setValue(externalOption.value, externalOption);
-                    !controlled && handleSearchChange(externalOption.label);
-                  }
+              if ((external || isAutofillInputChange(event)) && !readOnly) {
+                const externalOption = getOptionByLabel(optionsLockup, event.currentTarget.value);
+
+                if (externalOption) {
+                  const changed = `${externalOption.value}` !== `${_value}`;
+                  changed && setValue(externalOption.value, externalOption);
+                  (!controlled || !changed) && handleSearchChange(externalOption.label);
+                  store.closeDropdown();
+                  return;
                 }
+              }
 
+              if (external) {
                 return;
               }
 

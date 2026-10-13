@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import {
   externalInputFill,
+  focusedAutofill,
   inputDefaultProps,
   inputStylesApiSelectors,
   render,
@@ -539,6 +540,78 @@ describe('@mantine/core/Select', () => {
       expect(screen.getByRole('combobox')).toHaveValue('Germ');
       expect(screen.getByRole('option', { name: 'Germany' })).toBeVisible();
       expect(screen.queryByRole('option', { name: 'Armenia' })).toBe(null);
+      expect(getHiddenInput()).toHaveValue('');
+    });
+  });
+
+  describe('autofill suggestion picked in the focused input', () => {
+    const autofillProps: SelectProps = {
+      ...defaultProps,
+      searchable: true,
+      name: 'test-select',
+      data: ['Germany', 'Armenia'],
+    };
+
+    const getHiddenInput = () => document.querySelector('input[name="test-select"]');
+    const autofill = (value: string, inputType?: string) =>
+      focusedAutofill(screen.getByRole('combobox'), value, inputType);
+
+    it('selects the option with a matching label (Chrome, Safari)', async () => {
+      const spy = jest.fn();
+      render(<Select {...autofillProps} onChange={spy} />);
+      await autofill('  gERMANY ');
+      expect(spy).toHaveBeenCalledWith('Germany', { value: 'Germany', label: 'Germany' });
+      expect(screen.getByRole('combobox')).toHaveValue('Germany');
+      expect(getHiddenInput()).toHaveValue('Germany');
+      expect(screen.queryByRole('option')).toBe(null);
+    });
+
+    it('selects the option with a matching label (Firefox, datalist)', async () => {
+      render(<Select {...autofillProps} defaultValue="Armenia" />);
+      await autofill('Germany', 'insertReplacementText');
+      expect(screen.getByRole('combobox')).toHaveValue('Germany');
+      expect(getHiddenInput()).toHaveValue('Germany');
+    });
+
+    it('does not deselect the option when its own label is filled in', async () => {
+      render(<Select {...autofillProps} defaultValue="Armenia" allowDeselect />);
+      await autofill('Armenia');
+      expect(getHiddenInput()).toHaveValue('Armenia');
+    });
+
+    it('displays the label of the matched option in controlled mode', async () => {
+      function Controlled() {
+        const [value, setValue] = useState<string | null>(null);
+        return <Select {...autofillProps} value={value} onChange={setValue} />;
+      }
+
+      render(<Controlled />);
+      await autofill('germany');
+      expect(screen.getByRole('combobox')).toHaveValue('Germany');
+      expect(getHiddenInput()).toHaveValue('Germany');
+    });
+
+    it('restores the label when the controlled value is filled in after editing the search', async () => {
+      render(<Select {...autofillProps} value="Germany" />);
+      await userEvent.click(screen.getByRole('combobox'));
+      await userEvent.clear(screen.getByRole('combobox'));
+      await userEvent.type(screen.getByRole('combobox'), 'Ger');
+      await autofill('Germany');
+      expect(screen.getByRole('combobox')).toHaveValue('Germany');
+    });
+
+    it('keeps the filled in value as search when the label does not match', async () => {
+      render(<Select {...autofillProps} />);
+      await autofill('Germ');
+      expect(screen.getByRole('combobox')).toHaveValue('Germ');
+      expect(screen.getByRole('option', { name: 'Germany' })).toBeVisible();
+      expect(getHiddenInput()).toHaveValue('');
+    });
+
+    it('does not select an option from a regular typing input event', async () => {
+      render(<Select {...autofillProps} />);
+      await autofill('Germany', 'insertText');
+      expect(screen.getByRole('combobox')).toHaveValue('Germany');
       expect(getHiddenInput()).toHaveValue('');
     });
   });

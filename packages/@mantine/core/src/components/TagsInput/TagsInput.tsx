@@ -28,6 +28,7 @@ import {
   usePillsReorder,
 } from '../Combobox';
 import { getComboboxLabelId } from '../Combobox/get-combobox-label-id/get-combobox-label-id';
+import { isAutofillInputChange } from '../Combobox/is-autofill-input-change/is-autofill-input-change';
 import { isExternalInputChange } from '../Combobox/is-external-input-change/is-external-input-change';
 import {
   __BaseInputProps,
@@ -567,6 +568,12 @@ export const TagsInput = factory<TagsInputFactory>((_props) => {
                   value={_searchValue}
                   onChange={(event) => {
                     if (isExternalInputChange(event)) {
+                      return;
+                    }
+
+                    if (isAutofillInputChange(event, _searchValue) && !readOnly) {
+                      store.addSplittedTags(event.currentTarget.value);
+                      store.resetSelectedOption();
                       return;
                     }
 
