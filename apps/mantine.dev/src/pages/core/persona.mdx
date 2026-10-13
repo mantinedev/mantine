@@ -6,18 +6,16 @@ export default Layout(MDX_DATA.Persona);
 
 ## Usage
 
-`Persona` displays a person identity: an [Avatar](/core/avatar), an optional presence
-badge and up to four text lines. Use it in people pickers, contact and chat lists,
-comment authors and profile headers.
+`Persona` displays a person identity: an avatar, an optional presence badge and up to
+four text lines. Use it in people pickers, contact lists, comment authors and profile headers:
 
 <Demo data={PersonaDemos.usage} />
 
 ## Avatar
 
-`avatar` prop accepts [Avatar](/core/avatar) props or a custom React node. When `avatar` is
-not set, an avatar with initials generated from the `name` prop is displayed. To render
-`Persona` without an avatar, use the [presenceOnly](#presence-only) prop or
-[compound components](#compound-components) without `Persona.Avatar`.
+`avatar` prop accepts [Avatar](/core/avatar) props or a custom React node. When it is not set,
+initials generated from the `name` prop are displayed. To render `Persona` without an avatar,
+use the [presenceOnly](#presence-only) prop:
 
 <Demo data={PersonaDemos.initials} />
 
@@ -52,13 +50,10 @@ function Demo() {
 
 ## Presence
 
-Set `presence` prop to display a status badge on the avatar. It accepts a status string or a
-configuration object:
+Set `presence` prop to display a status badge on the avatar. It accepts a status string or
+an object with `outOfOffice` and `processing` modifiers:
 
 <Demo data={PersonaDemos.presence} />
-
-The configuration object supports two modifiers: `outOfOffice` renders the badge as a ring
-for any status, `processing` adds a pulsing animation.
 
 ```tsx
 import { Persona } from '@mantine/core';
@@ -83,8 +78,7 @@ avatar:
 
 ## Text lines
 
-`Persona` renders up to four text lines. Long lines are truncated with an ellipsis,
-the full text of string lines is available on hover:
+`Persona` renders up to four text lines. Long lines are truncated with an ellipsis:
 
 ```tsx
 import { Persona } from '@mantine/core';
@@ -103,29 +97,26 @@ function Demo() {
 
 ## Size
 
-`size` prop scales the avatar, the presence badge, the text and the gap between
-the avatar and the text. Change `size` in the configurator above to see how it scales.
+`size` prop scales the avatar, the presence badge, the text and the gap between them.
+Change `size` in the configurator above to see how it works.
 
 ## Text position and alignment
 
-Use `textPosition` prop to place the text `after` (default), `before` or `below` the avatar.
-`textAlignment` prop (`start` or `center`) controls how the text block is aligned.
-Change these props in the configurator above to see how they work.
+Use `textPosition` prop to place the text after, before or below the avatar and
+`textAlignment` prop to align the text block. Change these props in the configurator
+above to see how they work.
 
 ## Radius
 
-Set `radius` prop to change the avatar `border-radius`. The presence badge position is
-adjusted to the avatar shape: it sits on the circle edge of round avatars and on the corner
-of square ones. With compound components, set `radius` on `Persona`, not on `Persona.Avatar`.
+Set `radius` prop to change the avatar `border-radius`, the presence badge follows the avatar
+shape. With compound components, set `radius` on `Persona`, not on `Persona.Avatar`:
 
 <Demo data={PersonaDemos.radius} />
 
 ## Polymorphic component
 
-`Persona` is a [polymorphic component](/guides/polymorphic), its default root element is
-`div`. Set `component` prop to render it as a link or a button. Browser default styles of
-`a` and `button` elements are reset. A `button` root shrinks to its content – set `w="100%"`
-to stretch it to the container width:
+`Persona` is a [polymorphic component](/guides/polymorphic), set `component` prop to render it
+as a link or a button. A `button` root shrinks to its content, set `w="100%"` to stretch it:
 
 ```tsx
 import { Persona } from '@mantine/core';
@@ -145,18 +136,11 @@ function Demo() {
 
 ## Compound components
 
-For full control over the layout, use compound components instead of the shorthand props:
+For full control over the layout, use `Persona.Avatar`, `Persona.Presence` and `Persona.Text`
+compound components instead of the shorthand props. `level` prop of `Persona.Text` sets the
+line importance, `1` is the person name:
 
 <Demo data={PersonaDemos.compound} />
-
-- `Persona.Avatar` – avatar, accepts [Avatar](/core/avatar) props. Initials are generated
-  from the `name` prop of `Persona` or from its own `name` prop.
-- `Persona.Presence` – presence badge, accepts `presence` and `labels` props
-- `Persona.Text` – text line, `level` prop (`1`–`4`) controls its importance: `1` is the
-  primary line (person name), `2`–`4` are secondary lines
-
-`Persona.Avatar` and `Persona.Presence` can be wrapped in a component that does not render
-its own element, for example [Tooltip](/core/tooltip).
 
 ## Example: people list
 
@@ -164,10 +148,8 @@ its own element, for example [Tooltip](/core/tooltip).
 
 ## Accessibility
 
-- The status is rendered as visually hidden text. Screen readers announce the name first
-  and the status last, for example "Jane Doe, Product designer, Available".
-- Statuses are announced in English by default. Use `labels` prop to translate them,
-  `outOfOffice` is the suffix added when the `outOfOffice` modifier is set:
+- The status is announced after the name and text lines, for example "Jane Doe, Product designer, Available"
+- Statuses are announced in English by default. Use `labels` prop to translate them:
 
 ```tsx
 import { Persona } from '@mantine/core';
@@ -188,14 +170,11 @@ function Demo() {
 }
 ```
 
-- When a text line already displays the status (for example `tertiaryText="Available"`),
-  set that status label to an empty string (`labels={{ available: '' }}`), so the status
-  is not announced twice.
-- The avatar is hidden from assistive technologies by default, because the name
-  is rendered next to it. Set `alt` in the `avatar` prop or on `Persona.Avatar` when the
-  avatar is displayed without text.
-- A custom node passed to the `avatar` prop is not hidden. Add `aria-hidden` to it if it is
-  decorative.
+- When a text line already displays the status, set that status label to an empty string,
+  for example `labels={{ available: '' }}`, so it is not announced twice
+- The avatar is hidden from assistive technologies, because the name is rendered next to it.
+  Set `alt` in the `avatar` prop when the avatar is displayed without text.
+- A custom node passed to the `avatar` prop is not hidden, add `aria-hidden` to it if it is decorative
 
 <StylesApiSelectors component="Persona" />
 

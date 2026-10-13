@@ -6,16 +6,14 @@ export default Layout(MDX_DATA.QRCode);
 
 ## Usage
 
-`QRCode` encodes a string into a QR code and renders it as an SVG. The encoder is
-bundled with the component: no additional dependencies or network requests are
-required, and the component works with server-side rendering:
+`QRCode` encodes a string into a QR code and renders it as an SVG. It has no external
+dependencies and works with server-side rendering:
 
 <Demo data={QRCodeDemos.usage} />
 
 ## Size
 
-Set `size` prop to control the width and height of the code. Numbers are
-converted to rem, strings are used as is:
+Set `size` prop to change the width and height of the code:
 
 <Demo data={QRCodeDemos.sizes} />
 
@@ -29,28 +27,17 @@ Keep a high contrast between the two colors so that the code stays scannable:
 
 ## Error correction level
 
-`errorCorrectionLevel` prop controls how much of the code can be damaged or
-covered while remaining readable. Higher levels produce a denser code:
-
-- `L` – recovers up to ~7% of data
-- `M` – recovers up to ~15% of data (default)
-- `Q` – recovers up to ~25% of data
-- `H` – recovers up to ~30% of data
+`errorCorrectionLevel` prop controls how much of the code can be damaged or covered
+while remaining readable, from `L` (about 7%) to `H` (about 30%). Higher levels produce
+a denser code:
 
 <Demo data={QRCodeDemos.errorCorrection} />
 
 ## Capacity
 
-The amount of data a QR code can hold depends on the error correction level.
-The limits below are for text encoded as UTF-8 bytes, non-ASCII characters take 2–4 bytes each:
-
-- `L` – about 2953 bytes
-- `M` – about 2331 bytes
-- `Q` – about 1663 bytes
-- `H` – about 1273 bytes
-
-When the value is longer than the capacity, `QRCode` renders an empty code.
-`encodeQR` throws a `RangeError` in this case, use it to validate user input:
+A QR code holds from about 1270 bytes with `errorCorrectionLevel="H"` to about 2950 bytes
+with `"L"`. When the value is longer, `QRCode` renders an empty code. Use `encodeQR` to
+validate user input, it throws when the value does not fit:
 
 ```tsx
 import { encodeQR } from '@mantine/core';
@@ -68,15 +55,14 @@ function canEncode(value: string) {
 ## Logo
 
 Pass any React node to the `logo` prop to display it in the center of the code.
-The logo covers part of the code, set `errorCorrectionLevel="H"` to make
-sure the code can still be scanned:
+The logo covers a part of the code, set `errorCorrectionLevel="H"` to keep it scannable:
 
 <Demo data={QRCodeDemos.logo} />
 
 ## Custom rendering with encodeQR
 
-To fully control the appearance (rounded dots, gradients, canvas export, etc.), use
-`encodeQR` function to get the module matrix and render it yourself:
+To fully control the appearance, for example to render rounded dots or export to canvas,
+use `encodeQR` function to get the module matrix and render it yourself:
 
 ```tsx
 import { encodeQR } from '@mantine/core';
@@ -86,8 +72,8 @@ const { matrix, size } = encodeQR('https://mantine.dev', { errorCorrectionLevel:
 // size – number of modules per side (without the quiet zone)
 ```
 
-Finder patterns (the three large squares in the corners) and alignment patterns must
-stay solid squares so that scanners can locate the code. Other modules can have any shape:
+The three large squares in the corners and the alignment patterns must stay solid squares,
+other modules can have any shape:
 
 <Demo data={QRCodeDemos.customRender} />
 

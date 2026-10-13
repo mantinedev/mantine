@@ -6,31 +6,28 @@ export default Layout(MDX_DATA.ColorWheel);
 
 ## Usage
 
-`ColorWheel` is a circular hue selector. Its value is a hue in degrees, a number between 0 and 360:
+`ColorWheel` is a circular hue selector. Its value is a hue in degrees, from `0` at the top (red)
+increasing clockwise to `360`:
 
 <Demo data={ColorWheelDemos.usage} />
 
 ## Controlled
 
-Convert the value to a color with the `hsl(hue, 100%, 50%)` syntax or with any color conversion function:
+Convert the value to a color with `hsl(hue, 100%, 50%)` or any color conversion function:
 
 <Demo data={ColorWheelDemos.controlled} />
 
-The value starts at the top of the ring (`0°` is red) and increases clockwise:
-`90°` is on the right, `180°` at the bottom, `270°` on the left.
-
 ## Ring colors
 
-Use `saturation` and `lightness` props (numbers between 0 and 100) to change the ring colors.
-These props change only the appearance, the value is always the hue in degrees:
+Use `saturation` and `lightness` props (0 to 100) to change the ring colors.
+They change only the appearance, the value is always the hue:
 
 <Demo data={ColorWheelDemos.ringColors} />
 
 ## Size and thickness
 
-Use `size` prop to change the outer diameter of the wheel and `thickness` prop to
-change the ring width. The thumb size is calculated from `thickness`, use `thumbSize`
-prop to override it.
+Use `size` prop to change the outer diameter of the wheel and `thickness` to change the ring width.
+The thumb size is based on `thickness`, override it with `thumbSize`:
 
 ```tsx
 import { ColorWheel } from '@mantine/core';
@@ -42,15 +39,14 @@ function Demo() {
 
 ## onChangeEnd
 
-The `onChangeEnd` callback fires when the user stops dragging the wheel or changes its value
-with the keyboard. Use it as a debounced callback to prevent frequent updates:
+`onChangeEnd` is called when the user stops dragging the wheel or changes the value with the keyboard.
+Use it as a debounced callback to avoid too frequent updates:
 
 <Demo data={ColorWheelDemos.onChangeEnd} />
 
 ## Without thumb indicator
 
-Set `withThumbIndicator={false}` to hide the thumb. The component stays interactive and
-keyboard accessible:
+Set `withThumbIndicator={false}` to hide the thumb, the wheel stays interactive:
 
 ```tsx
 import { ColorWheel } from '@mantine/core';
@@ -62,15 +58,14 @@ function Demo() {
 
 ## Disabled
 
-The `disabled` prop disables the component and prevents user interaction:
+Set `disabled` to prevent user interaction:
 
 <Demo data={ColorWheelDemos.disabled} />
 
 ## ColorWheel with uncontrolled forms
 
-Set `name` prop to include the hue value in the `FormData` object on form submission.
-Use `defaultValue` prop to set the initial value and `hiddenInputProps` to pass
-additional props to the hidden input.
+Set `name` prop to include the hue value in the `FormData` object on form submission
+and `defaultValue` to set the initial value:
 
 ```tsx
 import { ColorWheel } from '@mantine/core';
@@ -93,7 +88,7 @@ function Demo() {
 
 ## Accessibility
 
-To make the component accessible for screen readers, set the `aria-label` prop:
+Set `aria-label` to make the wheel accessible for screen readers:
 
 ```tsx
 import { ColorWheel } from '@mantine/core';
@@ -103,7 +98,7 @@ function Demo() {
 }
 ```
 
-Keyboard interactions when the thumb is focused. Arrow keys wrap around: decreasing from 0 moves to the last step before 360.
+Keyboard interactions when the thumb is focused, arrow keys wrap around at `0` and `360`:
 
 <KeyboardEventsTable
   data={[
@@ -118,8 +113,7 @@ Keyboard interactions when the thumb is focused. Arrow keys wrap around: decreas
 
 ## Based on use-radial-move
 
-`ColorWheel` is based on the [use-radial-move](/hooks/use-radial-move) hook, the same hook
-that powers the [AngleSlider](/core/angle-slider) component. Use this hook to build
-a custom radial selector.
+`ColorWheel` is based on the [use-radial-move](/hooks/use-radial-move) hook.
+Use it to build a custom radial selector:
 
 <Demo data={UseRadialMoveDemos.usage} />

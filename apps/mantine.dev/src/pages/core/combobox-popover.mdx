@@ -6,16 +6,15 @@ export default Layout(MDX_DATA.ComboboxPopover);
 
 ## Usage
 
-`ComboboxPopover` adds a dropdown with selectable options to any button. Unlike `Select`
-and `MultiSelect`, it does not render an input: pass your own target element to
-`ComboboxPopover.Target`. The target must be a single element or component that accepts a `ref`.
+`ComboboxPopover` adds a dropdown with options to any element. It does not render an input,
+pass your own target to `ComboboxPopover.Target`. The target must be a single element
+or a component that accepts `ref`:
 
 <Demo data={ComboboxPopoverDemos.usage} />
 
 ## Data format
 
-`ComboboxPopover` supports the same `data` format as [Select](/core/select) component:
-an array of strings, objects with `value` and `label`, or grouped items.
+`ComboboxPopover` supports the same `data` format as [Select](/core/select):
 
 <ComboboxData component="ComboboxPopover" />
 
@@ -33,7 +32,7 @@ Use `searchValue` and `onSearchChange` props to control the search input value:
 
 ## Sort options
 
-Use `filter` prop with `searchable` to provide a custom filtering and sorting function:
+Use `filter` prop with `searchable` to customize filtering and sorting:
 
 <Demo data={ComboboxPopoverDemos.sort} />
 
@@ -45,8 +44,7 @@ Use `limit` prop with `searchable` to limit the number of options displayed at a
 
 ## Multiple selection
 
-Set `multiple` prop to allow selecting multiple values. `value` type changes
-from `string | null` to `string[]`.
+Set `multiple` prop to allow selecting multiple values, `value` becomes an array of strings:
 
 <Demo data={ComboboxPopoverDemos.multiple} />
 
@@ -56,8 +54,7 @@ from `string | null` to `string[]`.
 
 ## Allow deselect
 
-By default, the selected option can be deselected by clicking it again.
-Set `allowDeselect={false}` to prevent this behavior.
+By default, clicking the selected option again deselects it. Set `allowDeselect={false}` to prevent this:
 
 <Demo data={ComboboxPopoverDemos.allowDeselect} />
 
@@ -83,8 +80,7 @@ Use `renderOption` prop to customize option rendering:
 
 ## Large data sets
 
-By default, the dropdown is wrapped with `ScrollArea.Autosize`.
-Use `maxDropdownHeight` to control the maximum height:
+The dropdown is scrollable, use `maxDropdownHeight` to set its maximum height:
 
 <Demo data={ComboboxPopoverDemos.scrollArea} />
 
@@ -100,8 +96,7 @@ Use `dropdownOpened`, `onDropdownOpen` and `onDropdownClose` props to control th
 
 ## Dropdown width
 
-By default, the dropdown width matches the target element. Use `comboboxProps`
-to set a custom width:
+By default, the dropdown width matches the target. Set a custom width with `comboboxProps`:
 
 <Demo data={ComboboxPopoverDemos.dropdownWidth} />
 
@@ -111,9 +106,8 @@ to set a custom width:
 
 ## Form submission
 
-`ComboboxPopover` renders a hidden input with the selected value for native form submission.
-Use `name` prop to set the input name. For multiple selection, values are joined with a comma
-by default – use `hiddenInputValuesDivider` to change the separator.
+Set `name` prop to include the value in native form submission. With `multiple`, values are
+joined with a comma, change the separator with `hiddenInputValuesDivider`:
 
 <Demo data={ComboboxPopoverDemos.formSubmission} />
 

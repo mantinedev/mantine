@@ -6,24 +6,22 @@ export default Layout(MDX_DATA.useDrag);
 
 ## Usage
 
-`use-drag` hook handles pointer drag gestures over an element. It tracks movement,
-velocity, direction and supports axis constraints, threshold activation and tap detection.
+`use-drag` handles pointer drag gestures over an element. It tracks movement,
+velocity and direction, and supports axis constraints, thresholds and tap detection:
 
 <Demo data={UseDragDemos.usage} />
 
 ## Axis constraint
 
-Use the `axis` option to constrain movement to a single axis.
-Set `axis` to `'x'` or `'y'` for a fixed constraint, or `'lock'` to
-lock to whichever axis has more movement after `axisThreshold` is exceeded:
+Set `axis` to `'x'` or `'y'` to constrain movement to a single axis.
+With `'lock'`, movement locks to whichever axis moves more first:
 
 <Demo data={UseDragDemos.axis} />
 
 ## Distinguishing taps from drags
 
-When `filterTaps` is enabled, the last state includes a `tap` property that is `true`
-when the total distance is below `tapThreshold` (default `3px`). Combined with `threshold`,
-this lets you distinguish clicks from drags on the same element:
+With `filterTaps`, the last state has a `tap` property that is `true` when the pointer
+moved less than `tapThreshold`. Use it to tell clicks from drags on the same element:
 
 <Demo data={UseDragDemos.filterTaps} />
 
@@ -41,9 +39,8 @@ Apply `delta` to a container's `scrollLeft` to create a drag-to-scroll interacti
 
 ## Touch support
 
-The hook uses the Pointer Events API which handles both mouse and touch automatically.
-For touch devices, set `touch-action: none` on the draggable element to prevent
-the browser from interpreting touch drag as scroll:
+Mouse and touch are both supported. On touch devices, set `touch-action: none` on the
+draggable element so that the browser does not scroll instead:
 
 ```css
 .draggable {
@@ -51,9 +48,7 @@ the browser from interpreting touch drag as scroll:
 }
 ```
 
-If you want to allow scrolling on one axis while dragging on the other (e.g. horizontal
-drag with vertical scroll), use `touch-action: pan-y` or `touch-action: pan-x`.
-
+To allow scrolling on one axis while dragging on the other, use `touch-action: pan-y` or `touch-action: pan-x`.
 
 ## Definition
 

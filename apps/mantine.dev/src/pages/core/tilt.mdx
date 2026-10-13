@@ -6,22 +6,18 @@ export default Layout(MDX_DATA.Tilt);
 
 ## Usage
 
-`Tilt` rotates its content in 3D in response to the pointer position and, on supported mobile
-devices, the device orientation. Wrap any element with a defined size:
+`Tilt` rotates its content in 3D following the pointer. It is built on top of the
+[use-tilt](/hooks/use-tilt) hook, use the hook directly for full control over the transforms.
+Wrap any element with a defined size:
 
 <Demo data={TiltDemos.usage} />
-
-`Tilt` is based on the [use-tilt](/hooks/use-tilt) hook. Use the hook directly if you need
-full control over the transforms.
 
 <Demo data={TiltDemos.configurator} />
 
 ## Layers
 
-Use `Tilt.Layer` to build a layered depth effect. Each layer shifts towards the
-pointer: `depth` prop controls how far (`0` – static, `1` – full shift), `shift` prop sets
-the full shift distance in px (`20` by default). Layers with a higher `depth` appear closer
-to the viewer:
+Use `Tilt.Layer` to build a depth effect. Each layer shifts towards the pointer,
+`depth` prop controls how far it shifts: layers with a higher `depth` appear closer to the viewer:
 
 <Demo data={TiltDemos.layers} />
 
@@ -31,8 +27,7 @@ Set `withGlare` to display a light reflection that follows the pointer:
 
 <Demo data={TiltDemos.glare} />
 
-The reflection is the `::before` pseudo-element of the `glare` [Styles API](/styles/styles-api)
-selector. To change it, pass a class with `classNames`:
+The reflection is the `::before` pseudo-element of the `glare` selector, change it with `classNames`:
 
 ```tsx
 import { Tilt } from '@mantine/core';
@@ -62,11 +57,9 @@ the pointer anywhere on the page:
 
 ## Reduced motion
 
-`Tilt` respects the `prefers-reduced-motion` setting: when reduced motion is requested,
-the content does not tilt.
+`Tilt` does not tilt the content when the user has requested reduced motion.
 
 ## Device orientation
 
-On supported mobile devices, `Tilt` reacts to the device orientation instead of the
-pointer. On iOS 13+, access to device orientation requires a permission –
-see the [use-tilt](/hooks/use-tilt#device-orientation-permission) documentation for details on requesting it.
+On supported mobile devices, `Tilt` reacts to the device orientation instead of the pointer.
+iOS requires a permission, see [use-tilt](/hooks/use-tilt#device-orientation-permission) for details.

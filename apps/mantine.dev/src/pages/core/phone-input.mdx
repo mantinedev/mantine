@@ -6,8 +6,8 @@ export default Layout(MDX_DATA.PhoneInput);
 
 ## Usage
 
-`PhoneInput` provides an international phone number input with country selector
-and formatting masks.
+`PhoneInput` is an international phone number input with a country selector
+and per-country formatting:
 
 <Demo data={PhoneInputDemos.usage} />
 
@@ -25,48 +25,47 @@ Set `loading` prop to display a loading indicator in the input:
 
 ## Controlled
 
-Use `value` and `onChange` props to control the input value. The `onChange` callback
-receives the raw value and a details object containing the formatted value and country data.
+`onChange` is called with the raw value and a details object with the formatted value and
+the selected country:
 
 <Demo data={PhoneInputDemos.controlled} />
 
 ## Preferred countries
 
-Use `preferredCountries` prop to pin countries to the top of the dropdown.
+Use `preferredCountries` prop to pin countries to the top of the dropdown:
 
 <Demo data={PhoneInputDemos.preferredCountries} />
 
 ## Filter countries
 
-Use `onlyCountries` to show only specific countries or `excludeCountries` to hide specific countries.
+Use `onlyCountries` to show only specific countries or `excludeCountries` to hide some of them:
 
 <Demo data={PhoneInputDemos.onlyCountries} />
 <Demo data={PhoneInputDemos.excludeCountries} />
 
 ## Custom flags
 
-Use `renderFlag` prop to render custom flag elements, for example emoji flags.
-The function receives country data and should return a React node.
+Use `renderFlag` prop to render custom flags, for example emoji flags:
 
 <Demo data={PhoneInputDemos.emojiFlag} />
 
 ## Searchable
 
-Country dropdown search is enabled by default. Set `searchable={false}` to disable it.
+Country search is enabled by default. Set `searchable={false}` to disable it:
 
 <Demo data={PhoneInputDemos.searchable} />
 
 ## Country auto-detection
 
-Set `withCountryAutoDetect` to automatically detect and switch the country when the user
-types a dial code. For example, typing `+44` will switch to United Kingdom.
+Set `withCountryAutoDetect` to switch the country when the user types a dial code,
+for example `+44` for United Kingdom:
 
 <Demo data={PhoneInputDemos.countryAutoDetect} />
 
 ## Localization
 
-Use `renderCountryOption` to customize how countries are displayed in the dropdown.
-This can be used to translate country names to a different language.
+Use `renderCountryOption` to change how countries are displayed in the dropdown,
+for example to translate country names:
 
 <Demo data={PhoneInputDemos.localization} />
 
@@ -76,7 +75,7 @@ This can be used to translate country names to a different language.
 
 ## Use within Popover
 
-To use `PhoneInput` within `Popover` or other overlay, set `comboboxProps={{ withinPortal: false }}`.
+To use `PhoneInput` within `Popover` or another overlay, set `comboboxProps={{ withinPortal: false }}`:
 
 <Demo data={PhoneInputDemos.withinPopover} />
 

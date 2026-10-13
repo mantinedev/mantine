@@ -6,102 +6,95 @@ export default Layout(MDX_DATA.YearView);
 
 ## Usage
 
-YearView displays all 12 months of a year in a grid layout. Event indicators are shown as colored dots in day cells.
+`YearView` displays all months of a year, events are shown as colored dots in day cells:
 
 <Demo data={YearViewDemos.usage} />
 
 ## With week numbers
 
-Set `withWeekNumbers` to display week numbers in the first column of each month.
+Set `withWeekNumbers` to display week numbers in the first column of each month:
 
 <Demo data={YearViewDemos.withWeekNumbers} />
 
 ## Without week days
 
-Set `withWeekDays={false}` to hide the weekday names row in each month.
+Set `withWeekDays={false}` to hide the weekday names row in each month:
 
 <Demo data={YearViewDemos.withoutWeekDays} />
 
 ## Render day
 
-Use `renderDay` to replace the content of a day cell, for example to display counts, badges
-or icons instead of the default dots. The function is called with the day date in `YYYY-MM-DD`
-format and all events of that day. When `renderDay` is set, the default event indicators
-are not rendered.
+Use `renderDay` to replace the content of a day cell, for example with a count or a badge instead of dots.
+The function receives the date and all events of that day:
 
 <Demo data={YearViewDemos.renderDay} />
 
 ## Hide weekend days
 
-Set `withWeekendDays={false}` to hide weekend days. Every month grid shrinks to
-the remaining columns and events that fall only on hidden days are not displayed.
-The days that are considered weekend are controlled by the `weekendDays` prop
-(or [DatesProvider](/dates/getting-started/#datesprovider), `[0, 6]` by default).
+Set `withWeekendDays={false}` to hide weekend days, events that fall only on hidden days are not displayed.
+Use `weekendDays` prop or [DatesProvider](/dates/getting-started/#datesprovider) to change which days are weekend:
 
 <Demo data={YearViewDemos.withoutWeekendDays} />
 
 ## Hide outside days
 
-Set `withOutsideDays={false}` to hide days from adjacent months.
+Set `withOutsideDays={false}` to hide days of adjacent months:
 
 <Demo data={YearViewDemos.withOutsideDays} />
 
 ## First day of week
 
-Set `firstDayOfWeek` to control which day starts the week.
+Set `firstDayOfWeek` to change the first day of the week:
 
 <Demo data={YearViewDemos.firstDayOfWeek} />
 
 ## Weekday format
 
-Use `weekdayFormat` prop to customize weekday names.
+Use `weekdayFormat` prop to change the dayjs format of weekday names:
 
 <Demo data={YearViewDemos.weekdayFormat} />
 
 ## Highlight today
 
-Set `highlightToday={false}` to disable highlighting the current day.
+Set `highlightToday={false}` to remove the current day highlight:
 
 <Demo data={YearViewDemos.highlightToday} />
 
 ## Without header
 
-Set `withHeader={false}` to hide the header controls.
+Set `withHeader={false}` to hide the header:
 
 <Demo data={YearViewDemos.withoutHeader} />
 
 ## Custom header
 
-You can build a custom header using `ScheduleHeader` compound components combined with your own controls.
-Set `withHeader={false}` on the view and compose the header externally.
+Set `withHeader={false}` and build your own header with `ScheduleHeader` compound components:
 
 <Demo data={YearViewDemos.customHeader} />
 
 ## Recurring events
 
-YearView automatically expands recurring events for the visible year.
-See [Recurring events guide](/schedule/recurring-events) for full documentation.
+Recurring events are expanded for the visible year, see [recurring events guide](/schedule/recurring-events):
 
 <Demo data={YearViewDemos.recurringEvents} />
 
 ## Static mode
 
-Set `mode="static"` to disable all interactions.
+Set `mode="static"` to disable all interactions:
 
 <Demo data={YearViewDemos.staticMode} />
 
 ## Localization
 
 Use `locale` prop to set the dayjs locale for date formatting.
-Combine it with `labels` prop to translate all UI text.
+Combine it with `labels` prop to translate all UI text:
 
 <Demo data={YearViewDemos.localization} />
 
 ## Responsive styles
 
-YearView uses [@container queries](https://caniuse.com/css-container-queries) for responsive styles.
-The component automatically adjusts its layout based on the container width, hiding labels
-and reducing padding on smaller screens. Container queries are supported in all modern browsers.
+YearView uses [container queries](https://caniuse.com/css-container-queries) for responsive styles.
+Labels are hidden and paddings are reduced when the container is narrow.
 
 ## Accessibility
 
@@ -112,8 +105,6 @@ and reducing padding on smaller screens. Container queries are supported in all 
 - Disabled days are skipped during keyboard navigation
 
 ### Keyboard interactions
-
-Note that the following events will only trigger if focus is on a day control.
 
 <KeyboardEventsTable
   data={[
@@ -138,4 +129,4 @@ Note that the following events will only trigger if focus is on a day control.
 
 ### Day labels
 
-Each day button has an `aria-label` attribute with the full date in the format "Month Day, Year" (e.g., "November 15, 2025").
+Each day button has an `aria-label` with the full date, for example "November 15, 2025".

@@ -6,23 +6,18 @@ export default Layout(MDX_DATA.Splitter);
 
 ## Usage
 
-`Splitter` component provides resizable split pane layout. It is built on top of the
-[use-splitter](/hooks/use-splitter/) hook.
+`Splitter` is a resizable split pane layout:
 
 <Demo data={SplitterDemos.usage} />
 
 ## CSS units
 
-`Splitter.Pane` `defaultSize`, `min` and `max` props accept CSS units in addition to plain numbers:
+`defaultSize`, `min` and `max` props of `Splitter.Pane` accept numbers, percentages and CSS units:
 
-- A plain `number` or a `%` string (`'30%'`) is a **flexible** size – the pane shares the leftover
-  space with other flexible panes.
-- A `px` or `rem` string (`'240px'`, `'15rem'`) is a **fixed** size – the pane keeps its pixel size
-  when the container is resized and only changes when its own handle is dragged.
+- A number or a `%` string is a flexible size, the pane shares the leftover space with other flexible panes
+- A `px` or `rem` string is a fixed size, the pane keeps it when the container is resized
 
-`sizes` and `onSizeChange` use the unit the pane was declared with: a `'240px'` pane stays `'240px'`,
-a flexible pane reports a percentage. When the container is smaller than the sum of the fixed panes,
-fixed panes shrink proportionally.
+`sizes` and `onSizeChange` use the unit the pane was declared with:
 
 <Demo data={SplitterDemos.cssUnits} />
 
@@ -34,15 +29,13 @@ Set `orientation="vertical"` to split panes vertically:
 
 ## Collapsible panes
 
-Set `collapsible` prop on `Splitter.Pane` to allow the pane to be collapsed
-by dragging past its minimum size. Use `splitterRef` to access imperative API
-for programmatic collapse/expand:
+Set `collapsible` prop on `Splitter.Pane` to collapse the pane when it is dragged past its minimum size:
 
 <Demo data={SplitterDemos.collapsible} />
 
 ## Controlled
 
-To control panel sizes, use `sizes` and `onSizeChange` props:
+Use `sizes` and `onSizeChange` props to control pane sizes:
 
 <Demo data={SplitterDemos.controlled} />
 
@@ -60,14 +53,14 @@ You can nest `Splitter` components to create complex layouts:
 
 ## Redistribute
 
-When using multiple panes, set `redistribute` prop to control how space is borrowed from
-non-adjacent panels when the immediate neighbor is at its min/max:
+Set `redistribute` prop to control how space is borrowed from non-adjacent panes
+when the immediate neighbor has reached its min or max size:
 
 <Demo data={SplitterDemos.redistribute} />
 
 ## Line size
 
-Use `lineSize` prop to control the thickness of the separator line between panes:
+Set `lineSize` prop to change the thickness of the separator line between panes:
 
 <Demo data={SplitterDemos.lineSize} />
 
@@ -80,8 +73,8 @@ between panes is still visible and draggable:
 
 ## Handle props
 
-Use `getHandleProps` to pass props to each handle. It is called with the handle index.
-Set `aria-label` on handles to make them accessible to screen reader users:
+`getHandleProps` is called with the handle index and returns props for that handle.
+Use it to set `aria-label` on each handle:
 
 ```tsx
 import { Splitter } from '@mantine/core';
@@ -98,7 +91,7 @@ function Demo() {
 
 ## Imperative API
 
-Use `splitterRef` prop to access imperative splitter API:
+Use `splitterRef` prop to collapse, expand and resize panes programmatically:
 
 ```tsx
 import { useRef } from 'react';
@@ -128,8 +121,7 @@ function Demo() {
 
 ## Wrap Splitter.Pane
 
-`Splitter` component relies on `Splitter.Pane` order. Wrapping `Splitter.Pane` is not supported,
-`Splitter.Pane` must be a direct child of `Splitter`.
+`Splitter.Pane` must be a direct child of `Splitter`, wrapping it in another component is not supported:
 
 ```tsx
 import { Splitter } from '@mantine/core';
@@ -166,5 +158,5 @@ function Demo() {
 
 ## use-splitter hook
 
-`Splitter` component is built on top of the [use-splitter](/hooks/use-splitter/) hook.
-If you need more control over the layout and styling, you can use the hook directly.
+`Splitter` is built on top of the [use-splitter](/hooks/use-splitter/) hook.
+Use the hook directly when you need full control over the layout and styling.

@@ -6,8 +6,7 @@ export default Layout(MDX_DATA.TreeSelect);
 
 ## Usage
 
-`TreeSelect` allows picking one or more values from hierarchical tree data.
-It supports three selection modes: single, multiple, and checkbox (with parent-child cascade).
+`TreeSelect` allows picking one or more values from hierarchical data:
 
 <Demo data={TreeSelectDemos.usage} />
 
@@ -50,7 +49,7 @@ Use the `mode` prop to change the selection mode:
 ### Checkbox mode
 
 In checkbox mode, checking or unchecking a parent node does the same for all its children.
-If only some children are checked, the parent is displayed in indeterminate state.
+If only some children are checked, the parent is displayed in indeterminate state:
 
 <Demo data={TreeSelectDemos.checkbox} />
 
@@ -75,15 +74,15 @@ function MultipleDemo() {
 
 ## Searchable
 
-Set the `searchable` prop to allow filtering options by user input.
-When searching, matching nodes and their ancestors are shown:
+Set `searchable` prop to allow filtering options by user input.
+Matching nodes are displayed together with their ancestors:
 
 <Demo data={TreeSelectDemos.searchable} />
 
 ## Nothing found
 
-Set the `nothingFoundMessage` prop to display a given message when no options match the search query
-or there is no data available:
+Set `nothingFoundMessage` prop to display a message when no options match the search query
+or there is no data:
 
 <Demo data={TreeSelectDemos.nothingFound} />
 
@@ -95,11 +94,8 @@ Set the `clearable` prop to display the clear button in the right section:
 
 ## Expand on click
 
-Set the `expandOnClick` prop to also toggle expansion when clicking a parent node
-(in addition to the chevron). Behavior depends on the selection mode:
-
-- `single` and `multiple` – clicking a parent only expands/collapses it. Only leaf nodes can be selected.
-- `checkbox` – clicking a parent both toggles its checked state and expands it.
+Set `expandOnClick` prop to expand and collapse a parent node when it is clicked, not only with the chevron.
+In checkbox mode, the click also toggles the checked state:
 
 <Demo data={TreeSelectDemos.expandOnClick} />
 
@@ -112,15 +108,13 @@ Set `withLines={false}` to disable them:
 
 ## Check strictly
 
-Set `checkStrictly` to disable parent-child cascade in checkbox mode.
-Each node's checked state becomes fully independent:
+Set `checkStrictly` to disable parent-child cascade in checkbox mode, each node is checked independently:
 
 <Demo data={TreeSelectDemos.checkStrictly} />
 
 ## Checked strategy
 
-The `checkedStrategy` prop controls which checked nodes appear in the value and pills
-in checkbox mode:
+`checkedStrategy` prop controls which checked nodes appear in the value and pills in checkbox mode:
 
 - `child` (default) – only leaf nodes appear in the value
 - `all` – all checked nodes (parents and children) appear in the value
@@ -130,37 +124,33 @@ in checkbox mode:
 
 ## Max values
 
-Set the `maxValues` prop to limit the number of selected values in multiple and checkbox modes:
+Set `maxValues` prop to limit the number of selected values in multiple and checkbox modes:
 
 <Demo data={TreeSelectDemos.maxValues} />
 
 ## renderNode
 
-Use the `renderNode` callback to customize node rendering in the dropdown. It is called
-with the node and its state:
+Use `renderNode` callback to customize node rendering in the dropdown:
 
 <Demo data={TreeSelectDemos.renderNode} />
 
-The payload includes an `expand` function that toggles the expanded state of the node.
-Use it to build a custom expand control. Set `expandOnClick={false}` to expand nodes
-only with your control:
+The payload includes an `expand` function that toggles the node. Use it to build a custom
+expand control, set `expandOnClick={false}` to expand nodes only with your control:
 
 <Demo data={TreeSelectDemos.renderNodeExpand} />
 
 ## renderPill
 
-Use the `renderPill` callback to customize pills of selected values in `multiple` and
-`checkbox` modes. Call `onRemove` from your pill to remove the value.
-
-`renderPill` is not called for the overflow pill displayed when the number of selected values
-exceeds `maxDisplayedValues`, use `maxDisplayedValuesContent` to customize it instead.
+Use `renderPill` callback to customize pills of selected values in multiple and
+checkbox modes. Call `onRemove` from your pill to remove the value.
+The overflow pill is customized with `maxDisplayedValuesContent` instead:
 
 <Demo data={TreeSelectDemos.renderPill} />
 
 ## Scrollable dropdown
 
-By default, the options list is wrapped with [ScrollArea.Autosize](/core/scroll-area).
-You can control the dropdown max-height with the `maxDropdownHeight` prop:
+The options list is wrapped with [ScrollArea.Autosize](/core/scroll-area), set `maxDropdownHeight` prop
+to change the dropdown max-height:
 
 <Demo data={TreeSelectDemos.scrollArea} />
 
@@ -168,38 +158,35 @@ You can control the dropdown max-height with the `maxDropdownHeight` prop:
 
 ## Control dropdown opened state
 
-You can control the dropdown opened state with the `dropdownOpened` prop. Additionally,
-you can use `onDropdownClose` and `onDropdownOpen` to listen to dropdown opened state changes.
+Use `dropdownOpened` prop to control the dropdown opened state, `onDropdownOpen` and `onDropdownClose`
+to listen to its changes:
 
 <Demo data={TreeSelectDemos.dropdownOpened} />
 
 ## Dropdown position
 
-By default, the dropdown is displayed below the input if there is enough space; otherwise it is displayed above the input.
-You can change this behavior by setting the `position` and `middlewares` props, which are passed down to the
-underlying [Popover](/core/popover) component.
-
-Example of a dropdown that is always displayed above the input:
+By default, the dropdown is displayed below the input if there is enough space, otherwise above it.
+Set `position` and `middlewares` props to change this behavior, they are passed down to
+the underlying [Popover](/core/popover). Example of a dropdown that is always displayed above the input:
 
 <Demo data={TreeSelectDemos.dropdownPosition} />
 
 ## Dropdown width
 
-To change the dropdown width, set the `width` prop in `comboboxProps`. By default,
-the dropdown width is equal to the input width.
+By default, the dropdown width is equal to the input width. Set `width` in `comboboxProps` to change it:
 
 <Demo data={TreeSelectDemos.dropdownWidth} />
 
 ## Dropdown offset
 
-To change the dropdown offset, set the `offset` prop in `comboboxProps`:
+Set `offset` in `comboboxProps` to change the dropdown offset:
 
 <Demo data={TreeSelectDemos.dropdownOffset} />
 
 ## Dropdown animation
 
-By default, dropdown animations are disabled. To enable them, you can set `transitionProps`,
-which will be passed down to the underlying [Transition](/core/transition) component.
+By default, dropdown animations are disabled. Set `transitionProps` to enable them,
+they are passed down to the underlying [Transition](/core/transition) component:
 
 <Demo data={TreeSelectDemos.dropdownAnimation} />
 
@@ -222,7 +209,7 @@ which will be passed down to the underlying [Transition](/core/transition) compo
 
 ## Expand state
 
-You can control the expanded state of nodes:
+Use `defaultExpandedValues`, `defaultExpandAll` or `expandedValues` with `onExpandedChange` to manage expanded nodes:
 
 ```tsx
 import { TreeSelect } from '@mantine/core';
@@ -253,15 +240,13 @@ import { TreeSelect } from '@mantine/core';
 
 ## Read only
 
-Set `readOnly` to make the input read only. When `readOnly` is set,
-`TreeSelect` will not show suggestions and will not call the `onChange` function.
+Set `readOnly` to make the input read only, the dropdown is not displayed and `onChange` is not called:
 
 <Demo data={TreeSelectDemos.readOnly} />
 
 ## Disabled
 
-Set `disabled` to disable the input. When `disabled` is set,
-the user cannot interact with the input and `TreeSelect` will not show suggestions.
+Set `disabled` to disable the input:
 
 <Demo data={TreeSelectDemos.disabled} />
 
@@ -277,8 +262,7 @@ the user cannot interact with the input and `TreeSelect` will not show suggestio
 
 <InputAccessibility component="TreeSelect" />
 
-To set `aria-label` on the clear button, use `clearButtonProps`. Note that this is required
-only when `clearable` is set.
+When `clearable` is set, use `clearButtonProps` to set `aria-label` on the clear button:
 
 ```tsx
 import { TreeSelect } from '@mantine/core';

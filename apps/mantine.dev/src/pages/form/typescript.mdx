@@ -23,9 +23,7 @@ function Demo() {
 
 ## Set values type
 
-By default, form value types will be inferred from `initialValues`.
-To avoid that, you can pass a type to the `useForm` hook. This approach is useful when
-types cannot be correctly inferred or when you want to provide more specific types:
+Pass a type to `useForm` when it cannot be inferred from `initialValues` or when you need a more specific type:
 
 ```tsx
 import { useForm } from '@mantine/form';
@@ -58,8 +56,8 @@ function Demo() {
 
 ## TransformedValues type
 
-To get transformed values (output of [transformValues](/form/submission/#transformvalues)), use the `TransformedValues` type.
-It is useful when you want to create a custom submit function:
+`TransformedValues` is the type of [transformValues](/form/submission/#transformvalues) output.
+Use it to type a submit handler declared outside of `form.onSubmit`:
 
 ```tsx
 import { TransformedValues, useForm } from '@mantine/form';
@@ -88,8 +86,7 @@ function Demo() {
 
 ## Set transformed values type
 
-By default, transformed values type is the same as form values type. To set a different type, you can pass a second generic
-argument to the `useForm`:
+To set the transformed values type explicitly, pass a second type argument to `useForm`:
 
 ```tsx
 import { useForm } from '@mantine/form';
@@ -121,7 +118,7 @@ function Demo() {
 
 ## UseFormReturnType
 
-`UseFormReturnType` can be used when you want to pass the `form` as a prop to another component.
+Use `UseFormReturnType` to type `form` passed as a prop.
 To share the form with many nested components, use [form context](/form/create-form-context/) instead:
 
 ```tsx
@@ -195,7 +192,7 @@ see [Form errors](/form/errors/#formerrors-type).
 
 ## Validation return types
 
-The return types of `form.validate`, `form.validateField` and `form.isValid` depend on the rules:
-with sync rules the results are returned directly, with any async rule they are wrapped in a `Promise`.
+`form.validate`, `form.validateField` and `form.isValid` return results directly with sync rules.
+With any async rule, they return a `Promise`.
 With [schemaResolver](/form/schema-validation/#sync-and-async-schemas), pass `{ sync: true }` to get
 sync return types.

@@ -42,31 +42,16 @@ To migrate your application to Mantine 10.0, follow [9.x → 10.x migration guid
 
 ## @mantine/data-grid package
 
-New [@mantine/data-grid](/data-grid/getting-started) package provides a fully featured data grid
-component built on top of [TanStack Table v9](https://tanstack.com/table) and
-[TanStack Virtual](https://tanstack.com/virtual) with compound components and full Styles API
-support. Supported features:
-
-- Sorting, filtering, global search and pagination, with server-side mode for all of them
-- Column resizing, pinning, visibility toggling, reordering and a column menu
-- Row selection, spreadsheet-style cell selection and cell spanning
-- Row expansion with detail panels, grouping with aggregation and tree data
-- Inline cell and row editing with validation
-- Row virtualization for large datasets
-- State persistence to localStorage, sessionStorage or custom storage
-- Compound components for custom layouts: toolbar, global filter, export button, selection bar and footer
-- Loading and empty states, list view for narrow screens
-- Semantic `table` or ARIA grid roles with keyboard navigation
+New [@mantine/data-grid](/data-grid/getting-started) package provides a data grid built on
+TanStack Table with sorting, filtering, pagination, editing, virtualization and server-side data:
 
 <Demo data={DataGridDemos.usage} demoProps={{ defaultExpanded: false }} />
 
 ## Component controllers and stores
 
-Components that own state can now be driven with a hook. Call `use<Component>` and pass the result
-to the `controller` or `store` prop, see the [controllers and stores guide](/guides/controllers).
-
-A controller adds actions that props cannot express, for example `expandAll` on `Accordion`.
-The component still works with `value` and `onChange`. Components with controllers:
+Components that own state can now be driven with a hook: call `use<Component>` and pass the
+result to the `controller` or `store` prop, see the [controllers guide](/guides/controllers).
+A controller adds actions that props cannot express, for example `expandAll` on `Accordion`:
 
 - [Accordion](/core/accordion#controlling-with-useaccordion)
 - [Stepper](/core/stepper#controlling-with-usestepper)
@@ -95,8 +80,7 @@ The component still works with `value` and `onChange`. Components with controlle
 
 <Demo data={AccordionDemos.controller} />
 
-A store is a building block for your own component. For example, `useSelect` reuses `Select` logic
-to build a select that creates new options. Components with stores:
+A store is a building block for your own component, for example a select that creates new options:
 
 - [Combobox](/core/combobox#usecombobox-hook)
 - [Select](/core/select#building-on-select-with-useselect)
@@ -110,8 +94,8 @@ to build a select that creates new options. Components with stores:
 
 ## use-form engine and uncontrolled mode
 
-`useForm` is now uncontrolled by default. When the user types, only the input rerenders, not the
-component that calls `useForm`. `form.key()` is no longer needed and has been removed:
+`useForm` is now uncontrolled by default. Typing rerenders only the input, not the whole form,
+and `form.key()` is no longer needed:
 
 ```tsx
 import { TextInput } from '@mantine/core';
@@ -123,8 +107,8 @@ function Demo() {
 }
 ```
 
-New `form.useDirty` and `form.useTouched` hooks subscribe a component to dirty and touched state.
-Custom inputs subscribe to a field with the new [use-form-field](/hooks/use-form-field) hook.
+New `form.useDirty` and `form.useTouched` hooks subscribe a component to dirty and touched state,
+and custom inputs subscribe to a field with the `useFormField` hook.
 See [uncontrolled mode](/form/uncontrolled) for details.
 
 ## Form examples
@@ -136,7 +120,7 @@ New [form examples](/form/examples?e=LoginForm) section contains complete forms 
 ## Reusable form fields
 
 New `form.getField('path')` returns a field object with the same type as `useField`.
-A component that accepts it works in any form and with `useField`, see [reusable fields](/form/reusable-fields/):
+A component that accepts it works with any form, see [reusable fields](/form/reusable-fields/):
 
 ```tsx
 import { TextInput } from '@mantine/core';
@@ -173,8 +157,8 @@ New `Modal.Footer` and `Drawer.Footer` components render a footer with actions:
 
 ### Sticky header and footer
 
-[Modal](/core/modal) and [Drawer](/core/drawer) header and footer now stay pinned while the body
-scrolls. Set `stickyHeader={false}` or `stickyFooter={false}` to scroll them with the content:
+Header and footer now stay pinned while the body scrolls.
+Set `stickyHeader={false}` or `stickyFooter={false}` to scroll them with the content:
 
 <Demo data={ModalDemos.stickySections} />
 
@@ -187,8 +171,7 @@ Stacked modals and drawers now stay visible behind the top one with a depth effe
 
 ## Automatic Modal and Drawer stacking
 
-Set `overlayStack` in the theme to stack all modals and drawers automatically,
-without `Modal.Stack` wrappers:
+Set `overlayStack` in the theme to stack all modals and drawers without `Modal.Stack` wrappers:
 
 ```tsx
 import { createTheme } from '@mantine/core';
@@ -228,8 +211,8 @@ when the viewport is narrower than the given breakpoint:
 
 ## useModal and useDrawer hooks
 
-New `useModal` and `useDrawer` hooks open a [modal](/core/modal/#usemodal-hook) or a
-[drawer](/core/drawer/#usedrawer-hook) without rendering it in JSX:
+New [useModal](/core/modal/#usemodal-hook) and `useDrawer` hooks open a modal or a drawer
+without rendering it in JSX:
 
 <Demo data={ModalDemos.useModalHook} />
 
@@ -291,8 +274,8 @@ New `description` prop of `Menu.Item` displays a second line of text below the l
 
 ## NavLink redesign
 
-[NavLink](/core/nav-link) has a new look and a new `rail` variant that marks the active link with a
-bar. `withGuideline` prop displays a guideline next to nested links:
+[NavLink](/core/nav-link) has a new look and a `rail` variant that marks the active link with a bar.
+Set `withGuideline` to display a guideline next to nested links:
 
 <Demo data={NavLinkDemos.rail} />
 
@@ -302,36 +285,32 @@ New `size` prop controls font size and spacing:
 
 ## TableOfContents rail variant
 
-[TableOfContents](/core/table-of-contents) has a new `rail` variant, it is now the default.
-The default `size` is now `sm`:
+[TableOfContents](/core/table-of-contents) has a new default `rail` variant and a smaller default size:
 
 <Demo data={TableOfContentsDemos.usage} />
 
 ## PillsInput spacing
 
-Pills in [PillsInput](/core/pills-input) are now larger and fill the input.
-The change applies to `MultiSelect`, `TagsInput` and `TreeSelect` too:
+Pills in [PillsInput](/core/pills-input), `MultiSelect`, `TagsInput` and `TreeSelect` are now larger
+and fill the input:
 
 <Demo data={PillsInputDemos.usage} />
 
 ## OKLCH default palettes
 
-Default colors are regenerated in the OKLCH color space. Shades with the same index now look
-equally bright in every color, so filled components look consistent across colors.
-
-Color names, the number of shades and `primaryShade` are unchanged. `--mantine-color-*` CSS
-variables now contain `oklch()` values, see the [migration guide](/guides/9x-to-10x) if you parse them.
+Default colors are regenerated in the OKLCH color space: shades with the same index now look
+equally bright in every color. Color names and the number of shades are unchanged,
+see the [migration guide](/guides/9x-to-10x) if you parse `--mantine-color-*` variables.
 
 ## autoContrast enabled by default
 
-`theme.autoContrast` is now `true` by default: filled components pick black or white text to match
-their background color. Set `autoContrast: false` in the theme to restore the previous behavior.
+Filled components now pick black or white text to match their background color.
+Set `autoContrast: false` in the theme to restore the previous behavior.
 
 ## Semantic color CSS variables
 
 New CSS variables describe the role of a color: border, hover, surface, muted text and others.
-Components use them instead of fixed `gray` and `dark` shades, override them to restyle all
-components at once:
+Override them to restyle all components at once:
 
 <DataTable
   head={['Token', 'Light default', 'Dark default']}
@@ -359,7 +338,7 @@ components at once:
 ## Neutral color ladder
 
 New `--mantine-color-neutral-0` to `--mantine-color-neutral-9` variables adapt to the color scheme.
-Use them in custom CSS instead of separate `gray` and `dark` shades:
+Use them in custom CSS instead of separate gray and dark shades:
 
 ```css
 .card {
@@ -370,8 +349,8 @@ Use them in custom CSS instead of separate `gray` and `dark` shades:
 
 ## Surface component
 
-New [Surface](/core/surface) component replaces `Paper`. Nested surfaces step up one level
-automatically, so elevation is visible in dark mode. `Paper` is deprecated and will be removed in 11.0:
+New [Surface](/core/surface) component replaces `Paper`, which is deprecated and will be removed in 11.0.
+Nested surfaces step up one level automatically, so elevation is visible in dark mode:
 
 ```tsx
 import { Surface } from '@mantine/core';
@@ -402,20 +381,19 @@ const theme = createTheme({
 
 ## Dropdowns render on the page surface
 
-Dropdowns of `Popover`, `Menu`, `HoverCard` and `Combobox`-based components now use the page
-background, like `Modal` and `Drawer`. In dark mode they are darker than before and are separated
-from the content with a border and a shadow.
+Dropdowns of `Popover`, `Menu` and `Combobox` based components now use the page background, like `Modal`.
+In dark mode they are darker than before and are separated from the content with a border and a shadow.
 
 ## Sunken surfaces, code surfaces and control tracks
 
-`SegmentedControl`, `contained` `Tabs` and `ScrollArea` scrollbars now share the sunken surface
-color. `Code`, `Kbd`, `CodeHighlight` and `JsonViewer` share the muted surface color.
-Tracks of `Switch`, `Slider` and `Progress` use the new `--mantine-color-track` variable.
+Segmented controls, contained tabs and scrollbars now share one sunken surface color.
+Code elements share one muted surface color, and tracks of switches, sliders and progress bars
+use the new `--mantine-color-track` variable.
 
 ## Focus ring color variable
 
-Focus rings now use the new `--mantine-color-focus-ring` variable. In dark mode it is lighter than
-the primary color, so the ring stays visible. Override it to change focus rings of all components:
+Focus rings now use the `--mantine-color-focus-ring` variable, which stays visible in dark mode.
+Override it to change focus rings of all components:
 
 ```css
 [data-mantine-color-scheme='dark'] {
@@ -426,13 +404,13 @@ the primary color, so the ring stays visible. Override it to change focus rings 
 ## Disabled state opacity
 
 Disabled components now look like a faded version of their normal state instead of turning gray.
-Change the opacity with `theme.disabledOpacity`, it is `0.5` by default:
+Change the opacity with `theme.disabledOpacity`:
 
 <Demo data={ThemingDemos.disabledOpacity} />
 
 ## Dark neutral flavors
 
-`darkColors`, `darkColdColors`, `darkWarmColors` and `darkTintedColors` change the tone of the dark
+New `darkColdColors`, `darkWarmColors` and `darkTintedColors` palettes change the tone of the dark
 color scheme. Assign one of them to `theme.colors.dark`:
 
 ```tsx
@@ -461,8 +439,8 @@ const theme = createTheme({
 
 ## OKLCH colors generator
 
-`generateColors` from `@mantine/colors-generator` now returns OKLCH colors. New
-`generateColorFormats` function returns the palette in hex, rgb, hsl and oklch:
+`generateColors` from `@mantine/colors-generator` now returns OKLCH colors.
+New `generateColorFormats` function returns the palette in hex, rgb, hsl and oklch:
 
 ```tsx
 import { generateColors } from '@mantine/colors-generator';
@@ -477,7 +455,7 @@ const theme = createTheme({
 ## Mobile-friendly dates dropdowns
 
 Date picker inputs and `DateTimePicker` now open in a bottom drawer on small screens.
-Use `dropdownType` prop to choose `popover`, `modal` or `drawer` for each breakpoint:
+Use `dropdownType` prop to choose the dropdown type for each breakpoint:
 
 <Demo data={DatePickerInputDemos.dropdownType} />
 
@@ -492,8 +470,7 @@ Set `applyOnSubmit={false}` to apply it on selection:
 
 ## useMatches custom breakpoints
 
-[useMatches](/styles/responsive/#use-matches-hook) hook now accepts custom breakpoints in px or
-any CSS length:
+[useMatches](/styles/responsive/#use-matches-hook) hook now accepts custom breakpoints:
 
 <Demo data={StylesDemos.useMatchesHook} />
 
@@ -511,7 +488,7 @@ Set `withControls={false}` to hide [Scroller](/core/scroller#without-controls) n
 
 ## Other changes
 
-- [Affix](/core/affix) now supports `withSafeArea` prop to keep the content clear of the device notch and home indicator.
+- [Affix](/core/affix) now supports `withSafeArea` prop to keep the content clear of the device notch.
 - [Alert](/core/alert) now supports `size` and `closeButtonProps` props.
 - [AngleSlider](/core/angle-slider) now supports `largeStep` and `readOnly` props and `PageUp`/`PageDown` keys.
 - [Avatar.Group](/core/avatar) now supports `max` prop: avatars that do not fit are replaced with a `+N` counter.
@@ -519,7 +496,7 @@ Set `withControls={false}` to hide [Scroller](/core/scroller#without-controls) n
 - [Breadcrumbs](/core/breadcrumbs) and [Pagination](/core/pagination) root elements are now `nav` landmarks.
 - [ColorPicker](/core/color-picker) now follows `theme.defaultRadius`.
 - [Drawer](/core/drawer) now supports `fullScreen` prop.
-- [MultiSelect](/core/multi-select#max-displayed-values) and [TagsInput](/core/tags-input#max-displayed-values) now support `maxDisplayedValues` prop: extra values collapse into a `+N more` pill.
+- [MultiSelect](/core/multi-select#max-displayed-values) and [TagsInput](/core/tags-input#max-displayed-values) now support `maxDisplayedValues` prop.
 - [NavLink](/core/nav-link) with nested links and without `href` is now rendered as a `button` element.
 - [PasswordInput](/core/password-input) visibility toggle icon is now smaller.
 - [Select](/core/select#scrollable-dropdown) and other `Combobox`-based components now support `scrollBehavior="smooth"` for keyboard navigation.

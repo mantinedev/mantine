@@ -6,8 +6,8 @@ export default Layout(MDX_DATA.EmojiPickerPopover);
 
 ## Usage
 
-`EmojiPickerPopover` combines `EmojiPicker` with Mantine `Popover`.
-The child element is used as the popover target – the popover is toggled when it is clicked.
+`EmojiPickerPopover` renders [EmojiPicker](/emoji/emoji-picker) in a popover.
+The child element is the popover target, clicking it toggles the popover:
 
 <Demo data={EmojiPickerPopoverDemos.usage} />
 
@@ -19,8 +19,7 @@ By default, the popover closes when an emoji is selected. Set `closeOnSelect={fa
 
 ## EmojiPicker props
 
-All `EmojiPicker` props are supported directly on `EmojiPickerPopover`.
-For example, you can change the number of columns and hide the preview and category navigation:
+All `EmojiPicker` props are supported on `EmojiPickerPopover`, for example to change the number of columns or hide sections:
 
 <Demo data={EmojiPickerPopoverDemos.pickerProps} />
 
@@ -49,8 +48,8 @@ function Demo() {
 
 ## Controlled state
 
-Use `opened` and `onOpenedChange` props to control the popover state. A controlled popover
-is not toggled when the target is clicked, add an `onClick` handler to the target element:
+Use `opened` and `onOpenedChange` props to control the popover state.
+A controlled popover is not toggled by the target click, add an `onClick` handler to the target:
 
 ```tsx
 import { useState } from 'react';

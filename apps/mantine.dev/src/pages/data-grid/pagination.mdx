@@ -6,17 +6,16 @@ export default Layout(MDX_DATA.DataGridPagination);
 
 ## Basic pagination
 
-Pass `pageSize` or any other pagination option (`pagination`, `manualPagination`) to `useDataGrid`
-to split data into pages. The default page size is `10`. Add `DataGrid.Footer` as a child of
-`DataGrid` to display the status text, the page size select and the page buttons.
+Pass `pageSize` to `useDataGrid` to split data into pages, 10 rows per page by default.
+Add `DataGrid.Footer` as a child of `DataGrid` to display the status text, the page size select
+and the page buttons:
 
 <Demo data={DataGridDemos.pagination} />
 
 ## Status formats
 
-Set `statusFormat` to change the status text: `compact` (default) displays `1–10 of 20`,
-`long` displays `Showing 1–10 of 20 · 2 selected`. The selected count is displayed only while
-rows are selected. Without pagination the status is `20 rows`.
+By default, the status text is `1–10 of 20`. Set `statusFormat="long"` to display
+`Showing 1–10 of 20` instead. The number of selected rows is added while rows are selected:
 
 <Demo data={DataGridDemos.footerStatusFormats} />
 
@@ -29,8 +28,7 @@ previous / next controls:
 
 ## Status only
 
-Set `pagination="none"` to display the status text only. This mode is used automatically
-when the grid has no pagination:
+Set `pagination="none"` to display the status text only:
 
 <Demo data={DataGridDemos.footerStatusOnly} />
 
@@ -45,27 +43,24 @@ default. Set `withPageSize={false}` to hide the select, use `selectProps` to pas
 </DataGrid>
 ```
 
-`paginationProps` are passed to the `Pagination` component. For example, page buttons are
-displayed when there is only one page, set `paginationProps={{ hideWithOnePage: true }}` to hide them.
+`paginationProps` are passed down to the `Pagination` component. For example, set
+`paginationProps={{ hideWithOnePage: true }}` to hide the page buttons when there is only one page.
 
 ## Controlled pagination
 
-Pass `pagination` and `onPaginationChange` to `useDataGrid` to control pagination state externally.
-The state is an object with `pageIndex` and `pageSize`.
+Pass `pagination` and `onPaginationChange` to `useDataGrid` to control pagination state.
+The state is an object with `pageIndex` and `pageSize`:
 
 <Demo data={DataGridDemos.controlledPagination} />
 
 ## Custom footer
 
-Pass `children` to `DataGrid.Footer` to replace the status, page size select and pagination with
-your own controls. Use `store.getPagination()`, `store.table.getRowCount()` and the navigation
-methods below to build them:
+Pass `children` to `DataGrid.Footer` to replace the default controls with your own.
+Use `store.getPagination()`, `store.table.getRowCount()` and the navigation methods below to build them.
+A footer built without `DataGrid.Footer` must set the `--dg-footer-height` CSS variable
+for the floating [selection bar](/data-grid/row-features#bulk-actions) to stay above it:
 
 <Demo data={DataGridDemos.customFooter} />
-
-`DataGrid.Footer` sets the `--dg-footer-height` CSS variable, which the floating
-[selection bar](/data-grid/row-features#bulk-actions) uses to stay above the footer. If you build
-a footer without `DataGrid.Footer` and use the floating selection bar, set this variable yourself.
 
 ## Page navigation methods
 
@@ -86,8 +81,8 @@ store.table.getRowCount();
 
 ## Auto-reset page index
 
-By default, the page index resets to `0` when data, sorting or filtering changes. Pass `autoResetPageIndex: false`
-to `useDataGrid` to disable this behavior:
+By default, the page index resets to `0` when data, sorting or filtering changes.
+Pass `autoResetPageIndex: false` to `useDataGrid` to keep the current page:
 
 ```tsx
 const store = useDataGrid({
@@ -113,9 +108,7 @@ const store = useDataGrid({
 });
 ```
 
-When neither `rowCount` nor `pageCount` is set, the total is unknown: the footer displays
-`Page 3` with previous / next controls, and the next control is enabled while the current page is full.
-
+Without `rowCount` and `pageCount`, the footer displays `Page 3` with previous / next controls.
 See the [Server-side](/data-grid/server-side) page for a complete example.
 
 ## Labels

@@ -6,8 +6,7 @@ export default Layout(MDX_DATA.MatrixChart);
 
 ## Usage
 
-`MatrixChart` is a generic x/y heatmap with categorical axes. Each cell is colored based on a value.
-Data is an array of objects with `x`, `y`, and `value` properties.
+`MatrixChart` is a heatmap with categorical axes, each cell is colored based on its value:
 
 <Demo data={MatrixChartDemos.usage} />
 
@@ -29,56 +28,50 @@ interface MatrixChartCell {
 
 ## Labels
 
-Set `withXLabels` and `withYLabels` to display axis labels. By default, labels are taken
-from `x` and `y` values of `data`. Use `xLabels` and `yLabels` props to change them and
-`xLabelsPosition="top"` to display x-axis labels above the chart.
+Set `withXLabels` and `withYLabels` to display axis labels. Use `xLabels` and `yLabels` props to override labels taken from the data,
+and `xLabelsPosition="top"` to display x-axis labels above the chart:
 
 <Demo data={MatrixChartDemos.labels} />
 
 ## X-axis labels rotation
 
-By default, x-axis labels are rotated -90 degrees. Use `xLabelsRotation` prop to change the angle.
-Set it to `0` for horizontal labels or `-45` for angled labels.
+Use `xLabelsRotation` prop to change the angle of x-axis labels, for example, `0` for horizontal labels:
 
 <Demo data={MatrixChartDemos.xLabelsRotation} />
 
 ## Tooltip
 
-Set `withTooltip` prop and provide `getTooltipLabel` function to display a tooltip on cell hover.
+Set `withTooltip` prop and provide `getTooltipLabel` function to display a tooltip on cell hover:
 
 <Demo data={MatrixChartDemos.tooltip} />
 
 ## Colors
 
-Use `colors` prop to customize the color palette. Colors are interpolated based on the cell value
-within the domain range.
+Use `colors` prop to change the palette. Cell colors are interpolated between the given colors:
 
 <Demo data={MatrixChartDemos.colors} />
 
 ## Values domain
 
-By default, domain is auto-calculated from data min/max values. Use `domain` prop to set
-a custom `[min, max]` range for color interpolation.
+Use `domain` prop to set a custom `[min, max]` range for color interpolation:
 
 <Demo data={MatrixChartDemos.domain} />
 
 ## Cell size and gap
 
-Use `cellSize` and `gap` props to control cell dimensions and spacing. `cellRadius` controls
-the border radius of cells.
+Use `cellSize`, `gap` and `cellRadius` props to change cell size, spacing and border radius:
 
 <Demo data={MatrixChartDemos.cellSize} />
 
 ## Pass props to cells
 
-Use `getCellProps` callback to add custom props to individual cells based on their data.
+Use `getCellProps` to add props to individual cells based on their data:
 
 <Demo data={MatrixChartDemos.getCellProps} />
 
 ## Legend
 
-Set `withLegend` prop to display a color legend below the chart. Use `legendLabels` prop
-to customize the legend text.
+Set `withLegend` prop to display a color legend below the chart. Use `legendLabels` prop to change its labels:
 
 <Demo data={MatrixChartDemos.legend} />
 

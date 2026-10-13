@@ -6,82 +6,79 @@ export default Layout(MDX_DATA.MobileMonthView);
 
 ## Usage
 
-`MobileMonthView` displays a month grid with event indicators at the top and a list of events
-for the selected day at the bottom, similar to calendar applications on iOS. It is optimized
-for touch devices and does not support drag and drop.
+`MobileMonthView` displays a month grid with a list of events of the selected day below it,
+similar to calendar applications on iOS. It does not support drag and drop:
 
 <Demo data={MobileMonthViewDemos.usage} />
 
 ## With week numbers
 
-Set `withWeekNumbers` to display week numbers in the first column.
+Set `withWeekNumbers` to display week numbers in the first column:
 
 <Demo data={MobileMonthViewDemos.withWeekNumbers} />
 
 ## With outside days
 
-By default, days from the previous and next months are hidden. Set `withOutsideDays` to display them.
+Set `withOutsideDays` to display days of adjacent months:
 
 <Demo data={MobileMonthViewDemos.withOutsideDays} />
 
 ## Highlight today
 
-Set `highlightToday={false}` to disable highlighting the current day.
+Set `highlightToday={false}` to remove the current day highlight:
 
 <Demo data={MobileMonthViewDemos.highlightToday} />
 
 ## First day of week
 
-Set `firstDayOfWeek` to control which day starts the week. 0 is Sunday, 1 is Monday (default), etc.
+Set `firstDayOfWeek` to change the first day of the week, `0` is Sunday, `1` is Monday:
 
 <Demo data={MobileMonthViewDemos.firstDayOfWeek} />
 
 ## Custom header
 
-Use `renderHeader` to customize the header. The callback receives the default header element,
-the current mode, and the current date, allowing you to wrap or replace the default header.
+Use `renderHeader` to wrap or replace the header. The function receives the default header element,
+the current mode and the current date:
 
 <Demo data={MobileMonthViewDemos.renderHeader} />
 
 ## Consistent weeks
 
-Set `consistentWeeks={false}` to only show weeks that have days in the current month.
+Set `consistentWeeks={false}` to display only weeks that have days in the current month:
 
 <Demo data={MobileMonthViewDemos.consistentWeeks} />
 
 ## Weekday format
 
-Use `weekdayFormat` prop to customize the weekday names display. It accepts dayjs format strings.
+Use `weekdayFormat` prop to change the dayjs format of weekday names:
 
 <Demo data={MobileMonthViewDemos.weekdayFormat} />
 
 ## Without week days
 
-Set `withWeekDays={false}` to hide the weekday names row.
+Set `withWeekDays={false}` to hide the weekday names row:
 
 <Demo data={MobileMonthViewDemos.withoutWeekDays} />
 
 ## Static mode
 
-Set `mode="static"` to disable all interactions. In this mode, days are not clickable and no selection changes occur.
+Set `mode="static"` to disable all interactions:
 
 <Demo data={MobileMonthViewDemos.staticMode} />
 
 ## Localization
 
 Use `locale` prop to set the dayjs locale for date formatting.
-Combine it with `labels` prop to translate all UI text.
+Combine it with `labels` prop to translate all UI text:
 
 <Demo data={MobileMonthViewDemos.localization} />
 
 ## Accessibility
 
-MobileMonthView follows the same keyboard navigation patterns as [MonthView](/schedule/month-view/#accessibility).
-
 ### Focus management
 
-Only the first day of the month is included in the tab order, all other days can be reached
-with arrow keys. The day focused with arrow keys becomes the new tab stop.
+Only the first day of the month is included in the tab order, other days are reached with arrow keys.
+The day focused with arrow keys becomes the new tab stop.
 
 ### Keyboard interactions
 
@@ -108,4 +105,4 @@ with arrow keys. The day focused with arrow keys becomes the new tab stop.
 
 ### Day labels
 
-Each day button has an `aria-label` attribute with the full date in the format "Month Day, Year" (e.g., "November 15, 2025").
+Each day button has an `aria-label` with the full date, for example "November 15, 2025".

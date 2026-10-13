@@ -62,7 +62,7 @@ function Demo() {
 
 ## createDataGridColumnHelper
 
-`createDataGridColumnHelper` is a wrapper around TanStack Table's `createColumnHelper`.
+`createDataGridColumnHelper` is a wrapper around TanStack Table `createColumnHelper`.
 Pass your row data type as a generic to get autocompletion on accessor keys and cell values:
 
 ```tsx
@@ -85,9 +85,9 @@ const columns = [
 
 TanStack Table supports three kinds of column definitions:
 
-- **Accessor columns** — defined with `accessorKey` or `accessorFn`. Read data from the row and support sorting, filtering, and grouping.
-- **Display columns** — defined with an `id` and no accessor. Used for action buttons, checkboxes, or any content not tied to row data.
-- **Group columns** — defined with a `columns` array. Create a multi-level header by nesting accessor or display columns inside a group.
+- **Accessor columns** – defined with `accessorKey` or `accessorFn`. Read data from the row and support sorting, filtering and grouping.
+- **Display columns** – defined with an `id` and no accessor. Used for action buttons, checkboxes or any content not tied to row data.
+- **Group columns** – defined with a `columns` array. Create a multi-level header by nesting other columns inside a group.
 
 ## defaultColumn
 
@@ -111,22 +111,22 @@ when you pass controlled state or column-level flags:
 <DataTable
   head={['Feature', 'Inferred from']}
   data={[
-    ['Sorting', 'Columns with `enableSorting: true`'],
-    ['Column filtering', 'Columns with `enableColumnFilter` or `filterFn`'],
-    ['Global filter', '`globalFilter` or `onGlobalFilterChange`'],
-    ['Pagination', '`pagination`, `onPaginationChange`, `pageSize`, `pageCount`, `rowCount` or `manualPagination`'],
-    ['Column resizing', '`columnSizing`, `onColumnSizingChange` or `columnResizeMode`'],
-    ['Column pinning', '`columnPinning` or `onColumnPinningChange`'],
-    ['Column visibility', '`columnVisibility` or `onColumnVisibilityChange`'],
-    ['Column reorder', '`columnOrder` or `onColumnOrderChange`'],
-    ['Row selection', '`rowSelection` or `onRowSelectionChange`'],
-    ['Row expansion', '`expanded`, `onExpandedChange` or `getSubRows`'],
-    ['Grouping', '`grouping` or `onGroupingChange`'],
-    ['Row pinning', '`rowPinning`, `onRowPinningChange` or `enableRowPinning`'],
-    ['Tree data', '`getSubRows`'],
-    ['Row reorder', '`onRowOrderChange`'],
-    ['Cell selection', '`cellSelection` or `onCellSelectionChange`'],
-    ['Editing', '`editingMode` is set'],
+    ['Sorting', <>Columns with <code>enableSorting: true</code></>],
+    ['Column filtering', <>Columns with <code>enableColumnFilter</code> or <code>filterFn</code></>],
+    ['Global filter', <><code>globalFilter</code> or <code>onGlobalFilterChange</code></>],
+    ['Pagination', <><code>pagination</code>, <code>onPaginationChange</code>, <code>pageSize</code>, <code>pageCount</code>, <code>rowCount</code> or <code>manualPagination</code></>],
+    ['Column resizing', <><code>columnSizing</code>, <code>onColumnSizingChange</code> or <code>columnResizeMode</code></>],
+    ['Column pinning', <><code>columnPinning</code> or <code>onColumnPinningChange</code></>],
+    ['Column visibility', <><code>columnVisibility</code> or <code>onColumnVisibilityChange</code></>],
+    ['Column reorder', <><code>columnOrder</code> or <code>onColumnOrderChange</code></>],
+    ['Row selection', <><code>rowSelection</code> or <code>onRowSelectionChange</code></>],
+    ['Row expansion', <><code>expanded</code>, <code>onExpandedChange</code> or <code>getSubRows</code></>],
+    ['Grouping', <><code>grouping</code> or <code>onGroupingChange</code></>],
+    ['Row pinning', <><code>rowPinning</code>, <code>onRowPinningChange</code> or <code>enableRowPinning</code></>],
+    ['Tree data', <code>getSubRows</code>],
+    ['Row reorder', <code>onRowOrderChange</code>],
+    ['Cell selection', <><code>cellSelection</code> or <code>onCellSelectionChange</code></>],
+    ['Editing', <><code>editingMode</code> is set</>],
   ]}
 />
 
@@ -141,10 +141,10 @@ see [Customization](/data-grid/customization).
 <DataTable
   head={['Package', 'Min version', 'Purpose']}
   data={[
-    ['`@tanstack/react-table`', '`>=9.0.0`', 'Headless table logic'],
-    ['`@tanstack/match-sorter-utils`', '`>=9.0.0`', 'Fuzzy filtering and ranking'],
-    ['`@tanstack/react-virtual`', '`>=3.13.0`', 'Row virtualization'],
-    ['`@mantine/core`', '`9.0.2`', 'UI components'],
-    ['`@mantine/hooks`', '`9.0.2`', 'React hooks'],
+    [<code>@tanstack/react-table</code>, <code>&gt;=9.0.0</code>, 'Headless table logic'],
+    [<code>@tanstack/match-sorter-utils</code>, <code>&gt;=9.0.0</code>, 'Fuzzy filtering and ranking'],
+    [<code>@tanstack/react-virtual</code>, <code>&gt;=3.13.0</code>, 'Row virtualization'],
+    [<code>@mantine/core</code>, <code>9.0.2</code>, 'UI components'],
+    [<code>@mantine/hooks</code>, <code>9.0.2</code>, 'React hooks'],
   ]}
 />

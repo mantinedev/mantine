@@ -17,10 +17,8 @@ import '@mantine/code-highlight/styles.css';
 
 ## Adapters
 
-`@mantine/code-highlight` package does not depend on any specific code highlighting library.
-You can choose one of the default adapters provided by the package or create your own.
-
-Default adapters:
+`@mantine/code-highlight` does not depend on a specific highlighting library.
+Choose one of the built-in adapters or create your own:
 
 - `createShikiAdapter` – creates [shiki](https://shiki.matsu.io/) adapter
 - `createHighlightJsAdapter` – creates [highlight.js](https://highlightjs.org/) adapter
@@ -28,12 +26,10 @@ Default adapters:
 
 ## Usage with shiki
 
-[Shiki](https://shiki.matsu.io/) library provides the most advanced syntax highlighting
-for TypeScript and CSS/Sass code. It uses textmate grammars to highlight code (same as in VSCode).
-The Shiki adapter is recommended if you need to highlight advanced TypeScript (generics, jsx nested in props) or CSS code (custom syntaxes, newest features).
-The Shiki adapter is used for all code highlighting in Mantine documentation.
+[Shiki](https://shiki.matsu.io/) uses the same textmate grammars as VSCode and gives the most accurate highlighting.
+It is recommended for TypeScript and CSS code and is used in Mantine documentation.
 
-To use the shiki adapter, you need to install the `shiki` package:
+Install the `shiki` package:
 
 <InstallScript packages="shiki" />
 
@@ -70,10 +66,9 @@ function App() {
 
 ## Lazy languages loading
 
-By default, shiki downloads grammars of all languages given to the highlighter before
-the first code block is highlighted. To load grammars on demand, pass `resolveLanguage` option
-to `createShikiAdapter`. It is called with the language that is not loaded yet, its return value
-is passed to shiki `highlighter.loadLanguage`. Code is displayed as plain text until the grammar is loaded:
+By default, shiki loads grammars of all languages passed to the highlighter upfront.
+To load grammars on demand, pass `resolveLanguage` option to `createShikiAdapter`.
+Its return value is passed to shiki `highlighter.loadLanguage`, code is displayed as plain text until the grammar is loaded:
 
 ```tsx
 import { createShikiAdapter } from '@mantine/code-highlight';
@@ -121,18 +116,15 @@ its code is displayed as plain text.
 
 ## Unavailable languages
 
-If a code block uses a language that is not loaded in the highlighter and cannot be loaded on
-demand, its code is displayed as plain text and a warning is logged to the console in development.
-To fix it, add the language to the `langs` option of the highlighter or load it on demand
-with `resolveLanguage`.
+Code in a language that is not loaded is displayed as plain text, a warning is logged in development.
+To fix it, add the language to the `langs` option of the highlighter or load it with `resolveLanguage`.
 
 ## Usage with highlight.js
 
-[Highlight.js](https://highlightjs.org/) provides less accurate highlighting compared to shiki,
-but it has a smaller bundle size and better performance. Choose the highlight.js adapter if you need
-to highlight basic JavaScript, HTML, and CSS code.
+[Highlight.js](https://highlightjs.org/) is less accurate than shiki but has a smaller bundle size.
+Choose it for basic JavaScript, HTML and CSS code.
 
-To use the highlight.js adapter, you need to install the `highlight.js` package:
+Install the `highlight.js` package:
 
 <InstallScript packages="highlight.js" />
 
@@ -159,9 +151,7 @@ function App() {
 }
 ```
 
-Then you need to add styles from one of the highlight.js themes to your application.
-You can do that by importing a css file from the `highlight.js` package or adding it via
-a CDN link to the head of your application:
+Then add one of the highlight.js themes, either as a css import from the `highlight.js` package or as a CDN link:
 
 ```html
 <link
@@ -172,10 +162,8 @@ a CDN link to the head of your application:
 
 ## Create custom adapter
 
-You can create a custom adapter if you want to enhance the default behavior of code highlighting
-or use a different library.
-
-Example of creating a custom shiki adapter with custom themes and logic:
+Create a custom adapter to use another library or to extend the default behavior.
+Example of a shiki adapter with custom themes and transformers:
 
 ```tsx
 import { type CodeHighlightAdapter, stripShikiCodeBlocks } from '@mantine/code-highlight';

@@ -6,42 +6,34 @@ export default Layout(MDX_DATA.DownloadTrigger);
 
 ## Usage
 
-`DownloadTrigger` downloads generated content (CSV, JSON, images, QR codes) as a file
-without a server request. It does not render any element – its children is a function
-that receives an object with the following properties:
+`DownloadTrigger` downloads generated content (CSV, JSON, images) as a file without a server request.
+It does not render any element, its `children` is a function that receives:
 
-- `download` – function that must be called to trigger the download
+- `download` – function that starts the download
 - `loading` – `true` while an async `data` function is resolving
+
+`data` can be a string, a `Blob` or a `File`. Set `mimeType` prop when `data` is a string:
 
 <Demo data={DownloadTriggerDemos.usage} />
 
-`data` can be a string, a `Blob` or a `File`. Set `mimeType` prop when `data` is a string.
-Use `fileName` prop to set the name of the downloaded file. When `fileName` is not set
-and `data` is a `File`, the file name is used.
-
-`onDownloadComplete` is called when the download is dispatched to the browser, not when the browser
-finishes saving the file.
-
 ## Async data
 
-`data` can be a function that returns a `Blob`/string or a promise that resolves with one.
-The function is called when the download is triggered. While it is resolving, `loading`
-is `true` and repeated `download` calls are ignored:
+`data` can be a function that returns the content or a promise that resolves with it.
+While it is resolving, `loading` is `true` and repeated `download` calls are ignored:
 
 <Demo data={DownloadTriggerDemos.async} />
 
 ## Error handling
 
-If resolving `data` or the download fails, the error is passed to `onError` callback.
-If `onError` is not set, the error is rethrown:
+If resolving `data` or the download fails, the error is passed to `onError`.
+Without `onError`, the error is rethrown:
 
 <Demo data={DownloadTriggerDemos.error} />
 
 ## Custom trigger
 
-Children can return any element – a [Button](/core/button), an [ActionIcon](/core/action-icon), a
-[Menu.Item](/core/menu) or your own component. Call the `download` function from the element `onClick`
-handler:
+Children can return any element: a button, an action icon, a menu item or your own component.
+Call `download` from its `onClick` handler:
 
 <Demo data={DownloadTriggerDemos.customTrigger} />
 

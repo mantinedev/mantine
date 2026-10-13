@@ -6,30 +6,26 @@ export default Layout(MDX_DATA.useScroller);
 
 ## Usage
 
-The `use-scroller` hook manages horizontal scroll behavior for a container element.
-It provides scroll state (whether content can be scrolled in either direction),
-scroll functions, and drag-to-scroll functionality.
+`use-scroller` manages horizontal scrolling of a container. It reports whether the content can
+scroll in each direction, scrolls it with `scrollStart` and `scrollEnd` and supports drag to scroll:
 
 <Demo data={UseScrollerDemos.usage} />
 
 ## Scroll amount
 
-Use `scrollAmount` option to control how many pixels the content scrolls
-when `scrollStart` or `scrollEnd` functions are called. Default value is `200`:
+Set `scrollAmount` to change how many pixels `scrollStart` and `scrollEnd` scroll, `200` by default:
 
 <Demo data={UseScrollerDemos.scrollAmount} />
 
 ## Draggable
 
-By default, users can click and drag to scroll the content.
-Set `draggable: false` to disable it:
+By default, the content can be scrolled by dragging. Set `draggable: false` to disable it:
 
 <Demo data={UseScrollerDemos.draggable} />
 
 ## Scroller component
 
-If you prefer component API, you can use [Scroller](/core/scroller) component.
-It provides the same functionality with additional styling and control button features.
+[Scroller](/core/scroller) component is based on this hook and adds styles and scroll buttons:
 
 <Demo data={ScrollerDemos.usage} />
 
@@ -90,8 +86,8 @@ interface UseScrollerReturnValue<T extends HTMLElement = HTMLDivElement> {
 
 ## Exported types
 
-`UseScrollerOptions`, `UseScrollerReturnValue` and `UseScrollerScrollState` types are exported from the `@mantine/hooks` package;
-you can import them in your application:
+`UseScrollerOptions`, `UseScrollerReturnValue` and `UseScrollerScrollState` types are exported
+from the `@mantine/hooks` package:
 
 ```tsx
 import type {

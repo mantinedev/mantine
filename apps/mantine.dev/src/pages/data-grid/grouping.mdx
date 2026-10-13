@@ -6,17 +6,15 @@ export default Layout(MDX_DATA.DataGridGrouping);
 
 ## Basic grouping
 
-Pass `grouping` with an array of column IDs to `useDataGrid` to group rows by one or more columns.
-Each group is displayed as a group row with the grouped value and the number of rows in the group.
+Pass `grouping` with an array of column ids to `useDataGrid` to group rows by one or more columns.
+Each group is displayed as a group row with the grouped value and the number of rows in the group:
 
 <Demo data={DataGridDemos.grouping} />
 
 ## Group rows
 
 A group row displays its label in the cell of the grouping column, for example
-`Department: Engineering (5)`. The count is the number of leaf rows in the group, across nested
-groups. Columns with `aggregationFn` display their `aggregatedCell`.
-
+`Department: Engineering (5)`. Columns with `aggregationFn` display their `aggregatedCell`.
 Click anywhere on a group row or press `Enter` / `Space` while it is focused to toggle the group.
 Set `withTintedGroupRows` on `DataGrid` to paint group rows with the striped color:
 
@@ -26,21 +24,21 @@ Set `withTintedGroupRows` on `DataGrid` to paint group rows with the striped col
 
 Use controlled `grouping` state with `onGroupingChange` to change grouping dynamically. With
 `withColumnMenu` on `DataGrid`, every column that can be grouped gets **Group by this column** /
-**Ungroup** items in its header menu.
+**Ungroup** items in its header menu:
 
 <Demo data={DataGridDemos.groupingInteractive} />
 
 ## Multi-level grouping
 
-Pass multiple column IDs in the `grouping` array to create nested group hierarchies.
-The first ID is the outermost group.
+Pass multiple column ids in the `grouping` array to create nested groups.
+The first id is the outermost group:
 
 <Demo data={DataGridDemos.groupingMultiLevel} />
 
 ## Aggregation
 
 Add `aggregationFn` and `aggregatedCell` to column definitions to display computed values in group rows.
-TanStack Table provides built-in aggregation functions: `sum`, `min`, `max`, `mean`, `median`, `count`, `unique`, `uniqueCount`, `first`, `last` and `extent`.
+TanStack Table provides built-in aggregation functions, for example `sum`, `mean` and `count`:
 
 <Demo data={DataGridDemos.groupingAggregation} />
 
@@ -100,31 +98,30 @@ const columns = [
 ## groupedColumnMode
 
 The `groupedColumnMode` option controls what happens to a column after it is used for grouping.
+With `'reorder'`, grouped columns cannot be reordered while they are grouped,
+see [Column reorder](/data-grid/column-features#column-reorder).
 
 <DataTable
   head={['Value', 'Behavior']}
   data={[
-    ["`'reorder'` (default)", 'Grouped columns are moved to the front of the data columns, right after the utility columns'],
-    ["`'remove'`", 'Grouped columns are hidden from the table'],
-    ['`false`', 'Grouped columns stay in their original position'],
+    [<><code>'reorder'</code> (default)</>, 'Grouped columns are moved to the front, right after the utility columns'],
+    [<code>'remove'</code>, 'Grouped columns are hidden'],
+    [<code>false</code>, 'Grouped columns stay in their original position'],
   ]}
 />
 
 <Demo data={DataGridDemos.groupedColumnMode} />
 
-With `'reorder'`, grouped columns cannot be reordered while they are grouped, see [Column reorder](/data-grid/column-features#column-reorder).
-
 ## Group selection
 
 With `withRowSelection`, the checkbox of a group row selects or deselects all rows of the group.
-Group rows themselves are never selected: `rowSelection` contains data row ids only, and
-a function passed to `enableRowSelection` is called for data rows only. The group checkbox is
-not displayed in single selection mode.
+Group rows themselves are never selected, `rowSelection` contains data row ids only.
+The group checkbox is not displayed in single selection mode.
 
 ## Expand and collapse all groups
 
 Use `store.table.toggleAllRowsExpanded()` to expand or collapse every group at once.
-`store.table.getIsAllRowsExpanded()` returns the current state.
+`store.table.getIsAllRowsExpanded()` returns the current state:
 
 ```tsx
 function Demo() {
@@ -143,8 +140,8 @@ function Demo() {
 
 ## Controlled grouping
 
-Pass `grouping` and `onGroupingChange` to `useDataGrid` for fully controlled grouping state.
-The state is an array of column IDs representing the current grouping hierarchy.
+Pass `grouping` and `onGroupingChange` to `useDataGrid` for controlled grouping state.
+The state is an array of column ids, the first id is the outermost group:
 
 ```tsx
 import { useState } from 'react';
@@ -167,5 +164,5 @@ function Demo() {
 
 ## Cell selection
 
-Under `withCellSelection` group cells are excluded from ranges; the label cell of a group row is
-the keyboard target and `Enter` / `Space` toggle the group.
+With `withCellSelection`, group cells are excluded from ranges. The label cell of a group row is
+the keyboard target, `Enter` / `Space` toggle the group.

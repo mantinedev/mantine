@@ -6,10 +6,8 @@ export default Layout(MDX_DATA.useHoldRepeatHandlers);
 
 ## Usage
 
-`use-hold-repeat-handlers` is built on top of [use-hold-repeat](/hooks/use-hold-repeat). It returns
-event handlers that add press-and-hold-to-repeat behavior to an element. The hook is used
-in increment/decrement controls of [NumberInput](/core/number-input). Press and hold the buttons
-to change the value:
+`use-hold-repeat-handlers` returns event handlers that add press-and-hold-to-repeat behavior to an element.
+It supports all [use-hold-repeat](/hooks/use-hold-repeat) options. Press and hold the buttons to change the value:
 
 <Demo data={UseHoldRepeatHandlersDemos.usage} />
 
@@ -60,9 +58,6 @@ function useHoldRepeatHandlers(
 ): UseHoldRepeatHandlersReturnValue
 ```
 
-The hook supports all [use-hold-repeat](/hooks/use-hold-repeat) options. The function is called
-once per press unless both `delay` and `interval` are set.
-
 ## Event sources
 
 By default, the hook returns pointer event handlers. Use the `events` option to choose
@@ -82,18 +77,11 @@ function Demo() {
 }
 ```
 
-- `pointer` – `onPointerDown` starts, `onPointerUp`, `onPointerLeave` and `onPointerCancel` stop
-- `mouse` – `onMouseDown` starts, `onMouseUp` and `onMouseLeave` stop
-- `touch` – `onTouchStart` starts, `onTouchEnd` and `onTouchCancel` stop
-- `keyboard` – `onKeyDown` starts, `onKeyUp` and `onBlur` stop
-
-Do not combine `pointer` with `mouse` or `touch`: `pointer` already handles both, and the
-function will be called twice per interaction.
+Do not combine `pointer` with `mouse` or `touch`, `pointer` already handles both.
 
 ## Keyboard
 
-When `events` includes `keyboard`, the hold starts on `keydown` and stops on `keyup` or `blur`.
-Use the `keys` option to restrict which keys start the hold:
+With `keyboard` events, use the `keys` option to restrict which keys start the hold:
 
 ```tsx
 import { useHoldRepeatHandlers } from '@mantine/hooks';
@@ -110,16 +98,16 @@ function Demo() {
 }
 ```
 
-To handle several keys on one element, call the hook once per action with different `keys`
-and merge the returned handlers with [mergeEventHandlers](#combining-handler-bundles).
-Focus the input and hold <kbd>ArrowUp</kbd> or <kbd>ArrowDown</kbd> to change the value:
+To handle several keys on one element, call the hook once per key and merge the handlers
+with [mergeEventHandlers](#combining-handler-bundles). Focus the input and hold <kbd>ArrowUp</kbd>
+or <kbd>ArrowDown</kbd> to change the value:
 
 <Demo data={UseHoldRepeatHandlersDemos.events} />
 
 ## Combining handler bundles
 
-`mergeEventHandlers` function exported from `@mantine/hooks` merges several objects with event
-handlers into one. Handlers with the same name are all called in order with the same event:
+`mergeEventHandlers` merges several objects with event handlers into one.
+Handlers with the same name are called in order:
 
 ```tsx
 import { mergeEventHandlers, useHoldRepeatHandlers } from '@mantine/hooks';
@@ -132,16 +120,14 @@ function Demo() {
 }
 ```
 
-`mergeEventHandlers` returns new functions on every call, wrap it in `useMemo` if you need
-stable references.
+Wrap the call in `useMemo` if you need stable handler references.
 
 ## preventDefault
 
-By default `event.preventDefault()` is called on the start event (pointer down, mouse down or key
-down). Set `preventDefault: false` to keep the browser default behavior. `preventDefault()` has
-no effect on touch start events, use the
-[touch-action](https://developer.mozilla.org/en-US/docs/Web/CSS/touch-action) CSS
-property to prevent scrolling during a touch hold:
+By default, `event.preventDefault()` is called on the start event. Set `preventDefault: false`
+to keep the browser behavior. Touch start events are not prevented, use the
+[touch-action](https://developer.mozilla.org/en-US/docs/Web/CSS/touch-action) CSS property
+to stop scrolling during a touch hold:
 
 ```tsx
 import { useHoldRepeatHandlers } from '@mantine/hooks';
@@ -159,9 +145,8 @@ function Demo() {
 
 ## Imperative start/stop
 
-The returned object also includes `start` and `stop` functions from
-[use-hold-repeat](/hooks/use-hold-repeat). Use them to control the hold from events that
-are not covered by the handlers. They are not passed to the element when the handlers are spread:
+The returned object also includes `start` and `stop` functions. Use them to control the hold
+from events that the handlers do not cover:
 
 ```tsx
 import { useHoldRepeatHandlers } from '@mantine/hooks';

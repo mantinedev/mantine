@@ -6,44 +6,36 @@ export default Layout(MDX_DATA.useCountdown);
 
 ## Usage
 
-`use-countdown` counts down from a given duration (`countStart`) or to a target date
-(`targetDate`). It returns the remaining time in milliseconds and the same value split into
-days, hours, minutes, seconds and milliseconds.
+`use-countdown` counts down from a duration in milliseconds (`countStart`) or to a date (`targetDate`).
+It returns the remaining time and the same value split into days, hours, minutes and seconds.
 
-With `countStart`, the countdown does not start automatically – call `start` to begin.
-Once it reaches `0`, calling `start` again restarts it from `countStart`:
+With `countStart`, call `start` to begin the countdown. Once it reaches `0`, `start` restarts it:
 
 <Demo data={UseCountdownDemos.usage} />
 
 ## Count down to a target date
 
-Pass `targetDate` (`Date`, timestamp or date string) to count down to a specific moment.
-In this mode, the countdown starts automatically:
+Pass `targetDate` to count down to a specific moment. The countdown starts automatically:
 
 <Demo data={UseCountdownDemos.targetDate} />
 
 ## Controls
 
-Use `start`, `stop` and `reset` functions to control the countdown. `start` resumes
-a stopped countdown from the current `count`. Changing `countStart` while the countdown
-is not running resets `count` to the new value:
+Use `start`, `stop` and `reset` functions to control the countdown. `start` resumes a stopped countdown:
 
 <Demo data={UseCountdownDemos.controls} />
 
 ## Interval and sub-second precision
 
-`interval` option controls how often the countdown updates (`1000`ms by default). Use a smaller
-interval to display milliseconds:
+`interval` controls how often the countdown updates, one second by default.
+Use a smaller interval to display milliseconds:
 
 <Demo data={UseCountdownDemos.subSecond} />
 
-The remaining time is computed from the end timestamp, so the countdown does not drift
-when ticks are delayed, for example in background tabs.
-
 ## onComplete and onTick
 
-`onComplete` is called once when the countdown reaches `0`, `onTick` is called on every tick with
-the remaining number of milliseconds:
+`onComplete` is called once when the countdown reaches `0`. `onTick` is called on every tick with
+the remaining milliseconds:
 
 ```tsx
 import { useCountdown } from '@mantine/hooks';
@@ -72,24 +64,6 @@ const { count, formatted, running, start, stop, reset } = useCountdown({
 });
 ```
 
-Options:
-
-- `targetDate` – date to count down to (mutually exclusive with `countStart`)
-- `countStart` – duration in milliseconds to count down from
-- `interval` – amount of milliseconds between each tick, `1000` by default
-- `autoStart` – whether to start automatically, `true` for `targetDate`, `false` for `countStart`
-- `onComplete` – called once when the countdown reaches `0`
-- `onTick` – called on every tick with the remaining milliseconds
-
-Return object:
-
-- `count` – remaining time in milliseconds, never less than `0`
-- `formatted` – `count` split into `days`, `hours`, `minutes`, `seconds` and `milliseconds`
-- `running` – whether the countdown is currently running
-- `start` – starts or resumes the countdown
-- `stop` – stops the countdown and keeps the current `count`
-- `reset` – stops the countdown and resets `count` to `countStart` or to the time remaining until `targetDate`
-
 ## Definition
 
 ```tsx
@@ -102,20 +76,42 @@ interface UseCountdownFormatted {
 }
 
 interface UseCountdownOptions {
+  /** Date to count down to, cannot be used with `countStart` */
   targetDate?: Date | number | string;
+
+  /** Duration in milliseconds to count down from */
   countStart?: number;
+
+  /** Milliseconds between ticks, `1000` by default */
   interval?: number;
+
+  /** Starts the countdown on mount, `true` for `targetDate`, `false` for `countStart` */
   autoStart?: boolean;
+
+  /** Called once when the countdown reaches `0` */
   onComplete?: () => void;
+
+  /** Called on every tick with the remaining milliseconds */
   onTick?: (count: number) => void;
 }
 
 interface UseCountdownReturnValue {
+  /** Remaining time in milliseconds, never less than `0` */
   count: number;
+
+  /** `count` split into days, hours, minutes, seconds and milliseconds */
   formatted: UseCountdownFormatted;
+
+  /** `true` while the countdown is running */
   running: boolean;
+
+  /** Starts or resumes the countdown */
   start: () => void;
+
+  /** Stops the countdown and keeps the current `count` */
   stop: () => void;
+
+  /** Stops the countdown and resets `count` to the initial value */
   reset: () => void;
 }
 

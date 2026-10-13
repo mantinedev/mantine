@@ -5,12 +5,9 @@ export default Layout(MDX_DATA.OxcConfig);
 
 # Mantine oxc config
 
-[oxc-config-mantine](https://github.com/mantinedev/oxc-config-mantine)
-is a set of [oxc](https://oxc.rs) configurations for
-[oxlint](https://www.npmjs.com/package/oxlint) (linter) and
-[oxfmt](https://www.npmjs.com/package/oxfmt) (formatter) used in Mantine projects.
-You can use it in your project to ensure that your code follows the same
-style and conventions as Mantine.
+[oxc-config-mantine](https://github.com/mantinedev/oxc-config-mantine) is a set of
+`oxlint` (linter) and `oxfmt` (formatter) configurations used in Mantine projects.
+Use it to follow the same code style and conventions as Mantine.
 
 ## Installation
 
@@ -44,8 +41,8 @@ import { oxfmt } from 'oxc-config-mantine';
 export default defineConfig(oxfmt);
 ```
 
-You can customize the formatter by spreading the base configuration and adding
-project-specific settings, for example, to add extra ignore patterns:
+To customize the formatter, spread the base configuration and add your settings,
+for example, extra ignore patterns:
 
 ```tsx
 import { defineConfig } from 'oxfmt';
@@ -79,7 +76,6 @@ npm run format
 
 ## Rules and source code
 
-Mantine oxlint config extends recommended [oxlint](https://oxc.rs/docs/guide/usage/linter)
-rules and adds custom rules and configurations for the `react`, `typescript`,
-`jsx-a11y` and `jest` plugins. You can find the full list of rules and source code
-in the [oxc-config-mantine repository](https://github.com/mantinedev/oxc-config-mantine).
+Mantine oxlint config extends the recommended oxlint rules and adds rules for the `react`,
+`typescript`, `jsx-a11y` and `jest` plugins. The full list of rules is in the
+[oxc-config-mantine repository](https://github.com/mantinedev/oxc-config-mantine).

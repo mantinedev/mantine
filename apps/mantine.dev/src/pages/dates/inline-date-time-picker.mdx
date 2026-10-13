@@ -7,18 +7,15 @@ export default Layout(MDX_DATA.InlineDateTimePicker);
 ## DatePicker props
 
 `InlineDateTimePicker` supports most of the [DatePicker](/dates/date-picker/) props.
-Read through the [DatePicker](/dates/date-picker/) documentation to learn about all component features that are not listed on this page.
+Features that are not listed on this page are documented there.
 
 ## Usage
 
 `InlineDateTimePicker` renders a calendar with a time picker inline, without a dropdown.
-It combines [DatePicker](/dates/date-picker/) and [TimePicker](/dates/time-picker/) components:
+The value is applied when the submit button is pressed.
+Change the button label with the `submitButtonLabel` prop or the same [DatesProvider](/dates/getting-started/#datesprovider) setting, and pass other props with `submitButtonProps`:
 
 <Demo data={InlineDateTimePickerDemos.usage} />
-
-The submit button label is `Save` by default – change it with the `submitButtonLabel` prop or the
-`submitButtonLabel` setting of [DatesProvider](/dates/getting-started/#datesprovider). Use
-`submitButtonProps` to pass props down to the [Button](/core/button/).
 
 ## With seconds
 
@@ -28,9 +25,8 @@ Set `withSeconds` prop to display seconds input in the time picker:
 
 ## Range
 
-Set `type="range"` to allow selecting a date and time range. In range mode,
-two time inputs are rendered side by side, and a range summary is displayed
-below the time inputs:
+Set `type="range"` to allow selecting a date and time range.
+Two time inputs are rendered side by side with a range summary below them:
 
 <Demo data={InlineDateTimePickerDemos.range} />
 
@@ -40,9 +36,13 @@ below the time inputs:
 
 ## Controlling with useInlineDateTimePicker
 
-`InlineDateTimePicker` component supports the [controller pattern](/guides/controllers). Use the `useInlineDateTimePicker` hook to manage `InlineDateTimePicker` state:
+`InlineDateTimePicker` component supports the [controller pattern](/guides/controllers). Use the `useInlineDateTimePicker` hook to manage `InlineDateTimePicker` state.
+The controller does not own the selected value, keep using `value` and `onChange` for it.
+When the `controller` prop is set, the date, level and `defaultTimeValue` props of the component are ignored, pass them to `useInlineDateTimePicker` instead:
 
 <Demo data={InlineDateTimePickerDemos.controller} />
+
+`useInlineDateTimePicker` returns the navigation actions of [useCalendar](/dates/calendar/#controlling-with-usecalendar) together with time actions and queries:
 
 ```tsx
 import { useState } from 'react';
@@ -77,18 +77,7 @@ function Demo() {
 }
 ```
 
-The controller does not own the selected value – keep using `value`/`onChange` (or your form
-library) for it. It owns what the value cannot express: the time entered before a date is picked
-and the end time of an incomplete range. `getTime` returns the time of the value once a date is
-picked, and `setTime` updates it. `focusTime` called while the time inputs are not displayed (the
-calendar is not on the month level) focuses the field when they are displayed.
-
-When the `controller` prop is set, the `date`, `defaultDate`, `onDateChange`, `level`,
-`defaultLevel`, `onLevelChange` and `defaultTimeValue` props are ignored – pass them to
-`useInlineDateTimePicker` instead. The time inputs are driven through the controller, so
-`timePickerProps` and `endTimePickerProps` do not accept a `controller`. The controller is typed as
-`InlineDateTimePickerController` and its options as `InlineDateTimePickerControllerOptions`, both
-exported from `@mantine/dates`.
+The time inputs are driven through the controller, `timePickerProps` and `endTimePickerProps` do not accept a `controller`.
 
 ## Value format
 

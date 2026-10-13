@@ -13,8 +13,7 @@ It displays hierarchical data as concentric rings, similar to a treemap plotted 
 
 ## Data format
 
-`SunburstChart` expects an array of objects. Each object must have a `name` and `color` property.
-Leaf nodes must have a `value` property. Parent nodes can have a `children` array:
+Each root node has `name`, `color` and `children`. Leaf nodes have `name` and `value`:
 
 ```tsx
 export const data = [
@@ -40,9 +39,7 @@ export const data = [
 
 ## Node color
 
-You can reference colors from [theme](/theming/theme-object) the same way as in
-other components, for example, `blue`, `red.5`, `orange.7`, etc. Any valid CSS
-color value is also accepted. Children inherit the color of their parent node.
+`color` accepts theme colors and any valid CSS color. Children inherit the color of their parent node:
 
 <Demo data={SunburstChartDemos.color} />
 
@@ -66,8 +63,7 @@ Use `gap` prop to control the spacing between sectors and rings:
 
 ## Labels
 
-Set `withLabels` to display value labels inside each sector. It is recommended
-to increase `size` to give labels enough space:
+Set `withLabels` to display value labels inside sectors. Increase `size` to give labels enough space:
 
 <Demo data={SunburstChartDemos.withLabels} />
 

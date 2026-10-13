@@ -8,26 +8,24 @@ export default Layout(MDX_DATA.DataGridCustomization);
 
 By default, the grid has a border around the toolbar, the table and the footer.
 Use `radius` to change its border radius and `withTableBorder={false}` to remove the border.
+`borderColor` accepts a key of `theme.colors` or any valid CSS color:
 
 <Demo data={DataGridDemos.frame} />
-
-Use `borderColor` to change the border color. It accepts a key of `theme.colors`
-or any valid CSS color.
 
 ## Separators
 
 Separator props are the same as in the core `Table` component:
 
 <DataTable
-  head={['Prop', 'Type', 'Description']}
+  head={['Prop', 'Description']}
   data={[
-    ['`withRowBorders`', '`boolean | \'subtle\'`, `true`', 'Rule between rows; `\'subtle\'` switches the rule to `--mantine-color-border-subtle` while the frame keeps `--dg-border-color`. The last body row never has a rule'],
-    ['`striped`', '`boolean | \'odd\' | \'even\'`, `false`', 'Alternating row background; `true` stripes odd data rows. The index skips group rows, expansion panels and pinned rows'],
-    ['`stripedColor`', '`MantineColor`', 'Stripe color, sets `--dg-striped-color`'],
-    ['`withColumnBorders`', '`boolean | \'data\'`, `false`', '`true` draws a rule between every column including utility columns, `\'data\'` between data columns only (the utility columns share one divider before the first data column)'],
-    ['`highlightOnHover`', '`boolean`, `false`', 'Row hover background; the default grid is static'],
-    ['`highlightOnHoverColor`', '`MantineColor`', 'Hover color, sets `--dg-hover-color`, which header, group row and toggle hovers use as well'],
-    ['`tabularNums`', '`boolean`, `false`', 'Tabular figures in every cell; end-aligned columns (`meta.align: \'end\'`) use them by themselves'],
+    [<code>withRowBorders</code>, <>Border between rows, <code>'subtle'</code> uses a lighter color</>],
+    [<code>striped</code>, <>Alternating row background, <code>'odd'</code> or <code>'even'</code> selects the striped rows</>],
+    [<code>stripedColor</code>, 'Stripe color'],
+    [<code>withColumnBorders</code>, <>Border between columns, <code>'data'</code> skips utility columns</>],
+    [<code>highlightOnHover</code>, 'Row background on hover'],
+    [<code>highlightOnHoverColor</code>, 'Hover color'],
+    [<code>tabularNums</code>, 'Tabular figures in every cell'],
   ]}
 />
 
@@ -35,33 +33,20 @@ To display stripes without row borders, set `striped` and `withRowBorders={false
 
 <Demo data={DataGridDemos.separators} />
 
+Example with custom stripe and hover colors:
+
 <Demo data={DataGridDemos.stripedHover} />
 
 ## Size
 
 `size` is a `useDataGrid` option, `sm` by default. It controls the font size, row height,
-cell padding and the size of controls and icons. Use `store.getSize()` and `store.setSize()`
-to read and change it.
-
-Controls in the toolbar, selection bar and footer use the size returned by `store.getControlSize()`.
-Pass it to your own buttons and inputs inside the grid so they match.
-
-<DataTable
-  head={['size', 'Font', 'Row height', 'Padding x / y', 'Control', 'Icon', 'Control size', 'Footer height']}
-  data={[
-    ['`xs`', '12px', '28px', '8px / 4px', '12px', '14px', '`xs`', '36px'],
-    ['`sm`', '13px', '32px', '10px / 5px', '14px', '16px', '`xs`', '40px'],
-    ['`md`', '14px', '36px', '12px / 6px', '16px', '16px', '`sm`', '44px'],
-    ['`lg`', '15px', '44px', '14px / 7px', '18px', '18px', '`md`', '48px'],
-    ['`xl`', '16px', '52px', '16px / 8px', '20px', '20px', '`md`', '52px'],
-  ]}
-/>
+cell padding and the size of controls and icons. It does not accept numbers,
+use [CSS variables](#css-variables) to change individual values:
 
 <Demo data={DataGridDemos.sizes} />
 
-`size` does not accept numbers, use [CSS variables](#css-variables) to change individual values.
-To let users change the density, call `store.setSize`, for example from a `SegmentedControl`
-in the toolbar:
+Pass `store.getControlSize()` to your own buttons and inputs inside the grid so they match the grid size.
+To let users change the density, call `store.setSize`:
 
 <Demo data={DataGridDemos.sizeToggle} />
 
@@ -71,66 +56,59 @@ The following CSS variables are set on the root element. Override them with `var
 the Styles API or in a stylesheet.
 
 <DataTable
-  head={['Variable', 'Description', 'Default']}
+  head={['Variable', 'Description']}
   data={[
-    ['`--dg-font-size`', 'Font size of cell content', 'from `size`, `13px` at `sm`'],
-    ['`--dg-row-height`', 'Row height', 'from `size`, `32px` at `sm`'],
-    ['`--dg-header-height`', 'Header row height', 'from `size`, equals row height'],
-    ['`--dg-cell-padding-x`', 'Horizontal cell padding', 'from `size`, `10px` at `sm`'],
-    ['`--dg-cell-padding-y`', 'Vertical cell padding', 'from `size`, `5px` at `sm`'],
-    ['`--dg-control-size`', 'Checkbox and radio size in utility columns', 'from `size`, `14px` at `sm`'],
-    ['`--dg-icon-size`', 'Chevron, grip, kebab and sort arrow size', 'from `size`, `16px` at `sm`'],
-    ['`--dg-footer-height`', 'Height of `DataGrid.Footer`, `0px` without a footer', 'from `size`, `40px` at `sm`'],
-    ['`--dg-radius`', 'Frame border-radius', '`theme.defaultRadius`'],
-    ['`--dg-border-color`', 'Frame, header, toolbar and footer rule color', '`var(--mantine-color-border)`'],
-    ['`--dg-row-border-color`', 'Rule color between rows', '`var(--dg-border-color)`'],
-    ['`--dg-striped-color`', 'Striped, tinted group and tinted expanded row background', '`var(--mantine-color-gray-0)`'],
-    ['`--dg-hover-color`', 'Row, header, group row and toggle hover background', '`var(--mantine-color-hover-strong)`'],
-    ['`--dg-selected-color`', 'Selected row background', '`var(--mantine-color-selected)`'],
-    ['`--dg-dirty-color`', 'Background of cells with `dirty` status', '12% `--mantine-color-yellow-filled`'],
-    ['`--dg-invalid-color`', 'Background of invalid cells and cells with `invalid` status', '8% `--mantine-color-error`'],
+    [<code>--dg-font-size</code>, 'Font size of cell content'],
+    [<code>--dg-row-height</code>, 'Row height'],
+    [<code>--dg-header-height</code>, 'Header row height'],
+    [<code>--dg-cell-padding-x</code>, 'Horizontal cell padding'],
+    [<code>--dg-cell-padding-y</code>, 'Vertical cell padding'],
+    [<code>--dg-control-size</code>, 'Checkbox and radio size in utility columns'],
+    [<code>--dg-icon-size</code>, 'Chevron, grip, kebab and sort arrow size'],
+    [<code>--dg-footer-height</code>, <>Height of <code>DataGrid.Footer</code></>],
+    [<code>--dg-radius</code>, 'Frame border-radius'],
+    [<code>--dg-border-color</code>, 'Frame, header, toolbar and footer border color'],
+    [<code>--dg-row-border-color</code>, 'Border color between rows'],
+    [<code>--dg-striped-color</code>, 'Striped, tinted group and tinted expanded row background'],
+    [<code>--dg-hover-color</code>, 'Row, header, group row and toggle hover background'],
+    [<code>--dg-selected-color</code>, 'Selected row background'],
+    [<code>--dg-dirty-color</code>, <>Background of cells with <code>dirty</code> status</>],
+    [<code>--dg-invalid-color</code>, <>Background of invalid cells and cells with <code>invalid</code> status</>],
   ]}
 />
-
-Cell selection, the selection bar, focus rings and pinned column shadows do not have
-their own variables, they follow the theme.
 
 ## Styles API
 
 DataGrid supports `classNames` and `styles` props. Selectors are listed in the Styles API table
 on the [DataGrid](/data-grid/data-grid) page. Row and cell states are available as data attributes,
-for example `data-selected`, `data-striped` and `data-pinned`.
+for example `data-selected`, `data-striped` and `data-pinned`:
 
 <Demo data={DataGridDemos.stylesApi} />
 
 ## Compound components
 
 Use compound components to add a toolbar, a selection bar and a footer to the grid.
-The table itself is always rendered by the grid. The toolbar and the selection bar are displayed
-above the table, other children below it.
+The toolbar and the selection bar are displayed above the table, other children below it:
+
+- `DataGrid.Toolbar` -- bar above the table
+- `DataGrid.GlobalFilter` -- global search input
+- `DataGrid.ColumnVisibilityToggle` -- column visibility menu button
+- `DataGrid.ExportButton` -- export menu
+- `DataGrid.RowCount` -- total / filtered row count text
+- `DataGrid.SelectionBar` -- bulk actions bar displayed while rows are selected
+- `DataGrid.Footer` -- bar below the table with status text, page size select and pagination
+- `DataGrid.ColumnMenu` -- column menu button for custom header cells
 
 <Demo data={DataGridDemos.compoundComponents} />
 
-Available compound components:
-
-- `DataGrid.Toolbar` -- chrome bar above the table, renders global filter, column visibility toggle and export button when empty
-- `DataGrid.GlobalFilter` -- global search input
-- `DataGrid.ColumnVisibilityToggle` -- labeled `Columns` menu button
-- `DataGrid.ExportButton` -- export menu (CSV, Excel, print, copy to clipboard)
-- `DataGrid.RowCount` -- total / filtered row count text
-- `DataGrid.SelectionBar` -- bulk actions bar shown in the toolbar slot while rows are selected
-- `DataGrid.Footer` -- chrome bar below the table with status text, page size select and pagination
-- `DataGrid.ColumnMenu` -- column menu button for custom header cells
-
 ## Toolbar
 
-`DataGrid.Toolbar` without children renders the global filter (with `withGlobalFilter`),
-the column visibility toggle (with `withColumnVisibility`) and the export button.
-Pass children to replace the default content. Use a `div` with `flex: 1` as a spacer.
+`DataGrid.Toolbar` without children renders the global filter, the column visibility toggle
+and the export button, each when its feature is enabled. Pass children to replace the default content,
+use a `div` with `flex: 1` as a spacer. `DataGrid.RowCount` displays the number of rows,
+for example `5 of 18 rows` when the data is filtered:
 
 <Demo data={DataGridDemos.toolbarComposed} />
-
-`DataGrid.RowCount` displays the number of rows: `18 rows`, or `5 of 18 rows` when the data is filtered.
 
 ## Export button
 
@@ -142,9 +120,7 @@ Pass children to replace the default content. Use a `div` with `flex: 1` as a sp
 - `columns` – columns to export: `visible` (default), `all` or an array of column ids
 - `onExport` – called with the format after an export
 
-`all` and `filtered` rows follow the current sort order and ignore pagination, group rows and
-tree sub-rows are not exported. Utility columns, actions columns and columns with
-`meta.disableExport` are never exported.
+Utility columns, actions columns and columns with `meta.disableExport` are never exported:
 
 <Demo data={DataGridDemos.exportButton} />
 
@@ -152,6 +128,7 @@ tree sub-rows are not exported. Utility columns, actions columns and columns wit
 
 `DataGrid.SelectionBar` replaces the toolbar while rows are selected. It displays the number
 of selected rows, bulk actions passed as `children` and a button that clears the selection.
+Set `withCloseButton={false}` to remove the close button:
 
 <Demo data={DataGridDemos.selectionBar} />
 
@@ -160,21 +137,17 @@ the toolbar stays visible:
 
 <Demo data={DataGridDemos.selectionBarFloating} />
 
-Set `withCloseButton={false}` to remove the close button. Use `closeButtonProps` to pass props to it.
-
 ## Footer
 
 `DataGrid.Footer` renders the status text, the page size select and pagination controls in one bar
-at the bottom of the frame; see [Pagination](/data-grid/pagination) for every option.
+at the bottom of the frame, see [Pagination](/data-grid/pagination).
 
 ## Column menu
 
 Set `withColumnMenu` on `DataGrid` to add a menu button to every data column header.
-The button is displayed when the header is hovered or focused, it is always visible on touch devices.
 Menu items depend on the features enabled for the column: sorting, reordering, pinning, hiding,
-grouping and resizing.
-
-Use `columnMenuItems` to add your own items and `meta.disableColumnMenu` to hide the menu of one column:
+grouping and resizing. Use `columnMenuItems` to add your own items and `meta.disableColumnMenu`
+to hide the menu of one column:
 
 <Demo data={DataGridDemos.columnMenu} />
 
@@ -202,17 +175,17 @@ the `column` instance to it. `children` are added after the built-in items:
 <DataTable
   head={['Field', 'Description']}
   data={[
-    ['`label`', 'Human-readable column label used by the column visibility menu, list view, group rows and export; falls back to a string `header`, then the column id (`getColumnLabel(column)` resolves it)'],
-    ['`align`', '`\'start\' | \'center\' | \'end\'`, alignment of header, body and tfoot cells, reflected as `data-align`; `end` also enables tabular figures and moves the sort arrow before the label'],
-    ['`type: \'actions\'`', 'Marks a display column that holds row action buttons, see [Editing](/data-grid/editing#actions-column)'],
-    ['`disableColumnMenu`', 'Hides the column menu for this column'],
-    ['`disableEditing`', 'Excludes the column from cell and row editing'],
-    ['`disableExport`', 'Excludes the column from every export'],
-    ['`aggregationLabel`', 'Label shown above the aggregated value in the totals row'],
-    ['`formatAggregatedValue`', '`(value, rows) => ReactNode`, formats the totals row value, `String(value)` by default'],
-    ['`editComponent`', 'Custom editor, see [Editing](/data-grid/editing#custom-edit-components)'],
-    ['`validate`', 'Draft validation, see [Editing](/data-grid/editing#validation)'],
-    ['`utility`', 'Set by the grid on its injected utility columns, read-only'],
+    [<code>label</code>, <>Column label used by the visibility menu, list view, group rows and export. Falls back to a string <code>header</code>, then to the column id</>],
+    [<code>align</code>, <>Alignment of header, body and footer cells: <code>start</code>, <code>center</code> or <code>end</code></>],
+    [<code>type: 'actions'</code>, <>Marks a display column with row action buttons, see <a href="/data-grid/editing#actions-column">Editing</a></>],
+    [<code>disableColumnMenu</code>, 'Hides the column menu for this column'],
+    [<code>disableEditing</code>, 'Excludes the column from cell and row editing'],
+    [<code>disableExport</code>, 'Excludes the column from every export'],
+    [<code>aggregationLabel</code>, 'Label displayed above the aggregated value in the totals row'],
+    [<code>formatAggregatedValue</code>, 'Formats the totals row value'],
+    [<code>editComponent</code>, <>Custom editor, see <a href="/data-grid/editing#custom-edit-components">Editing</a></>],
+    [<code>validate</code>, <>Validation function, see <a href="/data-grid/editing#validation">Editing</a></>],
+    [<code>utility</code>, 'Set by the grid on its utility columns, read-only'],
   ]}
 />
 

@@ -15,8 +15,7 @@ Its background color depends on the depth level. `Surface` replaces the deprecat
 
 ## Surface levels
 
-`Surface` has three depth levels. Each level uses a surface color token
-of the [colors system](/theming/colors):
+`Surface` has three depth levels, each level uses a surface color token of the [colors system](/theming/colors):
 
 <DataTable
   head={['Level', 'Token', 'Light', 'Dark']}
@@ -28,13 +27,12 @@ of the [colors system](/theming/colors):
 />
 
 In dark color scheme each level is one shade lighter than the previous one. In light color
-scheme all levels are white by default, so the demos on this page are best viewed in dark
-color scheme.
+scheme all levels are white by default, switch to dark color scheme to see the demos on this page.
 
 ## Automatic depth
 
-By default, each `Surface` renders one level above its parent `Surface`: a standalone
-`Surface` has level 1, a `Surface` nested inside it has level 2. Deeper nesting stays at level 2.
+By default, each `Surface` renders one level above its parent: a standalone `Surface`
+has level 1, a `Surface` nested inside it has level 2. Deeper nesting stays at level 2:
 
 <Demo data={SurfaceDemos.autoDepth} />
 
@@ -57,16 +55,15 @@ function Demo() {
 
 ## level prop
 
-Set `level` prop to control the depth explicitly. It accepts an absolute value (`0`–`2`)
-or a value relative to the parent surface level (`"+1"`, `"-1"`). `level` overrides `autoDepth`.
+Set `level` prop to set the depth explicitly. It accepts an absolute value (`0`–`2`)
+or a value relative to the parent surface level (`"+1"`, `"-1"`):
 
 <Demo data={SurfaceDemos.level} />
 
 ## Styling surfaces by level
 
-The root element has `data-mantine-surface-level` attribute with the resolved level
-(`0`, `1` or `2`). Use it to change styles depending on the depth, for example to add
-a border only to the deepest surfaces:
+The root element has `data-mantine-surface-level` attribute with the resolved level.
+Use it to style surfaces depending on the depth, for example, to add a border only to the deepest surfaces:
 
 ```css
 .surface {
@@ -78,9 +75,10 @@ a border only to the deepest surfaces:
 
 ## Customize surface colors
 
-Use the `surfaces` key of the [theme](/theming/theme-object) to change surface colors
-for each color scheme. The change applies to all components that use these colors,
-not only to `Surface`:
+Use the `surfaces` key of the theme to change surface colors for each color scheme.
+The change applies to all components that use these colors, not only to `Surface`.
+Note that `page` is also the background of the page, modals and dropdowns, see the
+[colors guide](/theming/colors) for all keys:
 
 ```tsx
 import { createTheme, MantineProvider } from '@mantine/core';
@@ -99,14 +97,10 @@ function Demo() {
 }
 ```
 
-Each color scheme accepts `page`, `panel`, `panel2`, `sunken` and `muted` keys. Note that
-`page` is also the background of the page, modals and dropdowns, see the
-[colors guide](/theming/colors) for the full list.
-
 ## Migrating from Paper
 
 [Paper](/core/paper) is deprecated in 10.0 and will be removed in 11.0. `Surface` supports
-all `Paper` props, so in most cases it is enough to replace the component name:
+all `Paper` props, in most cases it is enough to replace the component name:
 
 ```tsx
 import { Paper, Surface } from '@mantine/core';
@@ -122,9 +116,8 @@ function Demo() {
 }
 ```
 
-In light color scheme `Surface` looks the same as `Paper`. In dark color scheme `Paper`
-has the body background (level 0), while a standalone `Surface` has level 1 and is one shade
-lighter. To keep the `Paper` appearance, set `level={0}`:
+In dark color scheme a standalone `Surface` is one shade lighter than `Paper`.
+Set `level={0}` to keep the `Paper` appearance:
 
 ```tsx
 import { Surface } from '@mantine/core';

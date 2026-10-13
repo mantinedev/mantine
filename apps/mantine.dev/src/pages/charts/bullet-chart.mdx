@@ -6,8 +6,7 @@ export default Layout(MDX_DATA.BulletChart);
 
 ## Usage
 
-`BulletChart` is a compact KPI chart that displays an actual value against a target
-with qualitative ranges as background bands. The required props are `value` and `ranges`.
+`BulletChart` displays a value against a target on top of range bands:
 
 <Demo data={BulletChartDemos.usage} />
 
@@ -31,34 +30,30 @@ Use `label` prop to display a label next to the chart:
 
 ## Vertical orientation
 
-Set `orientation="vertical"` to render the chart vertically. Note that you need to set
-a fixed height on the component when using vertical orientation:
+Set `orientation="vertical"` to render the chart vertically. Vertical chart requires a fixed height:
 
 <Demo data={BulletChartDemos.vertical} />
 
 ## Bar color
 
-By default, the bar color is white. Use `barColor` prop to customize
-the color of the actual value bar. Use `targetColor` to change the target marker color:
+Use `barColor` prop to change the value bar color and `targetColor` to change the target marker color:
 
 <Demo data={BulletChartDemos.barColor} />
 
 ## Chart size
 
-Use `size` prop to control the height of the chart track area.
-The `barSize` prop controls the height of the actual value bar independently:
+Use `size` prop to change the height of the track and `barSize` to change the height of the value bar:
 
 <Demo data={BulletChartDemos.barSize} />
 
 ## Value formatter
 
-Use `valueFormatter` prop to format values displayed in labels and tooltips.
-Set `withTooltip` to also show a tooltip on hover:
+Use `valueFormatter` prop to format values in labels and tooltip. Set `withTooltip` to display the tooltip on hover:
 
 <Demo data={BulletChartDemos.valueFormatter} />
 
 ## Without target
 
-The `target` prop is optional. If not provided, the target marker is not rendered:
+The target marker is rendered only when the `target` prop is set:
 
 <Demo data={BulletChartDemos.noTarget} />

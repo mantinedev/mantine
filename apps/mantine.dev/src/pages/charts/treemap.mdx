@@ -13,31 +13,26 @@ It displays hierarchical data as a set of nested rectangles:
 
 ## Nested data
 
-`Treemap` supports nested data – each data item can have a `children` array.
-The `color` property on a parent node is used for all its children:
+Each data item can have a `children` array. Children inherit the `color` of their parent node:
 
 <Demo data={TreemapDemos.nestedDataDemo} />
 
 ## Node color
 
-You can reference colors from [theme](/theming/theme-object) the same way as in
-other components, for example, `blue`, `red.5`, `orange.7`, etc. Any valid CSS
-color value is also accepted.
+`color` accepts theme colors and any valid CSS color:
 
 <Demo data={TreemapDemos.color} />
 
 ## autoContrast
 
-`Treemap` automatically adjusts text color based on the background color of each node
-to ensure readable labels. This behavior is controlled by [theme.autoContrast](/theming/theme-object/#autocontrast),
-which is `true` by default. Set `autoContrast={false}` to disable it.
+Label color is adjusted to the node background color when [theme.autoContrast](/theming/theme-object/#autocontrast) is enabled.
+Set `autoContrast={false}` to disable it:
 
 <Demo data={TreemapDemos.autoContrast} />
 
 ## Node stroke
 
-Use the `strokeWidth` prop to control the width of the stroke around each node.
-To change the color of the stroke, use the `strokeColor` prop:
+Use `strokeWidth` and `strokeColor` props to change the stroke around nodes:
 
 <Demo data={TreemapDemos.strokeColor} />
 

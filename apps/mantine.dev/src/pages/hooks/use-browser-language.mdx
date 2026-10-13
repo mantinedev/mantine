@@ -7,18 +7,15 @@ export default Layout(MDX_DATA.useBrowserLanguage);
 ## Usage
 
 `use-browser-language` returns the browser language from
-[navigator.language](https://developer.mozilla.org/en-US/docs/Web/API/Navigator/language).
-The value is updated when the user changes the preferred language in the browser
-or operating system settings:
+[navigator.language](https://developer.mozilla.org/en-US/docs/Web/API/Navigator/language):
 
 <Demo data={UseBrowserLanguageDemos.usage} />
 
 ## usePreferredLanguages
 
-`usePreferredLanguages` returns the list of the user's preferred languages from
-[navigator.languages](https://developer.mozilla.org/en-US/docs/Web/API/Navigator/languages),
-the most preferred language is first. Use it to find the best match with the locales
-that your application supports:
+`usePreferredLanguages` returns the user's preferred languages from
+[navigator.languages](https://developer.mozilla.org/en-US/docs/Web/API/Navigator/languages), most preferred first.
+Use it to pick the best match among the locales your application supports:
 
 <Demo data={UseBrowserLanguageDemos.languages} />
 
@@ -31,12 +28,9 @@ function usePreferredLanguages(): readonly string[];
 
 ## Reacting to changes
 
-Both hooks subscribe to the window
-[languagechange](https://developer.mozilla.org/en-US/docs/Web/API/Window/languagechange_event)
-event and update the value when it fires.
+Both hooks update the value when the user changes the preferred language in the browser or operating system settings.
 
 ## Server-side rendering
 
-During server-side rendering and the first client render, `useBrowserLanguage`
-returns `undefined` and `usePreferredLanguages` returns an empty array. The values are set
-after the component is mounted.
+On the server and during the first client render, `useBrowserLanguage` returns `undefined`
+and `usePreferredLanguages` returns an empty array.

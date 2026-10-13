@@ -12,14 +12,14 @@ with `@mantine/core` components and connect it to the store:
 <DataTable
   head={['Store member', 'Description']}
   data={[
-    ['`columnFilters`', 'Current `ColumnFiltersState`, an array of `{ id, value }` entries; its length is the number of active filters'],
-    ['`setColumnFilter(columnId, value)`', 'Sets the filter value of one column; `undefined`, `null` and `\'\'` remove the entry; writes to columns with `enableColumnFilter: false` are ignored'],
-    ['`setColumnFilters(updater)`', 'Replaces the whole state with a value or an updater function (not guarded, any column id is accepted)'],
-    ['`resetColumnFilters()`', 'Clears every column filter'],
-    ['`getColumnFilterValue(columnId)`', 'Reads the current filter value of a column'],
-    ['`getFacetedUniqueValues(columnId)`', 'Sorted `{ value, label }[]` of the distinct values in a column (arrays flattened, `null` / `undefined` dropped, values stringified); empty unless `withFaceting` is set'],
-    ['`getFacetedMinMaxValues(columnId)`', '`[min, max]` of a numeric column, `undefined` unless `withFaceting` is set'],
-    ['`globalFilter` / `setGlobalFilter(value)`', 'Global search value and setter'],
+    [<code>columnFilters</code>, <>Current filter state, an array of <code>{'{ id, value }'}</code> entries</>],
+    [<code>setColumnFilter(columnId, value)</code>, <>Sets the filter value of one column, <code>undefined</code>, <code>null</code> and <code>''</code> remove it</>],
+    [<code>setColumnFilters(updater)</code>, 'Replaces the whole filter state'],
+    [<code>resetColumnFilters()</code>, 'Clears every column filter'],
+    [<code>getColumnFilterValue(columnId)</code>, 'Returns the current filter value of a column'],
+    [<code>getFacetedUniqueValues(columnId)</code>, <>Returns distinct values of a column, requires <code>withFaceting</code></>],
+    [<code>getFacetedMinMaxValues(columnId)</code>, <>Returns <code>[min, max]</code> of a numeric column, requires <code>withFaceting</code></>],
+    [<><code>globalFilter</code> / <code>setGlobalFilter(value)</code></>, 'Global search value and setter'],
   ]}
 />
 
@@ -27,13 +27,13 @@ Column filtering is enabled automatically when any column has `enableColumnFilte
 `filterFn`. Set `withFiltering: true` to enable it for all columns.
 
 Rows are filtered with `filterFn` of the column. It is the name of a built-in TanStack Table
-filter function (`includesString`, `equals`, `inNumberRange`, etc.) or a function.
+filter function, for example `includesString` or `inNumberRange`, or your own function.
 
 ## Global search
 
 Pass `withGlobalFilter` to `useDataGrid` to enable search across all columns.
 `DataGrid.GlobalFilter` renders the search input, `DataGrid.Toolbar` without children includes it.
-To use your own input, connect it with `store.getGlobalFilter()` and `store.setGlobalFilter()`.
+To use your own input, connect it with `store.getGlobalFilter()` and `store.setGlobalFilter()`:
 
 <Demo data={DataGridDemos.globalFilter} />
 
@@ -53,7 +53,7 @@ from the data:
 - `getFacetedMinMaxValues(columnId)` returns `[min, max]` for `RangeSlider` or number inputs
 
 Use the matching `filterFn`: `equals` for a single value, `arrIncludesSome` for multiple values
-and `inNumberRange` for a range.
+and `inNumberRange` for a range:
 
 <Demo data={DataGridDemos.facetedFilters} />
 
@@ -62,42 +62,35 @@ and `inNumberRange` for a range.
 `stringOperators`, `numberOperators` and `booleanOperators` are sets of filter operators:
 contains, equals, starts with, is empty, greater than, etc. Set
 `filterFn: createOperatorFilterFn(stringOperators)` on the column and use an
-`{ operator, value }` object as its filter value:
+`{ operator, value }` object as its filter value. To define your own operators,
+pass an array of `FilterOperator` objects to `createOperatorFilterFn`:
 
 <Demo data={DataGridDemos.operatorFilters} />
-
-To create your own set of operators, pass an array of `FilterOperator` objects to
-`createOperatorFilterFn`. Each operator has a `label`, a `value` stored in the filter state,
-a `filterFn` and an optional `valueless` flag for operators that do not need a value,
-for example `isEmpty`.
 
 ## Filter chips
 
 Render `store.getColumnFilters()` as removable pills to show active filters. Use the `getColumnLabel`
-function exported from `@mantine/data-grid` to get the column label.
+function exported from `@mantine/data-grid` to get the column label:
 
 <Demo data={DataGridDemos.filterChips} />
 
 ## Controlled filters
 
 Pass `columnFilters` and `onColumnFiltersChange` to `useDataGrid` to control filter state.
-The state is an array of `{ id: string, value: unknown }` objects (`ColumnFiltersState` type of TanStack Table).
-Store setters call `onColumnFiltersChange`.
+The state is an array of `{ id, value }` objects:
 
 <Demo data={DataGridDemos.controlledFilters} />
 
 ## Custom filter functions
 
 Set `filterFn` on a column definition to a function that receives the row, column id and
-filter value and returns `true` if the row should be included. Use the `DataGridFilterFn` type
-for the function.
+filter value and returns `true` if the row should be included:
 
 <Demo data={DataGridDemos.customFilterFn} />
 
 ## Disable filtering per column
 
 Set `enableColumnFilter: false` on a column definition to disable filtering of that column.
-`store.setColumnFilter` ignores such columns, `store.setColumnFilters` and `column.setFilterValue` do not.
 
 ## Global filter column exclusion
 
@@ -108,7 +101,7 @@ Set `enableGlobalFilter: false` on a column definition to exclude the column fro
 ## Fuzzy search
 
 Pass `fuzzyFilter` exported from `@mantine/data-grid` as `globalFilterFn` to `useDataGrid`
-for typo-tolerant global search. Use `fuzzySort` to sort rows by their match rank.
+for typo-tolerant global search. Use `fuzzySort` to sort rows by their match rank:
 
 <Demo data={DataGridDemos.fuzzySearch} />
 

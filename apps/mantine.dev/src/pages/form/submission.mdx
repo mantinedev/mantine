@@ -12,8 +12,6 @@ validates the form and then calls one of two callbacks:
 - `handleSubmit` – called with form values when validation passes
 - `handleValidationFailure` – optional, called with validation errors when validation fails
 
-Both callbacks also receive the submit event. `handleValidationFailure` receives form values as the second argument:
-
 ```tsx
 import { useForm } from '@mantine/form';
 
@@ -42,9 +40,8 @@ with invalid values, for example, to show a notification:
 
 ## Focus the first invalid field
 
-To get the DOM node of any input, use `form.getInputNode('path-to-field')`. Note that
-in order for this feature to work, you need to spread `form.getInputProps('path-to-field')` to
-the input element. Combine it with `handleValidationFailure` to focus the first invalid field:
+`form.getInputNode('path')` returns the DOM node of an input that has `form.getInputProps('path')` spread on it.
+Combine it with `handleValidationFailure` to focus the first invalid field:
 
 <Demo data={FormDemos.focusError} />
 
@@ -110,9 +107,8 @@ For example, it can be used to merge several fields into one or to convert types
 
 ## Get transformed values
 
-You can get transformed values outside of the `form.onSubmit` method by calling `form.getTransformedValues`.
-It accepts `values` that need to be transformed as an optional argument. If it is not provided, then
-the result of `form.getValues()` transformation will be returned instead:
+`form.getTransformedValues` returns transformed values outside of `form.onSubmit`.
+Pass values to transform as an argument, by default it transforms `form.getValues()`:
 
 ```tsx
 import { useForm } from '@mantine/form';
@@ -142,9 +138,7 @@ To type a submit handler declared outside of `form.onSubmit`, use the
 
 ## onSubmitPreventDefault option
 
-By default, `event.preventDefault()` is called on the form `onSubmit` handler.
-If you want to change this behavior, you can pass the `onSubmitPreventDefault` option
-to the `useForm` hook. It can have the following values:
+`onSubmitPreventDefault` option controls when `form.onSubmit` calls `event.preventDefault()`:
 
 - `always` (default) - always call `event.preventDefault()`
 - `never` - never call `event.preventDefault()`

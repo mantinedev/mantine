@@ -6,23 +6,22 @@ export default Layout(MDX_DATA.DataGridTreeData);
 
 ## Basic tree data
 
-Use `getSubRows` in `useDataGrid` to define how child rows are accessed from your data.
-DataGrid renders the tree in the first visible data column: rows are indented by 20px per level, a
-chevron toggles rows that have children, and guide lines connect every level.
+Pass `getSubRows` to `useDataGrid` to define how child rows are read from your data.
+The tree is rendered in the first visible data column: rows are indented, a chevron toggles
+rows that have children and guide lines connect the levels:
 
 <Demo data={DataGridDemos.treeData} />
 
 ## Tree lines
 
-Guide lines are displayed by default. Set `withTreeLines={false}` for a plain indent with the
-chevron only:
+Set `withTreeLines={false}` to hide the guide lines:
 
 <Demo data={DataGridDemos.treeDataPlainIndent} />
 
 ## Icons and custom labels
 
-The tree cell renders the output of the column's `cell` renderer, so icons and any other
-inline content are rendered by the column itself:
+The tree cell renders the output of the column `cell` renderer, use it to add icons or any
+other inline content:
 
 <Demo data={DataGridDemos.treeDataIcons} />
 
@@ -34,22 +33,22 @@ the indentation and the chevron first in your column definitions or in `columnOr
 
 ## Filtering through tree hierarchy
 
-Set `filterFromLeafRows` to `true` to filter from leaf rows upward. When a leaf row matches
-the filter, its parent rows are included to keep the tree structure.
+Set `filterFromLeafRows` to filter from leaf rows upward. When a leaf row matches
+the filter, its parent rows are kept to preserve the tree structure:
 
 <Demo data={DataGridDemos.treeDataFiltering} />
 
 ## Pagination with expanded rows
 
-By default, expanded sub-rows count toward the page size. Set `paginateExpandedRows` to `false`
-to only count top-level rows when paginating.
+By default, expanded sub-rows count toward the page size. Set `paginateExpandedRows: false`
+to count top-level rows only:
 
 <Demo data={DataGridDemos.treeDataPagination} />
 
 ## Server-side expansion
 
-Set `manualExpanding` to `true` for server-side tree data. Handle expansion in your data
-fetching logic using controlled `expanded` and `onExpandedChange`.
+Set `manualExpanding` for server-side tree data. Load children in your data fetching logic
+with controlled `expanded` and `onExpandedChange`.
 
 ## Per-row expand control
 
@@ -66,10 +65,10 @@ const store = useDataGrid({
 
 ## Selection
 
-With `withRowSelection`, selecting a parent row selects its children. This behavior is
-controlled by the `enableSubRowSelection` option, `true` by default.
+With `withRowSelection`, selecting a parent row selects its children. Set
+`enableSubRowSelection: false` to select the parent row only.
 
 ## List view and row reorder
 
-In list view tree rows render flat, without indentation. Row reorder is not available with tree
-data.
+In list view, tree rows are rendered flat without indentation. Row reorder is not available
+with tree data.

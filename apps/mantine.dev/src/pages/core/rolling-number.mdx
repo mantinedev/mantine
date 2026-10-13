@@ -6,8 +6,7 @@ export default Layout(MDX_DATA.RollingNumber);
 
 ## Usage
 
-`RollingNumber` animates value changes with rolling digit transitions. Each digit
-independently rolls to its new position when the value changes.
+`RollingNumber` animates value changes, each digit rolls to its new position independently:
 
 <Demo data={RollingNumberDemos.usage} />
 
@@ -21,13 +20,11 @@ to control decimal formatting:
 
 ## Animation duration
 
-Control animation speed with `animationDuration` prop (in milliseconds, default is `600`).
-Use `timingFunction` prop to change the CSS timing function (default is `ease`):
+Set `animationDuration` (in milliseconds) and `timingFunction` props to change the animation:
 
 <Demo data={RollingNumberDemos.duration} />
 
 ## Text selection and copying
 
 Selecting and copying `RollingNumber` always produces the value as it is displayed,
-for example `$ 1,234.56 USD`. Animated digits are not selectable, text selection
-is handled by a transparent copy of the formatted value rendered on top of them.
+for example `$ 1,234.56 USD`.

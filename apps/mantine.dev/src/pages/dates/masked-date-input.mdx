@@ -7,35 +7,32 @@ export default Layout(MDX_DATA.MaskedDateInput);
 ## Usage
 
 `MaskedDateInput` is similar to [TimePicker](/dates/time-picker) but for dates.
-It provides individual masked input fields for day, month, and year with an optional
-calendar dropdown for date selection.
+It renders masked fields for day, month and year with an optional calendar dropdown:
 
 <Demo data={MaskedDateInputDemos.usage} />
 
 ## Controlled
 
-The `MaskedDateInput` value is a string in `YYYY-MM-DD` format (for example `2000-06-15`).
-When `withTime` is set, the value uses `YYYY-MM-DD HH:mm:ss` format (for example `2000-06-15 14:30:00`).
-`null` is used to represent no value. The `onChange` function is called when all fields are filled
-or when all fields are cleared.
+The value is a string in `YYYY-MM-DD` format, or `YYYY-MM-DD HH:mm:ss` when `withTime` is set.
+`null` represents no value. `onChange` is called when all fields are filled or when all fields are cleared:
 
 <Demo data={MaskedDateInputDemos.controlled} />
 
 ## With time
 
-Set the `withTime` prop to display hours and minutes fields in addition to date fields.
+Set the `withTime` prop to display hours and minutes fields in addition to date fields:
 
 <Demo data={MaskedDateInputDemos.withTime} />
 
 ## With seconds
 
-Set the `withSeconds` prop to display the seconds field. The `withTime` prop must also be set.
+Set the `withSeconds` prop to display the seconds field, `withTime` must also be set:
 
 <Demo data={MaskedDateInputDemos.withSeconds} />
 
 ## 12-hour format
 
-Set `format="12h"` to use 12-hour time format. The am/pm selector is displayed automatically.
+Set `format="12h"` to use 12-hour time format with an am/pm selector:
 
 <Demo data={MaskedDateInputDemos.format12h} />
 
@@ -47,27 +44,26 @@ Use the `amPmLabels` prop to customize am/pm labels:
 
 ## Date separator
 
-Use the `dateSeparator` prop to change the separator displayed between date fields. The default is `/`.
+Use the `dateSeparator` prop to change the separator displayed between date fields:
 
 <Demo data={MaskedDateInputDemos.dateSeparator} />
 
 ## Time separator
 
-Use the `timeSeparator` prop to change the separator displayed between time fields. The default is `:`.
+Use the `timeSeparator` prop to change the separator displayed between time fields:
 
 <Demo data={MaskedDateInputDemos.timeSeparator} />
 
 ## Fields order
 
-Use the `fieldsOrder` prop to control the display order of day, month, and year fields.
-The default order is `['day', 'month', 'year']`.
+Use the `fieldsOrder` prop to change the order of day, month and year fields:
 
 <Demo data={MaskedDateInputDemos.fieldsOrder} />
 
 ## Min and max dates
 
-Set the `minDate` and `maxDate` props to restrict the selectable date range. While the entered
-date is outside the allowed range, the component value is `null`.
+Set the `minDate` and `maxDate` props to restrict the selectable date range.
+While the entered date is outside the range, the value is `null`:
 
 <Demo data={MaskedDateInputDemos.minMax} />
 
@@ -86,35 +82,32 @@ Set `withDropdown={false}` to disable the calendar dropdown:
 
 ## Dropdown position
 
-Use `popoverProps` to pass props down to the underlying [Popover](/core/popover) component.
-By default, the dropdown is limited to the space available in the viewport and scrolls when the
-calendar does not fit; pass `middlewares: { size: false }` to disable this behavior. For example,
-to always display the dropdown above the input:
+Use `popoverProps` to pass props down to the underlying [Popover](/core/popover) component, for example to display the dropdown above the input.
+The dropdown scrolls when it does not fit in the viewport, pass `middlewares: { size: false }` to disable this behavior:
 
 <Demo data={MaskedDateInputDemos.dropdownPosition} />
 
 ## Hours/minutes/seconds step
 
-Use `hoursStep`, `minutesStep` and `secondsStep` props to control the increment/decrement step
-for each time field when using arrow keys:
+Use `hoursStep`, `minutesStep` and `secondsStep` props to change the arrow keys step of time fields:
 
 <Demo data={MaskedDateInputDemos.steps} />
 
 ## Paste events
 
-By default, `MaskedDateInput` handles only dates in `YYYY-MM-DD` (or `YYYY-MM-DD HH:mm:ss`) format
-for paste events. With the `pasteSplit` prop you can provide a custom paste parser that extracts day, month, and year values from a pasted string:
+By default, only pasted dates in the value format are handled.
+Use the `pasteSplit` prop to parse other formats:
 
 <Demo data={MaskedDateInputDemos.pasteSplit} />
 
 ## Controlling with useMaskedDateInput
 
-`MaskedDateInput` component supports the [controller pattern](/guides/controllers). Use the `useMaskedDateInput` hook to manage `MaskedDateInput` state:
+`MaskedDateInput` component supports the [controller pattern](/guides/controllers). Use the `useMaskedDateInput` hook to manage `MaskedDateInput` state.
+When the `controller` prop is set, the value, time, format and date limit props of the component are ignored, pass them to `useMaskedDateInput` instead:
 
 <Demo data={MaskedDateInputDemos.controller} />
 
-`useMaskedDateInput` accepts the state options that `MaskedDateInput` accepts as props, and returns
-the current state, actions and queries:
+`useMaskedDateInput` accepts the state options that `MaskedDateInput` accepts as props, and returns actions and queries:
 
 ```tsx
 import { MaskedDateInput, useMaskedDateInput } from '@mantine/dates';
@@ -154,42 +147,17 @@ function Demo() {
 }
 ```
 
-The controller owns the state, so when the `controller` prop is set, the `value`, `defaultValue`,
-`onChange`, `withTime`, `withSeconds`, `format`, `amPmLabels`, `minDate`, `maxDate` and `pasteSplit`
-props of `MaskedDateInput` are ignored – pass them to `useMaskedDateInput` instead. `withTime`,
-`withSeconds`, `format` and `amPmLabels` also decide which fields are rendered, and `minDate` and
-`maxDate` also limit the calendar dropdown.
-
-Options that reach `MaskedDateInput` through `theme.components.MaskedDateInput.defaultProps` do not
-reach a controller you create yourself – pass them to `useMaskedDateInput` as well.
-
-`focus` is a no-op until a `MaskedDateInput` is mounted with the controller, because it works on the
-fields that component renders.
-
 ## Usage with forms
 
-`form.getInputProps()` returns `value`, `onChange`, `error`, `onFocus` and `onBlur`, which bind to
-the props of `MaskedDateInput`. When the `controller` prop is set, the `value` and `onChange` props
-are ignored, so a controller and `form.getInputProps()` cannot be spread on the same component.
-Instead, create a component that accepts the same props as `MaskedDateInput`, passes the props that
-the controller supersedes (`value`, `defaultValue`, `onChange`, `withTime`, `withSeconds`, `format`,
-`amPmLabels`, `minDate`, `maxDate` and `pasteSplit`) to `useMaskedDateInput` and forwards the rest to
-`MaskedDateInput`. The form binds to the props of that component, and the component owns the
-controller. `error`, `onFocus` and `onBlur` reach `MaskedDateInput` as usual, so validation errors and
-touched/dirty tracking work without extra code. `form.reset()` and `form.setFieldValue()` clear a
-partially entered date in both form modes. See the
-[Controllers guide](/guides/controllers#usage-with-forms) for the details of the pattern:
+A controller and `form.getInputProps()` cannot be spread on the same component: the controller ignores `value` and `onChange`.
+Instead, wrap `MaskedDateInput` in a component that owns the controller and bind the form to that component, see the [controllers guide](/guides/controllers#usage-with-forms).
+A partially entered date is `null` for the form, use `controller.hasValue()` and the field queries to report it with a specific message:
 
 <Demo data={MaskedDateInputDemos.form} />
 
-The controller adds what the form cannot see on its own: a partially entered date and a complete date
-outside of `minDate`/`maxDate` are both `null` for the form, so validation reports them as missing,
-while `controller.hasValue()` and the individual field values (`getDay()`, `getMonth()`, `getYear()`)
-let the field replace that error with a more specific message.
-
 ## Clearable
 
-Set the `clearable` prop to display a clear button in the right section of the input.
+Set the `clearable` prop to display a clear button in the right section of the input:
 
 <Demo data={MaskedDateInputDemos.clearable} />
 
@@ -213,8 +181,7 @@ Set the `clearable` prop to display a clear button in the right section of the i
 
 ## Get refs
 
-Use `dayRef`, `monthRef`, `yearRef`, `hoursRef`, `minutesRef`, `secondsRef` and `amPmRef` props
-to get refs of the inner inputs:
+Every field has a ref prop, for example `dayRef` or `hoursRef`, to get the ref of its input:
 
 ```tsx
 import { useRef } from 'react';
@@ -255,8 +222,7 @@ function Demo() {
 
 ## Accessibility
 
-Set `aria-label` for each field using the corresponding props. Also set an `aria-label` for the
-clear button if `clearable` is used:
+Set a label for each field with the corresponding prop, and an `aria-label` for the clear button when `clearable` is set:
 
 ```tsx
 import { MaskedDateInput } from '@mantine/dates';

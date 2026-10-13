@@ -17,8 +17,8 @@ import '@mantine/emoji/styles.css';
 
 ## Emoji data
 
-`@mantine/emoji` does not include emoji data, you need to pass it with the `data` prop.
-The package exports adapters for the two most popular emoji data sources:
+`@mantine/emoji` does not include emoji data, pass it with the `data` prop.
+The package exports adapters for two popular emoji data sources:
 
 ### Using @emoji-mart/data
 
@@ -61,7 +61,7 @@ function Demo() {
 
 ### Custom data
 
-You can also provide data directly using the `EmojiPickerData` interface:
+You can also build the data yourself with the `EmojiPickerData` interface:
 
 ```tsx
 import { EmojiPicker, EmojiPickerData } from '@mantine/emoji';
@@ -94,8 +94,7 @@ function Demo() {
 
 ## Canonical category IDs
 
-Both adapters return the same category IDs in the following order. Use these IDs
-as keys of the `categoryLabels` prop:
+Both adapters return the same category IDs in this order, use them as keys of the `categoryLabels` prop:
 
 - `people` – Smileys & People
 - `nature` – Animals & Nature
@@ -106,6 +105,5 @@ as keys of the `categoryLabels` prop:
 - `symbols` – Symbols
 - `flags` – Flags
 
-`frequent` category is not returned by the adapters. To display recently used emojis,
-add a category with `id: 'frequent'` to your data. It is displayed with a clock icon
-in the category navigation.
+To display recently used emojis, add a category with `id: 'frequent'` to your data.
+It is displayed with a clock icon in the category navigation.

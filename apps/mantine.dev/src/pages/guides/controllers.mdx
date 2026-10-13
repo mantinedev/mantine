@@ -12,9 +12,8 @@ two kinds of these objects:
 
 - A controller is passed with the `controller` prop. It adds actions and queries to a component
   that you use as is, for example `expandAll()` on `Accordion` or `next()` on `Stepper`.
-- A store is passed with the `store` prop. It is a building block for your own component:
-  `Select`, `MultiSelect` and `Autocomplete` are built on top of `Combobox` with `useCombobox`,
-  and `useSelect` lets you build your own component on top of `Select` in the same way.
+- A store is passed with the `store` prop. It is a building block for your own component,
+  for example `useSelect` lets you build a custom select on top of `Select`.
 
 Both are optional. Every component works without them with `value`, `defaultValue` and `onChange`
 props, see [Controlled vs Uncontrolled](/guides/controlled-vs-uncontrolled).
@@ -46,10 +45,10 @@ function Demo() {
 
 Use a controller when props are not enough:
 
-- To call an action that depends on state the component owns internally. `expandAll()` needs the
-  list of mounted `Accordion.Item` components, which you cannot reconstruct from outside.
-- To drive the component from outside its subtree. The hook can be called in a parent, a context
-  provider or a layout, and its actions passed to a toolbar or a keyboard shortcut handler.
+- To call an action that depends on state the component owns internally, for example `expandAll()`
+  needs the list of mounted items.
+- To drive the component from outside its subtree, for example from a toolbar or a keyboard
+  shortcut handler.
 - To read state that `onChange` does not report, for example `isExpanded(item)` or `getItems()`.
 
 Each component documents the actions and queries of its controller on its own page, see the
@@ -134,10 +133,9 @@ function Demo() {
 }
 ```
 
-`usePinInput`, `useTimePicker` and `useMaskedDateInput` own the value. When one of them is passed,
-`value`, `defaultValue` and `onChange` props of the component are ignored, so `form.getInputProps()`
-cannot be spread on the component. Instead, create a component that accepts the same props, passes
-the props that the controller replaces to the hook and forwards the rest to the component:
+`usePinInput`, `useTimePicker` and `useMaskedDateInput` own the value, so `form.getInputProps()`
+cannot be spread on the component. Instead, create a wrapper component: it passes the props
+that the controller replaces to the hook and forwards the rest to the component:
 
 <Demo data={PinInputDemos.form} />
 
@@ -147,15 +145,13 @@ The pattern has three rules:
   `defaultValue` and `onChange`. For example, `length` of `PinInput` and `format` of `TimePicker`
   are ignored on the component once a controller is set.
 - Keep `error`, `onFocus` and `onBlur` on the component.
-- Pass `onChange` to the hook as is. The hook subscribes to the form field through it, so the
-  component rerenders alone in uncontrolled mode and `form.reset()` clears a partially entered
-  time or date.
+- Pass `onChange` to the hook as is, so that `form.reset()` clears a partially entered value.
 
-Actions called on the controller, for example `clear()` or `setValue()`, call `onChange`
-the same way as typing, so the form stays in sync.
+Controller actions, for example `clear()` or `setValue()`, call `onChange` the same way as typing,
+so the form stays in sync.
 
-Inside this component you can use controller queries that the form cannot see. For example,
-the form treats an incomplete time as an empty value, while `controller.hasValue()` knows that
+Inside the wrapper you can use controller queries that the form cannot see.
+For example, the form treats an incomplete time as empty, while `controller.hasValue()` knows that
 the user has started typing:
 
 <Demo data={TimePickerDemos.form} />
@@ -192,8 +188,7 @@ function Demo() {
 
 ## Reading state
 
-A controller is reactive: the component that called the hook re-renders when the state changes,
-so you can read the state during render with query functions:
+The component that called the hook rerenders when the state changes, so queries can be used during render:
 
 ```tsx
 import { Accordion, Button, Text, useAccordion } from '@mantine/core';
@@ -214,9 +209,8 @@ function Demo() {
 }
 ```
 
-Actions and queries keep the same reference for the lifetime of the controller, so they are safe as
-`useEffect` and `useCallback` dependencies and as props of memoized components. Queries always
-return the latest value, both during render and inside callbacks:
+Actions and queries keep the same reference for the lifetime of the controller.
+They are safe as effect dependencies and as props of memoized components, and queries always return the latest value:
 
 ```tsx
 import { useEffect } from 'react';

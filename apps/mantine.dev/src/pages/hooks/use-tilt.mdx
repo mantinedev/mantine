@@ -6,17 +6,14 @@ export default Layout(MDX_DATA.useTilt);
 
 ## Usage
 
-`use-tilt` returns normalized `roll` and `tilt` values based on the pointer position over
-the target element or, on supported mobile devices, the device orientation.
-Map these values to CSS transforms to create a tilt effect:
+`use-tilt` returns `roll` and `tilt` values based on the pointer position over the target
+element or, on mobile devices, the device orientation. Map them to CSS transforms to create
+a tilt effect. Assign `ref` to a static wrapper and transform its child: an element that
+rotates itself flickers near its edges.
+
+If you need a ready-to-use component with glare and layers, use [Tilt](/core/tilt):
 
 <Demo data={UseTiltDemos.usage} />
-
-Assign `ref` to a static wrapper and apply the transform to its child. If the element
-with `ref` rotates itself, it flickers near its edges.
-
-If you need a ready-to-use component with glare and layers, use the
-[Tilt](/core/tilt) component, which is based on this hook.
 
 ## Definition
 
@@ -64,14 +61,12 @@ function useTilt<T extends HTMLElement = any>(
 
 ## roll and tilt values
 
-`roll` is the vertical tilt and `tilt` is the horizontal tilt:
+`roll` is the vertical tilt and `tilt` is the horizontal tilt. Both are `0` at the center of
+the element and reach `-0.5` and `0.5` at its edges. `roll` is positive above the center,
+`tilt` is positive to the right of it.
 
-- Mouse: both values are `0` at the center of the element and approach `-0.5`/`0.5` at the edges.
-  `roll` is positive above the center, `tilt` is positive to the right of the center.
-- Device orientation: `roll` is `-beta / 90` and `tilt` is `gamma / 90`.
-
-Multiply the values by the number of degrees or pixels you need. With `rotateX(roll)` and
-`rotateY(tilt)`, the edge under the pointer moves away from the viewer:
+Multiply the values by the number of degrees you need. With `rotateX(roll)` and `rotateY(tilt)`,
+the edge under the pointer moves away from the viewer:
 
 ```tsx
 import { useTilt } from '@mantine/hooks';
@@ -95,7 +90,7 @@ function Demo() {
 
 ## Example: 3D card
 
-Nested layers with different multipliers create a sense of depth:
+Nested layers with different multipliers create depth:
 
 <Demo data={UseTiltDemos.card} />
 
@@ -116,19 +111,17 @@ function Demo() {
 
 ## React to the whole page
 
-By default, the hook updates the values only while the target element is hovered.
-Set `trackWindow: true` to react to the pointer position anywhere on the page:
+By default, the values change only while the target element is hovered. Set `trackWindow: true`
+to react to the pointer anywhere on the page. The values are then not clamped: they grow the
+further the cursor is from the element.
 
 <Demo data={UseTiltDemos.page} />
 
-With `trackWindow`, the values are not clamped to `[-0.5, 0.5]` – they grow
-the further the cursor is from the element. Use the adjust options to limit the effect.
-
 ## Adjusting values
 
-Use the `*Adjust` options to amplify, dampen, clamp or invert the values of each input
-source. In the example below, the mouse values are inverted and amplified, so the edge
-under the cursor moves towards the viewer:
+Use the adjust options to amplify, dampen, clamp or invert the values of each input source.
+In this example, the mouse values are inverted and amplified, so the edge under the cursor
+moves towards the viewer:
 
 <Demo data={UseTiltDemos.adjust} />
 
@@ -151,15 +144,15 @@ function Demo() {
 
 ## Source selection
 
-`source` is the active input: `'mouse'` or `'deviceOrientation'`. Once the device
-reports orientation data, the hook switches to `deviceOrientation` and keeps using it.
-Use `source` to display input-specific hints, for example "move the cursor" or "tilt the device".
+`source` is the active input, `'mouse'` or `'deviceOrientation'`. Once the device reports
+orientation data, the hook switches to it and stays there. Use `source` to show a hint,
+for example "move the cursor" or "tilt the device".
 
 ## Device orientation permission
 
-On iOS 13+, access to device orientation requires a permission. `use-tilt` does not request
-it – call `DeviceOrientationEvent.requestPermission()` from an event handler, for example
-a button click. Until the permission is granted, the hook uses the pointer position:
+On iOS, device orientation requires a permission. `use-tilt` does not request it: call
+`DeviceOrientationEvent.requestPermission()` from a user event, for example a button click.
+Until the permission is granted, the hook uses the pointer position:
 
 ```tsx
 async function requestOrientationPermission() {
@@ -176,7 +169,7 @@ async function requestOrientationPermission() {
 ## Exported types
 
 `UseTiltOptions`, `UseTiltReturnValue` and `UseTiltSource` types are exported from
-the `@mantine/hooks` package, you can import them in your application:
+the `@mantine/hooks` package:
 
 ```tsx
 import type {

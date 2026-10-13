@@ -6,18 +6,14 @@ export default Layout(MDX_DATA.GaugeChart);
 
 ## Usage
 
-`GaugeChart` displays a single value on a radial arc. The arc is filled from `min`
-up to `value`, and the value is displayed in the center of the chart.
+`GaugeChart` displays a single value on a radial arc:
 
 <Demo data={GaugeChartDemos.usage} />
 
 ## Sections
 
-Use `sections` to split the arc into threshold bands. Each section starts where
-the previous one ends and is filled up to its own `value`, the last section should end at `max`.
-
-When `sections` is set, the entire arc is colored and `value` is displayed only in the center
-label. To mark where the value falls on the arc, use the [target marker](#target-marker):
+Use `sections` to split the arc into threshold bands. Each section ends at its `value`, the last section should end at `max`.
+With `sections`, the whole arc is colored, use the [target marker](#target-marker) to show where the value falls:
 
 <Demo data={GaugeChartDemos.sectionsProp} />
 
@@ -30,8 +26,7 @@ Use `targetColor` and `targetSize` to change its color and thickness:
 
 ## Start and end angle
 
-`startAngle` and `endAngle` control the span of the arc in degrees, `-120` and `120` by
-default. `0` is the top of the chart, positive values go clockwise:
+`startAngle` and `endAngle` set the span of the arc in degrees. `0` is the top of the chart, positive values go clockwise:
 
 <Demo data={GaugeChartDemos.angles} />
 
@@ -56,15 +51,13 @@ function Demo() {
 
 ## Thickness
 
-`thickness` controls the width of the arc in px, `size` controls both the width and the
-height of the chart:
+`thickness` sets the width of the arc, `size` sets the width and height of the chart:
 
 <Demo data={GaugeChartDemos.thickness} />
 
 ## Custom label
 
-By default, the center label displays `value` formatted with `valueFormatter`. Use the
-`label` prop to render any React node instead:
+Use `label` prop to replace the center label with any React node:
 
 <Demo data={GaugeChartDemos.label} />
 

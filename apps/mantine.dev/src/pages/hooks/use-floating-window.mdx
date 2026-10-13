@@ -12,25 +12,20 @@ The `use-floating-window` hook makes a given element draggable:
 
 ## Constrain to viewport
 
-Use `constrainToViewport` option to restrict element movement to the viewport boundaries.
-If you do not set `constrainToViewport` option, the element can be dragged outside the viewport:
+Set `constrainToViewport` to keep the element inside the viewport. Without it, the element can be dragged outside:
 
 <Demo data={UseFloatingWindowDemos.constrainToViewport} />
 
 ## Constrain offset
 
-Use `constrainOffset` option to set the offset from the viewport edges when constraining the element.
-This option requires `constrainToViewport: true`:
+`constrainOffset` sets the minimum distance from the viewport edges. It requires `constrainToViewport: true`:
 
 <Demo data={UseFloatingWindowDemos.constrainOffset} />
 
 ## Drag handle selector
 
-`dragHandleSelector` option allows specifying a selector of an element (or a group of elements) that should be used to drag floating window.
-If not specified, the entire root element is used as a drag target.
-
-`excludeDragHandleSelector` option excludes elements within `dragHandleSelector` from the drag event.
-In the following example, the close button is excluded from the drag event:
+By default, the entire element is the drag target. Set `dragHandleSelector` to drag only by matching elements,
+and `excludeDragHandleSelector` to exclude elements inside the handle. In the example, the close button is excluded:
 
 <Demo data={UseFloatingWindowDemos.dragHandleSelector} />
 
@@ -42,17 +37,14 @@ Use `enabled` option to enable or disable dragging:
 
 ## Set position
 
-Call `setPosition` function to set the position of the element programmatically.
-This function accepts an object with `top`, `left`, `right` and `bottom` properties,
-from which you should only specify two (for example, `top` and `left`, `bottom` and `right`).
+Call `setPosition` to move the element programmatically. Pass two of the `top`, `left`, `right` and `bottom` offsets:
 
 <Demo data={UseFloatingWindowDemos.setPosition} />
 
 ## Keyboard support
 
-When the element has focus, arrow keys move it in 10px steps, hold `Shift` to move it
-in 50px steps. The hook does not make the element focusable: set `tabIndex={0}` on it
-to enable keyboard support.
+When the element has focus, arrow keys move it, hold `Shift` for larger steps.
+Set `tabIndex={0}` on the element to make it focusable.
 
 ## Lock axis
 
@@ -62,13 +54,11 @@ Use `axis` option to restrict movement to the specified axis:
 
 ## FloatingWindow component
 
-If you prefer component API, you can use [FloatingWindow](/core/floating-window) component.
-It supports the same options as the hook and provides extra features like portal rendering, basic styles and more.
+[FloatingWindow](/core/floating-window) component supports the same options and adds portal rendering and basic styles:
 
 <Demo data={FloatingWindowDemos.usage} />
 
 ## Definition
-
 
 ```tsx
 function useFloatingWindow<T extends HTMLElement>(

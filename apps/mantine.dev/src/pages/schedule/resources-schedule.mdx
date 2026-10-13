@@ -6,70 +6,63 @@ export default Layout(MDX_DATA.ResourcesSchedule);
 
 ## Usage
 
-`ResourcesSchedule` is a wrapper component that combines `ResourcesDayView`, `ResourcesWeekView`, and `ResourcesMonthView`
-into a single component with view switching. It manages the current view and date state, passing
-common props to all three views automatically.
+`ResourcesSchedule` combines resources day, week and month views in one component with view switching:
 
 <Demo data={ResourcesScheduleDemos.usage} />
 
 ## Controlled state
 
-You can control the current date and view level with `date`/`onDateChange` and `view`/`onViewChange` props.
+Use `view`, `onViewChange`, `date` and `onDateChange` props to control the current view and date:
 
 <Demo data={ResourcesScheduleDemos.controlled} />
 
 ## Drag and drop
 
-Enable drag and drop across all views with `withEventsDragAndDrop` prop.
+Set `withEventsDragAndDrop` prop to allow dragging events in all views:
 
 <Demo data={ResourcesScheduleDemos.dragDrop} />
 
 ## Week view
 
-Set `defaultView="week"` to open the schedule in week view by default.
+Set `defaultView="week"` to open the schedule in week view:
 
 <Demo data={ResourcesScheduleDemos.weekView} />
 
 ## View-specific props
 
-Use `dayViewProps`, `weekViewProps`, and `monthViewProps` to pass props specific to each view.
+Use `dayViewProps`, `weekViewProps` and `monthViewProps` to pass props to a single view:
 
 <Demo data={ResourcesScheduleDemos.viewProps} />
 
 ## Event form
 
-Click time slots, day cells, or existing events to open an event form. The form works across
-day, week, and month views with automatic view switching.
+Use slot, day and event click callbacks to open a form that creates and edits events in all views:
 
 <Demo data={ResourcesScheduleDemos.eventForm} />
 
 ## External drag and drop
 
-You can drag external items onto the schedule using `onExternalEventDrop` prop. The callback
-receives the `resourceId` of the target resource.
+Use `onExternalEventDrop` to accept items dragged from outside the schedule.
+The callback receives `resourceId` of the target resource:
 
 <Demo data={ResourcesScheduleDemos.externalDragDrop} />
 
 ## Event resize
 
-Enable event resizing with `withEventResize` prop. Events can be resized by dragging their left or
-right edges in all three views. In week view, an event cannot be resized to span multiple days. In
-month view, resizing snaps to whole days and keeps the time of day.
+Set `withEventResize` prop to allow changing event start and end by dragging its edges.
+In week view, an event cannot be resized across days. In month view, resize snaps to whole days:
 
 <Demo data={ResourcesScheduleDemos.eventResize} />
 
 ## Drop validation
 
-Use `preventEventOverlap`, `canDropEvent` and other validation props to reject a drop or resize
-before it is committed, see [drop validation](/schedule/schedule/#drop-validation).
-
-In resource views, the event is checked against the events of the target resource.
-The target resource is passed to `canDropEvent` and `canDropExternalEvent` as `resourceId`.
+Use validation props to reject a drop or resize before it is committed, see [drop validation](/schedule/schedule/#drop-validation).
+In resources views, overlap is checked against events of the target resource, its id is passed to the callbacks as `resourceId`:
 
 <Demo data={ResourcesDayViewDemos.canDropEvent} />
 
 ## Static mode
 
-Set `mode="static"` to disable all interactions across all three views.
+Set `mode="static"` to disable all interactions:
 
 <Demo data={ResourcesScheduleDemos.staticMode} />

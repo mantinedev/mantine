@@ -7,8 +7,8 @@ export default Layout(MDX_DATA.Mentions);
 ## Usage
 
 `Mentions` is a textarea that opens a suggestions dropdown when the user types a trigger character,
-for example `@` or `#`. Picking a suggestion inserts a mention into the value. Mentions are atomic:
-deleting any part of a mention removes the whole mention.
+for example `@` or `#`. Picking a suggestion inserts a mention. Deleting any part of a mention
+removes the whole mention:
 
 <Demo data={MentionsDemos.usage} />
 
@@ -32,15 +32,14 @@ to display the same value as `Hey @Walter White, are you there?`:
 ## Custom mention rendering
 
 Use `renderMention` prop to customize how mentions are displayed, for example to add
-a tooltip or a `HoverCard`. The returned content must take the same space as the mention
-text, otherwise mentions are misaligned with the input text:
+a tooltip. The returned content must take the same space as the mention text, otherwise
+mentions are misaligned with the input text:
 
 <Demo data={MentionsDemos.renderMention} />
 
 ## Custom suggestions
 
-Use `renderSuggestion` on `Mentions.Mention` to customize suggestions in the dropdown.
-`item` is the data item with all of its additional fields:
+Use `renderSuggestion` on `Mentions.Mention` to customize suggestions in the dropdown:
 
 <Demo data={MentionsDemos.renderSuggestion} />
 
@@ -106,8 +105,7 @@ function Demo() {
 ## Copy and paste
 
 Mentions are kept when text is copied or cut and then pasted into a `Mentions` field
-that has the same triggers. Other applications receive plain text. A mention that is
-selected only partially is copied as plain text.
+with the same triggers. Other applications receive plain text.
 
 ## Multiple triggers
 
@@ -118,9 +116,9 @@ of the `#` source below are stored as `#[__display__](__id__)`:
 
 ## RegExp triggers
 
-`trigger` also accepts a `RegExp` that matches the trigger character. Mentions of a `RegExp`
-trigger are stored as `@[__display__](__id__)`, use `markup` prop to change that.
-For example, the source below opens the dropdown on both `@` and `+`:
+`trigger` also accepts a `RegExp`, for example to open the dropdown on both `@` and `+`.
+Mentions of a `RegExp` trigger are stored as `@[__display__](__id__)`, use `markup` prop
+to change that:
 
 ```tsx
 import { Mentions } from '@mantine/core';
@@ -134,23 +132,21 @@ function Demo() {
 }
 ```
 
-To control how the query is matched, use a `RegExp` with two capture groups. It must be
-anchored to the end of the text with `$`, group 1 must capture the trigger with the query
-and group 2 the query.
+To control how the query is matched, use a `RegExp` with two capture groups anchored with `$`:
+group 1 captures the trigger with the query, group 2 the query.
 
 ## Data sources
 
 `data` prop of `Mentions.Mention` accepts an array of `{ id, display }` items or a function
-that returns matches. Array data is filtered by the query: an item matches when its `display`
-or `id` contains the query, case-insensitively.
+that returns matches. Array data is filtered by the query, case-insensitively.
 
-- Set `ignoreAccents` to ignore accents when filtering array data, for example to match `José` with `jose`
-- Set `allowSpaceInQuery` to allow spaces in the query. By default, the query ends at the first whitespace.
+- Set `ignoreAccents` to match `José` with `jose`
+- Set `allowSpaceInQuery` to allow spaces in the query, by default the query ends at the first whitespace
 
 ## Custom filter
 
-Use `filter` prop of `Mentions` to change how array data is filtered. Set `filter={false}`
-to display array data as is, for example when it is already filtered on the server.
+Use `filter` prop to change how array data is filtered. Set `filter={false}` to display
+the data as is, for example when it is already filtered on the server:
 
 ```tsx
 import { Mentions, MentionsFilter } from '@mantine/core';
@@ -185,16 +181,16 @@ function Demo() {
 
 ## Async data
 
-`data` function can be asynchronous. It is called with the query and an object with
-`signal` that is aborted when the request becomes stale. Use `debounceMs` to debounce requests:
+`data` function can be asynchronous. It receives the query and an `AbortSignal` that is
+aborted when the request becomes stale. Use `debounceMs` to debounce requests:
 
 <Demo data={MentionsDemos.async} />
 
 ## Loading, empty and error states
 
-Use `loadingMessage`, `errorMessage` and `nothingFoundMessage` props of `Mentions` to change
-messages displayed in the dropdown. To change empty and error states of a single source,
-use `renderEmpty` and `renderError` on `Mentions.Mention`:
+Use `loadingMessage`, `errorMessage` and `nothingFoundMessage` props to change messages
+displayed in the dropdown. To change them for a single source, use `renderEmpty` and
+`renderError` on `Mentions.Mention`:
 
 ```tsx
 import { Mentions } from '@mantine/core';
@@ -221,15 +217,13 @@ function Demo() {
 
 Use `markup` prop of `Mentions.Mention` to change how mentions are stored, for example
 `{{__id__}}`. If the format cannot be described with a template, pass a serializer object
-with `insert` and `findAll` methods.
-
-With the default markup, `id` must not contain `)` and `display` must not contain `](`.
-If your data can contain these characters, use a serializer object.
+with `insert` and `findAll` methods. Use a serializer when `id` can contain `)` or
+`display` can contain `](`.
 
 ## displayTransform
 
 `displayTransform` on `Mentions.Mention` changes the displayed text of mentions without
-changing the value:
+changing the value, for example to display only the first name:
 
 ```tsx
 import { Mentions } from '@mantine/core';
@@ -246,9 +240,6 @@ function Demo() {
   );
 }
 ```
-
-The value above is displayed as `Assigned to Walter`, while the markup still stores the full
-`Walter White` display.
 
 ## Mention styles
 
@@ -277,30 +268,23 @@ To style mentions of all sources, use the `highlight` Styles API selector or the
 ## Anchor mode
 
 By default, the dropdown is displayed below the caret. Set `anchorMode="left"` to align it
-with the left edge of the input. Use `suggestionsPlacement` to display it above the input (`above`)
-or on the side with more space (`auto`).
+with the left edge of the input. Set `suggestionsPlacement="above"` to display it above the
+input or `"auto"` to pick the side with more space.
 
 ## Inline suggestions
 
 Set `suggestionsDisplay="inline"` to display the first match as ghost text at the caret
-instead of the dropdown. The ghost text is displayed only when the match starts with the query.
-Press `Tab` or `Enter` to accept it:
+instead of the dropdown. Press `Tab` or `Enter` to accept it:
 
 <Demo data={MentionsDemos.inline} />
 
 ## Caret-aware styling
 
-Mentions have `data-mention-selection` attribute that you can use to style them based on
-the caret position and selection:
-
-- `inside` – the caret is inside the mention
-- `boundary` – the caret is at the edge of the mention
-- `partial` – a part of the mention is selected
-- `full` – the whole mention is selected
+Use `data-mention-selection` attribute to style mentions based on the caret position:
+`inside`, `boundary`, `partial` or `full`. `onSelectionChange` is called with the current
+selection and the mentions it overlaps:
 
 <Demo data={MentionsDemos.caretStyling} />
-
-`onSelectionChange` is called with the current selection and the mentions it overlaps.
 
 ## Parsing mentions
 
@@ -313,14 +297,13 @@ const mentions = getMentions('Hey @[Walter White](walter)', [{ trigger: '@' }]);
 // [{ id: 'walter', display: 'Walter White', index: 4, plainTextIndex: 4, trigger: '@' }]
 ```
 
-`@mantine/core` also exports `createMarkupSerializer` to build a serializer from a template
-string and `makeTriggerRegex` to build a trigger `RegExp`.
+`createMarkupSerializer` builds a serializer from a template string, `makeTriggerRegex`
+builds a trigger `RegExp`.
 
 ## Undo and redo
 
-`Mentions` keeps its own undo history instead of the native one: undo and redo shortcuts
-restore removed mentions. Changes of a controlled `value` made outside of the component,
-for example a form reset, can be undone as well.
+`Mentions` keeps its own undo history: undo and redo shortcuts restore removed mentions.
+External changes of a controlled `value`, for example a form reset, can be undone as well.
 
 ## Single line
 
@@ -357,8 +340,8 @@ function Demo() {
 
 ## Accessibility
 
-Set `label` or `aria-label` prop to label the input. The suggestions list is labelled
-`Suggestions`, use `a11ySuggestionsListLabel` prop to change or translate the label.
+Set `label` or `aria-label` prop to label the input. Use `a11ySuggestionsListLabel` prop
+to translate the `Suggestions` label of the dropdown.
 
 Keyboard interactions while the suggestions dropdown is open:
 

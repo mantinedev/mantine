@@ -6,13 +6,11 @@ export default Layout(MDX_DATA.useBroadcastChannel);
 
 ## Usage
 
-`use-broadcast-channel` is a wrapper over the
-[BroadcastChannel API](https://developer.mozilla.org/en-US/docs/Web/API/BroadcastChannel).
-It sends messages between tabs, windows, iframes and workers of the **same origin** that
-use the same channel name, for example to sync logout, theme or cart between tabs.
+`use-broadcast-channel` sends messages between tabs, windows, iframes and workers of the same origin
+with the [BroadcastChannel API](https://developer.mozilla.org/en-US/docs/Web/API/BroadcastChannel).
+Use it to sync logout, theme or cart between tabs.
 
-Both panels in the demo use the same channel name. Open this page in a second browser tab
-to see the reactions synced between tabs as well:
+Open this page in a second browser tab to see the reactions synced between tabs:
 
 <Demo data={UseBroadcastChannelDemos.usage} />
 
@@ -44,8 +42,8 @@ function useBroadcastChannel<T = any>(name: string): UseBroadcastChannelReturnVa
 
 ## Sending and receiving
 
-Call `post` to send a message to every other context subscribed to the same channel name. The
-`data` value updates whenever another context posts a message:
+Call `post` to send a message to every other context with the same channel name.
+`data` updates whenever another context posts a message:
 
 ```tsx
 import { useBroadcastChannel } from '@mantine/hooks';
@@ -63,9 +61,8 @@ function Demo() {
 
 ## Self-exclusion
 
-The BroadcastChannel API **does not deliver a message back to the context that sent it**:
-`data` is never updated by your own `post` calls. To update the tab that sends the message,
-change its local state in addition to calling `post`:
+A message is not delivered back to the tab that sent it, `data` is never updated by your own `post` calls.
+To update the sending tab, change its local state in addition to calling `post`:
 
 ```tsx
 import { useState } from 'react';
@@ -87,15 +84,13 @@ function Demo() {
 ## Structured data
 
 `post` accepts any [structured-cloneable](https://developer.mozilla.org/en-US/docs/Web/API/Web_Workers_API/Structured_clone_algorithm)
-value: objects, arrays, `Map`, `Set`, `Date`, etc. Pass a type argument to `useBroadcastChannel`
-to type the message data:
+value, for example objects, arrays or dates. Pass a type argument to type the message data:
 
 <Demo data={UseBroadcastChannelDemos.structuredData} />
 
 ## Handling errors
 
-If a received message cannot be deserialized, the channel emits a `messageerror` event. The hook
-exposes the last such event through the `error` value:
+`error` holds the last `messageerror` event, emitted when a received message cannot be deserialized:
 
 ```tsx
 import { useBroadcastChannel } from '@mantine/hooks';
@@ -113,21 +108,17 @@ function Demo() {
 
 ## Closing the channel
 
-The channel is created on mount and closed automatically on unmount or when the `name` changes.
-Call `close` to close it earlier. After that, `post` does nothing and `channel` is `null` until the
-component remounts or the `name` changes.
+The channel is closed automatically on unmount or when the `name` changes.
+Call `close` to close it earlier, after that `post` does nothing.
 
 ## Server-side rendering
 
-The hook is safe to use with server-side rendering. On the server and in browsers without the
-BroadcastChannel API `supported` is `false` and `post` does nothing.
+On the server and in browsers without the BroadcastChannel API, `supported` is `false` and `post` does nothing.
 
 ## Difference from use-local-storage
 
-[use-local-storage](/hooks/use-local-storage) also synchronizes state across tabs, but it
-stores the value in `localStorage`. `use-broadcast-channel` does not persist anything.
-Use `use-local-storage` for persisted state and `use-broadcast-channel` for messaging,
-including communication with workers and iframes.
+[use-local-storage](/hooks/use-local-storage) also syncs state across tabs, but it persists the value.
+`use-broadcast-channel` does not store anything, use it for messaging, including with workers and iframes.
 
 ## Definition of exported types
 

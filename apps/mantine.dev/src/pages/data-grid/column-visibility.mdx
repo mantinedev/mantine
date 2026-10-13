@@ -6,23 +6,23 @@ export default Layout(MDX_DATA.DataGridColumnVisibility);
 
 ## Basic column visibility
 
-Pass `withColumnVisibility` to `useDataGrid` to allow users to show and hide columns.
-`DataGrid.ColumnVisibilityToggle` renders a button with a menu of columns. `DataGrid.Toolbar`
-without children renders it automatically.
+Pass `withColumnVisibility` to `useDataGrid` to let users show and hide columns.
+`DataGrid.ColumnVisibilityToggle` renders a button with a menu of columns, `DataGrid.Toolbar`
+without children renders it automatically:
 
 <Demo data={DataGridDemos.columnVisibility} />
 
 ## Controlled visibility state
 
 Pass `columnVisibility` and `onColumnVisibilityChange` to `useDataGrid` for controlled state.
-The state is an object of column ids and boolean values.
+The state is an object of column ids and boolean values:
 
 <Demo data={DataGridDemos.columnVisibilityControlled} />
 
 ## Disable hiding per column
 
 Set `enableHiding: false` on a column definition to prevent the column from being hidden.
-Such columns are not listed in the visibility menu.
+Such columns are not listed in the visibility menu:
 
 <Demo data={DataGridDemos.columnVisibilityEnableHiding} />
 

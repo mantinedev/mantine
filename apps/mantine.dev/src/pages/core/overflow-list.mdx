@@ -10,9 +10,8 @@ export default Layout(MDX_DATA.OverflowList);
 
 ## Data type
 
-`OverflowList` data prop supports an array of any type. By default, `OverflowList` infers
-data type from the data array automatically. To specify data type explicitly, pass
-generic type argument to the component:
+`data` prop accepts an array of any type. By default, the type is inferred from the array.
+To set it explicitly, pass a generic type argument:
 
 ```tsx
 import { OverflowList } from '@mantine/core';
@@ -30,26 +29,26 @@ function Demo() {
 
 ## Max rows
 
-Use `maxRows` to limit visible rows count. By default, 1 row is visible.
+Set `maxRows` to change the number of visible rows, 1 by default:
 
 <Demo data={OverflowListDemos.maxRows} />
 
 ## Max visible items
 
-Use `maxVisibleItems` to limit visible items count. By default, there is no limit.
+Set `maxVisibleItems` to limit the number of visible items:
 
 <Demo data={OverflowListDemos.maxVisibleItems} />
 
 ## Collapse from
 
 By default, items are collapsed from the end. Set `collapseFrom="start"` to collapse
-items from the beginning, for example to keep the last items of breadcrumbs visible.
+items from the beginning, for example to keep the last breadcrumbs visible:
 
 <Demo data={OverflowListDemos.collapseFrom} />
 
 ## Example: overflow with hover card
 
-You can use any React components in `renderOverflow` function. Example
-of displaying collapsed items inside [HoverCard](/core/hover-card):
+`renderOverflow` can return any React node, for example a [HoverCard](/core/hover-card)
+with the collapsed items:
 
 <Demo data={OverflowListDemos.hoverCard} />

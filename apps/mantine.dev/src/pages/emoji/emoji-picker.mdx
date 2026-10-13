@@ -6,9 +6,8 @@ export default Layout(MDX_DATA.EmojiPicker);
 
 ## Usage
 
-`EmojiPicker` displays a searchable emoji grid with category navigation, skin tone selector,
-and emoji preview. Emoji data is passed with the `data` prop, see the
-[Getting started](/emoji/getting-started) page for setup instructions.
+`EmojiPicker` displays a searchable emoji grid with category navigation, skin tone selector and preview.
+Emoji data is passed with the `data` prop, see [getting started](/emoji/getting-started) for setup instructions:
 
 <Demo data={EmojiPickerDemos.usage} />
 
@@ -32,49 +31,44 @@ Set `withPreview={false}` and `withSkinToneSelector={false}` to hide the footer 
 
 ## Custom columns
 
-Use the `columns` prop to change the number of emojis per row. The picker width
-adjusts automatically based on the number of columns and emoji size.
+Use the `columns` prop to change the number of emojis per row, the picker width adjusts to it:
 
 <Demo data={EmojiPickerDemos.columns} />
 
 ## Emoji size
 
-Use the `emojiSize` prop to change the size of emoji buttons. Emoji font size is derived from
-this value.
+Use the `emojiSize` prop to change the size of emoji buttons:
 
 <Demo data={EmojiPickerDemos.emojiSize} />
 
 ## Skin tone
 
-The skin tone selector is displayed in the preview area. Click it to open a popover
-with all skin tone options. Use `skinTone` and `onSkinToneChange` props to control the value:
+The skin tone selector in the preview area opens a popover with all skin tone options.
+Use `skinTone` and `onSkinToneChange` props to control the value:
 
 <Demo data={EmojiPickerDemos.skinTone} />
 
 ## Scroll area
 
-Use the `scrollAreaProps` prop to pass props to the internal `ScrollArea`, for example
-to change its height. The default height is 300px.
+Use the `scrollAreaProps` prop to pass props to the internal `ScrollArea`, for example to change its height:
 
 <Demo data={EmojiPickerDemos.scrollArea} />
 
 ## Category labels and localization
 
-Override category labels with the `categoryLabels` prop (keyed by canonical category ID),
-and UI strings with the `labels` prop:
+Override category labels with the `categoryLabels` prop and other strings with the `labels` prop:
 
 <Demo data={EmojiPickerDemos.categoryLabels} />
 
 ## Search icon
 
-Customize the search input with the `searchInputProps` prop. For example, you can add a
-search icon to the left section:
+Use the `searchInputProps` prop to customize the search input, for example to add an icon to the left section:
 
 <Demo data={EmojiPickerDemos.searchIcon} />
 
 ## Empty search content
 
-Customize the content shown when search yields no results with the `emptySearchContent` prop:
+Use the `emptySearchContent` prop to change the content displayed when nothing is found:
 
 <Demo data={EmojiPickerDemos.emptySearch} />
 
@@ -108,19 +102,17 @@ function Demo() {
 
 ## Unsupported emoji detection
 
-Set `withUnsupportedDetection` to hide emojis that are not supported by the current browser
-or operating system. To detect support, each emoji is drawn on a canvas.
+Set `withUnsupportedDetection` to hide emojis that the current browser or operating system cannot render.
+Detection draws each emoji on a canvas and is not reliable on every platform, so it is disabled by default:
 
 ```tsx
 <EmojiPicker data={emojiData} withUnsupportedDetection />
 ```
 
-This feature is disabled by default because canvas-based detection has edge cases across platforms.
-
 ## Keyboard navigation
 
-The emoji grid is a single tab stop. `ArrowDown`, `ArrowUp` and `Enter` keys also work
-when the search input is focused: `Enter` selects the first search result.
+The emoji grid is a single tab stop.
+`ArrowDown`, `ArrowUp` and `Enter` also work when the search input is focused, `Enter` selects the first search result.
 
 <KeyboardEventsTable
   data={[

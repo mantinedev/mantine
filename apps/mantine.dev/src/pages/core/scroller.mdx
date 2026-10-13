@@ -6,9 +6,8 @@ export default Layout(MDX_DATA.Scroller);
 
 ## Usage
 
-`Scroller` is a horizontal scroll container that displays navigation controls (chevron buttons)
-when content overflows its container. It supports native scrolling via trackpad, shift + mouse wheel,
-or touch gestures.
+`Scroller` is a horizontal scroll container with navigation buttons displayed when the content overflows.
+Native scrolling with trackpad, shift + mouse wheel and touch gestures keeps working:
 
 <Demo data={ScrollerDemos.usage} />
 
@@ -20,34 +19,31 @@ Content can be scrolled by clicking and dragging with the mouse. Set `draggable=
 
 ## Scroll amount
 
-Use the `scrollAmount` prop to control how many pixels the container scrolls when clicking
-the navigation buttons. The default value is `200`.
+Set `scrollAmount` prop to change how many pixels the container scrolls when a navigation button is clicked:
 
 <Demo data={ScrollerDemos.scrollAmount} />
 
 ## Control size
 
-Use the `controlSize` prop to change the size of the navigation buttons. It accepts any valid
-Mantine size value (`xs`, `sm`, `md`, `lg`, `xl`) or a number (converted to pixels).
+Set `controlSize` prop to change the size of the navigation buttons:
 
 <Demo data={ScrollerDemos.controlSize} />
 
 ## Custom icons
 
-Use `startControlIcon` and `endControlIcon` props to replace default chevron icons
-with custom icons:
+Set `startControlIcon` and `endControlIcon` props to replace the default chevron icons:
 
 <Demo data={ScrollerDemos.customIcons} />
 
 ## Without controls
 
 Set `withControls={false}` to remove the navigation buttons and the edge gradients, for example,
-on touch devices where users scroll with gestures. Native scrolling and mouse drag scrolling keep working:
+on touch devices. Native and mouse drag scrolling keep working:
 
 <Demo data={ScrollerDemos.withoutControls} />
 
 ## Usage with Tabs
 
-Use `Scroller` inside [Tabs.List](/core/tabs) to make the tabs list scrollable when there are too many tabs to fit in the available space:
+Use `Scroller` inside [Tabs.List](/core/tabs) to make the tabs list scrollable when tabs do not fit:
 
 <Demo data={TabsDemos.scroller} />

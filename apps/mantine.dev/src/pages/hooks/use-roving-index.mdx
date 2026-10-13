@@ -6,24 +6,24 @@ export default Layout(MDX_DATA.useRovingIndex);
 
 ## Usage
 
-`use-roving-index` implements the [roving tabindex](https://www.w3.org/WAI/ARIA/apg/practices/keyboard-interface/#kbd_roving_tabindex) keyboard navigation pattern.
-In a group of focusable elements, only one element has `tabIndex={0}` (can be reached with Tab key),
-while all others have `tabIndex={-1}`. Arrow keys move focus between items in the group.
+`use-roving-index` implements the [roving tabindex](https://www.w3.org/WAI/ARIA/apg/practices/keyboard-interface/#kbd_roving_tabindex) pattern.
+Only one item in the group is reachable with the Tab key, arrow keys move focus between items:
 
 <Demo data={UseRovingIndexDemos.usage} />
 
 ## Orientation
 
-Set `orientation` to control which arrow keys are used for navigation:
-- `'horizontal'` (default) – ArrowLeft/ArrowRight
-- `'vertical'` – ArrowUp/ArrowDown
-- `'both'` – all four arrow keys
+Set `orientation` to choose which arrow keys move focus:
+
+- `horizontal` (default) – ArrowLeft/ArrowRight
+- `vertical` – ArrowUp/ArrowDown
+- `both` – all four arrow keys
 
 <Demo data={UseRovingIndexDemos.vertical} />
 
 ## Grid navigation
 
-Set `columns` to enable grid navigation. Navigation stops at grid boundaries.
+Set `columns` to navigate a grid. Navigation stops at the grid edges:
 
 - ArrowLeft/ArrowRight – move within the row
 - ArrowUp/ArrowDown – move between rows, the column is preserved
@@ -34,16 +34,13 @@ Set `columns` to enable grid navigation. Navigation stops at grid boundaries.
 
 ## Disabled items
 
-Use `isItemDisabled` callback to mark items as disabled. Disabled items are skipped during
-keyboard navigation. If the initially focused item is disabled, the first non-disabled item
-receives focus instead.
+Use `isItemDisabled` to mark items as disabled. Keyboard navigation skips them:
 
 <Demo data={UseRovingIndexDemos.disabled} />
 
 ## Loop
 
-By default, navigation wraps around at boundaries (`loop` is `true`).
-Set `loop: false` to stop at the first and last items.
+By default, navigation wraps around at the first and last items. Set `loop: false` to stop there:
 
 <Demo data={UseRovingIndexDemos.loop} />
 
@@ -69,9 +66,8 @@ function Demo() {
 
 ## activateOnFocus
 
-Set `activateOnFocus` to `true` to click items when they receive focus
-via keyboard navigation, for example in tab-like interfaces where focus and selection
-are synchronized:
+Set `activateOnFocus: true` to click an item when it receives focus with the keyboard,
+for example in tabs where focus and selection are synchronized:
 
 ```tsx
 import { useRovingIndex } from '@mantine/hooks';
@@ -88,7 +84,7 @@ function Demo() {
 
 ## RTL support
 
-Set `dir: 'rtl'` to swap ArrowLeft/ArrowRight behavior for right-to-left layouts:
+Set `dir: 'rtl'` to swap ArrowLeft and ArrowRight in right-to-left layouts:
 
 ```tsx
 import { useRovingIndex } from '@mantine/hooks';
@@ -171,7 +167,7 @@ function useRovingIndex(input: UseRovingIndexInput): UseRovingIndexReturnValue;
 ## Exported types
 
 `UseRovingIndexInput`, `UseRovingIndexGetItemPropsInput` and `UseRovingIndexReturnValue` types are exported
-from the `@mantine/hooks` package; you can import them in your application:
+from the `@mantine/hooks` package:
 
 ```tsx
 import type {

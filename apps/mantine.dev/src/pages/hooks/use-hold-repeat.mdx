@@ -6,10 +6,9 @@ export default Layout(MDX_DATA.useHoldRepeat);
 
 ## Usage
 
-`use-hold-repeat` calls a function once and then keeps calling it at a fixed or accelerating
-interval until it is stopped. It does not attach any DOM events: call `start` and `stop` from
-your own handlers. To get ready-made event handlers, use
-[use-hold-repeat-handlers](/hooks/use-hold-repeat-handlers) instead.
+`use-hold-repeat` calls a function once, then repeats it at a fixed or accelerating interval
+until it is stopped. The hook does not attach DOM events: call `start` and `stop` from your own
+handlers, or use [use-hold-repeat-handlers](/hooks/use-hold-repeat-handlers) to get them ready-made:
 
 <Demo data={UseHoldRepeatDemos.usage} />
 
@@ -50,9 +49,8 @@ function useHoldRepeat(
 
 ## Repeat is opt-in
 
-By default, `start()` calls the function once. It is repeated only when **both** `delay`
-and `interval` are set. `delay` is the pause before the first repeat, `interval` is the time
-between all subsequent repeats:
+By default, `start` calls the function once. To repeat it, set both `delay` and `interval`.
+`delay` is the pause before the first repeat, `interval` is the time between the following ones:
 
 ```tsx
 import { useHoldRepeat } from '@mantine/hooks';
@@ -74,9 +72,8 @@ function Demo() {
 
 ## Accelerating interval
 
-Pass a function to `interval` to calculate the time before each repeat from the number of
-calls made so far. The function is called for the first time with `count === 2`: the first
-call is the immediate one, the second is the first repeat.
+Pass a function to `interval` to calculate the delay before each repeat from the number of calls
+made so far. `count` starts at `2`: the first call is the immediate one, the second is the first repeat.
 
 ```tsx
 import { useHoldRepeat } from '@mantine/hooks';
@@ -103,7 +100,7 @@ The timer is cleared automatically when the component unmounts.
 ## Exported types
 
 `UseHoldRepeatInterval`, `UseHoldRepeatOptions` and `UseHoldRepeatReturnValue` types are exported
-from the `@mantine/hooks` package; you can import them in your application:
+from the `@mantine/hooks` package:
 
 ```tsx
 import type {

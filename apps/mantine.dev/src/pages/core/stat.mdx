@@ -6,24 +6,20 @@ export default Layout(MDX_DATA.Stat);
 
 ## Usage
 
-`Stat` displays a single key metric: a label, a formatted value and an optional trend
-indicator. Use it to build dashboard stat rows, KPI cards and summary blocks.
+`Stat` displays a single metric: a label, a formatted value and an optional trend indicator:
 
 <Demo data={StatDemos.usage} />
 
 ## Value formatting
 
-Numeric values are formatted with [NumberFormatter](/core/number-formatter), `Stat` supports
-the same separator and decimal scale props. Use `prefix` and `suffix` to render units,
-currency or icons before and after the value:
+Numeric values are formatted with [NumberFormatter](/core/number-formatter) and support the same formatting props.
+Numeric strings are formatted the same way, other strings are rendered as is.
+Use `prefix` and `suffix` to add units or currency:
 
 <Demo data={StatDemos.formatting} />
 
-Numeric strings (`'1234.5'`) are formatted the same way as numbers. Other strings
-(`'12k'`, `'N/A'`) are rendered as is.
-
-To fully control value rendering, pass a `formatter` function. It receives the raw `value`
-and returns any React node. Formatting props and `animate` are ignored when `formatter` is set:
+To fully control value rendering, pass a `formatter` function.
+Formatting props and `animate` are ignored when `formatter` is set:
 
 ```tsx
 import { Stat } from '@mantine/core';
@@ -41,13 +37,12 @@ function Demo() {
 
 ## Trend indicator
 
-Set `diff` prop to display a trend delta below the value. Positive values are green with
-an up arrow, negative values are red with a down arrow, zero is dimmed. By default,
-the delta is rounded to at most one decimal and formatted as a signed percentage (`+0.3%`, `-12%`):
+Set `diff` prop to display a trend delta below the value. Positive values are green,
+negative values are red, zero is dimmed. The delta is formatted as a signed percentage:
 
 <Demo data={StatDemos.diff} />
 
-Use `diffFormatter` to customize the delta text and `withDiffIcon={false}` to hide the arrow:
+Use `diffFormatter` to change the delta text and `withDiffIcon={false}` to hide the arrow:
 
 ```tsx
 import { Stat } from '@mantine/core';
@@ -64,9 +59,6 @@ function Demo() {
 }
 ```
 
-Values and deltas are never truncated. In narrow containers, use responsive columns
-(for example, `SimpleGrid` with `cols={{ base: 1, sm: 3 }}`) instead of a fixed number of columns.
-
 ## Icon
 
 Use `icon` prop to display an icon next to the value:
@@ -75,38 +67,31 @@ Use `icon` prop to display an icon next to the value:
 
 ## Loading state
 
-Set `loading` prop to display a [Skeleton](/core/skeleton) in place of the value.
-The trend indicator is hidden while `loading` is set:
+Set `loading` prop to display a [Skeleton](/core/skeleton) instead of the value and hide the trend indicator:
 
 <Demo data={StatDemos.loading} />
 
 ## Animated value
 
-Set the `animate` prop to animate value changes with [RollingNumber](/core/rolling-number).
-Animation only applies to numeric values:
+Set `animate` prop to animate numeric value changes with [RollingNumber](/core/rolling-number):
 
 <Demo data={StatDemos.animate} />
 
 ## Countdown
 
 `Stat.Countdown` displays a live countdown to a target time. `value` is a `Date`
-or a timestamp in milliseconds. Keep it stable between renders (create it with `useState`
-or `useMemo`), a new value restarts the countdown.
+or a timestamp in milliseconds, keep it stable between renders: a new value restarts the countdown.
+
+`format` prop accepts dayjs-style tokens:
+
+- Units absent from the format roll into the leading token: `mm:ss` displays 62 minutes as `62:00`
+- `S` displays tenths of a second, `SS` hundredths and `SSS` milliseconds
+- Literal characters are escaped with square brackets, for example `D[d] HH:mm:ss`
 
 <Demo data={StatDemos.countdown} />
 
-`format` prop accepts dayjs-style tokens (`D`, `H`, `m`, `s`, `S`):
-
-- Units absent from the format roll into the leading token: `mm:ss` displays 62 minutes
-  as `62:00`
-- `S` displays tenths of a second, `SS` hundredths and `SSS` milliseconds
-- Literal characters are escaped with square brackets, for example `D[d] HH:mm:ss`
-- The remaining time is rounded up: a 3 hour countdown starts at `03:00:00` and
-  `00:00:00` is displayed only when it has finished
-
-Note that these rules differ from the `format` of the [Timer](/core/timer) component.
-
-`Stat.Countdown` supports the same display props and Styles API selectors as `Stat`:
+`onFinish` is called once when the target time is reached, `onTick` is called on every
+tick with the remaining time in milliseconds:
 
 ```tsx
 import { useState } from 'react';
@@ -127,18 +112,13 @@ function Demo() {
 }
 ```
 
-`onFinish` is called once when the target time is reached, and `onTick` is called on every
-tick with the remaining time in milliseconds.
-
 ## Size
 
-`size` prop scales the label, value, diff and icon. Change `size` in the configurator
-above to see how it scales.
+`size` prop scales the label, value, diff and icon, change it in the configurator above to see the result.
 
 ## Color
 
-Set the `color` prop to change the value color. It accepts a value from `theme.colors` or any
-valid CSS color:
+Set `color` prop to change the value color:
 
 ```tsx
 import { Stat } from '@mantine/core';
@@ -150,30 +130,24 @@ function Demo() {
 
 ## Compound components
 
-For full control over the layout, use compound components instead of the shorthand props:
+For full control over the layout, use compound components instead of the shorthand props.
+`Stat.Icon` is always placed next to the value, other components are rendered in the order they are declared:
 
 <Demo data={StatDemos.compound} />
 
-- `Stat.Icon` – icon wrapper, always placed next to the value. Other components are rendered in the order they are declared.
-- `Stat.Label` – caption displayed above the value
-- `Stat.Value` – value wrapper, accepts `prefix` and `suffix` props
-- `Stat.Diff` – trend delta, accepts `value`, `formatter`, `withIcon` and `labels` props (or custom children)
-
 ## Example: dashboard stat row
 
-Compose multiple `Stat` components in a [SimpleGrid](/core/simple-grid) or
-[Group](/core/group) to build a stat row:
+Compose several `Stat` components in a [SimpleGrid](/core/simple-grid) to build a stat row:
 
 <Demo data={StatDemos.statRow} />
 
 ## Accessibility
 
-- `Stat.Countdown` value is not announced on every tick. To announce milestones
-  (for example "5 minutes left"), render your own live region and update it from `onTick`.
+- `Stat.Countdown` value is not announced on every tick. To announce milestones,
+  render your own live region and update it from `onTick`.
 - When `loading` is set, the root element has `aria-busy="true"`.
-- `Stat.Diff` renders a visually hidden direction text after the delta ("increase",
-  "decrease" or "no change"), screen readers announce `+12.4% increase`. Use `diffLabels`
-  on `Stat` or `labels` on `Stat.Diff` to translate these texts:
+- `Stat.Diff` renders a visually hidden direction text after the delta, screen readers
+  announce `+12.4% increase`. Use `diffLabels` prop to translate these texts:
 
 ```tsx
 import { Stat } from '@mantine/core';

@@ -6,16 +6,16 @@ export default Layout(MDX_DATA.CompareSlider);
 
 ## Usage
 
-`CompareSlider` displays two layers in the same box with a draggable divider between them.
-It is commonly used to compare two versions of an image. The `before` layer is displayed
-on the left/top side of the divider, the `after` layer – on the right/bottom side.
+`CompareSlider` displays two layers in the same box with a draggable divider between them,
+for example to compare two versions of an image. The `before` layer is displayed on the left
+of the divider, the `after` layer on the right:
 
 <Demo data={CompareSliderDemos.usage} />
 
 ## Compare any content
 
-`before` and `after` accept any React node: videos, maps, charts, code blocks or plain markup.
-Both layers fill the container, make sure they have the same dimensions:
+`before` and `after` accept any React node. Both layers fill the container,
+make sure they have the same dimensions:
 
 <Demo data={CompareSliderDemos.content} />
 
@@ -34,8 +34,7 @@ The position is a number between 0 and 100:
 
 ## Change position on hover
 
-Set `changePositionOnHover` to update the divider position when the pointer moves over the
-component:
+Set `changePositionOnHover` to move the divider with the pointer instead of dragging:
 
 <Demo data={CompareSliderDemos.hover} />
 
@@ -45,8 +44,7 @@ Use the `handle` prop to replace the default divider handle with any React node:
 
 <Demo data={CompareSliderDemos.customHandle} />
 
-Set `withHandle={false}` to hide the handle. The divider line stays visible and the component
-remains interactive:
+Set `withHandle={false}` to hide the handle, the divider line stays interactive:
 
 ```tsx
 import { CompareSlider, Image } from '@mantine/core';
@@ -64,10 +62,9 @@ function Demo() {
 
 ## Container size
 
-`CompareSlider` does not have an intrinsic size. It takes the full width of its parent,
-so in most layouts you only need to set a height with `h` prop or an `aspect-ratio`.
-If the parent does not constrain the width (for example, a flex container), set `w` or `maw` prop.
-Make both layers fill the box:
+`CompareSlider` takes the full width of its parent and has no intrinsic height. Set the height
+with `h` prop or an `aspect-ratio`. If the parent does not constrain the width, for example a flex
+container, set `w` or `maw` as well. Make both layers fill the box:
 
 ```tsx
 import { CompareSlider, Image } from '@mantine/core';
@@ -86,10 +83,9 @@ function Demo() {
 
 ## Transition
 
-Set `transition` prop to animate position changes made with the keyboard or with a controlled
-value. Pass `true` to use the default `150ms` duration or a number to set the duration in
-milliseconds. The transition is not applied while the divider is dragged and when
-`changePositionOnHover` is set:
+Set `transition` prop to animate position changes made with the keyboard or with a controlled value.
+Pass `true` for the default duration or a number of milliseconds. The transition is not applied
+while the divider is dragged or when `changePositionOnHover` is set:
 
 ```tsx
 import { CompareSlider } from '@mantine/core';
@@ -101,14 +97,13 @@ function Demo() {
 
 ## Disabled
 
-Set the `disabled` prop to lock the divider and prevent user interaction:
+Set `disabled` to lock the divider:
 
 <Demo data={CompareSliderDemos.disabled} />
 
 ## Accessibility
 
-The divider handle is a `role="slider"` element. To make the component accessible for screen
-readers, set the `aria-label` prop:
+The handle is a slider element, set `aria-label` to describe it for screen readers:
 
 ```tsx
 import { CompareSlider } from '@mantine/core';
@@ -118,7 +113,8 @@ function Demo() {
 }
 ```
 
-Keyboard interactions when the handle is focused:
+Keyboard interactions when the handle is focused. In vertical orientation, `ArrowUp`
+decreases the position and `ArrowDown` increases it:
 
 <KeyboardEventsTable
   data={[
@@ -128,6 +124,3 @@ Keyboard interactions when the handle is focused:
     { key: 'End', description: 'Sets position to 100' },
   ]}
 />
-
-For vertical orientation, `ArrowUp`/`ArrowLeft` decrease the position and
-`ArrowDown`/`ArrowRight` increase it.

@@ -6,16 +6,16 @@ export default Layout(MDX_DATA.MaskInput);
 
 ## Usage
 
-`MaskInput` is a wrapper around [useMask](/hooks/use-mask) hook. It supports all mask options
-and standard input props (label, description, error, etc.). The `mask` string defines the expected
-format, see [mask pattern syntax](#mask-pattern-syntax).
+`MaskInput` is an input with a fixed format, for example a phone number or a credit card.
+The `mask` string defines the format, see [mask pattern syntax](#mask-pattern-syntax).
+All [useMask](/hooks/use-mask) options and standard input props are supported:
 
 <Demo data={MaskInputDemos.usage} />
 
 ## Dynamic mask
 
-Use the `modify` option to change the mask based on the current input value.
-This example switches between standard and American Express credit card formats:
+Use the `modify` option to change the mask based on the current value, for example
+to switch between standard and American Express credit card formats:
 
 <Demo data={MaskInputDemos.dynamic} />
 
@@ -27,15 +27,14 @@ Override or extend the built-in token map with the `tokens` option:
 
 ## Regex array format
 
-For complex masks where built-in tokens are not enough, pass an array of
-string literals and `RegExp` objects:
+When built-in tokens are not enough, pass an array of string literals and `RegExp` objects:
 
 <Demo data={MaskInputDemos.regex} />
 
 ## Transform
 
-Use the `transform` option to convert each character before validation.
-This example auto-uppercases input so the `A` token accepts lowercase letters:
+Use the `transform` option to convert each character before validation, for example
+to uppercase letters so that the `A` token accepts lowercase input:
 
 <Demo data={MaskInputDemos.transform} />
 
@@ -53,25 +52,23 @@ This example auto-uppercases input so the `A` token accepts lowercase letters:
 
 ## Reset value
 
-`MaskInput` is uncontrolled internally – setting `value` from a parent will not clear it.
-Use the `resetRef` prop to get a function that clears the input value imperatively.
-Values written by [use-form](#with-use-form) are an exception, the form writes them to the input:
+`MaskInput` is uncontrolled, setting `value` from a parent does not clear it.
+Use the `resetRef` prop to get a function that clears the input:
 
 <Demo data={MaskInputDemos.resetRef} />
 
 ## With use-form
 
-`MaskInput` works with [use-form](/form/use-form) like any other input, spread
-`form.getInputProps('field')` on it. The form receives the raw (unmasked) value, for example
-`1234567890` for `(123) 456-7890`. `form.setFieldValue` and `form.reset` accept both raw and
-masked values:
+`MaskInput` works with [use-form](/form/use-form) like any other input. The form receives
+the raw value without the mask, for example `1234567890` for `(123) 456-7890`.
+`form.setFieldValue` and `form.reset` accept both raw and masked values:
 
 <Demo data={MaskInputDemos.withUseForm} />
 
 ## Mask pattern syntax
 
-Each character of the mask string is either a **token** (editable slot)
-or a **literal** (fixed character inserted automatically).
+Each character of the mask string is either a token, an editable slot, or a literal,
+a fixed character inserted automatically.
 
 ### Built-in tokens
 

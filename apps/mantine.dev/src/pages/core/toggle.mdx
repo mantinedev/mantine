@@ -6,15 +6,13 @@ export default Layout(MDX_DATA.Toggle);
 
 ## Usage
 
-`Toggle` is a button that can be toggled between active and inactive states.
-It is a polymorphic component and can be rendered as any element.
+`Toggle` is a button that switches between active and inactive states:
 
 <Demo data={ToggleDemos.usage} />
 
 ## Controlled and uncontrolled
 
-Use `defaultActive` to set the initial state of an uncontrolled `Toggle`,
-`active` and `onActiveChange` props to control it.
+Set `defaultActive` for an uncontrolled `Toggle`, `active` and `onActiveChange` props to control it:
 
 ```tsx
 import { useState } from 'react';
@@ -34,17 +32,15 @@ function ControlledDemo() {
 
 ## Auto contrast
 
-`Toggle` adjusts icon color based on the active toggle background color, for example
-with `variant="filled"` and light colors. This behavior is controlled by
-[theme.autoContrast](/theming/theme-object/#autocontrast), which is `true` by default.
-Set `autoContrast={false}` to disable it for a single toggle:
+`Toggle` adjusts the icon color to the active background color, for example, with light colors
+and `variant="filled"`. The behavior is controlled by [theme.autoContrast](/theming/theme-object/#autocontrast),
+set `autoContrast={false}` to disable it for a single toggle:
 
 <Demo data={ToggleDemos.autoContrast} />
 
 ## Auto width
 
-By default, `Toggle` renders as a square button. Set `autoWidth` to allow
-the width to adjust to content.
+By default, `Toggle` is a square button. Set `autoWidth` to fit the width to the content:
 
 <Demo data={ToggleDemos.autoWidth} />
 
@@ -54,9 +50,8 @@ the width to adjust to content.
 
 ## Accessibility
 
-`Toggle` renders a `button` element with `aria-pressed` attribute that reflects the active state.
-When using icon-only toggles, provide an `aria-label` prop so that screen readers can
-announce the button purpose.
+`Toggle` renders a `button` with `aria-pressed` attribute that reflects the active state.
+Set `aria-label` on icon-only toggles so that screen readers can announce the button purpose.
 
-When `Toggle` is rendered as a non-button element (for example, `component="a"`), the `disabled` prop
+When `Toggle` is rendered as a non-button element, for example, `component="a"`, the `disabled` prop
 sets `aria-disabled`, removes the element from the tab order and prevents clicks.

@@ -50,10 +50,9 @@ export default {
 
 ## Setup
 
-Add styles imports, [MantineProvider](/theming/mantine-provider/) and [ColorSchemeScript](/theming/color-schemes)
+Add styles imports, [MantineProvider](/theming/mantine-provider/) and `ColorSchemeScript`
 to `src/routes/__root.tsx`. Import styles with the `?url` suffix and add them to the
-`links` array of the root route. Mantine styles must be first in the `links` array,
-before other styles of your application:
+`links` array of the root route, before other styles of your application:
 
 ```tsx
 // Import styles of packages that you've installed.

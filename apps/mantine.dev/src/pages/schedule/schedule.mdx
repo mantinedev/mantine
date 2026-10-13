@@ -6,89 +6,85 @@ export default Layout(MDX_DATA.Schedule);
 
 ## Usage
 
-Schedule is a unified component that combines all schedule views (Day, Week, Month, Year) with automatic
-view switching. Use the view selector in the header to switch between different views.
+`Schedule` combines day, week, month and year views in one component.
+Use the view selector in the header to switch between views:
 
 <Demo data={ScheduleDemos.usage} />
 
 ## Controlled state
 
-Use `view`, `onViewChange`, `date` and `onDateChange` props to control the current view and date.
+Use `view`, `onViewChange`, `date` and `onDateChange` props to control the current view and date:
 
 <Demo data={ScheduleDemos.controlled} />
 
 ## View-specific props
 
 Use `dayViewProps`, `weekViewProps`, `monthViewProps` and `yearViewProps` to pass props
-to the corresponding view component, for example to set different time ranges for Day and Week views.
+to a single view, for example to set a different time range in day and week views:
 
 <Demo data={ScheduleDemos.viewProps} />
 
 ## Default view
 
-Set `defaultView` to control which view is shown initially when using uncontrolled mode.
+Set `defaultView` to choose the view that is shown initially in uncontrolled mode:
 
 <Demo data={ScheduleDemos.defaultView} />
 
 ## Custom header
 
-You can build a custom header using `ScheduleHeader` compound components combined with your own controls.
-Disable the default header on all views by passing `withHeader={false}` through view-specific props.
+Set `withHeader={false}` in view-specific props and build your own header
+with `ScheduleHeader` compound components:
 
 <Demo data={ScheduleDemos.customHeader} />
 
 ## Agenda view
 
-Set `withAgenda` prop to display an "Agenda" button in the header of DayView, WeekView
-and MonthView. When clicked, it opens an `AgendaView` showing events for the currently
-visible date range.
+Set `withAgenda` prop to add an "Agenda" button to the header of day, week and month views.
+It opens an `AgendaView` with events of the visible date range:
 
 <Demo data={ScheduleDemos.withAgenda} />
 
 ## Drag and drop
 
-Enable event drag and drop by setting `withEventsDragAndDrop` prop. Events can be dragged
-to different time slots and days across all views.
+Set `withEventsDragAndDrop` prop to allow dragging events to other time slots and days in all views:
 
 <Demo data={ScheduleDemos.dragDrop} />
 
 ## Create and update events
 
-Set `withDragSlotSelect` prop to allow users to select a range by dragging across time slots
-or day cells. When the drag ends, `onSlotDragEnd` is called with the range start and end dates.
-Combine it with slot, day and event click callbacks to create and edit events in all views.
+Set `withDragSlotSelect` prop to allow selecting a range by dragging across time slots or day cells.
+`onSlotDragEnd` is called with the range start and end when the drag ends.
+Combine it with slot, day and event click callbacks to create and edit events:
 
 <Demo data={ScheduleDemos.eventForm} />
 
 ## External drag and drop
 
-Use `onExternalEventDrop` to allow dragging items from outside the component into
-the schedule. External items must set data in `dataTransfer` during their `onDragStart`.
-The callback receives the `DataTransfer` object and the drop target datetime.
+Use `onExternalEventDrop` to accept items dragged from outside the schedule.
+External items must set data in `dataTransfer` during their `onDragStart`.
+The callback receives the `DataTransfer` object and the drop target datetime:
 
 <Demo data={ScheduleDemos.externalDragDrop} />
 
 ## Bidirectional drag and drop
 
 Combine `onExternalEventDrop` with `withEventsDragAndDrop` to drag items both to and from
-the schedule. When an event is dragged, the schedule sets `application/json` data with `{ eventId }`
-in `dataTransfer`, read it in your drop zone to identify the event.
+the schedule. A dragged event sets `application/json` data with `{ eventId }` in `dataTransfer`,
+read it in your drop zone to identify the event:
 
 <Demo data={ScheduleDemos.bidirectionalDragDrop} />
 
 ## Event resize
 
-Enable event resizing by setting `withEventResize` prop. Users can drag the top or bottom
-edge of an event to adjust its start or end time. Use `onEventResize` callback to handle
-the resize. Event resize works in Day and Week views.
+Set `withEventResize` prop to allow changing event start and end times by dragging its edges.
+`onEventResize` is called with the new range. Resize works in day and week views:
 
 <Demo data={ScheduleDemos.eventResize} />
 
 ## Drop validation
 
-By default, every drop and resize is committed and the application decides in `onEventDrop` /
-`onEventResize` whether to accept it. Use the validation props to reject a placement before
-it is committed, based on where the event is being dropped:
+By default, every drop and resize is committed. Use the validation props to reject
+a placement before it is committed:
 
 <DataTable
   head={['Prop', 'Description']}
@@ -113,15 +109,12 @@ it is committed, based on where the event is being dropped:
   ]}
 />
 
-A placement is allowed only when the overlap check passes and the matching callback does not
-return `false`. The callbacks are called many times while the event is dragged, so they must be
-pure and cheap. Do not show notifications, update state or send requests from them,
-use `onEventPlacementRejected` for that.
+The callbacks are called many times during a drag, they must be pure and cheap.
+Show notifications, update state or send requests in `onEventPlacementRejected` instead.
 
 While the event is over an invalid target, `data-invalid` attribute is set on the drag ghost
-(rendered only when `eventDragInterval` is set) and on the event that is being resized.
-`MonthView`, `ResourcesMonthView` and the all-day row of `WeekView` have no drag ghost,
-the rejection is only reported with `onEventPlacementRejected`.
+and on the event that is being resized. Month views have no drag ghost,
+the rejection is only reported with `onEventPlacementRejected`:
 
 <Demo data={WeekViewDemos.preventEventOverlap} />
 
@@ -135,10 +128,10 @@ are not counted as conflicts:
 - All-day events when the moving event is timed, and timed events when the moving event is all-day
 
 An event that ends at 10:00 and an event that starts at 10:00 do not conflict.
-In `Resources*` views, the event is checked against the events of the target resource.
+In resources views, the event is checked against the events of the target resource.
 
-`preventEventOverlap` only sees the events of the current view, a conflict outside of the visible
-range is not detected. If you need a complete check, validate the placement in `onEventDrop` as well.
+Only events of the current view are checked. To detect conflicts outside of the visible
+range, validate the placement in `onEventDrop` as well.
 
 ### Blocking drops onto closed hours
 
@@ -162,7 +155,7 @@ import { isEventsOverlap, ScheduleEventData } from '@mantine/schedule';
 - `start` – start of the rejected placement
 - `reason` – `'overlap'` when the overlap check found a conflict, `'rejected'` when a callback returned `false`
 - `conflicts` – events that the placement overlaps
-- `resourceId` – only in `Resources*` views: the target resource for `drop` and `external-drop`, the event's own resource for `resize`
+- `resourceId` – target resource, only in resources views
 
 Other fields depend on `action`:
 
@@ -175,35 +168,35 @@ Other fields depend on `action`:
   ]}
 />
 
-`preventEventOverlap` does not apply to external drops: the schedule does not know the duration
-of an external item. `canDropExternalEvent` can read only `dataTransfer.types`, the data itself
-is not available while the drag is in progress.
+`preventEventOverlap` does not apply to external drops, the schedule does not know the duration
+of an external item. `canDropExternalEvent` can read only `dataTransfer.types` while the drag is in progress.
 
 ## Recurring events
 
-Schedule automatically expands recurring events for the visible date range in each view.
-See [Recurring events guide](/schedule/recurring-events) for full documentation.
+Recurring events are expanded for the visible date range of each view,
+see [recurring events guide](/schedule/recurring-events):
 
 <Demo data={ScheduleDemos.recurringEvents} />
 
 ## Background events
 
-Set `display="background"` on an event to render it as a full-width, non-interactive
-block behind regular events. Background events work in Day, Week, and Month views.
+Set `display="background"` on an event to render it as a non-interactive block behind
+regular events. Background events work in day, week and month views:
 
 <Demo data={ScheduleDemos.backgroundEvents} />
 
 ## Responsive layout
 
-Schedule supports `layout="responsive"` prop that automatically switches between views
-based on the container width. Resize the container below to see the view change.
+Set `layout="responsive"` to switch between views based on the container width.
+Resize the container below to see the view change:
 
 <Demo data={ScheduleDemos.responsiveLayout} />
 
 ## View components
 
-For more control over individual views, use the view components directly:
-- [DayView](/schedule/day-view) - Single day with time slots
-- [WeekView](/schedule/week-view) - Full week with time slots
-- [MonthView](/schedule/month-view) - Calendar month grid
-- [YearView](/schedule/year-view) - Full year overview
+Use view components directly for more control over a single view:
+
+- [DayView](/schedule/day-view) – single day with time slots
+- [WeekView](/schedule/week-view) – full week with time slots
+- [MonthView](/schedule/month-view) – calendar month grid
+- [YearView](/schedule/year-view) – full year overview

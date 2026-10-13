@@ -6,8 +6,7 @@ export default Layout(MDX_DATA.BarsList);
 
 ## Usage
 
-`BarsList` component displays a list of bars with names and values.
-The only required prop is `data` – an array of objects with `name` and `value` properties.
+`BarsList` displays a list of horizontal bars with names and values:
 
 <Demo data={BarsListDemos.usage} />
 
@@ -26,8 +25,7 @@ export const data = [
 
 ## Value formatter
 
-Use `valueFormatter` prop to format the value displayed next to the bar.
-The function receives the numeric value and must return a string.
+Use `valueFormatter` prop to format the value displayed next to the bar:
 
 <Demo data={BarsListDemos.valueFormatter} />
 
@@ -63,9 +61,8 @@ Use `barColor` and `barTextColor` props to set the default background and text c
 
 ## Auto contrast
 
-`BarsList` automatically adjusts text color based on the bar background color. This behavior is
-controlled by [theme.autoContrast](/theming/theme-object/#autocontrast), which is `true` by default.
-Set `autoContrast={false}` to disable it.
+Text color is adjusted to the bar background color when [theme.autoContrast](/theming/theme-object/#autocontrast) is enabled.
+Set `autoContrast={false}` to disable it:
 
 <Demo data={BarsListDemos.autoContrast} />
 
@@ -77,8 +74,7 @@ Each bar can have its own color by setting the `color` property in the data:
 
 ## Get bar props
 
-Use `getBarProps` to pass additional props to each bar element.
-For example, it can be used to add custom styling or event handlers:
+Use `getBarProps` to add props to each bar element, for example, event handlers:
 
 <Demo data={BarsListDemos.getBarProps} />
 

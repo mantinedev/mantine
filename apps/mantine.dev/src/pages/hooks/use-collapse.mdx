@@ -6,8 +6,8 @@ export default Layout(MDX_DATA.useCollapse);
 
 ## Usage
 
-`use-collapse` is the hook version of [Collapse](/core/collapse) component.
-It allows animation of height from `0` to `auto` and vice versa.
+`use-collapse` is the hook version of the [Collapse](/core/collapse) component.
+It animates element height from `0` to `auto` and back:
 
 <Demo data={UseCollapseDemos.usage} />
 
@@ -19,8 +19,7 @@ It allows animation of height from `0` to `auto` and vice versa.
 
 ## ref prop
 
-`getCollapseProps` return value includes `ref` prop. It must be passed to the collapsible element
-to make the hook work correctly.
+`getCollapseProps` returns a `ref` prop. It must be passed to the collapsible element for the hook to work.
 
 ## Definition
 

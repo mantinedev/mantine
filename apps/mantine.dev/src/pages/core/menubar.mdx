@@ -6,19 +6,18 @@ export default Layout(MDX_DATA.Menubar);
 
 ## Usage
 
-`Menubar` is a desktop-application style menu bar: a horizontal row of triggers
-(File, Edit, View, …), each of them opens a dropdown. `Menubar` is built on top of
-[Menu](/core/menu), dropdown content is composed from `Menu.Item`, `Menu.Divider` and other
-`Menu` components.
+`Menubar` is a horizontal row of menu triggers (File, Edit, View), each opening a dropdown.
+It is built on top of [Menu](/core/menu): dropdown content is composed from `Menu.Item`,
+`Menu.Divider` and other `Menu` components:
 
 <Demo data={MenubarDemos.usage} />
 
 ## How it differs from Menu
 
-[Menu](/core/menu) is one target that toggles one dropdown. `Menubar` coordinates multiple menus:
+`Menu` is one target that toggles one dropdown. `Menubar` coordinates multiple menus:
 
-- Only one menu is open at a time. Moving to another target while a menu is open switches the open menu.
-- The whole bar is a single tab stop, arrow keys move focus between targets.
+- Only one menu is open at a time, moving to another target switches the open menu
+- The whole bar is a single tab stop, arrow keys move focus between targets
 
 If you need a single dropdown attached to one button, use [Menu](/core/menu) instead.
 
@@ -57,45 +56,41 @@ function Demo() {
 
 ## Trigger and loop
 
-By default, a menu opens when its target is clicked. Once a menu is open, hovering another
-target switches to it. Set `trigger="hover"` to open menus on hover, the menu closes when
-the pointer leaves the bar.
-
-Set `loop={false}` to stop arrow key navigation from wrapping around from the last menu
-to the first and vice versa.
+By default, a menu opens on click, and hovering another target switches the open menu.
+Set `trigger="hover"` to open menus on hover. Set `loop={false}` to stop arrow key
+navigation from wrapping around:
 
 <Demo data={MenubarDemos.hover} />
 
 ## Submenus
 
-Use `Menu.Sub` inside `Menubar.Dropdown` to create nested submenus, see the
-[Menu submenus documentation](/core/menu/#submenus). The [usage demo](#usage) includes
-a submenu in the File menu.
+Use `Menu.Sub` inside `Menubar.Dropdown` to create nested submenus, see
+[Menu submenus](/core/menu/#submenus). The usage demo above has a submenu in the File menu.
 
 ## Checkbox and radio items
 
 Use `Menu.CheckboxItem` for toggles and `Menu.RadioGroup` with `Menu.RadioItem` for
-single-choice options. By default, clicking these items does not close the menu.
+single-choice options. Clicking these items does not close the menu:
 
 <Demo data={MenubarDemos.selectable} />
 
 ## Controlled
 
 Use `openIndex` and `onOpenChange` props to control which menu is open. `openIndex` is the
-index of the opened `Menubar.Menu` or `null` when all menus are closed.
-
-Use `defaultOpenIndex` to open a menu initially without controlling the state.
+index of the opened `Menubar.Menu` or `null` when all menus are closed. Use `defaultOpenIndex`
+to open a menu initially without controlling the state:
 
 <Demo data={MenubarDemos.controlled} />
 
 ## Controlling with useMenubar
 
-`Menubar` component supports the [controller pattern](/guides/controllers). Use the `useMenubar` hook to manage `Menubar` state:
+`Menubar` supports the [controller pattern](/guides/controllers). Use the `useMenubar` hook
+to manage `Menubar` state. When `controller` is set, the open index and `loop` props of
+`Menubar` are ignored, pass them to `useMenubar` instead:
 
 <Demo data={MenubarDemos.controller} />
 
-`useMenubar` accepts the state options that `Menubar` accepts as props, and returns the current
-state, actions and queries:
+`useMenubar` returns the current state, actions and queries:
 
 ```tsx
 import { Menubar, useMenubar } from '@mantine/core';
@@ -121,7 +116,7 @@ function Demo() {
   controller.focusPreviousMenu();
   controller.focusFirstMenu();
   controller.focusLastMenu();
-  controller.focusMenuItem(1, 'first'); // -> focuses the first item of the opened menu dropdown
+  controller.focusMenuItem(1, 'first'); // -> focuses the first item of the opened menu, call after openMenu
 
   // Queries
   controller.getOpenIndex(); // -> index of the opened menu, null when all menus are closed
@@ -135,30 +130,10 @@ function Demo() {
 }
 ```
 
-The controller owns the state, so when the `controller` prop is set, the `openIndex`,
-`defaultOpenIndex`, `onOpenChange` and `loop` props of `Menubar` are ignored – pass them to
-`useMenubar` instead. `trigger` and `position` are not owned by the controller and keep working as
-props.
-
-Every query and focus action reads the targets rendered by the associated `Menubar`, which reports
-its root element to the controller when it mounts. They are no-op (`getMenuCount()` returns `0`,
-`getEnabledIndexes()` returns an empty array) while no `Menubar` is mounted with the controller, and
-they are functions rather than fields because the rendered menus are not reactive – reading them
-does not re-render the component that owns the controller. One controller drives one `Menubar`:
-the root element is replaced rather than accumulated, so two `Menubar` components sharing a
-controller report only the menus of the one that mounted last.
-
-`focusMenuItem` focuses an item of a dropdown that is already opened. Call it after `openMenu` – it
-waits for the dropdown to render before moving focus, so the two compose into "open this menu and
-step into it", which is what a global keyboard shortcut needs.
-
-The controller is typed as `MenubarController` and its options as `MenubarControllerOptions`, both
-exported from `@mantine/core`.
-
 ## Position
 
-By default, dropdowns are positioned at `bottom-start`. Set the `position` prop to use a different
-[Floating UI position](/core/menu/#dropdown-position) for all menus in the bar:
+Set the `position` prop to change the [dropdown position](/core/menu/#dropdown-position)
+of all menus in the bar:
 
 ```tsx
 import { Menubar } from '@mantine/core';
@@ -172,7 +147,7 @@ function Demo() {
 }
 ```
 
-To override settings of a single menu, pass [Menu](/core/menu) props to `Menubar.Menu`,
+To override settings of a single menu, pass `Menu` props to `Menubar.Menu`,
 for example `position` or `closeOnItemClick`.
 
 ## Keyboard interactions

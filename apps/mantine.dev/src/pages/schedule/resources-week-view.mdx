@@ -6,35 +6,31 @@ export default Layout(MDX_DATA.ResourcesWeekView);
 
 ## Usage
 
-ResourcesWeekView displays resources as rows and a full week of time slots as columns
-with a two-level header showing day names and time labels. Each row represents a resource
-(e.g., conference room, person, equipment) and shows events assigned to that resource
-via the `resourceId` property on event data.
+`ResourcesWeekView` displays resources as rows and a week of time slots as columns.
+Events are assigned to a resource with `resourceId` property:
 
 <Demo data={ResourcesWeekViewDemos.usage} />
 
 ## All-day events
 
-Events that span a whole day (start at `00:00:00` and end at the next day `00:00:00`) are
-rendered as full-width bars within their day column. Foreground all-day events are pinned to
-the top of the column and stack when there are several; all-day events with
-`display: 'background'` tint the whole day column.
+Events that start at midnight and end at the next midnight are all-day events.
+They are pinned to the top of their day column, all-day background events tint the whole column:
 
 <Demo data={ResourcesWeekViewDemos.allDayEvents} />
 
 ## Interactive background events
 
 Set `withInteractiveBackgroundEvents` prop to make background events clickable. `onEventClick`
-is called the same way as for regular events, use `event.display === 'background'` to tell them apart.
-Interactive background events cover the time slots underneath them and cannot be dragged.
+is called with the background event, check `event.display === 'background'` to tell it apart.
+An interactive background event covers the time slots underneath it, clicks in its range go to the event:
 
 <Demo data={ResourcesWeekViewDemos.interactiveBackgroundEvents} />
 
 ## Resizable background events
 
-Set both `withEventResize` and `withInteractiveBackgroundEvents` to allow resizing
-background events. All-day background events cannot be resized. To resize only regular
-events, return `false` from `canResizeEvent`:
+Set `withEventResize` together with `withInteractiveBackgroundEvents` to make background events resizable.
+All-day background events are never resizable. To keep background events fixed while
+regular events stay resizable, return `false` from `canResizeEvent`:
 
 ```tsx
 <ResourcesWeekView
@@ -47,172 +43,152 @@ events, return `false` from `canResizeEvent`:
 
 ## Drag and drop
 
-Enable drag and drop with `withEventsDragAndDrop` prop. The `onEventDrop` callback receives
-the `resourceId` of the target resource, use it to update the event's resource.
-Events can be dragged across both resources and days.
-
-To reject a drop based on where the event lands, for example to prevent double booking, use
-`preventEventOverlap` and `canDropEvent`, see [drop validation](/schedule/schedule/#drop-validation).
-In resource views, the event is checked against the events of the target resource.
+Set `withEventsDragAndDrop` prop to allow dragging events between resources and time slots.
+`onEventDrop` receives `resourceId` of the target resource, use it to update the event's resource.
+To reject a drop, for example to prevent double booking, see [drop validation](/schedule/schedule/#drop-validation):
 
 <Demo data={ResourcesWeekViewDemos.dragDrop} />
 
 ## Drag interval
 
-By default, dragged events snap to `intervalMinutes`. Set `eventDragInterval` to use a different
-step, for example to move events in 15-minute increments on a grid with 30-minute slots.
-A ghost preview shows where the event will land:
+Dragged events snap to `intervalMinutes` by default. Set `eventDragInterval` to use a different step,
+for example to move events in 15-minute increments on a grid with 30-minute slots:
 
 <Demo data={ResourcesWeekViewDemos.eventDragInterval} />
 
 ## Event form
 
-Use `onTimeSlotClick`, `onSlotDragEnd`, and `onEventClick` callbacks to open a form
-for creating or editing events. Combine with `withDragSlotSelect` to allow selecting
-a time range by dragging across slots.
+Use slot and event click callbacks to open a form that creates and edits events.
+Set `withDragSlotSelect` to allow selecting a time range by dragging across slots:
 
 <Demo data={ResourcesWeekViewDemos.eventForm} />
 
 ## Time range and intervals
 
-Use `startTime`, `endTime` and `intervalMinutes` props to control the visible time range
-and slot granularity.
+Use `startTime`, `endTime` and `intervalMinutes` props to set the visible time range and slot length:
 
 <Demo data={ResourcesWeekViewDemos.timeRange} />
 
 ## Multi-hour intervals
 
-`intervalMinutes` accepts values that divide evenly into an hour (for example `15` or `30`)
-or whole numbers of hours (for example `120` or `240`).
+`intervalMinutes` accepts values that divide an hour evenly, for example `15` or `30`,
+or whole hours, for example `120` or `240`:
 
 <Demo data={ResourcesWeekViewDemos.multiHourIntervals} />
 
 ## Current time indicator
 
-Use `withCurrentTimeIndicator` to display a line at the current time. Set `withCurrentTimeBubble={false}`
-to hide the time bubble label.
+Set `withCurrentTimeIndicator` to display a line at the current time.
+Set `withCurrentTimeBubble={false}` to hide the time bubble:
 
 <Demo data={ResourcesWeekViewDemos.currentTimeIndicator} />
 
 ## Current time indicator in a different timezone
 
-`@mantine/schedule` does not perform timezone conversions, the current time indicator
-is positioned based on the user's local time. To display it in a different timezone, pass
-a function that returns the current time to `getCurrentTime` prop. The example below uses
-the [dayjs timezone plugin](https://day.js.org/docs/en/plugin/timezone):
+The indicator is positioned based on the user's local time, `@mantine/schedule` does not convert timezones.
+To display it in a different timezone, return the current time from `getCurrentTime` prop.
+The example below uses the [dayjs timezone plugin](https://day.js.org/docs/en/plugin/timezone):
 
 <Demo data={ResourcesWeekViewDemos.timezone} />
 
 ## First day of week
 
-Use `firstDayOfWeek` to set the first day of the week. Set `weekdayFormat` to customize
-the day label format.
+Use `firstDayOfWeek` to change the first day of the week and `weekdayFormat` to change the day label format:
 
 <Demo data={ResourcesWeekViewDemos.firstDayOfWeek} />
 
 ## Custom week label
 
-Use `renderWeekLabel` to fully customize the week label in the header.
-Use `weekLabelFormat` instead if you only need to change the date format.
+Use `renderWeekLabel` to replace the week label in the header.
+Use `weekLabelFormat` if you only need to change the date format:
 
 <Demo data={ResourcesWeekViewDemos.renderWeekLabel} />
 
 ## Business hours
 
-Use `highlightBusinessHours` prop to visually distinguish business hours from non-business hours.
+Set `highlightBusinessHours` to highlight business hours:
 
 <Demo data={ResourcesWeekViewDemos.businessHours} />
 
 ## Without weekend days
 
-Set `withWeekendDays={false}` to hide weekend days from the view.
+Set `withWeekendDays={false}` to hide weekend days:
 
 <Demo data={ResourcesWeekViewDemos.withoutWeekendDays} />
 
 ## Custom resource label
 
-Use `renderResourceLabel` prop to customize how resource labels are rendered.
+Use `renderResourceLabel` prop to change resource labels content:
 
 <Demo data={ResourcesWeekViewDemos.renderResourceLabel} />
 
 ## Resource groups
 
-Use `groups` prop to group resources under labeled headers. The group labels are displayed
-as a column to the left of resource labels, spanning vertically across their resources.
-Use `renderGroupLabel` to customize group label rendering and `groupLabelWidth` to control
-the group column width.
+Use `groups` prop to group resources under labels displayed in a column to the left of resources.
+Use `renderGroupLabel` to change the label content and `groupLabelWidth` to change the column width:
 
 <Demo data={ResourcesWeekViewDemos.resourceGroups} />
 
 ## Custom event rendering
 
-Use `renderEvent` prop to customize how events are rendered. The example below
-shows event details in a hover card.
+Use `renderEvent` prop to replace the event element. The example below shows event details in a hover card:
 
 <Demo data={ResourcesWeekViewDemos.renderEvent} />
 
 ## Recurring events
 
-ResourcesWeekView automatically expands recurring events for the visible week.
-See [Recurring events guide](/schedule/recurring-events) for full documentation.
+Recurring events are expanded for the visible week, see [recurring events guide](/schedule/recurring-events):
 
 <Demo data={ResourcesWeekViewDemos.recurringEvents} />
 
 ## Max events per time slot
 
 Use `maxEventsPerTimeSlot` prop to limit the number of visible overlapping events per time slot.
-The "+N more" indicator opens a popover with all events of the group, use `moreEventsProps`
-to customize it.
+The "+N more" indicator opens a popover with all events, use `moreEventsProps` to customize it:
 
 <Demo data={ResourcesWeekViewDemos.maxEventsPerTimeSlot} />
 
 ## Localization
 
-Use `locale` prop to set the locale for date formatting and `labels` prop to override
-default labels.
+Use `locale` prop to set the dayjs locale and `labels` prop to override built-in labels:
 
 <Demo data={ResourcesWeekViewDemos.localization} />
 
 ## Radius
 
-Use `radius` prop to change the border radius of events.
+Use `radius` prop to change the border radius of events:
 
 <Demo data={ResourcesWeekViewDemos.radius} />
 
 ## Start scroll date time
 
-Use `startScrollDateTime` prop to scroll to a specific time on mount.
+Use `startScrollDateTime` prop to set the date and time the view is scrolled to initially:
 
 <Demo data={ResourcesWeekViewDemos.startScrollDateTime} />
 
 ## Scroll area props
 
-Use `scrollAreaProps` to pass props to the underlying ScrollArea component.
+Use `scrollAreaProps` to pass props to the underlying `ScrollArea`:
 
 <Demo data={ResourcesWeekViewDemos.scrollAreaProps} />
 
 ## Event resize
 
-Enable event resizing with `withEventResize` prop. Events can be resized by dragging their left or
-right edges, `onEventResize` is called with the new start and end times.
-
-To reject a resize based on the new range, use `preventEventOverlap` and `canResizeEventTo`, see
-[drop validation](/schedule/schedule/#drop-validation).
-
-An event cannot be resized to span multiple days. Use `canResizeEvent` to control which events
-can be resized.
+Set `withEventResize` prop to allow changing event start and end by dragging its edges,
+`onEventResize` is called with the new range. An event cannot be resized across days.
+To reject a resize, see [drop validation](/schedule/schedule/#drop-validation):
 
 <Demo data={ResourcesWeekViewDemos.eventResize} />
 
 ## Resize interval
 
-By default, resized events snap to `intervalMinutes`. Set `eventResizeInterval` to use a different
-step, for example to resize events in 15-minute increments on a grid with 30-minute slots:
+Resized events snap to `intervalMinutes` by default. Set `eventResizeInterval` to use a different step,
+for example to resize events in 15-minute increments on a grid with 30-minute slots:
 
 <Demo data={ResourcesWeekViewDemos.eventResizeInterval} />
 
 ## Static mode
 
-Set `mode="static"` to disable all interactions.
+Set `mode="static"` to disable all interactions:
 
 <Demo data={ResourcesWeekViewDemos.staticMode} />

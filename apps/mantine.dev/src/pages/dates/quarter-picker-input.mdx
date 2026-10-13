@@ -7,7 +7,7 @@ export default Layout(MDX_DATA.QuarterPickerInput);
 ## QuarterPicker props
 
 `QuarterPickerInput` supports most of the [QuarterPicker](/dates/quarter-picker/) props.
-Read through the [QuarterPicker](/dates/quarter-picker/) documentation to learn about all component features that are not listed on this page.
+Features that are not listed on this page are documented there.
 
 ## Usage
 
@@ -40,55 +40,30 @@ To use `presets` with `type="range"`, define the value as a tuple of two dates:
 
 ## Controlling with useQuarterPickerInput
 
-`QuarterPickerInput` component supports the [controller pattern](/guides/controllers). Use the `useQuarterPickerInput` hook to manage `QuarterPickerInput` state:
+`QuarterPickerInput` component supports the [controller pattern](/guides/controllers). Use the `useQuarterPickerInput` hook to manage `QuarterPickerInput` state.
+The controller does not own the selected value, keep using `value` and `onChange` for it.
+When the `controller` prop is set, the date, level and dropdown state props of the component are ignored, pass them to `useQuarterPickerInput` instead.
+
+The dropdown resets the displayed date and level every time it opens.
+To open it on another level or date, call `setLevel` or `setDate` after `openDropdown`:
 
 <Demo data={QuarterPickerInputDemos.controller} />
 
-Every time the dropdown opens, the displayed year is reset to the selected value (or to `defaultDate`
-when there is no value) and the level is reset to `defaultLevel` (`'year'` by default). To open on a
-different level or year, call `setLevel` or `setDate` right after `openDropdown`, as the demo above does.
-
-The controller does not own the selected value – keep using `value`/`onChange` (or your form
-library) for it. When the `controller` prop is set, the `date`, `defaultDate`, `onDateChange`, `level`, `defaultLevel`, `onLevelChange`, `popoverProps.opened` and
-`popoverProps.onChange` props are ignored – pass them to `useQuarterPickerInput` instead (`dropdownOpened` and
-`onDropdownOpenedChange` replace `popoverProps.opened` and `popoverProps.onChange`).
-
-`openDropdown` does nothing while the input is `disabled` or `readOnly`. With `type="range"`, closing
-the dropdown when only the first quarter of the range is picked clears the value, whether the dropdown is
-closed by the user or with `closeDropdown`.
-
-If you only need the dropdown state, `popoverProps={{ opened, onChange }}` controls it without a
-controller in every dropdown type (`popover`, `modal` and `drawer`): `onChange` is called on every open and close, including the input click and the close
-after a pick, and the input keeps opening and closing the dropdown through it.
-
-The controller is typed as `PickerInputController` and its options as `PickerInputControllerOptions`,
-both exported from `@mantine/dates`. The same types are used by `DatePickerInput`, `MonthPickerInput`,
-`YearPickerInput`, `WeekPickerInput` and `QuarterPickerInput`.
-
 ## Dropdown type
 
-The dropdown opens in a bottom [Drawer](/core/drawer/) below `theme.breakpoints.sm` and in a
-[Popover](/core/popover/) above. Set `dropdownType` to `'popover'`, `'modal'`, `'drawer'` or an object
-with breakpoints:
+By default, the dropdown is a bottom [Drawer](/core/drawer/) below `theme.breakpoints.sm` and a popover above.
+Set `dropdownType` to `popover`, `modal`, `drawer` or an object with breakpoints.
+Use `popoverProps`, `modalProps` and `drawerProps` to pass props down to the underlying component:
 
 <Demo data={QuarterPickerInputDemos.dropdownType} />
 
-Object keys can be `theme.breakpoints` keys or custom values in px, for example,
-`{ base: 'drawer', 600: 'popover' }`. Use `popoverProps`, `modalProps` and `drawerProps` to pass props
-down to the underlying component. If the viewport crosses a breakpoint while the dropdown is open,
-the dropdown switches to the other type and a selection that was not applied yet is discarded.
-
 ## Submit button
 
-In `drawer` and `modal` dropdowns, the value is applied only when the submit button is pressed, and
-closing the dropdown discards the selection. Set `applyOnSubmit={false}` to apply the value on selection:
+In `drawer` and `modal` dropdowns, the value is applied when the submit button is pressed.
+Set `applyOnSubmit={false}` to apply the value on selection.
+Change the button label with the `submitButtonLabel` prop or the same [DatesProvider](/dates/getting-started/#datesprovider) setting, and pass other props with `submitButtonProps`:
 
 <Demo data={QuarterPickerInputDemos.applyOnSubmit} />
-
-- The label is `Save` by default – change it with the `submitButtonLabel` prop or the `submitButtonLabel`
-  setting of [DatesProvider](/dates/getting-started/#datesprovider)
-- `submitButtonProps` are passed down to the [Button](/core/button/)
-- With `type="range"`, the button is disabled until both dates are selected
 
 ## Value format
 
@@ -99,19 +74,16 @@ The default format is `[Q]Q YYYY`, for example `Q2 2026`:
 
 ## Value formatter
 
-`valueFormatter` is a more powerful alternative to the `valueFormat` prop.
-It allows formatting the value label with a custom function.
-The function is the same for all component types (`default`, `multiple` and `range`)
-– you need to perform additional checks inside the function to handle different types.
-
-Example of using a custom formatter function with `type="multiple"`:
+`valueFormatter` formats the value label with a custom function.
+The same function is called for all `type` values, so check the value type inside it.
+Example with `type="multiple"`:
 
 <Demo data={QuarterPickerInputDemos.valueFormatter} />
 
 ## Clearable
 
-Set the `clearable` prop to display a clear button in the right section. Note that if you set the `rightSection`
-prop, the clear button will not be displayed.
+Set the `clearable` prop to display a clear button in the right section.
+The clear button is not displayed when the `rightSection` prop is set:
 
 <Demo data={QuarterPickerInputDemos.clearable} />
 
@@ -125,14 +97,13 @@ prop, the clear button will not be displayed.
 
 ## Min and max dates
 
-`minDate` and `maxDate` props define the minimum and maximum dates that can be picked.
 Quarters that end before `minDate` or start after `maxDate` are disabled:
 
 <Demo data={QuarterPickerInputDemos.minMax} />
 
 ## Max level
 
-`maxLevel` prop allows to set the maximum level that can be reached by clicking on the label in the header.
+Set `maxLevel` to limit the level that can be reached by clicking on the header label:
 
 <Demo data={QuarterPickerInputDemos.maxLevel} />
 

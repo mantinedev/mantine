@@ -6,55 +6,48 @@ export default Layout(MDX_DATA.useSplitter);
 
 ## Usage
 
-`use-splitter` hook provides resizable split-pane functionality. It handles pointer drag
-on resize handles, keyboard navigation following the WAI-ARIA Window Splitter pattern,
-collapsible panels and min/max constraints.
+`use-splitter` manages resizable panels: drag and keyboard resizing, collapsible panels,
+minimum and maximum sizes:
 
 <Demo data={UseSplitterDemos.usage} />
 
 ## CSS units
 
 `defaultSize`, `min` and `max` accept CSS units. A number or `%` string is a flexible size
-that shares the leftover space, a `px` or `rem` string is a fixed size that does not change
+that shares the leftover space. A `px` or `rem` string is a fixed size that does not change
 when the container is resized. Sizes are reported in the unit they were declared in:
-a `'240px'` pane stays `'240px'` in `sizes` and `onSizeChange`.
 
 <Demo data={UseSplitterDemos.cssUnits} />
 
 ## Vertical orientation
 
-Set `orientation: 'vertical'` to create a vertical split layout.
-Keyboard navigation uses ArrowUp/ArrowDown instead of ArrowLeft/ArrowRight:
+Set `orientation: 'vertical'` to stack panels vertically. Handles are then resized with ArrowUp/ArrowDown:
 
 <Demo data={UseSplitterDemos.vertical} />
 
 ## Collapsible panels
 
-Set `collapsible: true` on a panel to allow it to collapse to zero size.
-When dragged below the `collapseThreshold` (defaults to `min`), the panel
-snaps to 0%. Use `collapse()`, `expand()` and `toggleCollapse()` for
-programmatic control:
+Set `collapsible: true` on a panel to let it collapse to zero size when dragged below
+`collapseThreshold` (`min` by default). Use `collapse`, `expand` and `toggleCollapse` to
+collapse panels programmatically:
 
 <Demo data={UseSplitterDemos.collapsible} />
 
 ## Multiple panels
 
-The hook supports any number of panels. Each handle controls the boundary
-between its two adjacent panels:
+The hook supports any number of panels. Each handle resizes its two adjacent panels:
 
 <Demo data={UseSplitterDemos.multiple} />
 
 ## Redistribute
 
-By default, each handle only affects its two adjacent panels: when a neighbor panel
-is at its minimum, the handle stops. Use the `redistribute` option to borrow
-space from panels further away.
+By default, a handle stops when one of its adjacent panels reaches its minimum size.
+Set `redistribute` to borrow space from panels further away.
 
 ### Nearest
 
 `redistribute: 'nearest'` takes space from the nearest panel in the drag direction first,
-then moves to the next one if more space is needed. Drag the first handle to
-the right to see it:
+then from the next one. Drag the first handle to the right to see it:
 
 <Demo data={UseSplitterDemos.redistributeNearest} />
 
@@ -67,25 +60,22 @@ drag direction, respecting the minimum size of each panel:
 
 ### Custom function
 
-Pass a function to `redistribute` to control how space is borrowed.
-The function receives `{ sizes, panels, handleIndex, delta }` and must return
-a new sizes array. This example always borrows from the last panel when growing
-and from the first panel when shrinking:
+Pass a function to `redistribute` to decide how space is borrowed. It receives the current sizes,
+the handle index and the drag delta, and returns new sizes. This example borrows from the last
+panel when growing and from the first panel when shrinking:
 
 <Demo data={UseSplitterDemos.redistributeCustom} />
 
 ## Grip only handle
 
-The drag handle can be a small grip button instead of a full-height bar.
-In this example, only the grip icon is draggable, the line between panels is not
-interactive:
+The handle can be a small grip button instead of a full-height bar. In this example, only the
+grip is draggable:
 
 <Demo data={UseSplitterDemos.gripOnly} />
 
 ## Nested layout
 
-Use several `useSplitter` instances to combine horizontal and vertical splits.
-Here the right side of a horizontal split contains a vertical split:
+Nest several `useSplitter` instances to combine horizontal and vertical splits:
 
 <Demo data={UseSplitterDemos.nested} />
 
@@ -97,8 +87,7 @@ A collapsible file explorer sidebar, a code editor panel and a terminal:
 
 ## Controlled mode
 
-Pass `sizes` and `onSizeChange` to control the sizes externally.
-Use `setSizes()` for programmatic updates:
+Pass `sizes` and `onSizeChange` to control panel sizes. Call `setSizes` to update them:
 
 <Demo data={UseSplitterDemos.controlled} />
 
@@ -115,9 +104,8 @@ Handles follow the WAI-ARIA Window Splitter pattern:
 
 ## Touch support
 
-The hook uses the Pointer Events API which handles both mouse and touch automatically.
-Set `touch-action: none` on the handle element to prevent the browser from
-interpreting touch drag as scroll:
+Touch drag works out of the box. Set `touch-action: none` on the handle element so that
+the browser does not scroll the page instead:
 
 ```css
 .handle {
@@ -223,9 +211,7 @@ function useSplitter<T extends HTMLElement = any>(
 
 ## Exported types
 
-`UseSplitterPanel`, `UseSplitterOptions`, `UseSplitterReturnValue`, `UseSplitterRedistributeInput`,
-`UseSplitterRedistributeFn`, `UseSplitterResolvedPanel`, `SplitterPaneSize` and `SplitterStep` types
-are exported from the `@mantine/hooks` package:
+The following types are exported from the `@mantine/hooks` package:
 
 ```tsx
 import type {

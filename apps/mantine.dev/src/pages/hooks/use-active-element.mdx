@@ -6,10 +6,9 @@ export default Layout(MDX_DATA.useActiveElement);
 
 ## Usage
 
-`use-active-element` reactively tracks
-[document.activeElement](https://developer.mozilla.org/en-US/docs/Web/API/Document/activeElement)
-– the element that currently has focus. The returned value is updated every time focus moves
-to another element:
+`use-active-element` returns the element that currently has focus
+([document.activeElement](https://developer.mozilla.org/en-US/docs/Web/API/Document/activeElement)).
+The value updates every time focus moves to another element:
 
 <Demo data={UseActiveElementDemos.usage} />
 
@@ -33,16 +32,14 @@ function useActiveElement<T extends Element = Element>(
 
 ## Example: ignore shortcuts while typing
 
-Use the hook to disable global keyboard shortcuts while the user is typing.
 In the example below, <kbd>/</kbd> focuses the search field only when no input is focused:
 
 <Demo data={UseActiveElementDemos.hotkey} />
 
 ## Shadow DOM
 
-When focus is inside a [web component](https://developer.mozilla.org/en-US/docs/Web/API/Web_components),
-`document.activeElement` returns the host element. By default, the hook returns the element
-that is focused inside the shadow root. Set `deep: false` to get the host element instead:
+When focus is inside a web component, the hook returns the element focused inside the shadow root.
+Set `deep: false` to get the host element instead:
 
 ```tsx
 import { useActiveElement } from '@mantine/hooks';
@@ -56,9 +53,8 @@ function Demo() {
 
 ## Trigger on removal
 
-Focus events are not dispatched when the focused element is removed from the DOM.
-By default, the hook uses [MutationObserver](https://developer.mozilla.org/en-US/docs/Web/API/MutationObserver)
-to update the value in this case. Set `triggerOnRemoval: false` to disable it:
+By default, the value is updated when the focused element is removed from the DOM.
+Set `triggerOnRemoval: false` to disable this:
 
 ```tsx
 import { useActiveElement } from '@mantine/hooks';
@@ -71,8 +67,7 @@ function Demo() {
 
 ## TypeScript
 
-The hook accepts a generic type argument for the returned element. It defaults to `Element`,
-narrow it if you know the type of the focused element in advance:
+Pass a type argument to narrow the type of the returned element:
 
 ```tsx
 import { useActiveElement } from '@mantine/hooks';

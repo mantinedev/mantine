@@ -6,8 +6,8 @@ export default Layout(MDX_DATA.DataGridColumnSizing);
 
 ## Basic column resizing
 
-Pass `withColumnResizing` to `useDataGrid` to allow users to resize columns by dragging
-column boundaries. Set the initial column width with the `size` property of a column definition.
+Pass `withColumnResizing` to `useDataGrid` to let users resize columns by dragging
+column boundaries. Set the initial column width with the `size` property of a column definition:
 
 <Demo data={DataGridDemos.columnResizing} />
 
@@ -34,8 +34,7 @@ Use `minSize` and `maxSize` in column definitions to limit the width of a resize
 
 ## Controlled column sizing
 
-Pass `columnSizing` and `onColumnSizingChange` to `useDataGrid` for controlled column sizing state.
-Access current sizes via `store.getColumnSizing()`.
+Pass `columnSizing` and `onColumnSizingChange` to `useDataGrid` for controlled column sizing state:
 
 <Demo data={DataGridDemos.columnSizingControlled} />
 
@@ -58,18 +57,18 @@ the grid `size`, use `columnSizing` to override it.
 
 ## Column size defaults
 
-TanStack Table uses these defaults when `size`, `minSize`, or `maxSize` are not specified:
+TanStack Table uses these defaults when `size`, `minSize` or `maxSize` are not set:
 
 <DataTable
   head={['Property', 'Default']}
   data={[
-    ['`size`', '`150`'],
-    ['`minSize`', '`20`'],
-    ['`maxSize`', '`Number.MAX_SAFE_INTEGER`'],
+    [<code>size</code>, <code>150</code>],
+    [<code>minSize</code>, <code>20</code>],
+    [<code>maxSize</code>, <code>Number.MAX_SAFE_INTEGER</code>],
   ]}
 />
 
-Override these globally via `tableOptions.defaultColumn`:
+Override them with `tableOptions.defaultColumn`:
 
 ```tsx
 const store = useDataGrid({
@@ -86,7 +85,7 @@ const store = useDataGrid({
 
 Use the `tableLayout` prop of `DataGrid` to change how column widths are applied:
 
-- `fixed` (default) – every column has the width set with `size`. The last data column takes the remaining space, the grid scrolls horizontally when columns do not fit.
+- `fixed` (default) – every column has the width set with `size`, the last column takes the remaining space and the grid scrolls horizontally when columns do not fit
 - `auto` – the browser distributes the remaining space between columns, `size` is a hint
 
 Use the `textOverflow` prop (`ellipsis`, `wrap` or `clip`) to change how content

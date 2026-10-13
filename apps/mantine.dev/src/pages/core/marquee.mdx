@@ -6,8 +6,7 @@ export default Layout(MDX_DATA.Marquee);
 
 ## Usage
 
-`Marquee` component creates a continuous scrolling animation for its children.
-It is commonly used for displaying logos, testimonials, or any repeating content.
+`Marquee` scrolls its children continuously, for example a row of logos or testimonials:
 
 <Demo data={MarqueeDemos.usage} />
 
@@ -27,43 +26,33 @@ must have a control to pause it ([WCAG 2.2.2](https://www.w3.org/WAI/WCAG22/Unde
 
 ## Vertical orientation
 
-Set `orientation="vertical"` to scroll content vertically. Note that you need to set
-a fixed height on the container for vertical scrolling:
+Set `orientation="vertical"` to scroll content vertically. The container must have
+a fixed height:
 
 <Demo data={MarqueeDemos.vertical} />
 
 ## Multiple rows
 
-You can combine multiple `Marquee` components with different directions to create
-more complex layouts:
+Combine several `Marquee` components with different directions:
 
 <Demo data={MarqueeDemos.multipleRows} />
 
 ## Fade edges
 
-By default, `Marquee` displays gradient fade on edges to create a smooth transition effect.
-You can customize the fade using the following props:
-
-- `fadeEdges` – enables/disables fade gradient (default: `true`)
-- `fadeEdgeColor` – color of the fade gradient (default: `var(--mantine-color-body)`)
-- `fadeEdgeSize` – size of the fade area (default: `5%`)
+By default, the edges are faded with a gradient. Use `fadeEdges`, `fadeEdgeColor` and
+`fadeEdgeSize` props to change or disable it:
 
 <Demo data={MarqueeDemos.fadeEdges} />
 
 ## Customization
 
-Use the following props to customize the marquee behavior:
-
-- `reverse` – reverses animation direction
-- `repeat` – number of times children are repeated (default: 4)
-- `duration` – animation duration in ms (default: 100000)
-- `gap` – gap between repeated children, key of `theme.spacing` or any valid CSS value
+Use `reverse`, `repeat`, `duration` and `gap` props to change the direction, speed and
+spacing of the animation:
 
 <Demo data={MarqueeDemos.configurator} />
 
 ## Accessibility
 
-`Marquee` renders children `repeat` times. Only the first copy is exposed to assistive
-technologies, the repeated copies have `aria-hidden` and `inert` attributes. The animation
-stops when the user has reduced motion enabled in the operating system and
-`respectReducedMotion` is enabled on the [theme](/theming/theme-object/).
+Only the first copy of children is exposed to assistive technologies, repeated copies are
+hidden. The animation stops when the user prefers reduced motion and `respectReducedMotion`
+is enabled on the [theme](/theming/theme-object/).

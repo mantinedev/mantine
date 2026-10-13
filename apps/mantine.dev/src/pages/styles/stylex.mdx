@@ -5,34 +5,26 @@ export default Layout(MDX_DATA.StyleX);
 
 # StyleX integration
 
-[StyleX](https://stylexjs.com/) is a styling library that compiles styles defined in JavaScript/TypeScript
-into atomic CSS at build time. It can be used to style Mantine components as an alternative to
-[CSS Modules](/styles/css-modules) if you prefer to write your styles in TypeScript.
+[StyleX](https://stylexjs.com/) compiles styles written in TypeScript into atomic CSS at build time.
+Use it to style Mantine components if you prefer TypeScript over [CSS Modules](/styles/css-modules).
 
 ## StyleX vs CSS Modules
 
-Common features of [StyleX](https://stylexjs.com/) and [CSS Modules](/styles/css-modules):
-
-- Styles are generated at build time – no runtime and performance overhead
-- Class names are scoped to the component that uses them
-
-Differences between [StyleX](https://stylexjs.com/) and [CSS Modules](/styles/css-modules):
+Like CSS Modules, StyleX generates styles at build time and scopes class names to the component.
+Differences:
 
 - StyleX styles are type-safe and are defined next to the component that uses them
-- StyleX generates atomic class names with increased specificity – StyleX styles always
-  override Mantine styles, regardless of the order in which styles are loaded
-- With StyleX you do not have access to [postcss-preset-mantine](/styles/postcss-preset) features like the `hover` and
-  `smaller-than` mixins, so not all demos from the Mantine documentation can be copied as is
-- StyleX requires a compiler plugin for your bundler. This page covers [Vite](https://vitejs.dev/) setup,
-  see [StyleX documentation](https://stylexjs.com/docs/learn/installation/) for other bundlers and frameworks
+- StyleX styles have higher specificity and always override Mantine styles, regardless of the order in which styles are loaded
+- `postcss-preset-mantine` mixins such as `hover` and `smaller-than` are not available, so not all demos from the documentation can be copied as is
+- StyleX requires a compiler plugin for your bundler. This page covers Vite setup, see
+  [StyleX documentation](https://stylexjs.com/docs/learn/installation/) for other bundlers and frameworks
 
-You can use both [StyleX](https://stylexjs.com/) and [CSS Modules](/styles/css-modules) in the same project.
+StyleX and CSS Modules can be used in the same project.
 
 ## Installation
 
-Set up Mantine in your application by following the [Vite guide](/guides/vite), then install StyleX
-and its bundler plugin. `unplugin` and `lightningcss` are required by `@stylexjs/unplugin` and must be
-installed alongside it:
+Set up Mantine by following the [Vite guide](/guides/vite), then install StyleX and its bundler
+plugin with its `unplugin` and `lightningcss` dependencies:
 
 <InstallScript packages="@stylexjs/stylex" />
 
@@ -56,12 +48,11 @@ export default defineConfig({
 });
 ```
 
-`lightningcssOptions: { exclude: Features.LightDark }` is required to use `light-dark()` function in StyleX styles.
-Without it, colors defined with `light-dark()` are not applied.
+`lightningcssOptions: { exclude: Features.LightDark }` is required to use `light-dark()` in StyleX styles.
 
-In development, StyleX plugin injects generated styles into `index.html` automatically.
-If your framework renders the HTML document itself (for example, [TanStack Start](/guides/tanstack-start)),
-add the stylesheet and the runtime script to the document `<head>` in development mode:
+In development, StyleX plugin injects generated styles into `index.html`. If your framework renders
+the HTML document itself (for example, [TanStack Start](/guides/tanstack-start)), add the stylesheet
+and the runtime script to the document `<head>` in development mode:
 
 ```html
 <link rel="stylesheet" href="/virtual:stylex.css" />
@@ -70,11 +61,11 @@ add the stylesheet and the runtime script to the document `<head>` in developmen
 
 ## Vitest
 
-StyleX styles must be compiled in tests – `stylex.create` throws an error when it is called at runtime.
+StyleX styles must be compiled in tests, `stylex.create` throws when called at runtime.
 If your [Vitest](/guides/vitest) configuration uses `vite.config.mjs`, StyleX plugin is already applied to test files.
 
-At the time of writing (`@stylexjs/unplugin@0.19`), StyleX plugin keeps Vitest process running for 10 seconds
-after all tests are completed. To avoid the delay, remove the development server hook of the plugin when running tests:
+StyleX plugin keeps the Vitest process running for several seconds after all tests are completed.
+To avoid the delay, remove the development server hook of the plugin when running tests:
 
 ```js
 import stylex from '@stylexjs/unplugin';
@@ -102,8 +93,7 @@ export default defineConfig({
 
 ## Styling components
 
-`stylex.props` function returns an object with `className` and `style` properties.
-Spread it on any Mantine component to apply styles to the root element:
+Spread the result of `stylex.props` on any Mantine component to style its root element:
 
 ```tsx
 import * as stylex from '@stylexjs/stylex';
@@ -157,17 +147,14 @@ function Demo() {
 }
 ```
 
-Do not use `attributes` prop to apply StyleX styles – Mantine class names override `className`
-passed to `attributes`, so StyleX styles are not applied.
+Do not pass StyleX class names with the `attributes` prop, Mantine class names override them.
 
 ## Components CSS variables
 
-Since StyleX styles have higher specificity than Mantine styles, they also override styles
-that Mantine applies based on component state. For example, if you set `backgroundColor`
-of a [Button](/core/button), disabled buttons keep the same background color.
-
-To keep states styles, override component CSS variables instead of CSS properties.
-All components CSS variables are listed on the Styles API tab of each component documentation page:
+StyleX styles also override styles that Mantine applies based on component state. For example,
+if you set `backgroundColor` of a button, disabled buttons keep the same background color.
+To keep state styles, override component CSS variables instead. They are listed on the Styles API
+tab of each component page:
 
 ```tsx
 import * as stylex from '@stylexjs/stylex';
@@ -195,10 +182,9 @@ function Demo() {
 
 ## Theme tokens
 
-You should not duplicate Mantine [theme](/theming/theme-object) tokens in StyleX – all
-theme properties are already exposed as [CSS variables](/styles/css-variables).
-Reference them in StyleX styles directly, or use `stylex.defineVars` to create type-safe
-references to the variables that you use frequently:
+All theme properties are exposed as [CSS variables](/styles/css-variables), do not duplicate
+them in StyleX. Reference them directly, or use `stylex.defineVars` to create type-safe
+references to the variables you use frequently:
 
 ```tsx
 // tokens.stylex.ts
@@ -237,8 +223,8 @@ Variables defined with `stylex.defineVars` must be exported from files with `.st
 
 ## Light and dark color schemes
 
-Use `light-dark()` CSS function to define different values for light and dark [color schemes](/theming/color-schemes).
-It requires `lightningcssOptions` configuration described in the [installation](#installation) section:
+Use `light-dark()` CSS function to define different values for light and dark color schemes.
+It requires the `lightningcssOptions` configuration from the [installation](#installation) section:
 
 ```tsx
 import * as stylex from '@stylexjs/stylex';
@@ -250,8 +236,8 @@ const styles = stylex.create({
 });
 ```
 
-Mantine CSS variables that depend on color scheme (for example, `--mantine-color-body`,
-`--mantine-color-text` or `--mantine-primary-color-filled`) are updated automatically.
+Mantine CSS variables that depend on the color scheme, for example `--mantine-color-body`,
+are updated automatically.
 
 ## Responsive styles
 
@@ -272,9 +258,8 @@ const styles = stylex.create({
 
 ## Dynamic styles
 
-StyleX dynamic styles are applied with `style` property returned by `stylex.props`.
-If you also pass `style` prop to the component, it overrides the one from `stylex.props`.
-To use both, pass an array to [style](/styles/style) prop:
+Dynamic styles are applied with the `style` property returned by `stylex.props`.
+To combine them with your own `style` prop, pass an array to [style](/styles/style) prop:
 
 ```tsx
 import * as stylex from '@stylexjs/stylex';
@@ -297,7 +282,6 @@ function Demo() {
 
 ## CSS layers
 
-By default, StyleX does not use CSS layers and can be used with `@mantine/core/styles.css`.
 If you enable `useCSSLayers` option in StyleX plugin, import `@mantine/core/styles.layer.css`
-instead. Otherwise, Mantine styles override all StyleX styles. See [Mantine styles](/styles/mantine-styles#css-layers) guide to learn more about
-CSS layers support.
+instead of `@mantine/core/styles.css`. Otherwise, Mantine styles override all StyleX styles.
+See [CSS layers](/styles/mantine-styles#css-layers) to learn more.

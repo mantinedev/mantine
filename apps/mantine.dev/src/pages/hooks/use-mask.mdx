@@ -6,24 +6,23 @@ export default Layout(MDX_DATA.useMask);
 
 ## Usage
 
-`use-mask` hook adds input masking to any `<input>` element. It returns a ref that must be passed
-to the input, the masked value and the raw unmasked value. If you need a ready-made input component,
-use [MaskInput](/core/mask-input).
+`use-mask` adds input masking to any `<input>` element. It returns a ref for the input, the masked
+value and the raw unmasked value. If you need a ready-made input, use [MaskInput](/core/mask-input):
 
 <Demo data={UseMaskDemos.usage} />
 
 ## isComplete, slotChar, and transform
 
 - `isComplete` – `true` when all required mask slots are filled, use it to enable a submit button
-- `slotChar` – accepts a multi-character string to show a hint for each slot
-- `transform` – converts each character before validation, the example uses it to uppercase the input
+- `slotChar` – placeholder for empty slots, a multi-character string shows a hint for each slot
+- `transform` – converts each character before validation, the example uppercases the input
 
 <Demo data={UseMaskDemos.complete} />
 
 ## Dynamic mask
 
-Use the `modify` option to change the mask based on the current input value.
-This example switches between standard and American Express credit card formats:
+Use the `modify` option to change the mask based on the current value.
+This example switches between standard and American Express card formats:
 
 <Demo data={UseMaskDemos.dynamic} />
 
@@ -43,20 +42,19 @@ In this example, `\A` is a literal character, not an uppercase letter token:
 ## Regex array format
 
 If built-in tokens are not enough, pass an array of string literals and `RegExp` objects.
-In this example, the first digit of the time input is restricted to `0-2`
-and the first digit of minutes to `0-5`:
+In this example, the first digit of hours is restricted to `0-2` and the first digit of minutes to `0-5`:
 
 <Demo data={UseMaskDemos.regex} />
 
 ## Reset
 
-Call `reset` function to clear the input value:
+Call `reset` to clear the input value:
 
 <Demo data={UseMaskDemos.reset} />
 
 ## Set value
 
-Call `setValue` function to replace the input value. The mask is applied to the given value,
+Call `setValue` to replace the input value. The mask is applied to the given value,
 `onChangeRaw` and `onComplete` are not called:
 
 ```tsx
@@ -78,8 +76,8 @@ function Demo() {
 
 ## Mask pattern syntax
 
-The mask string defines the expected format. Each character is either a **token** (editable slot)
-or a **literal** (fixed character inserted automatically).
+Each character of the mask is either a token (an editable slot) or a literal (a fixed character
+inserted automatically).
 
 ### Built-in tokens
 
@@ -99,12 +97,12 @@ useMask({ mask: '(999) 999-9999? x9999' }) // Extension is optional
 
 ## Utility functions
 
-The following pure functions are exported alongside the hook:
+The following functions are exported from `@mantine/hooks`:
 
-- `formatMask(raw, options)` – apply a mask to a raw value string
-- `unformatMask(masked, options)` – strip all mask literals from a masked value
-- `isMaskComplete(masked, options)` – check if all required slots are filled
-- `generatePattern(mode, options)` – generate a regex string for HTML `pattern` attribute
+- `formatMask(raw, options)` – applies the mask to a raw value
+- `unformatMask(masked, options)` – strips mask literals from a masked value
+- `isMaskComplete(masked, options)` – checks whether all required slots are filled
+- `generatePattern(mode, options)` – generates a regex string for the HTML `pattern` attribute
 
 ```tsx
 import { formatMask, unformatMask, isMaskComplete } from '@mantine/hooks';
@@ -180,8 +178,7 @@ function useMask(options: UseMaskOptions): UseMaskReturnValue;
 
 ## Exported types
 
-The `UseMaskOptions` and `UseMaskReturnValue` types are exported from the `@mantine/hooks` package;
-you can import them in your application:
+`UseMaskOptions` and `UseMaskReturnValue` types are exported from the `@mantine/hooks` package:
 
 ```tsx
 import type { UseMaskOptions, UseMaskReturnValue } from '@mantine/hooks';

@@ -6,14 +6,14 @@ export default Layout(MDX_DATA.ControlledVsUncontrolled);
 # Controlled vs Uncontrolled
 
 All Mantine inputs support both controlled and uncontrolled modes. This guide explains
-the difference between these two modes and when to use each of them.
+the difference and when to use each of them.
 
 ## Controlled components
 
 A controlled component is a form element whose value is stored in React state.
 The value is passed with the `value` prop and updated in the `onChange` handler.
 
-Example of a controlled `TextInput` component:
+Every keystroke updates the state and rerenders the component:
 
 ```tsx
 import { useState } from 'react';
@@ -32,15 +32,10 @@ function Demo() {
 }
 ```
 
-Every keystroke triggers a state update, which causes a re-render with the new value.
-
 ## Uncontrolled components
 
-An uncontrolled component manages its own state through the DOM or internal state,
-similar to regular HTML form elements. Use refs or DOM methods to read the current value
-when needed, usually on form submission.
-
-Example of an uncontrolled `TextInput` component:
+An uncontrolled component keeps its value in the DOM, like a native input.
+Read the value with a ref when needed, usually on submit:
 
 ```tsx
 import { useRef } from 'react';
@@ -70,28 +65,25 @@ function Demo() {
 
 - Controlled components store state in React, uncontrolled components store it in the DOM
 - Controlled components use `value` prop, uncontrolled components use `defaultValue`
-- Controlled components require `onChange` handler to remain interactive, uncontrolled components
-  work without change handlers, like regular HTML inputs
+- Controlled components need an `onChange` handler to stay interactive, uncontrolled components
+  work without it
 
 ## When to use which
 
 Use controlled components when:
-- You need to validate or manipulate input values in real-time.
-- You want to enforce specific formats or constraints on user input.
-- You require immediate feedback or dynamic UI updates based on input changes.
+
+- You validate or change the value as the user types
+- The UI depends on the value
 
 Use uncontrolled components when:
-- You want to simplify your code and reduce boilerplate for simple forms.
-- You don't need to validate or manipulate input values until form submission.
-- You are working with large forms where performance is a concern, and you want to minimize re-renders.
+
+- The form only needs values on submit
+- The form is large and rerenders are a concern
 
 ## FormData and uncontrolled components
 
-Uncontrolled forms are often used with the [FormData](https://developer.mozilla.org/en-US/docs/Web/API/FormData) API,
-which allows you to easily collect form values without managing state for each input. All Mantine components
-support uncontrolled usage with `FormData`.
-
-Example of using uncontrolled `Checkbox` with `FormData`:
+All Mantine inputs work with the [FormData](https://developer.mozilla.org/en-US/docs/Web/API/FormData) API.
+Set the `name` prop and read values on submit without any state:
 
 ```tsx
 import { Checkbox } from '@mantine/core';

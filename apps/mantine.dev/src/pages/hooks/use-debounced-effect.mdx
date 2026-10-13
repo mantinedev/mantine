@@ -7,24 +7,21 @@ export default Layout(MDX_DATA.useDebouncedEffect);
 ## Usage
 
 `use-debounced-effect` works like `useEffect`, but the effect runs only after its
-dependencies stop changing for the specified `delay`. Use it for side effects that
-depend on rapidly changing values, for example data fetching for a search input:
+dependencies stop changing for the given `delay`. Use it for side effects that
+depend on rapidly changing values, for example fetching search results:
 
 <Demo data={UseDebouncedEffectDemos.usage} />
 
 ## Difference from useEffect
 
-Unlike `useEffect`, the effect is **not** executed immediately on mount: it runs
-`delay` milliseconds after the mount and after each dependencies change. Set the
-`leading` option to run the effect immediately.
+The effect does not run immediately on mount, it runs `delay` milliseconds after the mount
+and after each dependencies change. Set the `leading` option to run it immediately.
 
-The effect may return a cleanup function. It is called before the next execution
-and when the component unmounts. A pending effect is canceled on unmount.
+The effect may return a cleanup function. It is called before the next run and on unmount.
 
 ## Options
 
-The third argument is either a number (a `delay` shorthand) or an options object
-with the same shape as [use-debounced-callback](/hooks/use-debounced-callback):
+The third argument is either a `delay` number or an options object:
 
 ```tsx
 import { useDebouncedEffect } from '@mantine/hooks';
@@ -41,9 +38,6 @@ useDebouncedEffect(() => fetchResults(query), [query], {
   maxWait: 1000,
 });
 ```
-
-With `leading: true`, the effect runs on the first change and does not run again
-on the trailing edge. Use `maxWait` to also run it periodically while the deps keep changing.
 
 ## Definition
 

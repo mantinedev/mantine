@@ -6,20 +6,17 @@ export default Layout(MDX_DATA.RecurringEventsSchedule);
 
 ## Recurring events
 
-`@mantine/schedule` supports recurring events via [RFC 5545](https://datatracker.ietf.org/doc/html/rfc5545)
-recurrence rules (powered by the [rrule](https://github.com/jkbrzt/rrule) library).
-
-There are three event shapes:
+`@mantine/schedule` supports recurring events defined with [RFC 5545](https://datatracker.ietf.org/doc/html/rfc5545)
+recurrence rules. There are three event shapes:
 
 1. **Series event** – has a `recurrence` field with an `rrule` string
-2. **Override event** – has `recurringEventId` + `recurrenceId` to replace one generated occurrence
-3. **One-off event** – has none of the recurring fields (regular event)
+2. **Override event** – has `recurringEventId` and `recurrenceId`, replaces one generated occurrence
+3. **One-off event** – a regular event without recurring fields
 
 ## Series event
 
-Series events define recurrence with `recurrence.rrule`. You can optionally add
-`recurrence.exdate` to exclude specific occurrences and `recurrence.dtstart` to set
-an explicit series start date (defaults to `start`).
+Series events define recurrence with `recurrence.rrule`. Add `recurrence.exdate` to exclude
+occurrences and `recurrence.dtstart` to set a series start other than `start`:
 
 ```tsx
 const event = {
@@ -44,9 +41,8 @@ Common rrule patterns:
 
 ## Override event
 
-Override events replace a single generated occurrence from a series.
-Use `recurringEventId` to point to the series and `recurrenceId` to identify
-which occurrence to replace (in `YYYY-MM-DD HH:mm:ss` format matching the original start time):
+An override event replaces one generated occurrence. `recurringEventId` points to the series,
+`recurrenceId` is the original start time of the replaced occurrence:
 
 ```tsx
 const override = {
@@ -62,23 +58,15 @@ const override = {
 
 ## How rendering works
 
-Each view expands recurring events only for its visible date range:
+Each view expands series events for its visible date range, removes `exdate` occurrences,
+applies overrides and renders the result together with one-off events.
 
-1. Parse the `rrule` string and generate occurrence start times within the range
-2. Remove occurrences that match `exdate` entries
-3. Replace matching occurrences with override events
-4. Merge with one-off events and render
-
-Generated instances include a `recurringInstance` metadata object with:
-
-- `isRecurringInstance` – always `true` for generated events
-- `recurringEventId` – parent series id
-- `recurrenceId` – occurrence identifier
-- `originalStart` / `originalEnd` – the occurrence dates before any overrides
+Generated events have a `recurringInstance` object with the series id and the original
+occurrence dates, see [recurring instance metadata](/schedule/events-data/#recurring-instance-metadata).
 
 ## expandRecurringEvents utility
 
-You can use the `expandRecurringEvents` utility directly for custom logic:
+Use `expandRecurringEvents` to expand events for a date range yourself:
 
 ```tsx
 import { expandRecurringEvents } from '@mantine/schedule';
@@ -93,10 +81,9 @@ const expanded = expandRecurringEvents({
 
 ## recurrenceExpansionLimit prop
 
-All views accept a `recurrenceExpansionLimit` prop (default `2000`) that limits the number
-of generated instances per recurring series. It prevents performance issues with
-rules that never end, for example `FREQ=DAILY` without `COUNT` or `UNTIL`.
-The limit applies to each series separately.
+All views accept `recurrenceExpansionLimit` prop that limits the number of generated
+occurrences per series, `2000` by default. It protects against rules that never end,
+for example `FREQ=DAILY` without `COUNT` or `UNTIL`.
 
 ## Schedule demo
 

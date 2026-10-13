@@ -6,15 +6,14 @@ export default Layout(MDX_DATA.DataGridVirtualization);
 
 ## virtualize prop
 
-The `virtualize` prop controls which axis is virtualized. Pass one of the following values:
+The `virtualize` prop controls which axis is virtualized. The `height` prop is required
+in all virtualization modes:
 
 ```tsx
 <DataGrid store={store} virtualize="rows" height={500} />
 <DataGrid store={store} virtualize="columns" height={500} />
 <DataGrid store={store} virtualize="rows,columns" height={500} />
 ```
-
-The `height` prop is required for all virtualization modes so the grid has a bounded scroll container.
 
 ## Basic virtualization
 
@@ -24,17 +23,11 @@ Set `virtualize="rows"` to render only the rows visible in the viewport:
 
 ## Row height estimate
 
-The virtualized body needs an estimated height per row before it measures the rendered rows. The
-estimate is resolved in this order, first hit wins:
-
-1. `virtualScrollConfig.estimateSize(index)`
-2. `getRowHeight(row)` when it returns a number
-3. `estimateRowHeight`
-4. the row height of the current grid `size` (`32px` at `sm`)
-
-If `getRowHeight` returns a number, it is the rendered height of the row. Return `'auto'`
-for rows with wrapped content (for example with `textOverflow="wrap"`): such rows are measured
-after render and grow to fit their content.
+The virtualized body needs an estimated row height before rows are measured. Set
+`estimateRowHeight` when your rows are taller than the default, or pass `getRowHeight` to set
+the height per row. Return `'auto'` from `getRowHeight` for rows with wrapped content
+(for example with `textOverflow="wrap"`): such rows are measured after render and grow to fit
+their content.
 
 ## Virtual scroll config
 
@@ -60,7 +53,7 @@ Fine-tune virtual scroll behavior with the `virtualScrollConfig` prop:
 
 Use the `onScrollToBottom` callback to load more data when the user scrolls near the bottom of the grid.
 It works with or without virtualization. Combine it with `loading` and `loadingVariant="bar"` to show
-progress without hiding the rows that are already loaded.
+progress without hiding the rows that are already loaded:
 
 <Demo data={DataGridDemos.infiniteScroll} />
 
@@ -86,8 +79,8 @@ Set `virtualize="rows,columns"` for grids with many rows and many columns.
 ## Parity with the table body
 
 The virtualized body renders `div` elements with ARIA grid roles instead of a `<table>`.
-It looks and behaves like the table body, see the table below for the features that are not supported.
-The header of a virtualized grid is always sticky.
+It looks and behaves like the table body, and its header is always sticky. See the table
+below for the features that are not supported.
 
 ## Feature compatibility
 
@@ -105,23 +98,21 @@ The header of a virtualized grid is always sticky.
     ['Column reorder', 'Works', 'Works'],
     ['Cell spanning', 'Not supported', 'Not supported'],
     ['Sticky header', 'Always on', 'Always on'],
-    ['`withScrollArea`', 'Ignored', 'Ignored'],
+    [<code>withScrollArea</code>, 'Ignored', 'Ignored'],
   ]}
 />
 
-Row pinning and row reorder are turned off with a development warning when `virtualize` is set.
-
 ## Performance tips
 
-- Always memoize your `data` and `columns` arrays with `useMemo` to prevent unnecessary re-renders.
-- Set explicit `size` on columns to avoid layout recalculation.
-- Use `getRowId` to provide stable row identifiers instead of relying on array index.
-- Adjust `overscan` based on row height: fewer overscan rows for tall rows, more for short rows.
-- For extremely large datasets (1M+ rows), consider server-side pagination instead.
+- Memoize `data` and `columns` arrays with `useMemo`
+- Set explicit `size` on columns to avoid layout recalculation
+- Use `getRowId` to provide stable row ids
+- Adjust `overscan` to the row height: fewer rows for tall rows, more for short rows
+- For extremely large datasets (1M+ rows), consider server-side pagination instead
 
 ## Accessibility
 
-The virtualized grid sets `aria-rowcount`, `aria-rowindex` and `aria-colindex`, so screen readers
+The virtualized grid sets `aria-rowcount`, `aria-rowindex` and `aria-colindex`. Screen readers
 announce the row position (for example "row 500 of 100,000") even though only a part of the rows
 is in the DOM. Keyboard navigation follows the same focus model as the table body, see
 [Accessibility](/data-grid/accessibility).

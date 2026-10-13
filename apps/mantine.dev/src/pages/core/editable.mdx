@@ -24,17 +24,14 @@ The edit is committed on `Enter` or blur and cancelled on `Escape`:
 
 ## Submit mode
 
-`submitMode` prop controls what commits the edit. `Escape` cancels the edit in all modes.
+`submitMode` prop controls what commits the edit. `Escape` cancels the edit in all modes:
 
 - `both` (default) – `Enter` and blur
 - `enter` – only `Enter`
-- `blur` – only blur
+- `blur` – only blur, including when the browser window loses focus
 - `none` – only the controller or `Editable.SubmitTrigger`
 
 <Demo data={EditableDemos.submitMode} />
-
-Blur commits the edit when focus leaves `Editable`, including when the browser window
-loses focus.
 
 ## Select on focus
 
@@ -59,8 +56,7 @@ Set `placeholder` to display text when the value is empty. It can be a string or
 ## Controlled value
 
 Use `value` and `onChange` props to control the value. `onChange` is called on every keystroke,
-`onValueCommit` is called when the edit is confirmed and `onValueRevert` is called when it is
-cancelled:
+`onValueCommit` when the edit is confirmed and `onValueRevert` when it is cancelled:
 
 ```tsx
 import { useState } from 'react';
@@ -96,17 +92,14 @@ function Demo() {
 
 ## Multiline
 
-Set `multiline` prop to use a `textarea` instead of an `input`. In multiline mode `Enter` inserts a
-new line and the edit is committed with `Cmd`/`Ctrl` + `Enter` or on blur. Set `autosize` to grow
-the field with its content, use `minRows` and `maxRows` to limit its size:
+Set `multiline` prop to use a textarea. `Enter` then inserts a new line and the edit is committed
+with `Cmd`/`Ctrl` + `Enter` or on blur. Set `autosize` to grow the field with its content:
 
 <Demo data={EditableDemos.multiline} />
 
 ## useEditable hook
 
-`Editable` supports the [controller pattern](/guides/controllers). Use the `useEditable` hook
-to share one controller between several components or to build custom edit-in-place UI.
-It returns the editing state and actions:
+`Editable` supports the [controller pattern](/guides/controllers) with the `useEditable` hook:
 
 ```tsx
 import { useEditable } from '@mantine/core';
@@ -154,13 +147,11 @@ function Demo() {
 
 ## Controlling with useEditable
 
-To control `Editable` from outside, create a controller with `useEditable` and pass it to the
-`controller` prop. When a controller is provided, the props accepted by `useEditable` are
-ignored on `Editable` – pass them to `useEditable`.
+Pass the controller to the `controller` prop. The options accepted by `useEditable` are then
+ignored on `Editable`, pass them to the hook instead.
 
-Buttons outside of `Editable` that call `submit` or `cancel` must call `event.preventDefault()` in
-`onMouseDown`. Otherwise the input loses focus and the blur commits the edit before the click
-is handled. `submitMode="none"` does not have this issue.
+Buttons outside of `Editable` that call `submit` or `cancel` must call `event.preventDefault()`
+in `onMouseDown`, otherwise blur commits the edit before the click is handled:
 
 <Demo data={EditableDemos.controller} />
 
@@ -168,34 +159,23 @@ is handled. `submitMode="none"` does not have this issue.
 
 Pass compound components as children to change the layout. Triggers are displayed only in
 the relevant mode: the edit trigger in preview mode, the submit and cancel triggers in edit mode.
+Use `Editable.Textarea` instead of `Editable.Input` for multiline values:
 
 <Demo data={EditableDemos.triggers} />
 
-### Compound components
-
-- `Editable.Area` – optional wrapper of the preview and input
-- `Editable.Preview` – displays the value in preview mode
-- `Editable.Input` – the input displayed in edit mode
-- `Editable.Textarea` – the textarea displayed in edit mode, use it instead of `Editable.Input` for multiline values
-- `Editable.Control` – wrapper of the triggers
-- `Editable.EditTrigger` – enters edit mode
-- `Editable.SubmitTrigger` – commits the edit
-- `Editable.CancelTrigger` – cancels the edit
-
 ## Form field props
 
-`disabled`, `readOnly`, `required`, `maxLength` and `name` props are forwarded to the field.
+Native field props such as `name`, `required` and `maxLength` are forwarded to the input.
 Set `name` to include the value in native form submission.
 
-In preview mode the value is submitted with a hidden input, which is not validated by the browser:
-`required` is enforced only while the field is in edit mode. Validate the value yourself if it
-must not be empty.
+In preview mode the value is submitted with a hidden input, so `required` is enforced only
+in edit mode. Validate the value yourself if it must not be empty.
 
 ## Focus management
 
-When the edit is committed or cancelled with the keyboard or with triggers, focus returns to the
-preview. Set `finalFocusRef` to move focus to a different element instead. When the edit is
-committed by blur, focus stays where the user moved it.
+When the edit is committed or cancelled with the keyboard or triggers, focus returns to the preview.
+Set `finalFocusRef` to move focus to a different element instead. Moving focus to a trigger inside
+`Editable` does not commit the edit:
 
 ```tsx
 import { useRef } from 'react';
@@ -213,16 +193,10 @@ function Demo() {
 }
 ```
 
-Moving focus from the input to an element inside `Editable` (for example, pressing `Tab` to reach
-`Editable.CancelTrigger`) does not commit the edit.
-
 ## Accessibility
 
-The preview has `role="button"` and can be focused and activated with the keyboard, except
-when `activationMode="none"`, `disabled` or `readOnly` is set.
-
-The preview is named by its text. If the value can be empty and `placeholder` is not set,
-set `aria-label` or `aria-labelledby` on `Editable`:
+The preview is a focusable button named by its text. If the value can be empty and
+`placeholder` is not set, set `aria-label` on `Editable`:
 
 ```tsx
 import { Editable } from '@mantine/core';

@@ -5,14 +5,14 @@ export default Layout(MDX_DATA.ScheduleEventsData);
 
 ## Overview
 
-All `@mantine/schedule` components accept events through the `events` prop. Each event
-is typed as `ScheduleEventData` and can be one of three shapes:
+All `@mantine/schedule` components accept events through the `events` prop.
+An event is one of three shapes:
 
 - **One-off event** – a regular event without recurrence
 - **Recurring series event** – a source event that expands into multiple occurrences
 - **Recurring override event** – an event that replaces a single occurrence of a series
 
-All three variants share a common set of base fields described in `ScheduleEventBase`.
+All three shapes share the base fields described below.
 
 ## ScheduleEventBase
 
@@ -49,12 +49,11 @@ interface ScheduleEventBase<Payload extends EventPayload = EventPayload> {
 }
 ```
 
-`start` and `end` accept either a `Date` instance or a string in `YYYY-MM-DD HH:mm:ss`
-format (the `DateTimeStringValue` type used by all Mantine date components).
+`start` and `end` accept a `Date` instance or a string in `YYYY-MM-DD HH:mm:ss` format.
 
 ## ScheduleSingleEventData
 
-A one-off event without recurrence. This is the most common shape:
+A regular event without recurrence, the most common shape:
 
 ```tsx
 import type { ScheduleSingleEventData } from '@mantine/schedule';
@@ -70,7 +69,7 @@ const event: ScheduleSingleEventData = {
 
 ## ScheduleRecurringSeriesEventData
 
-A source event for a recurring series. Adds a `recurrence` field with an [RFC 5545](https://datatracker.ietf.org/doc/html/rfc5545)
+A source event of a recurring series. It has a `recurrence` field with an [RFC 5545](https://datatracker.ietf.org/doc/html/rfc5545)
 recurrence rule:
 
 ```tsx
@@ -105,12 +104,11 @@ interface ScheduleRecurrenceData {
 }
 ```
 
-See the [Recurring events guide](/schedule/recurring-events) for more details on
-recurrence rules and series expansion.
+See [recurring events guide](/schedule/recurring-events) for rule examples and expansion details.
 
 ## ScheduleRecurringOverrideEventData
 
-An override event replaces a single generated occurrence from a series:
+An override event replaces a single generated occurrence of a series:
 
 ```tsx
 import type { ScheduleRecurringOverrideEventData } from '@mantine/schedule';
@@ -131,8 +129,8 @@ const override: ScheduleRecurringOverrideEventData = {
 
 ## EventPayload
 
-Use the `payload` field to attach your own data to events. It is not used by the library,
-you can read it in callbacks and in custom event renderers:
+Use the `payload` field to attach your own data to events. The library does not read it,
+it is available in callbacks and custom event renderers:
 
 ```tsx
 import type { ScheduleEventData } from '@mantine/schedule';
@@ -157,14 +155,12 @@ const event: ScheduleEventData<MyEventPayload> = {
 };
 ```
 
-`EventPayload` is `Record<PropertyKey, any>`. Pass your own payload type as a generic
-argument: `ScheduleEventData<MyPayload>`.
+Pass your payload type as a generic argument to get typed access: `ScheduleEventData<MyPayload>`.
 
 ## Recurring instance metadata
 
-Each event generated from a recurring series has a `recurringInstance` object. It is added
-by the library, read it in callbacks and custom renderers to distinguish generated
-occurrences from regular events:
+Each event generated from a recurring series has a `recurringInstance` object.
+Read it in callbacks and custom renderers to tell generated occurrences from regular events:
 
 ```tsx
 interface RecurringInstanceMeta {
@@ -224,10 +220,8 @@ onEventDrop?: (data: {
 }) => void;
 ```
 
-- `eventId` – id of the dropped event, same as `event.id`. For generated recurring
-  occurrences it is the occurrence id (`"<seriesId>::<recurrenceId>"`), not the series id.
-  Use `event.recurringInstance?.recurringEventId` to get the series id.
-- `newStart` / `newEnd` – new datetime values in `YYYY-MM-DD HH:mm:ss` format.
+For generated recurring occurrences, `eventId` is the occurrence id, not the series id.
+Use `event.recurringInstance?.recurringEventId` to get the series id.
 
 ### onEventResize
 
@@ -243,8 +237,8 @@ onEventResize?: (data: {
 }) => void;
 ```
 
-The payload has the same shape as `onEventDrop`, including the caveat about `eventId`
-for generated recurring instances.
+The payload has the same shape as in `onEventDrop`, including the `eventId` note
+for generated recurring occurrences.
 
 ### onEventDragStart / onEventDragEnd
 
@@ -255,8 +249,8 @@ onEventDragStart?: (event: ScheduleEventData) => void;
 onEventDragEnd?: () => void;
 ```
 
-`onEventDragEnd` is called both for successful drops and for cancelled drags – use
-`onEventDrop` if you need the new position.
+`onEventDragEnd` is called for both successful drops and cancelled drags.
+Use `onEventDrop` to get the new position.
 
 ### onTimeSlotClick
 
@@ -270,8 +264,7 @@ onTimeSlotClick?: (data: {
 }) => void;
 ```
 
-- `slotStart` / `slotEnd` – the slot range in `YYYY-MM-DD HH:mm:ss` format. Slot length
-  is controlled by the view's `intervalMinutes` prop.
+Slot length is controlled by the view's `intervalMinutes` prop.
 
 ### onAllDaySlotClick
 
@@ -284,8 +277,6 @@ onAllDaySlotClick?: (
 ) => void;
 ```
 
-- `date` – the clicked date in `YYYY-MM-DD` format.
-
 ### onDayClick
 
 Called when a day is clicked in `MonthView` or `YearView`:
@@ -296,8 +287,6 @@ onDayClick?: (
   event: React.MouseEvent<HTMLButtonElement>
 ) => void;
 ```
-
-- `date` – the clicked date in `YYYY-MM-DD` format.
 
 ### onSlotDragEnd
 
@@ -311,8 +300,6 @@ onSlotDragEnd?: (
 ) => void;
 ```
 
-- `rangeStart` / `rangeEnd` – the selected range in `YYYY-MM-DD HH:mm:ss` format.
-
 ### onExternalEventDrop
 
 Called when an item is dragged from outside the schedule and dropped onto a slot:
@@ -324,15 +311,13 @@ onExternalEventDrop?: (
 ) => void;
 ```
 
-- `dataTransfer` – the native `DataTransfer` object set by the external item during its
-  `onDragStart` handler. Read your custom data with `dataTransfer.getData(type)`.
-- `dropDateTime` – the drop target datetime in `YYYY-MM-DD HH:mm:ss` format.
+`dataTransfer` is the native object set by the external item in its `onDragStart` handler.
+Read your data with `dataTransfer.getData(type)`.
 
 ### Callbacks in resources views
 
-In `ResourcesSchedule` and `Resources*` views, `onDayClick`, `onSlotDragEnd` and `onExternalEventDrop`
-are called with a single object that includes `resourceId` of the row. `onTimeSlotClick` payload
-includes `resourceId` as well:
+In resources views, `onDayClick`, `onSlotDragEnd` and `onExternalEventDrop` are called with
+a single object that includes `resourceId` of the row. `onTimeSlotClick` payload includes `resourceId` as well:
 
 ```tsx
 onDayClick?: (data: {
@@ -356,7 +341,7 @@ onExternalEventDrop?: (data: {
 
 ### canDragEvent / canResizeEvent
 
-Permission callbacks – return `false` to prevent dragging or resizing for a specific event:
+Return `false` to prevent dragging or resizing of a specific event:
 
 ```tsx
 canDragEvent?: (event: ScheduleEventData) => boolean;
@@ -375,14 +360,13 @@ preventEventOverlap?:
 ```
 
 Pass a function to decide per pair of events, return `true` to forbid the overlap.
-`movingEvent` has the new `start` and `end` and, in `Resources*` views, the target `resourceId`.
-The function is called many times while dragging and resizing, it must be pure and cheap.
+`movingEvent` has the new `start` and `end` and, in resources views, the target `resourceId`.
+The function is called many times while dragging, it must be pure and cheap.
 
 ### canDropEvent / canResizeEventTo / canDropExternalEvent
 
-Placement callbacks – return `false` to reject a drop or resize based on where the event
-is being placed. They are called many times while dragging and again before the placement
-is committed, so they must be pure and cheap:
+Return `false` to reject a drop or resize based on where the event is being placed.
+The callbacks are called many times while dragging, they must be pure and cheap:
 
 ```tsx
 canDropEvent?: (data: {
@@ -406,16 +390,13 @@ canDropExternalEvent?: (data: {
 }) => boolean;
 ```
 
-- `start` / `end` – the candidate range in `YYYY-MM-DD HH:mm:ss` format. `canDropExternalEvent`
-  has no `end` – the schedule does not know the duration of an external item.
-- `resourceId` – the target resource, only in `Resources*` views.
-- `edge` – the edge of the event that is being dragged.
-- `dataTransfer` – only `dataTransfer.types` can be read while the drag is in progress.
+`canDropExternalEvent` has no `end`, the schedule does not know the duration of an external item.
+Only `dataTransfer.types` can be read while the drag is in progress.
 
 ### onEventPlacementRejected
 
 Called when a drop, resize or external drop is rejected by `preventEventOverlap` or by one of
-the placement callbacks above. The payload is a discriminated union keyed on `action`:
+the placement callbacks above. The payload shape depends on `action`:
 
 ```tsx
 onEventPlacementRejected?: (
@@ -450,19 +431,15 @@ onEventPlacementRejected?: (
 ) => void;
 ```
 
-- `conflicts` – events the placement collided with, empty when the rejection came from a
-  callback.
-- `reason` – `'overlap'` when `preventEventOverlap` found a conflict, `'rejected'` when a
-  callback returned `false`.
-- `resourceId` – only in `Resources*` views: the target resource for `drop` and
-  `external-drop`, the event's own resource for `resize`.
+- `conflicts` – events the placement collided with, empty when the rejection came from a callback
+- `reason` – `'overlap'` when `preventEventOverlap` found a conflict, `'rejected'` when a callback returned `false`
+- `resourceId` – only in resources views: the target resource for drops, the event's own resource for `resize`
 
 ## Date and time value formats
 
-Event data and callback payloads use the following string formats consistently:
+Event data and callback payloads use two string formats:
 
-- `DateStringValue` – `YYYY-MM-DD` (e.g. `2024-01-15`)
-- `DateTimeStringValue` – `YYYY-MM-DD HH:mm:ss` (e.g. `2024-01-15 10:00:00`)
+- `DateStringValue` – `YYYY-MM-DD`, for example `2024-01-15`
+- `DateTimeStringValue` – `YYYY-MM-DD HH:mm:ss`, for example `2024-01-15 10:00:00`
 
-These types are shared across `@mantine/dates` and `@mantine/schedule` and are exported
-from both packages.
+Both types are exported from `@mantine/dates` and `@mantine/schedule`.

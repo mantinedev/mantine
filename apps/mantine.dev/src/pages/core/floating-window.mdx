@@ -25,46 +25,36 @@ Use the `constrainOffset` prop to set the offset from the viewport edges when co
 
 ## Drag handle selector
 
-The `dragHandleSelector` prop allows specifying a selector of an element (or a group of elements) that should be used to drag the floating window.
-If not specified, the entire root element is used as a drag target.
-
-The `excludeDragHandleSelector` prop excludes elements within `dragHandleSelector` from the drag event.
-In the following example, the close button is excluded from the drag event:
+By default, the whole window can be dragged. Set `dragHandleSelector` to drag the window
+only by the matching elements. Use `excludeDragHandleSelector` to exclude elements inside the
+handle, for example the close button:
 
 <Demo data={FloatingWindowDemos.dragHandleSelector} />
 
 ## Enabled prop
 
-Use the `enabled` option to enable or disable dragging:
+Set `enabled={false}` to disable dragging:
 
 <Demo data={FloatingWindowDemos.enabled} />
 
 ## Set position
 
-Call the `setPosition` function to set the position of the element programmatically.
-This function accepts an object with `top`, `left`, `right` and `bottom` properties,
-from which you should only specify two (for example, `top` and `left`, `bottom` and `right`).
+Call `setPosition` to move the window programmatically. It accepts an object with two
+of the `top`, `left`, `right` and `bottom` properties, for example `{ top: 20, left: 20 }`:
 
 <Demo data={FloatingWindowDemos.setPosition} />
 
 ## Keyboard support
 
-The window root element is focusable. When it has focus, arrow keys move the window
-in 10px steps, hold `Shift` to move it in 50px steps. Keys pressed inside window
-content (for example, in inputs) do not move the window.
+The window root element is focusable. When it has focus, arrow keys move the window,
+hold `Shift` for larger steps. Keys pressed inside window content, for example in inputs,
+do not move the window.
 
 ## Resize handle
 
-Use `FloatingWindow.ResizeHandle` compound component to add a resize handle to the floating window.
-The `dimensions` prop on `FloatingWindow` controls the resize behavior:
-
-- `initialWidth` / `initialHeight` – initial size of the window in px
-- `minWidth` / `minHeight` – minimum size the window can be resized to
-- `maxWidth` / `maxHeight` – maximum size the window can be resized to
-
-The resize handle respects `constrainToViewport` and `constrainOffset` props.
-It can be used with keyboard: arrow keys resize the window in 10px steps,
-`Home` and `End` keys set the minimum and maximum size.
+Add `FloatingWindow.ResizeHandle` to make the window resizable. Set the initial, minimum and
+maximum size with the `dimensions` prop. The handle supports keyboard: arrow keys resize the
+window, `Home` and `End` set the minimum and maximum size:
 
 <Demo data={FloatingWindowDemos.resizeHandle} />
 
@@ -80,13 +70,13 @@ Resize callbacks require the `dimensions` prop and `FloatingWindow.ResizeHandle`
 
 ## Lock axis
 
-Use the `axis` option to restrict movement to the specified axis:
+Set the `axis` prop to restrict movement to one axis:
 
 <Demo data={FloatingWindowDemos.axis} />
 
 ## use-floating-window hook
 
-If you prefer the hook API, you can use the [useFloatingWindow](/hooks/use-floating-window) hook.
-It supports most of the `FloatingWindow` features:
+Use the [useFloatingWindow](/hooks/use-floating-window) hook if you prefer the hook API.
+It supports most `FloatingWindow` features:
 
 <Demo data={UseFloatingWindowDemos.usage} />

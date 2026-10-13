@@ -5,14 +5,12 @@ export default Layout(MDX_DATA.useFormField);
 
 ## Usage
 
-The `use-form-field` hook subscribes a component to a value store carried by its `onChange`
-handler. A state manager attaches a field object to the handler it hands out, and the component
-that receives the handler subscribes to that field with the hook: it rerenders when the field
-value changes, without the component that owns the state rerendering.
+`use-form-field` subscribes a custom input to a form field through its `onChange` handler.
+A state manager such as `useForm` attaches a field to the handler it passes down.
+The input then rerenders on its own when the field value changes, the component that owns the form does not.
 
-Pass the `onChange` prop to the hook. If a field is attached, `field.subscribed` is `true` and
-the component must render `field.value`. If the handler is a plain function, the component keeps
-using its `value` prop:
+Pass the `onChange` prop to the hook. When a field is attached, `field.subscribed` is `true`
+and the component must render `field.value`. Otherwise, keep using the `value` prop:
 
 ```tsx
 import { useFormField } from '@mantine/hooks';
@@ -35,15 +33,12 @@ function CustomInput({ value, onChange }: CustomInputProps) {
 }
 ```
 
-All Mantine inputs call this hook, as do components built with
-[use-uncontrolled](/hooks/use-uncontrolled/) that pass `onChange` to it as is.
+All Mantine inputs and components built with [use-uncontrolled](/hooks/use-uncontrolled/) already call this hook.
 
 ## Field protocol
 
-A handler carries a field when it has a `FormField` object stored under
-`Symbol.for('mantine-form-field')`. The object exposes the field path, a `subscribe` function
-and a `getSnapshot` function used with `useSyncExternalStore`, and a `subscribeExternalWrite`
-function for writes that do not come from the component. Any store can attach it:
+A handler carries a field when a `FormField` object is stored on it under `Symbol.for('mantine-form-field')`.
+Any store can attach it:
 
 ```tsx
 import { FormField } from '@mantine/hooks';
@@ -61,13 +56,13 @@ function attachField<Handler extends (...args: any[]) => any>(
 
 ## onExternalWrite
 
-Some components keep state that the value cannot express, for example a date input with a
-partially entered date reports `null` until the date is complete. When the store writes `null`
-again, the value does not change and the component cannot know that it has to clear the entry.
-`onExternalWrite` is called with the field value on every write that comes from the store rather
-than from the component, and once with the current value when the component is bound to another
-field, for example when list items are reordered or removed. The callback must update the
-internal state only and must not call `onChange`:
+Some components keep state that the value cannot express. A date input with a partially typed date
+reports `null` until the date is complete. When the store writes `null` again, the value does not
+change and the component cannot know that it has to clear the entry.
+
+`onExternalWrite` is called with the field value on every write made by the store, not by the component.
+It is also called when the component is bound to another field, for example after list items are reordered.
+Update only the internal state in the callback, do not call `onChange`:
 
 ```tsx
 import { useState } from 'react';
@@ -114,8 +109,8 @@ function ExpiryInput({ value, onChange }: ExpiryInputProps) {
 }
 ```
 
-Set `subscribe: false` when the component renders the `value` prop instead of the subscribed
-value. The store is then responsible for rerendering the component that passes `value`.
+Set `subscribe: false` when the component renders the `value` prop instead of the subscribed value.
+The store then rerenders the component that passes `value`.
 
 ## Definition
 
@@ -158,14 +153,11 @@ import type { UseFormFieldOptions, UseFormFieldReturnValue, FormField } from '@m
 
 ## Usage with @mantine/form
 
-[use-form](/form/use-form/) attaches a field to every `onChange` handler returned by
-`form.getInputProps` and `field.getInputProps`, handlers returned by [use-field](/form/use-field/)
-for `type: 'radio'` are the exception. A custom input that calls `use-form-field` rerenders on its
-own when its field changes, and the component that called `useForm` does not. The form writes the
-field with `form.setFieldValue`, `form.setValues`, `form.reset`, `form.resetField`,
-`form.initialize` and list handlers, these writes reach `onExternalWrite`. When a bound input
-is not subscribed (`subscribe: false`), the form rerenders the component that called `useForm`
-instead, so the input receives a new `value` prop:
+[use-form](/form/use-form/) attaches a field to every `onChange` handler returned by `getInputProps`,
+except handlers for `type: 'radio'`. A custom input that calls `use-form-field` rerenders alone when its field changes.
+Writes made with form methods, for example `form.setFieldValue` or `form.reset`, reach `onExternalWrite`.
+With `subscribe: false`, the form rerenders the component that called `useForm` instead,
+so the input receives a new `value` prop:
 
 ```tsx
 import { useForm } from '@mantine/form';
@@ -180,10 +172,8 @@ function Demo() {
 ```
 
 In uncontrolled mode, bind each field path to a single input. A component that is not subscribed
-is not updated while the user types in a subscribed input of the same path. Call `use-form-field`
-in every component bound to that path or switch the form to controlled mode, see
-[one input per field path](/form/uncontrolled#one-input-per-field-path).
+does not update while the user types in a subscribed input of the same path.
+See [one input per field path](/form/uncontrolled#one-input-per-field-path).
 
 See the [custom input](/form/examples?e=CustomInputSubscription) and
-[rich text](/form/examples?e=RichTextForm) form examples, and the
-[get-input-props](/form/get-input-props/) guide.
+[rich text](/form/examples?e=RichTextForm) form examples.

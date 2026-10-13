@@ -5,8 +5,7 @@ export default Layout(MDX_DATA.CustomComponents);
 
 # Create custom components
 
-This guide will help you understand how to create custom components that integrate
-with Mantine's theming, styling, and other core features.
+This guide explains how to create custom components that support Mantine theming and Styles API.
 
 `ExampleComponent` will be used as an example throughout this guide:
 
@@ -98,8 +97,7 @@ ExampleComponent.classes = classes;
 
 ## Factory type
 
-`Factory` type is used to group all types related to the component: variant, Styles API selectors, ref type,
-CSS variables and other properties described later. All properties except `props` are optional.
+`Factory` groups all types related to the component. All properties except `props` are optional:
 
 ```tsx
 // Usage with Styles API when the component has related styles
@@ -118,10 +116,8 @@ export type ExampleComponentFactory = Factory<{
 }>;
 ```
 
-The created `ExampleComponentFactory` is then passed as the first type argument to all helper functions
-imported from `@mantine/core` package: `useStyles`, `createVarsResolver` and `factory` in the example above.
-
-`Factory` type is used for validation and IDE autocomplete. It does not modify the passed type:
+Pass the factory type to `useStyles`, `createVarsResolver` and `factory`.
+`Factory` is used only for validation and IDE autocomplete, it does not modify the passed type:
 
 ```tsx
 export type ExampleComponentFactory = {
@@ -138,7 +134,7 @@ export type ExampleComponentFactory = Factory<{
 
 ## factory function
 
-`factory` function is used to type props and assign shared static properties: `extend` and `withProps`.
+`factory` types the component and adds the `extend` and `withProps` static properties:
 
 ```tsx
 export const ExampleComponent = factory<ExampleComponentFactory>((_props) => {
@@ -152,10 +148,8 @@ ExampleComponent.classes = classes;
 
 ## Box component
 
-[Box](/core/box) component is a base for all other components. To create custom components,
-use it as the root element and spread `...others` props to it to support [style props](/styles/style-props).
-
-To add [style props](/styles/style-props) types to component, extend `BoxProps`.
+Use [Box](/core/box) as the root element and spread `...others` to it to support style props.
+Extend `BoxProps` to add style props types:
 
 ```tsx
 // Extend props with `BoxProps` to add style props types
@@ -187,14 +181,10 @@ export const ExampleComponent = factory<ExampleComponentFactory>((_props) => {
 
 ## ElementProps type
 
-`ElementProps` is used to retrieve the props a component accepts. Can either be passed a string,
-indicating a DOM element (e.g. `'div'`, `'span'`, etc.) or the type of a React component. The second
-type argument is optional and may be used to omit props types from the original component/element.
+`ElementProps` returns props of a DOM element (`'div'`, `'input'`) or a React component.
+The second type argument omits props that conflict with your own.
+`ElementProps` also makes the `style` prop accept CSS variables:
 
-`ElementProps` reassigns `style` prop signature to make it compatible with Mantine components and allow
-CSS variables usage.
-
-Examples of `ElementProps` type usage:
 ```tsx
 // Root element is `div`, extend component props with ElementProps<'div'>
 export interface ExampleComponentProps extends ElementProps<'div'> {}
@@ -211,14 +201,11 @@ export interface ExampleComponentProps extends ElementProps<'input', 'color' | '
 
 ## useProps hook
 
-`useProps` hook is used to support [default props](/theming/default-props). It accepts arguments:
-- Component name which is used to reference component in [theme](/theming/theme-object)
-- Default props on component level
-- Component props
+`useProps` adds [default props](/theming/default-props) support. It accepts the component name,
+component level default props and component props. Props are merged in the following order:
 
-`useProps` merges props using the order:
 1. Component props – highest priority
-2. [Default props](/theming/default-props) on theme – lower priority
+2. Default props on theme – lower priority
 3. Default props defined on component level – used only if prop is not defined in previous steps
 
 Example of using `useProps`:
@@ -271,7 +258,7 @@ const defaultProps: Partial<ExampleComponentProps> = {
 };
 ```
 
-You can use [defaultProps](/theming/default-props) the following way:
+Default props can then be set in the theme:
 
 ```tsx
 import { createTheme } from '@mantine/core';
@@ -290,12 +277,7 @@ const theme = createTheme({
 
 ## useStyles hook
 
-`useStyles` hook is used to support [Styles API](/styles/styles-api) features:
-`classNames`, `styles`, `attributes` and other related properties.
-
-`useStyles` returns `getStyles` function, which returns an object that should be
-spread (`{...getStyles('root')}`) to an element.
-
+`useStyles` adds [Styles API](/styles/styles-api) support. It returns the `getStyles` function described below:
 
 ```tsx
 // 🔝 See full component code above
@@ -337,8 +319,8 @@ const getStyles = useStyles<ExampleComponentFactory>({
 
 ## getStyles function
 
-`getStyles` function is returned by `useStyles` hook. The first argument is a Styles API selector,
-the second argument can be used to add `className` or `style` to the returned object.
+`getStyles` returns an object to spread on an element. The first argument is a Styles API selector,
+the second argument adds `className` or `style` to the result:
 
 ```tsx
 <Box {...getStyles('root')}>
@@ -350,9 +332,8 @@ the second argument can be used to add `className` or `style` to the returned ob
 
 ## varsResolver
 
-Use `varsResolver` to transform component props into CSS variables.
-
-Example of `varsResolver` usage in [Button](/core/button) component:
+`varsResolver` transforms component props into CSS variables.
+Example from the [Button](/core/button) component:
 
 ```tsx
 import { getFontSize, getRadius, getSize, createVarsResolver } from '@mantine/core';
@@ -390,10 +371,8 @@ const varsResolver = createVarsResolver<ButtonFactory>(
 
 ## Compound components
 
-Compound components (`Button.Group`, `Input.Wrapper`, etc.) are defined as static properties
-on the main component and assigned as type in the main component factory.
-
-Example of assigning compound components in [Tabs](/core/tabs) component:
+Compound components (`Tabs.Tab`, `Tabs.List`) are static properties of the main component.
+Their types go to `staticComponents` in the factory, example from the [Tabs](/core/tabs) component:
 
 ```tsx
 export type TabsFactory = Factory<{
@@ -423,8 +402,7 @@ Tabs.List = TabsList;
 
 ## Namespace exports
 
-Mantine components support namespace exports to group related types with the component.
-For example, `Button` component exports related types as `Button.*`:
+Namespace exports group related types with the component, for example `Button.Props`:
 
 ```tsx
 import { Button } from '@mantine/core';
@@ -433,8 +411,7 @@ import { Button } from '@mantine/core';
 type Props = Button.Props;
 ```
 
-To implement this feature, add namespace exports at the end of the component file or `index.ts`.
-Example of [Button](/core/button) component namespace exports:
+To support it, add a namespace with the same name at the end of the component file:
 
 ```tsx
 export namespace Button {
@@ -463,14 +440,9 @@ export namespace Button {
 
 ## polymorphicFactory
 
-`polymorphicFactory` is used to create [polymorphic components](/guides/polymorphic).
-Use `polymorphicFactory` instead of `factory` if you need to change the root element.
-For example, [Button](/core/button) component is polymorphic: the default root element is `button`,
-but it can be changed to `a` or any other element using `component` and `renderRoot` props.
-
-`polymorphicFactory` operates only with types, it does not modify the component behavior compared
-to `factory`. Types of components created with `polymorphicFactory` add overhead for TypeScript and
-slow down IDE autocomplete, use it only when necessary.
+Use `polymorphicFactory` instead of `factory` when the root element can be changed with the `component` prop,
+see [polymorphic components](/guides/polymorphic).
+It changes only types, not behavior. Polymorphic types slow down IDE autocomplete, use them only when necessary.
 
 Full polymorphic component example:
 
@@ -539,9 +511,8 @@ PolymorphicExample.displayName = '@mantine/core/PolymorphicExample';
 
 ## genericFactory
 
-Use `genericFactory` to create components accepting generic type arguments.
-For example, [Accordion](/core/accordion) component `value` and `onChange` props type
-depend on the `multiple` prop value.
+Use `genericFactory` for components with generic type arguments.
+For example, [Accordion](/core/accordion) `value` and `onChange` types depend on the `multiple` prop:
 
 ```tsx
 type AccordionValue<Multiple extends boolean> = Multiple extends true

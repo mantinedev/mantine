@@ -14,9 +14,8 @@ the timer with [useTimer](#controlling-the-timer). Set `autoStart` to start the 
 
 ## Countdown and stopwatch
 
-By default `Timer` works as a stopwatch: it counts up from `startMs` (`0` by default). Set the
-`countdown` prop to count down instead. In countdown mode `startMs` is the initial duration and
-the timer counts down to `targetMs` (`0` by default):
+By default, `Timer` counts up from `startMs`. Set `countdown` prop to count down
+from `startMs` to `targetMs` instead. In both modes the timer stops at `targetMs` and calls `onComplete`:
 
 ```tsx
 import { Timer } from '@mantine/core';
@@ -34,14 +33,11 @@ function Demo() {
 }
 ```
 
-Set `targetMs` in stopwatch mode to stop the timer at that value. In both modes `onComplete`
-is called when the timer reaches `targetMs`. Changing `startMs` or `countdown` stops the timer
-and resets it to the new `startMs`.
+Changing `startMs` or `countdown` stops the timer and resets it to the new `startMs`.
 
 ## Format
 
-The default readout is rendered with the `format` prop, `'HH:mm:ss'` by default. The following
-tokens are supported:
+Set `format` prop to change the readout, `'HH:mm:ss'` by default:
 
 <DataTable
   head={['Token', 'Description', 'Example']}
@@ -56,15 +52,13 @@ tokens are supported:
   ]}
 />
 
-Literal text in `format` is not escaped: the letters `D`, `H`, `m`, `s` and `S` are always replaced with time values, even inside words.
-
-All tokens except days are capped to their natural range. Include a larger token
-(for example `DD` or `HH`) for durations that exceed the largest unit in the format:
+Literal text is not escaped: token letters are replaced with time values even inside words.
+All tokens except days are capped to their natural range, include a larger token
+for durations that exceed the largest unit in the format:
 
 <Demo data={TimerDemos.formats} />
 
-To display milliseconds or centiseconds, lower the `interval` prop so the readout updates more
-frequently than once per second:
+To display milliseconds, lower the `interval` prop so the readout updates more often than once per second:
 
 <Demo data={TimerDemos.stopwatch} />
 
@@ -78,9 +72,8 @@ set with the `action` prop:
 
 ## useTimer hook
 
-`Timer` supports the [controller pattern](/guides/controllers). Use the `useTimer` hook to build
-custom timer UI or to share one timer between several components. It accepts the same timer options
-as [Timer props](/core/timer?t=props) and returns the timer state and actions:
+`Timer` supports the [controller pattern](/guides/controllers) with the `useTimer` hook.
+It accepts the same options as `Timer` props and returns the timer state and actions:
 
 ```tsx
 import { useTimer } from '@mantine/core';
@@ -105,17 +98,15 @@ function Demo() {
 
 ## Controlling the timer
 
-To control the timer from outside the component, create a controller with `useTimer` and pass it
-to `Timer` with the `controller` prop. When a controller is provided, timer options set
-on `Timer` are ignored – pass them to `useTimer`:
+Pass the controller created with `useTimer` to the `controller` prop.
+Timer options set on `Timer` are then ignored, pass them to `useTimer` instead:
 
 <Demo data={TimerDemos.controller} />
 
 ## Progress
 
-When `targetMs` is set (or in countdown mode, where it defaults to `0`), the controller's
-`getProgress()` returns a value from `0` to `1`. Use it with [Progress](/core/progress) or
-[RingProgress](/core/ring-progress):
+When `targetMs` is set, `getProgress()` returns a value from `0` to `1`.
+Use it with [Progress](/core/progress) or `RingProgress`:
 
 <Demo data={TimerDemos.progress} />
 
@@ -133,25 +124,20 @@ Timer.parse({ hours: 1, minutes: 30 }); // -> 5400000
 Timer.parse('2030-01-01T00:00:00'); // -> milliseconds from now until the date
 ```
 
-With a `Date` or a date string, the result depends on the current time. Calculate it once
-(for example, with a `useState` initializer): a new `startMs` value on every render
-resets the timer.
+With a `Date` or a date string, the result depends on the current time. Calculate it once,
+for example, in a `useState` initializer: a new `startMs` value on every render resets the timer:
 
 <Demo data={TimerDemos.deadline} />
 
-A date in the past produces a negative value, which `Timer` clamps to `0`, so a countdown with `autoStart` completes on mount.
-
 ## Timer vs use-countdown
 
-[use-countdown](/hooks/use-countdown) is a display-only countdown hook. Use it when you only need
-a countdown readout, and use `Timer` or `useTimer` when the timer must count up or be paused,
-resumed and restarted.
+[use-countdown](/hooks/use-countdown) is a display-only countdown hook. Use `Timer` or `useTimer`
+when the timer must count up or be paused, resumed and restarted.
 
 ## Accessibility
 
-The `Timer` root element has `role="timer"` and `aria-live="off"`, so screen readers do not
-announce every tick. Set `aria-live="polite"` on `Timer` to announce value changes. It is
-recommended only with `interval` of one second or more.
+The root element has `role="timer"` and `aria-live="off"`, screen readers do not announce ticks.
+Set `aria-live="polite"` to announce value changes, recommended only with `interval` of one second or more.
 
 When `Timer.Control` renders only an icon, set an `aria-label`:
 

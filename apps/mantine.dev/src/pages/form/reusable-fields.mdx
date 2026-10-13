@@ -6,8 +6,7 @@ export default Layout(MDX_DATA.formReusableFields);
 ## Usage
 
 A field component that accepts `UseFieldReturnType` can be used in any form.
-Pass it `form.getField('path')` from [use-form](/form/use-form/) or the return value of
-[use-field](/form/use-field/):
+Pass it `form.getField('path')` from [use-form](/form/use-form/) or the return value of `useField`:
 
 ```tsx
 import { TextInput } from '@mantine/core';
@@ -36,9 +35,8 @@ function Demo() {
 
 ## Field object
 
-`form.getField('path')` returns an object with the same shape as [use-field](/form/use-field/#use-field-api)
-return value. Its methods read and change the value, error and status at the given path, so the
-field component can use them without knowing which form it is rendered in:
+`form.getField('path')` returns the same object as [use-field](/form/use-field/#use-field-api).
+Its methods read and change the field without knowing which form renders it:
 
 ```tsx
 import { TextInput } from '@mantine/core';
@@ -125,8 +123,7 @@ function Demo() {
 
 A component that renders several fields accepts the form object.
 `UseFormReturnType<{ email: string }>` accepts any form with a top-level `email` string.
-To render fields under a path that differs between forms, use the `FormPath` type: it accepts
-paths of form values with the given value type:
+To render fields under a path that differs between forms, type the path with `FormPath`:
 
 ```tsx
 import { TextInput } from '@mantine/core';

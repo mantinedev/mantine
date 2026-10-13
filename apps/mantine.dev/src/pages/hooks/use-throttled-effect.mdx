@@ -6,25 +6,21 @@ export default Layout(MDX_DATA.useThrottledEffect);
 
 ## Usage
 
-`use-throttled-effect` works like `useEffect`, but the effect runs at most once per
-`wait` milliseconds while its dependencies keep changing. Use it for side effects that
-follow a continuous stream of updates, for example scroll position, pointer movement
-or a slider value:
+`use-throttled-effect` works like `useEffect`, but runs the effect at most once per `wait`
+milliseconds while its dependencies keep changing. Use it for effects that follow a stream of
+updates, for example scroll position or a slider value:
 
 <Demo data={UseThrottledEffectDemos.usage} />
 
 ## Difference from useEffect
 
-The effect runs immediately on mount and on the first change, then it is not called
-until `wait` milliseconds have passed. If the dependencies change during that time,
-the effect runs once more at the end of it with the latest values.
+The effect runs immediately on mount and on the first change. Changes during the next `wait`
+milliseconds run it once more at the end of that time with the latest values.
 
-The effect may return a cleanup function. It is called before the next execution
-and when the component unmounts. A pending execution is canceled on unmount.
+The effect may return a cleanup function. It is called before the next run and on unmount.
+A pending run is canceled on unmount.
 
-Unlike [use-debounced-effect](/hooks/use-debounced-effect), the hook does not support
-`leading` and `maxWait` options. It works the same way as
-[use-throttled-callback](/hooks/use-throttled-callback).
+Unlike [use-debounced-effect](/hooks/use-debounced-effect), the hook has no `leading` and `maxWait` options.
 
 ## Definition
 

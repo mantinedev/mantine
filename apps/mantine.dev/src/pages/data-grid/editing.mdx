@@ -12,18 +12,17 @@ Editing is not available in list view.
 
 ## Cell editing
 
-Set `editingMode: 'cell'` in `useDataGrid` to edit one cell at a time. Double-click a cell
-to open its editor, or set `editTrigger: 'click'` to open it with a single click.
-Press `Enter` to save and `Escape` to cancel, the value is also saved when the editor loses focus.
-`onEditSave` is called with the updated row:
+Set `editingMode: 'cell'` to edit one cell at a time. Double-click a cell to open its editor,
+or set `editTrigger: 'click'` to open it with a single click. Press `Enter` to save and `Escape` to cancel,
+the value is also saved when the editor loses focus. `onEditSave` is called with the updated row:
 
 <Demo data={DataGridDemos.cellEditing} />
 
 ## Row editing
 
-Set `editingMode: 'row'` to edit all editable cells of a row at once. Editing is started
-with a double-click on a cell or from an [actions column](#actions-column). `Enter` saves the row,
-`Escape` cancels editing and a click outside the row saves it.
+Set `editingMode: 'row'` to edit all editable cells of a row at once. Editing starts
+with a double-click on a cell or from an [actions column](#actions-column). `Enter` or a click
+outside the row saves it, `Escape` cancels editing:
 
 <Demo data={DataGridDemos.rowEditing} />
 
@@ -32,17 +31,15 @@ with a double-click on a cell or from an [actions column](#actions-column). `Ent
 Add a display column with `meta.type: 'actions'` to render row action buttons. In its cell,
 use `row.getIsEditing()` to switch between Edit and Save / Cancel buttons and call
 `row.startEditing()`, `row.saveEditing()` and `row.cancelEditing()` when they are clicked.
-
-The column is 80px wide, set `size` to change it. Pass `size={store.getControlSize()}`
-to your buttons so they match the grid size.
+Pass `size={store.getControlSize()}` to your buttons so they match the grid size:
 
 <Demo data={DataGridDemos.actionsColumn} />
 
 ## Floating actions
 
 Set `withFloatingEditActions` on `DataGrid` to display floating Save and Cancel buttons
-next to the row being edited. It works in row mode only, with or without an actions column.
-Use `saveRow` and `cancelRow` labels to change the button text.
+next to the row being edited. It works in row mode only. Use `saveRow` and `cancelRow` labels
+to change the button text:
 
 <Demo data={DataGridDemos.floatingEditActions} />
 
@@ -51,12 +48,12 @@ Use `saveRow` and `cancelRow` labels to change the button text.
 <DataTable
   head={['Key', 'Context', 'Action']}
   data={[
-    ['`Enter` / `F2`', 'Focused row, or focused cell under cell selection', 'Starts editing the row or cell when it is editable (takes precedence over the row-click and expand behavior of `Enter`)'],
-    ['`Enter`', 'Inside an editor', 'Validates and saves the drafts'],
-    ['`Escape`', 'Inside an editor', 'Cancels editing and drops the drafts'],
-    ['`Tab` / `Shift + Tab`', 'Inside an editor, row mode', 'Moves focus to the next / previous editor of the row, wrapping around'],
-    ['Blur', 'Default editor, cell mode', 'Saves the draft when focus leaves the editor (focus moving into a portal such as a dropdown does not count)'],
-    ['Outside click', 'Row mode', 'Saves the row; clicks inside the editing row, the floating pill or any portal are ignored'],
+    [<><code>Enter</code> / <code>F2</code></>, 'Focused row or cell', 'Starts editing'],
+    [<code>Enter</code>, 'Inside an editor', 'Validates and saves the changes'],
+    [<code>Escape</code>, 'Inside an editor', 'Cancels editing'],
+    [<><code>Tab</code> / <code>Shift + Tab</code></>, 'Inside an editor, row mode', 'Moves focus to the next / previous editor of the row'],
+    ['Blur', 'Default editor, cell mode', 'Saves the value when focus leaves the editor'],
+    ['Outside click', 'Row mode', 'Saves the row'],
   ]}
 />
 
@@ -70,14 +67,14 @@ All editing options live in `useDataGrid`:
 <DataTable
   head={['Option', 'Description']}
   data={[
-    ['`editingMode`', '`cell` or `row`, editing is disabled when omitted'],
-    ['`editTrigger`', '`doubleClick` (default) or `click`, the pointer gesture that opens an editor'],
-    ['`onEditStart`', 'Called with `{ row, columnId }` when a row or cell enters edit mode (`columnId` is `null` when row editing starts from a button or the keyboard)'],
-    ['`onEditSave`', 'Called with `{ row, newRow, oldRow, changedColumnIds }` on commit; return a promise to keep the editor open until it settles'],
-    ['`onEditSaveError`', 'Called with `(error, { row, newRow })` when `onEditSave` throws or rejects; the editor stays open with the drafts and is marked invalid until the next change'],
-    ['`onEditCancel`', 'Called with `{ row }` when editing is cancelled'],
-    ['`getCellStatus`', 'Returns `dirty` or `invalid` for `{ row, columnId, value }` to tint a cell, see cell status below'],
-    ['`editing` / `onEditingChange`', 'Controlled editing state, `null` while nothing is edited'],
+    [<code>editingMode</code>, <><code>cell</code> or <code>row</code>, editing is disabled when omitted</>],
+    [<code>editTrigger</code>, <><code>doubleClick</code> (default) or <code>click</code></>],
+    [<code>onEditStart</code>, <>Called with <code>{'{ row, columnId }'}</code> when editing starts</>],
+    [<code>onEditSave</code>, <>Called with <code>{'{ row, newRow, oldRow, changedColumnIds }'}</code> when the changes are saved</>],
+    [<code>onEditSaveError</code>, <>Called when <code>onEditSave</code> throws or rejects</>],
+    [<code>onEditCancel</code>, <>Called with <code>{'{ row }'}</code> when editing is cancelled</>],
+    [<code>getCellStatus</code>, <>Returns <code>dirty</code> or <code>invalid</code> to tint a cell, see <a href="#cell-status">cell status</a></>],
+    [<><code>editing</code> / <code>onEditingChange</code></>, <>Controlled editing state, <code>null</code> while nothing is edited</>],
   ]}
 />
 
@@ -88,8 +85,7 @@ the new value is written to `newRow[column.id]`.
 ## Async saves
 
 Return a promise from `onEditSave` to keep the editor open while the save is pending.
-The default editor is disabled until the promise settles. If the promise is rejected,
-`onEditSaveError` is called and the editor stays open:
+If the promise is rejected, `onEditSaveError` is called and the editor stays open:
 
 ```tsx
 const store = useDataGrid({
@@ -112,8 +108,7 @@ In custom editors, use `cell.row.getIsSaving()` to disable the input while the s
 
 Add `meta.validate` to a column to validate the value before it is saved. The function receives
 the value and the row and returns an error message, or `null` if the value is valid.
-The error is displayed in a tooltip and the value cannot be saved until it is changed.
-In row mode all editors are validated when the row is saved.
+The error is displayed in a tooltip and the value cannot be saved until it is changed:
 
 <Demo data={DataGridDemos.cellValidation} />
 
@@ -126,8 +121,8 @@ CSS variables to change the colors.
 
 ## Custom edit components
 
-Set `meta.editComponent` on a column to replace the default text input. The function receives
-the following props (`DataGridEditComponentProps` type):
+Set `meta.editComponent` on a column to replace the default text input. The component receives
+the following props:
 
 - `value` and `onChange` – the current value and a function to change it
 - `onSave` and `onCancel` – functions to save the value and to cancel editing
@@ -177,8 +172,8 @@ cell.setEditingValue(value);
 cell.getEditingError();
 ```
 
-When editing of another row or cell is started, the current one is saved first. If it cannot
-be saved (validation failed, a save is pending or was rejected), the new one is not opened.
+When editing of another row or cell is started, the current one is saved first.
+If it cannot be saved, the new one is not opened.
 
 ## Modal editing
 

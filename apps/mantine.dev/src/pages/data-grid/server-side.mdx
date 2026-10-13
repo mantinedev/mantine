@@ -6,14 +6,14 @@ export default Layout(MDX_DATA.DataGridServerSide);
 
 ## Overview
 
-Use server-side mode when your dataset is too large to load entirely in the browser, or when
-sorting, filtering, and pagination must be handled by an API. Enable server-side mode by setting
-the `manual*` options and providing controlled state in `useDataGrid`.
+Use server-side mode when the dataset is too large to load in the browser, or when sorting,
+filtering and pagination are handled by an API. Set the `manual*` options and pass controlled
+state to `useDataGrid`.
 
 ## Server-side sorting
 
-Set `manualSorting` to prevent DataGrid from sorting data client-side. Use controlled `sorting`
-and `onSortingChange` to send the sort state to your API.
+Set `manualSorting` to disable client-side sorting. Use controlled `sorting` and
+`onSortingChange` to send the sort state to your API:
 
 ```tsx
 const store = useDataGrid({
@@ -28,9 +28,8 @@ const store = useDataGrid({
 ## Server-side filtering
 
 Set `manualFiltering` to disable client-side filtering. Use controlled `columnFilters`
-and `onColumnFiltersChange` to pass filter state to your API. The grid renders no filter inputs:
-bind your own controls to `store.setColumnFilter` / `store.getColumnFilterValue` or to
-`store.setGlobalFilter`, see [Filtering](/data-grid/filtering).
+and `onColumnFiltersChange` to send the filter state to your API. The grid renders no filter
+inputs in this mode, bind your own controls to the store filter methods, see [Filtering](/data-grid/filtering):
 
 ```tsx
 const store = useDataGrid({
@@ -46,7 +45,7 @@ const store = useDataGrid({
 ## Server-side pagination
 
 Set `manualPagination` and provide `rowCount` with the total number of rows. `DataGrid.Footer`
-uses it to display the `1–10 of 200` range and the page count.
+uses it to display the `1–10 of 200` range and the page count:
 
 ```tsx
 const store = useDataGrid({
@@ -63,14 +62,14 @@ const store = useDataGrid({
 
 Server-side sorting, filtering and pagination with a simulated API delay. With
 `loadingVariant="bar"`, the current rows stay visible while the next page is fetched.
-See [States](/data-grid/states) for the other loading variants.
+See [States](/data-grid/states) for the other loading variants:
 
 <Demo data={DataGridDemos.fullServerSide} />
 
 ## Server-side grouping
 
-Set `manualGrouping` via `tableOptions` to prevent DataGrid from grouping data client-side.
-Provide controlled `grouping` and `onGroupingChange` to pass the grouping state to your API:
+Set `manualGrouping` in `tableOptions` to disable client-side grouping. Use controlled
+`grouping` and `onGroupingChange` to send the grouping state to your API:
 
 ```tsx
 const store = useDataGrid({
@@ -85,8 +84,7 @@ const store = useDataGrid({
 
 ## Debounced filtering
 
-When triggering API calls from filter controls, debounce the filter value to avoid
-sending a request on every keystroke:
+Debounce the filter value to avoid sending a request on every keystroke:
 
 ```tsx
 import { useEffect, useState } from 'react';
@@ -103,8 +101,8 @@ useEffect(() => {
 
 ## Stable row IDs
 
-Always provide `getRowId` when using server-side pagination together with row selection. Without
-stable IDs, selection state is keyed by row index, which breaks when the page changes:
+Always provide `getRowId` when server-side pagination is used together with row selection.
+Without it, selection is keyed by row index and breaks when the page changes:
 
 ```tsx
 const store = useDataGrid({

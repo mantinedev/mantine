@@ -24,8 +24,7 @@ Click any image to open the lightbox:
 
 ## Slide data
 
-The `slides` prop accepts an array of `LightboxSlideData` objects. There are three slide types –
-image (default), video and custom:
+The `slides` prop accepts an array of image (default), video and custom slides:
 
 ```tsx
 import type { LightboxSlideData } from '@mantine/lightbox';
@@ -67,12 +66,9 @@ const slides: LightboxSlideData[] = [
 
 ### Image loading
 
-By default, only the image of the active slide is loaded when the lightbox is opened, other images
-and thumbnails are loaded lazily. Thumbnails use `src` if `thumbSrc` is not set, set `thumbSrc`
-to a smaller image if the originals are large.
-
-Set the `loading` property on an image slide to change this, for example to preload
-the next slide:
+By default, only the image of the active slide is loaded when the lightbox opens, other images
+and thumbnails are loaded lazily. Set `thumbSrc` to a smaller image if the originals are large.
+Set `loading: 'eager'` on a slide to preload it:
 
 ```tsx
 import type { LightboxSlideData } from '@mantine/lightbox';
@@ -85,9 +81,9 @@ const slides: LightboxSlideData[] = [
 
 ## Zoom
 
-Enable image zoom with the `withZoom` prop. On desktop, click an image to zoom in, scroll wheel to
-adjust zoom level, and drag or use arrow keys to pan when zoomed. On mobile, double-tap to zoom and
-pinch to adjust. Use `zoomMaxScale` to change the maximum zoom scale (`3` by default):
+Set `withZoom` to enable image zoom. Click an image to zoom in, use the scroll wheel to adjust
+the zoom level and drag to pan. On mobile, double-tap to zoom and pinch to adjust.
+Use `zoomMaxScale` to change the maximum zoom scale, `3` by default:
 
 <Demo data={LightboxDemos.zoom} />
 
@@ -100,9 +96,9 @@ with the `T` key or the toolbar button:
 
 ### Custom thumbnails
 
-By default, thumbnails are images. Set `renderThumb` on a slide to render custom thumbnail
-content instead, for example a `<video>` element. The content is placed inside a 64x64px
-button, size it with `width: 100%` and `height: 100%`:
+Set `renderThumb` on a slide to render custom thumbnail content instead of an image, for
+example a `<video>` element. The content is placed inside a square button, size it with
+`width: 100%` and `height: 100%`:
 
 ```tsx
 import type { LightboxSlideData } from '@mantine/lightbox';
@@ -132,16 +128,15 @@ Zoom, thumbnails, fullscreen and download features can be combined:
 
 ## Loop navigation
 
-Set `loop` to enable infinite wrapping at the ends of the slide list:
+Set `loop` to continue from the last slide to the first and back:
 
 <Demo data={LightboxDemos.loop} />
 
 ## Slide transition
 
-By default, slides are changed instantly when arrow buttons or keyboard are used.
-Set `withSlideTransition` to animate slide changes. Use `emblaOptions={{ duration: 40 }}`
-to change the animation speed. Embla duration is not in milliseconds, values between 20 and 60
-are recommended:
+By default, slides change instantly. Set `withSlideTransition` to animate slide changes.
+Use `emblaOptions={{ duration: 40 }}` to change the animation speed, embla duration is not in
+milliseconds, values between 20 and 60 are recommended:
 
 <Demo data={LightboxDemos.transition} />
 
@@ -180,9 +175,9 @@ function Demo() {
 
 ## Open and close transition
 
-Use `transitionProps` to change the animation of the content, it accepts the same options
-as the [Transition](/core/transition) component. The overlay always fades. To change only
-the duration (`200` by default), use `transitionDuration`:
+Use `transitionProps` to change the open and close animation, it accepts the same options
+as the [Transition](/core/transition) component. To change only the duration, use
+`transitionDuration`:
 
 <Demo data={LightboxDemos.overlayTransition} />
 
@@ -194,22 +189,21 @@ Set `transitionProps={{ duration: 0 }}` to open and close the lightbox without a
 
 ## Swipe to close
 
-On mobile, swiping down closes the lightbox. This is enabled by default.
-Set `closeOnSwipeDown={false}` to disable:
+On mobile, swiping down closes the lightbox. Set `closeOnSwipeDown={false}` to disable it:
 
 <Demo data={LightboxDemos.swipeClose} />
 
 ## Click outside to close
 
 Set `closeOnClickOutside` to close the lightbox when the empty space around the slide
-content is clicked. It is disabled by default to prevent accidental closing:
+is clicked:
 
 <Demo data={LightboxDemos.closeOnClickOutside} />
 
 ## Store API
 
 Mount `Lightbox.Provider` once in your app and open the lightbox from anywhere
-using the static `Lightbox` methods:
+with the static `Lightbox` methods:
 
 ```tsx
 import { Lightbox } from '@mantine/lightbox';
@@ -230,9 +224,8 @@ Lightbox.setIndex(5);
 
 ## Multiple lightboxes
 
-By default, `Lightbox.Provider` and the static `Lightbox` methods use the shared `lightboxStore`.
 To use several independent lightboxes, create a separate store with `createLightbox`
-and pass it to the `store` prop:
+and pass it to the `store` prop of `Lightbox.Provider`:
 
 ```tsx
 import { Button } from '@mantine/core';
@@ -250,7 +243,7 @@ function Demo() {
 }
 ```
 
-To subscribe to the state of any lightbox store in a component, use the `useLightboxStore` hook:
+Use the `useLightboxStore` hook to subscribe to the state of a lightbox store in a component:
 
 ```tsx
 import { lightboxStore, useLightboxStore } from '@mantine/lightbox';
@@ -263,9 +256,8 @@ function Demo() {
 
 ## Video slides
 
-Set `type: 'video'` on a slide to render a `<video>` element. Videos are paused
-when the slide is changed. The `poster` image is used as the thumbnail unless
-`thumbSrc` or `renderThumb` is set:
+Set `type: 'video'` on a slide to render a `<video>` element. Videos are paused when the
+slide changes. The `poster` image is used as the thumbnail:
 
 <Demo data={LightboxDemos.video} />
 
@@ -279,7 +271,7 @@ Custom slides do not have a default thumbnail, set `renderThumb` or `thumbSrc`:
 ## Custom toolbar
 
 Use `toolbarItems` prop to replace the default toolbar items. It accepts an array of items
-or a function that returns it. The function is called with the lightbox state and handlers:
+or a function that receives the lightbox state and handlers:
 
 ```tsx
 interface ToolbarItemsPayload {
@@ -330,8 +322,7 @@ function CustomLightbox({ opened, onClose, slides }) {
 
 ## Labels
 
-Use `labels` prop to translate the lightbox. Labels that are not set fall back
-to the default English values:
+Use `labels` prop to translate the lightbox:
 
 ```tsx
 import { Lightbox } from '@mantine/lightbox';

@@ -6,25 +6,23 @@ export default Layout(MDX_DATA.DataGridStates);
 
 ## Empty state
 
-Use the `emptyState` prop of `DataGrid` to render content when there are no rows to display:
-the data is empty or filters match nothing. The content is rendered in a full-width cell
-without padding, use the `emptyState` Styles API selector to style it.
+Use the `emptyState` prop of `DataGrid` to render content when there are no rows to display.
+The content is rendered in a full-width cell without padding, use the `emptyState` Styles API
+selector to style it. The empty state is not displayed while `loading` is set.
 
 `emptyState` can be a React node or a function that receives the following object:
 
 <DataTable
   head={['Field', 'Description']}
   data={[
-    ['`rowCount`', 'Total number of rows before filtering; the `rowCount` option of `useDataGrid` when set, so server-side grids report the server total'],
-    ['`filteredRowCount`', 'Number of top-level rows left after column and global filters'],
-    ['`isFiltered`', 'Whether a column filter or a non-empty global filter is active (read from the state, so it is correct under `manualFiltering`)'],
-    ['`table`', 'The table instance, for example to clear filters'],
+    [<code>rowCount</code>, <>Total number of rows before filtering, or the <code>rowCount</code> option for server-side grids</>],
+    [<code>filteredRowCount</code>, 'Number of rows left after filtering'],
+    [<code>isFiltered</code>, 'Whether a column filter or a global filter is active'],
+    [<code>table</code>, 'The table instance, for example to clear filters'],
   ]}
 />
 
 <Demo data={DataGridDemos.emptyState} />
-
-The empty state is not displayed while `loading` is set.
 
 ## Loading
 
@@ -40,9 +38,9 @@ Set the `loading` prop on `DataGrid` to display the loading state:
 <DataTable
   head={['Variant', 'Rendering']}
   data={[
-    ['`overlay` (default)', 'A core `LoadingOverlay` over the body only (the toolbar, header and footer stay clear; the tfoot is covered) with a 2px blur and 60% background opacity; interaction is blocked while it is visible'],
-    ['`bar`', 'A 2px primary indeterminate progress bar on the header rule; the body rows are dimmed to 50% opacity and stay interactive, which suits background refreshes and infinite scroll. The animation is static under `prefers-reduced-motion`'],
-    ['`skeleton`', 'Skeleton rows replace the existing rows'],
+    [<><code>overlay</code> (default)</>, <><code>LoadingOverlay</code> over the body, the toolbar, header and footer stay clear. Interaction is blocked while it is visible</>],
+    [<code>bar</code>, 'Progress bar under the header, the rows are dimmed and stay interactive. Suits background refreshes and infinite scroll'],
+    [<code>skeleton</code>, 'Skeleton rows replace the existing rows'],
   ]}
 />
 

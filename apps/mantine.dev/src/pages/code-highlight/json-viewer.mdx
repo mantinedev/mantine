@@ -6,19 +6,19 @@ export default Layout(MDX_DATA.JsonViewer);
 
 ## Usage
 
-`JsonViewer` is an interactive component for viewing JSON structures.
-
-`JsonViewer` displays values the way `JSON.stringify` serializes them: values that implement `toJSON()` (for example, `Date`) are displayed as the result of `toJSON()`, and `Map` / `Set` are displayed as empty objects.
+`JsonViewer` displays JSON data as a collapsible tree. Values are serialized the same way as with `JSON.stringify`,
+for example, `Date` is displayed as a string and `Map` as an empty object:
 
 <Demo data={JsonViewerDemos.usage} />
 
 ## Default expand depth
 
-Use `defaultExpandDepth` prop to control how many levels are expanded by default. The root node is always expanded. With `1` (default), nested objects and arrays of the root node are collapsed:
+Use `defaultExpandDepth` prop to set how many levels are expanded initially, the root node is always expanded:
 
 <Demo data={JsonViewerDemos.expandDepth} />
 
-`defaultExpandDepth` is applied only when the component mounts. If `value` is loaded later, change the `key` together with the data to apply it again, or control the expanded state with `expandedPaths` and `onExpandedPathsChange` props:
+`defaultExpandDepth` is applied only on mount. If `value` is loaded later, change the `key` together with the data,
+or control the expanded state with `expandedPaths` and `onExpandedPathsChange` props:
 
 ```tsx
 import { JsonViewer } from '@mantine/code-highlight';
@@ -30,19 +30,19 @@ function Demo({ data }: { data: unknown }) {
 
 ## Long arrays and objects
 
-Use `maxDisplayLength` prop (`100` by default) to limit the number of entries displayed for a single object or array. The rest of the entries are replaced with a "... N more items" row.
+Use `maxDisplayLength` prop to limit the number of entries displayed in a single object or array. The rest is replaced with a "... N more items" row.
 
-Set `groupArraysAfterLength` prop to a number to split longer arrays into collapsible `[start...end]` groups instead. `maxDisplayLength` does not apply to grouped arrays.
+Set `groupArraysAfterLength` prop to split longer arrays into collapsible groups instead. `maxDisplayLength` does not apply to grouped arrays.
 
 ## Root name
 
-Use `rootName` prop to display a label for the root node. Set it to `false` (default) to hide it:
+Use `rootName` prop to display a label for the root node:
 
 <Demo data={JsonViewerDemos.rootName} />
 
 ## Expand all / collapse all controls
 
-Set `withControls` prop to display expand all and collapse all buttons. The controls are not displayed when `allExpanded` is set:
+Set `withControls` prop to display expand all and collapse all buttons. Controls are hidden when `allExpanded` is set:
 
 <Demo data={JsonViewerDemos.controls} />
 
@@ -61,24 +61,20 @@ Set `withCopy` prop to display a copy button when a row is hovered or focused:
 
 ## Collapse long strings
 
-Use `collapseStringsAfterLength` prop to truncate long strings. Truncated strings
-display a "show more" button that reveals the full value.
-
-String values longer than 20 characters wrap onto multiple lines. These values have `data-wrap` attribute, use it to change the wrapping behavior with [Styles API](/styles/styles-api).
+Use `collapseStringsAfterLength` prop to truncate long strings behind a "show more" button.
+Long strings wrap onto multiple lines, target the `data-wrap` attribute with [Styles API](/styles/styles-api) to change that:
 
 <Demo data={JsonViewerDemos.collapseStrings} />
 
 ## Sort keys
 
-Set `sortKeys` prop to sort object keys alphabetically. You can also pass a custom
-comparator function:
+Set `sortKeys` prop to sort object keys alphabetically or pass a comparator function:
 
 <Demo data={JsonViewerDemos.sortKeys} />
 
 ## Highlight items
 
-Use `highlightItems` prop to highlight properties with diff-style colors. It is an object:
-keys are property paths created with `serializeJsonViewerPath` function, values are `added` or `removed`:
+Use `highlightItems` prop to highlight properties with diff colors. Keys are paths created with `serializeJsonViewerPath`, values are `added` or `removed`:
 
 <Demo data={JsonViewerDemos.highlight} />
 
@@ -112,6 +108,5 @@ Set `withChevrons` prop to display expand/collapse chevrons next to collapsible 
 
 ## Accessibility
 
-`JsonViewer` renders its content as an ARIA tree. `rootName` prop is used as the accessible name of the tree, when it is not set, the tree is labelled `JSON`.
-
-The component is always rendered left-to-right, regardless of the [direction](/styles/rtl) of the application.
+The content is rendered as an ARIA tree labelled with `rootName`, or `JSON` when it is not set.
+The component is always rendered left-to-right, regardless of the application [direction](/styles/rtl).

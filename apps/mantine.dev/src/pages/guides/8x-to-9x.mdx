@@ -9,10 +9,8 @@ export default Layout(MDX_DATA.EightToNine);
 
 ## Migrate with LLM agents
 
-You can use LLM agents to assist with the migration from 8.x to 9.x.
-The LLM documentation includes all breaking changes and migration steps
-in a format optimized for AI coding tools. Copy the link to the md documentation
-file and ask your AI agent to perform the migration for you.
+LLM agents can perform the migration for you. Copy the link to the md version of this page
+and ask your AI agent to apply it: it includes all breaking changes and migration steps.
 
 <LlmButton href="/llms/guides-8x-to-9x.md" />
 
@@ -63,7 +61,7 @@ function Demo() {
 
 ## Text color prop
 
-The `color` prop of the [Text](/core/text) and [Anchor](/core/anchor) components was removed.
+The `color` prop of `Text` and `Anchor` components was removed.
 Use the `c` [style prop](/styles/style-props) instead:
 
 ```tsx
@@ -314,9 +312,8 @@ function Demo() {
 
 ## Grid gutter -> gap
 
-The [Grid](/core/grid) component `gutter` prop was renamed to `gap` for consistency with other layout components
-(like [Flex](/core/flex) and [SimpleGrid](/core/simple-grid)). Additionally, new `rowGap` and `columnGap` props
-were added to allow separate control of vertical and horizontal spacing:
+The [Grid](/core/grid) `gutter` prop was renamed to `gap`, the same as in other layout components.
+Use the new `rowGap` and `columnGap` props to set vertical and horizontal spacing separately:
 
 ```tsx
 import { Grid } from '@mantine/core';

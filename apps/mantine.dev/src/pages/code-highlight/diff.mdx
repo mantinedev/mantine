@@ -6,8 +6,7 @@ export default Layout(MDX_DATA.Diff);
 
 ## Usage
 
-`Diff` component highlights differences between two strings. By default, it uses
-word-level diff granularity and unified display mode:
+`Diff` highlights differences between two strings:
 
 <Demo data={DiffDemos.usage} />
 
@@ -19,15 +18,13 @@ Set `mode="split"` to display the diff in a side-by-side layout:
 
 ## Diff method
 
-Use the `diffMethod` prop to change how changed lines are highlighted: by characters,
-by words (default) or by whole lines:
+Use `diffMethod` prop to highlight changes by characters, words or whole lines:
 
 <Demo data={DiffDemos.diffMethod} />
 
 ## Context lines
 
-Set `contextLines` prop to control how many unchanged lines are displayed around changes.
-Other unchanged lines are collapsed and can be expanded with the expand button:
+Set `contextLines` prop to limit the number of unchanged lines displayed around changes. Other lines are collapsed behind an expand button:
 
 <Demo data={DiffDemos.contextLines} />
 

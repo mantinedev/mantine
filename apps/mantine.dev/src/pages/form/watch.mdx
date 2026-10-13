@@ -15,17 +15,12 @@ export default Layout(MDX_DATA.formWatch);
 
 ## form.useWatchValue
 
-`form.useWatchValue` subscribes the component to a single field and returns its current value.
-The component rerenders only when that field changes, changes to other fields do not trigger
-a rerender. Use it when you need a form value during render – for example, to show a section
-of the form conditionally:
+`form.useWatchValue` returns the current value of a field and rerenders the component only when that field changes.
+Use it to render a part of the form based on a value:
 
 <Demo data={FormDemos.watchValue} />
 
-`form.useWatchValue` works the same way in both controlled and uncontrolled
-modes. In uncontrolled mode, reading a value with `form.getValues()` during
-render does not rerender the component when the value changes – use
-`form.useWatchValue` instead:
+Do not read values with `form.getValues()` during render, it does not rerender the component when the value changes:
 
 ```tsx
 import { Collapse } from '@mantine/core';
@@ -46,8 +41,7 @@ function Demo() {
 }
 ```
 
-Note that `form.useWatchValue` is a hook – all hook rules apply. For example,
-you cannot call it conditionally or inside loops.
+`form.useWatchValue` is a hook, it cannot be called conditionally or inside loops:
 
 ```tsx
 function Demo() {
@@ -64,14 +58,12 @@ function Demo() {
 
 ## form.watch
 
-`form.watch` is an effect function that allows subscribing to changes of a
-specific form field. It accepts a field path and a callback function that is
-called with the new value, previous value, touched and dirty field states:
+`form.watch` runs a callback when a field changes.
+The callback receives the new value, previous value, touched and dirty states:
 
 <Demo data={FormDemos.watch} />
 
-Note that `form.watch` uses `useEffect` under the hood – all hook rules apply.
-For example, you cannot use `form.watch` conditionally or inside loops.
+`form.watch` is a hook, it cannot be called conditionally or inside loops:
 
 ```tsx
 function Demo() {
@@ -90,19 +82,15 @@ function Demo() {
 
 ## form.watch with arrays
 
-`form.watch` works with array fields – the callback is triggered when any
-nested field within the array changes or when list operations
-(`insertListItem`, `removeListItem`, `reorderListItem`, `replaceListItem`)
-are performed:
+With array fields, the callback is called when any nested field changes or when a list handler is called:
 
 <Demo data={FormDemos.watchList} />
 
 ## form.watch cascade
 
-By default, `form.watch` notifies parent watchers when nested fields change
-(upward cascade). `form.setValues`, `form.initialize`, `form.reset` and list handlers
-always notify watchers of every changed nested field. To also notify nested field watchers
-when `form.setFieldValue` sets a parent path, set `cascadeUpdates: true`:
+A watcher of a parent path is called when a nested field changes.
+The reverse is not true: `form.setFieldValue` on a parent path does not call watchers of nested fields.
+Set `cascadeUpdates: true` to change that:
 
 <Demo data={FormDemos.cascadeUpdates} />
 

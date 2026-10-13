@@ -6,29 +6,25 @@ export default Layout(MDX_DATA.DataGridColumnFeatures);
 
 ## Column reorder
 
-Pass `withColumnReorder` to `useDataGrid` to allow users to reorder columns by dragging
-column headers:
+Pass `withColumnReorder` to `useDataGrid` to let users reorder columns by dragging column headers.
+Use `columnOrder` and `onColumnOrderChange` for controlled state.
+
+- A column can be moved only within its pin region and its header group, utility columns always stay first
+- With `withColumnMenu`, the **Move left** and **Move right** menu items reorder columns from the keyboard
+- Grouped columns stay first while rows are grouped, see [groupedColumnMode](/data-grid/grouping#groupedcolumnmode)
 
 <Demo data={DataGridDemos.columnReorder} />
-
-- A column can be moved only within its pin region and its parent header group
-- Utility columns always stay first and cannot be moved
-- Set `withColumnMenu` on `DataGrid` to add **Move left** and **Move right** items to the column menu, they make reordering available from the keyboard
-- While rows are grouped, grouped columns are kept first and cannot be moved. Set `groupedColumnMode: false` to keep them in place, see [groupedColumnMode](/data-grid/grouping#groupedcolumnmode)
-
-Use `columnOrder` and `onColumnOrderChange` for controlled state. To reset the column order,
-call `store.table.setColumnOrder([])`.
 
 ## Header groups
 
 Use the `columns` property of a column definition to group columns under a shared header.
-Group headers can be resized, but cannot be sorted or dragged and have no column menu.
+Group headers can be resized, but cannot be sorted or dragged:
 
 <Demo data={DataGridDemos.headerGroups} />
 
 ## Column alignment
 
-Set `meta.align` on a column to align its header, body and footer cells. The default value is `start`.
+Set `meta.align` on a column to align its header, body and footer cells.
 Columns with `align: 'end'` use tabular figures, use it for numbers:
 
 ```tsx
@@ -42,25 +38,17 @@ const columns = [
 ## Utility columns
 
 Row reorder, row selection, row expansion and row numbers features add their own columns
-at the start of the grid:
-
-- `__reorder__` – `withRowReorder`
-- `__select__` – `withRowSelection`
-- `__expand__` – `withRowExpansion` without tree data
-- `__rowNumber__` – `withRowNumbers`
-
-Utility columns cannot be sorted, filtered, resized or hidden by the user and are not exported.
-Their ids are exported as `UTILITY_COLUMN_IDS`. If your code iterates over `table.getAllColumns()`,
-skip columns with `meta.utility`.
+at the start of the grid. Utility columns cannot be sorted, filtered, resized or hidden by the user
+and are not exported. If your code iterates over `table.getAllColumns()`, skip columns with `meta.utility`.
 
 ## Cell spanning
 
 Set `spanRows: true` on a column definition to merge cells of adjacent rows that have
-the same value in that column. Only rows that are displayed next to each other are merged.
+the same value in that column:
 
 <Demo data={DataGridDemos.cellSpanning} />
 
-Pass a predicate instead of `true` to decide whether a row joins the run anchored at `anchorRow`:
+Pass a function instead of `true` to decide whether a row joins the run anchored at `anchorRow`:
 
 ```tsx
 const columns = [
@@ -73,8 +61,8 @@ const columns = [
 ];
 ```
 
-Use `spanColumns` to make a cell span several columns in a given row. Return `1` or less for no
-span, or `Infinity` for the rest of the cell's pinned region:
+Use `spanColumns` to make a cell span several columns. Return `1` for no span
+or `Infinity` to span the rest of the row:
 
 ```tsx
 const columns = [
@@ -86,10 +74,7 @@ const columns = [
 ];
 ```
 
-Notes:
-
 - `null` and `undefined` values are not merged
-- Group rows are not spanned
 - `spanRows` and `spanColumns` are ignored when `virtualize` is set
 - Set `enableCellSpanning: false` in `tableOptions` to disable spanning for the whole grid, or on a column definition to disable it for one column
 
