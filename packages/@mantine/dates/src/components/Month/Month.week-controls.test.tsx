@@ -24,7 +24,7 @@ describe('@mantine/dates/Month week controls', () => {
   it('renders week numbers as text by default', () => {
     const { container } = render(<Month {...defaultProps} />);
     expect(weekControls(container)).toHaveLength(0);
-    expect(container.querySelectorAll('.mantine-Month-weekNumber')).toHaveLength(5);
+    expect(container.querySelectorAll('.mantine-Month-weekNumber')).toHaveLength(6);
     expect(container.querySelector('table')).not.toHaveAttribute('data-week-mode');
   });
 
@@ -32,7 +32,7 @@ describe('@mantine/dates/Month week controls', () => {
     const { container } = renderWithWeekControls();
     const controls = weekControls(container);
     expect(container.querySelector('table')).toHaveAttribute('data-week-mode');
-    expect(controls).toHaveLength(5);
+    expect(controls).toHaveLength(6);
     expect(controls[0]).toHaveClass('mantine-Month-weekControl');
     expect(controls[0].textContent).toBe('13');
     expect(controls[0]).toHaveAttribute('tabindex', '0');
@@ -87,7 +87,7 @@ describe('@mantine/dates/Month week controls', () => {
         },
       }
     );
-    expect(refSpy).toHaveBeenCalledTimes(5);
+    expect(refSpy).toHaveBeenCalledTimes(6);
     expect(refSpy).toHaveBeenCalledWith(0, 0, expect.any(HTMLButtonElement));
     await userEvent.type(weekControls(container)[1], '{ArrowDown}');
     expect(keySpy).toHaveBeenCalledWith({ rowIndex: 1, date: '2022-04-04' });

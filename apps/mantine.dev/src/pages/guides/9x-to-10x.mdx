@@ -392,6 +392,26 @@ function Demo() {
 }
 ```
 
+## DatesProvider consistentWeeks default
+
+If you want months to have only as many weeks as they need, set `consistentWeeks: false` in
+`DatesProvider` – the setting is now `true` by default and every month has 6 weeks in all
+calendar components:
+
+```tsx
+import { DatesProvider } from '@mantine/dates';
+
+function Demo() {
+  return (
+    <DatesProvider settings={{ consistentWeeks: false }}>
+      {/* Your app here */}
+    </DatesProvider>
+  );
+}
+```
+
+If you set `consistentWeeks: true`, you can remove it.
+
 ## useMatches options argument
 
 Remove the second argument of `useMatches`. The hook always returns the `base` value on the

@@ -73,7 +73,7 @@ describe('@mantine/dates/use-dates-context', () => {
     expect(hook.result.current.firstDayOfWeek).toBe(1);
     expect(hook.result.current.weekendDays).toStrictEqual([0, 6]);
     expect(hook.result.current.labelSeparator).toBe('–');
-    expect(hook.result.current.consistentWeeks).toBe(false);
+    expect(hook.result.current.consistentWeeks).toBe(true);
     expect(hook.result.current.submitButtonLabel).toBe('Save');
   });
 });

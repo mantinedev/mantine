@@ -58,7 +58,7 @@ describe('@mantine/dates/Month', () => {
       },
     });
 
-    expect(Object.keys(daysRefs)).toHaveLength(35);
+    expect(Object.keys(daysRefs)).toHaveLength(42);
     expect(daysRefs['0.0.0']).toBeInstanceOf(HTMLButtonElement);
   });
 

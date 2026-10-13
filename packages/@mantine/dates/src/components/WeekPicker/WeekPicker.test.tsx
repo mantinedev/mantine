@@ -57,8 +57,8 @@ describe('@mantine/dates/WeekPicker', () => {
     const { container } = render(
       <WeekPicker {...defaultProps} {...({ withWeekNumbers: false } as any)} />
     );
-    expect(weekControls(container)).toHaveLength(5);
-    expect(container.querySelectorAll('.mantine-WeekPicker-weekControl')).toHaveLength(5);
+    expect(weekControls(container)).toHaveLength(6);
+    expect(container.querySelectorAll('.mantine-WeekPicker-weekControl')).toHaveLength(6);
     expect(weekControls(container)[0].textContent).toBe('13');
   });
 
@@ -137,7 +137,7 @@ describe('@mantine/dates/WeekPicker', () => {
     await userEvent.keyboard('{ArrowDown}');
     expect(container.querySelector('[data-level-control]')!.textContent).toBe('May 2022');
     expect(
-      container.querySelector('[data-week-control][aria-label="2 May 2022 – 8 May 2022"]')
+      container.querySelector('[data-week-control][aria-label="9 May 2022 – 15 May 2022"]')
     ).toHaveFocus();
   });
 
@@ -148,7 +148,7 @@ describe('@mantine/dates/WeekPicker', () => {
     const secondColumnControls = columns[1].querySelectorAll('[data-week-control]');
     await userEvent.click(firstColumnControls[firstColumnControls.length - 1]);
     await userEvent.keyboard('{ArrowDown}');
-    expect(secondColumnControls[1]).toHaveFocus();
+    expect(secondColumnControls[2]).toHaveFocus();
     await userEvent.keyboard('{ArrowUp}');
     expect(firstColumnControls[firstColumnControls.length - 1]).toHaveFocus();
   });
@@ -437,7 +437,7 @@ describe('@mantine/dates/WeekPicker', () => {
 
   it('does not hang and renders no selection for an invalid/empty value', () => {
     const { container } = render(<WeekPicker defaultDate="2022-04-11" value="" />);
-    expect(days(container)).toHaveLength(35);
+    expect(days(container)).toHaveLength(42);
     expect(container.querySelectorAll('[data-selected]:not([data-week-control])')).toHaveLength(0);
   }, 5000);
 });

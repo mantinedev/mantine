@@ -13,6 +13,11 @@ export const Demo_consistentWeeks = {
   render: renderDemo(demos.consistentWeeks),
 };
 
+export const Demo_consistentWeeksDisabled = {
+  name: '⭐ Demo: consistentWeeksDisabled',
+  render: renderDemo(demos.consistentWeeksDisabled),
+};
+
 export const Demo_intlFormatting = {
   name: '⭐ Demo: intlFormatting',
   render: renderDemo(demos.intlFormatting),

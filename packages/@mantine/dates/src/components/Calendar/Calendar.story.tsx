@@ -19,10 +19,10 @@ export function Unstyled() {
   );
 }
 
-export function ConsistentWeeks() {
+export function ConsistentWeeksDisabled() {
   return (
     <div style={{ padding: 40 }}>
-      <DatesProvider settings={{ consistentWeeks: true }}>
+      <DatesProvider settings={{ consistentWeeks: false }}>
         <Calendar />
       </DatesProvider>
     </div>

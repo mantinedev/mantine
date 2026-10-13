@@ -14,7 +14,7 @@ export interface DatesProviderValue {
   /** Separator between start and end dates in range picker inputs value @default '–' */
   labelSeparator: string;
 
-  /** If set, every month has 6 weeks @default false */
+  /** If set, every month has 6 weeks @default true */
   consistentWeeks: boolean;
 
   /** Label of the submit button in picker inputs dropdowns @default 'Save' */
@@ -28,7 +28,7 @@ export const DATES_PROVIDER_DEFAULT_SETTINGS: DatesProviderValue = {
   firstDayOfWeek: 1,
   weekendDays: [0, 6],
   labelSeparator: '–',
-  consistentWeeks: false,
+  consistentWeeks: true,
   submitButtonLabel: 'Save',
 };
 

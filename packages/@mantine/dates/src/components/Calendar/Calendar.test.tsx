@@ -441,8 +441,13 @@ describe('@mantine/dates/Calendar', () => {
     expect(getDay('1 April 2022')).toHaveAttribute('data-outside');
 
     await userEvent.keyboard('{ArrowDown}');
-    expectHeaderLevel('month', 'April 2022');
+    expectHeaderLevel('month', 'March 2022');
     expect(getDay('8 April 2022')).toHaveFocus();
+    expect(getDay('8 April 2022')).toHaveAttribute('data-outside');
+
+    await userEvent.keyboard('{ArrowDown}');
+    expectHeaderLevel('month', 'April 2022');
+    expect(getDay('15 April 2022')).toHaveFocus();
   });
 
   it('switches month when hidden outside dates are reached with keyboard', async () => {

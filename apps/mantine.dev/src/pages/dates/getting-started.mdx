@@ -55,17 +55,17 @@ components exported from the `@mantine/dates` package. `DatesProvider` supports 
 - `firstDayOfWeek` – a number from 0 to 6, where 0 is Sunday and 6 is Saturday. The default value is 1 – Monday.
 - `weekendDays` – an array of numbers from 0 to 6, where 0 is Sunday and 6 is Saturday. The default value is `[0, 6]` – Saturday and Sunday.
 - `labelSeparator` – string. Separator between start and end dates in the input value of range picker inputs. The default value is `–`.
-- `consistentWeeks` – boolean. If `true`, every month will have 6 weeks. The default value is `false`.
+- `consistentWeeks` – boolean. If `true`, every month has 6 weeks. The default value is `true`.
 - `submitButtonLabel` – string. Label of the submit button in the dropdowns of picker inputs. The default value is `Save`.
 
 <Demo data={DatesProviderDemos.usage} />
 
 ## Consistent weeks
 
-If you want to avoid layout shifts, set `consistentWeeks: true` in the `DatesProvider` settings.
-This will ensure that every month has 6 weeks, even if outside days are not in the same month.
+By default, every month has 6 weeks, so the calendar does not change height when the month changes.
+Set `consistentWeeks: false` in the `DatesProvider` settings to render only the weeks that contain days of the current month:
 
-<Demo data={DatesProviderDemos.consistentWeeks} />
+<Demo data={DatesProviderDemos.consistentWeeksDisabled} />
 
 ## Formatting without dayjs
 

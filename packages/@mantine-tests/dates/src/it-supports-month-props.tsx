@@ -23,7 +23,7 @@ export function itSupportsMonthProps(options: Options, name = 'supports month pr
       const { container } = render(<options.component {...options.props} />);
 
       const days = getDays(container);
-      expect(days).toHaveLength(35);
+      expect(days).toHaveLength(42);
 
       // First week of April 2022 (with outside dates)
       expect(days[0].textContent).toBe('28');
@@ -36,6 +36,22 @@ export function itSupportsMonthProps(options: Options, name = 'supports month pr
 
       // Last days of April 2022 (with outside dates)
       expect(days[33].textContent).toBe('30');
+      expect(days[34].textContent).toBe('1');
+
+      // Sixth week added by consistentWeeks (May 2022)
+      expect(days[35].textContent).toBe('2');
+      expect(days[41].textContent).toBe('8');
+    });
+
+    it('renders only the weeks of the month when consistentWeeks is disabled', () => {
+      const { container } = render(
+        <DatesProvider settings={{ consistentWeeks: false }}>
+          <options.component {...options.props} />
+        </DatesProvider>
+      );
+
+      const days = getDays(container);
+      expect(days).toHaveLength(35);
       expect(days[34].textContent).toBe('1');
     });
 
@@ -209,11 +225,12 @@ export function itSupportsMonthProps(options: Options, name = 'supports month pr
       const { container } = render(<options.component {...options.props} hideOutsideDates />);
       const days = getDays(container);
 
-      expect(days).toHaveLength(35);
+      expect(days).toHaveLength(42);
       expect(days[0]).toHaveAttribute('data-hidden');
       expect(days[6]).not.toHaveAttribute('data-hidden');
       expect(days[33]).not.toHaveAttribute('data-hidden');
       expect(days[34]).toHaveAttribute('data-hidden');
+      expect(days[41]).toHaveAttribute('data-hidden');
     });
 
     it('supports hideWeekdays', () => {
