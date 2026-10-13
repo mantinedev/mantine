@@ -54,10 +54,9 @@ function Demo() {
 
 ## Read only
 
-Set the `readOnly` prop to prevent the switch value from being changed by user
-interaction. The switch still displays its current value and reflects programmatic
-updates to the `checked` prop, but clicking it (or pressing <kbd>Space</kbd>) does not
-toggle its state and does not call the `onChange` handler:
+Set `readOnly` prop to prevent the user from changing the value. The switch still
+follows the `checked` prop, but clicking it or pressing <kbd>Space</kbd> does not toggle
+it and does not call `onChange`:
 
 ```tsx
 import { useState } from 'react';
