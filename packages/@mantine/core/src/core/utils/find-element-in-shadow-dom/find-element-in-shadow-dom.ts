@@ -66,12 +66,7 @@ export function getRootElement(
   }
 
   const root = targetElement.getRootNode();
-
-  // instanceof fails for nodes from another window/iframe (each realm has its own
-  // Document and ShadowRoot constructors), so compare node types instead.
-  const nodeType = (root as Node | undefined)?.nodeType;
-  const isDocument = nodeType === 9; // Node.DOCUMENT_NODE
-  const isShadowRoot = nodeType === 11 && 'host' in (root as object); // Node.DOCUMENT_FRAGMENT_NODE
-
+  const isDocument = root.nodeType === Node.DOCUMENT_NODE;
+  const isShadowRoot = root.nodeType === Node.DOCUMENT_FRAGMENT_NODE && 'host' in root;
   return isDocument || isShadowRoot ? (root as Document | ShadowRoot) : document;
 }
