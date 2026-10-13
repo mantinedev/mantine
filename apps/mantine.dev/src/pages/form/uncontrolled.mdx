@@ -41,7 +41,6 @@ the user types, only when the form rerenders.
 import { useForm } from '@mantine/form';
 
 const form = useForm({
-  mode: 'uncontrolled',
   initialValues: { name: 'John Doe' },
 });
 
@@ -67,7 +66,6 @@ import { useEffect } from 'react';
 import { useForm } from '@mantine/form';
 
 const form = useForm({
-  mode: 'uncontrolled',
   initialValues: { name: '' },
   // ✅ Called on every change
   onValuesChange: (values) => console.log(values),
@@ -90,7 +88,6 @@ import { useForm } from '@mantine/form';
 
 function Demo() {
   const form = useForm({
-    mode: 'uncontrolled',
     initialValues: { shipsInternationally: false, country: '' },
   });
 
@@ -136,7 +133,6 @@ import { useForm } from '@mantine/form';
 
 function Demo() {
   const form = useForm({
-    mode: 'uncontrolled',
     initialValues: { text: '' },
   });
 

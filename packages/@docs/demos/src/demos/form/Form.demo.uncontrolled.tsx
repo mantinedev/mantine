@@ -10,7 +10,6 @@ import { hasLength, isEmail, useForm } from '@mantine/form';
 
 function Demo() {
   const form = useForm({
-    mode: 'uncontrolled',
     initialValues: { name: '', email: '' },
     validate: {
       name: hasLength({ min: 3 }, 'Must be at least 3 characters'),
@@ -49,7 +48,6 @@ function Demo() {
 
 function Demo() {
   const form = useForm({
-    mode: 'uncontrolled',
     initialValues: { name: '', email: '' },
     validate: {
       name: hasLength({ min: 3 }, 'Must be at least 3 characters'),

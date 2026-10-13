@@ -18,7 +18,7 @@ Both callbacks also receive the submit event. `handleValidationFailure` receives
 import { useForm } from '@mantine/form';
 
 function Demo() {
-  const form = useForm({ mode: 'uncontrolled' });
+  const form = useForm();
 
   return (
     <form
@@ -61,7 +61,7 @@ You can also set `form.submitting` manually with `form.setSubmitting`:
 ```tsx
 import { useForm } from '@mantine/form';
 
-const form = useForm({ mode: 'uncontrolled' });
+const form = useForm();
 form.submitting; // -> false
 
 form.setSubmitting(true);
@@ -82,7 +82,6 @@ import { useForm } from '@mantine/form';
 
 function Demo() {
   const form = useForm({
-    mode: 'uncontrolled',
     initialValues: { email: '' },
   });
 
@@ -120,7 +119,6 @@ import { useForm } from '@mantine/form';
 
 function Demo() {
   const form = useForm({
-    mode: 'uncontrolled',
     initialValues: {
       firstName: 'John',
       lastName: 'Doe',
@@ -156,7 +154,6 @@ to the `useForm` hook. It can have the following values:
 import { useForm } from '@mantine/form';
 
 const form = useForm({
-  mode: 'uncontrolled',
   onSubmitPreventDefault: 'never',
 });
 ```
@@ -171,7 +168,7 @@ import { Button } from '@mantine/core';
 import { useForm } from '@mantine/form';
 
 function Demo() {
-  const form = useForm({ mode: 'uncontrolled' });
+  const form = useForm();
 
   return (
     <form onSubmit={form.onSubmit(console.log)} onReset={form.onReset}>

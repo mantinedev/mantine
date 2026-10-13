@@ -24,7 +24,6 @@ export function Rendering() {
 
 export function UncontrolledResetField() {
   const form = useForm({
-    mode: 'uncontrolled',
     initialValues: {
       foo: 'foo',
     },

@@ -26,7 +26,6 @@ import { useForm } from '@mantine/form';
 
 function Demo() {
   const form = useForm({
-    mode: 'uncontrolled',
     initialValues: { name: '', accepted: false },
     validate: {
       name: (value) => value.trim().length > 2,
@@ -122,7 +121,6 @@ import { CustomInput } from './CustomInput';
 
 function Demo() {
   const form = useForm({
-    mode: 'uncontrolled',
     initialValues: { name: '' },
   });
 

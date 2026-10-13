@@ -49,7 +49,6 @@ function TimeField({
 function Demo() {
   const [submitted, setSubmitted] = useState<string | null>(null);
   const form = useForm({
-    mode: 'uncontrolled',
     initialValues: { time: '' },
     validate: { time: (value) => (value ? null : 'Time is required') },
   });
@@ -117,7 +116,6 @@ function TimeField({
 function Demo() {
   const [submitted, setSubmitted] = useState<string | null>(null);
   const form = useForm({
-    mode: 'uncontrolled',
     initialValues: { time: '' },
     validate: { time: (value) => (value ? null : 'Time is required') },
   });

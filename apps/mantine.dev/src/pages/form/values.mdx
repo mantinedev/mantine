@@ -13,7 +13,6 @@ their types, and they are used by `form.reset` and dirty checks:
 import { useForm } from '@mantine/form';
 
 const form = useForm({
-  mode: 'uncontrolled',
   initialValues: {
     name: '',
     email: '',
@@ -38,7 +37,6 @@ updated while the user types in [uncontrolled mode](/form/uncontrolled/#formgetv
 import { useForm } from '@mantine/form';
 
 const form = useForm({
-  mode: 'uncontrolled',
   initialValues: { name: 'John Doe' },
 });
 
@@ -64,7 +62,6 @@ With `form.setValues` you can set all form values. For example, you can set valu
 import { useForm } from '@mantine/form';
 
 const form = useForm({
-  mode: 'uncontrolled',
   initialValues: { name: '', email: '', age: 0 },
 });
 
@@ -99,7 +96,6 @@ function slugify(value: string) {
 
 function Demo() {
   const form = useForm({
-    mode: 'uncontrolled',
     touchTrigger: 'focus',
     initialValues: { name: '', slug: '' },
   });
@@ -147,7 +143,6 @@ function Demo() {
   });
 
   const form = useForm({
-    mode: 'uncontrolled',
     initialValues: {
       name: '',
       email: '',
@@ -187,7 +182,6 @@ and clears its error and dirty state:
 import { useForm } from '@mantine/form';
 
 const form = useForm({
-  mode: 'uncontrolled',
   initialValues: { name: 'John', email: 'john@mantine.dev' },
 });
 
@@ -207,7 +201,6 @@ import { useForm } from '@mantine/form';
 
 function Demo() {
   const form = useForm({
-    mode: 'uncontrolled',
     initialValues: {
       name: '',
       email: '',

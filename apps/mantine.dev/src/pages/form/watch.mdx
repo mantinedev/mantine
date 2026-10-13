@@ -33,7 +33,6 @@ import { useForm } from '@mantine/form';
 
 function Demo() {
   const form = useForm({
-    mode: 'uncontrolled',
     initialValues: { shipsInternationally: false },
   });
 
@@ -53,7 +52,6 @@ you cannot call it conditionally or inside loops.
 ```tsx
 function Demo() {
   const form = useForm({
-    mode: 'uncontrolled',
     initialValues: { name: '' },
   });
 
@@ -78,7 +76,6 @@ For example, you cannot use `form.watch` conditionally or inside loops.
 ```tsx
 function Demo() {
   const form = useForm({
-    mode: 'uncontrolled',
     initialValues: { name: '' },
   });
 

@@ -16,7 +16,6 @@ export default { title: 'Form' };
 
 export function Usage() {
   const form = useForm({
-    mode: 'uncontrolled',
     initialValues: {
       name: '',
       terms: false,
@@ -60,7 +59,6 @@ export function Usage() {
 
 export function ErrorOnSubmit() {
   const form = useForm({
-    mode: 'uncontrolled',
     initialValues: {
       email: 'a@a',
     },
@@ -130,7 +128,6 @@ export function Initialize() {
 
 export function ControlMode() {
   const form = useForm({
-    mode: 'uncontrolled',
     initialValues: { name: 'initial', terms: false, area: 'test', select: 'Angular' },
     validate: {
       name: (value) => (value.length === 0 ? 'Required' : null),
@@ -180,7 +177,6 @@ export function FocusOnError() {
   const [counter, setCounter] = useState(0);
 
   const form = useForm({
-    mode: 'uncontrolled',
     validateInputOnChange: true,
     initialValues: { name: '', terms: false, area: '', select: '', nested: { field: 'test' } },
     validate: {
@@ -234,7 +230,6 @@ export function ReorderWithErrors() {
   });
 
   const form = useForm({
-    mode: 'uncontrolled',
     initialValues: {
       sortable: [
         emptyObject(),

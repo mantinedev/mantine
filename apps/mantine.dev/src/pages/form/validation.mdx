@@ -29,7 +29,6 @@ For example, you can get the index of an array element:
 import { useForm } from '@mantine/form';
 
 const form = useForm({
-  mode: 'uncontrolled',
   initialValues: { a: [{ b: 1 }, { b: 2 }] },
   validate: {
     a: {
@@ -69,7 +68,6 @@ To validate all fields on change, set the `validateInputOnChange` option to `tru
 import { useForm } from '@mantine/form';
 
 const form = useForm({
-  mode: 'uncontrolled',
   validateInputOnChange: true,
 });
 ```
@@ -82,7 +80,6 @@ You can also provide an array of field paths to validate only those values:
 import { FORM_INDEX, useForm } from '@mantine/form';
 
 const form = useForm({
-  mode: 'uncontrolled',
   validateInputOnChange: [
     'name',
     'email',
@@ -104,7 +101,6 @@ To validate all fields on blur, set the `validateInputOnBlur` option to `true`:
 import { useForm } from '@mantine/form';
 
 const form = useForm({
-  mode: 'uncontrolled',
   validateInputOnBlur: true,
 });
 ```
@@ -117,7 +113,6 @@ You can also provide an array of field paths to validate only those values:
 import { FORM_INDEX, useForm } from '@mantine/form';
 
 const form = useForm({
-  mode: 'uncontrolled',
   validateInputOnBlur: ['name', 'email', `jobs.${FORM_INDEX}.title`],
 });
 ```
@@ -138,7 +133,6 @@ To change this, set `clearInputErrorOnChange` to `false`:
 import { useForm } from '@mantine/form';
 
 const form = useForm({
-  mode: 'uncontrolled',
   clearInputErrorOnChange: false,
 });
 ```
@@ -157,7 +151,6 @@ a single field and sets its error only:
 import { useForm } from '@mantine/form';
 
 const form = useForm({
-  mode: 'uncontrolled',
   initialValues: { name: '', age: 0 },
   validate: {
     name: (value) => (value.trim().length < 2 ? 'Too short' : null),
@@ -180,7 +173,6 @@ form.validateField('name'); // -> { hasError: true, error: 'Too short' }
 import { useForm } from '@mantine/form';
 
 const form = useForm({
-  mode: 'uncontrolled',
   initialValues: { name: '', age: 0 },
   validate: {
     name: (value) => (value.trim().length < 2 ? 'Too short' : null),
@@ -248,7 +240,6 @@ or field validation is in progress, and while a field waits for [debounced valid
 import { useForm } from '@mantine/form';
 
 const form = useForm({
-  mode: 'uncontrolled',
   initialValues: { username: '' },
   validate: {
     username: async (value) => {

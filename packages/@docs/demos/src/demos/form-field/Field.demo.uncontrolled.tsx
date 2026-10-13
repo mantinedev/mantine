@@ -8,7 +8,6 @@ import { useField } from '@mantine/form';
 
 function Demo() {
   const field = useField({
-    mode: 'uncontrolled',
     initialValue: '',
     validate: (value) => (value.trim().length < 2 ? 'Value is too short' : null),
   });
@@ -29,7 +28,6 @@ function Demo() {
 
 function Demo() {
   const field = useField({
-    mode: 'uncontrolled',
     initialValue: '',
     validate: (value) => (value.trim().length < 2 ? 'Value is too short' : null),
   });

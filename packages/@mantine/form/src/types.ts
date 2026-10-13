@@ -1,4 +1,5 @@
-import { FormArrayElement, FormPathValue, LooseKeys } from './paths.types';
+import { FormArrayElement, FormPathValue, LooseKeys, Path, PathValue } from './paths.types';
+import type { UseFieldReturnType } from './use-field';
 import type { formRootRule } from './validate/validate-values';
 
 export type GetInputPropsType = 'input' | 'checkbox' | 'radio';
@@ -245,6 +246,24 @@ export type UseFormStatus<out Values, out Field extends LooseKeys<Values> = Loos
   path?: TField
 ) => boolean;
 
+export type FormPath<Values, Value = any> = {
+  [Field in Path<Values>]: PathValue<Values, Field> extends Value ? Field : never;
+}[Path<Values>];
+
+export interface GetFieldOptions<FieldType extends GetInputPropsType = 'input'> {
+  /** Input type passed to `getInputProps`, `'input'` by default */
+  type?: FieldType;
+}
+
+export type GetField<out Values> = <
+  TValues extends Values,
+  Field extends Path<TValues>,
+  FieldType extends GetInputPropsType = 'input',
+>(
+  path: Field,
+  options?: GetFieldOptions<FieldType>
+) => UseFieldReturnType<FormPathValue<TValues, Field>, NoInfer<FieldType>>;
+
 export type GetInputNode<Values> = <NodeType extends HTMLElement, Field extends LooseKeys<Values>>(
   path: Field
 ) => NodeType | null;
@@ -320,6 +339,7 @@ interface _UseFormReturnType<out Values, out TransformedValues = Values, Rules =
   useDirty: UseFormStatus<Values>;
   useTouched: UseFormStatus<Values>;
   getInputNode: GetInputNode<Values>;
+  getField: GetField<Values>;
   resetField: <Field extends LooseKeys<Values>>(path: Field) => void;
 }
 

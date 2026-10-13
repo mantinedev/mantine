@@ -129,6 +129,15 @@ export const MDX_FORM_DATA: Record<string, Frontmatter> = {
     searchTags: 'createFormContext, FormProvider, useFormContext',
   },
 
+  formReusableFields: {
+    title: 'Reusable fields',
+    package: '@mantine/form',
+    slug: '/form/reusable-fields',
+    description: 'Field components that work in any form and with use-field',
+    docs: 'form/reusable-fields.mdx',
+    searchTags: 'getField, UseFieldReturnType, FormPath, reusable, field component',
+  },
+
   formActions: {
     title: 'Form actions',
     package: '@mantine/form',
@@ -139,12 +148,12 @@ export const MDX_FORM_DATA: Record<string, Frontmatter> = {
   },
 
   formTypescript: {
-    title: 'TypeScript',
+    title: 'use-form types',
     package: '@mantine/form',
     slug: '/form/typescript',
     description: 'Form values types, generics, UseFormReturnType and TransformedValues',
     docs: 'form/typescript.mdx',
-    searchTags: 'types, UseFormReturnType, TransformedValues, FormErrors, generics',
+    searchTags: 'types, UseFormReturnType, TransformedValues, FormErrors, FormPath, generics',
   },
 
   useField: {

@@ -60,7 +60,6 @@ function PinField({
 function Demo() {
   const [submitted, setSubmitted] = useState<string | null>(null);
   const form = useForm({
-    mode: 'uncontrolled',
     initialValues: { code: '' },
     validate: { code: (value) => (value.length === 6 ? null : 'Enter all 6 digits') },
   });
@@ -121,7 +120,6 @@ function PinField({
 function Demo() {
   const [submitted, setSubmitted] = useState<string | null>(null);
   const form = useForm({
-    mode: 'uncontrolled',
     initialValues: { code: '' },
     validate: { code: (value) => (value.length === 6 ? null : 'Enter all 6 digits') },
   });

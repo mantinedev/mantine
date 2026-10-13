@@ -629,6 +629,7 @@ const FORM_PAGES_GROUP: MdxPagesCategory[] = [
     category: 'Advanced',
     pages: [
       MDX_DATA.createFormContext,
+      MDX_DATA.formReusableFields,
       MDX_DATA.formActions,
       MDX_DATA.formTypescript,
       MDX_DATA.useField,

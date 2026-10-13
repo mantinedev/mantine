@@ -40,7 +40,6 @@ function ContextField() {
 export function Context() {
   // Create form as described in use-form documentation
   const form = useForm({
-    mode: 'uncontrolled',
     initialValues: {
       age: 0,
       name: '',
@@ -102,7 +101,6 @@ import { NameInput } from './NameInput';
 
 function UserForm() {
   const form = useUserForm({
-    mode: 'uncontrolled',
     initialValues: {
       age: 0,
       name: '',

@@ -45,7 +45,6 @@ interface FormValues {
 
 function Demo() {
   const form = useForm<FormValues>({
-    mode: 'uncontrolled',
     initialValues: {
       name: '',
       role: 'user',
@@ -67,7 +66,6 @@ import { TransformedValues, useForm } from '@mantine/form';
 
 function Demo() {
   const form = useForm({
-    mode: 'uncontrolled',
     initialValues: {
       name: '',
       locationId: '2',
@@ -108,7 +106,6 @@ interface TransformedValues {
 
 function Demo() {
   const form = useForm<FormValues, TransformedValues>({
-    mode: 'uncontrolled',
     initialValues: {
       name: '',
       locationId: '2',
@@ -162,7 +159,6 @@ function OccupationInput({
 
 function Demo() {
   const form = useForm<FormValues>({
-    mode: 'uncontrolled',
     initialValues: { name: '', occupation: '' },
   });
   return (
@@ -172,6 +168,24 @@ function Demo() {
     </>
   );
 }
+```
+
+## FormPath type
+
+`FormPath<Values, Value>` is a union of paths of form values with the given value type.
+It is used to type components that render [groups of fields](/form/reusable-fields/#groups-of-fields):
+
+```tsx
+import { FormPath } from '@mantine/form';
+
+interface FormValues {
+  name: string;
+  shipping: { street: string; city: string };
+  billing: { street: string; city: string };
+}
+
+type AddressPath = FormPath<FormValues, { street: string; city: string }>;
+// -> 'shipping' | 'billing'
 ```
 
 ## FormErrors type

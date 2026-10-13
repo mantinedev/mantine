@@ -22,7 +22,6 @@ and [Form validation](/form/validation/#validating-state) pages.
 import { useForm } from '@mantine/form';
 
 const form = useForm({
-  mode: 'uncontrolled',
   initialValues: { a: 1, nested: { field: '' } },
 });
 
@@ -55,7 +54,6 @@ import { useForm } from '@mantine/form';
 
 function Demo() {
   const form = useForm({
-    mode: 'uncontrolled',
     initialValues: { name: '' },
   });
 
@@ -90,7 +88,6 @@ Example of using `focus` trigger:
 import { useForm } from '@mantine/form';
 
 const form = useForm({
-  mode: 'uncontrolled',
   initialValues: { a: 1 },
   touchTrigger: 'focus',
 });
@@ -113,7 +110,6 @@ Both properties support [the same field path format as errors](/form/errors/):
 import { useForm } from '@mantine/form';
 
 const form = useForm({
-  mode: 'uncontrolled',
   initialValues: { a: 1, nested: { field: '' } },
   initialTouched: { a: true, 'nested.field': true },
   initialDirty: { a: true, 'nested.field': true },
@@ -128,7 +124,6 @@ const form = useForm({
 import { useForm } from '@mantine/form';
 
 const form = useForm({
-  mode: 'uncontrolled',
   initialValues: { a: 1, nested: { field: '' } },
 });
 
@@ -148,7 +143,6 @@ Note that `form.reset` will also reset the `touched` and `dirty` state:
 import { useForm } from '@mantine/form';
 
 const form = useForm({
-  mode: 'uncontrolled',
   initialValues: { a: 1 },
   initialTouched: { a: true },
   initialDirty: { a: true },
@@ -170,7 +164,6 @@ To reset the values that are used for the dirty check, call `form.resetDirty` wi
 import { useForm } from '@mantine/form';
 
 const form = useForm({
-  mode: 'uncontrolled',
   initialValues: { a: 1 },
 });
 

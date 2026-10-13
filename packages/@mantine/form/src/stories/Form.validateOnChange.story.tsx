@@ -44,7 +44,6 @@ export function ValidateOnChange() {
 
 export function ValidateOnChangeUncontrolled() {
   const form = useForm({
-    mode: 'uncontrolled',
     initialValues: {
       name: '',
       email: '',
@@ -88,7 +87,6 @@ export function ValidateDebounce() {
   const [requestCount, setRequestCount] = useState(0);
 
   const form = useForm({
-    mode: 'uncontrolled',
     validateInputOnChange: true,
     validateDebounce: 500,
     initialValues: {

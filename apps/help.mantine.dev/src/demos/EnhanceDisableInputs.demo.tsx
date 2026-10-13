@@ -12,7 +12,6 @@ function Demo() {
   const [disabled, setDisabled] = useState(false);
 
   const form = useForm({
-    mode: 'uncontrolled',
     initialValues: { name: '', email: '' },
     enhanceGetInputProps: () => ({ disabled }),
   });
@@ -42,7 +41,6 @@ function Demo() {
   const [disabled, setDisabled] = useState(false);
 
   const form = useForm({
-    mode: 'uncontrolled',
     initialValues: { name: '', email: '' },
     enhanceGetInputProps: () => ({ disabled }),
   });

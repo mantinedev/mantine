@@ -73,7 +73,6 @@ export function Lists() {
 
 export function ListsUncontrolled() {
   const form = useForm({
-    mode: 'uncontrolled',
     initialValues: {
       employees: [
         { name: 'First', active: false, key: randomId() },

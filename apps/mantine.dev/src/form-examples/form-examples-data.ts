@@ -347,9 +347,16 @@ export const FORM_EXAMPLES_DATA: FormExample[] = [
   {
     id: 'ReusableFields',
     name: 'Reusable fields',
-    description: 'Typed field components that read the form from context',
+    description: 'Typed field components for one form, read from context',
     type: 'architecture',
     features: ['createFormContext', 'LooseKeys', 'TypeScript'],
+  },
+  {
+    id: 'ReusableFieldsAcrossForms',
+    name: 'Reusable fields across forms',
+    description: 'One email field component used in different forms and with use-field',
+    type: 'architecture',
+    features: ['getField', 'useField', 'UseFieldReturnType', 'TypeScript'],
   },
   {
     id: 'FormActions',

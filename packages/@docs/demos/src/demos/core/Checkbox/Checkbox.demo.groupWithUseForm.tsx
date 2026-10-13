@@ -13,7 +13,6 @@ interface FormValues {
 
 function Demo() {
   const form = useForm<FormValues>({
-    mode: 'uncontrolled',
     initialValues: { frameworks: [] },
     validate: {
       frameworks: hasLength({ min: 1 }, 'Select at least one framework'),
@@ -49,7 +48,6 @@ interface FormValues {
 
 function Demo() {
   const form = useForm<FormValues>({
-    mode: 'uncontrolled',
     initialValues: { frameworks: [] },
     validate: {
       frameworks: hasLength({ min: 1 }, 'Select at least one framework'),

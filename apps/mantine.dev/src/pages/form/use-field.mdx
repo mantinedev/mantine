@@ -143,3 +143,8 @@ It is useful if you experience performance issues with controlled mode, but in m
 mode is recommended as it always provides up-to-date field information as React state.
 
 <Demo data={FieldDemos.uncontrolled} />
+
+## Reusable fields
+
+`form.getField('path')` returns an object with the same shape as `useField`. A field component
+typed with `UseFieldReturnType` works with both, see [reusable fields](/form/reusable-fields/).

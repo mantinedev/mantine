@@ -34,7 +34,6 @@ function CustomInput({ value, defaultValue, onChange, error, ...others }: Custom
 
 function Demo() {
   const form = useForm({
-    mode: 'uncontrolled',
     initialValues: {
       customInput: '',
     },
@@ -83,7 +82,6 @@ function CustomInput({ value, defaultValue, onChange, error, ...others }: Custom
 
 function Demo() {
   const form = useForm({
-    mode: 'uncontrolled',
     initialValues: {
       customInput: '',
     },

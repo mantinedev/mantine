@@ -56,7 +56,6 @@ function DateField({
 function Demo() {
   const [submitted, setSubmitted] = useState<string | null>(null);
   const form = useForm({
-    mode: 'uncontrolled',
     initialValues: { birthday: null as string | null },
     validate: { birthday: (value) => (value ? null : 'Date of birth is required') },
   });
@@ -137,7 +136,6 @@ function DateField({
 function Demo() {
   const [submitted, setSubmitted] = useState<string | null>(null);
   const form = useForm({
-    mode: 'uncontrolled',
     initialValues: { birthday: null as string | null },
     validate: { birthday: (value) => (value ? null : 'Date of birth is required') },
   });

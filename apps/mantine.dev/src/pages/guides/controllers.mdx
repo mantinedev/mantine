@@ -125,7 +125,7 @@ import { DateInput, useDateInput } from '@mantine/dates';
 import { useForm } from '@mantine/form';
 
 function Demo() {
-  const form = useForm({ mode: 'uncontrolled', initialValues: { date: null } });
+  const form = useForm({ initialValues: { date: null } });
   const controller = useDateInput();
 
   return (

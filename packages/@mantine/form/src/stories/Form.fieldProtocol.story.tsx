@@ -188,7 +188,6 @@ export function FieldRerenders() {
 
 export function FieldUncontrolledWithoutKey() {
   const form = useForm({
-    mode: 'uncontrolled',
     initialValues: { name: '', role: 'react', country: 'de', terms: false, user: { email: '' } },
     validate: { name: (value) => (value.length < 2 ? 'Name is too short' : null) },
   });
@@ -336,7 +335,6 @@ export function FieldExternalWriteCleanup() {
 
 export function FieldListWithIndexKeys() {
   const form = useForm({
-    mode: 'uncontrolled',
     initialValues: { people: [{ name: 'One' }, { name: 'Two' }, { name: 'Three' }] },
   });
 
@@ -384,8 +382,8 @@ export function FieldListWithIndexKeys() {
 }
 
 export function FieldUseFieldUncontrolled() {
-  const field = useField({ mode: 'uncontrolled', initialValue: '' });
-  const nativeField = useField({ mode: 'uncontrolled', initialValue: '' });
+  const field = useField({ initialValue: '' });
+  const nativeField = useField({ initialValue: '' });
 
   return (
     <Layout>

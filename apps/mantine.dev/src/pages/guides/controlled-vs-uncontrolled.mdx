@@ -114,9 +114,8 @@ function Demo() {
 
 ## Uncontrolled use-form
 
-[@mantine/form](/form/use-form) supports uncontrolled mode. Use it to build large
-forms with many fields without re-rendering the form on every change: each input is
-subscribed to its own field and rerenders alone.
+[@mantine/form](/form/use-form) uses uncontrolled mode by default. The form does not rerender
+on every change: each input is subscribed to its own field and rerenders alone.
 
 Example of uncontrolled mode with `useForm`:
 
@@ -127,7 +126,6 @@ import { hasLength, isEmail, useForm } from '@mantine/form';
 
 function Demo() {
   const form = useForm({
-    mode: 'uncontrolled',
     initialValues: { name: '', email: '' },
     validate: {
       name: hasLength({ min: 3 }, 'Must be at least 3 characters'),

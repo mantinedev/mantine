@@ -45,7 +45,6 @@ export function Dirty() {
 
 export function DirtyUncontrolled() {
   const form = useForm({
-    mode: 'uncontrolled',
     initialValues: {
       text: '1',
     },

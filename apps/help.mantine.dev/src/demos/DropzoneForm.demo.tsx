@@ -14,7 +14,6 @@ interface FormValues {
 
 function Demo() {
   const form = useForm<FormValues>({
-    mode: 'uncontrolled',
     initialValues: { files: [] },
   });
 
@@ -26,7 +25,7 @@ function Demo() {
         onClick={() =>
           form.setFieldValue(
             'files',
-            form.values.files.filter((_, i) => i !== index)
+            form.getValues().files.filter((_, i) => i !== index)
           )
         }
       />
@@ -75,7 +74,6 @@ interface FormValues {
 
 function Demo() {
   const form = useForm<FormValues>({
-    mode: 'uncontrolled',
     initialValues: { files: [] },
   });
 
@@ -87,7 +85,7 @@ function Demo() {
         onClick={() =>
           form.setFieldValue(
             'files',
-            form.values.files.filter((_, i) => i !== index)
+            form.getValues().files.filter((_, i) => i !== index)
           )
         }
       />

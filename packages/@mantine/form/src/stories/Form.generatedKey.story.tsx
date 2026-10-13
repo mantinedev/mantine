@@ -19,7 +19,6 @@ function RenderCount({ label }: { label: string }) {
 
 export function GeneratedKey() {
   const form = useForm({
-    mode: 'uncontrolled',
     touchTrigger: 'focus',
     initialValues: { name: '', key: '' },
   });

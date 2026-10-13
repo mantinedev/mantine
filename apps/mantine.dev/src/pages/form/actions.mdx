@@ -23,7 +23,6 @@ export interface DemoFormValues {
 
 function Demo() {
   const form = useForm<DemoFormValues>({
-    mode: 'uncontrolled',
     name: 'demo-form',
     initialValues: {
       name: '',
@@ -83,13 +82,11 @@ import { useForm } from '@mantine/form';
 // ✅ Valid form name
 const valid = useForm({
   name: 'valid-FORM-name-10',
-  mode: 'uncontrolled',
 });
 
 // ❌ Invalid form name: must not contain spaces and special characters
 const invalid = useForm({
   name: 'invalid_form name',
-  mode: 'uncontrolled',
 });
 ```
 

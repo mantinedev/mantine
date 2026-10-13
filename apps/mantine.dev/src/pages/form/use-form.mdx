@@ -4,19 +4,19 @@ import { MDX_DATA } from '@/mdx';
 
 export default Layout(MDX_DATA.useForm);
 
-## Usage
-
-The `useForm` hook returns a form object with values, errors, validation and submission handlers.
-Installation and a walkthrough of the example below are on the [Get started](/form/package/) page:
-
-<Demo data={FormDemos.usage} />
-
 ## Examples
 
 This page is the `useForm` reference. Complete forms that combine several features,
 with full code, are available on a separate page:
 
 <ExamplesButton link="/form/examples?e=LoginForm" label="Open form examples page" />
+
+## Usage
+
+The `useForm` hook returns a form object with values, errors, validation and submission handlers.
+Installation and a walkthrough of the example below are on the [Get started](/form/package/) page:
+
+<Demo data={FormDemos.usage} />
 
 ## Options
 
@@ -46,7 +46,6 @@ All examples below use the following form:
 import { useForm } from '@mantine/form';
 
 const form = useForm({
-  mode: 'uncontrolled',
   initialValues: {
     path: '',
     path2: '',
@@ -127,6 +126,10 @@ form.getInputProps('path', { type: 'radio', value: 'option' });
 
 // DOM node of the input with the given path
 form.getInputNode('path');
+
+// Field object for the path, same shape as useField return value
+form.getField('path');
+form.getField('accepted', { type: 'checkbox' });
 ```
 
 ### Watchers
@@ -268,5 +271,5 @@ form.resetDirty();
 
 ## Types
 
-`UseFormReturnType`, `TransformedValues`, `FormErrors` and `useForm` generics are described
-on the [TypeScript](/form/typescript/) page.
+`UseFormReturnType`, `TransformedValues`, `FormErrors`, `FormPath` and `useForm` generics are described
+on the [use-form types](/form/typescript/) page.

@@ -12,7 +12,6 @@ export default Layout(MDX_DATA.formErrors);
 import { useForm } from '@mantine/form';
 
 const form = useForm({
-  mode: 'uncontrolled',
   initialValues: { firstName: '', lastName: '' },
   validate: {
     firstName: (value) =>
@@ -44,7 +43,6 @@ Same as with [initial values](/form/values/) you can set initial form errors:
 import { useForm } from '@mantine/form';
 
 const form = useForm({
-  mode: 'uncontrolled',
   initialValues: { firstName: '', lastName: '' },
   initialErrors: {
     firstName: 'First name is too short',
@@ -61,7 +59,7 @@ The `form.setErrors` handler replaces all errors. Use it to display
 ```tsx
 import { useForm } from '@mantine/form';
 
-const form = useForm({ mode: 'uncontrolled' });
+const form = useForm();
 form.setErrors({ firstName: 'Too short', email: 'Invalid email' });
 
 form.errors;
@@ -76,7 +74,6 @@ The `form.setFieldError` handler sets the error for the given field:
 import { useForm } from '@mantine/form';
 
 const form = useForm({
-  mode: 'uncontrolled',
   initialValues: { name: '', email: '' },
 });
 
@@ -93,7 +90,6 @@ The `form.clearErrors` handler clears all form errors:
 import { useForm } from '@mantine/form';
 
 const form = useForm({
-  mode: 'uncontrolled',
   initialErrors: { name: 'Too short', email: 'Invalid email' },
 });
 
@@ -110,7 +106,6 @@ The `form.clearFieldError` handler clears the error for the given field:
 import { useForm } from '@mantine/form';
 
 const form = useForm({
-  mode: 'uncontrolled',
   initialErrors: { name: 'Too short', email: 'Invalid email' },
 });
 form.clearFieldError('name');
@@ -126,7 +121,6 @@ You can use any React node as an error message:
 import { useForm } from '@mantine/form';
 
 const form = useForm({
-  mode: 'uncontrolled',
   initialValues: { name: '', email: '' },
   initialErrors: {
     name: <p>Paragraph error</p>, // -> error as a react element
@@ -141,7 +135,6 @@ Note that errors that are `false`, `null` or `undefined` will be automatically r
 import { useForm } from '@mantine/form';
 
 const form = useForm({
-  mode: 'uncontrolled',
   initialErrors: { name: 'name-error', email: null },
 });
 
@@ -161,7 +154,7 @@ You can also get the type directly from the `form` instance:
 ```tsx
 import { useForm } from '@mantine/form';
 
-const form = useForm({ mode: 'uncontrolled' });
+const form = useForm();
 
 const handleErrors = (errors: typeof form.errors) => {};
 ```

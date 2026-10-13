@@ -61,6 +61,8 @@ import ReorderListItemsCode from './ReorderListItems/code.json';
 import { ReorderListItems } from './ReorderListItems/ReorderListItems';
 import ReusableFieldsCode from './ReusableFields/code.json';
 import { ReusableFields } from './ReusableFields/ReusableFields';
+import ReusableFieldsAcrossFormsCode from './ReusableFieldsAcrossForms/code.json';
+import { ReusableFieldsAcrossForms } from './ReusableFieldsAcrossForms/ReusableFieldsAcrossForms';
 import RichTextFormCode from './RichTextForm/code.json';
 import { RichTextForm } from './RichTextForm/RichTextForm';
 import SameAsBillingCode from './SameAsBilling/code.json';
@@ -157,6 +159,7 @@ export const FORM_EXAMPLES_COMPONENTS = {
   CustomInputSubscription: example(CustomInputSubscription, CustomInputSubscriptionCode),
   FormContextSplit: example(FormContextSplit, FormContextSplitCode),
   ReusableFields: example(ReusableFields, ReusableFieldsCode),
+  ReusableFieldsAcrossForms: example(ReusableFieldsAcrossForms, ReusableFieldsAcrossFormsCode),
   FormActions: example(FormActions, FormActionsCode),
   TypedForm: example(TypedForm, TypedFormCode),
   RichTextForm: example(RichTextForm, RichTextFormCode),

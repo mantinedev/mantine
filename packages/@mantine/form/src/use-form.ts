@@ -1,19 +1,24 @@
-import { useCallback, useEffect, useState, useSyncExternalStore } from 'react';
+import { useCallback, useEffect, useMemo, useState, useSyncExternalStore } from 'react';
 import { useFormActions } from './actions';
 import { createFormStore, FormStore } from './form-store/form-store';
+import { getStatus } from './get-status';
+import { clearChildKeys } from './lists';
 import { getPath } from './paths';
 import {
   FormErrors,
   FormFieldSubscriber,
   FormRulesRecord,
+  GetField,
   GetInputNode,
   GetInputProps,
+  GetInputPropsType,
   UseFormInput,
   UseFormReturnType,
   UseFormStatus,
   UseWatchValue,
   Watch,
 } from './types';
+import type { UseFieldReturnType } from './use-field';
 
 function createWatchHooks(store: FormStore) {
   const watch: Watch<any> = (path, callback) => {
@@ -45,6 +50,42 @@ function createWatchHooks(store: FormStore) {
   };
 
   return { watch, useWatchValue, useDirty, useTouched };
+}
+
+function createFieldHandle(
+  store: FormStore,
+  path: string,
+  type: GetInputPropsType,
+  getForm: () => unknown
+) {
+  const resetTouched = () =>
+    store.setTouched((current) => {
+      if (!getStatus(current, path)) {
+        return current;
+      }
+
+      const { [path]: _, ...rest } = clearChildKeys(path, current);
+      return rest;
+    });
+
+  const handle: UseFieldReturnType<any> = {
+    getInputProps: (options) => store.getInputProps(path, { type, ...options }, getForm()) as any,
+    getValue: () => getPath(path, store.getValues()),
+    setValue: (value) => store.setFieldValue(path, value),
+    reset: () => {
+      store.resetField(path);
+      resetTouched();
+    },
+    validate: async () => (await store.validateField(path)).error,
+    isValidating: store.isValidating(path),
+    error: store.getErrors()[path] ?? null,
+    setError: (error) => store.setFieldError(path, error),
+    isTouched: () => store.isTouched(path),
+    isDirty: () => store.isDirty(path),
+    resetTouched,
+  };
+
+  return handle;
 }
 
 export function useForm<
@@ -119,13 +160,48 @@ export function useForm<
 
   const getInputNode: GetInputNode<Values> = (path) => store.getInputNode(path) as any;
 
+  const errors = store.getErrors();
+  const submitting = store.isSubmitting();
+  const initialized = store.isInitialized();
+  const fieldHandles = useMemo(
+    () => new Map<string, UseFieldReturnType<any>>(),
+    [
+      store,
+      values,
+      initialValues,
+      touched,
+      dirty,
+      errors,
+      validatingFields,
+      formValidating,
+      submitting,
+      initialized,
+      rules,
+    ]
+  );
+
+  const getField: GetField<Values> = useCallback(
+    (path, { type = 'input' as GetInputPropsType } = {}) => {
+      const key = `${type}:${String(path)}`;
+      let handle = fieldHandles.get(key);
+
+      if (!handle) {
+        handle = createFieldHandle(store, String(path), type, () => form);
+        fieldHandles.set(key, handle);
+      }
+
+      return handle as any;
+    },
+    [fieldHandles]
+  );
+
   const form: any = {
     watch,
     useWatchValue,
     useDirty,
     useTouched,
 
-    initialized: store.isInitialized(),
+    initialized,
     values,
     getValues,
     getInitialValues,
@@ -135,13 +211,13 @@ export function useForm<
     setValues: store.setValues,
     setFieldValue: store.setFieldValue,
 
-    submitting: store.isSubmitting(),
+    submitting,
     setSubmitting: store.setSubmitting,
 
     validating: store.isValidating(),
     isValidating,
 
-    errors: store.getErrors(),
+    errors,
     setErrors: store.setErrors,
     setFieldError: store.setFieldError,
     clearFieldError: store.clearFieldError,
@@ -170,6 +246,7 @@ export function useForm<
     isValid,
     getTransformedValues: store.getTransformedValues,
     getInputNode,
+    getField,
   };
 
   useFormActions(input.name, form);

@@ -13,7 +13,6 @@ Property path includes keys/indices of objects/arrays in which the target proper
 import { useForm } from '@mantine/form';
 
 const form = useForm({
-  mode: 'uncontrolled',
   initialValues: {
     user: {
       firstName: 'John',
@@ -56,7 +55,6 @@ Validation rules and errors use the same paths:
 import { useForm } from '@mantine/form';
 
 const form = useForm({
-  mode: 'uncontrolled',
   initialValues: {
     user: {
       name: '',
@@ -79,7 +77,6 @@ form.setFieldValue('user', { name: 'Jane', occupation: 'Architect' });
 import { useForm } from '@mantine/form';
 
 const form = useForm({
-  mode: 'uncontrolled',
   initialValues: {
     user: {
       name: '',
@@ -133,7 +130,6 @@ To validate list items on change or blur, use `FORM_INDEX` in the field path, se
 import { useForm } from '@mantine/form';
 
 const form = useForm({
-  mode: 'uncontrolled',
   initialValues: {
     users: [
       { name: 'John', age: 12 },

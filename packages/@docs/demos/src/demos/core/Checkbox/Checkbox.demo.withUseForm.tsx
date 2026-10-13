@@ -9,7 +9,6 @@ import { isNotEmpty, useForm } from '@mantine/form';
 
 function Demo() {
   const form = useForm({
-    mode: 'uncontrolled',
     initialValues: { terms: false },
     validate: {
       terms: isNotEmpty('You must accept terms and conditions'),
@@ -33,7 +32,6 @@ function Demo() {
 
 function Demo() {
   const form = useForm({
-    mode: 'uncontrolled',
     initialValues: { terms: false },
     validate: {
       terms: isNotEmpty('You must accept terms and conditions'),

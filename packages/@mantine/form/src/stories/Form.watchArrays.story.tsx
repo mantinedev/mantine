@@ -19,7 +19,6 @@ export function WatchArrays() {
   const [watchLog, setWatchLog] = useState<{ previous: Product[]; current: Product[] }[]>([]);
 
   const form = useForm({
-    mode: 'uncontrolled',
     initialValues: {
       products: [
         { name: 'Phone', price: 1000, quantity: 1, key: randomId() },

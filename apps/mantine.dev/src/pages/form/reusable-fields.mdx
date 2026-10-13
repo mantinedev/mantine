@@ -1,0 +1,156 @@
+import { Layout } from '@/layout';
+import { MDX_DATA } from '@/mdx';
+
+export default Layout(MDX_DATA.formReusableFields);
+
+## Usage
+
+A field component that accepts `UseFieldReturnType` can be used in any form.
+Pass it `form.getField('path')` from [use-form](/form/use-form/) or the return value of
+[use-field](/form/use-field/):
+
+```tsx
+import { TextInput } from '@mantine/core';
+import { useField, useForm, UseFieldReturnType } from '@mantine/form';
+
+function EmailField({ field }: { field: UseFieldReturnType<string> }) {
+  return <TextInput label="Email" {...field.getInputProps()} />;
+}
+
+function Demo() {
+  const signup = useForm({ initialValues: { email: '', password: '' } });
+  const checkout = useForm({ initialValues: { contact: { email: '' } } });
+  const newsletter = useField({ initialValue: '' });
+
+  return (
+    <>
+      <EmailField field={signup.getField('email')} />
+      <EmailField field={checkout.getField('contact.email')} />
+      <EmailField field={newsletter} />
+    </>
+  );
+}
+```
+
+<ExamplesButton link="/form/examples?e=ReusableFieldsAcrossForms" label="Open reusable fields example" variant="default" />
+
+## Field object
+
+`form.getField('path')` returns an object with the same shape as [use-field](/form/use-field/#use-field-api)
+return value. Its methods read and change the value, error and status at the given path, so the
+field component can use them without knowing which form it is rendered in:
+
+```tsx
+import { TextInput } from '@mantine/core';
+import { UseFieldReturnType } from '@mantine/form';
+
+function EmailField({ field }: { field: UseFieldReturnType<string> }) {
+  const inputProps = field.getInputProps();
+
+  const handleBlur = () => {
+    inputProps.onBlur?.();
+    field.setValue(field.getValue().trim().toLowerCase());
+  };
+
+  return <TextInput label="Email" {...inputProps} onBlur={handleBlur} />;
+}
+```
+
+## Type checking
+
+The path passed to `form.getField` must exist in form values, and its value type must match
+the type of the field component:
+
+```tsx
+const form = useForm({
+  initialValues: { email: '', age: 0 },
+});
+
+<EmailField field={form.getField('email')} />;
+
+// Type error: age is a number
+<EmailField field={form.getField('age')} />;
+
+// Type error: emial is not a path of form values
+<EmailField field={form.getField('emial')} />;
+```
+
+## Validation
+
+Validation rules are defined on `useForm` or `useField`, the field component only renders the input.
+Export the rule next to the component to reuse it:
+
+```tsx
+import { isEmail, useField, useForm } from '@mantine/form';
+
+export const emailRule = isEmail('Invalid email');
+
+function Demo() {
+  const signup = useForm({
+    initialValues: { email: '' },
+    validate: { email: emailRule },
+  });
+
+  const newsletter = useField({ initialValue: '', validate: emailRule });
+}
+```
+
+## Checkbox fields
+
+For checkbox fields, type the component with `UseFieldReturnType<boolean, 'checkbox'>` and
+pass `{ type: 'checkbox' }` to `form.getField` or `useField`:
+
+```tsx
+import { Checkbox } from '@mantine/core';
+import { useField, useForm, UseFieldReturnType } from '@mantine/form';
+
+function TermsField({ field }: { field: UseFieldReturnType<boolean, 'checkbox'> }) {
+  return <Checkbox label="I accept terms of service" {...field.getInputProps()} />;
+}
+
+function Demo() {
+  const form = useForm({ initialValues: { terms: false } });
+  const terms = useField({ initialValue: false, type: 'checkbox' });
+
+  return (
+    <>
+      <TermsField field={form.getField('terms', { type: 'checkbox' })} />
+      <TermsField field={terms} />
+    </>
+  );
+}
+```
+
+## Groups of fields
+
+A component that renders several fields accepts the form object.
+`UseFormReturnType<{ email: string }>` accepts any form with a top-level `email` string.
+To render fields under a path that differs between forms, use the `FormPath` type: it accepts
+paths of form values with the given value type:
+
+```tsx
+import { TextInput } from '@mantine/core';
+import { FormPath, UseFormReturnType } from '@mantine/form';
+
+interface Address {
+  street: string;
+  city: string;
+}
+
+interface AddressFieldsProps<Values> {
+  form: UseFormReturnType<Values>;
+  path: FormPath<Values, Address>;
+}
+
+function AddressFields<Values>({ form, path }: AddressFieldsProps<Values>) {
+  return (
+    <>
+      <TextInput label="Street" {...form.getInputProps(`${path}.street`)} />
+      <TextInput label="City" {...form.getInputProps(`${path}.city`)} />
+    </>
+  );
+}
+
+// <AddressFields form={form} path="shipping" />
+// <AddressFields form={form} path="billing" />
+```

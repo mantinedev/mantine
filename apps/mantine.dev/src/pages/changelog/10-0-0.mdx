@@ -7,7 +7,6 @@ import {
   DatePickerInputDemos,
   DateTimePickerDemos,
   DrawerDemos,
-  FormDemos,
   MenuDemos,
   NavLinkDemos,
   TableOfContentsDemos,
@@ -63,23 +62,11 @@ support. Supported features:
 
 ## Component controllers and stores
 
-Components that own state can now be driven with a hook. Call `use<Component>` in your component
-and pass the result to the component: a controller with the `controller` prop, a store with the
-`store` prop. The [Controllers and stores](/guides/controllers) guide explains the pattern, each
-component documents its own actions and queries.
+Components that own state can now be driven with a hook. Call `use<Component>` and pass the result
+to the `controller` or `store` prop, see the [controllers and stores guide](/guides/controllers).
 
-A controller adds actions and queries to a component that you use as is, for example `expandAll`
-and `collapseAll` on `Accordion`, which props cannot express. Adopting a controller is always
-additive, the component keeps working with `value`, `defaultValue` and `onChange` as before:
-
-<Demo data={AccordionDemos.controller} />
-
-A store is a building block for your own component. For example, `useSelect` reuses the value,
-search and dropdown handling of `Select` to build a select that can create new options:
-
-<Demo data={SelectDemos.creatable} />
-
-Components with controllers:
+A controller adds actions that props cannot express, for example `expandAll` on `Accordion`.
+The component still works with `value` and `onChange`. Components with controllers:
 
 - [Accordion](/core/accordion#controlling-with-useaccordion)
 - [Stepper](/core/stepper#controlling-with-usestepper)
@@ -106,7 +93,10 @@ Components with controllers:
 - [InlineDateTimePicker](/dates/inline-date-time-picker#controlling-with-useinlinedatetimepicker)
 - [TimePicker](/dates/time-picker#controlling-with-usetimepicker)
 
-Components with stores:
+<Demo data={AccordionDemos.controller} />
+
+A store is a building block for your own component. For example, `useSelect` reuses `Select` logic
+to build a select that creates new options. Components with stores:
 
 - [Combobox](/core/combobox#usecombobox-hook)
 - [Select](/core/select#building-on-select-with-useselect)
@@ -116,72 +106,89 @@ Components with stores:
 - [Tree](/core/tree#usetree-hook)
 - [DataGrid](/data-grid/getting-started#store-hook)
 
-`Tree` now takes its store through the `store` prop, and the types of `useTimer`, `useEditable` and
-`useImageCropper` are renamed to `<Component>Controller` and `<Component>ControllerOptions`, see the
-[migration guide](/guides/9x-to-10x).
+<Demo data={SelectDemos.creatable} />
 
 ## use-form engine and uncontrolled mode
 
-[use-form](/form/use-form) keeps form state outside of React state.
-[Uncontrolled mode](/form/uncontrolled) is now the default mode of `useForm` and `useField`: each
-input is subscribed to its own field and rerenders alone: the component that calls `useForm` does not rerender when the user types, and
-`form.setFieldValue`, `form.setValues`, `form.reset` and list handlers update inputs without a
-remount. `key={form.key()}` is no longer needed and `form.key` has been removed.
-`form.getInputProps` returns `value` and `checked` in both modes. New `form.useDirty` and
-`form.useTouched` hooks subscribe a component to [dirty and touched state](/form/status#usedirty-and-usetouched-hooks).
+`useForm` is now uncontrolled by default. When the user types, only the input rerenders, not the
+component that calls `useForm`. `form.key()` is no longer needed and has been removed:
 
-Custom inputs subscribe to a field with the new [use-form-field](/hooks/use-form-field) hook,
-components built with [use-uncontrolled](/hooks/use-uncontrolled) are subscribed automatically.
-Its `onExternalWrite` option lets components with internal entry state, for example
-[TimePicker](/dates/time-picker) and [MaskedDateInput](/dates/masked-date-input), clear it when
-the form resets the value:
+```tsx
+import { TextInput } from '@mantine/core';
+import { useForm } from '@mantine/form';
 
-<Demo data={FormDemos.uncontrolled} />
+function Demo() {
+  const form = useForm({ initialValues: { email: '' } });
+  return <TextInput label="Email" {...form.getInputProps('email')} />;
+}
+```
+
+New `form.useDirty` and `form.useTouched` hooks subscribe a component to dirty and touched state.
+Custom inputs subscribe to a field with the new [use-form-field](/hooks/use-form-field) hook.
+See [uncontrolled mode](/form/uncontrolled) for details.
 
 ## Form examples
 
-A new [form examples](/form/examples?e=LoginForm) section contains complete forms
-built with `useForm`: login and registration, async and schema validation, dependent fields,
-lists with calculated totals, multi-step forms, autosave, form context and input integrations.
-Every example is a self-contained component with full code, examples are searchable by the
-`useForm` APIs they use.
+New [form examples](/form/examples?e=LoginForm) section contains complete forms built with `useForm`:
 
 <ExamplesButton link="/form/examples?e=LoginForm" label="Open form examples page" />
+
+## Reusable form fields
+
+New `form.getField('path')` returns a field object with the same type as `useField`.
+A component that accepts it works in any form and with `useField`, see [reusable fields](/form/reusable-fields/):
+
+```tsx
+import { TextInput } from '@mantine/core';
+import { useField, useForm, UseFieldReturnType } from '@mantine/form';
+
+function EmailField({ field }: { field: UseFieldReturnType<string> }) {
+  return <TextInput label="Email" {...field.getInputProps()} />;
+}
+
+function Demo() {
+  const signup = useForm({ initialValues: { email: '' } });
+  const checkout = useForm({ initialValues: { contact: { email: '' } } });
+  const newsletter = useField({ initialValue: '' });
+
+  return (
+    <>
+      <EmailField field={signup.getField('email')} />
+      <EmailField field={checkout.getField('contact.email')} />
+      <EmailField field={newsletter} />
+    </>
+  );
+}
+```
+
+<ExamplesButton link="/form/examples?e=ReusableFieldsAcrossForms" label="Open reusable fields example" variant="default" />
 
 ## Modal and Drawer updates
 
 ### Footer
 
-[Modal](/core/modal) and [Drawer](/core/drawer) now support `Modal.Footer`/`Drawer.Footer`
-compound components to render a footer with actions:
+New `Modal.Footer` and `Drawer.Footer` components render a footer with actions:
 
 <Demo data={DrawerDemos.footer} />
 
 ### Sticky header and footer
 
-[Modal](/core/modal) and [Drawer](/core/drawer) now support the `stickyHeader` and `stickyFooter`
-props:
+[Modal](/core/modal) and [Drawer](/core/drawer) header and footer now stay pinned while the body
+scrolls. Set `stickyHeader={false}` or `stickyFooter={false}` to scroll them with the content:
 
 <Demo data={ModalDemos.stickySections} />
 
-Both props default to `true` – the header stays pinned to the top and the footer stays pinned to the
-bottom while the body scrolls between them. Set either to `false` to make that section scroll away
-with the body content.
-
 ### Reworked Modal.Stack and Drawer.Stack
 
-[Modal.Stack](/core/modal/#modalstack) and [Drawer.Stack](/core/drawer/#drawerstack) have been
-reworked – all opened stacked items now stay mounted and visible with a stacked depth effect
-instead of hiding items below the top one. The new `maxDepth` prop (default `5`) controls how many
-stacked items are visible behind the top one at the same time.
+Stacked modals and drawers now stay visible behind the top one with a depth effect.
+`maxDepth` prop sets how many of them are visible:
 
 <Demo data={ModalDemos.stack} />
 
 ## Automatic Modal and Drawer stacking
 
-New `theme.overlayStack` option stacks all [Modal](/core/modal/#shared-stack) and
-[Drawer](/core/drawer/#shared-stack) components automatically – no `Modal.Stack`/`Drawer.Stack`
-wrappers or `stackId` props required:
+Set `overlayStack` in the theme to stack all modals and drawers automatically,
+without `Modal.Stack` wrappers:
 
 ```tsx
 import { createTheme } from '@mantine/core';
@@ -193,56 +200,40 @@ const theme = createTheme({
 
 <Demo data={ModalDemos.overlayStack} />
 
-All modals join one shared `Modal.Stack` and all drawers join one shared `Drawer.Stack`. Modals and
-drawers are stacked visually in separate stacks, but z-index, focus trap and `Escape` key handling
-always follow the topmost opened modal or drawer. New `useModalStackContext` and
-`useDrawerStackContext` hooks provide access to the shared stacks.
-
 ## Drawer swipe to dismiss
 
-[Drawer](/core/drawer) can now be dismissed with a swipe gesture. Swipe to dismiss is enabled by
-default for all four positions and is RTL-aware. Opt out with `withSwipe={false}`, prevent the
-gesture from starting on specific elements with the `data-drawer-no-swipe` attribute and adjust the
-distance required to dismiss with `swipeThreshold`:
+[Drawer](/core/drawer) can now be closed with a swipe. It is enabled by default,
+set `withSwipe={false}` to disable it:
 
 <Demo data={DrawerDemos.swipe} />
 
 ## Drawer drag handle
 
-[Drawer](/core/drawer) now supports the `withHandle` prop – an optional grab-bar drag affordance
-rendered on the overlay at the drawer's leading edge that hints the drawer can be dragged:
+New `withHandle` prop displays a drag handle next to the [Drawer](/core/drawer):
 
 <Demo data={DrawerDemos.handle} />
 
 ## Drawer snap points
 
-[Drawer](/core/drawer) now supports opt-in snap points with the `snapPoints` prop. The active snap
-point can be controlled with `activeSnapPoint`/`onSnapPointChange` or used in uncontrolled mode
-with `defaultActiveSnapPoint`:
+New `snapPoints` prop lets the [Drawer](/core/drawer) stop at several sizes:
 
 <Demo data={DrawerDemos.snapPoints} />
 
 ## Modal and Drawer fullScreenBelow prop
 
-[Modal](/core/modal) and [Drawer](/core/drawer) now support the `fullScreenBelow` prop to take
-the entire screen when the viewport is narrower than the given breakpoint:
+New `fullScreenBelow` prop makes [Modal](/core/modal) and [Drawer](/core/drawer) full screen
+when the viewport is narrower than the given breakpoint:
 
 <Demo data={ModalDemos.fullScreenBelow} />
 
-The prop accepts a key of `theme.breakpoints`, any CSS length or a number of pixels, and reacts to
-viewport changes while the component is opened. [Drawer](/core/drawer) now also supports the
-`fullScreen` prop.
-
 ## useModal and useDrawer hooks
 
-New `useModal` and `useDrawer` hooks open a [Modal](/core/modal/#usemodal-hook) or a
-[Drawer](/core/drawer/#usedrawer-hook) from any component without rendering it in JSX. Props,
-including `children`, are updated every time the component that called the hook renders:
+New `useModal` and `useDrawer` hooks open a [modal](/core/modal/#usemodal-hook) or a
+[drawer](/core/drawer/#usedrawer-hook) without rendering it in JSX:
 
 <Demo data={ModalDemos.useModalHook} />
 
-`open` accepts props that are applied on top of the hook options, use it to open the same
-drawer or modal with different content or settings:
+Pass props to `open` to change the content or settings for one opening:
 
 <Demo data={DrawerDemos.useDrawerHook} />
 
@@ -266,14 +257,13 @@ drawer or modal with different content or settings:
 
 ## Slider thumb redesign
 
-[Slider](/core/slider) and [RangeSlider](/core/range-slider) thumb has been redesigned:
+[Slider](/core/slider) and [RangeSlider](/core/range-slider) have a new thumb:
 
 <Demo data={SliderDemos.variants} />
 
 ## Switch pressed state
 
-[Switch](/core/switch) thumb now stretches towards the direction of travel while the input is
-pressed and snaps into place on release, the way native toggles behave:
+[Switch](/core/switch) thumb now stretches while it is pressed, like native toggles:
 
 <Demo data={SwitchDemos.pressed} />
 
@@ -285,103 +275,63 @@ pressed and snaps into place on release, the way native toggles behave:
 
 ## Tabs variants
 
-[Tabs](/core/tabs) component now supports four new variants: `inset` with a short rounded
-indicator under the tab label, `pill-compact` with reduced padding and fully rounded pills,
-`contained` with a sunken track and a raised active tab that shares colors with
-[SegmentedControl](/core/segmented-control), and `enclosed` with outline tabs attached to a
-bordered panel with rounded corners:
+[Tabs](/core/tabs) now support four new variants: `inset`, `pill-compact`, `contained` and `enclosed`:
 
 <Demo data={TabsDemos.variants} />
 
 ## Menu filled variant and item description
 
-[Menu](/core/menu) component now supports `variant="filled"` that highlights hovered and
-keyboard-active items with the primary color background. Items with `color` prop use their own
-color for the highlight:
+New `variant="filled"` of [Menu](/core/menu) highlights the hovered item with the primary color:
 
 <Demo data={MenuDemos.filled} />
 
-`Menu.Item` now supports `description` prop to display a secondary line of text below the label:
+New `description` prop of `Menu.Item` displays a second line of text below the label:
 
 <Demo data={MenuDemos.description} />
 
-Menu styles were also tuned: item radius is now concentric with the dropdown radius, dividers span
-the full dropdown width, `Menu.Label` uses the text color and sub menu chevrons are dimmed until the
-item is hovered.
-
 ## NavLink redesign
 
-[NavLink](/core/nav-link) component styles were tuned: links now have `border-radius` controlled
-by the new `radius` prop (`theme.defaultRadius` by default), icons and chevrons are dimmed until the
-link is hovered or active, and nested links are aligned with the parent link label by default.
-
-New `variant="rail"` displays a bar at the start of the active link over a neutral background.
-`withGuideline` prop displays a vertical guideline at the start of nested links:
+[NavLink](/core/nav-link) has a new look and a new `rail` variant that marks the active link with a
+bar. `withGuideline` prop displays a guideline next to nested links:
 
 <Demo data={NavLinkDemos.rail} />
 
-New `size` prop controls font size, padding, gap between sections and the offset of nested links:
+New `size` prop controls font size and spacing:
 
 <Demo data={NavLinkDemos.sizes} />
 
 ## TableOfContents rail variant
 
-[TableOfContents](/core/table-of-contents) has a new `rail` variant that displays a bar at the start
-of the active control over a neutral background and a vertical guideline along the list (can be hidden
-with `withGuideline={false}`). It is now the default variant, the previous default was `filled`. Default `size` was changed from `md` to `sm`. Padding and depth offset of controls
-are now defined in px per `size` instead of em values, the depth offset is added to the horizontal
-padding (see [Size](/core/table-of-contents#size) section):
+[TableOfContents](/core/table-of-contents) has a new `rail` variant, it is now the default.
+The default `size` is now `sm`:
 
 <Demo data={TableOfContentsDemos.usage} />
 
 ## PillsInput spacing
 
-Pills inside [PillsInput](/core/pills-input) now fill the input: the input keeps a 3px inset on every
-side, pills are 3px apart, the pill height is the input height minus 8px, the pill font size is the
-input font size minus 1px and the pill radius is concentric with the input radius. This applies to
-all components built on top of `PillsInput`: [MultiSelect](/core/multi-select),
-[TagsInput](/core/tags-input) and [TreeSelect](/core/tree-select). `Pill` and `Pill.Group` used
-outside of `PillsInput` are not affected.
+Pills in [PillsInput](/core/pills-input) are now larger and fill the input.
+The change applies to `MultiSelect`, `TagsInput` and `TreeSelect` too:
 
 <Demo data={PillsInputDemos.usage} />
 
 ## OKLCH default palettes
 
-All 14 built-in color palettes (`dark`, `gray`, `red`, `pink`, `grape`, `violet`, `indigo`, `blue`,
-`cyan`, `teal`, `green`, `lime`, `yellow`, `orange`) have been re-derived in the OKLCH color space.
-The new palettes use a **shared perceptual-lightness ramp**: every color at index `N` has the same
-perceived brightness regardless of hue, so filled buttons, badges, and other colored controls look
-visually consistent across all hues. Warm and bright hues (yellow, orange, lime, green) are lifted on
-a separate ramp to compensate for the Abney effect.
+Default colors are regenerated in the OKLCH color space. Shades with the same index now look
+equally bright in every color, so filled components look consistent across colors.
 
-The number of shades (10), the color names, and the `primaryShade` default (`{ light: 6, dark: 7 }`)
-are unchanged. All default shades remain within the sRGB gamut.
-
-`--mantine-color-*` CSS variables are now emitted as `oklch(L C H)` strings. Code that reads and
-parses these variables as hex or RGB must be updated. See the [9.x → 10.x migration guide](/guides/9x-to-10x)
-for details.
+Color names, the number of shades and `primaryShade` are unchanged. `--mantine-color-*` CSS
+variables now contain `oklch()` values, see the [migration guide](/guides/9x-to-10x) if you parse them.
 
 ## autoContrast enabled by default
 
-`theme.autoContrast` now defaults to `true`. Filled controls automatically pick black or white text
-based on the luminance of their background color (threshold `0.2`), so light shades used as a filled
-color will switch to dark text without any extra configuration.
-
-The following 22 components are affected: `Button`, `ActionIcon`, `ActionIconGroupSection`, `Badge`,
-`ThemeIcon`, `Alert`, `Avatar`, `Chip`, `NavLink`, `TableOfContents`, `Toggle`, `Tooltip`, `Tabs`,
-`Pagination`, `Radio`, `RadioIndicator`, `Checkbox`, `CheckboxIndicator`, `Indicator`, `Progress`,
-`Stepper`, `SegmentedControl`, `Timeline`, and `Toolbar`/`ToolbarToggle`/`ToolbarToggleItem`.
-
-To restore the v9 behaviour set `autoContrast: false` in the theme, or use the one-line v9 opt-out
-described in the migration guide.
+`theme.autoContrast` is now `true` by default: filled components pick black or white text to match
+their background color. Set `autoContrast: false` in the theme to restore the previous behavior.
 
 ## Semantic color CSS variables
 
-A new layer of semantic role variables has been added. Components now use these tokens instead of
-hardcoding raw `gray-N` or `dark-N` indices, making it easier to theme borders, surfaces, and text
-consistently without touching individual component styles.
-
-New variables (values differ per color scheme):
+New CSS variables describe the role of a color: border, hover, surface, muted text and others.
+Components use them instead of fixed `gray` and `dark` shades, override them to restyle all
+components at once:
 
 <DataTable
   head={['Token', 'Light default', 'Dark default']}
@@ -406,76 +356,37 @@ New variables (values differ per color scheme):
   ]}
 />
 
-Role variables are defined as `var()` references to the underlying shade variables, so overriding
-`--mantine-color-gray-3` (for example) still cascades into `--mantine-color-border` automatically.
-`--mantine-color-body` is aliased to `--mantine-color-surface-page`, so overriding the latter also
-updates the page background.
-
 ## Neutral color ladder
 
-A new `--mantine-color-neutral-0..9` scale backs the role and surface tokens above. The ladder is
-scheme-agnostic by role – index `N` means the same thing in both color schemes – while the
-underlying shade differs so contrast holds in both:
+New `--mantine-color-neutral-0` to `--mantine-color-neutral-9` variables adapt to the color scheme.
+Use them in custom CSS instead of separate `gray` and `dark` shades:
 
-<DataTable
-  head={['Index', 'Role', 'Light', 'Dark']}
-  data={[
-    ['0', 'Page', <Code>white</Code>, <Code>dark-7</Code>],
-    ['1', 'Panel', <Code>white</Code>, <Code>dark-6</Code>],
-    ['2', 'Hover / raised', <Code>gray-0</Code>, <Code>dark-5</Code>],
-    ['3', 'Active', <Code>gray-2</Code>, <Code>dark-4</Code>],
-    ['4', 'Border', <Code>gray-3</Code>, <Code>dark-4</Code>],
-    ['5', 'Border strong / disabled', <Code>gray-5</Code>, <Code>dark-3</Code>],
-    ['6', 'Dimmed', <Code>gray-6</Code>, <Code>dark-2</Code>],
-    ['7', 'Secondary text', <Code>gray-7</Code>, <Code>dark-1</Code>],
-    ['8', 'Text', <Code>black</Code>, <Code>dark-0</Code>],
-    ['9', 'Max contrast', <Code>black</Code>, <Code>white</Code>],
-  ]}
-/>
-
-Use `var(--mantine-color-neutral-N)` in custom CSS when you need a neutral shade that adapts to the
-color scheme without hardcoding separate `gray-N`/`dark-N` pairs.
+```css
+.card {
+  background-color: var(--mantine-color-neutral-1);
+  border: 1px solid var(--mantine-color-neutral-4);
+}
+```
 
 ## Surface component
 
-A new [Surface](/core/surface) component replaces `Paper` as the depth-aware background primitive. `Surface` has
-3 levels – `0` (page), `1` (panel, the default for a standalone `Surface`), and `2` (panel-2) – and
-in dark mode each level is one shade lighter, giving your UI natural elevation layers. In light mode
-surfaces are near-flat and rely on shadows and borders instead of tone. Two separate tokens (not
-`Surface` levels) cover non-container backgrounds: `--mantine-color-surface-sunken` for wells and
-`--mantine-color-surface-muted` for code and inset content.
-
-`Surface` is a strict superset of `Paper` (`shadow`, `radius`, `withBorder`, padding, polymorphic
-`component` prop) and can be used as a drop-in replacement. `Paper` is deprecated in v10 and will be
-removed in v11.
+New [Surface](/core/surface) component replaces `Paper`. Nested surfaces step up one level
+automatically, so elevation is visible in dark mode. `Paper` is deprecated and will be removed in 11.0:
 
 ```tsx
 import { Surface } from '@mantine/core';
 
-// Manual level
-function Demo() {
-  return <Surface level={2} p="md">Content on elevation level 2</Surface>;
-}
-
-// Automatic depth stepping, on by default (each nested Surface steps up one level, clamped at level 2)
 function Demo() {
   return (
-    <Surface p="md">
+    <Surface p="md" withBorder>
       Outer surface
-      <Surface p="md">
-        Inner surface – one level higher
-      </Surface>
+      <Surface p="md">Inner surface, one level higher</Surface>
     </Surface>
   );
 }
 ```
 
-`level` also accepts a relative string, `"+1"` or `"-1"`, which steps up or down from the parent
-surface's level instead of setting an absolute value. Like an absolute `level`, a relative `level`
-always overrides `autoDepth`, and both forms clamp to the `0`–`2` range.
-
-Surface backgrounds can be overridden per color scheme with the `surfaces` theme key, without
-touching CSS variables directly:
+Use the `surfaces` theme key to change surface colors for each color scheme:
 
 ```tsx
 import { createTheme } from '@mantine/core';
@@ -489,50 +400,22 @@ const theme = createTheme({
 });
 ```
 
-Each scheme (`light`/`dark`) accepts `page`, `panel`, `panel2`, `sunken`, and `muted` keys, matching
-the five surface tokens documented above.
-
 ## Dropdowns render on the page surface
 
-Floating dropdowns – `Popover`, `Menu`, `HoverCard`, and all `Combobox`-based components such as
-`Select` and `Autocomplete` – now use `--mantine-color-surface-page` as their background, matching
-`Modal` and `Drawer`. In dark mode dropdowns are now `dark-7` instead of `dark-6`, separated from
-surrounding content by border and shadow; light mode is visually unchanged. Overriding
-`surfaces.page` in the theme moves modals and dropdowns together with the page background.
+Dropdowns of `Popover`, `Menu`, `HoverCard` and `Combobox`-based components now use the page
+background, like `Modal` and `Drawer`. In dark mode they are darker than before and are separated
+from the content with a border and a shadow.
 
 ## Sunken surfaces, code surfaces and control tracks
 
-Wells share the `--mantine-color-surface-sunken` token: the `SegmentedControl` root, the `Tabs`
-`contained` list, and `ScrollArea` scrollbar backgrounds. In dark mode these are tonally sunken
-below the page (`dark-9`); in light mode they unify on `gray-1`. A well always holds a raised child
-(the active segment or tab, drawn on `--mantine-color-surface-panel-2`), which is what the deep
-dark value buys.
-
-Code and inset content use `--mantine-color-surface-muted` instead: `Code`, `Kbd`, `CodeHighlight`,
-`JsonViewer`, and `Typography` `pre`/`code`/`kbd`. It is `gray-0` in light mode – one light step
-off the page – and `dark-5` in dark mode, two steps *above* the page, so a code block reads as
-raised rather than as a hole punched into the page, and keeps its edge inside a `Card` or a
-level-1 `Surface`.
-
-Control tracks are a third role: `Switch`, `Slider`, `Progress`, `RingProgress`, and
-`SemiCircleProgress` share the `--mantine-color-track` role variable, anchored to the border tone
-(`gray-3` / `dark-4`) so the unfilled part of a control reads as a rail rather than a hole.
-
-Overriding `surfaces.sunken` or `surfaces.muted` in the theme (or the tokens themselves) restyles
-each group together; override `--mantine-color-track` to restyle every control track at once.
+`SegmentedControl`, `contained` `Tabs` and `ScrollArea` scrollbars now share the sunken surface
+color. `Code`, `Kbd`, `CodeHighlight` and `JsonViewer` share the muted surface color.
+Tracks of `Switch`, `Slider` and `Progress` use the new `--mantine-color-track` variable.
 
 ## Focus ring color variable
 
-Focus rings are now drawn with a dedicated `--mantine-color-focus-ring` variable instead of
-`--mantine-primary-color-filled`. It covers the `.mantine-focus-auto` / `.mantine-focus-always`
-outline, the focused `Input` border, and every component that draws its own ring (`Switch`, `Chip`,
-`Pill`, `Rating`, `Tree`, `AngleSlider`, `ColorPicker`, `ColorWheel`, `Editable`, `Timer`,
-`Splitter`, `SegmentedControl`, charts, `DataGrid`, `CalendarHeader`, `EmojiPicker`, `JsonViewer`).
-
-The variable follows `theme.primaryColor`, and its light value is unchanged (`blue-6` by default).
-In dark mode it resolves to shade 5 rather than `primaryShade.dark` (shade 7), so the ring stays
-legible against the darker v10 backgrounds. Override it to restyle focus rings across the entire
-application without affecting filled buttons:
+Focus rings now use the new `--mantine-color-focus-ring` variable. In dark mode it is lighter than
+the primary color, so the ring stays visible. Override it to change focus rings of all components:
 
 ```css
 [data-mantine-color-scheme='dark'] {
@@ -542,34 +425,18 @@ application without affecting filled buttons:
 
 ## Disabled state opacity
 
-All components now render their disabled state as a reduced-opacity version of their normal
-appearance instead of switching to flat neutral colors. A disabled filled `Button` stays blue, a
-checked disabled `Checkbox` keeps its accent color, and every other component follows the same
-rule – only faded.
-
-The opacity is controlled by a single theme option, `theme.disabledOpacity` (`0.5` by default),
-exposed as the `--mantine-disabled-opacity` CSS variable. Override it globally in your theme, or
-per subtree and color scheme with plain CSS.
+Disabled components now look like a faded version of their normal state instead of turning gray.
+Change the opacity with `theme.disabledOpacity`, it is `0.5` by default:
 
 <Demo data={ThemingDemos.disabledOpacity} />
 
 ## Dark neutral flavors
 
-Four pre-built dark neutral color tuples are exported from `@mantine/core` and can be assigned to
-`theme.colors.dark` to change the overall tone of the dark scheme:
-
-<DataTable
-  head={['Export', 'Description']}
-  data={[
-    [<Code>darkColors</Code>, 'Neutral (near-zero chroma)'],
-    [<Code>darkColdColors</Code>, 'Slightly cool-tinted'],
-    [<Code>darkWarmColors</Code>, 'Slightly warm-tinted'],
-    [<Code>darkTintedColors</Code>, 'Primary-color hue mixed in'],
-  ]}
-/>
+`darkColors`, `darkColdColors`, `darkWarmColors` and `darkTintedColors` change the tone of the dark
+color scheme. Assign one of them to `theme.colors.dark`:
 
 ```tsx
-import { darkWarmColors, createTheme } from '@mantine/core';
+import { createTheme, darkWarmColors } from '@mantine/core';
 
 const theme = createTheme({
   colors: {
@@ -580,13 +447,10 @@ const theme = createTheme({
 
 ## tintColors utility
 
-A new `tintColors` function mixes a color into every shade of a `MantineColorsTuple`, useful for
-building a custom-tinted dark ramp without hand-editing 10 shades. It targets the **dark** ramp –
-tinting light neutrals forces surfaces darker and breaks the flat light look, so keep tinting to
-dark:
+New `tintColors` function mixes a color into every shade of the dark palette:
 
 ```tsx
-import { tintColors, darkColors, createTheme } from '@mantine/core';
+import { createTheme, darkColors, tintColors } from '@mantine/core';
 
 const theme = createTheme({
   colors: {
@@ -595,105 +459,75 @@ const theme = createTheme({
 });
 ```
 
-`strength` (default `0.1`) controls how much of the tint is mixed in. Middle shades of the tuple
-receive proportionally more tint than the shades near either end of the ramp.
-
-`tintColors` returns CSS `color-mix(in oklab, ...)` strings that are resolved by the browser, not
-concrete color values – the result cannot be fed into functions that expect a resolved color (such
-as `darken`), and it appears as a `color-mix(...)` expression, not a hex/rgb value, in computed
-styles.
-
 ## OKLCH colors generator
 
-`@mantine/colors-generator` has been updated to output OKLCH color palettes. The `generateColors`
-function still returns a `MantineColorsTuple` (now containing `oklch(...)` strings) so existing
-usage is unchanged:
+`generateColors` from `@mantine/colors-generator` now returns OKLCH colors. New
+`generateColorFormats` function returns the palette in hex, rgb, hsl and oklch:
 
 ```tsx
 import { generateColors } from '@mantine/colors-generator';
 
 const theme = createTheme({
   colors: {
-    brand: generateColors('#375EAC'), // returns MantineColorsTuple of oklch strings
+    brand: generateColors('#375EAC'),
   },
 });
 ```
 
-A new `generateColorFormats` function is also available when you need the full palette in multiple
-formats (oklch, hex, rgb, hsl) along with the detected base color index.
-
 ## Mobile-friendly dates dropdowns
 
-[DatePickerInput](/dates/date-picker-input), [MonthPickerInput](/dates/month-picker-input),
-[YearPickerInput](/dates/year-picker-input), [QuarterPickerInput](/dates/quarter-picker-input),
-[WeekPickerInput](/dates/week-picker-input) and [DateTimePicker](/dates/date-time-picker) now adapt
-to the viewport. The `dropdownType` prop accepts `'popover'`, `'modal'`, `'drawer'` or an object with
-breakpoints, and its default value is `{ base: 'drawer', sm: 'popover' }`: on viewports narrower than
-`theme.breakpoints.sm` the picker opens in a bottom [Drawer](/core/drawer) with a full width calendar,
-presets displayed as a row of chips and larger touch targets. Object keys can be `theme.breakpoints`
-keys or custom values in px, for example, `{ base: 'drawer', 600: 'popover' }`:
+Date picker inputs and `DateTimePicker` now open in a bottom drawer on small screens.
+Use `dropdownType` prop to choose `popover`, `modal` or `drawer` for each breakpoint:
 
 <Demo data={DatePickerInputDemos.dropdownType} />
 
-In `drawer` and `modal` dropdowns, the value is applied only when the new submit button is pressed,
-and closing the dropdown discards the selection. Set `applyOnSubmit={false}` to apply the value on
-selection. The button label is `Save` by default and can be changed with the `submitButtonLabel` prop
-or with the `submitButtonLabel` setting of [DatesProvider](/dates/getting-started/#datesprovider):
+In drawer and modal dropdowns, the value is applied when the user presses the submit button.
+Set `applyOnSubmit={false}` to apply it on selection:
 
 <Demo data={DatePickerInputDemos.applyOnSubmit} />
 
-[DateTimePicker](/dates/date-time-picker#mobile-time-input) captures time in the drawer with a native
-`<input type="time" />`, so mobile users get the platform time picker without the on-screen keyboard,
-and its submit button is now a text button in every dropdown type. The submit button of
-[InlineDateTimePicker](/dates/inline-date-time-picker) is a text button as well:
+[DateTimePicker](/dates/date-time-picker#mobile-time-input) uses the native time input in the drawer:
 
 <Demo data={DateTimePickerDemos.dropdownType} />
 
-Popover dropdowns of all `@mantine/dates` components are now limited to the available viewport space
-and scroll when the calendar does not fit, for example, when the input is rendered in the middle of a
-short viewport.
-
 ## useMatches custom breakpoints
 
-[useMatches](/styles/responsive/#use-matches-hook) hook now accepts custom breakpoints as keys – numbers
-(px) or any CSS length – in addition to `theme.breakpoints` keys. All queries are resolved with a single
-`useSyncExternalStore` subscription, and the `base` value is returned on the server and during hydration:
+[useMatches](/styles/responsive/#use-matches-hook) hook now accepts custom breakpoints in px or
+any CSS length:
 
 <Demo data={StylesDemos.useMatchesHook} />
 
 ## Drawer auto size
 
-[Drawer](/core/drawer#auto-size) now supports `size="auto"` – the drawer is as large as its content
-along the `position` axis and scrolls when the content is larger than the viewport:
+`size="auto"` makes the [Drawer](/core/drawer#auto-size) as large as its content:
 
 <Demo data={DrawerDemos.autoSize} />
 
 ## Scroller withControls
 
-[Scroller](/core/scroller#without-controls) now supports `withControls` prop – set it to `false` to
-remove the navigation buttons and edge gradients while keeping native and drag scrolling:
+Set `withControls={false}` to hide [Scroller](/core/scroller#without-controls) navigation buttons:
 
 <Demo data={ScrollerDemos.withoutControls} />
 
 ## Other changes
 
-- [Affix](/core/affix) now supports `withSafeArea` prop – when it is set, `env(safe-area-inset-*)` values are added to the `position` offsets, so the affixed content is not covered by the device notch or the home indicator.
-- [Alert](/core/alert) now supports `closeButtonProps` and sets `Close` as the default close button `aria-label`.
-- [AngleSlider](/core/angle-slider) now supports `largeStep` prop and `PageUp`/`PageDown`/`Shift + Arrow` keyboard interactions, a `readOnly` prop, and sets `aria-valuetext`, `aria-disabled` and `aria-readonly` attributes. Keyboard interactions now always produce values that are on the same grid as pointer interactions: with `step={5}`, `ArrowLeft` at `0` sets the value to `355` instead of `359`. `onMouseDown` and `onTouchStart` props are now forwarded to the root element – previously they were silently ignored.
-- [Avatar.Group](/core/avatar) now supports `max`, `total` and `renderOverflow` props – children that do not fit into `max` are replaced with a `+N` counter.
-- [Badge](/core/badge) no longer renders `leftSection` when `variant="dot"` is used – the dot indicator occupies the same slot and the two collided in the grid layout.
-- [Breadcrumbs](/core/breadcrumbs) root element is now a `nav` landmark with a default `aria-label="Breadcrumbs"`, and separators are rendered with `aria-hidden` so that they are not announced by screen readers.
-- [Alert](/core/alert) now supports the `size` prop
-- [ColorPicker](/core/color-picker) saturation picker, sliders, preview swatch and color swatches now follow `theme.defaultRadius`
-- [PasswordInput](/core/password-input) default visibility toggle icon is now smaller in all sizes – 16px instead of 20px for `size="sm"`, the toggle button size is unchanged.
-- [MultiSelect](/core/multi-select#max-displayed-values) and [TagsInput](/core/tags-input#max-displayed-values) now support `maxDisplayedValues` and `maxDisplayedValuesContent` props – values that do not fit into `maxDisplayedValues` are collapsed into a single `+N more` pill.
-- [Select](/core/select#scrollable-dropdown), [MultiSelect](/core/multi-select), [TagsInput](/core/tags-input), [Autocomplete](/core/autocomplete), [TreeSelect](/core/tree-select), [PhoneInput](/core/phone-input), [Mentions](/core/mentions) and [ComboboxPopover](/core/combobox-popover) now support `scrollBehavior` prop – set it to `smooth` to animate the scroll when options are navigated with the keyboard.
-- [Stepper.Step](/core/stepper#wrapping-stepperstep) can now be wrapped in another component – the step index is passed by forwarding the props the wrapper receives or declared with the `step` prop.
-- [Timeline.Item](/core/timeline#wrapping-timelineitem) can now be wrapped in another component – the item index is passed by forwarding the props the wrapper receives or declared with the new `index` prop. New `active` and `lineActive` props allow an item to be active while the line after it is not.
-- [Tooltip](/core/tooltip) now opens when the target receives keyboard focus – set `events={{ hover: true, focus: false, touch: false }}` to restore the previous behavior.
-- [Combobox.Target](/core/combobox) now sets `role="combobox"` and `aria-expanded` on the target element by default – set `withExpandedAttribute={false}` to restore the previous behavior.
-- [Pagination](/core/pagination) root element is now a `nav` landmark.
+- [Affix](/core/affix) now supports `withSafeArea` prop to keep the content clear of the device notch and home indicator.
+- [Alert](/core/alert) now supports `size` and `closeButtonProps` props.
+- [AngleSlider](/core/angle-slider) now supports `largeStep` and `readOnly` props and `PageUp`/`PageDown` keys.
+- [Avatar.Group](/core/avatar) now supports `max` prop: avatars that do not fit are replaced with a `+N` counter.
+- [Badge](/core/badge) with `variant="dot"` no longer renders `leftSection`.
+- [Breadcrumbs](/core/breadcrumbs) and [Pagination](/core/pagination) root elements are now `nav` landmarks.
+- [ColorPicker](/core/color-picker) now follows `theme.defaultRadius`.
+- [Drawer](/core/drawer) now supports `fullScreen` prop.
+- [MultiSelect](/core/multi-select#max-displayed-values) and [TagsInput](/core/tags-input#max-displayed-values) now support `maxDisplayedValues` prop: extra values collapse into a `+N more` pill.
 - [NavLink](/core/nav-link) with nested links and without `href` is now rendered as a `button` element.
-- [LoadingOverlay](/core/loading-overlay) now announces its loading state to screen readers, use `loadingLabel` prop to change the announced text.
-- [Pill](/core/pill) remove button now has a default `aria-label="Remove"`.
-- [Input](/core/input) and all components based on it now render placeholder with a lighter error color when `error` prop is set – an empty invalid input no longer looks like an input with an invalid value.
+- [PasswordInput](/core/password-input) visibility toggle icon is now smaller.
+- [Select](/core/select#scrollable-dropdown) and other `Combobox`-based components now support `scrollBehavior="smooth"` for keyboard navigation.
+- [Stepper.Step](/core/stepper#wrapping-stepperstep) and [Timeline.Item](/core/timeline#wrapping-timelineitem) can now be wrapped in other components.
+- [Timeline.Item](/core/timeline) now supports `active` and `lineActive` props.
+- [Tooltip](/core/tooltip) now opens on keyboard focus, set `events={{ hover: true, focus: false, touch: false }}` to restore the previous behavior.
+- [Combobox.Target](/core/combobox) now sets `role="combobox"` and `aria-expanded`, set `withExpandedAttribute={false}` to restore the previous behavior.
+- [LoadingOverlay](/core/loading-overlay) now announces the loading state to screen readers, change the text with `loadingLabel` prop.
+- [Pill](/core/pill) remove button now has `aria-label="Remove"` by default.
+- Inputs with `error` prop now have a lighter placeholder, so an empty invalid input does not look like it has a value.
+- `Tree` now receives its store with the `store` prop, see the [migration guide](/guides/9x-to-10x).

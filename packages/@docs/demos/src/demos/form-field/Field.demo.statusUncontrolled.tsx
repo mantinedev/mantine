@@ -8,7 +8,7 @@ import { Button, TextInput } from '@mantine/core';
 import { useField } from '@mantine/form';
 
 function Demo() {
-  const field = useField({ mode: 'uncontrolled', initialValue: '' });
+  const field = useField({ initialValue: '' });
   const [fieldStatus, setFieldStatus] = useState({ touched: false, dirty: false });
   const updateStatus = () => {
     setFieldStatus({ touched: field.isTouched(), dirty: field.isDirty() });
@@ -40,7 +40,7 @@ function Demo() {
 `;
 
 function Demo() {
-  const field = useField({ mode: 'uncontrolled', initialValue: '' });
+  const field = useField({ initialValue: '' });
   const [fieldStatus, setFieldStatus] = useState({ touched: false, dirty: false });
   const updateStatus = () => {
     setFieldStatus({ touched: field.isTouched(), dirty: field.isDirty() });
