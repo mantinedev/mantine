@@ -486,6 +486,34 @@ Set `withControls={false}` to hide [Scroller](/core/scroller#without-controls) n
 
 <Demo data={ScrollerDemos.withoutControls} />
 
+## Write to storage without rerender
+
+New `writeLocalStorageValue` and `removeLocalStorageValue` functions update storage and every
+`useLocalStorage` hook with the same key without rerendering the component that calls them.
+See [use-local-storage](/hooks/use-local-storage#write-value-without-rerender):
+
+```tsx
+import { useLocalStorage, writeLocalStorageValue } from '@mantine/hooks';
+
+function DraftStatus() {
+  const [savedAt] = useLocalStorage<string | null>({ key: 'draft-saved-at', defaultValue: null });
+  return <p>{savedAt ? `Draft saved at ${savedAt}` : 'No draft saved'}</p>;
+}
+
+function Editor() {
+  // Editor does not rerender when the draft is saved
+  const saveDraft = () =>
+    writeLocalStorageValue({ key: 'draft-saved-at', value: new Date().toLocaleTimeString() });
+
+  return (
+    <>
+      <textarea onBlur={saveDraft} />
+      <DraftStatus />
+    </>
+  );
+}
+```
+
 ## Other changes
 
 - [Affix](/core/affix) now supports `withSafeArea` prop to keep the content clear of the device notch.

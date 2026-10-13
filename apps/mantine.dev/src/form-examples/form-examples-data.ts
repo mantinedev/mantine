@@ -286,7 +286,7 @@ export const FORM_EXAMPLES_DATA: FormExample[] = [
     name: 'Autosave to local storage',
     description: 'Draft saved a second after the last change and restored on mount',
     type: 'data',
-    features: ['onValuesChange', 'setValues', 'useLocalStorage', 'useDebouncedCallback'],
+    features: ['onValuesChange', 'setValues', 'writeLocalStorageValue', 'useDebouncedCallback'],
   },
   {
     id: 'AutosaveServer',

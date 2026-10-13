@@ -154,6 +154,43 @@ import { readLocalStorageValue } from '@mantine/hooks';
 const value = readLocalStorageValue({ key: 'color-scheme' });
 ```
 
+## Write value without rerender
+
+`setValue` rerenders the component that owns the hook. Use `writeLocalStorageValue` and `removeLocalStorageValue`
+to write without rerender. Hooks with the same key are updated, in the current tab and in other tabs.
+Keep the hook in the component that shows the value and call the function from the one that writes it:
+
+```tsx
+import { useLocalStorage, writeLocalStorageValue } from '@mantine/hooks';
+
+function DraftStatus() {
+  const [savedAt] = useLocalStorage<string | null>({
+    key: 'draft-saved-at',
+    defaultValue: null,
+  });
+
+  return <p>{savedAt ? `Draft saved at ${savedAt}` : 'No draft saved'}</p>;
+}
+
+function Editor() {
+  // Editor does not rerender when the draft is saved
+  const saveDraft = () =>
+    writeLocalStorageValue({
+      key: 'draft-saved-at',
+      value: new Date().toLocaleTimeString(),
+    });
+
+  return (
+    <>
+      <textarea onBlur={saveDraft} />
+      <DraftStatus />
+    </>
+  );
+}
+```
+
+`writeSessionStorageValue` and `removeSessionStorageValue` do the same for `sessionStorage`.
+
 ## Definition
 
 ```tsx
@@ -183,16 +220,49 @@ type UseStorageReturnValue<T> = [
   () => void, // callback to remove value from storage
 ];
 
+interface WriteStorageValueOptions<T> {
+  /** Storage key */
+  key: string;
+
+  /** Value to write to storage */
+  value: T;
+
+  /** Function to serialize value into string to be saved in storage */
+  serialize?: (value: T) => string;
+}
+
+interface RemoveStorageValueOptions {
+  /** Storage key */
+  key: string;
+}
+
 function useLocalStorage<T = string>(
   options: UseStorageOptions<T>,
 ): UseStorageReturnValue<T>;
+
+function readLocalStorageValue<T = string>(
+  options: UseStorageOptions<T>,
+): T;
+
+function writeLocalStorageValue<T = string>(
+  options: WriteStorageValueOptions<T>,
+): void;
+
+function removeLocalStorageValue(
+  options: RemoveStorageValueOptions,
+): void;
 ```
 
 ## Exported types
 
-`UseStorageOptions` and `UseStorageReturnValue` types are exported from the `@mantine/hooks` package;
-you can import them in your application:
+`UseStorageOptions`, `UseStorageReturnValue`, `WriteStorageValueOptions` and `RemoveStorageValueOptions`
+types are exported from the `@mantine/hooks` package; you can import them in your application:
 
 ```tsx
-import type { UseStorageOptions, UseStorageReturnValue } from '@mantine/hooks';
+import type {
+  RemoveStorageValueOptions,
+  UseStorageOptions,
+  UseStorageReturnValue,
+  WriteStorageValueOptions,
+} from '@mantine/hooks';
 ```

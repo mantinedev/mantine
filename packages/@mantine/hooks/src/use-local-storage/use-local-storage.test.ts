@@ -1,5 +1,10 @@
 import { act, renderHook } from '@testing-library/react';
-import { useLocalStorage } from './use-local-storage';
+import {
+  readLocalStorageValue,
+  removeLocalStorageValue,
+  useLocalStorage,
+  writeLocalStorageValue,
+} from './use-local-storage';
 
 beforeEach(() => {
   localStorage.clear();
@@ -75,5 +80,73 @@ describe('@mantine/hooks/use-local-storage', () => {
       );
     });
     expect(result.current[0]).toBe('original');
+  });
+});
+
+describe('@mantine/hooks/write-local-storage-value', () => {
+  it('writes serialized value to localStorage', () => {
+    writeLocalStorageValue({ key: 'test', value: { name: 'draft' } });
+    expect(localStorage.getItem('test')).toBe(JSON.stringify({ name: 'draft' }));
+  });
+
+  it('supports custom serialize', () => {
+    writeLocalStorageValue({ key: 'test', value: 'draft', serialize: (value) => `raw:${value}` });
+    expect(localStorage.getItem('test')).toBe('raw:draft');
+  });
+
+  it('updates mounted hooks with the same key', () => {
+    const { result } = renderHook(() => useLocalStorage({ key: 'test', defaultValue: 'default' }));
+    act(() => writeLocalStorageValue({ key: 'test', value: 'written' }));
+    expect(result.current[0]).toBe('written');
+  });
+
+  it('does not update mounted hooks with a different key', () => {
+    const { result } = renderHook(() => useLocalStorage({ key: 'mine', defaultValue: 'default' }));
+    act(() => writeLocalStorageValue({ key: 'other', value: 'written' }));
+    expect(result.current[0]).toBe('default');
+  });
+
+  it('does not update mounted hooks with sync disabled', () => {
+    const { result } = renderHook(() =>
+      useLocalStorage({ key: 'test', defaultValue: 'default', sync: false })
+    );
+    act(() => writeLocalStorageValue({ key: 'test', value: 'written' }));
+    expect(result.current[0]).toBe('default');
+  });
+
+  it('does not rerender the component that writes the value', () => {
+    let renders = 0;
+    const { result } = renderHook(() => {
+      renders += 1;
+      return useLocalStorage({ key: 'reader', defaultValue: 'default' });
+    });
+    const rendersBeforeWrite = renders;
+    act(() => writeLocalStorageValue({ key: 'writer', value: 'written' }));
+    expect(renders).toBe(rendersBeforeWrite);
+    expect(result.current[0]).toBe('default');
+    expect(readLocalStorageValue({ key: 'writer' })).toBe('written');
+  });
+});
+
+describe('@mantine/hooks/remove-local-storage-value', () => {
+  it('removes value from localStorage', () => {
+    localStorage.setItem('test', JSON.stringify('stored'));
+    removeLocalStorageValue({ key: 'test' });
+    expect(localStorage.getItem('test')).toBeNull();
+  });
+
+  it('resets mounted hooks with the same key to defaultValue', () => {
+    const { result } = renderHook(() => useLocalStorage({ key: 'test', defaultValue: 'default' }));
+    act(() => result.current[1]('set'));
+    act(() => removeLocalStorageValue({ key: 'test' }));
+    expect(result.current[0]).toBe('default');
+    expect(localStorage.getItem('test')).toBeNull();
+  });
+
+  it('does not reset mounted hooks with a different key', () => {
+    const { result } = renderHook(() => useLocalStorage({ key: 'mine', defaultValue: 'default' }));
+    act(() => result.current[1]('set'));
+    act(() => removeLocalStorageValue({ key: 'other' }));
+    expect(result.current[0]).toBe('set');
   });
 });

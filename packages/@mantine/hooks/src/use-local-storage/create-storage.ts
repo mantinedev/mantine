@@ -40,6 +40,22 @@ function deserializeJSON(value: string | undefined) {
   }
 }
 
+function getEventName(type: StorageType) {
+  return type === 'localStorage' ? 'mantine-local-storage' : 'mantine-session-storage';
+}
+
+function isStorageBlocked(type: StorageType) {
+  try {
+    return typeof window === 'undefined' || !(type in window) || window[type] === null;
+  } catch (_e) {
+    return true;
+  }
+}
+
+function dispatchStorageEvent<T>(type: StorageType, key: string, value: T) {
+  window.dispatchEvent(new CustomEvent(getEventName(type), { detail: { key, value } }));
+}
+
 function createStorageHandler(type: StorageType) {
   const getItem = (key: string) => {
     try {
@@ -78,7 +94,6 @@ export type UseStorageReturnValue<T> = [
 ];
 
 export function createStorage<T>(type: StorageType, hookName: string) {
-  const eventName = type === 'localStorage' ? 'mantine-local-storage' : 'mantine-session-storage';
   const { getItem, setItem, removeItem } = createStorageHandler(type);
 
   return function useStorage({
@@ -91,19 +106,7 @@ export function createStorage<T>(type: StorageType, hookName: string) {
   }: UseStorageOptions<T>): UseStorageReturnValue<T> {
     const readStorageValue = useCallback(
       (skipStorage?: boolean): T => {
-        let storageBlockedOrSkipped;
-
-        try {
-          storageBlockedOrSkipped =
-            typeof window === 'undefined' ||
-            !(type in window) ||
-            window[type] === null ||
-            !!skipStorage;
-        } catch (_e) {
-          storageBlockedOrSkipped = true;
-        }
-
-        if (storageBlockedOrSkipped) {
+        if (skipStorage || isStorageBlocked(type)) {
           return defaultValue as T;
         }
 
@@ -122,14 +125,12 @@ export function createStorage<T>(type: StorageType, hookName: string) {
             const result = val(current);
             setItem(key, serialize(result));
             // Defer dispatching this event to avoid the handler being called during render.
-            queueMicrotask(() => {
-              window.dispatchEvent(new CustomEvent(eventName, { detail: { key, value: result } }));
-            });
+            queueMicrotask(() => dispatchStorageEvent(type, key, result));
             return result;
           });
         } else {
           setItem(key, serialize(val));
-          window.dispatchEvent(new CustomEvent(eventName, { detail: { key, value: val } }));
+          dispatchStorageEvent(type, key, val);
           setValue(val);
         }
       },
@@ -139,7 +140,7 @@ export function createStorage<T>(type: StorageType, hookName: string) {
     const removeStorageValue = useCallback(() => {
       removeItem(key);
       setValue(defaultValue as T);
-      window.dispatchEvent(new CustomEvent(eventName, { detail: { key, value: defaultValue } }));
+      dispatchStorageEvent(type, key, defaultValue);
     }, [key, defaultValue]);
 
     useWindowEvent('storage', (event) => {
@@ -150,10 +151,10 @@ export function createStorage<T>(type: StorageType, hookName: string) {
       }
     });
 
-    useWindowEvent(eventName, (event) => {
+    useWindowEvent(getEventName(type), (event) => {
       if (sync) {
         if (event.detail.key === key) {
-          setValue(event.detail.value);
+          setValue(event.detail.value === undefined ? (defaultValue as T) : event.detail.value);
         }
       }
     });
@@ -181,20 +182,57 @@ export function readValue(type: StorageType) {
     defaultValue,
     deserialize = deserializeJSON,
   }: UseStorageOptions<T>) {
-    let storageBlockedOrSkipped;
-
-    try {
-      storageBlockedOrSkipped =
-        typeof window === 'undefined' || !(type in window) || window[type] === null;
-    } catch (_e) {
-      storageBlockedOrSkipped = true;
-    }
-
-    if (storageBlockedOrSkipped) {
+    if (isStorageBlocked(type)) {
       return defaultValue as T;
     }
 
     const storageValue = getItem(key);
     return storageValue !== null ? deserialize(storageValue) : (defaultValue as T);
+  };
+}
+
+export interface WriteStorageValueOptions<T> {
+  /** Storage key */
+  key: string;
+
+  /** Value to write to storage */
+  value: T;
+
+  /** Function to serialize value into string to be saved in storage */
+  serialize?: (value: T) => string;
+}
+
+export interface RemoveStorageValueOptions {
+  /** Storage key */
+  key: string;
+}
+
+export function writeValue(type: StorageType, hookName: string) {
+  const { setItem } = createStorageHandler(type);
+
+  return function write<T>({
+    key,
+    value,
+    serialize = (val: T) => serializeJSON(val, hookName),
+  }: WriteStorageValueOptions<T>) {
+    if (isStorageBlocked(type)) {
+      return;
+    }
+
+    setItem(key, serialize(value));
+    dispatchStorageEvent(type, key, value);
+  };
+}
+
+export function removeValue(type: StorageType) {
+  const { removeItem } = createStorageHandler(type);
+
+  return function remove({ key }: RemoveStorageValueOptions) {
+    if (isStorageBlocked(type)) {
+      return;
+    }
+
+    removeItem(key);
+    dispatchStorageEvent(type, key, undefined);
   };
 }

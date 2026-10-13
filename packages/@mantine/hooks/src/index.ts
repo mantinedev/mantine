@@ -26,10 +26,17 @@ export { useIdle } from './use-idle/use-idle.js';
 export { useInterval } from './use-interval/use-interval.js';
 export { useIsomorphicEffect } from './use-isomorphic-effect/use-isomorphic-effect.js';
 export { useListState } from './use-list-state/use-list-state.js';
-export { useLocalStorage, readLocalStorageValue } from './use-local-storage/use-local-storage.js';
+export {
+  useLocalStorage,
+  readLocalStorageValue,
+  writeLocalStorageValue,
+  removeLocalStorageValue,
+} from './use-local-storage/use-local-storage.js';
 export {
   useSessionStorage,
   readSessionStorageValue,
+  writeSessionStorageValue,
+  removeSessionStorageValue,
 } from './use-session-storage/use-session-storage.js';
 export { useMediaQuery } from './use-media-query/use-media-query.js';
 export { useMergedRef, mergeRefs, assignRef } from './use-merged-ref/use-merged-ref.js';
@@ -179,7 +186,12 @@ export type {
   UseListStateReturnValue,
   UseListStateHandlers,
 } from './use-list-state/use-list-state';
-export type { UseStorageOptions, UseStorageReturnValue } from './use-local-storage/create-storage';
+export type {
+  UseStorageOptions,
+  UseStorageReturnValue,
+  WriteStorageValueOptions,
+  RemoveStorageValueOptions,
+} from './use-local-storage/create-storage';
 export type { UseMovePosition, UseMoveHandlers, UseMoveReturnValue } from './use-move/use-move';
 export type { UseTiltOptions, UseTiltReturnValue, UseTiltSource } from './use-tilt/use-tilt';
 export type { UserNetworkReturnValue } from './use-network/use-network';

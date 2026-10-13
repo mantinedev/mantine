@@ -1,5 +1,10 @@
 import { act, renderHook } from '@testing-library/react';
-import { useSessionStorage } from './use-session-storage';
+import {
+  readSessionStorageValue,
+  removeSessionStorageValue,
+  useSessionStorage,
+  writeSessionStorageValue,
+} from './use-session-storage';
 
 beforeEach(() => {
   sessionStorage.clear();
@@ -34,6 +39,27 @@ describe('@mantine/hooks/use-session-storage', () => {
     );
     act(() => result.current[1]('set'));
     act(() => result.current[2]());
+    expect(sessionStorage.getItem('test')).toBeNull();
+    expect(result.current[0]).toBe('default');
+  });
+
+  it('writeSessionStorageValue writes to sessionStorage and updates mounted hooks', () => {
+    const { result } = renderHook(() =>
+      useSessionStorage({ key: 'test', defaultValue: 'default' })
+    );
+    act(() => writeSessionStorageValue({ key: 'test', value: 'written' }));
+    expect(sessionStorage.getItem('test')).toBe(JSON.stringify('written'));
+    expect(localStorage.getItem('test')).toBeNull();
+    expect(result.current[0]).toBe('written');
+    expect(readSessionStorageValue({ key: 'test' })).toBe('written');
+  });
+
+  it('removeSessionStorageValue removes from sessionStorage and resets mounted hooks', () => {
+    const { result } = renderHook(() =>
+      useSessionStorage({ key: 'test', defaultValue: 'default' })
+    );
+    act(() => result.current[1]('set'));
+    act(() => removeSessionStorageValue({ key: 'test' }));
     expect(sessionStorage.getItem('test')).toBeNull();
     expect(result.current[0]).toBe('default');
   });

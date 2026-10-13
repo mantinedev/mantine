@@ -1,8 +1,10 @@
 import {
   createStorage,
   readValue,
+  removeValue,
   UseStorageOptions,
   UseStorageReturnValue,
+  writeValue,
 } from '../use-local-storage/create-storage';
 
 export function useSessionStorage<T = string>(
@@ -21,3 +23,6 @@ interface ReadStorageValue {
 }
 
 export const readSessionStorageValue: ReadStorageValue = readValue('sessionStorage');
+
+export const writeSessionStorageValue = writeValue('sessionStorage', 'use-session-storage');
+export const removeSessionStorageValue = removeValue('sessionStorage');

@@ -1,25 +1,16 @@
 import { useEffect } from 'react';
-import { Button, Group, Stack, Text, Textarea, TextInput } from '@mantine/core';
+import { Button, Group, Stack, Textarea, TextInput } from '@mantine/core';
 import { FormErrors, hasLength, isNotEmpty, useForm } from '@mantine/form';
 import {
   readLocalStorageValue,
+  removeLocalStorageValue,
   useDebouncedCallback,
-  useLocalStorage,
   useWindowEvent,
+  writeLocalStorageValue,
 } from '@mantine/hooks';
 import { notifications } from '@mantine/notifications';
-
-interface PostValues {
-  title: string;
-  body: string;
-}
-
-interface Draft {
-  values: PostValues;
-  savedAt: string;
-}
-
-const STORAGE_KEY = 'mantine-form-examples-post-draft';
+import { Draft, PostValues, STORAGE_KEY } from './draft';
+import { DraftStatus } from './DraftStatus';
 
 const initialValues: PostValues = {
   title: '',
@@ -27,13 +18,13 @@ const initialValues: PostValues = {
 };
 
 export function AutosaveLocalStorage() {
-  const [draft, setDraft, removeDraft] = useLocalStorage<Draft | null>({
-    key: STORAGE_KEY,
-    defaultValue: null,
-  });
-
+  // writeLocalStorageValue does not rerender the form, only DraftStatus updates
   const saveDraft = useDebouncedCallback(
-    (values: PostValues) => setDraft({ values, savedAt: new Date().toLocaleTimeString() }),
+    (values: PostValues) =>
+      writeLocalStorageValue<Draft>({
+        key: STORAGE_KEY,
+        value: { values, savedAt: new Date().toLocaleTimeString() },
+      }),
     { delay: 1000, flushOnUnmount: true }
   );
 
@@ -62,7 +53,7 @@ export function AutosaveLocalStorage() {
     // reset triggers onValuesChange, cancel the save it scheduled
     form.reset();
     saveDraft.cancel();
-    removeDraft();
+    removeLocalStorageValue({ key: STORAGE_KEY });
   };
 
   const handleSubmit = (values: PostValues) => {
@@ -97,7 +88,7 @@ export function AutosaveLocalStorage() {
         />
 
         <Group justify="space-between">
-          <Text size="sm">{draft ? `Draft saved at ${draft.savedAt}` : 'No draft saved'}</Text>
+          <DraftStatus />
 
           <Group>
             <Button size="md" variant="default" onClick={discardDraft}>

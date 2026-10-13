@@ -1,8 +1,10 @@
 import {
   createStorage,
   readValue,
+  removeValue,
   UseStorageOptions,
   UseStorageReturnValue,
+  writeValue,
 } from './create-storage';
 
 export function useLocalStorage<T = string>(
@@ -21,3 +23,6 @@ interface ReadStorageValue {
 }
 
 export const readLocalStorageValue: ReadStorageValue = readValue('localStorage');
+
+export const writeLocalStorageValue = writeValue('localStorage', 'use-local-storage');
+export const removeLocalStorageValue = removeValue('localStorage');
