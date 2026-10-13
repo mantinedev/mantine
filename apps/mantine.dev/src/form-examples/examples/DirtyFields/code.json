@@ -1,0 +1,22 @@
+[
+  {
+    "fileName": "DirtyFields.tsx",
+    "language": "tsx",
+    "code": "import { Button, Group, Stack } from '@mantine/core';\nimport { FormErrors, isEmail, isNotEmpty, useForm } from '@mantine/form';\nimport { notifications } from '@mantine/notifications';\nimport { DirtyField } from './DirtyField';\nimport { ProfileValues } from './types';\n\nexport function DirtyFields() {\n  const form = useForm<ProfileValues>({\n    initialValues: {\n      name: 'John Doe',\n      email: 'john@mantine.dev',\n      website: 'https://mantine.dev',\n    },\n    validate: {\n      name: isNotEmpty('Name is required'),\n      email: isEmail('Invalid email'),\n    },\n  });\n\n  const dirty = form.useDirty();\n\n  const handleSubmit = (values: ProfileValues) => {\n    // Saved values become the new baseline for dirty checks\n    form.setInitialValues(values);\n    form.resetDirty(values);\n    notifications.show({\n      title: 'Profile saved',\n      message: `${values.name} profile updated`,\n    });\n  };\n\n  const handleErrors = (errors: FormErrors) => {\n    form.getInputNode(Object.keys(errors)[0])?.focus();\n  };\n\n  return (\n    <form onSubmit={form.onSubmit(handleSubmit, handleErrors)}>\n      <Stack gap={5}>\n        <DirtyField form={form} field=\"name\" label=\"Name\" placeholder=\"John Doe\" />\n        <DirtyField form={form} field=\"email\" label=\"Email\" placeholder=\"john@mantine.dev\" />\n        <DirtyField form={form} field=\"website\" label=\"Website\" placeholder=\"https://mantine.dev\" />\n\n        <Group justify=\"flex-end\">\n          {dirty && (\n            <Button size=\"md\" variant=\"default\" onClick={form.reset}>\n              Reset all\n            </Button>\n          )}\n\n          <Button size=\"md\" type=\"submit\" disabled={!dirty}>\n            Save changes\n          </Button>\n        </Group>\n      </Stack>\n    </form>\n  );\n}\n"
+  },
+  {
+    "fileName": "DirtyField.module.css",
+    "language": "css",
+    "code": ".root {\n  padding: var(--mantine-spacing-xs);\n  margin-inline: calc(var(--mantine-spacing-xs) * -1);\n  transition: background-color 150ms ease;\n\n  &[data-dirty] {\n    background-color: color-mix(in srgb, var(--mantine-primary-color-light) 40%, transparent);\n  }\n}\n"
+  },
+  {
+    "fileName": "DirtyField.tsx",
+    "language": "tsx",
+    "code": "import { ArrowCounterClockwiseIcon } from '@phosphor-icons/react';\nimport { ActionIcon, TextInput, TextInputProps } from '@mantine/core';\nimport { ProfileForm, ProfileValues } from './types';\nimport classes from './DirtyField.module.css';\n\ninterface DirtyFieldProps extends Omit<TextInputProps, 'label' | 'form'> {\n  form: ProfileForm;\n  field: keyof ProfileValues;\n  label: string;\n}\n\nexport function DirtyField({ form, field, label, ...others }: DirtyFieldProps) {\n  const dirty = form.useDirty(field);\n\n  return (\n    <TextInput\n      size=\"md\"\n      label={label}\n      classNames={classes}\n      mod={{ dirty }}\n      rightSectionPointerEvents=\"all\"\n      rightSection={\n        dirty && (\n          <ActionIcon\n            variant=\"subtle\"\n            color=\"gray\"\n            aria-label={`Reset ${label.toLowerCase()}`}\n            onClick={() => form.resetField(field)}\n          >\n            <ArrowCounterClockwiseIcon size={16} />\n          </ActionIcon>\n        )\n      }\n      {...others}\n      {...form.getInputProps(field)}\n    />\n  );\n}\n"
+  },
+  {
+    "fileName": "types.ts",
+    "language": "tsx",
+    "code": "import { UseFormReturnType } from '@mantine/form';\n\nexport interface ProfileValues {\n  name: string;\n  email: string;\n  website: string;\n}\n\nexport type ProfileForm = UseFormReturnType<ProfileValues>;\n"
+  }
+]

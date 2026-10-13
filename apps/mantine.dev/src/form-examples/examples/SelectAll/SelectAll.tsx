@@ -72,7 +72,11 @@ export function SelectAll() {
             }
           />
 
-          <Checkbox.Group size="md" {...form.getInputProps('permissions')}>
+          <Checkbox.Group
+            size="md"
+            errorProps={{ mt: 'xs' }}
+            {...form.getInputProps('permissions')}
+          >
             <Stack gap="sm" mt="sm">
               {items}
             </Stack>

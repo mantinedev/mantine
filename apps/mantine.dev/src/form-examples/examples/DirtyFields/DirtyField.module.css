@@ -1,0 +1,9 @@
+.root {
+  padding: var(--mantine-spacing-xs);
+  margin-inline: calc(var(--mantine-spacing-xs) * -1);
+  transition: background-color 150ms ease;
+
+  &[data-dirty] {
+    background-color: color-mix(in srgb, var(--mantine-primary-color-light) 40%, transparent);
+  }
+}

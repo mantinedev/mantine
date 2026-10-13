@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Button, Group, Stepper } from '@mantine/core';
+import { Button, Group, Stepper, useMatches } from '@mantine/core';
 import { hasLength, isEmail, isNotEmpty, useForm } from '@mantine/form';
 import { notifications } from '@mantine/notifications';
 import { AccountStep } from './AccountStep';
@@ -20,6 +20,7 @@ function createAccount(values: WizardValues) {
 
 export function StepperWizard() {
   const [active, setActive] = useState(0);
+  const mobile = useMatches({ base: true, xs: false });
 
   const form = useForm<WizardValues>({
     initialValues: {
@@ -58,16 +59,16 @@ export function StepperWizard() {
 
   return (
     <form onSubmit={form.onSubmit(handleSubmit)}>
-      <Stepper active={active} size="sm">
-        <Stepper.Step label="Account" description="Username and password">
+      <Stepper active={active} size="sm" labelPosition={mobile ? 'bottom' : 'right'} wrap={!mobile}>
+        <Stepper.Step label="Account" description={!mobile && 'Username and password'}>
           <AccountStep form={form} />
         </Stepper.Step>
 
-        <Stepper.Step label="Profile" description="Name and email">
+        <Stepper.Step label="Profile" description={!mobile && 'Name and email'}>
           <ProfileStep form={form} />
         </Stepper.Step>
 
-        <Stepper.Step label="Done" description="Review and submit">
+        <Stepper.Step label="Done" description={!mobile && 'Review and submit'}>
           <SummaryStep form={form} />
         </Stepper.Step>
       </Stepper>

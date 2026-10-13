@@ -19,6 +19,9 @@ export interface FormExample extends ExampleItem {
 
   /** Removes the max-width limit of the preview, for examples with tables and multi-column layouts */
   fullWidth?: boolean;
+
+  /** Minimum height of the preview area in px, for examples that change height between states */
+  minHeight?: number;
 }
 
 export const FORM_EXAMPLES_GROUPS: ExamplesGroup[] = [
@@ -233,14 +236,15 @@ export const FORM_EXAMPLES_DATA: FormExample[] = [
     name: 'Stepper wizard',
     description: 'Form split across steps, each step validates its own fields',
     type: 'layout',
-    features: ['validate', 'Stepper'],
+    features: ['validate', 'Stepper', 'useMatches'],
+    minHeight: 600,
   },
   {
     id: 'FormInModal',
     name: 'Form in modal',
-    description: 'Form opened in a modal, reset when the modal is closed',
+    description: 'Form opened with useModal hook, reset when the modal is closed',
     type: 'layout',
-    features: ['reset', 'submitting', 'Modal'],
+    features: ['reset', 'submitting', 'useModal', 'Modal'],
   },
   {
     id: 'TabsWithErrorCount',
@@ -255,6 +259,13 @@ export const FORM_EXAMPLES_DATA: FormExample[] = [
     description: 'Unsaved changes bar driven by dirty state',
     type: 'layout',
     features: ['useDirty', 'setInitialValues', 'resetDirty', 'reset'],
+  },
+  {
+    id: 'DirtyFields',
+    name: 'Dirty fields',
+    description: 'Changed fields are highlighted and can be reset one by one',
+    type: 'layout',
+    features: ['useDirty', 'resetField', 'setInitialValues', 'resetDirty'],
   },
   {
     id: 'AccordionSections',

@@ -26,7 +26,7 @@ export function FormExamplesDemo() {
             {metaData.fullDescription || metaData.description}
           </Text>
         </div>
-        <div className={classes.inner}>
+        <div className={classes.inner} style={{ minHeight: metaData.minHeight }}>
           <div
             className={classes.wrapper}
             key={id}

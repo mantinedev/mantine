@@ -1,4 +1,5 @@
-import { ActionBar, Button, Text } from '@mantine/core';
+import { ArrowCounterClockwiseIcon, FloppyDiskIcon } from '@phosphor-icons/react';
+import { ActionBar, ActionIcon, Text, Tooltip } from '@mantine/core';
 
 interface SaveBarProps {
   opened: boolean;
@@ -11,6 +12,7 @@ export function SaveBar({ opened, saving, onDiscard }: SaveBarProps) {
     <ActionBar
       opened={opened}
       withinPortal={false}
+      withBorder
       shadow="md"
       aria-label="Unsaved changes actions"
     >
@@ -20,13 +22,23 @@ export function SaveBar({ opened, saving, onDiscard }: SaveBarProps) {
 
       <ActionBar.Divider />
 
-      <Button size="md" variant="default" onClick={onDiscard} disabled={saving}>
-        Discard
-      </Button>
+      <Tooltip label="Discard changes">
+        <ActionIcon
+          variant="default"
+          size="lg"
+          aria-label="Discard changes"
+          onClick={onDiscard}
+          disabled={saving}
+        >
+          <ArrowCounterClockwiseIcon size={18} />
+        </ActionIcon>
+      </Tooltip>
 
-      <Button size="md" type="submit" loading={saving}>
-        Save
-      </Button>
+      <Tooltip label="Save changes">
+        <ActionIcon size="lg" type="submit" aria-label="Save changes" loading={saving}>
+          <FloppyDiskIcon size={18} />
+        </ActionIcon>
+      </Tooltip>
     </ActionBar>
   );
 }

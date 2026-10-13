@@ -17,6 +17,8 @@ import DateRangeCode from './DateRange/code.json';
 import { DateRange } from './DateRange/DateRange';
 import DependentSelectsCode from './DependentSelects/code.json';
 import { DependentSelects } from './DependentSelects/DependentSelects';
+import DirtyFieldsCode from './DirtyFields/code.json';
+import { DirtyFields } from './DirtyFields/DirtyFields';
 import EditableTableCode from './EditableTable/code.json';
 import { EditableTable } from './EditableTable/EditableTable';
 import EditRecordCode from './EditRecord/code.json';
@@ -142,6 +144,7 @@ export const FORM_EXAMPLES_COMPONENTS = {
   FormInModal: example(FormInModal, FormInModalCode),
   TabsWithErrorCount: example(TabsWithErrorCount, TabsWithErrorCountCode),
   SettingsSaveBar: example(SettingsSaveBar, SettingsSaveBarCode),
+  DirtyFields: example(DirtyFields, DirtyFieldsCode),
   AccordionSections: example(AccordionSections, AccordionSectionsCode),
   EditRecord: example(EditRecord, EditRecordCode),
   AutosaveLocalStorage: example(AutosaveLocalStorage, AutosaveLocalStorageCode),

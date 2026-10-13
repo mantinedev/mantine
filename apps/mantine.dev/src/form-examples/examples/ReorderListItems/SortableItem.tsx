@@ -11,7 +11,9 @@ interface SortableItemProps {
 }
 
 export function SortableItem({ id, index, form }: SortableItemProps) {
-  const { attributes, listeners, setNodeRef, transform, transition } = useSortable({ id });
+  const { attributes, listeners, setNodeRef, transform, transition, isDragging } = useSortable({
+    id,
+  });
 
   return (
     <Group
@@ -19,7 +21,12 @@ export function SortableItem({ id, index, form }: SortableItemProps) {
       gap="xs"
       wrap="nowrap"
       align="flex-start"
-      style={{ transform: CSS.Transform.toString(transform), transition }}
+      style={{
+        transform: CSS.Transform.toString(transform),
+        transition,
+        position: 'relative',
+        zIndex: isDragging ? 1 : undefined,
+      }}
     >
       <ActionIcon
         variant="default"

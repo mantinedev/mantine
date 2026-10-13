@@ -1,7 +1,6 @@
 import { useState } from 'react';
-import { Button, Modal } from '@mantine/core';
+import { Button, useModal } from '@mantine/core';
 import { FormErrors, isEmail, isNotEmpty, useForm } from '@mantine/form';
-import { useDisclosure } from '@mantine/hooks';
 import { notifications } from '@mantine/notifications';
 import { User, UserValues } from './types';
 import { UserForm } from './UserForm';
@@ -19,7 +18,6 @@ function createUser(values: UserValues) {
 }
 
 export function FormInModal() {
-  const [opened, { open, close }] = useDisclosure(false);
   const [users, setUsers] = useState<User[]>([]);
 
   const form = useForm<UserValues>({
@@ -35,11 +33,6 @@ export function FormInModal() {
     },
   });
 
-  const handleClose = () => {
-    form.reset();
-    close();
-  };
-
   const handleSubmit = async (values: UserValues) => {
     const user = await createUser(values);
     setUsers((current) => [...current, user]);
@@ -47,30 +40,30 @@ export function FormInModal() {
       title: 'User added',
       message: `${user.name} added as ${user.role}`,
     });
-    handleClose();
+    modal.close();
   };
 
   const handleErrors = (errors: FormErrors) => {
     form.getInputNode(Object.keys(errors)[0])?.focus();
   };
 
+  // onClose runs for every way the modal is closed, including a successful submit
+  const modal = useModal({
+    title: 'Add user',
+    onClose: form.reset,
+    closeOnClickOutside: !form.submitting,
+    closeOnEscape: !form.submitting,
+    withCloseButton: !form.submitting,
+    children: (
+      <form onSubmit={form.onSubmit(handleSubmit, handleErrors)}>
+        <UserForm form={form} onCancel={() => modal.close()} />
+      </form>
+    ),
+  });
+
   return (
     <>
-      <Modal
-        opened={opened}
-        onClose={handleClose}
-        title="Add user"
-        closeOnClickOutside={!form.submitting}
-        closeOnEscape={!form.submitting}
-        withCloseButton={!form.submitting}
-      >
-        <form onSubmit={form.onSubmit(handleSubmit, handleErrors)}>
-          <UserForm form={form} onCancel={handleClose} />
-        </form>
-      </Modal>
-
-      <Button onClick={open}>Add user</Button>
-
+      <Button onClick={() => modal.open()}>Add user</Button>
       <UsersTable users={users} />
     </>
   );
