@@ -24,6 +24,8 @@ export { useModalsStack } from './use-modals-stack';
 export { useModalStackContext } from './use-modal-stack-context';
 export type { UseModalStackContextReturnType } from './use-modal-stack-context';
 export { useModalContext } from './Modal.context';
+export { useModal, ModalOutlet } from './use-modal';
+export type { UseModalOptions, UseModalReturnValue } from './use-modal';
 
 export type {
   ModalProps,

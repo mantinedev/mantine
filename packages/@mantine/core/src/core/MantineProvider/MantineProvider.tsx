@@ -1,8 +1,14 @@
+import { use } from 'react';
 import { localStorageColorSchemeManager, MantineColorSchemeManager } from './color-scheme-managers';
 import { MantineContext, MantineStylesTransform } from './Mantine.context';
 import { MantineClasses } from './MantineClasses';
 import { CSSVariablesResolver, MantineCssVariables } from './MantineCssVariables';
 import { MantineThemeProvider } from './MantineThemeProvider';
+import {
+  ProviderOutlets,
+  ProviderOutletsContext,
+  useProviderOutletsScopeValue,
+} from './ProviderOutlets';
 import type { MantineColorScheme, MantineThemeOverride } from './theme.types';
 import { useProviderColorScheme } from './use-mantine-color-scheme';
 import { useRespectReduceMotion } from './use-respect-reduce-motion';
@@ -82,6 +88,8 @@ export function MantineProvider({
   env,
   deduplicateInlineStyles = false,
 }: MantineProviderProps) {
+  const parentContext = use(MantineContext);
+  const outletsScope = useProviderOutletsScopeValue();
   const { colorScheme, setColorScheme, clearColorScheme } = useProviderColorScheme({
     defaultColorScheme,
     forceColorScheme,
@@ -119,7 +127,10 @@ export function MantineProvider({
           />
         )}
         {withGlobalClasses && <MantineClasses />}
-        {children}
+        <ProviderOutletsContext value={outletsScope}>
+          {children}
+          {!parentContext && <ProviderOutlets />}
+        </ProviderOutletsContext>
       </MantineThemeProvider>
     </MantineContext>
   );
@@ -139,6 +150,9 @@ export interface HeadlessMantineProviderProps {
 }
 
 export function HeadlessMantineProvider({ children, theme, env }: HeadlessMantineProviderProps) {
+  const parentContext = use(MantineContext);
+  const outletsScope = useProviderOutletsScopeValue();
+
   return (
     <MantineContext
       value={{
@@ -153,7 +167,12 @@ export function HeadlessMantineProvider({ children, theme, env }: HeadlessMantin
         env,
       }}
     >
-      <MantineThemeProvider theme={theme}>{children}</MantineThemeProvider>
+      <MantineThemeProvider theme={theme}>
+        <ProviderOutletsContext value={outletsScope}>
+          {children}
+          {!parentContext && <ProviderOutlets />}
+        </ProviderOutletsContext>
+      </MantineThemeProvider>
     </MantineContext>
   );
 }

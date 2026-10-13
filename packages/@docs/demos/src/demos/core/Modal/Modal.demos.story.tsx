@@ -112,3 +112,28 @@ export const Demo_overlayStack = {
   name: '⭐ Demo: overlayStack',
   render: renderDemo(demos.overlayStack),
 };
+
+export const Demo_useModalHook = {
+  name: '⭐ Demo: useModalHook',
+  render: renderDemo(demos.useModalHook),
+};
+
+export const Demo_useModalOverrides = {
+  name: '⭐ Demo: useModalOverrides',
+  render: renderDemo(demos.useModalOverrides),
+};
+
+export const Demo_useModalTable = {
+  name: '⭐ Demo: useModalTable',
+  render: renderDemo(demos.useModalTable),
+};
+
+export const Demo_useModalConfirm = {
+  name: '⭐ Demo: useModalConfirm',
+  render: renderDemo(demos.useModalConfirm),
+};
+
+export const Demo_useModalShared = {
+  name: '⭐ Demo: useModalShared',
+  render: renderDemo(demos.useModalShared),
+};

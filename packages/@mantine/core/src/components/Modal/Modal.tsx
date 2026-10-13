@@ -14,6 +14,7 @@ import {
 } from './ModalRoot';
 import { ModalStack, ModalStackProps } from './ModalStack';
 import { ModalTitle, ModalTitleProps } from './ModalTitle';
+import { ModalOutlet } from './use-modal/ModalOutlet';
 import classes from './Modal.module.css';
 export type ModalStylesNames = ModalRootStylesNames;
 export type ModalCssVariables = ModalRootCssVariables;
@@ -58,6 +59,7 @@ export type ModalFactory = Factory<{
     Title: typeof ModalTitle;
     CloseButton: typeof ModalCloseButton;
     Stack: typeof ModalStack;
+    Outlet: typeof ModalOutlet;
   };
 }>;
 
@@ -157,6 +159,7 @@ Modal.Footer = ModalFooter;
 Modal.Title = ModalTitle;
 Modal.CloseButton = ModalCloseButton;
 Modal.Stack = ModalStack;
+Modal.Outlet = ModalOutlet;
 
 export namespace Modal {
   export type Props = ModalProps;

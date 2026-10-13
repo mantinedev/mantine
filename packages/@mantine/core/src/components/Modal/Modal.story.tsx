@@ -1,14 +1,21 @@
 import { useEffect, useRef, useState } from 'react';
+import { flushSync } from 'react-dom';
 import { useDisclosure } from '@mantine/hooks';
 import { MantineThemeProvider } from '../../core';
 import { Button } from '../Button';
 import { Card } from '../Card';
+import { Group } from '../Group';
 import { Menu } from '../Menu';
 import { ScrollArea } from '../ScrollArea';
+import { SegmentedControl } from '../SegmentedControl';
 import { Select } from '../Select';
 import { Stack } from '../Stack';
+import { Table } from '../Table';
 import { Tabs } from '../Tabs';
+import { Text } from '../Text';
+import { TextInput } from '../TextInput';
 import { Modal } from './Modal';
+import { useModal } from './use-modal';
 import { useModalStackContext } from './use-modal-stack-context';
 import { useModalsStack } from './use-modals-stack';
 
@@ -583,5 +590,245 @@ export function ThemeOverlayStackScopedStacks() {
     <MantineThemeProvider theme={{ overlayStack: true }}>
       <ScopedStacksContent />
     </MantineThemeProvider>
+  );
+}
+
+function UseModalCounter() {
+  const [count, setCount] = useState(0);
+  const modal = useModal({
+    title: `Count: ${count}`,
+    children: (
+      <Stack>
+        <div>Count inside modal: {count}</div>
+        <Button onClick={() => setCount((c) => c + 1)}>Increment from modal</Button>
+      </Stack>
+    ),
+  });
+
+  return (
+    <Stack align="flex-start">
+      <Button onClick={() => modal.open()}>Open managed modal</Button>
+      <Button variant="default" onClick={() => setCount((c) => c + 1)}>
+        Increment outside ({count})
+      </Button>
+    </Stack>
+  );
+}
+
+export function UseModalHook() {
+  return (
+    <div style={{ padding: 40 }}>
+      <UseModalCounter />
+    </div>
+  );
+}
+
+function UseModalStackedItem({ label }: { label: string }) {
+  const modal = useModal({
+    title: label,
+    children: (
+      <Stack>
+        <Select data={['React', 'Vue', 'Svelte']} label="Framework" />
+        <UseModalStackedButton label={`${label} / nested`} />
+      </Stack>
+    ),
+  });
+
+  return <Button onClick={() => modal.open()}>Open {label}</Button>;
+}
+
+function UseModalStackedButton({ label }: { label: string }) {
+  const modal = useModal({ title: label, children: 'Nested managed modal' });
+  return (
+    <Button variant="default" onClick={() => modal.open({ size: 'xs' })}>
+      Open {label}
+    </Button>
+  );
+}
+
+export function UseModalStacked() {
+  return (
+    <div style={{ padding: 40 }}>
+      <Stack align="flex-start">
+        <UseModalStackedItem label="First" />
+        <UseModalStackedItem label="Second" />
+      </Stack>
+    </div>
+  );
+}
+
+export function UseModalSharedStack() {
+  const [opened, { open, close }] = useDisclosure(false);
+  return (
+    <MantineThemeProvider theme={{ overlayStack: true }}>
+      <div style={{ padding: 40 }}>
+        <Stack align="flex-start">
+          <Button onClick={open}>Open regular modal</Button>
+          <UseModalStackedItem label="Managed" />
+        </Stack>
+        <Modal opened={opened} onClose={close} title="Regular modal">
+          <UseModalStackedButton label="Managed from regular" />
+        </Modal>
+      </div>
+    </MantineThemeProvider>
+  );
+}
+
+export function UseModalExplicitOutlet() {
+  return (
+    <div style={{ padding: 40 }}>
+      <Modal.Outlet />
+      <UseModalStackedItem label="Rendered in Modal.Outlet" />
+    </div>
+  );
+}
+
+const perfUsers = Array.from({ length: 100 }, (_, index) => ({
+  id: index + 1,
+  name: `User ${index + 1}`,
+  email: `user-${index + 1}@mantine.dev`,
+}));
+
+type PerfUser = (typeof perfUsers)[number];
+type PerfMode = 'use-modal' | 'inline' | 'none';
+
+function DeleteModalContent({ user, onClose }: { user: PerfUser; onClose: () => void }) {
+  return (
+    <Stack>
+      <Text size="sm">Are you sure you want to delete {user.name}?</Text>
+      <Button color="red" onClick={onClose}>
+        Delete {user.name}
+      </Button>
+    </Stack>
+  );
+}
+
+function UseModalRow({ user, tick }: { user: PerfUser; tick: number }) {
+  const modal = useModal({
+    title: `Delete ${user.name}`,
+    children: <DeleteModalContent user={user} onClose={() => modal.close()} />,
+  });
+
+  return (
+    <Table.Tr>
+      <Table.Td>{user.name}</Table.Td>
+      <Table.Td>{user.email}</Table.Td>
+      <Table.Td>{tick}</Table.Td>
+      <Table.Td>
+        <Button size="compact-xs" color="red" variant="light" onClick={() => modal.open()}>
+          Delete
+        </Button>
+      </Table.Td>
+    </Table.Tr>
+  );
+}
+
+function InlineModalRow({ user, tick }: { user: PerfUser; tick: number }) {
+  const [opened, { open, close }] = useDisclosure(false);
+
+  return (
+    <Table.Tr>
+      <Table.Td>{user.name}</Table.Td>
+      <Table.Td>{user.email}</Table.Td>
+      <Table.Td>{tick}</Table.Td>
+      <Table.Td>
+        <Modal opened={opened} onClose={close} title={`Delete ${user.name}`}>
+          <DeleteModalContent user={user} onClose={close} />
+        </Modal>
+        <Button size="compact-xs" color="red" variant="light" onClick={open}>
+          Delete
+        </Button>
+      </Table.Td>
+    </Table.Tr>
+  );
+}
+
+function NoModalRow({ user, tick }: { user: PerfUser; tick: number }) {
+  return (
+    <Table.Tr>
+      <Table.Td>{user.name}</Table.Td>
+      <Table.Td>{user.email}</Table.Td>
+      <Table.Td>{tick}</Table.Td>
+      <Table.Td>
+        <Button size="compact-xs" color="red" variant="light">
+          Delete
+        </Button>
+      </Table.Td>
+    </Table.Tr>
+  );
+}
+
+const perfRows: Record<PerfMode, React.FC<{ user: PerfUser; tick: number }>> = {
+  'use-modal': UseModalRow,
+  inline: InlineModalRow,
+  none: NoModalRow,
+};
+
+export function UseModalTablePerf() {
+  const [mode, setMode] = useState<PerfMode>('use-modal');
+  const [tick, setTick] = useState(0);
+  const [query, setQuery] = useState('');
+  const [result, setResult] = useState('');
+  const Row = perfRows[mode];
+  const rows = perfUsers.filter((user) => user.name.toLowerCase().includes(query.toLowerCase()));
+
+  const measure = async (runs: number) => {
+    const durations: number[] = [];
+    for (let i = 0; i < runs; i += 1) {
+      await new Promise((resolve) => requestAnimationFrame(resolve));
+      const start = performance.now();
+      flushSync(() => setTick((t) => t + 1));
+      durations.push(performance.now() - start);
+    }
+    const sorted = [...durations].sort((a, b) => a - b);
+    const median = sorted[Math.floor(sorted.length / 2)];
+    const avg = durations.reduce((a, b) => a + b, 0) / durations.length;
+    setResult(
+      `${mode}: median ${median.toFixed(1)}ms, avg ${avg.toFixed(1)}ms, min ${sorted[0].toFixed(1)}ms, max ${sorted[sorted.length - 1].toFixed(1)}ms (${runs} runs)`
+    );
+  };
+
+  return (
+    <div style={{ padding: 40 }}>
+      <Group mb="md" align="flex-end">
+        <SegmentedControl
+          value={mode}
+          onChange={(value) => setMode(value as PerfMode)}
+          data={[
+            { label: 'useModal per row', value: 'use-modal' },
+            { label: 'Inline Modal per row', value: 'inline' },
+            { label: 'No modal', value: 'none' },
+          ]}
+        />
+        <TextInput
+          label="Filter"
+          placeholder="Type to re-render rows"
+          value={query}
+          onChange={(event) => setQuery(event.currentTarget.value)}
+        />
+        <Button onClick={() => setTick((t) => t + 1)}>Re-render rows</Button>
+        <Button variant="default" onClick={() => measure(20)}>
+          Measure 20 re-renders
+        </Button>
+      </Group>
+      <Text size="sm" mb="md" data-testid="perf-result">
+        {result || 'No measurement yet'}
+      </Text>
+      <Table>
+        <Table.Thead>
+          <Table.Tr>
+            <Table.Th>Name</Table.Th>
+            <Table.Th>Email</Table.Th>
+            <Table.Th>Tick</Table.Th>
+            <Table.Th />
+          </Table.Tr>
+        </Table.Thead>
+        <Table.Tbody>
+          {rows.map((user) => (
+            <Row key={user.id} user={user} tick={tick} />
+          ))}
+        </Table.Tbody>
+      </Table>
+    </div>
   );
 }

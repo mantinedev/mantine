@@ -13,6 +13,7 @@ import { RangeSlider, Slider } from '../Slider';
 import { Stack as MantineStack } from '../Stack';
 import { Tabs } from '../Tabs';
 import { Drawer } from './Drawer';
+import { useDrawer } from './use-drawer';
 import { useDrawerStackContext } from './use-drawer-stack-context';
 
 export default { title: 'Drawer' };
@@ -500,5 +501,66 @@ export function AutoSize() {
         </div>
       </Drawer>
     </div>
+  );
+}
+
+function UseDrawerCounter() {
+  const [count, setCount] = useState(0);
+  const drawer = useDrawer({
+    title: `Count: ${count}`,
+    position: 'right',
+    children: (
+      <MantineStack>
+        <div>Count inside drawer: {count}</div>
+        <Button onClick={() => setCount((c) => c + 1)}>Increment from drawer</Button>
+        <UseDrawerNested />
+      </MantineStack>
+    ),
+  });
+
+  return (
+    <MantineStack align="flex-start">
+      <Button onClick={() => drawer.open()}>Open managed drawer</Button>
+      <Button variant="default" onClick={() => drawer.open({ position: 'bottom', size: 'auto' })}>
+        Open at the bottom with auto size
+      </Button>
+      <Button variant="default" onClick={() => setCount((c) => c + 1)}>
+        Increment outside ({count})
+      </Button>
+    </MantineStack>
+  );
+}
+
+function UseDrawerNested() {
+  const drawer = useDrawer({ title: 'Nested', children: 'Nested managed drawer', size: 'xs' });
+  return (
+    <Button variant="default" onClick={() => drawer.open()}>
+      Open nested drawer
+    </Button>
+  );
+}
+
+export function UseDrawerHook() {
+  return (
+    <div style={{ padding: 40 }}>
+      <UseDrawerCounter />
+    </div>
+  );
+}
+
+export function UseDrawerSharedStack() {
+  const [opened, { open, close }] = useDisclosure(false);
+  return (
+    <MantineThemeProvider theme={{ overlayStack: true }}>
+      <div style={{ padding: 40 }}>
+        <MantineStack align="flex-start">
+          <Button onClick={open}>Open regular drawer</Button>
+          <UseDrawerNested />
+        </MantineStack>
+        <Drawer opened={opened} onClose={close} title="Regular drawer">
+          <UseDrawerNested />
+        </Drawer>
+      </div>
+    </MantineThemeProvider>
   );
 }

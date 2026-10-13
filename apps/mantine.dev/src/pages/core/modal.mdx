@@ -8,6 +8,73 @@ export default Layout(MDX_DATA.Modal);
 
 <Demo data={ModalDemos.usage} />
 
+## useModal hook
+
+`useModal` hook opens a modal from any component without rendering `Modal` in JSX.
+It accepts [Modal](/core/modal) props and returns an object with `open`, `close`, `toggle`
+and `isOpened` functions. The modal is rendered by `MantineProvider`, and all props,
+including `children`, are updated every time the component that called the hook renders:
+
+<Demo data={ModalDemos.useModalHook} />
+
+`modal.open` accepts props that are applied on top of the hook options until the next `modal.open` call.
+Use it to open the same modal with different content:
+
+<Demo data={ModalDemos.useModalOverrides} />
+
+`useModal` can be called in list items, for example, to render a delete confirmation for each table row.
+Closed modals are not updated when their parent component re-renders, so a table with hundreds of rows,
+each with its own `useModal`, re-renders at about the same cost as a table without modals:
+
+<Demo data={ModalDemos.useModalTable} />
+
+`useModal` accepts the following options in addition to `Modal` props:
+
+- `id` – modal id, used as `id` and `stackId` of the rendered `Modal`, generated automatically if not set
+- `defaultOpened` – initial opened state, `false` by default
+- `onOpen` – called when the modal is opened
+- `onClose` – called when the modal is closed with `modal.close()`, close button, overlay click or Escape key
+
+Modals opened with `useModal` are rendered in a [Modal.Stack](#modalstack), or join the
+[shared stack](#shared-stack) when `theme.overlayStack` is set. Modal content is rendered
+inside `MantineProvider` and does not have access to contexts provided below it.
+Render `Modal.Outlet` anywhere in your application to render managed modals inside
+the providers your modal content depends on:
+
+```tsx
+import { MantineProvider, Modal } from '@mantine/core';
+
+function App() {
+  return (
+    <MantineProvider>
+      <RouterProvider>
+        <QueryClientProvider>
+          {/* Your app here */}
+          <Modal.Outlet />
+        </QueryClientProvider>
+      </RouterProvider>
+    </MantineProvider>
+  );
+}
+```
+
+## Shared modal
+
+To open the same modal from different parts of the application, for example, an authentication
+modal, call `useModal` once in a provider component and share the returned object with context.
+`Modal.Outlet` rendered inside the provider keeps the modal content within your application
+providers:
+
+<Demo data={ModalDemos.useModalShared} />
+
+## Confirm modal
+
+`useModal` is a building block for application specific modals. The example below creates a
+`useConfirmModal` hook that returns a function resolving to `true` when the user confirms and to
+`false` when the modal is canceled or closed:
+
+<Demo data={ModalDemos.useModalConfirm} />
+
 ## Center modal vertically
 
 <Demo data={ModalDemos.centered} />

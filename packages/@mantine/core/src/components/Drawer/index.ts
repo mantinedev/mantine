@@ -19,6 +19,8 @@ export { DrawerFooter } from './DrawerFooter';
 export { DrawerHeader } from './DrawerHeader';
 export { DrawerOverlay } from './DrawerOverlay';
 export { DrawerTitle } from './DrawerTitle';
+export { useDrawer, DrawerOutlet } from './use-drawer';
+export type { UseDrawerOptions, UseDrawerReturnValue } from './use-drawer';
 export { DrawerStack, DrawerStackContext } from './DrawerStack';
 export { useDrawerContext } from './Drawer.context';
 export { useDrawersStack } from './use-drawers-stack';

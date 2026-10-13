@@ -20,3 +20,8 @@ export { stackSizes } from './Modal.demo.stackSizes';
 export { transitionEnd } from './Modal.demo.transitionEnd';
 export { footer } from './Modal.demo.footer';
 export { stickySections } from './Modal.demo.stickySections';
+export { useModalHook } from './Modal.demo.useModal';
+export { useModalOverrides } from './Modal.demo.useModalOverrides';
+export { useModalTable } from './Modal.demo.useModalTable';
+export { useModalConfirm } from './Modal.demo.useModalConfirm';
+export { useModalShared } from './Modal.demo.useModalShared';

@@ -22,3 +22,4 @@ export { swipe } from './Drawer.demo.swipe';
 export { noSwipe } from './Drawer.demo.noSwipe';
 export { snapPoints } from './Drawer.demo.snapPoints';
 export { handle } from './Drawer.demo.handle';
+export { useDrawerHook } from './Drawer.demo.useDrawer';

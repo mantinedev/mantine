@@ -233,6 +233,23 @@ The prop accepts a key of `theme.breakpoints`, any CSS length or a number of pix
 viewport changes while the component is opened. [Drawer](/core/drawer) now also supports the
 `fullScreen` prop.
 
+## useModal and useDrawer hooks
+
+New `useModal` and `useDrawer` hooks open a [Modal](/core/modal/#usemodal-hook) or a
+[Drawer](/core/drawer/#usedrawer-hook) from any component without rendering the component in JSX.
+They accept `Modal`/`Drawer` props, return `open`, `close`, `toggle` and `isOpened` functions and
+keep the content in sync with the component that called the hook – title, children and other props
+are updated every time the component renders. Managed modals and drawers are rendered by
+`MantineProvider` inside a stack, or join the shared stack when `theme.overlayStack` is set.
+Render `Modal.Outlet`/`Drawer.Outlet` to place them inside the providers your content depends on:
+
+<Demo data={ModalDemos.useModalHook} />
+
+`open` accepts props that are applied on top of the hook options, use it to open the same
+drawer or modal with different content or settings:
+
+<Demo data={DrawerDemos.useDrawerHook} />
+
 ## Alert redesign
 
 [Alert](/core/alert) has a new look:

@@ -14,6 +14,7 @@ import {
 } from './DrawerRoot';
 import { DrawerStack } from './DrawerStack';
 import { DrawerTitle } from './DrawerTitle';
+import { DrawerOutlet } from './use-drawer/DrawerOutlet';
 import classes from './Drawer.module.css';
 
 export type DrawerStylesNames = DrawerRootStylesNames;
@@ -57,6 +58,7 @@ export type DrawerFactory = Factory<{
     Title: typeof DrawerTitle;
     CloseButton: typeof DrawerCloseButton;
     Stack: typeof DrawerStack;
+    Outlet: typeof DrawerOutlet;
   };
 }>;
 
@@ -138,3 +140,4 @@ Drawer.Footer = DrawerFooter;
 Drawer.Title = DrawerTitle;
 Drawer.CloseButton = DrawerCloseButton;
 Drawer.Stack = DrawerStack;
+Drawer.Outlet = DrawerOutlet;

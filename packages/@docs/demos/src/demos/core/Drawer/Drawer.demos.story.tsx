@@ -122,3 +122,8 @@ export const Demo_handle = {
   name: '⭐ Demo: handle',
   render: renderDemo(demos.handle),
 };
+
+export const Demo_useDrawerHook = {
+  name: '⭐ Demo: useDrawerHook',
+  render: renderDemo(demos.useDrawerHook),
+};
