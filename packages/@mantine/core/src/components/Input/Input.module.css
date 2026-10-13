@@ -140,8 +140,12 @@
     }
 
     --input-color: var(--mantine-color-error);
-    --input-placeholder-color: var(--mantine-color-error);
+    --input-placeholder-color: color-mix(in srgb, var(--mantine-color-error), transparent 60%);
     --input-section-color: var(--mantine-color-error);
+  }
+
+  [data-mantine-color-scheme='dark'] &[data-error] {
+    --input-placeholder-color: color-mix(in srgb, var(--mantine-color-error), transparent 40%);
   }
 
   [data-mantine-color-scheme] &[data-success] {
@@ -346,10 +350,6 @@
 /* ----- Input.Placeholder ----- */
 .placeholder {
   color: var(--input-placeholder-color, var(--mantine-color-placeholder));
-
-  .wrapper[data-error] & {
-    --input-placeholder-color: var(--input-color, var(--mantine-color-placeholder));
-  }
 }
 
 /* ----- Input.Wrapper ----- */
