@@ -172,6 +172,55 @@ jobs:
         id: deployment
         uses: actions/deploy-pages@368f82528645a54fb793d4d04e342629a3f51346 # v5.0.1
 
+  help_changes:
+    needs: prepare
+    if: >-
+      (needs.prepare.outputs.release_type == 'patch' ||
+      needs.prepare.outputs.release_type == 'minor_major') && !inputs.package
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    outputs:
+      changed: ${{ steps.detect.outputs.changed }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+        with:
+          ref: ${{ github.sha }}
+          fetch-depth: 0
+          filter: blob:none
+      - name: Detect help.mantine.dev changes since previous release
+        id: detect
+        env:
+          VERSION: ${{ needs.prepare.outputs.version }}
+        run: |
+          set -euo pipefail
+          PREVIOUS=$(git tag --merged HEAD | grep -E '^[0-9]+\.[0-9]+\.[0-9]+$' | grep -vx "$VERSION" | sort -V | tail -1 || true)
+          if [ -z "$PREVIOUS" ]; then
+            echo "No previous release tag found, deploying help.mantine.dev"
+            echo "changed=true" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+          CHANGED_FILES=$(git diff --name-only "$PREVIOUS" HEAD -- apps/help.mantine.dev)
+          if [ -n "$CHANGED_FILES" ]; then
+            echo "help.mantine.dev changed since $PREVIOUS:"
+            echo "$CHANGED_FILES"
+            echo "changed=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "help.mantine.dev unchanged since $PREVIOUS, skipping deploy"
+            echo "changed=false" >> "$GITHUB_OUTPUT"
+          fi
+
+  help:
+    needs: [prepare, publish, help_changes]
+    if: >-
+      needs.publish.result == 'success' &&
+      needs.help_changes.outputs.changed == 'true' && !inputs.package
+    permissions:
+      contents: read
+    uses: ./.github/workflows/deploy-help-mantine-dev.yml
+    secrets: inherit
+
   announce:
     needs: [prepare, publish]
     if: >-
