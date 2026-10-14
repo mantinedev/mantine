@@ -209,6 +209,30 @@ export const COMBOBOX_EXAMPLES_DATA: ComboboxExample[] = [
     type: 'dropdown',
   },
   {
+    id: 'DropdownFloatingHeight',
+    name: 'Fit dropdown to viewport',
+    description: 'Dropdown grows to fill the available viewport height',
+    fullDescription:
+      'Set floatingHeight="viewport" to make the dropdown fill the space below the input instead of flipping. The options list is bounded with the --combobox-floating-options-max-height CSS variable.',
+    type: 'dropdown',
+  },
+  {
+    id: 'SelectCategoryFilter',
+    name: 'Category filter',
+    description: 'Switch options category with controls in the dropdown header',
+    fullDescription:
+      'SegmentedControl in the dropdown header filters options by category. Focus stays on the input when it is clicked, Tab moves focus to the control, and Left and Right arrow keys switch categories without leaving the input. Changes are announced with a live region.',
+    type: 'dropdown',
+  },
+  {
+    id: 'SelectOptionDetails',
+    name: 'Option details panel',
+    description: 'Preview details of the highlighted option next to the list',
+    fullDescription:
+      'The panel subscribes to the highlighted option with store.subscribeToSelectedOptionId and shows details of the option under the mouse or keyboard cursor. When nothing is highlighted, the panel shows the selected value.',
+    type: 'dropdown',
+  },
+  {
     id: 'DropdownAnimation',
     name: 'Dropdown animation',
     description: 'Dropdown with open/close animation',
@@ -289,6 +313,14 @@ export const COMBOBOX_EXAMPLES_DATA: ComboboxExample[] = [
     type: 'multiselect',
   },
   {
+    id: 'MultiSelectSelectAll',
+    name: 'Select all',
+    description: 'Header checkbox that selects or clears all visible options',
+    fullDescription:
+      'The checkbox in the dropdown header applies to the options that match the current search and shows an indeterminate state when only some of them are selected. The header is reachable with Tab, so the action works with the keyboard as well.',
+    type: 'multiselect',
+  },
+  {
     id: 'SelectList',
     name: 'Inline options list',
     description: 'Inline list with checkboxes',
@@ -298,6 +330,14 @@ export const COMBOBOX_EXAMPLES_DATA: ComboboxExample[] = [
     id: 'TransferList',
     name: 'Transfer list',
     description: 'Transfer list with search',
+    type: 'other',
+  },
+  {
+    id: 'MobileBottomSheet',
+    name: 'Mobile bottom sheet',
+    description: 'Dropdown on desktop, bottom Drawer on small screens',
+    fullDescription:
+      'Below the sm breakpoint the options are rendered inside a bottom Drawer with a search input instead of the dropdown. Combobox.EventsTarget keeps keyboard navigation working inside the drawer. Resize the window to see both modes.',
     type: 'other',
   },
   {

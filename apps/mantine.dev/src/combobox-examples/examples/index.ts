@@ -47,10 +47,14 @@ import MaxDisplayedItemsCode from './MaxDisplayedItems/code.json';
 import { MaxDisplayedItems } from './MaxDisplayedItems/MaxDisplayedItems';
 import MaxSelectedItemsCode from './MaxSelectedItems/code.json';
 import { MaxSelectedItems } from './MaxSelectedItems/MaxSelectedItems';
+import MobileBottomSheetCode from './MobileBottomSheet/code.json';
+import { MobileBottomSheet } from './MobileBottomSheet/MobileBottomSheet';
 import MultiSelectCheckboxCode from './MultiSelectCheckbox/code.json';
 import { MultiSelectCheckbox } from './MultiSelectCheckbox/MultiSelectCheckbox';
 import MultiSelectCreatableCode from './MultiSelectCreatable/code.json';
 import { MultiSelectCreatable } from './MultiSelectCreatable/MultiSelectCreatable';
+import MultiSelectSelectAllCode from './MultiSelectSelectAll/code.json';
+import { MultiSelectSelectAll } from './MultiSelectSelectAll/MultiSelectSelectAll';
 import MultiSelectValueRendererCode from './MultiSelectValueRenderer/code.json';
 import { MultiSelectValueRenderer } from './MultiSelectValueRenderer/MultiSelectValueRenderer';
 import ReorderablePillsMultiSelectCode from './ReorderablePillsMultiSelect/code.json';
@@ -63,6 +67,8 @@ import SelectActiveCode from './SelectActive/code.json';
 import { SelectActive } from './SelectActive/SelectActive';
 import SelectAsyncCode from './SelectAsync/code.json';
 import { SelectAsync } from './SelectAsync/SelectAsync';
+import SelectCategoryFilterCode from './SelectCategoryFilter/code.json';
+import { SelectCategoryFilter } from './SelectCategoryFilter/SelectCategoryFilter';
 import SelectClearableCode from './SelectClearable/code.json';
 import { SelectClearable } from './SelectClearable/SelectClearable';
 import SelectCreatableCode from './SelectCreatable/code.json';
@@ -85,6 +91,8 @@ import SelectListCode from './SelectList/code.json';
 import { SelectList } from './SelectList/SelectList';
 import SelectOptionComponentCode from './SelectOptionComponent/code.json';
 import { SelectOptionComponent } from './SelectOptionComponent/SelectOptionComponent';
+import SelectOptionDetailsCode from './SelectOptionDetails/code.json';
+import { SelectOptionDetails } from './SelectOptionDetails/SelectOptionDetails';
 import SelectOptionOnHoverCode from './SelectOptionOnHover/code.json';
 import { SelectOptionOnHover } from './SelectOptionOnHover/SelectOptionOnHover';
 import TransferListCode from './TransferList/code.json';
@@ -379,6 +387,25 @@ export const COMBOBOX_EXAMPLES_COMPONENTS: Record<string, ComboboxExampleCompone
   TreeSelectVirtualized: {
     component: TreeSelectVirtualized,
     code: TreeSelectVirtualizedCode as ComboboxExampleComponent['code'],
+  },
+  MultiSelectSelectAll: {
+    component: MultiSelectSelectAll,
+    code: MultiSelectSelectAllCode as ComboboxExampleComponent['code'],
+  },
+
+  SelectCategoryFilter: {
+    component: SelectCategoryFilter,
+    code: SelectCategoryFilterCode as ComboboxExampleComponent['code'],
+  },
+
+  SelectOptionDetails: {
+    component: SelectOptionDetails,
+    code: SelectOptionDetailsCode as ComboboxExampleComponent['code'],
+  },
+
+  MobileBottomSheet: {
+    component: MobileBottomSheet,
+    code: MobileBottomSheetCode as ComboboxExampleComponent['code'],
   },
 };
 

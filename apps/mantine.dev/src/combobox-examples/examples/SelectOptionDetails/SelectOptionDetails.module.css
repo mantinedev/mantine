@@ -1,0 +1,16 @@
+.body {
+  display: flex;
+  align-items: stretch;
+}
+
+.options {
+  flex: 1;
+  min-width: 0;
+}
+
+.details {
+  width: 200px;
+  flex: 0 0 200px;
+  padding: var(--mantine-spacing-xs) var(--mantine-spacing-sm);
+  border-left: 1px solid light-dark(var(--mantine-color-gray-3), var(--mantine-color-dark-4));
+}
