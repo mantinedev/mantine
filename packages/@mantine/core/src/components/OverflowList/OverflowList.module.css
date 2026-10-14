@@ -3,4 +3,8 @@
   flex-wrap: wrap;
   contain: layout style;
   gap: var(--ol-gap, var(--mantine-spacing-xs));
+
+  &:where([data-measuring]) > * {
+    flex-grow: 0 !important;
+  }
 }

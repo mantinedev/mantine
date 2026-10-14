@@ -1,9 +1,9 @@
-import { Badge, Center, HoverCard, OverflowList } from '@mantine/core';
+import { Badge, HoverCard, OverflowList } from '@mantine/core';
 import { MantineDemo } from '@mantinex/demo';
 import { data, dataCode } from './_data';
 
 const code = `
-import { Badge, Center, HoverCard, OverflowList } from '@mantine/core';
+import { Badge, HoverCard, OverflowList } from '@mantine/core';
 import { data } from './data';
 
 function Demo() {
@@ -12,20 +12,20 @@ function Demo() {
       <OverflowList
         data={data}
         gap={4}
-        renderItem={(item, index) => <Badge key={index}>{item}</Badge>}
+        renderItem={(item) => <Badge>{item}</Badge>}
         renderOverflow={(items) => (
-          <Center>
-            <HoverCard>
-              <HoverCard.Target>
-                <Badge>+{items.length} more</Badge>
-              </HoverCard.Target>
-              <HoverCard.Dropdown>
-                {items.map((item, index) => (
-                  <div key={index}>{item}</div>
-                ))}
-              </HoverCard.Dropdown>
-            </HoverCard>
-          </Center>
+          <HoverCard>
+            <HoverCard.Target>
+              <Badge component="button" type="button">
+                +{items.length} more
+              </Badge>
+            </HoverCard.Target>
+            <HoverCard.Dropdown>
+              {items.map((item, index) => (
+                <div key={index}>{item}</div>
+              ))}
+            </HoverCard.Dropdown>
+          </HoverCard>
         )}
       />
     </div>
@@ -39,20 +39,20 @@ function Demo() {
       <OverflowList
         data={data}
         gap={4}
-        renderItem={(item, index) => <Badge key={index}>{item}</Badge>}
+        renderItem={(item) => <Badge>{item}</Badge>}
         renderOverflow={(items) => (
-          <Center>
-            <HoverCard>
-              <HoverCard.Target>
-                <Badge>+{items.length} more</Badge>
-              </HoverCard.Target>
-              <HoverCard.Dropdown>
-                {items.map((item, index) => (
-                  <div key={index}>{item}</div>
-                ))}
-              </HoverCard.Dropdown>
-            </HoverCard>
-          </Center>
+          <HoverCard>
+            <HoverCard.Target>
+              <Badge component="button" type="button">
+                +{items.length} more
+              </Badge>
+            </HoverCard.Target>
+            <HoverCard.Dropdown>
+              {items.map((item, index) => (
+                <div key={index}>{item}</div>
+              ))}
+            </HoverCard.Dropdown>
+          </HoverCard>
         )}
       />
     </div>

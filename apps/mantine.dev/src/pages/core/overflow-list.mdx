@@ -8,6 +8,10 @@ export default Layout(MDX_DATA.OverflowList);
 
 <Demo data={OverflowListDemos.usage} />
 
+## Width
+
+The list fits items into the width it gets from its parent. Inside a flex row, for example [Group](/core/group), set `flex={1}` on the list. Inside an absolutely positioned element, set a width on that element. Otherwise the list does not show more items when more space becomes available.
+
 ## Data type
 
 `data` prop accepts an array of any type. By default, the type is inferred from the array.
@@ -20,7 +24,7 @@ function Demo() {
   return (
     <OverflowList<{ value: string; label: string }>
       data={[{ value: '1', label: 'Item 1' }]}
-      renderItem={(item) => <div key={item.value}>{item.label}</div>}
+      renderItem={(item) => <div>{item.label}</div>}
       renderOverflow={(items) => <div>+{items.length} more</div>}
     />
   );
@@ -39,6 +43,25 @@ Set `maxVisibleItems` to limit the number of visible items:
 
 <Demo data={OverflowListDemos.maxVisibleItems} />
 
+## Item keys
+
+The visible items are recalculated when `data` changes. For object items, set `getItemKey` to return a unique key, otherwise reordering items without changing the array length is not detected:
+
+```tsx
+import { OverflowList } from '@mantine/core';
+
+function Demo() {
+  return (
+    <OverflowList
+      data={[{ id: '1', label: 'Item 1' }]}
+      getItemKey={(item) => item.id}
+      renderItem={(item) => <div>{item.label}</div>}
+      renderOverflow={(items) => <div>+{items.length} more</div>}
+    />
+  );
+}
+```
+
 ## Collapse from
 
 By default, items are collapsed from the end. Set `collapseFrom="start"` to collapse
@@ -49,6 +72,6 @@ items from the beginning, for example to keep the last breadcrumbs visible:
 ## Example: overflow with hover card
 
 `renderOverflow` can return any React node, for example a [HoverCard](/core/hover-card)
-with the collapsed items:
+with the collapsed items. Render the target as a button so keyboard users can reach the hidden items:
 
 <Demo data={OverflowListDemos.hoverCard} />

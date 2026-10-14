@@ -14,7 +14,7 @@ function Demo() {
         gap={4}
         maxRows={2}
         renderOverflow={(items) => <Badge>+{items.length} more</Badge>}
-        renderItem={(item, index) => <Badge key={index}>{item}</Badge>}
+        renderItem={(item) => <Badge>{item}</Badge>}
       />
     </div>
   );
@@ -29,7 +29,7 @@ function Demo() {
         gap={4}
         maxRows={2}
         renderOverflow={(items) => <Badge>+{items.length} more</Badge>}
-        renderItem={(item, index) => <Badge key={index}>{item}</Badge>}
+        renderItem={(item) => <Badge>{item}</Badge>}
       />
     </div>
   );
