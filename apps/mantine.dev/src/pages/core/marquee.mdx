@@ -40,19 +40,20 @@ Combine several `Marquee` components with different directions:
 ## Fade edges
 
 By default, the edges are faded with a gradient. Use `fadeEdges`, `fadeEdgeColor` and
-`fadeEdgeSize` props to change or disable it:
+`fadeEdgeSize` props to change or disable it. When `Marquee` is placed on a colored
+surface, set `fadeEdgeColor` to the surface color:
 
 <Demo data={MarqueeDemos.fadeEdges} />
 
 ## Customization
 
-Use `reverse`, `repeat`, `duration` and `gap` props to change the direction, speed and
-spacing of the animation:
+Use `reverse`, `duration` and `gap` props to change the direction, speed and spacing of the
+animation. `repeat` sets the minimum number of copies, more are added to fill wide containers:
 
 <Demo data={MarqueeDemos.configurator} />
 
 ## Accessibility
 
-Only the first copy of children is exposed to assistive technologies, repeated copies are
-hidden. The animation stops when the user prefers reduced motion and `respectReducedMotion`
-is enabled on the [theme](/theming/theme-object/).
+Only the first copy of children is exposed to assistive technologies. Repeated copies are
+hidden and skipped by the Tab key, but stay clickable. The animation stops when the user
+prefers reduced motion and `respectReducedMotion` is enabled on the [theme](/theming/theme-object/).

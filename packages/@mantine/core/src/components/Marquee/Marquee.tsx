@@ -1,3 +1,5 @@
+import { useEffect, useRef, useState } from 'react';
+import { useMergedRef } from '@mantine/hooks';
 import {
   Box,
   BoxProps,
@@ -11,6 +13,7 @@ import {
   useProps,
   useStyles,
 } from '../../core';
+import { useDisableCopiesFocus } from './use-disable-copies-focus';
 import classes from './Marquee.module.css';
 
 export type MarqueeStylesNames = 'root' | 'content' | 'group';
@@ -40,7 +43,7 @@ export interface MarqueeProps
   /** Scroll orientation @default 'horizontal' @category appearance */
   orientation?: 'horizontal' | 'vertical';
 
-  /** Number of times children are repeated inline for seamless scrolling @default 4 @category appearance */
+  /** Minimum number of times children are repeated inline, more copies are rendered when needed to fill the container @default 4 @category appearance */
   repeat?: number;
 
   /** Animation duration in ms @default 100000 @category appearance */
@@ -59,11 +62,16 @@ export interface MarqueeProps
   fadeEdgeSize?: string;
 }
 
+export interface MarqueeStylesCtx {
+  copiesCount: number;
+}
+
 export type MarqueeFactory = Factory<{
   props: MarqueeProps;
   ref: HTMLDivElement;
   stylesNames: MarqueeStylesNames;
   vars: MarqueeCssVariables;
+  ctx: MarqueeStylesCtx;
 }>;
 
 const defaultProps = {
@@ -74,12 +82,37 @@ const defaultProps = {
   playing: true,
 } satisfies Partial<MarqueeProps>;
 
+function normalizeRepeat(repeat: number | undefined) {
+  return Number.isFinite(repeat) ? Math.max(1, Math.floor(repeat!)) : defaultProps.repeat;
+}
+
+function getSizes(root: HTMLElement, content: HTMLElement, vertical: boolean) {
+  const group = content.firstElementChild as HTMLElement | null;
+  const groupSize = group ? (vertical ? group.offsetHeight : group.offsetWidth) : 0;
+  if (groupSize <= 0) {
+    return null;
+  }
+
+  const rootStyles = window.getComputedStyle(root);
+  const contentStyles = window.getComputedStyle(content);
+  const padding = vertical
+    ? (parseFloat(rootStyles.paddingTop) || 0) + (parseFloat(rootStyles.paddingBottom) || 0)
+    : (parseFloat(rootStyles.paddingLeft) || 0) + (parseFloat(rootStyles.paddingRight) || 0);
+  const gap = parseFloat(vertical ? contentStyles.rowGap : contentStyles.columnGap) || 0;
+
+  return {
+    available: (vertical ? root.clientHeight : root.clientWidth) - padding,
+    content: vertical ? content.offsetHeight : content.offsetWidth,
+    step: groupSize + gap,
+  };
+}
+
 const varsResolver = createVarsResolver<MarqueeFactory>(
-  (_, { duration, gap, repeat, fadeEdgeColor, fadeEdgeSize }) => ({
+  (_, { duration, gap, fadeEdgeColor, fadeEdgeSize }, { copiesCount }) => ({
     root: {
       '--marquee-duration': `${duration}ms`,
       '--marquee-gap': getSpacing(gap),
-      '--marquee-repeat': (repeat ?? 4).toString(),
+      '--marquee-repeat': copiesCount.toString(),
       '--marquee-fade-color': fadeEdgeColor,
       '--marquee-fade-size': fadeEdgeSize,
     },
@@ -108,13 +141,62 @@ export const Marquee = factory<MarqueeFactory>((_props) => {
     fadeEdgeSize,
     mod,
     attributes,
+    ref,
     ...others
   } = props;
+
+  const rootRef = useRef<HTMLDivElement>(null);
+  const contentRef = useRef<HTMLDivElement>(null);
+  const mergedRef = useMergedRef(rootRef, ref);
+  const [measuredCount, setMeasuredCount] = useState(0);
+  const copiesCount = Math.max(normalizeRepeat(repeat), measuredCount);
+
+  useEffect(() => {
+    const root = rootRef.current;
+    const content = contentRef.current;
+    if (!root || !content || typeof ResizeObserver === 'undefined') {
+      return undefined;
+    }
+
+    const vertical = orientation === 'vertical';
+    let previous: { count: number; fillsRoot: boolean } | null = null;
+    let sizedByContent = false;
+
+    const observer = new ResizeObserver(() => {
+      const sizes = getSizes(root, content, vertical);
+      if (!sizes) {
+        previous = null;
+        sizedByContent = false;
+        setMeasuredCount(0);
+        return;
+      }
+
+      const count = content.childElementCount;
+      const fillsRoot = Math.abs(sizes.available - sizes.content) <= 1;
+      sizedByContent =
+        fillsRoot && (sizedByContent || (!!previous?.fillsRoot && previous.count < count));
+      previous = { count, fillsRoot };
+
+      setMeasuredCount((current) =>
+        sizedByContent ? current : Math.ceil(sizes.available / sizes.step) + 1
+      );
+    });
+    observer.observe(root);
+    observer.observe(content);
+    if (content.firstElementChild) {
+      observer.observe(content.firstElementChild);
+    }
+
+    return () => observer.disconnect();
+  }, [orientation]);
+
+  useDisableCopiesFocus(contentRef);
 
   const getStyles = useStyles<MarqueeFactory>({
     name: 'Marquee',
     classes,
     props,
+    stylesCtx: { copiesCount },
     className,
     style,
     classNames,
@@ -125,26 +207,22 @@ export const Marquee = factory<MarqueeFactory>((_props) => {
     varsResolver,
   });
 
-  const repeatedChildren = Array(repeat)
+  const repeatedChildren = Array(copiesCount)
     .fill(0)
     .map((_, index) => (
-      <div
-        key={index}
-        {...getStyles('group')}
-        aria-hidden={index > 0 || undefined}
-        inert={index > 0 || undefined}
-      >
+      <div key={index} {...getStyles('group')} aria-hidden={index > 0 || undefined}>
         {children}
       </div>
     ));
 
   return (
     <Box
+      ref={mergedRef}
       {...getStyles('root')}
       mod={[{ orientation, reverse, pauseOnHover, paused: !playing, 'fade-edges': fadeEdges }, mod]}
       {...others}
     >
-      <div {...getStyles('content')} data-reduce-motion>
+      <div ref={contentRef} {...getStyles('content')} data-reduce-motion>
         {repeatedChildren}
       </div>
     </Box>

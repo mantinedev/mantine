@@ -1,9 +1,9 @@
-import { Marquee, Stack, Text } from '@mantine/core';
+import { Box, Marquee, Stack, Text } from '@mantine/core';
 import { MantineDemo } from '@mantinex/demo';
 import { MantineLogo } from '@mantinex/mantine-logo';
 
 const code = `
-import { Marquee, Stack, Text } from '@mantine/core';
+import { Box, Marquee, Stack, Text } from '@mantine/core';
 import { MantineLogo } from '@mantinex/mantine-logo';
 
 function Demo() {
@@ -31,12 +31,14 @@ function Demo() {
 
       <div>
         <Text size="sm" mb="xs">Custom fade color</Text>
-        <Marquee fadeEdgeColor="var(--mantine-color-blue-light)">
-          <MantineLogo width={80} type="full" color="violet" />
-          <MantineLogo width={80} type="full" color="grape" />
-          <MantineLogo width={80} type="full" color="pink" />
-          <MantineLogo width={80} type="full" color="red" />
-        </Marquee>
+        <Box bg="var(--mantine-color-default-hover)" p="md" bdrs="md">
+          <Marquee fadeEdgeColor="var(--mantine-color-default-hover)">
+            <MantineLogo width={80} type="full" color="violet" />
+            <MantineLogo width={80} type="full" color="grape" />
+            <MantineLogo width={80} type="full" color="pink" />
+            <MantineLogo width={80} type="full" color="red" />
+          </Marquee>
+        </Box>
       </div>
 
       <div>
@@ -84,12 +86,14 @@ function Demo() {
         <Text size="sm" mb="xs">
           Custom fade color
         </Text>
-        <Marquee fadeEdgeColor="var(--mantine-color-blue-light)">
-          <MantineLogo width={80} type="full" color="violet" />
-          <MantineLogo width={80} type="full" color="grape" />
-          <MantineLogo width={80} type="full" color="pink" />
-          <MantineLogo width={80} type="full" color="red" />
-        </Marquee>
+        <Box bg="var(--mantine-color-default-hover)" p="md" bdrs="md">
+          <Marquee fadeEdgeColor="var(--mantine-color-default-hover)">
+            <MantineLogo width={80} type="full" color="violet" />
+            <MantineLogo width={80} type="full" color="grape" />
+            <MantineLogo width={80} type="full" color="pink" />
+            <MantineLogo width={80} type="full" color="red" />
+          </Marquee>
+        </Box>
       </div>
 
       <div>

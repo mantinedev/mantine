@@ -4,7 +4,13 @@ import { MantineLogo } from '@mantinex/mantine-logo';
 
 function Wrapper(props: Partial<MarqueeProps>) {
   return (
-    <Marquee {...props} mah={200} maw={400}>
+    <Marquee
+      {...props}
+      mah={200}
+      maw={400}
+      w={props.orientation === 'vertical' ? 'fit-content' : undefined}
+      mx={props.orientation === 'vertical' ? 'auto' : undefined}
+    >
       <MantineLogo width={120} type="full" color="blue" />
       <MantineLogo width={120} type="full" color="cyan" />
       <MantineLogo width={120} type="full" color="teal" />

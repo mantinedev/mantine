@@ -2,9 +2,16 @@ import type {
   MarqueeCssVariables,
   MarqueeFactory,
   MarqueeProps,
+  MarqueeStylesCtx,
   MarqueeStylesNames,
 } from './Marquee';
 
 export { Marquee } from './Marquee';
 
-export type { MarqueeProps, MarqueeStylesNames, MarqueeCssVariables, MarqueeFactory };
+export type {
+  MarqueeProps,
+  MarqueeStylesCtx,
+  MarqueeStylesNames,
+  MarqueeCssVariables,
+  MarqueeFactory,
+};

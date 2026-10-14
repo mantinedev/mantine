@@ -1,4 +1,5 @@
 import { Box } from '../../core';
+import { Group } from '../Group';
 import { Marquee } from './Marquee';
 
 export default { title: 'Marquee' };
@@ -107,6 +108,40 @@ export function MultipleRows() {
       </Marquee>
       <Marquee>
         <ColorBoxes />
+      </Marquee>
+    </div>
+  );
+}
+
+export function WithLinks() {
+  return (
+    <div style={{ padding: 40 }}>
+      <Marquee pauseOnHover>
+        {['First', 'Second', 'Third', 'Fourth'].map((label) => (
+          <a key={label} href={`#${label.toLowerCase()}`} style={{ whiteSpace: 'nowrap' }}>
+            {label} link
+          </a>
+        ))}
+      </Marquee>
+    </div>
+  );
+}
+
+export function ContainerSizing() {
+  return (
+    <div style={{ padding: 40, display: 'flex', flexDirection: 'column', gap: 40 }}>
+      <Marquee orientation="vertical" p="md" bd="1px solid gray" data-case="vertical-padded">
+        <ColorBoxes />
+      </Marquee>
+
+      <Group data-case="group">
+        <Marquee>
+          <ColorBoxes />
+        </Marquee>
+      </Group>
+
+      <Marquee w={400} gap={0} repeat={4} fadeEdges={false} data-case="exact-fit">
+        <Box w={100} h={40} bg="blue.6" />
       </Marquee>
     </div>
   );

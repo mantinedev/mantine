@@ -4,12 +4,7 @@
   }
 
   to {
-    transform: translateX(
-      calc(
-        -100% / var(--marquee-repeat, 4) - var(--marquee-gap, var(--mantine-spacing-md)) /
-          var(--marquee-repeat, 4)
-      )
-    );
+    transform: translateX(calc(var(--_shift) * var(--_direction, 1)));
   }
 }
 
@@ -19,12 +14,7 @@
   }
 
   to {
-    transform: translateY(
-      calc(
-        -100% / var(--marquee-repeat, 4) - var(--marquee-gap, var(--mantine-spacing-md)) /
-          var(--marquee-repeat, 4)
-      )
-    );
+    transform: translateY(var(--_shift));
   }
 }
 
@@ -46,7 +36,6 @@
     flex-direction: column;
   }
 
-  /* Fade edges using pseudo-elements */
   &[data-fade-edges]::before,
   &[data-fade-edges]::after {
     content: '';
@@ -55,7 +44,6 @@
     pointer-events: none;
   }
 
-  /* Horizontal fade edges */
   &[data-orientation='horizontal'][data-fade-edges]::before,
   &[data-orientation='horizontal'][data-fade-edges]::after {
     top: 0;
@@ -73,7 +61,6 @@
     background: linear-gradient(to left, var(--_fade-color), transparent);
   }
 
-  /* Vertical fade edges */
   &[data-orientation='vertical'][data-fade-edges]::before,
   &[data-orientation='vertical'][data-fade-edges]::after {
     left: 0;
@@ -93,18 +80,27 @@
 }
 
 .content {
+  --_shift: calc(
+    -100% / var(--marquee-repeat, 4) - var(--marquee-gap, var(--mantine-spacing-md)) /
+      var(--marquee-repeat, 4)
+  );
+
   display: flex;
   gap: var(--marquee-gap, var(--mantine-spacing-md));
   animation-duration: var(--marquee-duration, 100000ms);
   animation-timing-function: linear;
   animation-iteration-count: infinite;
 
-  .root[data-orientation='horizontal'] > & {
+  :where(.root[data-orientation='horizontal']) > & {
     flex-direction: row;
     animation-name: marquee-horizontal;
+
+    @mixin rtl {
+      --_direction: -1;
+    }
   }
 
-  .root[data-orientation='vertical'] > & {
+  :where(.root[data-orientation='vertical']) > & {
     flex-direction: column;
     animation-name: marquee-vertical;
   }
@@ -117,12 +113,6 @@
   .root[data-pause-on-hover]:focus-within > &,
   .root[data-paused] > & {
     animation-play-state: paused;
-  }
-
-  @media (prefers-reduced-motion: reduce) {
-    :where([data-respect-reduced-motion]) .root > &[data-reduce-motion] {
-      animation-name: none;
-    }
   }
 }
 
