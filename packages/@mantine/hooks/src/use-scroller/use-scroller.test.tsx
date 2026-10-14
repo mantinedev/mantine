@@ -22,6 +22,13 @@ function fireWithPageX(
   fireEvent(container, event);
 }
 
+function clickButton() {
+  const button = screen.getByRole('button');
+  fireEvent.mouseDown(button);
+  fireEvent.mouseUp(button);
+  fireEvent.click(button);
+}
+
 function drag(container: HTMLElement) {
   fireWithPageX(container, createEvent.mouseDown, 100);
   fireWithPageX(container, createEvent.mouseMove, 50);
@@ -38,7 +45,7 @@ describe('@mantine/hooks/use-scroller', () => {
     fireEvent.click(screen.getByRole('button'));
     expect(spy).not.toHaveBeenCalled();
 
-    fireEvent.click(screen.getByRole('button'));
+    clickButton();
     expect(spy).toHaveBeenCalledTimes(1);
   });
 
@@ -49,11 +56,11 @@ describe('@mantine/hooks/use-scroller', () => {
 
     drag(container);
     fireEvent.mouseLeave(container);
-    fireEvent.click(screen.getByRole('button'));
+    clickButton();
     expect(spy).toHaveBeenCalledTimes(1);
   });
 
-  it('does not suppress a click after the pointer leaves, re-enters and releases inside', () => {
+  it('suppresses the click when the pointer leaves, re-enters and releases inside', () => {
     const spy = jest.fn();
     render(<Test onClick={spy} />);
     const container = screen.getByTestId('container');
@@ -62,6 +69,9 @@ describe('@mantine/hooks/use-scroller', () => {
     fireEvent.mouseLeave(container);
     fireEvent.mouseUp(container);
     fireEvent.click(screen.getByRole('button'));
+    expect(spy).not.toHaveBeenCalled();
+
+    clickButton();
     expect(spy).toHaveBeenCalledTimes(1);
   });
 });

@@ -62,6 +62,7 @@ export function useScroller<T extends HTMLElement = HTMLDivElement>(
   const hasDraggedRef = useRef(false);
   const startX = useRef(0);
   const scrollLeftStart = useRef(0);
+  const removeClickSuppressorRef = useRef<(() => void) | null>(null);
 
   const onScrollStateChangeRef = useRef(onScrollStateChange);
   onScrollStateChangeRef.current = onScrollStateChange;
@@ -131,6 +132,7 @@ export function useScroller<T extends HTMLElement = HTMLDivElement>(
 
   const handleMouseDown = useCallback(
     (event: React.MouseEvent) => {
+      removeClickSuppressorRef.current?.();
       if (!draggable) {
         return;
       }
@@ -164,7 +166,7 @@ export function useScroller<T extends HTMLElement = HTMLDivElement>(
     }
   }, []);
 
-  const endDrag = useCallback((suppressNextClick: boolean) => {
+  const handleMouseUp = useCallback(() => {
     const wasDragged = hasDraggedRef.current;
     isDraggingRef.current = false;
     hasDraggedRef.current = false;
@@ -174,24 +176,28 @@ export function useScroller<T extends HTMLElement = HTMLDivElement>(
       container.style.cursor = '';
       container.style.userSelect = '';
 
-      if (wasDragged && suppressNextClick) {
+      if (wasDragged) {
+        removeClickSuppressorRef.current?.();
+        const removeSuppressor = () => {
+          container.removeEventListener('click', suppressClick, true);
+          removeClickSuppressorRef.current = null;
+        };
         const suppressClick = (event: MouseEvent) => {
           event.stopPropagation();
           event.preventDefault();
-          container.removeEventListener('click', suppressClick, true);
+          removeSuppressor();
         };
         container.addEventListener('click', suppressClick, true);
+        removeClickSuppressorRef.current = removeSuppressor;
       }
     }
   }, []);
 
-  const handleMouseUp = useCallback(() => endDrag(true), [endDrag]);
-
   const handleMouseLeave = useCallback(() => {
     if (isDraggingRef.current) {
-      endDrag(false);
+      handleMouseUp();
     }
-  }, [endDrag]);
+  }, [handleMouseUp]);
 
   const assignRef: RefCallback<T | null> = useCallback(
     (node) => {
