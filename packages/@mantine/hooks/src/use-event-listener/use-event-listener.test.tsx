@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { fireEvent, render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { useEventListener } from './use-event-listener';
@@ -56,6 +57,50 @@ describe('@mantine/hooks/use-event-listener', () => {
 
     // Old node is gone from DOM, new node should fire
     fireEvent.click(screen.getByTestId('btn2'));
+    expect(spy).toHaveBeenCalledTimes(1);
+  });
+
+  it('keeps the listener attached across re-renders when options are passed inline', async () => {
+    function InlineOptions() {
+      const [count, setCount] = useState(0);
+      const ref = useEventListener('click', () => setCount((c) => c + 1), { passive: true });
+      return (
+        <button ref={ref} type="button">
+          {count}
+        </button>
+      );
+    }
+
+    render(<InlineOptions />);
+    await userEvent.click(screen.getByRole('button'));
+    await userEvent.click(screen.getByRole('button'));
+    await userEvent.click(screen.getByRole('button'));
+    expect(screen.getByRole('button')).toHaveTextContent('3');
+  });
+
+  it('removes the listener for the previous event type when type changes', () => {
+    const spy = jest.fn();
+
+    function TypeSwitch({ type }: { type: 'click' | 'mousedown' }) {
+      const ref = useEventListener(type, () => spy());
+      return (
+        <button ref={ref} type="button">
+          Test button
+        </button>
+      );
+    }
+
+    const { rerender } = render(<TypeSwitch type="click" />);
+    rerender(
+      <>
+        <TypeSwitch type="mousedown" />
+      </>
+    );
+
+    fireEvent.click(screen.getByRole('button'));
+    expect(spy).not.toHaveBeenCalled();
+
+    fireEvent.mouseDown(screen.getByRole('button'));
     expect(spy).toHaveBeenCalledTimes(1);
   });
 });

@@ -1,12 +1,26 @@
 import { useCallback, useEffect, useRef } from 'react';
 
+interface RegisteredListener<T extends HTMLElement> {
+  node: T;
+  type: string;
+  listener: Function;
+  options?: boolean | AddEventListenerOptions;
+}
+
+function removeRegisteredListener<T extends HTMLElement>(registered: RegisteredListener<T>) {
+  registered.node.removeEventListener(
+    registered.type,
+    registered.listener as any,
+    registered.options
+  );
+}
+
 export function useEventListener<K extends keyof HTMLElementEventMap, T extends HTMLElement = any>(
   type: K,
   listener: (this: T, ev: HTMLElementEventMap[K]) => any,
   options?: boolean | AddEventListenerOptions
 ): React.RefCallback<T | null> {
-  const previousListener = useRef<Function | null>(null);
-  const previousNode = useRef<T | null>(null);
+  const registered = useRef<RegisteredListener<T> | null>(null);
 
   const callbackRef: React.RefCallback<T | null> = useCallback(
     (node) => {
@@ -14,24 +28,24 @@ export function useEventListener<K extends keyof HTMLElementEventMap, T extends 
         return;
       }
 
-      if (previousNode.current && previousListener.current) {
-        previousNode.current.removeEventListener(type, previousListener.current as any, options);
+      if (registered.current) {
+        removeRegisteredListener(registered.current);
       }
 
       node.addEventListener(type, listener as any, options);
-      previousNode.current = node;
-      previousListener.current = listener;
+      registered.current = { node, type, listener, options };
     },
     [type, listener, options]
   );
 
   useEffect(
     () => () => {
-      if (previousNode.current && previousListener.current) {
-        previousNode.current.removeEventListener(type, previousListener.current as any, options);
+      if (registered.current) {
+        removeRegisteredListener(registered.current);
+        registered.current = null;
       }
     },
-    [type, options]
+    []
   );
 
   return callbackRef;
