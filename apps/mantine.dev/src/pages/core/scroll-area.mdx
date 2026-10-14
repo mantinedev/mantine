@@ -25,6 +25,15 @@ The `ScrollArea` component supports the following props:
 
 <Demo data={ScrollAreaDemos.usage} />
 
+## Offset size
+
+By default, `offsetScrollbars` reserves a gap equal to `scrollbarSize`. To change the gap
+without changing the scrollbar size, set the `--scrollarea-offset-size` CSS variable
+with the `style` or `vars` prop. The gap is always placed on the same side as the scrollbar,
+including in RTL and with `verticalScrollbarPosition`:
+
+<Demo data={ScrollAreaDemos.offsetSize} />
+
 ## Horizontal scrollbars
 
 <Demo data={ScrollAreaDemos.horizontal} />
