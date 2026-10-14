@@ -42,33 +42,32 @@ export function Usage() {
   );
 }
 
-export function WithActivityStatePreservation() {
+function StatePreservationPanel({ keepMounted }: { keepMounted: boolean }) {
   const [opened, setOpened] = useState(true);
-  const [value, setValue] = useState(42);
 
   return (
-    <Stack maw={400} p="md">
-      <Text size="sm" c="dimmed">
-        <strong>keepMounted + Activity</strong>: the NumberInput value is preserved when the panel
-        collapses and re-expands. Compare to the unmounted variant below where state resets.
-      </Text>
+    <Stack gap="xs">
+      <Button onClick={() => setOpened((o) => !o)}>
+        {opened ? 'Collapse' : 'Expand'} (keepMounted={String(keepMounted)})
+      </Button>
 
-      <Button onClick={() => setOpened((o) => !o)}>{opened ? 'Collapse' : 'Expand'}</Button>
-
-      <Collapse expanded={opened} keepMounted>
-        <Stack gap="xs" p="md" style={{ background: '#f0f4ff', borderRadius: 8 }}>
-          <Text fw={600}>keepMounted (Activity)</Text>
-          <NumberInput
-            label="Value survives collapse"
-            value={value}
-            onChange={(v) => setValue(typeof v === 'number' ? v : 0)}
-          />
-        </Stack>
+      <Collapse expanded={opened} keepMounted={keepMounted}>
+        <NumberInput label="Change the value, collapse and expand" defaultValue={42} />
       </Collapse>
+    </Stack>
+  );
+}
 
-      <Text size="xs" c="dimmed">
-        Value reported outside panel: <strong>{value}</strong>
+export function WithActivityStatePreservation() {
+  return (
+    <Stack maw={400} p="md" gap="xl">
+      <Text size="sm">
+        With keepMounted (default), the input value survives collapse. With keepMounted=false, the
+        input is unmounted and the value resets to 42.
       </Text>
+
+      <StatePreservationPanel keepMounted />
+      <StatePreservationPanel keepMounted={false} />
     </Stack>
   );
 }

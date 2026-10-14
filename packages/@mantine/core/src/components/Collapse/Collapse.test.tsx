@@ -154,4 +154,32 @@ describe('@mantine/core/Collapse', () => {
     );
     expect(screen.getByText('content').parentElement).toHaveAttribute('aria-hidden', 'false');
   });
+
+  it('keeps opacity at 0 until the expand transition starts', async () => {
+    const { rerender } = render(
+      <Collapse expanded={false}>
+        <div>content</div>
+      </Collapse>
+    );
+
+    rerender(
+      <Collapse expanded>
+        <div>content</div>
+      </Collapse>
+    );
+
+    const panel = screen.getByText('content').parentElement!;
+    expect(panel).toHaveStyle({ opacity: '0' });
+    await waitFor(() => expect(panel).toHaveStyle({ opacity: '1' }));
+  });
+
+  it('keeps opacity at 1 when animateOpacity is false', () => {
+    render(
+      <Collapse expanded={false} animateOpacity={false} keepMountedMode="display-none">
+        <div>content</div>
+      </Collapse>
+    );
+
+    expect(screen.getByText('content').parentElement).toHaveStyle({ opacity: '1' });
+  });
 });

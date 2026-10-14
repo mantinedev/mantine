@@ -33,7 +33,7 @@ export interface CollapseProps extends BoxProps, Omit<React.ComponentProps<'div'
   /** Determines whether the opacity is animated @default true */
   animateOpacity?: boolean;
 
-  /** If set, the element is kept in the DOM when collapsed. When `true`, React 19 `Activity` is used to preserve state while collapsed. When `false`, the element is unmounted after the exit animation. @default true */
+  /** If set, children stay mounted while collapsed, and their state is preserved. When `false`, children are unmounted after the exit animation. @default true */
   keepMounted?: boolean;
 
   /** Controls how the element is hidden when `keepMounted` is set:
@@ -140,15 +140,13 @@ export const Collapse = factory<CollapseFactory>((props) => {
   let content: React.ReactNode;
   if (keepMounted === false) {
     content = isExited ? null : children;
-  } else if (keepMounted === true) {
+  } else {
     content =
       keepMountedMode === 'display-none' ? (
         children
       ) : (
         <Activity mode={isExited ? 'hidden' : 'visible'}>{children}</Activity>
       );
-  } else {
-    content = children;
   }
 
   return (
@@ -156,12 +154,9 @@ export const Collapse = factory<CollapseFactory>((props) => {
       {...others}
       {...collapse.getCollapseProps({
         style: {
-          opacity: expanded || !animateOpacity ? 1 : 0,
+          opacity: !animateOpacity || (expanded && !isExited) ? 1 : 0,
           transition: animateOpacity ? `opacity ${duration}ms ${transitionTimingFunction}` : 'none',
           ...getStyleObject(style, theme),
-          ...(keepMounted && keepMountedMode === 'display-none' && isExited
-            ? { display: 'none' }
-            : {}),
         },
         ref,
       })}

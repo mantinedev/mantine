@@ -18,9 +18,60 @@ Set the following props to control the transition:
 
 - `transitionDuration` – duration in ms
 - `transitionTimingFunction` – timing function (ease, linear, etc.), defaults to `ease`
+- `onTransitionStart` – called when transition starts (both open and close)
 - `onTransitionEnd` – called when transition ends (both open and close)
 
 <Demo data={CollapseDemos.transition} />
+
+## keepMounted
+
+By default, children stay mounted while collapsed and keep their state, for example, input values.
+They are hidden with React [Activity](https://react.dev/reference/react/Activity), which also pauses their effects.
+Set `keepMountedMode="display-none"` to hide them with `display: none` and keep effects running.
+Set `keepMounted={false}` to unmount children after the collapse animation:
+
+```tsx
+import { Collapse } from '@mantine/core';
+
+function Demo() {
+  return (
+    <>
+      <Collapse expanded={false}>{/* Activity, state preserved */}</Collapse>
+      <Collapse expanded={false} keepMountedMode="display-none">
+        {/* display: none, effects keep running */}
+      </Collapse>
+      <Collapse expanded={false} keepMounted={false}>
+        {/* unmounted */}
+      </Collapse>
+    </>
+  );
+}
+```
+
+## Accessibility
+
+`Collapse` sets `aria-hidden` and `inert` on collapsed content.
+Set `aria-expanded` and `aria-controls` on the element that toggles it:
+
+```tsx
+import { Button, Collapse } from '@mantine/core';
+import { useDisclosure } from '@mantine/hooks';
+
+function Demo() {
+  const [expanded, { toggle }] = useDisclosure(false);
+
+  return (
+    <>
+      <Button onClick={toggle} aria-expanded={expanded} aria-controls="collapse-content">
+        Toggle content
+      </Button>
+      <Collapse expanded={expanded} id="collapse-content">
+        {/* content */}
+      </Collapse>
+    </>
+  );
+}
+```
 
 ## Example: nested Collapse components
 
