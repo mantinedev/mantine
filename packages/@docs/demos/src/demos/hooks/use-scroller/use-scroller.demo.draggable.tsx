@@ -30,7 +30,7 @@ function Demo() {
             Scroll right →
           </Button>
         </Group>
-        <Text size="sm" c="dimmed">draggable: false</Text>
+        <Text size="sm">draggable: false</Text>
       </Group>
 
       <div
@@ -89,9 +89,7 @@ function Demo() {
             Scroll right →
           </Button>
         </Group>
-        <Text size="sm" c="dimmed">
-          draggable: false
-        </Text>
+        <Text size="sm">draggable: false</Text>
       </Group>
 
       <div

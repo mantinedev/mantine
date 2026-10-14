@@ -1,12 +1,15 @@
+import { useState } from 'react';
 import { Badge } from '../Badge';
+import { Button } from '../Button';
 import { Group } from '../Group';
+import { Tabs } from '../Tabs';
 import { Scroller } from './Scroller';
 
 export default { title: 'Scroller' };
 
 function ColorBadges() {
   return Array.from({ length: 20 }).map((_, index) => (
-    <Badge key={index} variant="light" size="lg" miw="fit-content">
+    <Badge key={index} variant="default" size="lg" miw="fit-content">
       Badge {index + 1}
     </Badge>
   ));
@@ -18,22 +21,6 @@ export function Usage() {
       <Scroller>
         <Group gap="xs" wrap="nowrap">
           <ColorBadges />
-        </Group>
-      </Scroller>
-    </div>
-  );
-}
-
-export function WithBadges() {
-  return (
-    <div style={{ padding: 40, maxWidth: 600 }}>
-      <Scroller>
-        <Group gap="xs" wrap="nowrap">
-          {Array.from({ length: 15 }).map((_, index) => (
-            <Badge key={index} variant="light" size="lg" miw="fit-content">
-              Badge {index + 1}
-            </Badge>
-          ))}
         </Group>
       </Scroller>
     </div>
@@ -93,13 +80,13 @@ export function NoOverflow() {
     <div style={{ padding: 40, maxWidth: 600 }}>
       <Scroller>
         <Group gap="xs" wrap="nowrap">
-          <Badge variant="light" size="lg" miw="fit-content">
+          <Badge variant="default" size="lg" miw="fit-content">
             Badge 1
           </Badge>
-          <Badge variant="light" size="lg" miw="fit-content">
+          <Badge variant="default" size="lg" miw="fit-content">
             Badge 2
           </Badge>
-          <Badge variant="light" size="lg" miw="fit-content">
+          <Badge variant="default" size="lg" miw="fit-content">
             Badge 3
           </Badge>
         </Group>
@@ -123,15 +110,50 @@ export function Rtl() {
 export function WithTabs() {
   return (
     <div style={{ padding: 40, maxWidth: 400 }}>
+      <Tabs defaultValue="tab-1">
+        <Scroller>
+          <Tabs.List style={{ flexWrap: 'nowrap' }}>
+            {Array.from({ length: 12 }).map((_, index) => (
+              <Tabs.Tab key={index} value={`tab-${index + 1}`}>
+                Tab {index + 1}
+              </Tabs.Tab>
+            ))}
+          </Tabs.List>
+        </Scroller>
+      </Tabs>
+    </div>
+  );
+}
+
+export function NotDraggable() {
+  return (
+    <div style={{ padding: 40, maxWidth: 600 }}>
+      <Scroller draggable={false}>
+        <Group gap="xs" wrap="nowrap">
+          <ColorBadges />
+        </Group>
+      </Scroller>
+    </div>
+  );
+}
+
+export function WithLinks() {
+  const [clicks, setClicks] = useState(0);
+
+  return (
+    <div style={{ padding: 40, maxWidth: 600 }}>
       <Scroller>
-        <Group gap={0} wrap="nowrap">
-          {Array.from({ length: 12 }).map((_, index) => (
-            <Badge key={index} variant="subtle" radius={0} size="lg" miw="fit-content">
-              Tab {index + 1}
-            </Badge>
+        <Group gap="md" wrap="nowrap">
+          {Array.from({ length: 20 }).map((_, index) => (
+            <a key={index} href={`#link-${index + 1}`} style={{ whiteSpace: 'nowrap' }}>
+              Link {index + 1}
+            </a>
           ))}
         </Group>
       </Scroller>
+      <Button mt="md" variant="default" onClick={() => setClicks((c) => c + 1)}>
+        Outside button clicked {clicks} times
+      </Button>
     </div>
   );
 }

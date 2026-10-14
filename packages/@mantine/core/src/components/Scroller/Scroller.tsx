@@ -1,5 +1,5 @@
-import { Ref } from 'react';
-import { useScroller } from '@mantine/hooks';
+import { Ref, useEffect, useRef, useState } from 'react';
+import { useIsomorphicEffect, useMergedRef, useScroller } from '@mantine/hooks';
 import {
   Box,
   BoxProps,
@@ -10,6 +10,7 @@ import {
   getThemeColor,
   getSize,
   StylesApiProps,
+  useDirection,
   useProps,
   useStyles,
 } from '../../core';
@@ -30,10 +31,10 @@ export interface ScrollerProps
   /** Amount of pixels to scroll when clicking the control buttons @default 200 @category behavior */
   scrollAmount?: number;
 
-  /** Size of the control buttons, `xs`, `sm`, `md`, `lg`, `xl` or any valid CSS value @default 'md' @category appearance */
+  /** Width of the control buttons and their edge gradients, `xs`, `sm`, `md`, `lg`, `xl` or any valid CSS value @default 'md' @category appearance */
   controlSize?: string | number;
 
-  /** Background color for the gradient fade on controls @default 'var(--mantine-color-body)' @category appearance */
+  /** Background color for the gradient fade on controls, sets `--scroller-background-color` @default 'var(--mantine-color-body)' @category appearance */
   edgeGradientColor?: string;
 
   /** Props passed to the start control button */
@@ -42,10 +43,10 @@ export interface ScrollerProps
   /** Props passed to the end control button */
   endControlProps?: React.ComponentProps<'button'>;
 
-  /** Icon component for the start control, AccordionChevron by default @category appearance */
+  /** Icon for the start control, AccordionChevron by default @category appearance */
   startControlIcon?: React.ReactNode;
 
-  /** Icon component for the end control, AccordionChevron by default @category appearance */
+  /** Icon for the end control, AccordionChevron by default @category appearance */
   endControlIcon?: React.ReactNode;
 
   /** Determines whether start control should always be visible regardless of scroll position @default false @category appearance */
@@ -60,7 +61,7 @@ export interface ScrollerProps
   /** Determines whether the start and end control buttons with edge gradients are rendered @default true @category appearance */
   withControls?: boolean;
 
-  /** Ref for the scroll container element */
+  /** Ref for the root element */
   ref?: Ref<HTMLDivElement>;
 }
 
@@ -134,21 +135,83 @@ export const Scroller = factory<ScrollerFactory>((_props) => {
     draggable,
   });
 
+  const { dir } = useDirection();
+  const [isRtl, setIsRtl] = useState(false);
+  const rootRef = useRef<HTMLDivElement>(null);
+  const startControlRef = useRef<HTMLButtonElement>(null);
+  const endControlRef = useRef<HTMLButtonElement>(null);
+  const mergedRootRef = useMergedRef(rootRef, ref);
+  const mergedStartControlRef = useMergedRef(startControlRef, startControlProps?.ref);
+  const mergedEndControlRef = useMergedRef(endControlRef, endControlProps?.ref);
+
   const showStart = showStartControl || scroller.canScrollStart;
   const showEnd = showEndControl || scroller.canScrollEnd;
 
+  useIsomorphicEffect(() => {
+    if (rootRef.current) {
+      setIsRtl(getComputedStyle(rootRef.current).direction === 'rtl');
+    }
+  }, [dir]);
+
+  useEffect(() => {
+    const activeElement = document.activeElement;
+    const hiddenFocusedControl =
+      (!showStart && activeElement === startControlRef.current) ||
+      (!showEnd && activeElement === endControlRef.current);
+
+    if (!hiddenFocusedControl) {
+      return;
+    }
+
+    const visibleControl = showStart
+      ? startControlRef.current
+      : showEnd
+        ? endControlRef.current
+        : null;
+
+    if (visibleControl) {
+      visibleControl.focus();
+    } else {
+      (activeElement as HTMLElement).blur();
+    }
+  }, [showStart, showEnd]);
+
+  const handleContainerFocus = (event: React.FocusEvent<HTMLDivElement>) => {
+    const container = event.currentTarget;
+    const target = event.target;
+
+    if (target === container || !target.matches(':focus-visible')) {
+      return;
+    }
+
+    const inset = startControlRef.current?.offsetWidth ?? 0;
+    const containerRect = container.getBoundingClientRect();
+    const targetRect = target.getBoundingClientRect();
+    const visibleStart = containerRect.left + inset;
+    const visibleEnd = containerRect.right - inset;
+
+    if (targetRect.left < visibleStart) {
+      container.scrollBy({ left: targetRect.left - visibleStart });
+    } else if (targetRect.right > visibleEnd) {
+      container.scrollBy({
+        left: Math.min(targetRect.right - visibleEnd, targetRect.left - visibleStart),
+      });
+    }
+  };
+
   return (
-    <Box {...getStyles('root')} ref={ref} mod={mod} {...others}>
+    <Box {...getStyles('root')} ref={mergedRootRef} mod={mod} {...others}>
       {withControls && (
         <UnstyledButton
           {...getStyles('control')}
           onClick={scroller.scrollStart}
           data-position="start"
           data-hidden={!showStart || undefined}
-          aria-label="Scroll left"
+          aria-label={isRtl ? 'Scroll right' : 'Scroll left'}
           aria-hidden={!showStart || undefined}
           tabIndex={showStart ? 0 : -1}
           {...startControlProps}
+          ref={mergedStartControlRef}
         >
           {startControlIcon || <AccordionChevron {...getStyles('chevron')} />}
         </UnstyledButton>
@@ -159,6 +222,8 @@ export const Scroller = factory<ScrollerFactory>((_props) => {
         ref={scroller.ref}
         role="presentation"
         data-draggable={draggable || undefined}
+        data-dragging={scroller.isDragging || undefined}
+        onFocus={handleContainerFocus}
         {...scroller.dragHandlers}
       >
         <div {...getStyles('content')}>{children}</div>
@@ -170,10 +235,11 @@ export const Scroller = factory<ScrollerFactory>((_props) => {
           onClick={scroller.scrollEnd}
           data-position="end"
           data-hidden={!showEnd || undefined}
-          aria-label="Scroll right"
+          aria-label={isRtl ? 'Scroll left' : 'Scroll right'}
           aria-hidden={!showEnd || undefined}
           tabIndex={showEnd ? 0 : -1}
           {...endControlProps}
+          ref={mergedEndControlRef}
         >
           {endControlIcon || <AccordionChevron {...getStyles('chevron')} />}
         </UnstyledButton>

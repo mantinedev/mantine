@@ -30,7 +30,7 @@ function Demo() {
             Scroll right →
           </Button>
         </Group>
-        <Text size="sm" c="dimmed">scrollAmount: 400px</Text>
+        <Text size="sm">scrollAmount: 400px</Text>
       </Group>
 
       <div
@@ -91,9 +91,7 @@ function Demo() {
             Scroll right →
           </Button>
         </Group>
-        <Text size="sm" c="dimmed">
-          scrollAmount: 400px
-        </Text>
+        <Text size="sm">scrollAmount: 400px</Text>
       </Group>
 
       <div

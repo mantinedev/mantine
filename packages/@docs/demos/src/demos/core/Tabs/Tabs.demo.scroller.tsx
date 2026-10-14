@@ -7,8 +7,8 @@ import { Scroller, Tabs } from '@mantine/core';
 function Demo() {
   return (
     <Tabs defaultValue="tab-1">
-      <Tabs.List>
-        <Scroller>
+      <Scroller>
+        <Tabs.List style={{ flexWrap: 'nowrap' }}>
           <Tabs.Tab value="tab-1">First tab</Tabs.Tab>
           <Tabs.Tab value="tab-2">Second tab</Tabs.Tab>
           <Tabs.Tab value="tab-3">Third tab</Tabs.Tab>
@@ -19,8 +19,8 @@ function Demo() {
           <Tabs.Tab value="tab-8">Eighth tab</Tabs.Tab>
           <Tabs.Tab value="tab-9">Ninth tab</Tabs.Tab>
           <Tabs.Tab value="tab-10">Tenth tab</Tabs.Tab>
-        </Scroller>
-      </Tabs.List>
+        </Tabs.List>
+      </Scroller>
     </Tabs>
   );
 }
@@ -29,8 +29,8 @@ function Demo() {
 function Demo() {
   return (
     <Tabs defaultValue="tab-1">
-      <Tabs.List>
-        <Scroller>
+      <Scroller>
+        <Tabs.List style={{ flexWrap: 'nowrap' }}>
           <Tabs.Tab value="tab-1">First tab</Tabs.Tab>
           <Tabs.Tab value="tab-2">Second tab</Tabs.Tab>
           <Tabs.Tab value="tab-3">Third tab</Tabs.Tab>
@@ -41,8 +41,8 @@ function Demo() {
           <Tabs.Tab value="tab-8">Eighth tab</Tabs.Tab>
           <Tabs.Tab value="tab-9">Ninth tab</Tabs.Tab>
           <Tabs.Tab value="tab-10">Tenth tab</Tabs.Tab>
-        </Scroller>
-      </Tabs.List>
+        </Tabs.List>
+      </Scroller>
     </Tabs>
   );
 }

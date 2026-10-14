@@ -6,10 +6,10 @@ import { Badge, Group, Scroller } from '@mantine/core';
 
 function Demo() {
   return (
-    <Scroller>
+    <Scroller draggable={false}>
       <Group gap="xs" wrap="nowrap">
         {Array.from({ length: 20 }).map((_, index) => (
-          <Badge key={index} variant="light" size="lg" miw="fit-content">
+          <Badge key={index} variant="default" size="lg" miw="fit-content">
             Badge {index + 1}
           </Badge>
         ))}
@@ -21,10 +21,10 @@ function Demo() {
 
 function Demo() {
   return (
-    <Scroller>
+    <Scroller draggable={false}>
       <Group gap="xs" wrap="nowrap">
         {Array.from({ length: 20 }).map((_, index) => (
-          <Badge key={index} variant="light" size="lg" miw="fit-content">
+          <Badge key={index} variant="default" size="lg" miw="fit-content">
             Badge {index + 1}
           </Badge>
         ))}

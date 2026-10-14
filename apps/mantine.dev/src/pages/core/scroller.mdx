@@ -11,9 +11,9 @@ Native scrolling with trackpad, shift + mouse wheel and touch gestures keeps wor
 
 <Demo data={ScrollerDemos.usage} />
 
-## Mouse drag scrolling
+## Disable drag scrolling
 
-Content can be scrolled by clicking and dragging with the mouse. Set `draggable={false}` to disable it:
+Content can be scrolled by clicking and dragging with the mouse. Dragging that starts on a link or an image moves that element instead. Set `draggable={false}` to disable drag scrolling and allow text selection:
 
 <Demo data={ScrollerDemos.draggable} />
 
@@ -25,7 +25,7 @@ Set `scrollAmount` prop to change how many pixels the container scrolls when a n
 
 ## Control size
 
-Set `controlSize` prop to change the size of the navigation buttons:
+Set `controlSize` prop to change the width of the navigation buttons and their edge gradients:
 
 <Demo data={ScrollerDemos.controlSize} />
 
@@ -44,6 +44,7 @@ on touch devices. Native and mouse drag scrolling keep working:
 
 ## Usage with Tabs
 
-Use `Scroller` inside [Tabs.List](/core/tabs) to make the tabs list scrollable when tabs do not fit:
+Wrap [Tabs.List](/core/tabs) with `Scroller` to make the tabs list scrollable when tabs do not fit.
+Keep `Scroller` outside of `Tabs.List`, so the scroll buttons are not part of the tabs list:
 
 <Demo data={TabsDemos.scroller} />

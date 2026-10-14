@@ -12,7 +12,7 @@ export const ScrollerStylesApi: StylesApiData<ScrollerFactory> = {
 
   vars: {
     root: {
-      '--scroller-control-size': 'Controls width and chevron size',
+      '--scroller-control-size': 'Width of the control buttons and their edge gradients',
       '--scroller-background-color': 'Background color for the control edge gradients',
     },
   },
@@ -21,7 +21,12 @@ export const ScrollerStylesApi: StylesApiData<ScrollerFactory> = {
     {
       modifier: 'data-draggable',
       selector: 'container',
-      condition: '`draggable` prop is set',
+      condition: '`draggable` prop is `true` (default)',
+    },
+    {
+      modifier: 'data-dragging',
+      selector: 'container',
+      condition: 'Content is being dragged with the mouse',
     },
     {
       modifier: 'data-position',

@@ -1,4 +1,6 @@
+import { act, fireEvent } from '@testing-library/react';
 import { render, screen, tests, userEvent } from '@mantine-tests/core';
+import { Tabs } from '../Tabs';
 import { Scroller, ScrollerProps, ScrollerStylesNames } from './Scroller';
 
 const defaultProps: ScrollerProps = {
@@ -9,6 +11,14 @@ describe('@mantine/core/Scroller', () => {
   tests.axe([
     <Scroller {...defaultProps} key="1" />,
     <Scroller {...defaultProps} showStartControl showEndControl key="2" />,
+    <Tabs defaultValue="1" key="3">
+      <Scroller showStartControl showEndControl>
+        <Tabs.List>
+          <Tabs.Tab value="1">Tab 1</Tabs.Tab>
+          <Tabs.Tab value="2">Tab 2</Tabs.Tab>
+        </Tabs.List>
+      </Scroller>
+    </Tabs>,
   ]);
 
   tests.itSupportsSystemProps<ScrollerProps, ScrollerStylesNames>({
@@ -52,22 +62,6 @@ describe('@mantine/core/Scroller', () => {
       </Scroller>
     );
     expect(container.querySelectorAll('button')).toHaveLength(0);
-  });
-
-  it('renders start control when showStartControl is true', () => {
-    render(<Scroller {...defaultProps} showStartControl />);
-    expect(screen.getByLabelText('Scroll left')).toBeInTheDocument();
-  });
-
-  it('renders end control when showEndControl is true', () => {
-    render(<Scroller {...defaultProps} showEndControl />);
-    expect(screen.getByLabelText('Scroll right')).toBeInTheDocument();
-  });
-
-  it('renders both controls when both show props are true', () => {
-    render(<Scroller {...defaultProps} showStartControl showEndControl />);
-    expect(screen.getByLabelText('Scroll left')).toBeInTheDocument();
-    expect(screen.getByLabelText('Scroll right')).toBeInTheDocument();
   });
 
   it('applies startControlProps to start control', () => {
@@ -139,5 +133,94 @@ describe('@mantine/core/Scroller', () => {
     rerender(<Scroller {...defaultProps} showEndControl />);
     expect(screen.getByRole('button', { name: 'Scroll right' })).toHaveAttribute('tabindex', '0');
     expect(screen.queryByRole('button', { name: 'Scroll left' })).not.toBeInTheDocument();
+  });
+
+  it('moves focus to the other control when the focused control is hidden', () => {
+    const { rerender } = render(<Scroller {...defaultProps} showStartControl showEndControl />);
+    const end = screen.getByLabelText('Scroll right');
+    act(() => end.focus());
+
+    rerender(<Scroller {...defaultProps} showStartControl />);
+    expect(screen.getByLabelText('Scroll left')).toHaveFocus();
+
+    rerender(<Scroller {...defaultProps} />);
+    expect(document.body).toHaveFocus();
+  });
+
+  it('labels controls by their physical direction in RTL', () => {
+    render(
+      <Scroller {...defaultProps} style={{ direction: 'rtl' }} showStartControl showEndControl />
+    );
+    expect(screen.getByLabelText('Scroll right')).toHaveAttribute('data-position', 'start');
+    expect(screen.getByLabelText('Scroll left')).toHaveAttribute('data-position', 'end');
+  });
+
+  it('keeps RTL labels overridable with control props', () => {
+    render(
+      <Scroller
+        {...defaultProps}
+        style={{ direction: 'rtl' }}
+        showStartControl
+        startControlProps={{ 'aria-label': 'Previous' }}
+      />
+    );
+    expect(screen.getByLabelText('Previous')).toHaveAttribute('data-position', 'start');
+  });
+
+  it('scrolls keyboard-focused content out from under the controls', async () => {
+    const scrollBy = jest.fn();
+    const originalScrollBy = HTMLElement.prototype.scrollBy;
+    HTMLElement.prototype.scrollBy = scrollBy;
+
+    try {
+      const { container } = render(
+        <Scroller showStartControl showEndControl>
+          <button type="button">First</button>
+          <button type="button">Last</button>
+        </Scroller>
+      );
+      const viewport = container.querySelector<HTMLDivElement>('.mantine-Scroller-container')!;
+      const [first, last] = screen.getAllByRole('button', { name: /First|Last/ });
+      container
+        .querySelectorAll<HTMLButtonElement>('.mantine-Scroller-control')
+        .forEach((control) => {
+          Object.defineProperty(control, 'offsetWidth', { value: 50, configurable: true });
+        });
+      viewport.getBoundingClientRect = () => ({ left: 0, right: 500 }) as DOMRect;
+      first.getBoundingClientRect = () => ({ left: 20, right: 100 }) as DOMRect;
+      last.getBoundingClientRect = () => ({ left: 440, right: 520 }) as DOMRect;
+
+      await userEvent.tab();
+      await userEvent.tab();
+      expect(first).toHaveFocus();
+      expect(scrollBy).toHaveBeenLastCalledWith({ left: -30 });
+
+      await userEvent.tab();
+      expect(last).toHaveFocus();
+      expect(scrollBy).toHaveBeenLastCalledWith({ left: 70 });
+    } finally {
+      HTMLElement.prototype.scrollBy = originalScrollBy;
+    }
+  });
+
+  it('sets data-dragging while the content is dragged', () => {
+    const { container } = render(<Scroller {...defaultProps} />);
+    const viewport = container.querySelector('.mantine-Scroller-container')!;
+    expect(viewport).toHaveAttribute('data-draggable');
+    expect(viewport).not.toHaveAttribute('data-dragging');
+
+    fireEvent.mouseDown(viewport);
+    expect(viewport).toHaveAttribute('data-dragging');
+
+    fireEvent.mouseUp(viewport);
+    expect(viewport).not.toHaveAttribute('data-dragging');
+  });
+
+  it('does not set drag attributes when draggable is false', () => {
+    const { container } = render(<Scroller {...defaultProps} draggable={false} />);
+    const viewport = container.querySelector('.mantine-Scroller-container')!;
+    fireEvent.mouseDown(viewport);
+    expect(viewport).not.toHaveAttribute('data-draggable');
+    expect(viewport).not.toHaveAttribute('data-dragging');
   });
 });

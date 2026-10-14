@@ -9,7 +9,7 @@ function Demo() {
     <Scroller scrollAmount={300}>
       <Group gap="xs" wrap="nowrap">
         {Array.from({ length: 30 }).map((_, index) => (
-          <Badge key={index} variant="light" size="lg" miw="fit-content">
+          <Badge key={index} variant="default" size="lg" miw="fit-content">
             Badge {index + 1}
           </Badge>
         ))}
@@ -24,7 +24,7 @@ function Demo() {
     <Scroller scrollAmount={300}>
       <Group gap="xs" wrap="nowrap">
         {Array.from({ length: 30 }).map((_, index) => (
-          <Badge key={index} variant="light" size="lg" miw="fit-content">
+          <Badge key={index} variant="default" size="lg" miw="fit-content">
             Badge {index + 1}
           </Badge>
         ))}

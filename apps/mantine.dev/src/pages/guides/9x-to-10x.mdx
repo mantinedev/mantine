@@ -427,6 +427,10 @@ const value = useMatches({ base: 'a', sm: 'b' }, { getInitialValueInEffect: fals
 const value = useMatches({ base: 'a', sm: 'b' });
 ```
 
+## useScroller dragHandlers
+
+`useScroller` now tracks dragging on the document, so `dragHandlers` contains only `onMouseDown`. If you passed the handlers one by one, keep `onMouseDown` and remove `onMouseMove`, `onMouseUp` and `onMouseLeave`. Spreading `{...dragHandlers}` works as before. The hook no longer sets the cursor on the container: use the `isDragging` value to set it.
+
 ## TimeInput data-empty attribute
 
 If you set your own `data-empty` attribute on `TimeInput`, rename it. The component now sets

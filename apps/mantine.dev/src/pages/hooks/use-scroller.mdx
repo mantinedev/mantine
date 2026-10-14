@@ -7,7 +7,8 @@ export default Layout(MDX_DATA.useScroller);
 ## Usage
 
 `use-scroller` manages horizontal scrolling of a container. It reports whether the content can
-scroll in each direction, scrolls it with `scrollStart` and `scrollEnd` and supports drag to scroll:
+scroll in each direction, scrolls it with `scrollStart` and `scrollEnd` and supports drag to scroll.
+Use `isDragging` to change the cursor while the content is dragged:
 
 <Demo data={UseScrollerDemos.usage} />
 
@@ -43,7 +44,7 @@ interface UseScrollerOptions {
   /** Determines whether content can be scrolled by dragging with mouse, `true` by default */
   draggable?: boolean;
 
-  /** Called when scroll state changes (canScrollStart or canScrollEnd) */
+  /** Called when `canScrollStart` or `canScrollEnd` changes */
   onScrollStateChange?: (state: UseScrollerScrollState) => void;
 }
 
@@ -71,15 +72,12 @@ interface UseScrollerReturnValue<T extends HTMLElement = HTMLDivElement> {
   /** Scrolls towards the end direction */
   scrollEnd: () => void;
 
-  /** `true` if the user is currently dragging the content */
+  /** `true` while the user drags the content, use it to style the container (for example, `cursor: grabbing`) */
   isDragging: boolean;
 
   /** Props to spread on the scrollable container for drag functionality */
   dragHandlers: {
     onMouseDown: (e: React.MouseEvent) => void;
-    onMouseMove: (e: React.MouseEvent) => void;
-    onMouseUp: () => void;
-    onMouseLeave: () => void;
   };
 }
 ```

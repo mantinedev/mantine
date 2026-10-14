@@ -72,8 +72,8 @@ export function AsyncContent() {
   return (
     <div style={{ padding: 40, maxWidth: 500 }}>
       <p>
-        Items load after 1 second. Bug: canScrollEnd stays false after items appear (should be
-        true). Scroll buttons remain disabled until you manually scroll.
+        Items load after 1 second. canScrollEnd becomes true once they appear. Use the button below
+        to append more items at the end.
       </p>
       <div style={{ display: 'flex', gap: 8, marginBottom: 12 }}>
         <button type="button" onClick={scrollStart} disabled={!canScrollStart}>
@@ -81,6 +81,17 @@ export function AsyncContent() {
         </button>
         <button type="button" onClick={scrollEnd} disabled={!canScrollEnd}>
           Scroll End
+        </button>
+        <button
+          type="button"
+          onClick={() =>
+            setItems((current) => [
+              ...current,
+              ...Array.from({ length: 3 }, (_, i) => current.length + i),
+            ])
+          }
+        >
+          Append 3 items
         </button>
       </div>
       <div
