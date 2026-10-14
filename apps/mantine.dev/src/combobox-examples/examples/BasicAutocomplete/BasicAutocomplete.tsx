@@ -11,7 +11,9 @@ const groceries = [
 ];
 
 export function BasicAutocomplete() {
-  const store = useCombobox();
+  const store = useCombobox({
+    onDropdownClose: () => store.resetSelectedOption(),
+  });
   const [value, setValue] = useState('');
   const shouldFilterOptions = !groceries.some((item) => item === value);
   const filteredOptions = shouldFilterOptions

@@ -47,10 +47,12 @@ export function SelectActive() {
         <InputBase
           component="button"
           type="button"
+          aria-label="Pick value"
           pointer
           rightSection={<Combobox.Chevron />}
           rightSectionPointerEvents="none"
           onClick={() => store.toggleDropdown()}
+          onBlur={() => store.closeDropdown()}
         >
           {value || <Input.Placeholder>Pick value</Input.Placeholder>}
         </InputBase>

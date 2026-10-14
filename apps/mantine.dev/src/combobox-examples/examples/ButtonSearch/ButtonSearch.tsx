@@ -16,7 +16,6 @@ export function ButtonSearch() {
   const store = useCombobox({
     onDropdownClose: () => {
       store.resetSelectedOption();
-      store.focusTarget();
       setSearch('');
     },
 
@@ -34,7 +33,13 @@ export function ButtonSearch() {
     ));
 
   return (
-    <>
+    <div
+      onBlur={(event) => {
+        if (!event.currentTarget.contains(event.relatedTarget)) {
+          store.closeDropdown();
+        }
+      }}
+    >
       <Combobox
         store={store}
         width={250}
@@ -44,6 +49,7 @@ export function ButtonSearch() {
         onOptionSubmit={(val) => {
           setSelectedItem(val);
           store.closeDropdown();
+          store.focusTarget();
         }}
       >
         <Combobox.Target withAriaAttributes={false}>
@@ -54,6 +60,11 @@ export function ButtonSearch() {
           <Combobox.Search
             value={search}
             onChange={(event) => setSearch(event.currentTarget.value)}
+            onKeyDown={(event) => {
+              if (event.key === 'Escape') {
+                store.focusTarget();
+              }
+            }}
             placeholder="Search groceries"
           />
           <Combobox.Options>
@@ -63,7 +74,7 @@ export function ButtonSearch() {
       </Combobox>
 
       <Box mt="xs">
-        <Text span size="sm" c="dimmed">
+        <Text span size="sm">
           Selected item:{' '}
         </Text>
 
@@ -71,6 +82,6 @@ export function ButtonSearch() {
           {selectedItem || 'Nothing selected'}
         </Text>
       </Box>
-    </>
+    </div>
   );
 }

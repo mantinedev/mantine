@@ -35,12 +35,15 @@ export const ComboboxOptions = factory<ComboboxOptionsFactory>((_props) => {
 
   useEffect(() => {
     ctx.store.setListId(_id);
+    ctx.setListId(_id);
+    return () => ctx.setListId((current) => (current === _id ? null : current));
   }, [_id]);
 
   return (
     // eslint-disable-next-line jsx-a11y/interactive-supports-focus -- Combobox uses aria-activedescendant pattern: focus stays on the target, options are highlighted via aria-activedescendant rather than DOM focus
     <Box
       {...ctx.getStyles('options', { className, style, classNames, styles })}
+      tabIndex={-1}
       {...others}
       id={_id}
       role="listbox"

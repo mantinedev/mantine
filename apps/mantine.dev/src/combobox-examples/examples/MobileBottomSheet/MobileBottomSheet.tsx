@@ -58,11 +58,11 @@ export function MobileBottomSheet() {
   ));
 
   const optionsList = (
-    <Combobox.Options>
-      <ScrollArea.Autosize mah={280} type="scroll">
+    <ScrollArea.Autosize mah={280} type="scroll" viewportProps={{ tabIndex: -1 }}>
+      <Combobox.Options>
         {options.length > 0 ? options : <Combobox.Empty>Nothing found</Combobox.Empty>}
-      </ScrollArea.Autosize>
-    </Combobox.Options>
+      </Combobox.Options>
+    </ScrollArea.Autosize>
   );
 
   const handleSubmit = (val: string) => {
@@ -93,6 +93,9 @@ export function MobileBottomSheet() {
         <Drawer
           opened={store.dropdownOpened}
           onClose={() => store.closeDropdown()}
+          onEnterTransitionEnd={() =>
+            store.updateSelectedOptionIndex('active', { scrollIntoView: true })
+          }
           title="Pick country"
           position="bottom"
           size="auto"
@@ -105,6 +108,7 @@ export function MobileBottomSheet() {
             <TextInput
               data-autofocus
               placeholder="Search country"
+              aria-label="Search country"
               value={search}
               mb="sm"
               onChange={(event) => {
@@ -127,6 +131,7 @@ export function MobileBottomSheet() {
           rightSection={<Combobox.Chevron />}
           rightSectionPointerEvents="none"
           placeholder="Pick country"
+          aria-label="Pick country"
           value={search}
           onChange={(event) => {
             store.openDropdown();

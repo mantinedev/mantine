@@ -76,11 +76,11 @@ export function DropdownScrollArea() {
       </Combobox.Target>
 
       <Combobox.Dropdown>
-        <Combobox.Options>
-          <ScrollArea.Autosize mah={200} type="scroll">
+        <ScrollArea.Autosize mah={200} type="scroll" viewportProps={{ tabIndex: -1 }}>
+          <Combobox.Options>
             {options.length === 0 ? <Combobox.Empty>Nothing found</Combobox.Empty> : options}
-          </ScrollArea.Autosize>
-        </Combobox.Options>
+          </Combobox.Options>
+        </ScrollArea.Autosize>
       </Combobox.Dropdown>
     </Combobox>
   );

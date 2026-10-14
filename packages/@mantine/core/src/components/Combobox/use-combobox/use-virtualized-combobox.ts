@@ -49,6 +49,12 @@ export interface UseVirtualizedComboboxOptions {
   onSelectedOptionSubmit: (index: number) => void;
 }
 
+const virtualizedStores = new WeakSet<ComboboxStore>();
+
+export function isVirtualizedComboboxStore(store: ComboboxStore) {
+  return virtualizedStores.has(store);
+}
+
 export function useVirtualizedCombobox(
   {
     defaultOpened,
@@ -149,10 +155,10 @@ export function useVirtualizedCombobox(
     return settings.current.getOptionId(nextIndex);
   }, []);
 
-  const selectActiveOption = useCallback(
-    () => selectOption(settings.current.activeOptionIndex ?? 0),
-    []
-  );
+  const selectActiveOption = useCallback(() => {
+    const activeIndex = settings.current.activeOptionIndex;
+    return selectOption(typeof activeIndex === 'number' && activeIndex >= 0 ? activeIndex : 0);
+  }, []);
 
   const selectNextOption = useCallback(
     () =>
@@ -262,8 +268,8 @@ export function useVirtualizedCombobox(
     []
   );
 
-  return useMemo(
-    () => ({
+  return useMemo(() => {
+    const store: ComboboxStore = {
       dropdownOpened,
       isDropdownOpened,
       openDropdown,
@@ -292,7 +298,9 @@ export function useVirtualizedCombobox(
 
       targetRef,
       focusTarget,
-    }),
-    [dropdownOpened]
-  );
+    };
+
+    virtualizedStores.add(store);
+    return store;
+  }, [dropdownOpened]);
 }

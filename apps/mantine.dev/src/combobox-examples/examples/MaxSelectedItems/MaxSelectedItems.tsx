@@ -55,6 +55,7 @@ export function MaxSelectedItems() {
             <Combobox.EventsTarget>
               <PillsInput.Field
                 type="hidden"
+                aria-label="Pick one or more values"
                 onBlur={() => store.closeDropdown()}
                 onKeyDown={(event) => {
                   if (event.key === 'Backspace' && value.length > 0) {
@@ -70,9 +71,9 @@ export function MaxSelectedItems() {
 
       <Combobox.Dropdown>
         <Combobox.Header>
-          You can select up to 2 items, currently selected: {value.length}
+          You can select up to {ITEMS_LIMIT} items, currently selected: {value.length}
         </Combobox.Header>
-        <Combobox.Options>{options}</Combobox.Options>
+        <Combobox.Options aria-multiselectable>{options}</Combobox.Options>
       </Combobox.Dropdown>
     </Combobox>
   );

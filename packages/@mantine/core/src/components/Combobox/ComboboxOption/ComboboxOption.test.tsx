@@ -98,4 +98,20 @@ describe('@mantine/core/ComboboxOption', () => {
     await userEvent.hover(screen.getByRole('option'));
     expect(spy).toHaveBeenCalled();
   });
+
+  it('exposes active state with aria-selected', () => {
+    const { rerender } = render(<TestContainer {...defaultProps} active />);
+    expect(screen.getByRole('option')).toHaveAttribute('aria-selected', 'true');
+
+    rerender(<TestContainer {...defaultProps} active={false} />);
+    expect(screen.getByRole('option')).toHaveAttribute('aria-selected', 'false');
+
+    rerender(<TestContainer {...defaultProps} />);
+    expect(screen.getByRole('option')).not.toHaveAttribute('aria-selected');
+  });
+
+  it('lets explicit aria-selected prop override active state', () => {
+    render(<TestContainer {...defaultProps} active aria-selected={false} />);
+    expect(screen.getByRole('option')).toHaveAttribute('aria-selected', 'false');
+  });
 });

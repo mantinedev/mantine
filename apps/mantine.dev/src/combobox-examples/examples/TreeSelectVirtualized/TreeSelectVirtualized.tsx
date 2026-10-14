@@ -1,6 +1,7 @@
 import { type KeyboardEvent, useMemo, useState } from 'react';
 import { useVirtualizer } from '@tanstack/react-virtual';
 import { Combobox, Input, InputBase, ScrollArea, useVirtualizedCombobox } from '@mantine/core';
+import classes from './TreeSelectVirtualized.module.css';
 
 interface TreeNode {
   value: string;
@@ -9,9 +10,6 @@ interface TreeNode {
 }
 
 const ITEM_HEIGHT = 36;
-const LEVEL_OFFSET = 20;
-const BASE_PADDING = 8;
-const OPTION_GAP = 6;
 
 function ChevronIcon({ size = 16 }: { size?: number }) {
   return (
@@ -214,7 +212,9 @@ export function TreeSelectVirtualized() {
           rightSection={<Combobox.Chevron />}
           onClick={() => store.toggleDropdown()}
           onKeyDown={handleKeyDown}
+          onBlur={() => store.closeDropdown()}
           rightSectionPointerEvents="none"
+          aria-label="Pick a team"
         >
           {(value && findLabel(largeData, value)) || (
             <Input.Placeholder>Pick a team</Input.Placeholder>
@@ -223,17 +223,17 @@ export function TreeSelectVirtualized() {
       </Combobox.Target>
 
       <Combobox.Dropdown>
-        <Combobox.Options>
-          <ScrollArea.Autosize
-            mah={250}
-            type="scroll"
-            viewportRef={setScrollParent}
-            onMouseDown={(event) => event.preventDefault()}
-          >
-            <div style={{ height: virtualizer.getTotalSize(), position: 'relative' }}>
+        <ScrollArea.Autosize
+          mah={250}
+          type="scroll"
+          viewportProps={{ tabIndex: -1 }}
+          viewportRef={setScrollParent}
+          onMouseDown={(event) => event.preventDefault()}
+        >
+          <Combobox.Options>
+            <div className={classes.list} style={{ height: virtualizer.getTotalSize() }}>
               {virtualizer.getVirtualItems().map((virtualItem) => {
                 const flatNode = flatNodes[virtualItem.index];
-                const isExpanded = flatNode.expanded;
 
                 return (
                   <Combobox.Option
@@ -243,74 +243,36 @@ export function TreeSelectVirtualized() {
                     active={virtualItem.index === activeOptionIndex}
                     selected={virtualItem.index === selectedOptionIndex}
                     onClick={() => onOptionSubmit(virtualItem.index)}
+                    className={classes.option}
+                    mod={{ leaf: !flatNode.hasChildren }}
                     style={{
-                      position: 'absolute',
-                      top: 0,
-                      left: 0,
-                      width: '100%',
+                      '--level': flatNode.level,
                       height: virtualItem.size,
                       transform: `translateY(${virtualItem.start}px)`,
-                      paddingInlineStart:
-                        BASE_PADDING +
-                        (flatNode.level - 1) * LEVEL_OFFSET +
-                        (!flatNode.hasChildren ? OPTION_GAP : 0),
-                      display: 'flex',
-                      alignItems: 'center',
-                      gap: 6,
                     }}
                   >
                     {flatNode.hasChildren && (
                       <span
-                        role="button"
-                        tabIndex={0}
-                        aria-label={isExpanded ? 'Collapse' : 'Expand'}
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          e.preventDefault();
+                        aria-hidden
+                        className={classes.chevron}
+                        data-expanded={flatNode.expanded || undefined}
+                        onClick={(event) => {
+                          event.stopPropagation();
+                          event.preventDefault();
                           toggleExpand(flatNode.node.value);
                         }}
-                        onKeyDown={(e) => {
-                          if (e.key === 'Enter' || e.key === ' ') {
-                            e.stopPropagation();
-                            e.preventDefault();
-                            toggleExpand(flatNode.node.value);
-                          }
-                        }}
-                        onMouseDown={(e) => e.preventDefault()}
-                        style={{
-                          display: 'flex',
-                          alignItems: 'center',
-                          justifyContent: 'center',
-                          width: 20,
-                          minWidth: 20,
-                          height: 20,
-                          borderRadius: 'var(--mantine-radius-sm)',
-                          cursor: 'pointer',
-                          color: 'inherit',
-                          opacity: 0.6,
-                          transform: isExpanded ? 'rotate(0deg)' : 'rotate(-90deg)',
-                          transition: 'transform 150ms ease',
-                        }}
+                        onMouseDown={(event) => event.preventDefault()}
                       >
                         <ChevronIcon size={16} />
                       </span>
                     )}
-                    <span
-                      style={{
-                        flex: 1,
-                        overflow: 'hidden',
-                        textOverflow: 'ellipsis',
-                        whiteSpace: 'nowrap',
-                      }}
-                    >
-                      {flatNode.node.label}
-                    </span>
+                    <span className={classes.label}>{flatNode.node.label}</span>
                   </Combobox.Option>
                 );
               })}
             </div>
-          </ScrollArea.Autosize>
-        </Combobox.Options>
+          </Combobox.Options>
+        </ScrollArea.Autosize>
       </Combobox.Dropdown>
     </Combobox>
   );

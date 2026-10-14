@@ -22,7 +22,9 @@ function getFilteredOptions(data: string[], searchQuery: string, limit: number) 
 }
 
 export function AutocompleteLimit() {
-  const store = useCombobox();
+  const store = useCombobox({
+    onDropdownClose: () => store.resetSelectedOption(),
+  });
   const [value, setValue] = useState('');
   const filteredOptions = getFilteredOptions(MOCKDATA, value, 7);
 
@@ -49,6 +51,7 @@ export function AutocompleteLimit() {
           onChange={(event) => {
             setValue(event.currentTarget.value);
             store.openDropdown();
+            store.updateSelectedOptionIndex();
           }}
           onClick={() => store.openDropdown()}
           onFocus={() => store.openDropdown()}

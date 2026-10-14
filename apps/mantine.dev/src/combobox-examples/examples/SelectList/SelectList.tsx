@@ -42,6 +42,7 @@ export function SelectList() {
       <Combobox.EventsTarget>
         <TextInput
           placeholder="Search groceries"
+          aria-label="Search groceries"
           classNames={{ input: classes.input }}
           value={search}
           onChange={(event) => {
@@ -52,8 +53,8 @@ export function SelectList() {
       </Combobox.EventsTarget>
 
       <div className={classes.list}>
-        <Combobox.Options>
-          {options.length > 0 ? options : <Combobox.Empty>Nothing found....</Combobox.Empty>}
+        <Combobox.Options aria-multiselectable>
+          {options.length > 0 ? options : <Combobox.Empty>Nothing found</Combobox.Empty>}
         </Combobox.Options>
       </div>
     </Combobox>

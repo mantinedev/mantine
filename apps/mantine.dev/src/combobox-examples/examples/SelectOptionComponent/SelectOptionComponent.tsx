@@ -23,9 +23,7 @@ function SelectOption({ emoji, value, description }: Item) {
         <Text fz="sm" fw={500}>
           {value}
         </Text>
-        <Text fz="xs" opacity={0.6}>
-          {description}
-        </Text>
+        <Text fz="xs">{description}</Text>
       </div>
     </Group>
   );
@@ -58,9 +56,11 @@ export function SelectOptionComponent() {
         <InputBase
           component="button"
           type="button"
+          aria-label="Pick value"
           pointer
           rightSection={<Combobox.Chevron />}
           onClick={() => store.toggleDropdown()}
+          onBlur={() => store.closeDropdown()}
           rightSectionPointerEvents="none"
           multiline
         >

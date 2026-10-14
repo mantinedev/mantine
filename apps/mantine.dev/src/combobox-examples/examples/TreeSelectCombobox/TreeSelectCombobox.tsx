@@ -1,5 +1,6 @@
 import { type KeyboardEvent, useState } from 'react';
-import { CheckIcon, Combobox, Input, InputBase, ScrollArea, useCombobox } from '@mantine/core';
+import { Box, CheckIcon, Combobox, Input, InputBase, ScrollArea, useCombobox } from '@mantine/core';
+import classes from './TreeSelectCombobox.module.css';
 
 interface TreeNode {
   value: string;
@@ -35,11 +36,6 @@ const data: TreeNode[] = [
   },
   { value: 'devops', label: 'DevOps' },
 ];
-
-const LEVEL_OFFSET = 20;
-const BASE_PADDING = 8;
-const LINE_CONTENT_GAP = 5;
-const OPTION_GAP = 6;
 
 function ChevronIcon({ size = 16 }: { size?: number }) {
   return (
@@ -110,6 +106,65 @@ function findLabel(nodes: TreeNode[], value: string): string | null {
   return null;
 }
 
+function TreeOption({
+  flatNode,
+  selected,
+  onToggleExpand,
+}: {
+  flatNode: FlatNode;
+  selected: boolean;
+  onToggleExpand: (value: string) => void;
+}) {
+  const { node, level, hasChildren, expanded, isLastChild, lineGuides } = flatNode;
+
+  return (
+    <Combobox.Option
+      value={node.value}
+      active={selected}
+      aria-level={level}
+      aria-expanded={hasChildren ? expanded : undefined}
+      className={classes.option}
+      mod={{ nested: level > 1, leaf: !hasChildren }}
+      style={{ '--level': level }}
+    >
+      {level > 1 && (
+        <>
+          {lineGuides.map(
+            (show, index) =>
+              show && (
+                <Box
+                  key={index}
+                  component="span"
+                  className={classes.guide}
+                  style={{ '--guide-index': index }}
+                />
+              )
+          )}
+          <span className={classes.connector} data-last={isLastChild || undefined} />
+          <span className={classes.elbow} />
+        </>
+      )}
+      {hasChildren && (
+        <span
+          aria-hidden
+          className={classes.chevron}
+          data-expanded={expanded || undefined}
+          onClick={(event) => {
+            event.stopPropagation();
+            event.preventDefault();
+            onToggleExpand(node.value);
+          }}
+          onMouseDown={(event) => event.preventDefault()}
+        >
+          <ChevronIcon size={16} />
+        </span>
+      )}
+      <span className={classes.label}>{node.label}</span>
+      {selected && <CheckIcon className={classes.check} />}
+    </Combobox.Option>
+  );
+}
+
 export function TreeSelectCombobox() {
   const store = useCombobox({
     onDropdownClose: () => store.resetSelectedOption(),
@@ -164,7 +219,7 @@ export function TreeSelectCombobox() {
         store.closeDropdown();
       }}
     >
-      <Combobox.Target>
+      <Combobox.Target targetType="button">
         <InputBase
           component="button"
           type="button"
@@ -172,7 +227,9 @@ export function TreeSelectCombobox() {
           rightSection={<Combobox.Chevron />}
           onClick={() => store.toggleDropdown()}
           onKeyDown={handleKeyDown}
+          onBlur={() => store.closeDropdown()}
           rightSectionPointerEvents="none"
+          aria-label="Pick a technology"
         >
           {(value && findLabel(data, value)) || (
             <Input.Placeholder>Pick a technology</Input.Placeholder>
@@ -181,143 +238,18 @@ export function TreeSelectCombobox() {
       </Combobox.Target>
 
       <Combobox.Dropdown>
-        <Combobox.Options>
-          <ScrollArea.Autosize mah={250} type="scroll">
-            {flatNodes.map(({ node, level, hasChildren, isLastChild, lineGuides }) => {
-              const isSelected = value === node.value;
-              const isExpanded = !!expanded[node.value];
-
-              const lineElements =
-                level > 1 ? (
-                  <>
-                    {lineGuides.map((show, g) =>
-                      show ? (
-                        <span
-                          key={`g${g}`}
-                          style={{
-                            position: 'absolute',
-                            top: 0,
-                            bottom: 0,
-                            width: 0,
-                            borderInlineStart: '1px solid var(--mantine-color-default-border)',
-                            pointerEvents: 'none',
-                            insetInlineStart:
-                              BASE_PADDING + (g + 1) * LEVEL_OFFSET - LEVEL_OFFSET / 2,
-                          }}
-                        />
-                      ) : null
-                    )}
-                    <span
-                      style={{
-                        position: 'absolute',
-                        top: 0,
-                        bottom: isLastChild ? 'auto' : 0,
-                        height: isLastChild ? '50%' : undefined,
-                        width: 0,
-                        borderInlineStart: '1px solid var(--mantine-color-default-border)',
-                        pointerEvents: 'none',
-                        insetInlineStart:
-                          BASE_PADDING + (level - 1) * LEVEL_OFFSET - LEVEL_OFFSET / 2,
-                      }}
-                    />
-                    <span
-                      style={{
-                        position: 'absolute',
-                        top: '50%',
-                        height: 0,
-                        borderTop: '1px solid var(--mantine-color-default-border)',
-                        pointerEvents: 'none',
-                        insetInlineStart:
-                          BASE_PADDING + (level - 1) * LEVEL_OFFSET - LEVEL_OFFSET / 2,
-                        width: LEVEL_OFFSET / 2,
-                      }}
-                    />
-                  </>
-                ) : null;
-
-              return (
-                <Combobox.Option
-                  key={node.value}
-                  value={node.value}
-                  active={isSelected}
-                  aria-selected={isSelected}
-                  aria-level={level}
-                  aria-expanded={hasChildren ? isExpanded : undefined}
-                  style={{
-                    display: 'flex',
-                    alignItems: 'center',
-                    gap: 6,
-                    position: 'relative',
-                    paddingInlineStart:
-                      BASE_PADDING +
-                      (level - 1) * LEVEL_OFFSET +
-                      (level > 1 ? LINE_CONTENT_GAP : 0) +
-                      (!hasChildren ? OPTION_GAP : 0),
-                  }}
-                >
-                  {lineElements}
-                  {hasChildren && (
-                    <span
-                      role="button"
-                      tabIndex={0}
-                      aria-label={isExpanded ? 'Collapse' : 'Expand'}
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        e.preventDefault();
-                        toggleExpand(node.value);
-                      }}
-                      onKeyDown={(e) => {
-                        if (e.key === 'Enter' || e.key === ' ') {
-                          e.stopPropagation();
-                          e.preventDefault();
-                          toggleExpand(node.value);
-                        }
-                      }}
-                      onMouseDown={(e) => e.preventDefault()}
-                      style={{
-                        display: 'flex',
-                        alignItems: 'center',
-                        justifyContent: 'center',
-                        width: 20,
-                        minWidth: 20,
-                        height: 20,
-                        borderRadius: 'var(--mantine-radius-sm)',
-                        cursor: 'pointer',
-                        color: 'inherit',
-                        opacity: 0.6,
-                        transform: isExpanded ? 'rotate(0deg)' : 'rotate(-90deg)',
-                        transition: 'transform 150ms ease',
-                      }}
-                    >
-                      <ChevronIcon size={16} />
-                    </span>
-                  )}
-                  <span
-                    style={{
-                      flex: 1,
-                      overflow: 'hidden',
-                      textOverflow: 'ellipsis',
-                      whiteSpace: 'nowrap',
-                    }}
-                  >
-                    {node.label}
-                  </span>
-                  {isSelected && (
-                    <CheckIcon
-                      style={{
-                        opacity: 0.4,
-                        width: '0.8em',
-                        minWidth: '0.8em',
-                        height: '0.8em',
-                        marginInlineStart: 'auto',
-                      }}
-                    />
-                  )}
-                </Combobox.Option>
-              );
-            })}
-          </ScrollArea.Autosize>
-        </Combobox.Options>
+        <ScrollArea.Autosize mah={250} type="scroll" viewportProps={{ tabIndex: -1 }}>
+          <Combobox.Options>
+            {flatNodes.map((flatNode) => (
+              <TreeOption
+                key={flatNode.node.value}
+                flatNode={flatNode}
+                selected={value === flatNode.node.value}
+                onToggleExpand={toggleExpand}
+              />
+            ))}
+          </Combobox.Options>
+        </ScrollArea.Autosize>
       </Combobox.Dropdown>
     </Combobox>
   );

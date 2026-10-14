@@ -211,11 +211,13 @@ export function useCombobox({
         ? findElementsBySelector<HTMLDivElement>('[data-combobox-option]', list)
         : null;
 
-      if (!items) {
+      if (!items || items.length === 0) {
+        selectedOptionIndex.current = -1;
+        clearSelectedItem();
         return null;
       }
 
-      const nextIndex = index >= items!.length ? 0 : index < 0 ? items!.length - 1 : index;
+      const nextIndex = index >= items.length ? 0 : index < 0 ? items.length - 1 : index;
       selectedOptionIndex.current = nextIndex;
 
       if (items?.[nextIndex] && !items[nextIndex].hasAttribute('data-combobox-disabled')) {
@@ -324,6 +326,11 @@ export function useCombobox({
 
         if (target === 'selected') {
           setSelectedOptionId(items[index]?.id || null);
+        } else if (
+          selectedOptionId.current &&
+          !items.some((item) => item.id === selectedOptionId.current)
+        ) {
+          setSelectedOptionId(null);
         }
 
         if (options?.scrollIntoView) {

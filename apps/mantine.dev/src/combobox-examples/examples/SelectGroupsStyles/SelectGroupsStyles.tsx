@@ -23,9 +23,11 @@ export function SelectGroupsStyles() {
         <InputBase
           component="button"
           type="button"
+          aria-label="Pick value"
           pointer
           rightSection={<Combobox.Chevron />}
           onClick={() => store.toggleDropdown()}
+          onBlur={() => store.closeDropdown()}
           rightSectionPointerEvents="none"
         >
           {value || <Input.Placeholder>Pick value</Input.Placeholder>}

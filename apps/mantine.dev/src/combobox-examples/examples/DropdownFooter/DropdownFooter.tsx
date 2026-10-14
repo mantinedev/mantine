@@ -51,45 +51,52 @@ export function DropdownFooter() {
   ));
 
   return (
-    <Combobox
-      onOptionSubmit={(optionValue) => {
-        setValue(optionValue);
-        store.closeDropdown();
+    <div
+      onBlur={(event) => {
+        if (!event.currentTarget.contains(event.relatedTarget)) {
+          store.closeDropdown();
+        }
       }}
-      store={store}
-      withinPortal={false}
     >
-      <Combobox.Target>
-        <TextInput
-          label="Pick value or type anything"
-          placeholder="Pick value or type anything"
-          value={value}
-          onChange={(event) => {
-            setValue(event.currentTarget.value);
-            store.openDropdown();
-            store.updateSelectedOptionIndex();
-          }}
-          onClick={() => store.openDropdown()}
-          onFocus={() => store.openDropdown()}
-          onBlur={() => store.closeDropdown()}
-        />
-      </Combobox.Target>
+      <Combobox
+        onOptionSubmit={(optionValue) => {
+          setValue(optionValue);
+          store.closeDropdown();
+        }}
+        store={store}
+        withinPortal={false}
+      >
+        <Combobox.Target>
+          <TextInput
+            label="Pick value or type anything"
+            placeholder="Pick value or type anything"
+            value={value}
+            onChange={(event) => {
+              setValue(event.currentTarget.value);
+              store.openDropdown();
+              store.updateSelectedOptionIndex();
+            }}
+            onClick={() => store.openDropdown()}
+            onFocus={() => store.openDropdown()}
+          />
+        </Combobox.Target>
 
-      <Combobox.Dropdown>
-        <Combobox.Options>
-          <ScrollArea.Autosize mah={200} type="scroll">
-            {options.length === 0 ? <Combobox.Empty>Nothing found</Combobox.Empty> : options}
+        <Combobox.Dropdown>
+          <ScrollArea.Autosize mah={200} type="scroll" viewportProps={{ tabIndex: -1 }}>
+            <Combobox.Options>
+              {options.length === 0 ? <Combobox.Empty>Nothing found</Combobox.Empty> : options}
+            </Combobox.Options>
           </ScrollArea.Autosize>
-        </Combobox.Options>
-        <Combobox.Footer>
-          <Text fz="xs" c="dimmed">
-            Search powered by{' '}
-            <Anchor fz="xs" href="https://mantine.dev" target="_blank">
-              Mantine
-            </Anchor>
-          </Text>
-        </Combobox.Footer>
-      </Combobox.Dropdown>
-    </Combobox>
+          <Combobox.Footer>
+            <Text fz="xs">
+              Search powered by{' '}
+              <Anchor fz="xs" href="https://mantine.dev" target="_blank" rel="noopener noreferrer">
+                Mantine
+              </Anchor>
+            </Text>
+          </Combobox.Footer>
+        </Combobox.Dropdown>
+      </Combobox>
+    </div>
   );
 }

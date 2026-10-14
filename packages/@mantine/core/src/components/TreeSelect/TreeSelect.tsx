@@ -1079,9 +1079,7 @@ export const TreeSelect = genericFactory<TreeSelectFactory>((_props) => {
               onFocus?.(event);
             }}
             onBlur={(event) => {
-              if (searchable) {
-                store.closeDropdown();
-              }
+              store.closeDropdown();
               handleSearchChange(_value ? getNodeLabel(_value as string) : '');
               onBlur?.(event);
             }}

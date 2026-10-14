@@ -19,10 +19,14 @@ export function SelectCreatable() {
   const [value, setValue] = useState<string | null>(null);
   const [search, setSearch] = useState('');
 
-  const exactOptionMatch = data.some((item) => item === search);
-  const filteredOptions = exactOptionMatch
+  const trimmedSearch = search.trim();
+  const searchIsOptionLabel = data.some((item) => item === search);
+  const canCreate =
+    trimmedSearch.length > 0 &&
+    !data.some((item) => item.toLowerCase() === trimmedSearch.toLowerCase());
+  const filteredOptions = searchIsOptionLabel
     ? data
-    : data.filter((item) => item.toLowerCase().includes(search.toLowerCase().trim()));
+    : data.filter((item) => item.toLowerCase().includes(trimmedSearch.toLowerCase()));
 
   const options = filteredOptions.map((item) => (
     <Combobox.Option value={item} key={item}>
@@ -36,8 +40,9 @@ export function SelectCreatable() {
       withinPortal={false}
       onOptionSubmit={(val) => {
         if (val === '$create') {
-          setData((current) => [...current, search]);
-          setValue(search);
+          setData((current) => [...current, trimmedSearch]);
+          setValue(trimmedSearch);
+          setSearch(trimmedSearch);
         } else {
           setValue(val);
           setSearch(val);
@@ -62,6 +67,7 @@ export function SelectCreatable() {
             setSearch(value || '');
           }}
           placeholder="Search value"
+          aria-label="Search value"
           rightSectionPointerEvents="none"
         />
       </Combobox.Target>
@@ -69,9 +75,7 @@ export function SelectCreatable() {
       <Combobox.Dropdown>
         <Combobox.Options>
           {options}
-          {!exactOptionMatch && search.trim().length > 0 && (
-            <Combobox.Option value="$create">+ Create {search}</Combobox.Option>
-          )}
+          {canCreate && <Combobox.Option value="$create">+ Create {trimmedSearch}</Combobox.Option>}
         </Combobox.Options>
       </Combobox.Dropdown>
     </Combobox>

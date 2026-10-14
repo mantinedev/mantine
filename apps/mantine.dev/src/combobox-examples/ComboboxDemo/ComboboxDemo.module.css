@@ -10,7 +10,7 @@
 
 .preview {
   background-color: light-dark(var(--mantine-color-gray-0), var(--mantine-color-dark-7));
-  height: var(--preview-size);
+  min-height: var(--preview-size);
 }
 
 .header {
@@ -34,20 +34,20 @@
 
 .title {
   font-size: var(--mantine-font-size-sm);
-  font-weight: 600;
+  font-weight: var(--mantine-font-weight-medium);
+  color: var(--mantine-color-bright);
 }
 
 .description {
   font-size: var(--mantine-font-size-xs);
-  color: var(--mantine-color-gray-6);
   margin-top: 3px;
 }
 
 .inner {
   display: flex;
   justify-content: center;
-  height: 100%;
   padding-top: 180px;
+  padding-bottom: var(--mantine-spacing-xl);
 }
 
 .wrapper {

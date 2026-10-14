@@ -90,7 +90,9 @@ export function MultiSelectSelectAll() {
                   }}
                   value={search}
                   placeholder="Search values"
+                  aria-label="Search values"
                   onChange={(event) => {
+                    store.openDropdown();
                     store.updateSelectedOptionIndex();
                     setSearch(event.currentTarget.value);
                   }}
@@ -127,8 +129,8 @@ export function MultiSelectSelectAll() {
             </Group>
           </Combobox.Header>
 
-          <Combobox.Options>
-            {options.length > 0 ? options : <Combobox.Empty>Nothing found...</Combobox.Empty>}
+          <Combobox.Options aria-multiselectable>
+            {options.length > 0 ? options : <Combobox.Empty>Nothing found</Combobox.Empty>}
           </Combobox.Options>
         </Combobox.Dropdown>
       </Combobox>

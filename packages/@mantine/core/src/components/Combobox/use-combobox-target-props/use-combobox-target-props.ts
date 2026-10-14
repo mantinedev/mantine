@@ -2,10 +2,16 @@ import { useEffect, useRef, useSyncExternalStore } from 'react';
 import { findElementsBySelector, getRootElement } from '../../../core/utils';
 import { useComboboxContext } from '../Combobox.context';
 import { ComboboxStore } from '../use-combobox/use-combobox';
+import { isVirtualizedComboboxStore } from '../use-combobox/use-virtualized-combobox';
 
 const TYPEAHEAD_TIMEOUT = 500;
+const LEADING_NON_ALPHANUMERIC = /^[^\p{L}\p{N}]+/u;
 
 function selectOptionByText(store: ComboboxStore, text: string) {
+  if (isVirtualizedComboboxStore(store)) {
+    return;
+  }
+
   const root = getRootElement(store.targetRef.current);
   const items = findElementsBySelector<HTMLDivElement>(
     `#${store.getListId()} [data-combobox-option]`,
@@ -25,10 +31,12 @@ function selectOptionByText(store: ComboboxStore, text: string) {
   for (let i = 0; i < items.length; i += 1) {
     const index = (startIndex + i) % items.length;
     const item = items[index];
+    const itemText = (item.textContent || '').trim().toLowerCase();
+    const strippedText = itemText.replace(LEADING_NON_ALPHANUMERIC, '');
 
     if (
       !item.hasAttribute('data-combobox-disabled') &&
-      (item.textContent || '').trim().toLowerCase().startsWith(search)
+      (itemText.startsWith(search) || strippedText.startsWith(search))
     ) {
       store.selectOption(index);
       return;
@@ -189,10 +197,9 @@ export function useComboboxTargetProps({
         ...(withExpandedAttribute ? { role: 'combobox' as const } : {}),
         'aria-haspopup': 'listbox' as const,
         'aria-expanded': withExpandedAttribute
-          ? !!(ctx.store.getListId() && ctx.store.dropdownOpened)
+          ? !!(ctx.listId && ctx.store.dropdownOpened)
           : undefined,
-        'aria-controls':
-          ctx.store.dropdownOpened && ctx.store.getListId() ? ctx.store.getListId() : undefined,
+        'aria-controls': ctx.store.dropdownOpened && ctx.listId ? ctx.listId : undefined,
         'aria-autocomplete':
           withExpandedAttribute && targetType === 'input' && !readOnly
             ? ('list' as const)

@@ -18,7 +18,7 @@ export function ButtonMultiSelect() {
   });
 
   const options = groceries.map((item) => (
-    <Combobox.Option value={item} key={item}>
+    <Combobox.Option value={item} key={item} active={selectedItems.includes(item)}>
       <Group>
         {selectedItems.includes(item) && <CheckIcon size={12} />}
         <span>{item}</span>
@@ -29,8 +29,8 @@ export function ButtonMultiSelect() {
   return (
     <>
       <Box mb="xs">
-        <Text span size="sm" c="dimmed">
-          Selected item:{' '}
+        <Text span size="sm">
+          Selected items:{' '}
         </Text>
 
         <Text span size="sm">
@@ -50,12 +50,18 @@ export function ButtonMultiSelect() {
           );
         }}
       >
-        <Combobox.Target>
-          <Button onClick={() => store.toggleDropdown()}>Pick item</Button>
+        <Combobox.Target targetType="button">
+          <Button
+            aria-label="Pick item"
+            onClick={() => store.toggleDropdown()}
+            onBlur={() => store.closeDropdown()}
+          >
+            Pick item
+          </Button>
         </Combobox.Target>
 
         <Combobox.Dropdown>
-          <Combobox.Options>{options}</Combobox.Options>
+          <Combobox.Options aria-multiselectable>{options}</Combobox.Options>
         </Combobox.Dropdown>
       </Combobox>
     </>

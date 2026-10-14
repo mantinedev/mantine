@@ -51,7 +51,7 @@ export const COMBOBOX_EXAMPLES_DATA: ComboboxExample[] = [
     name: 'Select with options limit',
     description: '100 000 options searchable select',
     fullDescription:
-      'Limiting the number of options rendered at a time is the most efficient way to deal with large data sets. The example below shows how to use the limit prop to only render 7 options at a time while performing a search in a data set of 100,000 options.',
+      'Limiting the number of options rendered at a time is the most efficient way to deal with large data sets. The example below filters a data set of 100,000 options and stops after the first 7 matches, so only 7 options are rendered at a time.',
     type: 'select',
   },
   {
@@ -121,7 +121,7 @@ export const COMBOBOX_EXAMPLES_DATA: ComboboxExample[] = [
     name: 'Autocomplete with options limit',
     description: '100 000 options search',
     fullDescription:
-      'Limiting the number of options rendered at a time is the most efficient way to deal with large data sets. The example below shows how to use the limit prop to only render 7 options at a time while performing a search in a data set of 100,000 options.',
+      'Limiting the number of options rendered at a time is the most efficient way to deal with large data sets. The example below filters a data set of 100,000 options and stops after the first 7 matches, so only 7 options are rendered at a time.',
     type: 'autocomplete',
   },
   {
@@ -247,7 +247,7 @@ export const COMBOBOX_EXAMPLES_DATA: ComboboxExample[] = [
   {
     id: 'SelectedAnimation',
     name: 'Animate selected option',
-    description: 'Play options animation on when option is selected',
+    description: 'Animate the highlighted option',
     type: 'animations',
   },
   {
@@ -395,7 +395,7 @@ export const COMBOBOX_EXAMPLES_DATA: ComboboxExample[] = [
     name: 'Virtualized tree select',
     description: 'Virtualized tree select with large data set',
     fullDescription:
-      'A virtualized tree select using @tanstack/react-virtual to efficiently render a large tree with ~500 nodes. Supports expand/collapse with chevron icons.',
+      'A virtualized tree select using @tanstack/react-virtual to efficiently render a large tree with 292 nodes. Supports expand/collapse with chevron icons.',
     type: 'treeselect',
   },
 ];

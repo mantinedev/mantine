@@ -1,7 +1,8 @@
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { GetStylesApi } from '../../core';
 import { AccordionChevron } from '../Accordion';
 import { CheckIcon } from '../Checkbox/CheckIcon';
+import { useComboboxContext } from '../Combobox/Combobox.context';
 import { ScrollArea, ScrollAreaProps } from '../ScrollArea';
 import { UnstyledButton } from '../UnstyledButton';
 import type {
@@ -97,6 +98,17 @@ export function CascaderColumns({
 
   const columnRefs = useRef<Record<number, HTMLDivElement | null>>({});
   const safeArea = useCascaderSafeArea({ safeAreaPolygon, onFlush: onOptionMouseEnter });
+  const ctx = useComboboxContext();
+  const firstColumnId = listId ? `${listId}-column` : undefined;
+
+  useEffect(() => {
+    if (!firstColumnId) {
+      return undefined;
+    }
+
+    ctx.setListId(firstColumnId);
+    return () => ctx.setListId((current) => (current === firstColumnId ? null : current));
+  }, [firstColumnId]);
 
   return (
     <div
@@ -143,6 +155,7 @@ export function CascaderColumns({
               type="scroll"
               scrollbarSize="var(--combobox-padding)"
               role="listbox"
+              id={index === 0 ? firstColumnId : undefined}
               {...scrollAreaProps}
               {...getStyles('columnScroll')}
             >

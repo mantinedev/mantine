@@ -35,8 +35,14 @@ export function BasicButton() {
           store.closeDropdown();
         }}
       >
-        <Combobox.Target>
-          <Button onClick={() => store.toggleDropdown()}>Pick item</Button>
+        <Combobox.Target targetType="button">
+          <Button
+            aria-label="Pick item"
+            onClick={() => store.toggleDropdown()}
+            onBlur={() => store.closeDropdown()}
+          >
+            Pick item
+          </Button>
         </Combobox.Target>
 
         <Combobox.Dropdown>
@@ -45,7 +51,7 @@ export function BasicButton() {
       </Combobox>
 
       <Box mt="xs">
-        <Text span size="sm" c="dimmed">
+        <Text span size="sm">
           Selected item:{' '}
         </Text>
 

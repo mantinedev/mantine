@@ -85,6 +85,7 @@ export function SelectCategoryFilter() {
             rightSection={<Combobox.Chevron />}
             rightSectionPointerEvents="none"
             onClick={() => store.toggleDropdown()}
+            aria-label="Pick value"
             onKeyDown={(event) => {
               if (!store.isDropdownOpened()) {
                 return;

@@ -63,19 +63,29 @@ export function VirtualizedTanstack() {
   return (
     <Combobox store={store} resetSelectionOnOptionHover={false} keepMounted>
       <Combobox.Target targetType="button">
-        <InputBase component="button" onClick={() => store.toggleDropdown()} pointer>
+        <InputBase
+          component="button"
+          type="button"
+          pointer
+          aria-label="Pick a value"
+          rightSection={<Combobox.Chevron />}
+          rightSectionPointerEvents="none"
+          onClick={() => store.toggleDropdown()}
+          onBlur={() => store.closeDropdown()}
+        >
           {value || <Input.Placeholder>Pick a value</Input.Placeholder>}
         </InputBase>
       </Combobox.Target>
       <Combobox.Dropdown>
-        <Combobox.Options>
-          <ScrollArea.Autosize
-            mah={220}
-            type="scroll"
-            scrollbarSize={4}
-            viewportRef={setScrollParent}
-            onMouseDown={(event) => event.preventDefault()}
-          >
+        <ScrollArea.Autosize
+          mah={220}
+          type="scroll"
+          viewportProps={{ tabIndex: -1 }}
+          scrollbarSize={4}
+          viewportRef={setScrollParent}
+          onMouseDown={(event) => event.preventDefault()}
+        >
+          <Combobox.Options>
             <div style={{ height: virtualizer.getTotalSize(), position: 'relative' }}>
               {virtualizer.getVirtualItems().map((virtualItem) => {
                 const item = largeData[virtualItem.index];
@@ -83,6 +93,7 @@ export function VirtualizedTanstack() {
                   <Combobox.Option
                     value={item.value}
                     key={item.value}
+                    id={item.id}
                     active={virtualItem.index === activeOptionIndex}
                     selected={virtualItem.index === selectedOptionIndex}
                     onClick={() => onOptionSubmit(virtualItem.index)}
@@ -100,8 +111,8 @@ export function VirtualizedTanstack() {
                 );
               })}
             </div>
-          </ScrollArea.Autosize>
-        </Combobox.Options>
+          </Combobox.Options>
+        </ScrollArea.Autosize>
       </Combobox.Dropdown>
     </Combobox>
   );

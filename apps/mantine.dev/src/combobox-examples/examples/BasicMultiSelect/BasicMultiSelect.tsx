@@ -48,6 +48,7 @@ export function BasicMultiSelect() {
             <Combobox.EventsTarget>
               <PillsInput.Field
                 type="hidden"
+                aria-label="Pick one or more values"
                 onBlur={() => store.closeDropdown()}
                 onKeyDown={(event) => {
                   if (event.key === 'Backspace' && value.length > 0) {
@@ -62,7 +63,7 @@ export function BasicMultiSelect() {
       </Combobox.DropdownTarget>
 
       <Combobox.Dropdown>
-        <Combobox.Options>{options}</Combobox.Options>
+        <Combobox.Options aria-multiselectable>{options}</Combobox.Options>
       </Combobox.Dropdown>
     </Combobox>
   );

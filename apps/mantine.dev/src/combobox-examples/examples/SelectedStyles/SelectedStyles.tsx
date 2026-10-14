@@ -45,7 +45,9 @@ export function SelectedStyles() {
           pointer
           rightSection={<Combobox.Chevron />}
           onClick={() => store.toggleDropdown()}
+          onBlur={() => store.closeDropdown()}
           rightSectionPointerEvents="none"
+          aria-label="Pick value"
         >
           {value || <Input.Placeholder>Pick value</Input.Placeholder>}
         </InputBase>

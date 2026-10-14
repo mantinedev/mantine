@@ -5,11 +5,15 @@ export function AutocompleteDynamic() {
   const store = useCombobox();
   const [value, setValue] = useState('');
 
-  const options = ['gmail.com', 'outlook.com', 'mantine.dev'].map((item) => (
-    <Combobox.Option value={`${value}@${item}`} key={item}>
-      {`${value}@${item}`}
-    </Combobox.Option>
-  ));
+  const showOptions = value.trim().length > 0 && !value.includes('@');
+
+  const options = showOptions
+    ? ['gmail.com', 'outlook.com', 'mantine.dev'].map((item) => (
+        <Combobox.Option value={`${value}@${item}`} key={item}>
+          {`${value}@${item}`}
+        </Combobox.Option>
+      ))
+    : null;
 
   return (
     <Combobox
@@ -36,10 +40,8 @@ export function AutocompleteDynamic() {
         />
       </Combobox.Target>
 
-      <Combobox.Dropdown hidden={value.trim().length === 0 || value.includes('@')}>
-        <Combobox.Options>
-          {options.length === 0 ? <Combobox.Empty>Nothing found</Combobox.Empty> : options}
-        </Combobox.Options>
+      <Combobox.Dropdown hidden={!showOptions}>
+        <Combobox.Options>{options}</Combobox.Options>
       </Combobox.Dropdown>
     </Combobox>
   );

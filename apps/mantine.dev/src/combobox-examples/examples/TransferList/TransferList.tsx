@@ -48,41 +48,41 @@ function RenderList({ options, onTransfer, type }: RenderListProps) {
   return (
     <div className={classes.renderList} data-type={type}>
       <Combobox store={store} onOptionSubmit={handleValueSelect}>
-        <Combobox.EventsTarget>
-          <Group wrap="nowrap" gap={0} className={classes.controls}>
+        <Group wrap="nowrap" gap={0} className={classes.controls}>
+          <Combobox.EventsTarget>
             <TextInput
               placeholder="Search groceries"
               classNames={{ input: classes.input }}
-              aria-label="Search groceries"
+              aria-label={
+                type === 'forward' ? 'Search groceries, left list' : 'Search groceries, right list'
+              }
               value={search}
               onChange={(event) => {
                 setSearch(event.currentTarget.value);
                 store.updateSelectedOptionIndex();
               }}
             />
-            <ActionIcon
-              radius={0}
-              variant="default"
-              size={36}
-              className={classes.control}
-              aria-label={
-                type === 'forward'
-                  ? 'Transfer selected items right'
-                  : 'Transfer selected items left'
-              }
-              onClick={() => {
-                onTransfer(value);
-                setValue([]);
-              }}
-            >
-              <CaretRightIcon className={classes.icon} />
-            </ActionIcon>
-          </Group>
-        </Combobox.EventsTarget>
+          </Combobox.EventsTarget>
+          <ActionIcon
+            radius={0}
+            variant="default"
+            size={36}
+            className={classes.control}
+            aria-label={
+              type === 'forward' ? 'Transfer selected items right' : 'Transfer selected items left'
+            }
+            onClick={() => {
+              onTransfer(value);
+              setValue([]);
+            }}
+          >
+            <CaretRightIcon className={classes.icon} />
+          </ActionIcon>
+        </Group>
 
         <div className={classes.list}>
-          <Combobox.Options>
-            {items.length > 0 ? items : <Combobox.Empty>Nothing found....</Combobox.Empty>}
+          <Combobox.Options aria-multiselectable>
+            {items.length > 0 ? items : <Combobox.Empty>Nothing found</Combobox.Empty>}
           </Combobox.Options>
         </div>
       </Combobox>

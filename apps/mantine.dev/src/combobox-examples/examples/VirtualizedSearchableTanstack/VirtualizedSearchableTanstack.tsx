@@ -73,6 +73,7 @@ export function VirtualizedSearchableTanstack() {
       <Combobox.Target>
         <TextInput
           placeholder="Search options"
+          aria-label="Search options"
           value={search}
           onChange={(event) => {
             setSearch(event.currentTarget.value);
@@ -87,14 +88,15 @@ export function VirtualizedSearchableTanstack() {
         />
       </Combobox.Target>
       <Combobox.Dropdown hidden={filteredData.length === 0}>
-        <Combobox.Options>
-          <ScrollArea.Autosize
-            mah={220}
-            type="scroll"
-            scrollbarSize={4}
-            viewportRef={setScrollParent}
-            onMouseDown={(event) => event.preventDefault()}
-          >
+        <ScrollArea.Autosize
+          mah={220}
+          type="scroll"
+          viewportProps={{ tabIndex: -1 }}
+          scrollbarSize={4}
+          viewportRef={setScrollParent}
+          onMouseDown={(event) => event.preventDefault()}
+        >
+          <Combobox.Options>
             <div style={{ height: virtualizer.getTotalSize(), position: 'relative' }}>
               {virtualizer.getVirtualItems().map((virtualItem) => {
                 const item = filteredData[virtualItem.index];
@@ -102,6 +104,7 @@ export function VirtualizedSearchableTanstack() {
                   <Combobox.Option
                     value={item.value}
                     key={item.value}
+                    id={item.id}
                     active={item.label === value}
                     selected={virtualItem.index === selectedOptionIndex}
                     onClick={() => onOptionSubmit(virtualItem.index)}
@@ -119,8 +122,8 @@ export function VirtualizedSearchableTanstack() {
                 );
               })}
             </div>
-          </ScrollArea.Autosize>
-        </Combobox.Options>
+          </Combobox.Options>
+        </ScrollArea.Autosize>
       </Combobox.Dropdown>
     </Combobox>
   );

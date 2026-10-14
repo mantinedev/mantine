@@ -13,14 +13,17 @@ export function MultiSelectCreatable() {
   const [data, setData] = useState(groceries);
   const [value, setValue] = useState<string[]>([]);
 
-  const exactOptionMatch = data.some((item) => item === search);
+  const trimmedSearch = search.trim();
+  const canCreate =
+    trimmedSearch.length > 0 &&
+    !data.some((item) => item.toLowerCase() === trimmedSearch.toLowerCase());
 
   const handleValueSelect = (val: string) => {
     setSearch('');
 
     if (val === '$create') {
-      setData((current) => [...current, search]);
-      setValue((current) => [...current, search]);
+      setData((current) => [...current, trimmedSearch]);
+      setValue((current) => [...current, trimmedSearch]);
     } else {
       setValue((current) =>
         current.includes(val) ? current.filter((v) => v !== val) : [...current, val]
@@ -38,7 +41,7 @@ export function MultiSelectCreatable() {
   ));
 
   const options = data
-    .filter((item) => item.toLowerCase().includes(search.trim().toLowerCase()))
+    .filter((item) => item.toLowerCase().includes(trimmedSearch.toLowerCase()))
     .map((item) => (
       <Combobox.Option value={item} key={item} active={value.includes(item)}>
         <Group gap="sm">
@@ -61,7 +64,9 @@ export function MultiSelectCreatable() {
                 onBlur={() => store.closeDropdown()}
                 value={search}
                 placeholder="Search values"
+                aria-label="Search values"
                 onChange={(event) => {
+                  store.openDropdown();
                   store.updateSelectedOptionIndex();
                   setSearch(event.currentTarget.value);
                 }}
@@ -78,16 +83,10 @@ export function MultiSelectCreatable() {
       </Combobox.DropdownTarget>
 
       <Combobox.Dropdown>
-        <Combobox.Options>
+        <Combobox.Options aria-multiselectable>
           {options}
 
-          {!exactOptionMatch && search.trim().length > 0 && (
-            <Combobox.Option value="$create">+ Create {search}</Combobox.Option>
-          )}
-
-          {exactOptionMatch && search.trim().length > 0 && options.length === 0 && (
-            <Combobox.Empty>Nothing found</Combobox.Empty>
-          )}
+          {canCreate && <Combobox.Option value="$create">+ Create {trimmedSearch}</Combobox.Option>}
         </Combobox.Options>
       </Combobox.Dropdown>
     </Combobox>

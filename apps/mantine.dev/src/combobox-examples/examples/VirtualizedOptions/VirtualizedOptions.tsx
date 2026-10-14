@@ -55,19 +55,29 @@ export function VirtualizedOptions() {
   return (
     <Combobox store={store} resetSelectionOnOptionHover={false} keepMounted>
       <Combobox.Target targetType="button">
-        <InputBase component="button" onClick={() => store.toggleDropdown()} pointer>
+        <InputBase
+          component="button"
+          type="button"
+          pointer
+          aria-label="Pick a value"
+          rightSection={<Combobox.Chevron />}
+          rightSectionPointerEvents="none"
+          onClick={() => store.toggleDropdown()}
+          onBlur={() => store.closeDropdown()}
+        >
           {value || <Input.Placeholder>Pick a value</Input.Placeholder>}
         </InputBase>
       </Combobox.Target>
       <Combobox.Dropdown>
-        <Combobox.Options>
-          <ScrollArea.Autosize
-            mah={220}
-            type="scroll"
-            scrollbarSize={4}
-            viewportRef={setScrollParent}
-            onMouseDown={(event) => event.preventDefault()}
-          >
+        <ScrollArea.Autosize
+          mah={220}
+          type="scroll"
+          viewportProps={{ tabIndex: -1 }}
+          scrollbarSize={4}
+          viewportRef={setScrollParent}
+          onMouseDown={(event) => event.preventDefault()}
+        >
+          <Combobox.Options>
             <Virtuoso
               data={largeData}
               ref={virtuoso}
@@ -77,6 +87,7 @@ export function VirtualizedOptions() {
                 <Combobox.Option
                   value={item.value}
                   key={item.value}
+                  id={item.id}
                   active={index === activeOptionIndex}
                   selected={index === selectedOptionIndex}
                   onClick={() => onOptionSubmit(index)}
@@ -85,8 +96,8 @@ export function VirtualizedOptions() {
                 </Combobox.Option>
               )}
             />
-          </ScrollArea.Autosize>
-        </Combobox.Options>
+          </Combobox.Options>
+        </ScrollArea.Autosize>
       </Combobox.Dropdown>
     </Combobox>
   );

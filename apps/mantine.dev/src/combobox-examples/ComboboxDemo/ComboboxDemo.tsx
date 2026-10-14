@@ -29,7 +29,7 @@ export function ComboboxDemo({ exampleId: id }: ComboboxDemoProps) {
             </Text>
           </div>
 
-          <Badge variant="light">{metaData.type}</Badge>
+          <Badge variant="default">{metaData.type}</Badge>
         </div>
         <div className={classes.inner}>
           <div className={classes.wrapper}>

@@ -11,6 +11,11 @@ export interface ComboboxContextValue {
   resetSelectionOnOptionHover: boolean | undefined;
   readOnly: boolean | undefined;
   floatingHeight: 'viewport' | undefined;
+  /** Id of the mounted `Combobox.Options` listbox, `null` when it is not mounted */
+  listId: string | null;
+
+  /** Internal: used by `Combobox.Options` to register its id */
+  setListId: React.Dispatch<React.SetStateAction<string | null>>;
 }
 
 export const [ComboboxProvider, useComboboxContext] = createSafeContext<ComboboxContextValue>(

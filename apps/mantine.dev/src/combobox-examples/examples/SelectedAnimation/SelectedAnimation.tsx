@@ -18,8 +18,13 @@ export function SelectedAnimation() {
 
   const [value, setValue] = useState<string | null>(null);
 
-  const options = groceries.map((item) => (
-    <Combobox.Option value={item} key={item} className={classes.option}>
+  const options = groceries.map((item, index) => (
+    <Combobox.Option
+      value={item}
+      key={item}
+      className={classes.option}
+      onMouseOver={() => store.selectOption(index)}
+    >
       {item}
     </Combobox.Option>
   ));
@@ -40,7 +45,9 @@ export function SelectedAnimation() {
           pointer
           rightSection={<Combobox.Chevron />}
           onClick={() => store.toggleDropdown()}
+          onBlur={() => store.closeDropdown()}
           rightSectionPointerEvents="none"
+          aria-label="Pick value"
         >
           {value || <Input.Placeholder>Pick value</Input.Placeholder>}
         </InputBase>

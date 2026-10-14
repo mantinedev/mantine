@@ -36,13 +36,17 @@ export function SelectClearable() {
         <InputBase
           component="button"
           type="button"
+          aria-label="Pick value"
           pointer
           rightSection={
             value !== null ? (
               <CloseButton
                 size="sm"
                 onMouseDown={(event) => event.preventDefault()}
-                onClick={() => setValue(null)}
+                onClick={() => {
+                  setValue(null);
+                  store.focusTarget();
+                }}
                 aria-label="Clear value"
               />
             ) : (
@@ -50,6 +54,7 @@ export function SelectClearable() {
             )
           }
           onClick={() => store.toggleDropdown()}
+          onBlur={() => store.closeDropdown()}
           rightSectionPointerEvents={value === null ? 'none' : 'all'}
         >
           {value || <Input.Placeholder>Pick value</Input.Placeholder>}

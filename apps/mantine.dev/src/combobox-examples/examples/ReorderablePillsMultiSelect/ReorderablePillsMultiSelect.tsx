@@ -20,7 +20,7 @@ export function ReorderablePillsMultiSelect() {
   const [search, setSearch] = useState('');
   const [value, setValue] = useState<string[]>([]);
 
-  const { getPillProps } = usePillsReorder({
+  const { getPillProps, getListProps, handleInputKeyDown } = usePillsReorder({
     value,
     onChange: setValue,
     enabled: true,
@@ -60,7 +60,7 @@ export function ReorderablePillsMultiSelect() {
     <Combobox store={store} onOptionSubmit={handleValueSelect} withinPortal={false}>
       <Combobox.DropdownTarget>
         <PillsInput onClick={() => store.openDropdown()}>
-          <Pill.Group>
+          <Pill.Group {...getListProps()}>
             {values}
 
             <Combobox.EventsTarget>
@@ -69,7 +69,9 @@ export function ReorderablePillsMultiSelect() {
                 onBlur={() => store.closeDropdown()}
                 value={search}
                 placeholder="Search values"
+                aria-label="Search values"
                 onChange={(event) => {
+                  store.openDropdown();
                   store.updateSelectedOptionIndex();
                   setSearch(event.currentTarget.value);
                 }}
@@ -78,6 +80,8 @@ export function ReorderablePillsMultiSelect() {
                     event.preventDefault();
                     handleValueRemove(value[value.length - 1]);
                   }
+
+                  handleInputKeyDown(event);
                 }}
               />
             </Combobox.EventsTarget>
@@ -86,8 +90,8 @@ export function ReorderablePillsMultiSelect() {
       </Combobox.DropdownTarget>
 
       <Combobox.Dropdown>
-        <Combobox.Options>
-          {options.length > 0 ? options : <Combobox.Empty>Nothing found...</Combobox.Empty>}
+        <Combobox.Options aria-multiselectable>
+          {options.length > 0 ? options : <Combobox.Empty>Nothing found</Combobox.Empty>}
         </Combobox.Options>
       </Combobox.Dropdown>
     </Combobox>

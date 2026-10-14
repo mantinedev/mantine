@@ -1,4 +1,4 @@
-import { useId } from 'react';
+import { useEffect, useId } from 'react';
 import {
   Box,
   BoxProps,
@@ -10,6 +10,7 @@ import {
   useProps,
 } from '../../../core';
 import { useComboboxContext } from '../Combobox.context';
+import { isVirtualizedComboboxStore } from '../use-combobox/use-virtualized-combobox';
 import classes from '../Combobox.module.css';
 
 export type ComboboxOptionStylesNames = 'option';
@@ -19,7 +20,7 @@ export interface ComboboxOptionProps
   /** Option value */
   value: Primitive;
 
-  /** Current active state */
+  /** Current active state, also sets `aria-selected` on the option element */
   active?: boolean;
 
   /** Disabled state */
@@ -58,12 +59,27 @@ export const ComboboxOption = factory<ComboboxOptionFactory>((_props) => {
   const ctx = useComboboxContext();
   const uuid = useId();
   const _id = id || uuid;
+  const store = ctx.store;
+
+  useEffect(
+    () => () => {
+      if (isVirtualizedComboboxStore(store)) {
+        return;
+      }
+
+      if (store.getSelectedOptionId() === _id) {
+        store.updateSelectedOptionIndex('selected');
+      }
+    },
+    [_id]
+  );
 
   return (
     // eslint-disable-next-line jsx-a11y/interactive-supports-focus -- Combobox uses aria-activedescendant pattern: focus stays on the target, options are highlighted via aria-activedescendant rather than DOM focus
     <Box
       {...ctx.getStyles('option', { className, classNames, styles, style })}
       aria-disabled={disabled || undefined}
+      aria-selected={active}
       {...others}
       id={_id}
       mod={[

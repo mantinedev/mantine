@@ -131,6 +131,38 @@ describe('@mantine/core/Cascader', () => {
     expect(screen.queryByRole('option', { name: 'Asia' })).toBe(null);
   });
 
+  it('sets aria-expanded and aria-controls on the target when columns are displayed', async () => {
+    render(<Cascader {...defaultProps} />);
+    const input = screen.getByRole('combobox');
+    await userEvent.click(input);
+    expect(input).toHaveAttribute('aria-expanded', 'true');
+    const popup = document.getElementById(input.getAttribute('aria-controls')!);
+    expect(popup).toHaveAttribute('role', 'listbox');
+    expect(getColumns()[0]).toContainElement(popup);
+    await userEvent.click(input);
+    expect(input).toHaveAttribute('aria-expanded', 'false');
+    expect(input).not.toHaveAttribute('aria-controls');
+  });
+
+  it('points aria-controls at the displayed popup when search starts and is cleared', async () => {
+    render(<Cascader {...defaultProps} searchable />);
+    const input = screen.getByRole('combobox');
+    await userEvent.click(input);
+    const firstColumn = document.getElementById(input.getAttribute('aria-controls')!);
+    expect(firstColumn).toHaveAttribute('role', 'listbox');
+    expect(getColumns()[0]).toContainElement(firstColumn);
+    await userEvent.type(input, 'par');
+    expect(input).toHaveAttribute('aria-expanded', 'true');
+    expect(document.getElementById(input.getAttribute('aria-controls')!)).toBe(
+      screen.getByRole('listbox')
+    );
+    await userEvent.clear(input);
+    expect(input).toHaveAttribute('aria-expanded', 'true');
+    const clearedPopup = document.getElementById(input.getAttribute('aria-controls')!);
+    expect(clearedPopup).toHaveAttribute('role', 'listbox');
+    expect(getColumns()[0]).toContainElement(clearedPopup);
+  });
+
   it('controls dropdown state with dropdownOpened prop', () => {
     const { rerender } = render(<Cascader {...defaultProps} dropdownOpened />);
     expect(screen.getByRole('option', { name: 'Asia' })).toBeVisible();

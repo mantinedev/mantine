@@ -15,7 +15,6 @@ export function SelectDropdownSearch() {
   const store = useCombobox({
     onDropdownClose: () => {
       store.resetSelectedOption();
-      store.focusTarget();
       setSearch('');
     },
 
@@ -35,37 +34,51 @@ export function SelectDropdownSearch() {
     ));
 
   return (
-    <Combobox
-      store={store}
-      withinPortal={false}
-      onOptionSubmit={(val) => {
-        setValue(val);
-        store.closeDropdown();
+    <div
+      onBlur={(event) => {
+        if (!event.currentTarget.contains(event.relatedTarget)) {
+          store.closeDropdown();
+        }
       }}
     >
-      <Combobox.Target targetType="button">
-        <InputBase
-          component="button"
-          type="button"
-          pointer
-          rightSection={<Combobox.Chevron />}
-          onClick={() => store.toggleDropdown()}
-          rightSectionPointerEvents="none"
-        >
-          {value || <Input.Placeholder>Pick value</Input.Placeholder>}
-        </InputBase>
-      </Combobox.Target>
+      <Combobox
+        store={store}
+        withinPortal={false}
+        onOptionSubmit={(val) => {
+          setValue(val);
+          store.closeDropdown();
+          store.focusTarget();
+        }}
+      >
+        <Combobox.Target targetType="button" withAriaAttributes={false}>
+          <InputBase
+            component="button"
+            type="button"
+            pointer
+            rightSection={<Combobox.Chevron />}
+            onClick={() => store.toggleDropdown()}
+            rightSectionPointerEvents="none"
+          >
+            {value || <Input.Placeholder>Pick value</Input.Placeholder>}
+          </InputBase>
+        </Combobox.Target>
 
-      <Combobox.Dropdown>
-        <Combobox.Search
-          value={search}
-          onChange={(event) => setSearch(event.currentTarget.value)}
-          placeholder="Search groceries"
-        />
-        <Combobox.Options>
-          {options.length > 0 ? options : <Combobox.Empty>Nothing found</Combobox.Empty>}
-        </Combobox.Options>
-      </Combobox.Dropdown>
-    </Combobox>
+        <Combobox.Dropdown>
+          <Combobox.Search
+            value={search}
+            onChange={(event) => setSearch(event.currentTarget.value)}
+            onKeyDown={(event) => {
+              if (event.key === 'Escape') {
+                store.focusTarget();
+              }
+            }}
+            placeholder="Search groceries"
+          />
+          <Combobox.Options>
+            {options.length > 0 ? options : <Combobox.Empty>Nothing found</Combobox.Empty>}
+          </Combobox.Options>
+        </Combobox.Dropdown>
+      </Combobox>
+    </div>
   );
 }

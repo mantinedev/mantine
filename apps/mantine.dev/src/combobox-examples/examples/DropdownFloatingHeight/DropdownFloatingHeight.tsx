@@ -122,11 +122,15 @@ export function DropdownFloatingHeight() {
       </Combobox.Target>
 
       <Combobox.Dropdown>
-        <Combobox.Options>
-          <ScrollArea.Autosize mah="var(--combobox-floating-options-max-height)" type="scroll">
+        <ScrollArea.Autosize
+          mah="var(--combobox-floating-options-max-height)"
+          type="scroll"
+          viewportProps={{ tabIndex: -1 }}
+        >
+          <Combobox.Options>
             {options.length === 0 ? <Combobox.Empty>Nothing found</Combobox.Empty> : options}
-          </ScrollArea.Autosize>
-        </Combobox.Options>
+          </Combobox.Options>
+        </ScrollArea.Autosize>
       </Combobox.Dropdown>
     </Combobox>
   );

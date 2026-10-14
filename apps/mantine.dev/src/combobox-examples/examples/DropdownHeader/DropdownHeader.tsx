@@ -76,14 +76,14 @@ export function DropdownHeader() {
       </Combobox.Target>
 
       <Combobox.Dropdown>
-        <Combobox.Options>
-          <Combobox.Header>
-            <Text fz="xs">Note: Carrots are not currently available</Text>
-          </Combobox.Header>
-          <ScrollArea.Autosize mah={200} type="scroll">
+        <Combobox.Header>
+          <Text fz="xs">Note: Carrots are not currently available</Text>
+        </Combobox.Header>
+        <ScrollArea.Autosize mah={200} type="scroll" viewportProps={{ tabIndex: -1 }}>
+          <Combobox.Options>
             {options.length === 0 ? <Combobox.Empty>Nothing found</Combobox.Empty> : options}
-          </ScrollArea.Autosize>
-        </Combobox.Options>
+          </Combobox.Options>
+        </ScrollArea.Autosize>
       </Combobox.Dropdown>
     </Combobox>
   );

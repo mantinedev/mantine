@@ -49,6 +49,8 @@ export function SelectOptionDetails() {
           rightSection={<Combobox.Chevron />}
           rightSectionPointerEvents="none"
           onClick={() => store.toggleDropdown()}
+          onBlur={() => store.closeDropdown()}
+          aria-label="Pick assignee"
         >
           {selectedMember?.name || <Input.Placeholder>Pick assignee</Input.Placeholder>}
         </InputBase>

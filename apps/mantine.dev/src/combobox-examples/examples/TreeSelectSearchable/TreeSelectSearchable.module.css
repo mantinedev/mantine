@@ -1,0 +1,94 @@
+.option {
+  --tree-line-gap: 0rem;
+  --tree-leaf-gap: 0rem;
+
+  display: flex;
+  align-items: center;
+  gap: rem(6px);
+  position: relative;
+  padding-inline-start: calc(
+    rem(8px) + (var(--level) - 1) * rem(20px) + var(--tree-line-gap) + var(--tree-leaf-gap)
+  );
+
+  &:where([data-nested]) {
+    --tree-line-gap: rem(5px);
+  }
+
+  &:where([data-leaf]) {
+    --tree-leaf-gap: rem(6px);
+  }
+}
+
+.guide,
+.connector,
+.elbow {
+  position: absolute;
+  pointer-events: none;
+}
+
+.guide,
+.connector {
+  top: 0;
+  bottom: 0;
+  width: 0;
+  border-inline-start: 1px solid var(--mantine-color-default-border);
+}
+
+.guide {
+  inset-inline-start: calc(rem(8px) + var(--guide-index) * rem(20px) + rem(10px));
+}
+
+.connector {
+  inset-inline-start: calc(rem(8px) + (var(--level) - 1) * rem(20px) - rem(10px));
+
+  &:where([data-last]) {
+    bottom: auto;
+    height: 50%;
+  }
+}
+
+.elbow {
+  top: 50%;
+  height: 0;
+  width: rem(10px);
+  border-top: 1px solid var(--mantine-color-default-border);
+  inset-inline-start: calc(rem(8px) + (var(--level) - 1) * rem(20px) - rem(10px));
+}
+
+.chevron {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: rem(20px);
+  min-width: rem(20px);
+  height: rem(20px);
+  border-radius: var(--mantine-radius-sm);
+  cursor: pointer;
+  color: inherit;
+  opacity: 0.6;
+  transform: rotate(-90deg);
+  transition: transform 150ms ease;
+
+  &:where([data-expanded]) {
+    transform: rotate(0deg);
+  }
+
+  &:where([data-disabled]) {
+    cursor: default;
+  }
+}
+
+.label {
+  flex: 1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.check {
+  opacity: 0.4;
+  width: 0.8em;
+  min-width: 0.8em;
+  height: 0.8em;
+  margin-inline-start: auto;
+}

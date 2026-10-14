@@ -1,5 +1,6 @@
 import { type KeyboardEvent, useState } from 'react';
 import {
+  Box,
   Checkbox,
   Combobox,
   Input,
@@ -8,6 +9,7 @@ import {
   ScrollArea,
   useCombobox,
 } from '@mantine/core';
+import classes from './TreeMultiSelectCombobox.module.css';
 
 interface TreeNode {
   value: string;
@@ -24,11 +26,6 @@ interface FlatNode {
   isLastChild: boolean;
   lineGuides: boolean[];
 }
-
-const LEVEL_OFFSET = 20;
-const BASE_PADDING = 8;
-const LINE_CONTENT_GAP = 5;
-const OPTION_GAP = 6;
 
 const data: TreeNode[] = [
   {
@@ -112,7 +109,7 @@ function getLeafValues(node: TreeNode): string[] {
   return node.children.flatMap(getLeafValues);
 }
 
-function findLabel(nodes: TreeNode[], value: string): string {
+function findLabel(nodes: TreeNode[], value: string): string | null {
   for (const node of nodes) {
     if (node.value === value) {
       return node.label;
@@ -124,7 +121,7 @@ function findLabel(nodes: TreeNode[], value: string): string {
       }
     }
   }
-  return value;
+  return null;
 }
 
 function isChecked(node: TreeNode, selected: string[]): boolean {
@@ -161,111 +158,52 @@ function findNode(nodes: TreeNode[], value: string): TreeNode | null {
 function TreeOption({
   flatNode,
   selected,
-  expanded,
   onToggleExpand,
 }: {
   flatNode: FlatNode;
   selected: string[];
-  expanded: Record<string, boolean>;
   onToggleExpand: (value: string) => void;
 }) {
-  const { node, level, hasChildren, isLastChild, lineGuides } = flatNode;
+  const { node, level, hasChildren, expanded, isLastChild, lineGuides } = flatNode;
   const checked = isChecked(node, selected);
   const indeterminate = isIndeterminate(node, selected);
-  const isExpanded = !!expanded[node.value];
-
-  const lineElements =
-    level > 1 ? (
-      <>
-        {lineGuides.map((show, g) =>
-          show ? (
-            <span
-              key={`g${g}`}
-              style={{
-                position: 'absolute',
-                top: 0,
-                bottom: 0,
-                width: 0,
-                borderInlineStart: '1px solid var(--mantine-color-default-border)',
-                pointerEvents: 'none',
-                insetInlineStart: BASE_PADDING + (g + 1) * LEVEL_OFFSET - LEVEL_OFFSET / 2,
-              }}
-            />
-          ) : null
-        )}
-        <span
-          style={{
-            position: 'absolute',
-            top: 0,
-            width: 0,
-            borderInlineStart: '1px solid var(--mantine-color-default-border)',
-            pointerEvents: 'none',
-            insetInlineStart: BASE_PADDING + (level - 1) * LEVEL_OFFSET - LEVEL_OFFSET / 2,
-            ...(isLastChild ? { bottom: 'auto', height: '50%' } : { bottom: 0 }),
-          }}
-        />
-        <span
-          style={{
-            position: 'absolute',
-            top: '50%',
-            height: 0,
-            borderTop: '1px solid var(--mantine-color-default-border)',
-            pointerEvents: 'none',
-            insetInlineStart: BASE_PADDING + (level - 1) * LEVEL_OFFSET - LEVEL_OFFSET / 2,
-            width: LEVEL_OFFSET / 2,
-          }}
-        />
-      </>
-    ) : null;
 
   return (
     <Combobox.Option
       value={node.value}
-      style={{
-        display: 'flex',
-        alignItems: 'center',
-        gap: 6,
-        position: 'relative',
-        paddingInlineStart:
-          BASE_PADDING +
-          (level - 1) * LEVEL_OFFSET +
-          (level > 1 ? LINE_CONTENT_GAP : 0) +
-          (!hasChildren ? OPTION_GAP : 0),
-      }}
+      active={checked}
+      className={classes.option}
+      mod={{ nested: level > 1, leaf: !hasChildren }}
+      style={{ '--level': level }}
     >
-      {lineElements}
+      {level > 1 && (
+        <>
+          {lineGuides.map(
+            (show, index) =>
+              show && (
+                <Box
+                  key={index}
+                  component="span"
+                  className={classes.guide}
+                  style={{ '--guide-index': index }}
+                />
+              )
+          )}
+          <span className={classes.connector} data-last={isLastChild || undefined} />
+          <span className={classes.elbow} />
+        </>
+      )}
       {hasChildren && (
         <span
-          role="button"
-          tabIndex={0}
-          aria-label={isExpanded ? 'Collapse' : 'Expand'}
-          onClick={(e) => {
-            e.stopPropagation();
-            e.preventDefault();
+          aria-hidden
+          className={classes.chevron}
+          data-expanded={expanded || undefined}
+          onClick={(event) => {
+            event.stopPropagation();
+            event.preventDefault();
             onToggleExpand(node.value);
           }}
-          onKeyDown={(e) => {
-            if (e.key === 'Enter' || e.key === ' ') {
-              e.stopPropagation();
-              e.preventDefault();
-              onToggleExpand(node.value);
-            }
-          }}
-          onMouseDown={(e) => e.preventDefault()}
-          style={{
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            width: 20,
-            minWidth: 20,
-            height: 20,
-            borderRadius: 'var(--mantine-radius-sm)',
-            cursor: 'pointer',
-            color: 'inherit',
-            opacity: 0.6,
-            transform: isExpanded ? 'rotate(0deg)' : 'rotate(-90deg)',
-            transition: 'transform 150ms ease',
-          }}
+          onMouseDown={(event) => event.preventDefault()}
         >
           <ChevronIcon size={16} />
         </span>
@@ -275,9 +213,7 @@ function TreeOption({
         indeterminate={!checked && indeterminate}
         size="18px"
       />
-      <span style={{ flex: 1, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
-        {node.label}
-      </span>
+      <span className={classes.label}>{node.label}</span>
     </Combobox.Option>
   );
 }
@@ -357,7 +293,7 @@ export function TreeMultiSelectCombobox() {
       withRemoveButton
       onRemove={() => setSelected((prev) => prev.filter((v) => v !== item))}
     >
-      {findLabel(data, item)}
+      {findLabel(data, item) ?? item}
     </Pill>
   ));
 
@@ -373,26 +309,30 @@ export function TreeMultiSelectCombobox() {
           <Pill.Group>
             {pills.length > 0 ? pills : <Input.Placeholder>Pick technologies</Input.Placeholder>}
             <Combobox.EventsTarget>
-              <PillsInput.Field type="hidden" onKeyDown={handleKeyDown} />
+              <PillsInput.Field
+                type="hidden"
+                aria-label="Pick technologies"
+                onKeyDown={handleKeyDown}
+                onBlur={() => store.closeDropdown()}
+              />
             </Combobox.EventsTarget>
           </Pill.Group>
         </PillsInput>
       </Combobox.DropdownTarget>
 
       <Combobox.Dropdown>
-        <Combobox.Options>
-          <ScrollArea.Autosize mah={250} type="scroll">
+        <ScrollArea.Autosize mah={250} type="scroll" viewportProps={{ tabIndex: -1 }}>
+          <Combobox.Options aria-multiselectable>
             {flatNodes.map((flatNode) => (
               <TreeOption
                 key={flatNode.node.value}
                 flatNode={flatNode}
                 selected={selected}
-                expanded={expanded}
                 onToggleExpand={toggleExpand}
               />
             ))}
-          </ScrollArea.Autosize>
-        </Combobox.Options>
+          </Combobox.Options>
+        </ScrollArea.Autosize>
       </Combobox.Dropdown>
     </Combobox>
   );

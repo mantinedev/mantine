@@ -67,6 +67,7 @@ export function SelectGroupsSearchable() {
             setSearch(value || '');
           }}
           placeholder="Search value"
+          aria-label="Search value"
           rightSectionPointerEvents="none"
         />
       </Combobox.Target>

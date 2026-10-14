@@ -183,6 +183,26 @@ describe('@mantine/core/TreeSelect', () => {
       await userEvent.click(screen.getByRole('option', { name: 'Milk' }));
       expect(document.querySelector('input[name="test-tree-select"]')).toHaveValue('milk');
     });
+
+    it('closes the dropdown when focus leaves the non-searchable input', async () => {
+      render(
+        <>
+          <TreeSelect {...defaultProps} />
+          <button type="button">Next</button>
+        </>
+      );
+      const input = screen.getByRole('combobox');
+      await userEvent.click(input);
+      expect(input).toHaveAttribute('aria-expanded', 'true');
+
+      await userEvent.click(screen.getAllByRole('button', { name: 'Expand' })[0]);
+      expect(screen.getByRole('option', { name: 'Apple' })).toBeInTheDocument();
+      expect(input).toHaveAttribute('aria-expanded', 'true');
+
+      await userEvent.tab();
+      expect(screen.getByRole('button', { name: 'Next' })).toHaveFocus();
+      expect(input).toHaveAttribute('aria-expanded', 'false');
+    });
   });
 
   describe('multiple mode', () => {

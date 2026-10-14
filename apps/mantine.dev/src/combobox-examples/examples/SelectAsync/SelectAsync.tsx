@@ -54,9 +54,11 @@ export function SelectAsync() {
         <InputBase
           component="button"
           type="button"
+          aria-label="Pick value"
           pointer
           rightSection={loading ? <Loader size={18} /> : <Combobox.Chevron />}
           onClick={() => store.toggleDropdown()}
+          onBlur={() => store.closeDropdown()}
           rightSectionPointerEvents="none"
         >
           {value || <Input.Placeholder>Pick value</Input.Placeholder>}
@@ -65,7 +67,7 @@ export function SelectAsync() {
 
       <Combobox.Dropdown>
         <Combobox.Options>
-          {loading ? <Combobox.Empty>Loading....</Combobox.Empty> : options}
+          {loading ? <Combobox.Empty>Loading…</Combobox.Empty> : options}
         </Combobox.Options>
       </Combobox.Dropdown>
     </Combobox>

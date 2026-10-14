@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import {
   createVarsResolver,
   ExtendComponent,
@@ -187,6 +188,7 @@ export const Combobox = (_props: ComboboxProps) => {
       : middlewares;
 
   const store = useController(useCombobox, controlledStore, {});
+  const [listId, setListId] = useState<string | null>(null);
 
   const getStyles = useStyles<ComboboxFactory>({
     name: __staticSelector || 'Combobox',
@@ -215,6 +217,8 @@ export const Combobox = (_props: ComboboxProps) => {
         resetSelectionOnOptionHover,
         readOnly,
         floatingHeight,
+        listId,
+        setListId,
       }}
     >
       <Popover

@@ -365,6 +365,8 @@ compared to the `useCombobox` hook. In `useVirtualizedCombobox` hook all operati
 option indexing do not rely on the actual DOM structure, instead, you need to preserve values in
 React state and pass them to the hook.
 
+Button targets do not support typeahead with `useVirtualizedCombobox`: only rendered options are known to the combobox.
+
 `useVirtualizedCombobox` does not depend on any specific virtualization library.
 The recommended option is [@tanstack/react-virtual](https://tanstack.com/virtual/latest):
 

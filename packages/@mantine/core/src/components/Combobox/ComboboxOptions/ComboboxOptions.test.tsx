@@ -1,4 +1,4 @@
-import { createContextContainer, tests } from '@mantine-tests/core';
+import { createContextContainer, render, screen, tests } from '@mantine-tests/core';
 import { Combobox } from '../Combobox';
 import {
   ComboboxOptions,
@@ -27,5 +27,15 @@ describe('@mantine/core/ComboboxOptions', () => {
     component: ComboboxOptions,
     props: defaultProps,
     error: 'Combobox component was not found in tree',
+  });
+
+  it('is not a Tab stop by default', () => {
+    render(<TestContainer />);
+    expect(screen.getByRole('listbox')).toHaveAttribute('tabindex', '-1');
+  });
+
+  it('lets tabIndex prop override the default', () => {
+    render(<TestContainer tabIndex={0} />);
+    expect(screen.getByRole('listbox')).toHaveAttribute('tabindex', '0');
   });
 });

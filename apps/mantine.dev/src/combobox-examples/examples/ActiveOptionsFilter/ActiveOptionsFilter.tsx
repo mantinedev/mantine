@@ -6,15 +6,14 @@ const groceries = ['🍎 Apples', '🍌 Bananas', '🥦 Broccoli', '🥕 Carrots
 export function ActiveOptionsFilter() {
   const store = useCombobox({
     onDropdownClose: () => store.resetSelectedOption(),
-    onDropdownOpen: () => store.updateSelectedOptionIndex('active'),
   });
 
   const [value, setValue] = useState<string[]>([]);
 
-  const handleValueSelect = (val: string) =>
-    setValue((current) =>
-      current.includes(val) ? current.filter((v) => v !== val) : [...current, val]
-    );
+  const handleValueSelect = (val: string) => {
+    setValue((current) => [...current, val]);
+    store.resetSelectedOption();
+  };
 
   const handleValueRemove = (val: string) =>
     setValue((current) => current.filter((v) => v !== val));
@@ -28,7 +27,7 @@ export function ActiveOptionsFilter() {
   const options = groceries
     .filter((item) => !value.includes(item))
     .map((item) => (
-      <Combobox.Option value={item} key={item} active={value.includes(item)}>
+      <Combobox.Option value={item} key={item}>
         {item}
       </Combobox.Option>
     ));
@@ -47,6 +46,7 @@ export function ActiveOptionsFilter() {
             <Combobox.EventsTarget>
               <PillsInput.Field
                 type="hidden"
+                aria-label="Pick one or more values"
                 onBlur={() => store.closeDropdown()}
                 onKeyDown={(event) => {
                   if (event.key === 'Backspace' && value.length > 0) {
@@ -61,7 +61,7 @@ export function ActiveOptionsFilter() {
       </Combobox.DropdownTarget>
 
       <Combobox.Dropdown>
-        <Combobox.Options>
+        <Combobox.Options aria-multiselectable>
           {options.length === 0 ? <Combobox.Empty>All options selected</Combobox.Empty> : options}
         </Combobox.Options>
       </Combobox.Dropdown>

@@ -11,7 +11,9 @@ const groceries = [
 ];
 
 export function AutocompleteClearable() {
-  const store = useCombobox();
+  const store = useCombobox({
+    onDropdownClose: () => store.resetSelectedOption(),
+  });
   const [value, setValue] = useState('');
   const shouldFilterOptions = !groceries.some((item) => item === value);
   const filteredOptions = shouldFilterOptions
@@ -51,7 +53,10 @@ export function AutocompleteClearable() {
               <CloseButton
                 size="sm"
                 onMouseDown={(event) => event.preventDefault()}
-                onClick={() => setValue('')}
+                onClick={() => {
+                  setValue('');
+                  store.focusTarget();
+                }}
                 aria-label="Clear value"
               />
             )
