@@ -15,20 +15,50 @@ It displays hierarchical data as a set of nested rectangles:
 
 Each data item can have a `children` array. Children inherit the `color` of their parent node:
 
-<Demo data={TreemapDemos.nestedDataDemo} />
+<Demo data={TreemapDemos.nestedData} />
 
 ## Node color
 
-`color` accepts theme colors and any valid CSS color:
+`color` accepts theme colors and any valid CSS color.
+Nodes without `color` get a color from a default palette:
 
 <Demo data={TreemapDemos.color} />
 
 ## autoContrast
 
-Label color is adjusted to the node background color when [theme.autoContrast](/theming/theme-object/#autocontrast) is enabled.
-Set `autoContrast={false}` to disable it:
+Labels are black or white depending on the node color.
+Set `autoContrast={false}` to always use white labels:
 
 <Demo data={TreemapDemos.autoContrast} />
+
+## Text color
+
+Set `textColor` to use the same label color on all nodes:
+
+<Demo data={TreemapDemos.textColor} />
+
+## Value formatter
+
+Use `valueFormatter` to format values in the tooltip:
+
+<Demo data={TreemapDemos.valueFormatter} />
+
+## Data key
+
+By default, node values are read from the `value` key. Set `dataKey` to use another key:
+
+```tsx
+import { Treemap } from '@mantine/charts';
+
+const data = [
+  { name: 'USA', population: 340, color: 'indigo.8' },
+  { name: 'Japan', population: 124, color: 'teal.8' },
+];
+
+function Demo() {
+  return <Treemap data={data} dataKey="population" />;
+}
+```
 
 ## Node stroke
 

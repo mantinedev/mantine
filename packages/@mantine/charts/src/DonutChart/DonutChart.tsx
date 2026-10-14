@@ -303,7 +303,7 @@ export const DonutChart = factory<DonutChartFactory>((_props) => {
           {withTooltip && (
             <Tooltip
               animationDuration={tooltipAnimationDuration}
-              isAnimationActive={false}
+              isAnimationActive={!!tooltipAnimationDuration}
               content={({ payload }) => (
                 <ChartTooltip
                   payload={data}

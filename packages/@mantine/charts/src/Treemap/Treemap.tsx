@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import {
   Treemap as RechartsTreemap,
   TreemapProps as RechartsTreemapProps,
@@ -68,7 +68,7 @@ export interface TreemapProps
   /** Controls color of the node stroke, by default depends on color scheme @category appearance */
   strokeColor?: MantineColor;
 
-  /** Controls text color of labels @default dimmed @category appearance */
+  /** Controls text color of labels. If not set, labels are black or white depending on `autoContrast` @category appearance */
   textColor?: MantineColor;
 
   /** Controls chart height @default 300 @category appearance */
@@ -80,7 +80,7 @@ export interface TreemapProps
   /** A function to format values inside the tooltip @category appearance */
   valueFormatter?: (value: number) => string;
 
-  /** Determines whether text color should be adjusted based on background color to improve contrast @category appearance */
+  /** Determines whether label color should be black or white depending on the node fill to improve contrast. Ignored when `textColor` is set @default theme.autoContrast @category appearance */
   autoContrast?: boolean;
 
   /** Additional elements rendered inside `Treemap` component @category appearance */
@@ -110,6 +110,23 @@ const varsResolver = createVarsResolver<TreemapFactory>((theme, { strokeColor, h
   },
 }));
 
+const FALLBACK_COLORS = ['blue', 'teal', 'orange', 'grape', 'cyan', 'pink', 'lime', 'indigo'];
+const LABEL_FONT_SIZE = 12;
+const LABEL_LINE_HEIGHT = 16;
+const LABEL_PADDING = 4;
+const LABEL_MIN_WIDTH = LABEL_FONT_SIZE * 2;
+const LABEL_MIN_HEIGHT = 20;
+
+interface ResolvedTreemapNode {
+  name: string;
+  value?: number;
+  color?: MantineColor;
+  fill: string;
+  labelColor: string;
+  children?: ResolvedTreemapNode[];
+  [key: string]: unknown;
+}
+
 interface TreemapContentProps {
   x: number;
   y: number;
@@ -117,9 +134,8 @@ interface TreemapContentProps {
   height: number;
   depth: number;
   name: string;
-  resolvedColors: Record<string, string>;
-  resolvedLabelColors: Record<string, string>;
-  index: number;
+  fill?: string;
+  labelColor?: string;
   strokeWidth: number;
 }
 
@@ -130,14 +146,12 @@ function TreemapContent({
   height,
   depth,
   name,
-  resolvedColors,
-  resolvedLabelColors,
-  index,
+  fill,
+  labelColor,
   strokeWidth,
 }: TreemapContentProps) {
-  const fill = resolvedColors[name] || `var(--mantine-color-blue-${(index % 9) + 1})`;
-  const labelColor = resolvedLabelColors[name] || 'var(--mantine-color-white)';
-  const showLabel = width > 30 && height > 20;
+  const labelWidth = width - LABEL_PADDING * 2;
+  const withLabel = depth >= 1 && height > LABEL_MIN_HEIGHT && labelWidth >= LABEL_MIN_WIDTH;
 
   return (
     <g>
@@ -150,58 +164,66 @@ function TreemapContent({
         stroke="var(--chart-stroke-color, var(--mantine-color-body))"
         strokeWidth={depth >= 1 ? strokeWidth : 0}
       />
-      {depth >= 1 && showLabel && (
-        <text
-          x={x + width / 2}
-          y={y + height / 2}
-          textAnchor="middle"
-          dominantBaseline="central"
-          fill={labelColor}
-          fontSize={12}
-          fontFamily="var(--mantine-font-family)"
+      {withLabel && (
+        <foreignObject
+          x={x + LABEL_PADDING}
+          y={y + (height - LABEL_LINE_HEIGHT) / 2}
+          width={labelWidth}
+          height={LABEL_LINE_HEIGHT}
         >
-          {name}
-        </text>
+          <div
+            style={{
+              color: labelColor,
+              fontSize: LABEL_FONT_SIZE,
+              lineHeight: `${LABEL_LINE_HEIGHT}px`,
+              fontFamily: 'var(--mantine-font-family)',
+              textAlign: 'center',
+              whiteSpace: 'nowrap',
+              overflow: 'hidden',
+              textOverflow: 'ellipsis',
+            }}
+          >
+            {name}
+          </div>
+        </foreignObject>
       )}
     </g>
   );
 }
 
-function resolveColors(
-  data: TreemapData[],
-  theme: MantineTheme,
-  parentColor?: string
-): Record<string, string> {
-  const result: Record<string, string> = {};
-  for (const item of data) {
-    const color = item.color || parentColor;
-    if (color) {
-      result[item.name] = parseThemeColor({ color, theme }).value;
-    }
-    if (item.children) {
-      Object.assign(result, resolveColors(item.children, theme, color));
-    }
-  }
-  return result;
+interface ResolveDataOptions {
+  theme: MantineTheme;
+  autoContrast: boolean;
+  textColor: string | undefined;
 }
 
-function resolveLabelColors(
-  resolvedColors: Record<string, string>,
-  autoContrast: boolean,
-  luminanceThreshold: number,
-  textColor?: string
-): Record<string, string> {
-  const result: Record<string, string> = {};
-  for (const [name, color] of Object.entries(resolvedColors)) {
-    if (textColor) {
-      result[name] = textColor;
-    } else if (autoContrast) {
-      result[name] = isLightColor(color, luminanceThreshold)
+function resolveData(
+  data: TreemapData[],
+  options: ResolveDataOptions,
+  parentFill?: string
+): ResolvedTreemapNode[] {
+  return data.map((item, index) => {
+    const fill = item.color
+      ? parseThemeColor({ color: item.color, theme: options.theme }).value
+      : parentFill ||
+        parseThemeColor({
+          color: `${FALLBACK_COLORS[index % FALLBACK_COLORS.length]}.6`,
+          theme: options.theme,
+        }).value;
+
+    const labelColor =
+      options.textColor ||
+      (options.autoContrast && isLightColor(fill, options.theme.luminanceThreshold)
         ? 'var(--mantine-color-black)'
-        : 'var(--mantine-color-white)';
-    }
-  }
-  return result;
+        : 'var(--mantine-color-white)');
+
+    return {
+      ...item,
+      fill,
+      labelColor,
+      children: item.children ? resolveData(item.children, options, fill) : undefined,
+    };
+  });
 }
 
 export const Treemap = factory<TreemapFactory>((_props) => {
@@ -232,14 +254,11 @@ export const Treemap = factory<TreemapFactory>((_props) => {
   } = props;
 
   const theme = useMantineTheme();
-  const resolvedColors = resolveColors(data, theme);
   const _autoContrast = getAutoContrastValue(autoContrast, theme);
   const _textColor = textColor ? getThemeColor(textColor, theme) : undefined;
-  const resolvedLabelColors = resolveLabelColors(
-    resolvedColors,
-    _autoContrast,
-    theme.luminanceThreshold,
-    _textColor
+  const resolvedData = useMemo(
+    () => resolveData(data, { theme, autoContrast: _autoContrast, textColor: _textColor }),
+    [data, theme, _autoContrast, _textColor]
   );
 
   const getStyles = useStyles<TreemapFactory>({
@@ -266,31 +285,24 @@ export const Treemap = factory<TreemapFactory>((_props) => {
     <Box {...getStyles('root')} {...others}>
       <ResponsiveContainer height={chartHeight}>
         <RechartsTreemap
-          data={data as any}
+          data={resolvedData}
           dataKey={dataKey as any}
           aspectRatio={aspectRatio}
           isAnimationActive={false}
-          content={(nodeProps: any) => (
-            <TreemapContent
-              {...nodeProps}
-              resolvedColors={resolvedColors}
-              resolvedLabelColors={resolvedLabelColors}
-              strokeWidth={strokeWidth!}
-            />
-          )}
+          content={(nodeProps: any) => <TreemapContent {...nodeProps} strokeWidth={strokeWidth!} />}
           {...treemapProps}
         >
           {withTooltip && (
             <Tooltip
               animationDuration={tooltipAnimationDuration}
-              isAnimationActive={false}
+              isAnimationActive={!!tooltipAnimationDuration}
               content={({ payload }) => (
                 <ChartTooltip
                   payload={
                     payload?.map((item) => ({
                       name: item.name as string,
                       value: item.value as number,
-                      color: resolvedColors[item.name as string] || 'var(--mantine-color-blue-6)',
+                      color: item.payload?.fill,
                     })) || []
                   }
                   classNames={resolvedClassNames}

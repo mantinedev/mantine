@@ -238,7 +238,7 @@ export const SunburstChart = factory<SunburstChartFactory>((_props) => {
           {withTooltip && (
             <Tooltip
               animationDuration={tooltipAnimationDuration}
-              isAnimationActive={false}
+              isAnimationActive={!!tooltipAnimationDuration}
               content={({ payload }) => (
                 <ChartTooltip
                   payload={

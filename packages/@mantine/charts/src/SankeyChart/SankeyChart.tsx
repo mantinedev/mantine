@@ -373,7 +373,7 @@ export const SankeyChart = factory<SankeyChartFactory>((_props) => {
           {withTooltip && (
             <Tooltip
               animationDuration={tooltipAnimationDuration}
-              isAnimationActive={false}
+              isAnimationActive={!!tooltipAnimationDuration}
               content={({ payload }) => {
                 const resolveColor = (item: any) => {
                   const nodeIndex = data.nodes.findIndex((n) => n.name === item.name);

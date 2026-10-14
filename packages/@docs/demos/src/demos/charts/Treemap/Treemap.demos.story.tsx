@@ -18,9 +18,9 @@ export const Demo_color = {
   render: renderDemo(demos.color),
 };
 
-export const Demo_nestedDataDemo = {
-  name: '⭐ Demo: nestedDataDemo',
-  render: renderDemo(demos.nestedDataDemo),
+export const Demo_nestedData = {
+  name: '⭐ Demo: nestedData',
+  render: renderDemo(demos.nestedData),
 };
 
 export const Demo_noTooltip = {
@@ -31,4 +31,14 @@ export const Demo_noTooltip = {
 export const Demo_strokeColor = {
   name: '⭐ Demo: strokeColor',
   render: renderDemo(demos.strokeColor),
+};
+
+export const Demo_textColor = {
+  name: '⭐ Demo: textColor',
+  render: renderDemo(demos.textColor),
+};
+
+export const Demo_valueFormatter = {
+  name: '⭐ Demo: valueFormatter',
+  render: renderDemo(demos.valueFormatter),
 };

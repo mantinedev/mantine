@@ -1,6 +1,6 @@
 import { Treemap } from '@mantine/charts';
 import { MantineDemo } from '@mantinex/demo';
-import { nestedData, nestedDataCode } from './_data';
+import { nestedData as data, nestedDataCode } from './_data';
 
 const code = `
 import { Treemap } from '@mantine/charts';
@@ -12,10 +12,10 @@ function Demo() {
 `;
 
 function Demo() {
-  return <Treemap data={nestedData} />;
+  return <Treemap data={data} />;
 }
 
-export const nestedDataDemo: MantineDemo = {
+export const nestedData: MantineDemo = {
   type: 'code',
   component: Demo,
   code: [

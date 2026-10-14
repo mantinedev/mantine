@@ -79,3 +79,62 @@ export function CustomStroke() {
     </div>
   );
 }
+
+const noColorData: TreemapData[] = [
+  { name: 'Very long category name here', value: 400 },
+  { name: 'Another long category name', value: 300 },
+  { name: 'Short', value: 200 },
+  { name: 'Tiny', value: 20 },
+  {
+    name: 'Group',
+    children: [
+      { name: 'Other', value: 100 },
+      { name: 'Nested long label', value: 80 },
+    ],
+  },
+  {
+    name: 'Second group',
+    color: 'yellow.4',
+    children: [
+      { name: 'Other', value: 100 },
+      { name: 'Y', value: 60 },
+    ],
+  },
+];
+
+export function LabelsAndFallbackColors() {
+  return (
+    <div style={{ padding: 40, display: 'flex', flexDirection: 'column', gap: 40 }}>
+      <Treemap data={noColorData} />
+      <div style={{ width: 200 }}>
+        <Treemap data={noColorData} />
+      </div>
+      <Treemap data={noColorData} textColor="red.5" />
+      <Treemap data={noColorData} tooltipAnimationDuration={300} />
+    </div>
+  );
+}
+
+const wideLabelsData: TreemapData[] = [
+  { name: 'WWWWWWWWWWWWWWWWWWWW', value: 100, color: 'blue.6' },
+  { name: 'MMMMMMMMMMMMMMMMMMMM', value: 100, color: 'teal.6' },
+  { name: '東京都千代田区丸の内一丁目', value: 100, color: 'orange.6' },
+  { name: '👩‍👩‍👧‍👦🏳️‍🌈🇯🇵👍🏽😀😀😀😀😀😀😀😀😀😀😀😀😀😀', value: 100, color: 'grape.6' },
+];
+
+export function LongLabels() {
+  return (
+    <div style={{ padding: 40, display: 'flex', flexDirection: 'column', gap: 40 }}>
+      {[300, 600].map((width) => (
+        <div key={width} style={{ width }}>
+          <Treemap data={wideLabelsData} />
+        </div>
+      ))}
+      {[80, 160, 300].map((width) => (
+        <div key={width} style={{ width }}>
+          <Treemap data={data} />
+        </div>
+      ))}
+    </div>
+  );
+}
