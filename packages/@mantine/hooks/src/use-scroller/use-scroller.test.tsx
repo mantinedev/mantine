@@ -52,4 +52,16 @@ describe('@mantine/hooks/use-scroller', () => {
     fireEvent.click(screen.getByRole('button'));
     expect(spy).toHaveBeenCalledTimes(1);
   });
+
+  it('does not suppress a click after the pointer leaves, re-enters and releases inside', () => {
+    const spy = jest.fn();
+    render(<Test onClick={spy} />);
+    const container = screen.getByTestId('container');
+
+    drag(container);
+    fireEvent.mouseLeave(container);
+    fireEvent.mouseUp(container);
+    fireEvent.click(screen.getByRole('button'));
+    expect(spy).toHaveBeenCalledTimes(1);
+  });
 });
