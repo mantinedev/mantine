@@ -10,17 +10,16 @@ const content = (
       mt={5}
       maw="100%"
       style={{ float: 'right' }}
-      src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e2/Rock_in_caputh-WBTBWB-47.jpg/600px-Rock_in_caputh-WBTBWB-47.jpg"
-      alt="We Butter the Bread with Butter"
+      src="https://raw.githubusercontent.com/mantinedev/mantine/master/.demo/images/bg-1.png"
+      alt="Desert dunes at sunset"
     />
     <Text>
-      We Butter the Bread with Butter was founded in 2007 by Marcel Neumann, who was originally
-      guitarist for Martin Kesici&apos;s band, and Tobias Schultka. The band was originally meant as
-      a joke, but progressed into being a more serious musical duo. The name for the band has no
-      particular meaning, although its origins were suggested from when the two original members
-      were driving in a car operated by Marcel Neumann and an accident almost occurred. Neumann
-      found Schultka &quot;so funny that he briefly lost control of the vehicle.&quot; Many of their
-      songs from this point were covers of German folk tales and nursery rhymes.
+      Deserts cover about one third of the land surface of the Earth. They are defined by low
+      rainfall rather than by heat: some of the largest deserts, such as Antarctica and the Gobi,
+      are cold for most of the year. Sand dunes are the most familiar desert landscape, yet they
+      cover only a small part of desert areas. Most deserts are rocky plains, gravel fields and dry
+      mountain ranges. Plants and animals that live there have adapted to save water: cacti store it
+      in their thick stems, and many animals are active only at night when the air is cooler.
     </Text>
   </div>
 );
