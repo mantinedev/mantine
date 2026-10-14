@@ -1,6 +1,5 @@
 import { useEffect } from 'react';
 import Link from 'next/link';
-import { useRouter } from 'next/router';
 import { CaretDownIcon } from '@phosphor-icons/react';
 import { Box, Highlight, Text, UnstyledButton } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
@@ -11,6 +10,7 @@ interface ExamplesLinksGroupProps {
   group: ExamplesGroup;
   items: ExampleItem[];
   basePath: string;
+  activeId: string;
   searchQuery: string | string[];
   onClose: () => void;
 }
@@ -19,10 +19,10 @@ export function ExamplesLinksGroup({
   group,
   items,
   basePath,
+  activeId,
   searchQuery,
   onClose,
 }: ExamplesLinksGroupProps) {
-  const router = useRouter();
   const [opened, { toggle, open }] = useDisclosure(true);
 
   useEffect(open, [searchQuery]);
@@ -33,10 +33,10 @@ export function ExamplesLinksGroup({
 
   const links = items.map((item) => (
     <Link
-      href={`${basePath}?e=${item.id}`}
+      href={`${basePath}/${item.id}`}
       key={item.id}
       className={classes.link}
-      data-navbar-link-active={router.query.e === item.id || undefined}
+      data-navbar-link-active={activeId === item.id || undefined}
       onClick={onClose}
     >
       <Highlight className={classes.linkTitle} highlight={searchQuery}>

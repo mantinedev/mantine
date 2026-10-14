@@ -1,30 +1,29 @@
-import { useEffect } from 'react';
-import { useRouter } from 'next/router';
 import { ExamplesShell } from '@/components/ExamplesShell';
 import { PageHead } from '@/components/PageHead';
-import { FORM_EXAMPLES_COMPONENTS } from '../examples';
+import type { FormExampleId } from '../examples';
 import { FORM_EXAMPLES_DATA, FORM_EXAMPLES_GROUPS } from '../form-examples-data';
 import { FormExamplesDemo } from '../FormExamplesDemo/FormExamplesDemo';
 
-export function FormExamplesPage() {
-  const router = useRouter();
-  const exampleId = router.query.e as string;
+interface FormExamplesPageProps {
+  exampleId: FormExampleId;
+}
 
-  useEffect(() => {
-    if (router.isReady && !(exampleId in FORM_EXAMPLES_COMPONENTS)) {
-      router.replace('/form/examples?e=LoginForm');
-    }
-  }, [router.isReady, exampleId]);
+export function FormExamplesPage({ exampleId }: FormExamplesPageProps) {
+  const metaData = FORM_EXAMPLES_DATA.find((item) => item.id === exampleId);
 
   return (
     <>
-      <PageHead title="Form examples" description="Examples of using Mantine use-form hook" />
+      <PageHead
+        title={metaData ? `${metaData.name} | Form examples` : 'Form examples'}
+        description={metaData?.fullDescription || metaData?.description}
+      />
       <ExamplesShell
         data={FORM_EXAMPLES_DATA}
         groups={FORM_EXAMPLES_GROUPS}
         basePath="/form/examples"
+        activeId={exampleId}
       >
-        <FormExamplesDemo />
+        <FormExamplesDemo exampleId={exampleId} />
       </ExamplesShell>
     </>
   );

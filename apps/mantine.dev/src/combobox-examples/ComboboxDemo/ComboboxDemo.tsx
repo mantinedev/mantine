@@ -1,4 +1,3 @@
-import { useRouter } from 'next/router';
 import cx from 'clsx';
 import { CodeHighlightTabs } from '@mantine/code-highlight';
 import { Badge, RemoveScroll, Text } from '@mantine/core';
@@ -7,9 +6,11 @@ import { COMBOBOX_EXAMPLES_DATA } from '../combobox-examples-data';
 import { COMBOBOX_EXAMPLES_COMPONENTS, ComboboxExampleId } from '../examples';
 import classes from './ComboboxDemo.module.css';
 
-export function ComboboxDemo() {
-  const router = useRouter();
-  const id = router.query.e as ComboboxExampleId;
+interface ComboboxDemoProps {
+  exampleId: ComboboxExampleId;
+}
+
+export function ComboboxDemo({ exampleId: id }: ComboboxDemoProps) {
   const codeData = COMBOBOX_EXAMPLES_COMPONENTS[id];
   const metaData = COMBOBOX_EXAMPLES_DATA.find((item) => item.id === id);
 

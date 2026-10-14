@@ -10,7 +10,7 @@ This page contains documentation only. All `AppShell` components have a fixed
 position; examples are included in a separate documentation section.
 
 <ExamplesButton
-  link="/app-shell?e=BasicAppShell"
+  link="/app-shell/BasicAppShell"
   label="Open AppShell examples page"
 />
 
@@ -20,7 +20,7 @@ position; examples are included in a separate documentation section.
 layout pattern. All `AppShell` components have `position: fixed` styling, so they do not scroll with
 the page.
 
-[Basic AppShell example](/app-shell?e=BasicAppShell) with header and navbar.
+[Basic AppShell example](/app-shell/BasicAppShell) with header and navbar.
 The navbar is hidden on mobile by default and can be toggled with the burger button.
 
 ```tsx
@@ -117,8 +117,8 @@ interface Configuration {
 `layout` prop controls how `AppShell.Header`/`AppShell.Footer` and `AppShell.Navbar`/`AppShell.Aside`
 are positioned relative to each other. It accepts `alt` and `default` values:
 
-- `alt` – `AppShell.Navbar`/`AppShell.Aside` extends the full viewport height, while `AppShell.Header`/`AppShell.Footer` width equals the viewport width minus the width of `AppShell.Navbar` and `AppShell.Aside` ([example](/app-shell?e=AltLayout))
-- `default` – `AppShell.Navbar`/`AppShell.Aside` height equals the viewport height minus `AppShell.Header`/`AppShell.Footer` height, and `AppShell.Header`/`AppShell.Footer` spans the full viewport width ([example](/app-shell?e=FullLayout))
+- `alt` – `AppShell.Navbar`/`AppShell.Aside` extends the full viewport height, while `AppShell.Header`/`AppShell.Footer` width equals the viewport width minus the width of `AppShell.Navbar` and `AppShell.Aside` ([example](/app-shell/AltLayout))
+- `default` – `AppShell.Navbar`/`AppShell.Aside` height equals the viewport height minus `AppShell.Header`/`AppShell.Footer` height, and `AppShell.Header`/`AppShell.Footer` spans the full viewport width ([example](/app-shell/FullLayout))
 
 ## mode prop
 
@@ -141,8 +141,8 @@ function Demo() {
 ```
 
 Static mode is the only way to render an `AppShell` that is not attached to the viewport, for
-example inside a card, a modal or another `AppShell` ([static mode example](/app-shell?e=StaticMode),
-[nested AppShell example](/app-shell?e=NestedAppShell)).
+example inside a card, a modal or another `AppShell` ([static mode example](/app-shell/StaticMode),
+[nested AppShell example](/app-shell/NestedAppShell)).
 
 Note that in static mode `--app-shell-*` CSS variables are defined on the `AppShell` root element
 instead of `:root`, the same way as with the `resize` prop.
@@ -180,7 +180,7 @@ function Demo() {
 In this example, `navbar` and `header` are passed to `useAppShellResize`, so `AppShell.Navbar` and
 `AppShell.Header` render a resize handle – `AppShell.Aside` and `AppShell.Footer` keep their
 configured size even if they are used elsewhere in the same `AppShell`. See the
-[resizable app shell example](/app-shell?e=ResizableAppShell) for a full demo that includes a
+[resizable app shell example](/app-shell/ResizableAppShell) for a full demo that includes a
 reset button.
 
 Note that when the `resize` prop is set (same as with `mode="static"`), the `--app-shell-*`
@@ -492,7 +492,7 @@ whether the `AppShell.Main` component is offset by the header's height.
 This is particularly useful when you want to collapse the `AppShell.Header`
 based on scroll position. For example, you can use the [use-headroom](/hooks/use-headroom)
 hook to hide the header when the user scrolls down and show it when they
-scroll up ([example](/app-shell?e=Headroom)).
+scroll up ([example](/app-shell/Headroom)).
 
 ```tsx
 import { AppShell, rem } from '@mantine/core';
@@ -523,7 +523,7 @@ function Demo() {
 The `navbar` and `aside` props include a `collapsed` property that accepts an object with the format `{ mobile: boolean; desktop: boolean }`.
 This allows you to configure the collapsed state differently based on viewport width.
 
-[Example](/app-shell?e=CollapseDesktop) with separate collapsed states for mobile and desktop:
+[Example](/app-shell/CollapseDesktop) with separate collapsed states for mobile and desktop:
 
 ```tsx
 import { AppShell, Button } from '@mantine/core';

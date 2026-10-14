@@ -15,10 +15,13 @@ interface ExamplesShellProps {
   /** Page path used for example links, for example `/combobox` */
   basePath: string;
 
+  /** Id of the example displayed on the page */
+  activeId: string;
+
   children: React.ReactNode;
 }
 
-export function ExamplesShell({ data, groups, basePath, children }: ExamplesShellProps) {
+export function ExamplesShell({ data, groups, basePath, activeId, children }: ExamplesShellProps) {
   const [opened, setNavbarOpened] = useState(false);
   const { setDirection } = useDirection();
 
@@ -41,6 +44,7 @@ export function ExamplesShell({ data, groups, basePath, children }: ExamplesShel
           data={data}
           groups={groups}
           basePath={basePath}
+          activeId={activeId}
           opened={opened}
           onClose={() => setNavbarOpened(false)}
         />

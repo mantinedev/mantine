@@ -10,6 +10,7 @@ interface ExamplesNavbarProps {
   data: ExampleItem[];
   groups: ExamplesGroup[];
   basePath: string;
+  activeId: string;
   opened: boolean;
   onClose: () => void;
 }
@@ -21,7 +22,14 @@ function splitWords(value: string) {
     .filter((part) => part.trim().length > 0);
 }
 
-export function ExamplesNavbar({ data, groups, basePath, opened, onClose }: ExamplesNavbarProps) {
+export function ExamplesNavbar({
+  data,
+  groups,
+  basePath,
+  activeId,
+  opened,
+  onClose,
+}: ExamplesNavbarProps) {
   const [search, setSearch] = useState('');
   const searchInputRef = useRef<HTMLInputElement>(null);
   const splittedSearch = splitWords(search);
@@ -44,6 +52,7 @@ export function ExamplesNavbar({ data, groups, basePath, opened, onClose }: Exam
       group={group}
       items={filteredData.filter((item) => item.type === group.type)}
       basePath={basePath}
+      activeId={activeId}
       searchQuery={splittedSearch}
       onClose={onClose}
     />

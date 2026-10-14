@@ -679,12 +679,12 @@ export const MDX_NAV_SEARCH_PAGES: Frontmatter[] = [
   ...Object.keys(MDX_META_DATA).map((key) => MDX_META_DATA[key]),
   {
     title: 'Combobox examples',
-    slug: '/combobox/?e=BasicSelect',
+    slug: '/combobox/BasicSelect',
     search: '50+ examples of Combobox usage',
   },
   {
     title: 'AppShell examples',
-    slug: '/app-shell/?e=BasicAppShell',
+    slug: '/app-shell/BasicAppShell',
     search: '10+ examples of AppShell usage',
   },
 ].reduce<Frontmatter[]>((acc, item) => {

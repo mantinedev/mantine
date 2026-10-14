@@ -1,4 +1,3 @@
-import { useRouter } from 'next/router';
 import cx from 'clsx';
 import { CodeHighlightTabs } from '@mantine/code-highlight';
 import { RemoveScroll, Text } from '@mantine/core';
@@ -7,9 +6,11 @@ import { FORM_EXAMPLES_COMPONENTS, FormExampleId } from '../examples';
 import { FORM_EXAMPLES_DATA } from '../form-examples-data';
 import classes from './FormExamplesDemo.module.css';
 
-export function FormExamplesDemo() {
-  const router = useRouter();
-  const id = router.query.e as FormExampleId;
+interface FormExamplesDemoProps {
+  exampleId: FormExampleId;
+}
+
+export function FormExamplesDemo({ exampleId: id }: FormExamplesDemoProps) {
   const codeData = FORM_EXAMPLES_COMPONENTS[id];
   const metaData = FORM_EXAMPLES_DATA.find((item) => item.id === id);
 

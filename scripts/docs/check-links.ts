@@ -34,6 +34,26 @@ const SITES: Site[] = [
 
 const IGNORED_PAGES = new Set(['_app', '_document', '404']);
 
+const DYNAMIC_ROUTE_SOURCES: Record<string, string> = {
+  '/combobox/[example]': getPath(
+    'apps/mantine.dev/src/combobox-examples/combobox-examples-data.ts'
+  ),
+  '/form/examples/[example]': getPath('apps/mantine.dev/src/form-examples/form-examples-data.ts'),
+  '/app-shell/[example]': getPath(
+    'apps/mantine.dev/src/app-shell-examples/app-shell-examples-data.ts'
+  ),
+};
+
+function getDynamicRouteIds(route: string) {
+  const source = DYNAMIC_ROUTE_SOURCES[route];
+  if (!source) {
+    return null;
+  }
+
+  const content = fs.readFileSync(source, 'utf-8');
+  return new Set([...content.matchAll(/^\s*id: '([^']+)'/gm)].map((match) => match[1]));
+}
+
 function normalizeRoute(route: string) {
   const trimmed = route.replace(/\/+$/, '');
   return trimmed === '' ? '/' : trimmed;
@@ -51,7 +71,17 @@ function getRoutes(pagesDir: string) {
     }
 
     const route = base === 'index' ? path.posix.dirname(withoutExt) : withoutExt;
-    routes.set(normalizeRoute(route === '.' ? '/' : `/${route}`), path.posix.join(pagesDir, file));
+    const normalized = normalizeRoute(route === '.' ? '/' : `/${route}`);
+    const ids = getDynamicRouteIds(normalized);
+
+    if (ids) {
+      ids.forEach((id) =>
+        routes.set(normalized.replace(/\[[^\]]+\]$/, id), path.posix.join(pagesDir, file))
+      );
+      continue;
+    }
+
+    routes.set(normalized, path.posix.join(pagesDir, file));
   }
 
   return routes;
@@ -141,6 +171,33 @@ function indexSite(site: Site): SiteIndex {
   return { site, routes, anchors };
 }
 
+function matchRoute(routes: Map<string, string>, route: string) {
+  if (routes.has(route)) {
+    return route;
+  }
+
+  const segments = route.split('/');
+
+  for (const candidate of routes.keys()) {
+    if (!candidate.includes('[')) {
+      continue;
+    }
+
+    const candidateSegments = candidate.split('/');
+    const matches =
+      candidateSegments.length === segments.length &&
+      candidateSegments.every(
+        (segment, index) => segment.startsWith('[') || segment === segments[index]
+      );
+
+    if (matches) {
+      return candidate;
+    }
+  }
+
+  return null;
+}
+
 const LINK_PATTERN = /(?:\]\(|href=["'])([^\s)"']+)/g;
 const EXTERNAL_PATTERN = /^(?:[a-z][a-z0-9+.-]*:|\/\/)/i;
 
@@ -180,11 +237,17 @@ function checkLink(
     return null;
   }
 
-  if (!index.routes.has(route)) {
+  const matched = matchRoute(index.routes, route);
+
+  if (!matched) {
     return `page ${index.site.origin}${route} does not exist`;
   }
 
-  if (hash && index.routes.get(route)!.endsWith('.mdx') && !index.anchors.get(route)!.has(hash)) {
+  if (
+    hash &&
+    index.routes.get(matched)!.endsWith('.mdx') &&
+    !index.anchors.get(matched)!.has(hash)
+  ) {
     return `anchor #${hash} not found on ${index.site.origin}${route}`;
   }
 

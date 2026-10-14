@@ -58,7 +58,7 @@ function ComboboxDemo({ title, name, hiddenOnMobile, component: Component }: Com
           {title}
         </Title>
 
-        <Anchor component={Link} href={`/combobox/?e=${name}`} className={classes.demoLink}>
+        <Anchor component={Link} href={`/combobox/${name}`} className={classes.demoLink}>
           <span>View example code</span>
           <ArrowUpRightIcon size={16} />
         </Anchor>
@@ -86,7 +86,7 @@ export function HomePageCombobox() {
           simple.
         </HomePageDescription>
 
-        <HomePageLearnMore href="/combobox/?e=BasicSelect">
+        <HomePageLearnMore href="/combobox/BasicSelect">
           Explore all 50+ Combobox examples
         </HomePageLearnMore>
 

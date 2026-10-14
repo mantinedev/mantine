@@ -16,19 +16,22 @@ import { useDisclosure } from '@mantine/hooks';
 import { APP_SHELL_EXAMPLES_DATA } from '../../app-shell-examples-data';
 import classes from './ExamplesDrawer.module.css';
 
-export function ExamplesDrawer() {
+interface ExamplesDrawerProps {
+  exampleId: string;
+}
+
+export function ExamplesDrawer({ exampleId }: ExamplesDrawerProps) {
   const [opened, { open, close }] = useDisclosure();
   const router = useRouter();
-  const currentExample = router.query.e as string;
   const currentState = router.query.s === 'code' ? 'code' : 'demo';
   const StateIcon = currentState === 'code' ? LayoutIcon : CodeIcon;
 
   const examples = APP_SHELL_EXAMPLES_DATA.map((example) => (
     <UnstyledButton
       component={Link}
-      href={`/app-shell?e=${example.id}`}
+      href={`/app-shell/${example.id}`}
       key={example.id}
-      mod={{ active: router.query.e === example.id }}
+      mod={{ active: exampleId === example.id }}
       className={classes.control}
       onClick={close}
     >
@@ -59,7 +62,9 @@ export function ExamplesDrawer() {
 
           <Button
             component={Link}
-            href={`/app-shell?e=${currentExample}&s=${currentState === 'code' ? 'demo' : 'code'}`}
+            href={
+              currentState === 'code' ? `/app-shell/${exampleId}` : `/app-shell/${exampleId}?s=code`
+            }
             variant="default"
             size="md"
             w={160}

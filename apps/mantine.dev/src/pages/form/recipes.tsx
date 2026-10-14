@@ -13,7 +13,7 @@ export default function FormRecipesRedirect() {
 
   useEffect(() => {
     const example = RECIPES_REDIRECTS[window.location.hash] || 'LoginForm';
-    router.replace(`/form/examples?e=${example}`);
+    router.replace(`/form/examples/${example}`);
   }, []);
 
   return null;

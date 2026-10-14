@@ -1,33 +1,26 @@
-import { useEffect } from 'react';
 import { useRouter } from 'next/router';
 import { CodeHighlightTabs } from '@mantine/code-highlight';
 import { getCodeFileIcon } from '@mantinex/dev-icons';
 import { PageHead } from '@/components/PageHead';
-import { APP_SHELL_EXAMPLES_COMPONENTS } from '../examples';
+import { APP_SHELL_EXAMPLES_DATA } from '../app-shell-examples-data';
+import { APP_SHELL_EXAMPLES_COMPONENTS, AppShellExampleId } from '../examples';
 import { ExamplesDrawer } from './ExamplesDrawer/ExamplesDrawer';
 
-export function AppShellPage() {
+interface AppShellPageProps {
+  exampleId: AppShellExampleId;
+}
+
+export function AppShellPage({ exampleId }: AppShellPageProps) {
   const router = useRouter();
-  const exampleId = router.query.e as string;
   const state = router.query.s as string;
-
-  useEffect(() => {
-    if (exampleId && !(exampleId in APP_SHELL_EXAMPLES_COMPONENTS)) {
-      router.replace('/app-shell?e=BasicAppShell');
-    }
-  }, [exampleId]);
-
-  if (!(exampleId in APP_SHELL_EXAMPLES_COMPONENTS)) {
-    return <ExamplesDrawer />;
-  }
-  const data =
-    APP_SHELL_EXAMPLES_COMPONENTS[exampleId as keyof typeof APP_SHELL_EXAMPLES_COMPONENTS];
+  const data = APP_SHELL_EXAMPLES_COMPONENTS[exampleId];
+  const metaData = APP_SHELL_EXAMPLES_DATA.find((item) => item.id === exampleId);
 
   return (
     <>
       <PageHead
-        title="AppShell examples"
-        description="10+ examples of using Mantine AppShell component"
+        title={metaData ? `${metaData.name} | AppShell examples` : 'AppShell examples'}
+        description={metaData?.fullDescription || metaData?.description}
       />
 
       <div>
@@ -36,7 +29,7 @@ export function AppShellPage() {
         ) : (
           <data.component />
         )}
-        <ExamplesDrawer />
+        <ExamplesDrawer exampleId={exampleId} />
       </div>
     </>
   );

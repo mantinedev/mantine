@@ -2,7 +2,7 @@ import { useRouter } from 'next/router';
 import { useComputedColorScheme, useDirection, useMantineColorScheme } from '@mantine/core';
 import { useHotkeys } from '@mantine/hooks';
 
-const EXCLUDE_RTL = ['/combobox'];
+const EXCLUDE_RTL = ['/combobox', '/combobox/[example]'];
 
 export function HotKeysHandler() {
   const router = useRouter();

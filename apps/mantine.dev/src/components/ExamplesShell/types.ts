@@ -1,5 +1,5 @@
 export interface ExampleItem {
-  /** Example id, used in the url query (`?e=<id>`) */
+  /** Example id, used as the page url segment (`<basePath>/<id>`) */
   id: string;
 
   /** Name displayed in the navbar and used in search */
