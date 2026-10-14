@@ -164,7 +164,7 @@ export function useScroller<T extends HTMLElement = HTMLDivElement>(
     }
   }, []);
 
-  const handleMouseUp = useCallback(() => {
+  const endDrag = useCallback((suppressNextClick: boolean) => {
     const wasDragged = hasDraggedRef.current;
     isDraggingRef.current = false;
     hasDraggedRef.current = false;
@@ -174,7 +174,7 @@ export function useScroller<T extends HTMLElement = HTMLDivElement>(
       container.style.cursor = '';
       container.style.userSelect = '';
 
-      if (wasDragged) {
+      if (wasDragged && suppressNextClick) {
         const suppressClick = (event: MouseEvent) => {
           event.stopPropagation();
           event.preventDefault();
@@ -185,11 +185,13 @@ export function useScroller<T extends HTMLElement = HTMLDivElement>(
     }
   }, []);
 
+  const handleMouseUp = useCallback(() => endDrag(true), [endDrag]);
+
   const handleMouseLeave = useCallback(() => {
     if (isDraggingRef.current) {
-      handleMouseUp();
+      endDrag(false);
     }
-  }, [handleMouseUp]);
+  }, [endDrag]);
 
   const assignRef: RefCallback<T | null> = useCallback(
     (node) => {
