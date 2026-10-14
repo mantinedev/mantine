@@ -671,6 +671,151 @@ describe('@mantine/core/FloatingWindow', () => {
     expect(onPositionChange).not.toHaveBeenCalled();
   });
 
+  it('applies dimension bounds without initial size', () => {
+    render(
+      <FloatingWindow
+        withinPortal={false}
+        dimensions={{ minWidth: 300, maxWidth: 500, minHeight: 100, maxHeight: 200 }}
+        data-testid="window"
+      />
+    );
+
+    const root = screen.getByTestId('window');
+    expect(root.style.getPropertyValue('--floating-window-min-width')).toBe('300px');
+    expect(root.style.getPropertyValue('--floating-window-max-width')).toBe('500px');
+    expect(root.style.getPropertyValue('--floating-window-min-height')).toBe('100px');
+    expect(root.style.getPropertyValue('--floating-window-max-height')).toBe('200px');
+  });
+
+  it('keeps dragging when the position is persisted to initialPosition', () => {
+    const onDragEnd = jest.fn();
+
+    function Wrapper() {
+      const [pos, setPos] = useState({ x: 50, y: 50 });
+      return (
+        <FloatingWindow
+          withinPortal={false}
+          initialPosition={{ left: pos.x, top: pos.y }}
+          onPositionChange={setPos}
+          onDragEnd={onDragEnd}
+          data-testid="window"
+        />
+      );
+    }
+
+    render(<Wrapper />);
+    const root = screen.getByTestId('window');
+
+    fireEvent.mouseDown(root, { button: 0, clientX: 0, clientY: 0 });
+    fireEvent.mouseMove(document, { clientX: 70, clientY: 50 });
+    fireEvent.mouseMove(document, { clientX: 170, clientY: 50 });
+    expect(root.style.left).toBe('170px');
+
+    fireEvent.mouseUp(document);
+    expect(root).not.toHaveAttribute('data-dragging');
+    expect(document.body.style.userSelect).toBe('');
+    expect(onDragEnd).toHaveBeenCalledTimes(1);
+  });
+
+  it('does not move the window when initialPosition changes after mount', () => {
+    function Wrapper() {
+      const [left, setLeft] = useState(20);
+      return (
+        <>
+          <button type="button" onClick={() => setLeft(200)}>
+            move
+          </button>
+          <FloatingWindow
+            withinPortal={false}
+            initialPosition={{ left, top: 20 }}
+            data-testid="window"
+          />
+        </>
+      );
+    }
+
+    render(<Wrapper />);
+    fireEvent.click(screen.getByText('move'));
+    expect(screen.getByTestId('window').style.left).toBe('20px');
+  });
+
+  it('keeps dragging with the new axis when axis changes mid-drag', () => {
+    const onDragEnd = jest.fn();
+
+    function Wrapper() {
+      const [axis, setAxis] = useState<'x' | 'y' | undefined>(undefined);
+      return (
+        <>
+          <button type="button" onClick={() => setAxis('x')}>
+            axis
+          </button>
+          <FloatingWindow
+            withinPortal={false}
+            axis={axis}
+            initialPosition={{ left: 20, top: 20 }}
+            onDragEnd={onDragEnd}
+            data-testid="window"
+          />
+        </>
+      );
+    }
+
+    render(<Wrapper />);
+    const root = screen.getByTestId('window');
+
+    fireEvent.mouseDown(root, { button: 0, clientX: 0, clientY: 0 });
+    fireEvent.click(screen.getByText('axis'));
+    fireEvent.mouseMove(document, { clientX: 100, clientY: 100 });
+    expect(root.style.left).toBe('100px');
+    expect(root.style.top).toBe('20px');
+
+    fireEvent.mouseUp(document);
+    expect(root).not.toHaveAttribute('data-dragging');
+    expect(document.body.style.userSelect).toBe('');
+    expect(onDragEnd).toHaveBeenCalledTimes(1);
+  });
+
+  it('applies excludeDragHandleSelector changes after mount', () => {
+    const onDragStart = jest.fn();
+
+    function Wrapper() {
+      const [exclude, setExclude] = useState<string | undefined>(undefined);
+      return (
+        <>
+          <button type="button" onClick={() => setExclude('[data-exclude]')}>
+            exclude
+          </button>
+          <FloatingWindow
+            withinPortal={false}
+            excludeDragHandleSelector={exclude}
+            onDragStart={onDragStart}
+          >
+            <span data-exclude>excluded</span>
+          </FloatingWindow>
+        </>
+      );
+    }
+
+    render(<Wrapper />);
+    fireEvent.click(screen.getByText('exclude'));
+    fireEvent.mouseDown(screen.getByText('excluded'), { button: 0 });
+    expect(onDragStart).not.toHaveBeenCalled();
+  });
+
+  it('finishes an active drag on unmount', () => {
+    const onDragEnd = jest.fn();
+    const { unmount } = render(
+      <FloatingWindow withinPortal={false} onDragEnd={onDragEnd} data-testid="window" />
+    );
+
+    fireEvent.mouseDown(screen.getByTestId('window'), { button: 0, clientX: 0, clientY: 0 });
+    expect(document.body.style.userSelect).toBe('none');
+
+    unmount();
+    expect(document.body.style.userSelect).toBe('');
+    expect(onDragEnd).toHaveBeenCalledTimes(1);
+  });
+
   it('throws error when ResizeHandle is used outside FloatingWindow', () => {
     const spy = jest.spyOn(console, 'error').mockImplementation(() => {});
 

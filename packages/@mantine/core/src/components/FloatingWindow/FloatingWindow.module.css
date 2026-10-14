@@ -3,4 +3,8 @@
   z-index: var(--floating-window-z-index);
   width: var(--floating-window-width, auto);
   height: var(--floating-window-height, auto);
+  min-width: var(--floating-window-min-width, auto);
+  max-width: var(--floating-window-max-width, none);
+  min-height: var(--floating-window-min-height, auto);
+  max-height: var(--floating-window-max-height, none);
 }

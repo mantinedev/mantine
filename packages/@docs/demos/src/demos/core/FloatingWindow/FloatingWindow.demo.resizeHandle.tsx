@@ -44,7 +44,7 @@ function Demo() {
             <Text fw={500} fz="sm">
               Resize demo
             </Text>
-            <CloseButton onClick={handlers.close} />
+            <CloseButton aria-label="Close floating window" onClick={handlers.close} />
           </Group>
           <Text fz="sm" px="md" pb="sm">
             Drag the grip icon in the bottom-right corner to resize.
@@ -110,7 +110,7 @@ function Demo() {
             <Text fw={500} fz="sm">
               Resize demo
             </Text>
-            <CloseButton onClick={handlers.close} />
+            <CloseButton aria-label="Close floating window" onClick={handlers.close} />
           </Group>
           <Text fz="sm" px="md" pb="sm">
             Drag the grip icon in the bottom-right corner to resize. Use Arrow keys when the handle

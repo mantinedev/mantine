@@ -17,6 +17,7 @@ import {
 } from '../../core';
 import { Paper, PaperBaseProps } from '../Paper';
 import { OptionalPortal, PortalProps } from '../Portal';
+import { clampDimension } from './clamp-dimension';
 import {
   FloatingWindowDimensions,
   FloatingWindowProvider,
@@ -34,6 +35,9 @@ export interface FloatingWindowProps
     BoxProps,
     StylesApiProps<FloatingWindowFactory>,
     ElementProps<'div', keyof UseFloatingWindowOptions> {
+  /** If `true`, the element can only move within the current viewport boundaries. @default true @category behavior */
+  constrainToViewport?: boolean;
+
   /** Assigns ref to set position programmatically */
   setPositionRef?: React.RefObject<SetFloatingWindowPosition | null>;
 
@@ -72,17 +76,6 @@ const defaultProps = {
   constrainToViewport: true,
   zIndex: getDefaultZIndex('overlay'),
 } satisfies Partial<FloatingWindowProps>;
-
-function clampDimension(value: number, min?: number, max?: number): number {
-  let v = value;
-  if (min != null) {
-    v = Math.max(v, min);
-  }
-  if (max != null) {
-    v = Math.min(v, max);
-  }
-  return v;
-}
 
 export const FloatingWindow = factory<FloatingWindowFactory>((_props) => {
   const props = useProps('FloatingWindow', defaultProps, _props);
@@ -156,6 +149,22 @@ export const FloatingWindow = factory<FloatingWindowFactory>((_props) => {
       `${clampDimension(dimensions.initialWidth, dimensions.minWidth, dimensions.maxWidth)}px`;
   }
 
+  if (dimensions?.minWidth != null) {
+    cssVars['--floating-window-min-width'] = `${dimensions.minWidth}px`;
+  }
+
+  if (dimensions?.maxWidth != null) {
+    cssVars['--floating-window-max-width'] = `${dimensions.maxWidth}px`;
+  }
+
+  if (dimensions?.minHeight != null) {
+    cssVars['--floating-window-min-height'] = `${dimensions.minHeight}px`;
+  }
+
+  if (dimensions?.maxHeight != null) {
+    cssVars['--floating-window-max-height'] = `${dimensions.maxHeight}px`;
+  }
+
   if (dimensions?.initialHeight != null) {
     cssVars['--floating-window-height'] =
       `${clampDimension(dimensions.initialHeight, dimensions.minHeight, dimensions.maxHeight)}px`;
@@ -178,7 +187,7 @@ export const FloatingWindow = factory<FloatingWindowFactory>((_props) => {
           ref={useMergedRef(ref, floatingWindow.ref, rootRef)}
           mod={[{ dragging: floatingWindow.isDragging }, mod]}
           tabIndex={enabled === false ? undefined : 0}
-          {...getStyles('root')}
+          {...getStyles('root', { focusable: true })}
           {...others}
           __vars={cssVars}
         />

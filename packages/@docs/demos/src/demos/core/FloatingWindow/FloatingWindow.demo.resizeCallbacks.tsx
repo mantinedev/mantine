@@ -15,9 +15,14 @@ function Demo() {
   const [size, setSize] = useState({ width: 260, height: 200 });
   const [resizing, setResizing] = useState(false);
 
+  const toggle = () => {
+    setSize({ width: 260, height: 200 });
+    handlers.toggle();
+  };
+
   return (
     <>
-      <Button onClick={handlers.toggle} variant="default">
+      <Button onClick={toggle} variant="default">
         {visible ? 'Hide' : 'Show'} floating window
       </Button>
 
@@ -51,12 +56,12 @@ function Demo() {
             <Text fw={500} fz="sm">
               Resize callbacks
             </Text>
-            <CloseButton onClick={handlers.close} />
+            <CloseButton aria-label="Close floating window" onClick={toggle} />
           </Group>
           <Text fz="sm" px="md">
             {Math.round(size.width)} × {Math.round(size.height)}
           </Text>
-          <Text fz="sm" px="md" c="dimmed">
+          <Text fz="xs" px="md">
             {resizing ? 'Resizing…' : 'Drag the grip icon to resize'}
           </Text>
           <FloatingWindow.ResizeHandle
@@ -87,9 +92,14 @@ function Demo() {
   const [size, setSize] = useState({ width: 260, height: 200 });
   const [resizing, setResizing] = useState(false);
 
+  const toggle = () => {
+    setSize({ width: 260, height: 200 });
+    handlers.toggle();
+  };
+
   return (
     <>
-      <Button onClick={handlers.toggle} variant="default">
+      <Button onClick={toggle} variant="default">
         {visible ? 'Hide' : 'Show'} floating window
       </Button>
 
@@ -123,12 +133,12 @@ function Demo() {
             <Text fw={500} fz="sm">
               Resize callbacks
             </Text>
-            <CloseButton onClick={handlers.close} />
+            <CloseButton aria-label="Close floating window" onClick={toggle} />
           </Group>
           <Text fz="sm" px="md">
             {Math.round(size.width)} × {Math.round(size.height)}
           </Text>
-          <Text fz="sm" px="md" c="dimmed">
+          <Text fz="xs" px="md">
             {resizing ? 'Resizing…' : 'Drag the grip icon to resize'}
           </Text>
           <FloatingWindow.ResizeHandle

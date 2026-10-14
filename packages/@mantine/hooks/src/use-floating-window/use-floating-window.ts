@@ -1,4 +1,3 @@
-// Required to disable for webkit-user-select, although deprecated, it is still required for Safari support
 import { RefCallback, useCallback, useEffect, useRef, useState } from 'react';
 import { useLatestRef } from '../utils';
 
@@ -18,7 +17,7 @@ interface FloatingWindowPosition {
 }
 
 export interface UseFloatingWindowOptions {
-  /** If `false`, the element can not be dragged. @category behavior */
+  /** If `false`, the element can not be dragged. @default true @category behavior */
   enabled?: boolean;
 
   /** If `true`, the element can only move within the current viewport boundaries. @category behavior */
@@ -39,7 +38,7 @@ export interface UseFloatingWindowOptions {
   /** Initial position. If not set, calculated from element styles. @category state */
   initialPosition?: FloatingWindowPositionConfig;
 
-  /** Called when the element position changes: on initial placement, drag, keyboard move, `setPosition` call and re-clamp after the element is resized @category state */
+  /** Called when the element position changes: on initial placement, drag, keyboard move, `setPosition` call and re-clamp after the element or the browser window is resized @category state */
   onPositionChange?: (pos: FloatingWindowPosition) => void;
 
   /** Called when the drag starts @category behavior */
@@ -76,17 +75,12 @@ export function useFloatingWindow<T extends HTMLElement>(
 ): UseFloatingWindowReturnValue<T> {
   const [element, setElement] = useState<T | null>(null);
   const ref = useRef<T>(null);
-  const pos = useRef({ x: 0, y: 0 });
-  const offset = useRef({ x: 0, y: 0 });
+  const pos = useRef<FloatingWindowPosition>({ x: 0, y: 0 });
+  const grabOffset = useRef<FloatingWindowPosition>({ x: 0, y: 0 });
   const [isDragging, setIsDragging] = useState(false);
   const isDraggingRef = useRef(false);
-  const initialized = useRef(false);
-  const enabledRef = useLatestRef(options.enabled);
-  const constrainToViewportRef = useLatestRef(options.constrainToViewport);
-  const constrainOffsetRef = useLatestRef(options.constrainOffset);
-  const onPositionChangeRef = useLatestRef(options.onPositionChange);
-  const onDragStartRef = useLatestRef(options.onDragStart);
-  const onDragEndRef = useLatestRef(options.onDragEnd);
+  const initializedElement = useRef<T | null>(null);
+  const optionsRef = useLatestRef(options);
 
   const setDragging = useCallback((value: boolean) => {
     setIsDragging(value);
@@ -94,39 +88,43 @@ export function useFloatingWindow<T extends HTMLElement>(
   }, []);
 
   const assignRef = useCallback((node: T | null) => {
-    if (node) {
-      ref.current = node;
-      setElement(node);
-    } else {
-      ref.current = null;
-      setElement(null);
+    ref.current = node;
+    setElement(node);
+  }, []);
+
+  const applyPosition = useCallback((el: HTMLElement, next: FloatingWindowPosition) => {
+    pos.current = next;
+    el.style.left = `${next.x}px`;
+    el.style.top = `${next.y}px`;
+    optionsRef.current.onPositionChange?.(next);
+  }, []);
+
+  const reclamp = useCallback(() => {
+    const el = ref.current;
+    if (!el) {
+      return;
+    }
+
+    const constrained = getConstrainedPosition(el, pos.current, optionsRef.current);
+    if (constrained.x !== pos.current.x || constrained.y !== pos.current.y) {
+      applyPosition(el, constrained);
     }
   }, []);
 
   useEffect(() => {
     const el = ref.current;
-    if (!initialized.current && el) {
-      initialized.current = true;
-      pos.current = calculateInitialPosition(el, options);
-      el.style.left = `${pos.current.x}px`;
-      el.style.top = `${pos.current.y}px`;
+    if (el && initializedElement.current !== el) {
+      initializedElement.current = el;
+      const initial = calculateInitialPosition(el, optionsRef.current);
       el.style.right = 'unset';
       el.style.bottom = 'unset';
-      onPositionChangeRef.current?.(pos.current);
+      applyPosition(el, initial);
     }
+  }, [element]);
 
-    return () => {
-      initialized.current = false;
-    };
-  }, [
-    element,
-    options.constrainOffset,
-    options.initialPosition?.top,
-    options.initialPosition?.left,
-    options.initialPosition?.right,
-    options.initialPosition?.bottom,
-    options.constrainToViewport,
-  ]);
+  useEffect(() => {
+    reclamp();
+  }, [options.constrainToViewport, options.constrainOffset]);
 
   useEffect(() => {
     const el = ref.current;
@@ -139,7 +137,7 @@ export function useFloatingWindow<T extends HTMLElement>(
     let dragController: AbortController | null = null;
 
     const onStart = (e: MouseEvent | TouchEvent) => {
-      if (enabledRef.current === false) {
+      if (optionsRef.current.enabled === false) {
         return;
       }
 
@@ -149,7 +147,7 @@ export function useFloatingWindow<T extends HTMLElement>(
         return;
       }
 
-      if (!getHandle(el, e.target, options)) {
+      if (!isDragHandleTarget(el, e.target, optionsRef.current)) {
         return;
       }
 
@@ -159,12 +157,12 @@ export function useFloatingWindow<T extends HTMLElement>(
 
       const rect = el.getBoundingClientRect();
 
-      offset.current = {
+      grabOffset.current = {
         x: point.clientX - rect.left,
         y: point.clientY - rect.top,
       };
 
-      onDragStartRef.current?.();
+      optionsRef.current.onDragStart?.();
 
       dragController?.abort();
       dragController = new AbortController();
@@ -185,22 +183,16 @@ export function useFloatingWindow<T extends HTMLElement>(
       const point = 'touches' in e ? e.touches[0] : e;
       e.preventDefault();
 
-      moveTo({ x: point.clientX - offset.current.x, y: point.clientY - offset.current.y });
+      moveTo({ x: point.clientX - grabOffset.current.x, y: point.clientY - grabOffset.current.y });
     };
 
     const moveTo = (target: FloatingWindowPosition) => {
-      const constrained = getConstrainedPosition(el, target, options);
-      const x = options.axis === 'y' ? pos.current.x : constrained.x;
-      const y = options.axis === 'x' ? pos.current.y : constrained.y;
-
-      pos.current = { x, y };
-
-      if (ref.current) {
-        ref.current.style.left = `${x}px`;
-        ref.current.style.top = `${y}px`;
-      }
-
-      onPositionChangeRef.current?.({ x, y });
+      const { axis } = optionsRef.current;
+      const constrained = getConstrainedPosition(el, target, optionsRef.current);
+      applyPosition(el, {
+        x: axis === 'y' ? pos.current.x : constrained.x,
+        y: axis === 'x' ? pos.current.y : constrained.y,
+      });
     };
 
     const onEnd = () => {
@@ -211,12 +203,12 @@ export function useFloatingWindow<T extends HTMLElement>(
         setDragging(false);
         document.body.style.userSelect = '';
         document.body.style.webkitUserSelect = '';
-        onDragEndRef.current?.();
+        optionsRef.current.onDragEnd?.();
       }
     };
 
     const onKeyDown = (e: KeyboardEvent) => {
-      if (enabledRef.current === false || e.target !== el) {
+      if (optionsRef.current.enabled === false || e.target !== el) {
         return;
       }
 
@@ -236,20 +228,10 @@ export function useFloatingWindow<T extends HTMLElement>(
     el.addEventListener('keydown', onKeyDown, { signal });
 
     return () => {
+      onEnd();
       controller.abort();
-      dragController?.abort();
     };
-  }, [
-    options.constrainToViewport,
-    options.constrainOffset,
-    options.dragHandleSelector,
-    options.axis,
-    options.initialPosition?.top,
-    options.initialPosition?.left,
-    options.initialPosition?.right,
-    options.initialPosition?.bottom,
-    element,
-  ]);
+  }, [element]);
 
   useEffect(() => {
     const el = ref.current;
@@ -257,24 +239,15 @@ export function useFloatingWindow<T extends HTMLElement>(
       return;
     }
 
-    const observer = new ResizeObserver(() => {
-      const constrained = getConstrainedPosition(el, pos.current, options);
-      const changed = constrained.x !== pos.current.x || constrained.y !== pos.current.y;
-      pos.current = constrained;
-      el.style.left = `${constrained.x}px`;
-      el.style.top = `${constrained.y}px`;
-
-      if (changed) {
-        onPositionChangeRef.current?.(constrained);
-      }
-    });
-
+    const observer = new ResizeObserver(reclamp);
     observer.observe(el);
+    window.addEventListener('resize', reclamp);
 
     return () => {
       observer.disconnect();
+      window.removeEventListener('resize', reclamp);
     };
-  }, [options.constrainToViewport, options.constrainOffset, element]);
+  }, [element]);
 
   const setPosition = useCallback((position: FloatingWindowPositionConfig) => {
     const el = ref.current;
@@ -282,37 +255,16 @@ export function useFloatingWindow<T extends HTMLElement>(
       return;
     }
 
-    const offset = constrainOffsetRef.current ?? 0;
-    const rect = el.getBoundingClientRect();
+    const { x, y } = resolvePosition(el, position);
 
-    let x: number | undefined;
-    let y: number | undefined;
-
-    if (position.left != null) {
-      x = position.left;
-    } else if (position.right != null) {
-      x = window.innerWidth - rect.width - position.right;
-    }
-
-    if (position.top != null) {
-      y = position.top;
-    } else if (position.bottom != null) {
-      y = window.innerHeight - rect.height - position.bottom;
-    }
-
-    x = x ?? pos.current.x;
-    y = y ?? pos.current.y;
-
-    if (constrainToViewportRef.current) {
-      const clamped = clampToViewport(x, y, el, offset);
-      x = clamped.x;
-      y = clamped.y;
-    }
-
-    pos.current = { x, y };
-    el.style.left = `${x}px`;
-    el.style.top = `${y}px`;
-    onPositionChangeRef.current?.({ x, y });
+    applyPosition(
+      el,
+      getConstrainedPosition(
+        el,
+        { x: x ?? pos.current.x, y: y ?? pos.current.y },
+        optionsRef.current
+      )
+    );
   }, []);
 
   return {
@@ -322,69 +274,73 @@ export function useFloatingWindow<T extends HTMLElement>(
   };
 }
 
-// -------------------------------------------------------
-// Helper functions
-// -------------------------------------------------------
-
 function px(v: string) {
   return v.endsWith('px') ? parseFloat(v) : 0;
+}
+
+function getViewportSize() {
+  const root = document.documentElement;
+  return {
+    width: root.clientWidth || window.innerWidth,
+    height: root.clientHeight || window.innerHeight,
+  };
 }
 
 function calculateInitialPosition(
   el: HTMLElement,
   options: UseFloatingWindowOptions
-): { x: number; y: number } {
-  const rect = el.getBoundingClientRect();
-  const offset = options.constrainOffset ?? 0;
-  const winW = window.innerWidth;
-  const winH = window.innerHeight;
+): FloatingWindowPosition {
   const style = window.getComputedStyle(el);
-  const top = options.initialPosition?.top;
-  const left = options.initialPosition?.left;
-  const right = options.initialPosition?.right;
-  const bottom = options.initialPosition?.bottom;
+  const offset = options.constrainOffset ?? 0;
+  const fromStyle = resolvePosition(el, {
+    left: px(style.left) || undefined,
+    right: px(style.right),
+    top: px(style.top) || undefined,
+    bottom: px(style.bottom),
+  });
+  const initial = resolvePosition(el, options.initialPosition ?? {});
 
-  let x = offset;
-  let y = offset;
+  return getConstrainedPosition(
+    el,
+    { x: initial.x ?? (fromStyle.x || offset), y: initial.y ?? (fromStyle.y || offset) },
+    options
+  );
+}
 
-  if (left != null) {
-    x = left;
-  } else if (right != null) {
-    x = winW - rect.width - right;
-  } else {
-    x = px(style.left) || winW - rect.width - px(style.right) || offset;
-  }
-
-  if (top != null) {
-    y = top;
-  } else if (bottom != null) {
-    y = winH - rect.height - bottom;
-  } else {
-    y = px(style.top) || winH - rect.height - px(style.bottom) || offset;
-  }
-
-  return options.constrainToViewport
-    ? clampToViewport(x, y, el, options.constrainOffset)
-    : { x, y };
+function resolvePosition(
+  el: HTMLElement,
+  position: FloatingWindowPositionConfig
+): Partial<FloatingWindowPosition> {
+  const rect = el.getBoundingClientRect();
+  const viewport = getViewportSize();
+  return {
+    x:
+      position.left ??
+      (position.right != null ? viewport.width - rect.width - position.right : undefined),
+    y:
+      position.top ??
+      (position.bottom != null ? viewport.height - rect.height - position.bottom : undefined),
+  };
 }
 
 function getConstrainedPosition(
   el: HTMLElement,
   pos: FloatingWindowPosition,
   options: UseFloatingWindowOptions
-) {
-  if (!options.constrainToViewport || !el) {
+): FloatingWindowPosition {
+  if (!options.constrainToViewport) {
     return pos;
   }
 
   const rect = el.getBoundingClientRect();
   const offset = options.constrainOffset ?? 0;
-  const maxX = window.innerWidth - rect.width - offset;
-  const maxY = window.innerHeight - rect.height - offset;
+  const viewport = getViewportSize();
+  const maxX = viewport.width - rect.width - offset;
+  const maxY = viewport.height - rect.height - offset;
 
   return {
-    x: Math.min(Math.max(offset, pos.x), maxX),
-    y: Math.min(Math.max(offset, pos.y), maxY),
+    x: Math.max(offset, Math.min(pos.x, maxX)),
+    y: Math.max(offset, Math.min(pos.y, maxY)),
   };
 }
 
@@ -399,7 +355,7 @@ function matchesExcludeSelector(target: Node, excludeSelector?: string): boolean
   return Boolean(target.closest(excludeSelector));
 }
 
-function getHandle(
+function isDragHandleTarget(
   el: HTMLElement,
   target: EventTarget | null,
   options: UseFloatingWindowOptions
@@ -408,7 +364,6 @@ function getHandle(
     return false;
   }
 
-  // If no drag handle selector, allow dragging from entire element
   if (!options.dragHandleSelector) {
     return !matchesExcludeSelector(target, options.excludeDragHandleSelector);
   }
@@ -418,22 +373,6 @@ function getHandle(
     (handle) =>
       handle.contains(target) && !matchesExcludeSelector(target, options.excludeDragHandleSelector)
   );
-}
-
-function clampToViewport(
-  x: number,
-  y: number,
-  el: HTMLElement,
-  offset: number = 0
-): { x: number; y: number } {
-  const rect = el.getBoundingClientRect();
-  const maxX = window.innerWidth - rect.width - offset;
-  const maxY = window.innerHeight - rect.height - offset;
-
-  return {
-    x: Math.min(Math.max(offset, x), maxX),
-    y: Math.min(Math.max(offset, y), maxY),
-  };
 }
 
 export namespace useFloatingWindow {

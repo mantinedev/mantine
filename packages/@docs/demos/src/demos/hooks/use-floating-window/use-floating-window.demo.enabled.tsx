@@ -43,7 +43,7 @@ function Demo() {
           >
             <Group justify="space-between" mb="md">
               <Text>Enabled demo</Text>
-              <CloseButton onClick={handlers.close} />
+              <CloseButton aria-label="Close floating window" onClick={handlers.close} />
             </Group>
             <Text fz="sm">This is a floating window. You can drag it around.</Text>
           </Paper>
@@ -89,7 +89,7 @@ function Demo() {
           >
             <Group justify="space-between" mb="md">
               <Text>Enabled demo</Text>
-              <CloseButton onClick={handlers.close} />
+              <CloseButton aria-label="Close floating window" onClick={handlers.close} />
             </Group>
             <Text fz="sm">This is a floating window. You can drag it around.</Text>
           </Paper>

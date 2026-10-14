@@ -33,7 +33,7 @@ function Demo() {
           >
             <Group justify="space-between" mb="md">
               <Text>No constrain demo</Text>
-              <CloseButton onClick={handlers.close} />
+              <CloseButton aria-label="Close floating window" onClick={handlers.close} />
             </Group>
             <Text fz="sm">
               The floating window is not constrained by the viewport, it can move out of bounds.
@@ -73,7 +73,7 @@ function Demo() {
           >
             <Group justify="space-between" mb="md">
               <Text>No constrain demo</Text>
-              <CloseButton onClick={handlers.close} />
+              <CloseButton aria-label="Close floating window" onClick={handlers.close} />
             </Group>
             <Text fz="sm">
               The floating window is not constrained by the viewport, it can move out of bounds.

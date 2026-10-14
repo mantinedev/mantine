@@ -40,7 +40,7 @@ function Demo() {
               style={{ cursor: 'move' }}
             >
               <Text>Drag handle demo</Text>
-              <CloseButton onClick={handlers.close} />
+              <CloseButton aria-label="Close floating window" onClick={handlers.close} />
             </Group>
             <Text fz="sm" px="md" pb="sm">
               Drag floating window around with drag handle element.
@@ -87,7 +87,7 @@ function Demo() {
               style={{ cursor: 'move' }}
             >
               <Text>Drag handle demo</Text>
-              <CloseButton onClick={handlers.close} />
+              <CloseButton aria-label="Close floating window" onClick={handlers.close} />
             </Group>
             <Text fz="sm" px="md" pb="sm">
               Drag floating window around with drag handle element.

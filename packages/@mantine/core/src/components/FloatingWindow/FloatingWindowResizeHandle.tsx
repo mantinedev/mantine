@@ -1,7 +1,7 @@
-/* eslint-disable @typescript-eslint/no-deprecated */
 import { useEffect, useRef } from 'react';
 import { useLatestRef, useMergedRef } from '@mantine/hooks';
 import { Box, BoxProps, ElementProps, factory, Factory, useProps } from '../../core';
+import { clampDimension } from './clamp-dimension';
 import { useFloatingWindowContext } from './FloatingWindow.context';
 
 export interface FloatingWindowResizeHandleProps extends BoxProps, ElementProps<'div', 'role'> {}
@@ -15,23 +15,16 @@ const defaultProps = {} satisfies Partial<FloatingWindowResizeHandleProps>;
 
 const KEYBOARD_STEP = 10;
 
-function clampDimension(
-  value: number,
-  min: number | undefined,
-  max: number | undefined,
-  viewportMax: number | undefined
-) {
-  let v = value;
-  if (min != null) {
-    v = Math.max(v, min);
+function clampToViewport(value: number, viewportMax: number | undefined) {
+  return viewportMax == null ? value : Math.min(value, viewportMax);
+}
+
+function setValueNow(handle: HTMLElement, value: number | null | undefined) {
+  if (value == null) {
+    handle.removeAttribute('aria-valuenow');
+  } else {
+    handle.setAttribute('aria-valuenow', String(Math.round(value)));
   }
-  if (max != null) {
-    v = Math.min(v, max);
-  }
-  if (viewportMax != null) {
-    v = Math.min(v, viewportMax);
-  }
-  return v;
 }
 
 function getViewportLimits(
@@ -43,9 +36,10 @@ function getViewportLimits(
     return { maxWidth: undefined, maxHeight: undefined };
   }
   const offset = constrainOffset ?? 0;
+  const root = document.documentElement;
   return {
-    maxWidth: window.innerWidth - rect.left - offset,
-    maxHeight: window.innerHeight - rect.top - offset,
+    maxWidth: (root.clientWidth || window.innerWidth) - rect.left - offset,
+    maxHeight: (root.clientHeight || window.innerHeight) - rect.top - offset,
   };
 }
 
@@ -95,20 +89,16 @@ export const FloatingWindowResizeHandle = factory<FloatingWindowResizeHandleFact
       const viewportLimits = getViewportLimits(rect, constrainToViewport, constrainOffset);
 
       if (width !== null) {
-        const nextWidth = clampDimension(
-          width,
-          dimensions?.minWidth,
-          dimensions?.maxWidth,
+        const nextWidth = clampToViewport(
+          clampDimension(width, dimensions?.minWidth, dimensions?.maxWidth),
           viewportLimits.maxWidth
         );
         root.style.width = `${nextWidth}px`;
       }
 
       if (height !== null) {
-        const nextHeight = clampDimension(
-          height,
-          dimensions?.minHeight,
-          dimensions?.maxHeight,
+        const nextHeight = clampToViewport(
+          clampDimension(height, dimensions?.minHeight, dimensions?.maxHeight),
           viewportLimits.maxHeight
         );
         root.style.height = `${nextHeight}px`;
@@ -118,7 +108,7 @@ export const FloatingWindowResizeHandle = factory<FloatingWindowResizeHandleFact
 
       if (width !== null) {
         valueNowRef.current = resizedRect.width;
-        handle.setAttribute('aria-valuenow', String(Math.round(resizedRect.width)));
+        setValueNow(handle, resizedRect.width);
       }
 
       onSizeChange?.({ width: resizedRect.width, height: resizedRect.height });
@@ -243,7 +233,7 @@ export const FloatingWindowResizeHandle = factory<FloatingWindowResizeHandleFact
 
     if (!hasWidth) {
       valueNowRef.current = null;
-      handle.removeAttribute('aria-valuenow');
+      setValueNow(handle, null);
       return;
     }
 
@@ -252,20 +242,12 @@ export const FloatingWindowResizeHandle = factory<FloatingWindowResizeHandleFact
     }
 
     const initialWidth = ctx.dimensions?.initialWidth;
-
-    if (initialWidth == null) {
-      handle.removeAttribute('aria-valuenow');
-      return;
-    }
-
-    const width = clampDimension(
-      initialWidth,
-      ctx.dimensions?.minWidth,
-      ctx.dimensions?.maxWidth,
-      undefined
+    setValueNow(
+      handle,
+      initialWidth == null
+        ? null
+        : clampDimension(initialWidth, ctx.dimensions?.minWidth, ctx.dimensions?.maxWidth)
     );
-
-    handle.setAttribute('aria-valuenow', String(Math.round(width)));
   }, [hasWidth, ctx.dimensions?.initialWidth, ctx.dimensions?.minWidth, ctx.dimensions?.maxWidth]);
 
   return (

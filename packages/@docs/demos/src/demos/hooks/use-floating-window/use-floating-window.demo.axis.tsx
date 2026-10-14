@@ -41,7 +41,7 @@ function Demo() {
           >
             <Group justify="space-between" mb="md">
               <Text>Axis demo</Text>
-              <CloseButton onClick={handlers.close} />
+              <CloseButton aria-label="Close floating window" onClick={handlers.close} />
             </Group>
             <Text fz="sm">
               When you set axis prop, the floating window can be dragged only horizontally or
@@ -88,7 +88,7 @@ function Demo() {
           >
             <Group justify="space-between" mb="md">
               <Text>Axis demo</Text>
-              <CloseButton onClick={handlers.close} />
+              <CloseButton aria-label="Close floating window" onClick={handlers.close} />
             </Group>
             <Text fz="sm">
               When you set axis prop, the floating window can be dragged only horizontally or

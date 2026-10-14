@@ -12,8 +12,8 @@ export default Layout(MDX_DATA.FloatingWindow);
 
 ## Constrain to viewport
 
-Use the `constrainToViewport` prop to restrict element movement to the viewport boundaries.
-Without it, the element can be dragged outside the viewport:
+By default, the window cannot be dragged outside the viewport.
+Set `constrainToViewport={false}` to allow it:
 
 <Demo data={FloatingWindowDemos.constrainToViewport} />
 
@@ -39,8 +39,9 @@ Set `enabled={false}` to disable dragging:
 
 ## Set position
 
-Call `setPosition` to move the window programmatically. It accepts an object with two
-of the `top`, `left`, `right` and `bottom` properties, for example `{ top: 20, left: 20 }`:
+Pass a ref to the `setPositionRef` prop to move the window programmatically.
+Call it with offsets from the viewport edges, for example `{ top: 20, left: 20 }`.
+Axes you omit keep their current position:
 
 <Demo data={FloatingWindowDemos.setPosition} />
 

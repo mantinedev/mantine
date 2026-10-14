@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { FloatingWindow } from './FloatingWindow';
 
 export default { title: 'FloatingWindow' };
@@ -89,5 +90,58 @@ export function ResizeHandle() {
       <p>{lorem}</p>
       <p>{lorem}</p>
     </div>
+  );
+}
+
+export function DimensionBounds() {
+  return (
+    <FloatingWindow
+      p="md"
+      withBorder
+      dimensions={{ minWidth: 300, maxWidth: 500 }}
+      initialPosition={{ top: 40, left: 40 }}
+      data-testid="bounds-window"
+    >
+      Short
+    </FloatingWindow>
+  );
+}
+
+export function PersistedPosition() {
+  const [position, setPosition] = useState({ x: 40, y: 40 });
+  const [axis, setAxis] = useState<'x' | 'y' | undefined>(undefined);
+
+  return (
+    <div style={{ padding: 40 }}>
+      <button
+        type="button"
+        onClick={() => setAxis((current) => (current === 'x' ? undefined : 'x'))}
+      >
+        Toggle x axis ({axis ?? 'none'})
+      </button>
+      <FloatingWindow
+        p="md"
+        w={260}
+        withBorder
+        axis={axis}
+        initialPosition={{ left: position.x, top: position.y }}
+        onPositionChange={setPosition}
+      >
+        {`${Math.round(position.x)}, ${Math.round(position.y)}`}
+      </FloatingWindow>
+      <p>{lorem}</p>
+      <p>{lorem}</p>
+      <p>{lorem}</p>
+      <p>{lorem}</p>
+      <p>{lorem}</p>
+    </div>
+  );
+}
+
+export function LargerThanViewport() {
+  return (
+    <FloatingWindow p="md" w={400} h={1400} withBorder constrainOffset={10}>
+      Window taller than the viewport
+    </FloatingWindow>
   );
 }

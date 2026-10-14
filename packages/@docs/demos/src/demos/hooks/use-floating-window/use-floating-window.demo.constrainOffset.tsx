@@ -34,7 +34,7 @@ function Demo() {
           >
             <Group justify="space-between" mb="md">
               <Text>Constrain offset demo</Text>
-              <CloseButton onClick={handlers.close} />
+              <CloseButton aria-label="Close floating window" onClick={handlers.close} />
             </Group>
             <Text fz="sm">
               This floating window has 30px offset, it cannot move closer that 30px to the edge of
@@ -76,7 +76,7 @@ function Demo() {
           >
             <Group justify="space-between" mb="md">
               <Text>Constrain offset demo</Text>
-              <CloseButton onClick={handlers.close} />
+              <CloseButton aria-label="Close floating window" onClick={handlers.close} />
             </Group>
             <Text fz="sm">
               This floating window has 30px offset, it cannot move closer that 30px to the edge of

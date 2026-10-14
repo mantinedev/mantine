@@ -37,7 +37,7 @@ Use `enabled` option to enable or disable dragging:
 
 ## Set position
 
-Call `setPosition` to move the element programmatically. Pass two of the `top`, `left`, `right` and `bottom` offsets:
+Call `setPosition` to move the element programmatically. Pass offsets from the viewport edges, axes you omit keep their current position:
 
 <Demo data={UseFloatingWindowDemos.setPosition} />
 
@@ -106,7 +106,9 @@ interface UseFloatingWindowOptions {
   /** Initial position. If not set, calculated from element styles. */
   initialPosition?: FloatingWindowPositionConfig;
 
-  /** Called when the element position changes */
+  /** Called when the element position changes: on initial placement,
+   * drag, keyboard move, `setPosition` call and re-clamp after
+   * the element or the browser window is resized */
   onPositionChange?: (pos: FloatingWindowPosition) => void;
 
   /** Called when the drag starts */

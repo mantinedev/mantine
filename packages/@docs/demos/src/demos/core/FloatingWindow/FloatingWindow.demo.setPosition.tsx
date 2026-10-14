@@ -38,7 +38,7 @@ function Demo() {
         >
           <Group justify="space-between" mb="md">
             <Text>Set position demo</Text>
-            <CloseButton onClick={handlers.close} />
+            <CloseButton aria-label="Close floating window" onClick={handlers.close} />
           </Group>
           <Text fz="sm">
             You can control floating window position programmatically with setPositionRef.
@@ -80,7 +80,7 @@ function Demo() {
         >
           <Group justify="space-between" mb="md">
             <Text>Set position demo</Text>
-            <CloseButton onClick={handlers.close} />
+            <CloseButton aria-label="Close floating window" onClick={handlers.close} />
           </Group>
           <Text fz="sm">
             You can control floating window position programmatically with setPositionRef.
