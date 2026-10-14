@@ -103,4 +103,47 @@ describe('@mantine/hooks/use-event-listener', () => {
     fireEvent.mouseDown(screen.getByRole('button'));
     expect(spy).toHaveBeenCalledTimes(1);
   });
+
+  it('removes the listener with the options it was registered with when options change', () => {
+    const spy = jest.fn();
+
+    function CaptureSwitch({ capture }: { capture: boolean }) {
+      const ref = useEventListener('click', () => spy(), { capture });
+      return (
+        <button ref={ref} type="button">
+          Test button
+        </button>
+      );
+    }
+
+    const { rerender } = render(<CaptureSwitch capture />);
+    rerender(<CaptureSwitch capture={false} />);
+
+    fireEvent.click(screen.getByRole('button'));
+    expect(spy).toHaveBeenCalledTimes(1);
+  });
+
+  it('removes the listener when the target element unmounts while the hook stays mounted', () => {
+    const spy = jest.fn();
+
+    function Toggle({ show }: { show: boolean }) {
+      const ref = useEventListener('click', () => spy());
+      return show ? (
+        <button ref={ref} type="button">
+          Test button
+        </button>
+      ) : null;
+    }
+
+    const { rerender } = render(<Toggle show />);
+    const detached = screen.getByRole('button');
+
+    rerender(<Toggle show={false} />);
+    fireEvent.click(detached);
+    expect(spy).not.toHaveBeenCalled();
+
+    rerender(<Toggle show />);
+    fireEvent.click(screen.getByRole('button'));
+    expect(spy).toHaveBeenCalledTimes(1);
+  });
 });
