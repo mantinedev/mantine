@@ -74,7 +74,8 @@ export function WithGetBarProps() {
         valueFormatter={(value) => value.toLocaleString()}
         getBarProps={(barData) => ({
           style: {
-            backgroundColor: barData.value > 500000 ? '#10a37f' : undefined,
+            backgroundColor: barData.value > 500000 ? 'var(--mantine-color-teal-9)' : undefined,
+            color: barData.value > 500000 ? 'var(--mantine-color-white)' : undefined,
             fontWeight: barData.value > 500000 ? 700 : undefined,
           },
         })}
@@ -354,6 +355,115 @@ export function WithStylesAPI() {
           barValue: { color: 'blue' },
         }}
       />
+    </div>
+  );
+}
+
+export function LongNames() {
+  const longData = [
+    { name: 'Organic search from Google and other search engines', value: 1200000 },
+    { name: 'Referral traffic from partner websites and newsletters', value: 300000 },
+    { name: 'Direct visits with a very long name that does not fit', value: 0 },
+    { name: 'Paid campaigns', value: 20000 },
+  ];
+
+  return (
+    <div style={{ padding: 40, maxWidth: 600 }}>
+      <BarsList
+        data={longData}
+        barsLabel="Traffic Source"
+        valueLabel="Visits"
+        valueFormatter={(value) => value.toLocaleString()}
+        minBarSize={20}
+      />
+      <BarsList
+        mt="xl"
+        variant="filled"
+        data={longData}
+        valueFormatter={(value) => value.toLocaleString()}
+      />
+    </div>
+  );
+}
+
+export function NegativeAndInvalidValues() {
+  const invalidData = [
+    { name: 'Positive', value: 100 },
+    { name: 'Negative', value: -50 },
+    { name: 'NaN', value: NaN },
+    { name: 'Half', value: 50 },
+  ];
+
+  return (
+    <div style={{ padding: 40, maxWidth: 600 }}>
+      <BarsList data={invalidData} barsLabel="Item" valueLabel="Value" />
+    </div>
+  );
+}
+
+export function CssColors() {
+  const cssData = [
+    { name: 'Yellow', value: 1200000, color: '#ffd43b' },
+    { name: 'Navy', value: 800000, color: '#1c2a5a' },
+    { name: 'Green', value: 600000, color: 'rgb(16, 163, 127)' },
+  ];
+
+  return (
+    <div style={{ padding: 40, maxWidth: 600 }}>
+      <BarsList data={cssData} valueFormatter={(value) => value.toLocaleString()} />
+      <BarsList
+        mt="xl"
+        variant="filled"
+        autoContrast
+        data={cssData}
+        valueFormatter={(value) => value.toLocaleString()}
+      />
+    </div>
+  );
+}
+
+export function WrappedRenderBar() {
+  return (
+    <div style={{ padding: 40, maxWidth: 600 }}>
+      <BarsList
+        data={data}
+        barsLabel="Traffic Source"
+        valueLabel="Visits"
+        valueFormatter={(value) => value.toLocaleString()}
+        renderBar={(barData, defaultBar) => <div data-source={barData.name}>{defaultBar}</div>}
+      />
+    </div>
+  );
+}
+
+export function CustomizedBarLabel() {
+  const longData = [
+    { name: 'Organic search from Google and other search engines', value: 1200000 },
+    { name: 'Referral traffic from partner websites and newsletters', value: 300000 },
+    { name: 'Long traffic source name', value: 100000 },
+    { name: 'Paid campaigns', value: 20000 },
+  ];
+
+  return (
+    <div style={{ padding: 40, maxWidth: 600 }}>
+      <BarsList
+        data={longData}
+        valueFormatter={(value) => value.toLocaleString()}
+        styles={{ barLabel: { fontSize: 11, letterSpacing: 1, borderRadius: 16 } }}
+        getBarProps={(barData) => ({
+          tabIndex: 0,
+          onClick: () => console.log(barData.name),
+          style: barData.value > 500000 ? { fontWeight: 700 } : undefined,
+        })}
+      />
+    </div>
+  );
+}
+
+export function Unstyled() {
+  return (
+    <div style={{ padding: 40, maxWidth: 600 }}>
+      <BarsList data={data} unstyled valueFormatter={(value) => value.toLocaleString()} />
     </div>
   );
 }

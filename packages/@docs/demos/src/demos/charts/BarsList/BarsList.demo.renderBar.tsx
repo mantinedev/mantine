@@ -9,7 +9,7 @@ import { Tooltip } from '@mantine/core';
 import { data } from './data';
 
 function Demo() {
-  const maxValue = Math.max(...data.map((item) => item.value));
+  const total = data.reduce((sum, item) => sum + item.value, 0);
 
   return (
     <BarsList
@@ -17,14 +17,10 @@ function Demo() {
       barsLabel="Traffic Source"
       valueLabel="Visits"
       renderBar={(barData, defaultBar) => {
-        const percentage = ((barData.value / maxValue) * 100).toFixed(1);
+        const percentage = ((barData.value / total) * 100).toFixed(1);
 
         return (
-          <Tooltip
-            label={\`\${barData.name}: \${percentage}% of total traffic\`}
-            position="top"
-            withArrow
-          >
+          <Tooltip label={\`\${barData.name}: \${percentage}% of total traffic\`} position="top-start">
             {defaultBar}
           </Tooltip>
         );
@@ -35,7 +31,7 @@ function Demo() {
 `;
 
 function Demo() {
-  const maxValue = Math.max(...data.map((item) => item.value));
+  const total = data.reduce((sum, item) => sum + item.value, 0);
 
   return (
     <BarsList
@@ -43,7 +39,7 @@ function Demo() {
       barsLabel="Traffic Source"
       valueLabel="Visits"
       renderBar={(barData, defaultBar) => {
-        const percentage = ((barData.value / maxValue) * 100).toFixed(1);
+        const percentage = ((barData.value / total) * 100).toFixed(1);
 
         return (
           <Tooltip label={`${barData.name}: ${percentage}% of total traffic`} position="top-start">

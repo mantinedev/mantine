@@ -12,7 +12,7 @@ export default Layout(MDX_DATA.BarsList);
 
 ## Data format
 
-`BarsList` expects data in the following format:
+`BarsList` expects data in the following format. Values must be non-negative. Negative and non-finite values are displayed as empty bars:
 
 ```tsx
 export const data = [
@@ -61,25 +61,29 @@ Use `barColor` and `barTextColor` props to set the default background and text c
 
 ## Auto contrast
 
-Text color is adjusted to the bar background color when [theme.autoContrast](/theming/theme-object/#autocontrast) is enabled.
-Set `autoContrast={false}` to disable it:
+Set `autoContrast` prop to adjust text color to the bar background color.
+It applies to bars with solid background: `variant="filled"` or colors with a shade, for example `blue.9`.
+It is enabled by default when [theme.autoContrast](/theming/theme-object/#autocontrast) is set:
 
 <Demo data={BarsListDemos.autoContrast} />
 
 ## Custom colors
 
-Each bar can have its own color by setting the `color` property in the data:
+Each bar can have its own color by setting the `color` property in the data.
+Set `variant="filled"` to display bars with solid background. Colors with a shade, for example `blue.6`, always have solid background:
 
 <Demo data={BarsListDemos.customColors} />
 
 ## Get bar props
 
-Use `getBarProps` to add props to each bar element, for example, event handlers:
+Use `getBarProps` to pass props to each bar element, for example, to highlight some bars.
+`style.backgroundColor` sets the bar color:
 
 <Demo data={BarsListDemos.getBarProps} />
 
 ## Custom bar rendering
 
-Use `renderBar` to completely customize how each bar is rendered:
+Use `renderBar` to completely customize how each bar is rendered.
+The returned element must contain `defaultBar` or an element with `role="row"`:
 
 <Demo data={BarsListDemos.renderBar} />

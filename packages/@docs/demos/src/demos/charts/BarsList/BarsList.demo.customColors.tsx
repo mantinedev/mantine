@@ -2,13 +2,13 @@ import { BarsList } from '@mantine/charts';
 import { MantineDemo } from '@mantinex/demo';
 
 const data = [
-  { name: 'React', value: 850000, color: 'blue.6' },
-  { name: 'Vue', value: 620000, color: 'green.6' },
-  { name: 'Angular', value: 540000, color: 'yellow.6' },
-  { name: 'Svelte', value: 380000, color: 'red.6' },
-  { name: 'Next.js', value: 920000, color: 'teal.6' },
-  { name: 'Nuxt', value: 410000, color: 'gray.8' },
-  { name: 'Remix', value: 295000, color: 'orange.6' },
+  { name: 'React', value: 850000, color: 'blue' },
+  { name: 'Vue', value: 620000, color: 'green' },
+  { name: 'Angular', value: 540000, color: 'yellow' },
+  { name: 'Svelte', value: 380000, color: 'red' },
+  { name: 'Next.js', value: 920000, color: 'teal' },
+  { name: 'Nuxt', value: 410000, color: 'gray' },
+  { name: 'Remix', value: 295000, color: 'orange' },
 ];
 
 const dataCode = `export const data = ${JSON.stringify(data, null, 2)};`;

@@ -1,43 +1,99 @@
 .root {
-  display: flex;
-  flex-direction: column;
-  gap: var(--bars-list-gap);
+  --_columns: minmax(0, 1fr) auto;
+  --_column-gap: var(--mantine-spacing-md);
+
+  display: grid;
+  grid-template-columns: var(--_columns);
+  column-gap: var(--_column-gap);
+  row-gap: var(--bars-list-gap);
   width: 100%;
+
+  & > * {
+    grid-column: 1 / -1;
+  }
+
+  & > .bar,
+  & > .labelsRow {
+    grid-template-columns: subgrid;
+  }
 }
 
 .labelsRow {
-  display: flex;
-  justify-content: space-between;
+  display: grid;
+  grid-template-columns: var(--_columns);
+  column-gap: var(--_column-gap);
   font-size: var(--mantine-font-size-sm);
   font-weight: var(--mantine-font-weight-medium);
   padding-bottom: var(--bars-list-gap);
+
+  & > :last-child {
+    text-align: end;
+  }
 }
 
 .bar {
-  display: flex;
+  --_bar-size: min(100%, max(var(--bars-list-bar-size, 0%), var(--bars-list-min-bar-size, 0px)));
+
+  display: grid;
+  grid-template-columns: var(--_columns);
+  column-gap: var(--_column-gap);
   align-items: center;
-  justify-content: space-between;
-  gap: var(--mantine-spacing-md);
 }
 
 .barLabel {
-  display: flex;
-  align-items: center;
-  min-width: var(--bars-list-min-bar-size);
+  position: relative;
+  min-width: 0;
   height: var(--bars-list-bar-height);
+  line-height: var(--bars-list-bar-height);
   padding: 0 var(--mantine-spacing-sm);
   font-size: var(--mantine-font-size-sm);
   font-weight: 500;
   color: var(--mantine-color-white);
   border-radius: var(--mantine-radius-sm);
-  transition: width 300ms ease;
+}
 
-  @mixin where-light {
-    background-color: var(--mantine-primary-color-filled);
+.barFill,
+.barName,
+.barNameOutside {
+  position: absolute;
+  inset: 0;
+}
+
+.barFill {
+  inset-inline-end: auto;
+  width: var(--_bar-size);
+  border-radius: inherit;
+  background: var(--bars-list-bar-color, var(--mantine-primary-color-filled));
+  transition: width 300ms ease;
+}
+
+.barName,
+.barNameOutside {
+  padding: inherit;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  transition: clip-path 300ms ease;
+}
+
+.barName {
+  clip-path: inset(0 calc(100% - var(--_bar-size)) 0 0);
+
+  @mixin rtl {
+    clip-path: inset(0 0 0 calc(100% - var(--_bar-size)));
+  }
+}
+
+.barNameOutside {
+  color: var(--mantine-color-text);
+  clip-path: inset(0 0 0 var(--_bar-size));
+
+  &::before {
+    content: attr(data-name);
   }
 
-  @mixin where-dark {
-    background-color: var(--mantine-primary-color-filled);
+  @mixin rtl {
+    clip-path: inset(0 var(--_bar-size) 0 0);
   }
 }
 
@@ -45,5 +101,6 @@
   font-size: var(--mantine-font-size-sm);
   font-weight: var(--mantine-font-weight-medium);
   white-space: nowrap;
+  text-align: end;
   color: var(--mantine-color-text);
 }

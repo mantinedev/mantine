@@ -5,8 +5,9 @@ export const BarsListStylesApi: StylesApiData<BarsListFactory> = {
   selectors: {
     root: 'Root element',
     labelsRow: 'Container for labels row',
-    bar: 'Bar container element',
-    barLabel: 'Bar label element with name inside',
+    bar: 'Row element with bar and value, sets `--bars-list-bar-size` (bar length in % of the track)',
+    barLabel:
+      'Bar track element with the bar and the name inside, sets `--bars-list-bar-color` (bar background)',
     barValue: 'Bar value element',
   },
 

@@ -11,12 +11,15 @@ function Demo() {
     <BarsList
       data={data}
       valueFormatter={(value) => value.toLocaleString('en-US')}
-      barTextColor="white"
       getBarProps={(barData) => ({
-        style: {
-          backgroundColor: barData.value > 500000 ? '#10a37f' : undefined,
-          fontWeight: barData.value > 500000 ? 700 : undefined,
-        },
+        style:
+          barData.value > 500000
+            ? {
+                backgroundColor: 'var(--mantine-color-teal-9)',
+                color: 'var(--mantine-color-white)',
+                fontWeight: 700,
+              }
+            : undefined,
       })}
     />
   );
@@ -28,12 +31,15 @@ function Demo() {
     <BarsList
       data={data}
       valueFormatter={(value) => value.toLocaleString('en-US')}
-      barTextColor="white"
       getBarProps={(barData) => ({
-        style: {
-          backgroundColor: barData.value > 500000 ? '#10a37f' : undefined,
-          fontWeight: barData.value > 500000 ? 700 : undefined,
-        },
+        style:
+          barData.value > 500000
+            ? {
+                backgroundColor: 'var(--mantine-color-teal-9)',
+                color: 'var(--mantine-color-white)',
+                fontWeight: 700,
+              }
+            : undefined,
       })}
     />
   );

@@ -12,7 +12,7 @@ function Demo() {
       data={data}
       barColor="teal.6"
       barTextColor="white"
-      valueFormatter={(value) => value.toLocaleString('en-barsUS')}
+      valueFormatter={(value) => value.toLocaleString('en-US')}
     />
   );
 }
