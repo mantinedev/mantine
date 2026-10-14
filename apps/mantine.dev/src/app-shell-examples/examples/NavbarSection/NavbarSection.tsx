@@ -1,5 +1,11 @@
-import { AppShell, Burger, Group, NavLink, ScrollArea, Text } from '@mantine/core';
+import { BellIcon, MagnifyingGlassIcon } from '@phosphor-icons/react';
+import { ActionIcon, AppShell, Burger, Group, TextInput } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
+import { MantineLogo } from '@mantinex/mantine-logo';
+import { Dashboard } from './Dashboard';
+import { Navbar } from './Navbar';
+import { UserMenu } from './UserMenu';
+import classes from './NavbarSection.module.css';
 
 export function NavbarSection() {
   const [opened, { toggle }] = useDisclosure();
@@ -7,34 +13,49 @@ export function NavbarSection() {
   return (
     <AppShell
       header={{ height: 60 }}
-      navbar={{ width: 300, breakpoint: 'sm', collapsed: { mobile: !opened } }}
-      padding="md"
+      navbar={{ width: 260, breakpoint: 'sm', collapsed: { mobile: !opened } }}
+      padding={{ base: 'md', sm: 'xl' }}
     >
       <AppShell.Header>
-        <Group h="100%" px="md">
-          <Burger opened={opened} onClick={toggle} hiddenFrom="sm" size="sm" />
-          Header
+        <Group h="100%" px="md" justify="space-between">
+          <Group>
+            <Burger
+              opened={opened}
+              onClick={toggle}
+              hiddenFrom="sm"
+              size="sm"
+              aria-label="Toggle navigation"
+            />
+            <MantineLogo size={28} />
+          </Group>
+
+          <Group>
+            <TextInput
+              placeholder="Search"
+              leftSection={<MagnifyingGlassIcon size={16} />}
+              visibleFrom="sm"
+              w={240}
+            />
+            <ActionIcon
+              variant="default"
+              size="lg"
+              aria-label="Notifications"
+              title="Notifications"
+            >
+              <BellIcon size={18} />
+            </ActionIcon>
+            <UserMenu />
+          </Group>
         </Group>
       </AppShell.Header>
-      <AppShell.Navbar>
-        <AppShell.Section p="md">Navbar header</AppShell.Section>
-        <AppShell.Section grow my="md" component={ScrollArea} px="md">
-          <Text mb="sm">60 links in a scrollable section:</Text>
 
-          {Array(60)
-            .fill(0)
-            .map((_, index) => (
-              <NavLink
-                href="#"
-                key={index}
-                onClick={(event) => event.preventDefault()}
-                label="Navbar link"
-              />
-            ))}
-        </AppShell.Section>
-        <AppShell.Section p="md">Navbar footer – always at the bottom</AppShell.Section>
+      <AppShell.Navbar>
+        <Navbar />
       </AppShell.Navbar>
-      <AppShell.Main>Main</AppShell.Main>
+
+      <AppShell.Main className={classes.main}>
+        <Dashboard />
+      </AppShell.Main>
     </AppShell>
   );
 }

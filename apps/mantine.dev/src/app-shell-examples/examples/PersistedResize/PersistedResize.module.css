@@ -1,0 +1,13 @@
+.main {
+  background-color: light-dark(var(--mantine-color-gray-0), var(--mantine-color-dark-8));
+}
+
+.header {
+  container-type: inline-size;
+}
+
+@container (width < 800px) {
+  .search {
+    display: none;
+  }
+}

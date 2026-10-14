@@ -1,0 +1,18 @@
+.item {
+  display: block;
+  width: 100%;
+  padding: var(--mantine-spacing-sm) var(--mantine-spacing-md);
+
+  @mixin hover {
+    background-color: var(--mantine-color-hover);
+  }
+
+  &[data-active] {
+    background-color: var(--mantine-color-hover-strong);
+  }
+}
+
+.body {
+  flex: 1;
+  min-width: 0;
+}

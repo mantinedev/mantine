@@ -30,6 +30,7 @@
   --mantine-primary-color-light: var(--mantine-color-blue-light);
   --mantine-primary-color-light-hover: var(--mantine-color-blue-light-hover);
   --mantine-primary-color-light-color: var(--mantine-color-blue-light-color);
+  --mantine-primary-color-text: var(--mantine-color-blue-text);
   --mantine-color-divider: var(--mantine-color-border);
   --mantine-color-text-muted: var(--mantine-color-dimmed);
   --mantine-breakpoint-xs: 36em;

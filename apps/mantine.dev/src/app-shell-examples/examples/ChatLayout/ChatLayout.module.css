@@ -1,0 +1,45 @@
+.main {
+  display: flex;
+  flex-direction: column;
+  height: 100dvh;
+  background-color: light-dark(var(--mantine-color-gray-0), var(--mantine-color-dark-8));
+}
+
+.contact {
+  flex-shrink: 0;
+  border-bottom: 1px solid var(--mantine-color-border);
+  background-color: var(--mantine-color-body);
+}
+
+.messages {
+  flex: 1;
+  min-height: 0;
+}
+
+.bubble {
+  width: fit-content;
+  max-width: 70%;
+  align-self: flex-start;
+  padding: var(--mantine-spacing-xs) var(--mantine-spacing-sm);
+  border-radius: var(--mantine-radius-lg);
+  background-color: var(--mantine-color-body);
+  border: 1px solid var(--mantine-color-border);
+
+  &[data-own] {
+    align-self: flex-end;
+    background-color: var(--mantine-primary-color-filled);
+    border-color: transparent;
+    color: var(--mantine-primary-color-contrast);
+  }
+}
+
+.time {
+  text-align: right;
+  opacity: 0.7;
+}
+
+.composer {
+  flex-shrink: 0;
+  border-top: 1px solid var(--mantine-color-border);
+  background-color: var(--mantine-color-body);
+}

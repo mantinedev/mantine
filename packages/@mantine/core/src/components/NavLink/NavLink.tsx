@@ -6,10 +6,13 @@ import {
   getRadius,
   getSize,
   getSpacing,
+  getThemeColor,
   MantineColor,
   MantineRadius,
   MantineSize,
   MantineSpacing,
+  MantineTheme,
+  parseThemeColor,
   polymorphicFactory,
   PolymorphicFactory,
   StylesApiProps,
@@ -37,6 +40,7 @@ export type NavLinkCssVariables = {
     | '--nl-bg'
     | '--nl-hover'
     | '--nl-rail-color'
+    | '--nl-rail-icon-color'
     | '--nl-radius'
     | '--nl-fz'
     | '--nl-description-fz'
@@ -121,6 +125,13 @@ export type NavLinkFactory = PolymorphicFactory<{
   variant: NavLinkVariant;
 }>;
 
+function getRailIconColor(color: MantineColor, theme: MantineTheme) {
+  const parsed = parseThemeColor({ color, theme });
+  return parsed.isThemeColor && parsed.shade === undefined
+    ? `var(--mantine-color-${parsed.color}-text)`
+    : getThemeColor(color, theme);
+}
+
 const varsResolver = createVarsResolver<NavLinkFactory>(
   (theme, { variant, color, childrenOffset, autoContrast, size, radius }) => {
     const isRail = variant === 'rail';
@@ -137,6 +148,7 @@ const varsResolver = createVarsResolver<NavLinkFactory>(
         '--nl-hover': !isRail && (color || variant) ? colors.hover : undefined,
         '--nl-color': !isRail && (color || variant) ? colors.color : undefined,
         '--nl-rail-color': isRail && color ? colors.background : undefined,
+        '--nl-rail-icon-color': isRail && color ? getRailIconColor(color, theme) : undefined,
         '--nl-radius': getRadius(radius),
         '--nl-fz': getSize(size, 'nl-fz'),
         '--nl-description-fz': getSize(size, 'nl-description-fz'),

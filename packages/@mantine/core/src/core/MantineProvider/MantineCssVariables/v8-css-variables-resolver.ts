@@ -145,6 +145,7 @@ export const v8CssVariablesResolver: CSSVariablesResolver = (theme) => {
       '--mantine-primary-color-light': `var(--mantine-color-${theme.primaryColor}-light)`,
       '--mantine-primary-color-light-hover': `var(--mantine-color-${theme.primaryColor}-light-hover)`,
       '--mantine-primary-color-light-color': `var(--mantine-color-${theme.primaryColor}-light-color)`,
+      '--mantine-primary-color-text': `var(--mantine-color-${theme.primaryColor}-text)`,
     },
     light: {
       '--mantine-color-scheme': 'light',

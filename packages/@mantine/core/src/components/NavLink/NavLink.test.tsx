@@ -195,13 +195,29 @@ describe('@mantine/core/NavLink', () => {
     const root = screen.getByRole('link');
     expect(root).toHaveAttribute('data-variant', 'rail');
     expect(root).toHaveStyle({ '--nl-rail-color': 'var(--mantine-color-red-filled)' });
+    expect(root).toHaveStyle({ '--nl-rail-icon-color': 'var(--mantine-color-red-text)' });
     expect(root.style.getPropertyValue('--nl-bg')).toBe('');
     expect(root.style.getPropertyValue('--nl-color')).toBe('');
   });
 
+  it('sets rail icon color to the resolved color when color has a shade or is not a theme color', () => {
+    const { rerender } = render(<NavLink {...defaultProps} variant="rail" color="red.5" active />);
+    expect(screen.getByRole('link')).toHaveStyle({
+      '--nl-rail-icon-color': 'var(--mantine-color-red-5)',
+    });
+
+    rerender(<NavLink {...defaultProps} variant="rail" color="#ff00ff" active />);
+    expect(screen.getByRole('link')).toHaveStyle({ '--nl-rail-icon-color': '#ff00ff' });
+  });
+
   it('does not set rail color when color is not passed to rail variant', () => {
-    render(<NavLink {...defaultProps} variant="rail" active />);
-    expect(screen.getByRole('link').style.getPropertyValue('--nl-rail-color')).toBe('');
+    const { rerender } = render(<NavLink {...defaultProps} variant="rail" active />);
+    const root = screen.getByRole('link');
+    expect(root.style.getPropertyValue('--nl-rail-color')).toBe('');
+    expect(root.style.getPropertyValue('--nl-rail-icon-color')).toBe('');
+
+    rerender(<NavLink {...defaultProps} color="red" active />);
+    expect(screen.getByRole('link').style.getPropertyValue('--nl-rail-icon-color')).toBe('');
   });
 
   it('renders expandable parent as a button disclosure with aria-expanded and aria-controls', async () => {

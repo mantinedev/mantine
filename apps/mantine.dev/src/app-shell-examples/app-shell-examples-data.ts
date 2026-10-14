@@ -31,9 +31,24 @@ export const APP_SHELL_EXAMPLES_DATA: AppShellExample[] = [
     description: 'Navbar visible only on mobile',
   },
   {
+    id: 'MobileTabBar',
+    name: 'Mobile tab bar',
+    description: 'Footer tab bar on mobile, navbar on desktop',
+  },
+  {
     id: 'CollapseDesktop',
     name: 'Collapsible navbar',
     description: 'Collapsible navbar both on desktop and mobile',
+  },
+  {
+    id: 'MiniNavbar',
+    name: 'Mini navbar',
+    description: 'Navbar collapses to an icon rail with tooltips',
+  },
+  {
+    id: 'AsideDetails',
+    name: 'Aside as details panel',
+    description: 'Click an order to open it in a collapsible aside',
   },
   {
     id: 'FullLayout',
@@ -53,7 +68,7 @@ export const APP_SHELL_EXAMPLES_DATA: AppShellExample[] = [
   {
     id: 'Disabled',
     name: 'Disabled app shell',
-    description: 'Hide all app shell elements with disabled prop',
+    description: 'Focus mode switch hides all elements with disabled prop',
   },
   {
     id: 'Headroom',
@@ -63,7 +78,12 @@ export const APP_SHELL_EXAMPLES_DATA: AppShellExample[] = [
   {
     id: 'NavbarSection',
     name: 'Navbar with sections',
-    description: 'AppShell.Section component usage',
+    description: 'Scrollable projects list between pinned header and footer sections',
+  },
+  {
+    id: 'ChatLayout',
+    name: 'Chat layout',
+    description: 'Messages scroll inside main, composer stays at the bottom',
   },
   {
     id: 'StaticMode',
@@ -84,5 +104,10 @@ export const APP_SHELL_EXAMPLES_DATA: AppShellExample[] = [
     id: 'ResizableAltLayout',
     name: 'Resizable alt layout',
     description: 'Resizable navbar, aside and header in alt layout',
+  },
+  {
+    id: 'PersistedResize',
+    name: 'Drag-to-collapse and persisted sizes',
+    description: 'Navbar collapses when dragged closed, sizes saved in local storage',
   },
 ];

@@ -1,0 +1,17 @@
+.link {
+  @media (min-width: $mantine-breakpoint-sm) {
+    &[data-collapsed] {
+      justify-content: center;
+      padding-inline: 0;
+
+      & :global(.mantine-NavLink-section) {
+        margin-inline-end: 0;
+      }
+
+      & :global(.mantine-NavLink-body),
+      & :global(.mantine-NavLink-section[data-position='right']) {
+        display: none;
+      }
+    }
+  }
+}

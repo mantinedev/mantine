@@ -1,0 +1,13 @@
+.tab {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: rem(2px);
+  height: 100%;
+  color: var(--mantine-color-text);
+
+  &[data-active] {
+    color: var(--mantine-primary-color-text);
+  }
+}

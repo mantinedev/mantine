@@ -18,8 +18,9 @@ export const NavLinkStylesApi: StylesApiData<NavLinkFactory> = {
       '--nl-bg': 'Controls link `background-color`',
       '--nl-color': 'Controls link `color`',
       '--nl-hover': 'Controls link `background-color` when hovered',
-      '--nl-rail-color':
-        'Controls color of the bar and left section icon of active link, `rail` variant only',
+      '--nl-rail-color': 'Controls color of the bar of active link, `rail` variant only',
+      '--nl-rail-icon-color':
+        'Controls color of the left section icon of active link, `rail` variant only',
       '--nl-radius': 'Controls link `border-radius`',
       '--nl-fz': 'Controls label `font-size`',
       '--nl-description-fz': 'Controls description `font-size`',

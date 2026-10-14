@@ -1,5 +1,11 @@
-import { AppShell, Burger, Group, Text } from '@mantine/core';
+import { BellIcon, MagnifyingGlassIcon } from '@phosphor-icons/react';
+import { ActionIcon, AppShell, Burger, Group, TextInput } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
+import { MantineLogo } from '@mantinex/mantine-logo';
+import { Dashboard } from './Dashboard';
+import { Navbar } from './Navbar';
+import { UserMenu } from './UserMenu';
+import classes from './StaticMode.module.css';
 
 export function StaticMode() {
   const [opened, { toggle }] = useDisclosure();
@@ -8,37 +14,48 @@ export function StaticMode() {
     <AppShell
       mode="static"
       header={{ height: 60 }}
-      navbar={{ width: 300, breakpoint: 'sm', collapsed: { mobile: !opened } }}
-      padding="md"
+      navbar={{ width: 260, breakpoint: 'sm', collapsed: { mobile: !opened } }}
+      padding={{ base: 'md', sm: 'xl' }}
     >
       <AppShell.Header>
-        <Group h="100%" px="md">
-          <Burger opened={opened} onClick={toggle} hiddenFrom="sm" size="sm" />
-          Header in static mode
+        <Group h="100%" px="md" justify="space-between">
+          <Group>
+            <Burger
+              opened={opened}
+              onClick={toggle}
+              hiddenFrom="sm"
+              size="sm"
+              aria-label="Toggle navigation"
+            />
+            <MantineLogo size={28} />
+          </Group>
+
+          <Group>
+            <TextInput
+              placeholder="Search"
+              leftSection={<MagnifyingGlassIcon size={16} />}
+              visibleFrom="sm"
+              w={240}
+            />
+            <ActionIcon
+              variant="default"
+              size="lg"
+              aria-label="Notifications"
+              title="Notifications"
+            >
+              <BellIcon size={18} />
+            </ActionIcon>
+            <UserMenu />
+          </Group>
         </Group>
       </AppShell.Header>
-      <AppShell.Navbar p="md">
-        Navbar in static mode. Sections are rendered as part of the normal document flow using CSS
-        Grid layout.
+
+      <AppShell.Navbar>
+        <Navbar />
       </AppShell.Navbar>
-      <AppShell.Main>
-        <Text fw={500} mb="md">
-          Static Mode Example
-        </Text>
-        <Text mb="md">
-          In static mode, AppShell renders all sections as part of the normal document flow using
-          CSS Grid instead of fixed positioning.
-        </Text>
-        <Text mb="md">
-          Unlike fixed mode, the sections are part of the normal document flow and the main content
-          does not need padding offsets.
-        </Text>
-        {Array.from({ length: 30 }, (_, index) => (
-          <Text key={index} mb="sm">
-            Paragraph {index + 1}: This content demonstrates how static mode arranges sections in a
-            CSS Grid layout that stays within the normal document flow.
-          </Text>
-        ))}
+
+      <AppShell.Main className={classes.main}>
+        <Dashboard />
       </AppShell.Main>
     </AppShell>
   );

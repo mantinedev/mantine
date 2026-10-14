@@ -1,5 +1,19 @@
-import { AppShell, Burger, Button, Group, Text, useAppShellResize } from '@mantine/core';
+import { BellIcon, MagnifyingGlassIcon } from '@phosphor-icons/react';
+import {
+  ActionIcon,
+  AppShell,
+  Burger,
+  Button,
+  Group,
+  TextInput,
+  useAppShellResize,
+} from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
+import { MantineLogo } from '@mantinex/mantine-logo';
+import { Dashboard } from './Dashboard';
+import { Navbar } from './Navbar';
+import { UserMenu } from './UserMenu';
+import classes from './ResizableAppShell.module.css';
 
 export function ResizableAppShell() {
   const [opened, { toggle }] = useDisclosure();
@@ -11,27 +25,53 @@ export function ResizableAppShell() {
   return (
     <AppShell
       header={{ height: 60 }}
-      navbar={{ width: 300, breakpoint: 'sm', collapsed: { mobile: !opened } }}
-      padding="md"
+      navbar={{ width: 260, breakpoint: 'sm', collapsed: { mobile: !opened } }}
+      padding={{ base: 'md', sm: 'xl' }}
       resize={resize}
     >
-      <AppShell.Header>
-        <Group h="100%" px="md" justify="space-between">
-          <Group h="100%">
-            <Burger opened={opened} onClick={toggle} hiddenFrom="sm" size="sm" />
-            Drag the bottom edge of this header to resize it
+      <AppShell.Header className={classes.header}>
+        <Group h="100%" px="md" justify="space-between" wrap="nowrap">
+          <Group>
+            <Burger
+              opened={opened}
+              onClick={toggle}
+              hiddenFrom="sm"
+              size="sm"
+              aria-label="Toggle navigation"
+            />
+            <MantineLogo size={28} />
           </Group>
-          <Button onClick={resize.resetAll} variant="default" size="xs">
-            Reset layout
-          </Button>
+
+          <Group wrap="nowrap">
+            <Button onClick={resize.resetAll} variant="default" visibleFrom="sm">
+              Reset layout
+            </Button>
+            <TextInput
+              placeholder="Search"
+              leftSection={<MagnifyingGlassIcon size={16} />}
+              visibleFrom="sm"
+              w={240}
+              className={classes.search}
+            />
+            <ActionIcon
+              variant="default"
+              size="lg"
+              aria-label="Notifications"
+              title="Notifications"
+            >
+              <BellIcon size={18} />
+            </ActionIcon>
+            <UserMenu />
+          </Group>
         </Group>
       </AppShell.Header>
-      <AppShell.Navbar p="md">
-        Drag the right edge of the navbar, or focus it and use arrow keys, to resize it.
+
+      <AppShell.Navbar>
+        <Navbar />
       </AppShell.Navbar>
-      <AppShell.Main>
-        <Text>This is the main section, your app content here.</Text>
-        <Text>Navbar and header can be resized with mouse, touch or keyboard.</Text>
+
+      <AppShell.Main className={classes.main}>
+        <Dashboard />
       </AppShell.Main>
     </AppShell>
   );

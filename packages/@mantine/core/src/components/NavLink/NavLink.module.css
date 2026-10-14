@@ -3,6 +3,7 @@
   --nl-hover: var(--mantine-primary-color-light-hover);
   --nl-color: var(--mantine-primary-color-light-color);
   --nl-rail-color: var(--mantine-primary-color-filled);
+  --nl-rail-icon-color: var(--mantine-primary-color-text);
 
   --nl-fz-xs: var(--mantine-font-size-xs);
   --nl-fz-sm: var(--mantine-font-size-sm);
@@ -81,7 +82,7 @@
   &:where([data-variant='rail']) {
     --nl-bg: var(--mantine-color-hover);
     --nl-hover: var(--mantine-color-hover-strong);
-    --nl-color: var(--mantine-color-text);
+    --nl-color: var(--mantine-color-bright);
 
     border-radius: 0;
 
@@ -129,7 +130,7 @@
 
   :where(.root[data-variant='rail'][data-active], .root[data-variant='rail'][aria-current='page'])
     &:where([data-position='left']) {
-    color: var(--nl-rail-color);
+    color: var(--nl-rail-icon-color);
   }
 }
 
