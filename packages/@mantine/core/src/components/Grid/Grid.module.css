@@ -3,6 +3,9 @@
 }
 
 .root {
+  --grid-gap: var(--mantine-spacing-md);
+  --grid-justify: flex-start;
+  --grid-align: stretch;
   --grid-overflow: visible;
   --grid-column-gap: var(--grid-gap);
   --grid-row-gap: var(--grid-gap);
@@ -19,6 +22,8 @@
 }
 
 .col {
+  --col-order: 0;
+  --col-align-self: auto;
   --col-flex-grow: 0;
   --col-offset: 0rem;
 

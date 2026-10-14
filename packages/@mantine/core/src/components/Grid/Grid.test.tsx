@@ -41,13 +41,24 @@ describe('@mantine/core/Grid', () => {
     expect(container.querySelector('.mantine-Grid-container')).not.toBeInTheDocument();
   });
 
-  it('does not render container element when type="container" without breakpoints', () => {
+  it('renders container element when type="container" without breakpoints', () => {
     const { container } = render(
       <Grid type="container">
+        <Grid.Col span={{ base: 12, sm: 6 }}>test</Grid.Col>
+      </Grid>
+    );
+    expect(container.querySelector('.mantine-Grid-container')).toBeInTheDocument();
+    const css = [...container.querySelectorAll('style')].map((s) => s.textContent).join('');
+    expect(css).toContain('@container mantine-grid (min-width: 48em)');
+  });
+
+  it('does not render overflow as a DOM attribute', () => {
+    const { container } = render(
+      <Grid overflow="hidden">
         <Grid.Col span={12}>test</Grid.Col>
       </Grid>
     );
-    expect(container.querySelector('.mantine-Grid-container')).not.toBeInTheDocument();
+    expect(container.querySelector('.mantine-Grid-root')).not.toHaveAttribute('overflow');
   });
 
   it('applies justify prop correctly', () => {

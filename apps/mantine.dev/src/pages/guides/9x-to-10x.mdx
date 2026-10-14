@@ -427,6 +427,10 @@ const value = useMatches({ base: 'a', sm: 'b' }, { getInitialValueInEffect: fals
 const value = useMatches({ base: 'a', sm: 'b' });
 ```
 
+## Grid.Col default span
+
+`Grid.Col` without `span` now spans all `columns` of the grid. Before, it always spanned 12 columns, which was half of the row with `columns={24}`. Set `span={12}` to keep the old width in grids with a custom `columns` value.
+
 ## useScroller dragHandlers
 
 `useScroller` now tracks dragging on the document, so `dragHandlers` contains only `onMouseDown`. If you passed the handlers one by one, keep `onMouseDown` and remove `onMouseMove`, `onMouseUp` and `onMouseLeave`. Spreading `{...dragHandlers}` works as before. The hook no longer sets the cursor on the container: use the `isDragging` value to set it.

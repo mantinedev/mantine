@@ -1,20 +1,10 @@
-import {
-  filterProps,
-  getBaseValue,
-  getSortedBreakpoints,
-  InlineStyles,
-  keys,
-  useMantineTheme,
-} from '../../../core';
-import { GridBreakpoints, useGridContext } from '../Grid.context';
+import { filterProps, getBaseValue, InlineStyles, useMantineTheme } from '../../../core';
+import { getGridQueries } from '../get-grid-queries';
+import { useGridContext } from '../Grid.context';
 import type { ColSpan, GridColProps } from './GridCol';
 
-interface GridColVariablesProps {
+interface GridColVariablesProps extends Pick<GridColProps, 'span' | 'order' | 'offset' | 'align'> {
   selector: string;
-  span: GridColProps['span'] | undefined;
-  order?: GridColProps['order'] | undefined;
-  offset?: GridColProps['offset'] | undefined;
-  align?: GridColProps['align'] | undefined;
 }
 
 const getColumnFlexBasis = (colSpan: ColSpan | undefined, columns: number) => {
@@ -60,7 +50,7 @@ const getColumnFlexGrow = (colSpan: ColSpan | undefined, grow: boolean | undefin
     return undefined;
   }
 
-  return colSpan === 'auto' || grow ? '1' : 'auto';
+  return colSpan === 'auto' || grow ? '1' : '0';
 };
 
 const getColumnOffset = (offset: number | undefined, columns: number) => {
@@ -80,10 +70,9 @@ const getColumnOffset = (offset: number | undefined, columns: number) => {
 export function GridColVariables({ span, order, offset, align, selector }: GridColVariablesProps) {
   const theme = useMantineTheme();
   const ctx = useGridContext();
-  const _breakpoints = ctx.breakpoints || theme.breakpoints;
 
   const baseValue = getBaseValue(span);
-  const baseSpan = baseValue === undefined ? 12 : baseValue;
+  const baseSpan = baseValue === undefined ? ctx.columns : baseValue;
 
   const baseStyles: Record<string, string | undefined> = filterProps({
     '--col-order': getBaseValue(order)?.toString(),
@@ -95,58 +84,34 @@ export function GridColVariables({ span, order, offset, align, selector }: GridC
     '--col-align-self': getBaseValue(align),
   });
 
-  const queries = keys(_breakpoints).reduce<Record<string, Record<string, any>>>(
-    (acc, breakpoint) => {
-      if (!acc[breakpoint]) {
-        acc[breakpoint] = {};
-      }
+  const queries = getGridQueries({
+    breakpoints: ctx.breakpoints || theme.breakpoints,
+    type: ctx.type,
+    getBreakpointStyles: (breakpoint) => {
+      const styles: Record<string, string | undefined> = {};
 
       if (typeof order === 'object' && order[breakpoint] !== undefined) {
-        acc[breakpoint]['--col-order'] = order[breakpoint]?.toString();
+        styles['--col-order'] = order[breakpoint]?.toString();
       }
 
       if (typeof span === 'object' && span[breakpoint] !== undefined) {
-        acc[breakpoint]['--col-flex-grow'] = getColumnFlexGrow(span[breakpoint], ctx.grow);
-        acc[breakpoint]['--col-flex-basis'] = getColumnFlexBasis(span[breakpoint], ctx.columns);
-        acc[breakpoint]['--col-width'] = span[breakpoint] === 'content' ? 'auto' : undefined;
-        acc[breakpoint]['--col-max-width'] = getColumnMaxWidth(
-          span[breakpoint],
-          ctx.columns,
-          ctx.grow
-        );
+        styles['--col-flex-grow'] = getColumnFlexGrow(span[breakpoint], ctx.grow);
+        styles['--col-flex-basis'] = getColumnFlexBasis(span[breakpoint], ctx.columns);
+        styles['--col-width'] = span[breakpoint] === 'content' ? 'auto' : undefined;
+        styles['--col-max-width'] = getColumnMaxWidth(span[breakpoint], ctx.columns, ctx.grow);
       }
 
       if (typeof offset === 'object' && offset[breakpoint] !== undefined) {
-        acc[breakpoint]['--col-offset'] = getColumnOffset(offset[breakpoint], ctx.columns);
+        styles['--col-offset'] = getColumnOffset(offset[breakpoint], ctx.columns);
       }
 
       if (typeof align === 'object' && align[breakpoint] !== undefined) {
-        acc[breakpoint]['--col-align-self'] = align[breakpoint];
+        styles['--col-align-self'] = align[breakpoint];
       }
 
-      return acc;
+      return styles;
     },
-    {}
-  );
+  });
 
-  const sortedBreakpoints = getSortedBreakpoints(keys(queries), _breakpoints).filter(
-    (breakpoint) => keys(queries[breakpoint.value]).length > 0
-  );
-
-  const values = sortedBreakpoints.map((breakpoint) => ({
-    query:
-      ctx.type === 'container'
-        ? `mantine-grid (min-width: ${_breakpoints[breakpoint.value as keyof GridBreakpoints]})`
-        : `(min-width: ${_breakpoints[breakpoint.value as keyof GridBreakpoints]})`,
-    styles: queries[breakpoint.value],
-  }));
-
-  return (
-    <InlineStyles
-      styles={baseStyles}
-      media={ctx.type === 'container' ? undefined : values}
-      container={ctx.type === 'container' ? values : undefined}
-      selector={selector}
-    />
-  );
+  return <InlineStyles styles={baseStyles} selector={selector} {...queries} />;
 }

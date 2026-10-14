@@ -21,7 +21,7 @@ Examples:
 - `<Grid.Col span={12} />` – 12 / 12 = 100% of row width
 
 The `span` prop also supports object syntax to change column width based on viewport width.
-It accepts `xs`, `sm`, `md`, `lg` and `xl` keys and values from 1 to 12. The syntax
+It accepts `base`, `xs`, `sm`, `md`, `lg` and `xl` keys and the same values as `span`. The syntax
 is the same as in [style props](/styles/style-props).
 
 In the following example `span={{ base: 12, md: 6, lg: 3 }}`:
@@ -56,15 +56,15 @@ If the `grow` prop is set, the column will grow to fill the remaining space in t
 
 ## Column offset
 
-Set the `offset` prop on the `Grid.Col` component to add gaps to the grid. The `offset` prop
-supports the same syntax as the `span` prop: a number from 1 to 12 or an object with `xs`, `sm`, `md`, `lg` and `xl` keys and values from 1 to 12.
+Set the `offset` prop on the `Grid.Col` component to add empty columns before it.
+Like `span`, it accepts a number or an object with breakpoint keys:
 
 <Demo data={GridDemos.offset} />
 
 ## Order
 
-Set the `order` prop on the `Grid.Col` component to change the order of columns. The `order` prop
-supports the same syntax as the `span` prop: a number from 1 to 12 or an object with `xs`, `sm`, `md`, `lg` and `xl` keys and values from 1 to 12.
+Set the `order` prop on the `Grid.Col` component to change the order of columns.
+Like `span`, it accepts a number or an object with breakpoint keys:
 
 <Demo data={GridDemos.order} />
 
@@ -116,8 +116,8 @@ To use [container queries](https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_
 instead of media queries, set `type="container"`. With container queries, all responsive values
 are adjusted based on the container width, not the viewport width.
 
-Note that, when using container queries, it is also required to set `breakpoints` prop
-to the exact container width values.
+Theme breakpoints are designed for the viewport width. Set the `breakpoints` prop
+to values that match your container sizes.
 
 To see how the grid changes, resize the root element of the demo
 with the resize handle located at the bottom right corner of the demo:
@@ -126,51 +126,5 @@ with the resize handle located at the bottom right corner of the demo:
 
 ## Browser support
 
-Grid component uses flexbox with native `gap` for layout, which is supported in all modern browsers.
-
-### Container queries
-
-When using `type="container"`, the Grid component uses [CSS container queries](https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_containment/Container_queries).
-Container queries are supported in the following browsers:
-
-- Chrome 105+
-- Safari 16+
-- Firefox 110+
-- Edge 105+
-
-If you need to support older browsers, use the default `type="media"` which uses standard media queries
-instead of container queries.
-
-Example with media queries (default):
-
-```tsx
-import { Grid } from '@mantine/core';
-
-function Demo() {
-  return (
-    <Grid gap="md">
-      <Grid.Col span={{ base: 12, md: 6 }}>1</Grid.Col>
-      <Grid.Col span={{ base: 12, md: 6 }}>2</Grid.Col>
-    </Grid>
-  );
-}
-```
-
-Example with container queries:
-
-```tsx
-import { Grid } from '@mantine/core';
-
-function Demo() {
-  return (
-    <Grid
-      type="container"
-      breakpoints={{ xs: '100px', sm: '200px', md: '300px', lg: '400px', xl: '500px' }}
-      gap="md"
-    >
-      <Grid.Col span={{ base: 12, md: 6 }}>1</Grid.Col>
-      <Grid.Col span={{ base: 12, md: 6 }}>2</Grid.Col>
-    </Grid>
-  );
-}
-```
+Container queries are [supported in all modern browsers](https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_containment/Container_queries#browser_compatibility).
+Use the default `type="media"` if you need to support older browsers.

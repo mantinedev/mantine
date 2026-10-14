@@ -7,22 +7,11 @@ import { Grid } from '@mantine/core';
 
 function Demo() {
   return (
-    <Grid align="stretch">
-      <Grid.Col span={4} align="flex-start">
-        <div style={{ height: '100px', background: 'var(--mantine-color-blue-light)' }}>
-          flex-start
-        </div>
-      </Grid.Col>
-      <Grid.Col span={4} align="center">
-        <div style={{ height: '100px', background: 'var(--mantine-color-blue-light)' }}>
-          center
-        </div>
-      </Grid.Col>
-      <Grid.Col span={4} align="flex-end">
-        <div style={{ height: '100px', background: 'var(--mantine-color-blue-light)' }}>
-          flex-end
-        </div>
-      </Grid.Col>
+    <Grid>
+      <Grid.Col span={3} h={160}>tall</Grid.Col>
+      <Grid.Col span={3} h={70} align="flex-start">flex-start</Grid.Col>
+      <Grid.Col span={3} h={70} align="center">center</Grid.Col>
+      <Grid.Col span={3} h={70} align="flex-end">flex-end</Grid.Col>
     </Grid>
   );
 }
@@ -30,14 +19,17 @@ function Demo() {
 
 function Demo() {
   return (
-    <Grid align="stretch">
-      <Col span={4} align="flex-start" style={{ minHeight: '150px' }}>
+    <Grid>
+      <Col span={3} h={160}>
+        tall
+      </Col>
+      <Col span={3} h={70} align="flex-start">
         flex-start
       </Col>
-      <Col span={4} align="center" style={{ minHeight: '150px' }}>
+      <Col span={3} h={70} align="center">
         center
       </Col>
-      <Col span={4} align="flex-end" style={{ minHeight: '150px' }}>
+      <Col span={3} h={70} align="flex-end">
         flex-end
       </Col>
     </Grid>

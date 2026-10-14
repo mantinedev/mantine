@@ -31,7 +31,7 @@ export interface GridProps extends BoxProps, StylesApiProps<GridFactory>, Elemen
   /** Column gap, overrides `gap` for horizontal spacing @category appearance */
   columnGap?: StyleProp<MantineSpacing>;
 
-  /** If set, columns in the last row expand to fill all available space @default false @category appearance */
+  /** If set, columns expand to fill the remaining space in their row @default false @category appearance */
   grow?: boolean;
 
   /** Sets `justify-content` @default flex-start @category appearance */
@@ -46,7 +46,7 @@ export interface GridProps extends BoxProps, StylesApiProps<GridFactory>, Elemen
   /** Sets `overflow` CSS property on the root element @default 'visible' @category appearance */
   overflow?: React.CSSProperties['overflow'];
 
-  /** Type of queries used for responsive styles @default 'media' @category appearance */
+  /** Type of queries used for responsive styles. With `'container'`, responsive values are based on the width of the grid's parent element instead of the viewport width @default 'media' @category appearance */
   type?: 'media' | 'container';
 
   /** Breakpoints values used in media and container queries, overrides `theme.breakpoints` for this grid and its columns @category appearance */
@@ -92,6 +92,7 @@ export const Grid = factory<GridFactory>((_props) => {
     columns,
     align,
     justify,
+    overflow,
     children,
     breakpoints,
     type,
@@ -115,25 +116,25 @@ export const Grid = factory<GridFactory>((_props) => {
 
   const responsiveClassName = useRandomClassName();
 
-  if (type === 'container' && breakpoints) {
-    return (
-      <GridProvider value={{ getStyles, grow, columns, breakpoints, type }}>
-        <GridVariables selector={`.${responsiveClassName}`} {...props} />
-        <div {...getStyles('container')}>
-          <Box {...getStyles('root', { className: responsiveClassName })} {...others}>
-            <div {...getStyles('inner')}>{children}</div>
-          </Box>
-        </div>
-      </GridProvider>
-    );
-  }
+  const isContainer = type === 'container';
+
+  const root = (
+    <Box {...getStyles('root', { className: responsiveClassName })} {...others}>
+      <div {...getStyles('inner')}>{children}</div>
+    </Box>
+  );
 
   return (
     <GridProvider value={{ getStyles, grow, columns, breakpoints, type }}>
-      <GridVariables selector={`.${responsiveClassName}`} {...props} />
-      <Box {...getStyles('root', { className: responsiveClassName })} {...others}>
-        <div {...getStyles('inner')}>{children}</div>
-      </Box>
+      <GridVariables
+        selector={`.${responsiveClassName}`}
+        gap={gap}
+        rowGap={rowGap}
+        columnGap={columnGap}
+        breakpoints={breakpoints}
+        type={type}
+      />
+      {isContainer ? <div {...getStyles('container')}>{root}</div> : root}
     </GridProvider>
   );
 });

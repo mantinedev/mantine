@@ -19,7 +19,7 @@ export type ColSpan = number | 'auto' | 'content';
 
 export interface GridColProps
   extends BoxProps, CompoundStylesApiProps<GridColFactory>, ElementProps<'div'> {
-  /** Column span @default 12 */
+  /** Column span, by default the column spans all `columns` of the grid */
   span?: StyleProp<ColSpan>;
 
   /** Column order, use to reorder columns at different viewport sizes */
@@ -39,9 +39,7 @@ export type GridColFactory = Factory<{
   compound: true;
 }>;
 
-const defaultProps = {
-  span: 12,
-} satisfies Partial<GridColProps>;
+const defaultProps = {} satisfies Partial<GridColProps>;
 
 export const GridCol = factory<GridColFactory>((_props) => {
   const props = useProps('GridCol', defaultProps, _props);

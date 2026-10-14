@@ -151,3 +151,67 @@ export function PxBreakpoints() {
     </MantineThemeProvider>
   );
 }
+
+export function NestedInheritance() {
+  return (
+    <div style={{ padding: 0 }}>
+      <Grid justify="center" align="center" bg="pink.3">
+        <Grid.Col span={12} order={2} align="flex-end" style={{ minHeight: 200 }}>
+          <Grid bg="blue.3" style={{ height: 160 }}>
+            <Grid.Col span={3} bg="lime.3">
+              First
+            </Grid.Col>
+            <Grid.Col span={3} order={1} bg="yellow.3">
+              Second
+            </Grid.Col>
+          </Grid>
+        </Grid.Col>
+      </Grid>
+    </div>
+  );
+}
+
+export function GapWithoutBase() {
+  return (
+    <div style={{ padding: 0 }}>
+      <Grid gap={{ sm: 'xl' }} bg="pink.3">
+        <Grid.Col span={6}>
+          <Button fullWidth>First</Button>
+        </Grid.Col>
+        <Grid.Col span={6}>
+          <Button fullWidth>Second</Button>
+        </Grid.Col>
+      </Grid>
+    </div>
+  );
+}
+
+export function ContainerWithoutBreakpoints() {
+  return (
+    <div style={{ padding: 40, resize: 'horizontal', overflow: 'hidden' }}>
+      <Grid type="container">
+        <Grid.Col span={{ base: 12, sm: 6 }}>
+          <Button fullWidth>First</Button>
+        </Grid.Col>
+        <Grid.Col span={{ base: 12, sm: 6 }}>
+          <Button fullWidth>Second</Button>
+        </Grid.Col>
+      </Grid>
+    </div>
+  );
+}
+
+export function ColumnsWithoutSpan() {
+  return (
+    <div style={{ padding: 0 }}>
+      <Grid columns={24} bg="pink.3">
+        <Grid.Col>
+          <Button fullWidth>No span</Button>
+        </Grid.Col>
+        <Grid.Col span={{ md: 12 }}>
+          <Button fullWidth>md: 12</Button>
+        </Grid.Col>
+      </Grid>
+    </div>
+  );
+}
