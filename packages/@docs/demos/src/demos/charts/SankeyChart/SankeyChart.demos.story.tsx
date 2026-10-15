@@ -32,3 +32,13 @@ export const Demo_noTooltip = {
   name: '⭐ Demo: noTooltip',
   render: renderDemo(demos.noTooltip),
 };
+
+export const Demo_linkColor = {
+  name: '⭐ Demo: linkColor',
+  render: renderDemo(demos.linkColor),
+};
+
+export const Demo_valueFormatter = {
+  name: '⭐ Demo: valueFormatter',
+  render: renderDemo(demos.valueFormatter),
+};

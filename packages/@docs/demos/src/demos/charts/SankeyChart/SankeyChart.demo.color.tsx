@@ -7,12 +7,12 @@ import { SankeyChart } from '@mantine/charts';
 import { data } from './data';
 
 function Demo() {
-  return <SankeyChart data={data} linkOpacity={0.2} />;
+  return <SankeyChart data={data} />;
 }
 `;
 
 function Demo() {
-  return <SankeyChart data={colorData} linkOpacity={0.2} />;
+  return <SankeyChart data={colorData} />;
 }
 
 export const color: MantineDemo = {

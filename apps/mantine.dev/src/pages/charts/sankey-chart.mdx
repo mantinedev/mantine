@@ -11,6 +11,11 @@ It visualizes flow between nodes where the width of each link is proportional to
 
 <Demo data={SankeyChartDemos.usage} />
 
+## Data
+
+Each link references nodes by their index in the `nodes` array. Links must not form a cycle.
+If they do, the links that close the cycle are not rendered and a warning is shown in development.
+
 ## Node color
 
 Set `color` on a node in the data to change its color. Theme colors and any valid CSS color are accepted:
@@ -22,6 +27,14 @@ Set `color` on a node in the data to change its color. Theme colors and any vali
 Use `colors` prop to set colors for nodes that do not have `color`. Colors repeat when there are more nodes than colors:
 
 <Demo data={SankeyChartDemos.colors} />
+
+## Node and link color
+
+By default, each link has the color of its source node.
+Set `linkColor` prop to use one color for all links.
+Set `nodeColor` prop to use one color for all nodes that do not have `color`:
+
+<Demo data={SankeyChartDemos.linkColor} />
 
 ## Node width and padding
 
@@ -35,6 +48,12 @@ the spacing between nodes:
 Use `linkOpacity` prop to control the opacity of links between nodes:
 
 <Demo data={SankeyChartDemos.linkOpacity} />
+
+## Value formatter
+
+Use `valueFormatter` to format values in node labels and in the tooltip:
+
+<Demo data={SankeyChartDemos.valueFormatter} />
 
 ## Disable tooltip
 

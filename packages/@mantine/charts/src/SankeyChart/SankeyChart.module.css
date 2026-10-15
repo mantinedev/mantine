@@ -4,6 +4,4 @@
   & :where(*) {
     outline: 0;
   }
-
-  --chart-link-color: var(--mantine-color-neutral-2);
 }

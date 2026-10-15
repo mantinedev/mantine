@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useMemo } from 'react';
 import {
   Sankey as RechartsSankey,
   SankeyProps as RechartsSankeyProps,
@@ -15,6 +15,7 @@ import {
   Factory,
   getThemeColor,
   MantineColor,
+  MantineTheme,
   rem,
   StylesApiProps,
   useMantineTheme,
@@ -68,13 +69,13 @@ export interface SankeyChartProps
   /** The number of relaxation iterations @default 32 @category appearance */
   iterations?: number;
 
-  /** Default color for nodes, by default depends on color scheme @category appearance */
+  /** Color of nodes that do not have `color` set, overrides `colors` palette @category appearance */
   nodeColor?: MantineColor;
 
-  /** An array of colors used for nodes when no `color` is set on individual nodes @category appearance */
+  /** Colors palette used for nodes that do not have `color` set when `nodeColor` is not set, cycled by node index. By default, a 12-color palette starting with `blue` @category appearance */
   colors?: MantineColor[];
 
-  /** Default color for links, by default depends on color scheme @category appearance */
+  /** Color of all links. By default, each link uses the color of its source node @category appearance */
   linkColor?: MantineColor;
 
   /** Opacity of the link fill @default 0.4 @category appearance */
@@ -92,7 +93,7 @@ export interface SankeyChartProps
   /** Props passed down to recharts `Sankey` component */
   sankeyProps?: Partial<Omit<RechartsSankeyProps, 'ref' | 'data'>>;
 
-  /** Controls text color of labels @default dimmed @category appearance */
+  /** Controls text color of labels. By default, `var(--mantine-color-text)` @category appearance */
   textColor?: MantineColor;
 
   /** A function to format values inside the tooltip and node labels @category appearance */
@@ -131,16 +132,15 @@ const varsResolver = createVarsResolver<SankeyChartFactory>(
   })
 );
 
-interface SankeyNodeContentProps {
-  x: number;
-  y: number;
-  width: number;
-  height: number;
-  index: number;
-  payload: { name: string; value: number; targetNodes: number[]; color?: string };
-  resolvedNodeColors: Record<number, string>;
-  resolvedDefaultColors: string[];
-  valueFormatter?: (value: number) => string;
+const RESOLVED_KEY = '__mantineSankey';
+
+interface ResolvedSankeyColors {
+  fill: string;
+}
+
+interface ResolvedSankeyEntry {
+  [RESOLVED_KEY]: ResolvedSankeyColors;
+  [key: string]: unknown;
 }
 
 const DEFAULT_COLORS = [
@@ -158,20 +158,129 @@ const DEFAULT_COLORS = [
   'var(--mantine-color-indigo-filled)',
 ];
 
+function isValidLink(link: SankeyChartLink, nodesCount: number) {
+  return (
+    Number.isInteger(link.source) &&
+    Number.isInteger(link.target) &&
+    link.source >= 0 &&
+    link.target >= 0 &&
+    link.source < nodesCount &&
+    link.target < nodesCount
+  );
+}
+
+function getAcyclicLinks(nodesCount: number, links: SankeyChartLink[]) {
+  const validLinks = links.filter((link) => isValidLink(link, nodesCount));
+  const outgoing: number[][] = Array.from({ length: nodesCount }, () => []);
+  const hasIncoming = new Array<boolean>(nodesCount).fill(false);
+  validLinks.forEach((link, index) => {
+    outgoing[link.source].push(index);
+    if (link.source !== link.target) {
+      hasIncoming[link.target] = true;
+    }
+  });
+
+  const state = new Array<0 | 1 | 2>(nodesCount).fill(0);
+  const backEdges = new Set<number>();
+
+  const visit = (root: number) => {
+    const stack: [number, number][] = [[root, 0]];
+    state[root] = 1;
+    while (stack.length > 0) {
+      const frame = stack[stack.length - 1];
+      const [node, position] = frame;
+      if (position >= outgoing[node].length) {
+        state[node] = 2;
+        stack.pop();
+        continue;
+      }
+      frame[1] += 1;
+      const linkIndex = outgoing[node][position];
+      const target = validLinks[linkIndex].target;
+      if (state[target] === 1) {
+        backEdges.add(linkIndex);
+      } else if (state[target] === 0) {
+        state[target] = 1;
+        stack.push([target, 0]);
+      }
+    }
+  };
+
+  for (let node = 0; node < nodesCount; node += 1) {
+    if (!hasIncoming[node] && state[node] === 0) {
+      visit(node);
+    }
+  }
+
+  for (let node = 0; node < nodesCount; node += 1) {
+    if (state[node] === 0) {
+      visit(node);
+    }
+  }
+
+  return {
+    links: validLinks.filter((_, index) => !backEdges.has(index)),
+    droppedLinks: validLinks.filter((_, index) => backEdges.has(index)),
+  };
+}
+
+interface ResolveDataOptions {
+  theme: MantineTheme;
+  colors: MantineColor[] | undefined;
+}
+
+function resolveData(data: SankeyChartData, { theme, colors }: ResolveDataOptions) {
+  const palette = colors?.length
+    ? colors.map((color) => getThemeColor(color, theme))
+    : DEFAULT_COLORS;
+  const { links, droppedLinks } = getAcyclicLinks(data.nodes.length, data.links);
+
+  if (links.length === 0) {
+    return { nodes: [] as ResolvedSankeyEntry[], links: [] as ResolvedSankeyEntry[], droppedLinks };
+  }
+
+  const nodes: ResolvedSankeyEntry[] = data.nodes.map((node, index) => ({
+    ...node,
+    [RESOLVED_KEY]: {
+      fill: node.color
+        ? getThemeColor(node.color, theme)
+        : `var(--chart-node-color, ${palette[index % palette.length]})`,
+    },
+  }));
+
+  const resolvedLinks: ResolvedSankeyEntry[] = links.map((link) => ({
+    ...link,
+    [RESOLVED_KEY]: {
+      fill: `var(--chart-link-color, ${nodes[link.source][RESOLVED_KEY].fill})`,
+    },
+  }));
+
+  return { nodes, links: resolvedLinks, droppedLinks };
+}
+
+interface SankeyNodeContentProps {
+  x: number;
+  y: number;
+  width: number;
+  height: number;
+  payload: {
+    name: string;
+    value: number;
+    targetNodes: number[];
+    [RESOLVED_KEY]?: ResolvedSankeyColors;
+  };
+  valueFormatter?: (value: number) => string;
+}
+
 function SankeyNodeContent({
   x,
   y,
   width,
   height,
-  index,
   payload,
-  resolvedNodeColors,
-  resolvedDefaultColors,
   valueFormatter,
 }: SankeyNodeContentProps) {
-  const fill =
-    resolvedNodeColors[index] ||
-    `var(--chart-node-color, ${resolvedDefaultColors[index % resolvedDefaultColors.length]})`;
+  const fill = payload[RESOLVED_KEY]?.fill;
 
   const isLeaf = !payload.targetNodes || payload.targetNodes.length === 0;
   const labelX = isLeaf ? x - 6 : x + width + 6;
@@ -188,6 +297,7 @@ function SankeyNodeContent({
             x={labelX}
             y={y + height / 2 - 7}
             textAnchor={textAnchor}
+            direction="ltr"
             dominantBaseline="central"
             fill="var(--chart-text-color, var(--mantine-color-text))"
             fontSize={12}
@@ -199,6 +309,7 @@ function SankeyNodeContent({
             x={labelX}
             y={y + height / 2 + 7}
             textAnchor={textAnchor}
+            direction="ltr"
             dominantBaseline="central"
             fill="var(--chart-text-color, var(--mantine-color-text))"
             fontSize={12}
@@ -213,6 +324,7 @@ function SankeyNodeContent({
           x={labelX}
           y={y + height / 2}
           textAnchor={textAnchor}
+          direction="ltr"
           dominantBaseline="central"
           fill="var(--chart-text-color, var(--mantine-color-text))"
           fontSize={12}
@@ -233,12 +345,7 @@ interface SankeyLinkContentProps {
   sourceControlX: number;
   targetControlX: number;
   linkWidth: number;
-  index: number;
-  payload: {
-    source: { color?: string };
-    target: { color?: string };
-  };
-  sourceResolvedColor?: string;
+  payload: { [RESOLVED_KEY]?: ResolvedSankeyColors };
   linkOpacity: number;
 }
 
@@ -250,10 +357,10 @@ function SankeyLinkContent({
   sourceControlX,
   targetControlX,
   linkWidth,
-  sourceResolvedColor,
+  payload,
   linkOpacity,
 }: SankeyLinkContentProps) {
-  const fill = sourceResolvedColor || 'var(--chart-link-color, var(--mantine-color-gray-4))';
+  const fill = payload[RESOLVED_KEY]?.fill;
 
   return (
     <path
@@ -307,16 +414,20 @@ export const SankeyChart = factory<SankeyChartFactory>((_props) => {
 
   const theme = useMantineTheme();
 
-  const resolvedNodeColors: Record<number, string> = {};
-  data.nodes.forEach((node, index) => {
-    if (node.color) {
-      resolvedNodeColors[index] = getThemeColor(node.color, theme);
-    }
-  });
+  const resolved = useMemo(() => resolveData(data, { theme, colors }), [data, theme, colors]);
 
-  const resolvedDefaultColors = colors
-    ? colors.map((color) => getThemeColor(color, theme))
-    : DEFAULT_COLORS;
+  const droppedLinks = resolved.droppedLinks
+    .map((link) => `${link.source} -> ${link.target}`)
+    .join(', ');
+
+  useEffect(() => {
+    if (process.env.NODE_ENV !== 'production' && droppedLinks) {
+      // oxlint-disable-next-line no-console
+      console.warn(
+        `[@mantine/charts/SankeyChart] data contains a cycle, links that close it were not rendered: ${droppedLinks}`
+      );
+    }
+  }, [droppedLinks]);
 
   const getStyles = useStyles<SankeyChartFactory>({
     name: 'SankeyChart',
@@ -339,82 +450,45 @@ export const SankeyChart = factory<SankeyChartFactory>((_props) => {
   });
 
   return (
-    <Box {...getStyles('root')} {...others}>
+    <Box
+      role={others['aria-label'] || others['aria-labelledby'] ? 'img' : undefined}
+      {...getStyles('root')}
+      {...others}
+    >
       <ResponsiveContainer height={chartHeight}>
         <RechartsSankey
-          data={data as any}
+          data={resolved as any}
           nodeWidth={nodeWidth}
           nodePadding={nodePadding}
           linkCurvature={linkCurvature}
           iterations={iterations}
+          accessibilityLayer={false}
           node={(nodeProps: any) => (
-            <SankeyNodeContent
-              {...nodeProps}
-              resolvedNodeColors={resolvedNodeColors}
-              resolvedDefaultColors={resolvedDefaultColors}
-              valueFormatter={valueFormatter}
-            />
+            <SankeyNodeContent {...nodeProps} valueFormatter={valueFormatter} />
           )}
-          link={(linkProps: any) => {
-            const sourceIndex =
-              linkProps.index >= 0 && linkProps.index < data.links.length
-                ? data.links[linkProps.index].source
-                : -1;
-            return (
-              <SankeyLinkContent
-                {...linkProps}
-                sourceResolvedColor={resolvedNodeColors[sourceIndex]}
-                linkOpacity={linkOpacity!}
-              />
-            );
-          }}
+          link={(linkProps: any) => <SankeyLinkContent {...linkProps} linkOpacity={linkOpacity!} />}
           {...sankeyProps}
         >
           {withTooltip && (
             <Tooltip
               animationDuration={tooltipAnimationDuration}
               isAnimationActive={!!tooltipAnimationDuration}
-              content={({ payload }) => {
-                const resolveColor = (item: any) => {
-                  const nodeIndex = data.nodes.findIndex((n) => n.name === item.name);
-                  if (nodeIndex !== -1) {
-                    return (
-                      resolvedNodeColors[nodeIndex] ||
-                      resolvedDefaultColors[nodeIndex % resolvedDefaultColors.length]
-                    );
+              content={({ payload }) => (
+                <ChartTooltip
+                  payload={
+                    payload?.map((item) => ({
+                      name: item.name as string,
+                      value: item.value as number,
+                      color: item.payload?.payload?.[RESOLVED_KEY]?.fill,
+                    })) || []
                   }
-
-                  const sourceNode = item.payload?.payload?.source ?? item.payload?.source;
-                  if (sourceNode) {
-                    const sourceIndex = data.nodes.findIndex((n) => n.name === sourceNode.name);
-                    if (sourceIndex !== -1) {
-                      return (
-                        resolvedNodeColors[sourceIndex] ||
-                        resolvedDefaultColors[sourceIndex % resolvedDefaultColors.length]
-                      );
-                    }
-                  }
-
-                  return 'var(--mantine-color-blue-6)';
-                };
-
-                return (
-                  <ChartTooltip
-                    payload={
-                      payload?.map((item) => ({
-                        name: item.name as string,
-                        value: item.value as number,
-                        color: resolveColor(item),
-                      })) || []
-                    }
-                    classNames={resolvedClassNames}
-                    styles={resolvedStyles}
-                    type="radial"
-                    valueFormatter={valueFormatter}
-                    attributes={attributes}
-                  />
-                );
-              }}
+                  classNames={resolvedClassNames}
+                  styles={resolvedStyles}
+                  type="radial"
+                  valueFormatter={valueFormatter}
+                  attributes={attributes}
+                />
+              )}
               {...tooltipProps}
             />
           )}
