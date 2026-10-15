@@ -138,3 +138,17 @@ export function LongLabels() {
     </div>
   );
 }
+
+export function FillDataKey() {
+  const tanks: TreemapData[] = [
+    { name: 'Tank A', fill: 75 },
+    { name: 'Tank B', fill: 40, color: 'red.6' },
+    { name: 'Tank C', fill: 20 },
+  ];
+
+  return (
+    <div style={{ padding: 40 }}>
+      <Treemap data={tanks} dataKey="fill" />
+    </div>
+  );
+}

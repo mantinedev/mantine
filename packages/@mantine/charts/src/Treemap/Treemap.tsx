@@ -117,13 +117,17 @@ const LABEL_PADDING = 4;
 const LABEL_MIN_WIDTH = LABEL_FONT_SIZE * 2;
 const LABEL_MIN_HEIGHT = 20;
 
-interface ResolvedTreemapNode {
-  name: string;
-  value?: number;
-  color?: MantineColor;
+const RESOLVED_KEY = '__mantineTreemap';
+
+interface ResolvedTreemapColors {
   fill: string;
   labelColor: string;
+}
+
+interface ResolvedTreemapNode {
+  name: string;
   children?: ResolvedTreemapNode[];
+  [RESOLVED_KEY]: ResolvedTreemapColors;
   [key: string]: unknown;
 }
 
@@ -134,8 +138,7 @@ interface TreemapContentProps {
   height: number;
   depth: number;
   name: string;
-  fill?: string;
-  labelColor?: string;
+  [RESOLVED_KEY]?: ResolvedTreemapColors;
   strokeWidth: number;
 }
 
@@ -146,10 +149,11 @@ function TreemapContent({
   height,
   depth,
   name,
-  fill,
-  labelColor,
+  [RESOLVED_KEY]: resolved,
   strokeWidth,
 }: TreemapContentProps) {
+  const fill = resolved?.fill;
+  const labelColor = resolved?.labelColor;
   const labelWidth = width - LABEL_PADDING * 2;
   const withLabel = depth >= 1 && height > LABEL_MIN_HEIGHT && labelWidth >= LABEL_MIN_WIDTH;
 
@@ -219,8 +223,7 @@ function resolveData(
 
     return {
       ...item,
-      fill,
-      labelColor,
+      [RESOLVED_KEY]: { fill, labelColor },
       children: item.children ? resolveData(item.children, options, fill) : undefined,
     };
   });
@@ -302,7 +305,7 @@ export const Treemap = factory<TreemapFactory>((_props) => {
                     payload?.map((item) => ({
                       name: item.name as string,
                       value: item.value as number,
-                      color: item.payload?.fill,
+                      color: item.payload?.[RESOLVED_KEY]?.fill,
                     })) || []
                   }
                   classNames={resolvedClassNames}

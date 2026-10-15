@@ -153,6 +153,32 @@ describe('@mantine/charts/Treemap', () => {
     expect(label.style.textOverflow).toBe('ellipsis');
   });
 
+  it('does not overwrite user data fields named fill or labelColor', () => {
+    const data = [
+      { name: 'Tank A', fill: 75, labelColor: 'user', color: 'blue.9' },
+      { name: 'Tank B', fill: 25, labelColor: 'user', color: 'yellow.4' },
+    ];
+    const { container } = render(<Treemap data={data} dataKey="fill" />);
+    expect(data[0].fill).toBe(75);
+    const a = getTile(container, 'Tank A');
+    const b = getTile(container, 'Tank B');
+    expect(a.fill).toBe(color('blue.9'));
+    expect(b.fill).toBe(color('yellow.4'));
+    expect(a.labelColor).toBe('var(--mantine-color-white)');
+    expect(b.labelColor).toBe('var(--mantine-color-black)');
+    const areaA =
+      Number(a.tile.querySelector('rect')!.getAttribute('width')) *
+      Number(a.tile.querySelector('rect')!.getAttribute('height'));
+    const areaB =
+      Number(b.tile.querySelector('rect')!.getAttribute('width')) *
+      Number(b.tile.querySelector('rect')!.getAttribute('height'));
+    expect(areaA / areaB).toBeCloseTo(3, 1);
+
+    fireEvent.mouseEnter(a.tile.parentElement!);
+    const swatch = container.querySelector('.mantine-ChartTooltip-tooltipItemColor circle');
+    expect(swatch!.getAttribute('fill')).toBe(color('blue.9'));
+  });
+
   it('uses the tile fill for the tooltip swatch', () => {
     const data = [
       { name: 'G1', color: 'blue.9', children: [{ name: 'Other', value: 100 }] },
