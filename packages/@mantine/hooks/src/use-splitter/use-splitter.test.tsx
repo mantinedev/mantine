@@ -1239,6 +1239,42 @@ describe('useSplitter', () => {
       expect(result.current.sizes).toEqual([10, 50, 40]);
     });
 
+    it('keeps both panes collapsed when resetting the handle between two collapsed panes', () => {
+      const { result } = renderHook(() =>
+        useSplitter({
+          panels: [
+            { defaultSize: 25, min: 10, collapsible: true },
+            { defaultSize: 25, min: 10, collapsible: true },
+            { defaultSize: 50 },
+          ],
+        })
+      );
+
+      act(() => result.current.collapse(0));
+      act(() => result.current.collapse(1));
+      expect(result.current.sizes).toEqual([0, 0, 100]);
+
+      act(() => result.current.reset(0));
+      expect(result.current.sizes).toEqual([0, 0, 100]);
+      expect(result.current.collapsed).toEqual([true, true, false]);
+    });
+
+    it('does not open a collapsed pane below its min on reset', () => {
+      const { result } = renderHook(() =>
+        useSplitter({
+          panels: [
+            { defaultSize: 50, min: 20, collapsible: true },
+            { defaultSize: 50, min: 10 },
+            { defaultSize: 0 },
+          ],
+        })
+      );
+
+      act(() => result.current.setSizes([0, 15, 85]));
+      act(() => result.current.reset(0));
+      expect(result.current.sizes).toEqual([0, 15, 85]);
+    });
+
     it('double-clicking a handle resets its adjacent panels to the default ratio', () => {
       render(
         <TestComponent panels={[{ defaultSize: 20 }, { defaultSize: 30 }, { defaultSize: 50 }]} />
@@ -1902,6 +1938,16 @@ describe('useSplitter', () => {
                 { defaultSize: 25, min: 10, max: 60, collapsible: true },
                 { defaultSize: 35, min: 15 },
                 { defaultSize: 40, min: 10, max: 70, collapsible: true, collapseThreshold: 15 },
+              ],
+            },
+          },
+          {
+            name: 'adjacent collapsible',
+            options: {
+              panels: [
+                { defaultSize: 25, min: 10, collapsible: true },
+                { defaultSize: 25, min: 10, collapsible: true },
+                { defaultSize: 50, min: 10, max: 90, collapsible: true },
               ],
             },
           },

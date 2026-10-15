@@ -236,3 +236,36 @@ export function ControlledSidebars() {
     </div>
   );
 }
+
+export function AdjacentCollapsible() {
+  const splitterRef = useRef<UseSplitterReturnValue | null>(null);
+  return (
+    <div>
+      <div style={{ marginBottom: 10, display: 'flex', gap: 8 }}>
+        <button
+          type="button"
+          onClick={() => {
+            splitterRef.current?.collapse(0);
+            splitterRef.current?.collapse(1);
+          }}
+        >
+          Collapse first two panes
+        </button>
+        <button type="button" onClick={() => splitterRef.current?.reset(0)}>
+          Reset first handle
+        </button>
+      </div>
+      <Splitter splitterRef={splitterRef} h={300}>
+        <Splitter.Pane defaultSize={25} min={10} collapsible bg="blue">
+          <div style={{ padding: 20, color: 'white' }}>First</div>
+        </Splitter.Pane>
+        <Splitter.Pane defaultSize={25} min={10} collapsible bg="teal">
+          <div style={{ padding: 20, color: 'white' }}>Second</div>
+        </Splitter.Pane>
+        <Splitter.Pane defaultSize={50} min={10} bg="grape">
+          <div style={{ padding: 20, color: 'white' }}>Third</div>
+        </Splitter.Pane>
+      </Splitter>
+    </div>
+  );
+}

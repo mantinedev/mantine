@@ -1048,6 +1048,15 @@ export function useSplitter<T extends HTMLElement = any>(
       }
 
       const total = working[beforeIdx] + working[afterIdx];
+      const before = resolvedPanels[beforeIdx];
+      const after = resolvedPanels[afterIdx];
+      if (
+        Math.max(before.min, total - after.max) >
+        Math.min(before.max, total - after.min) + EPSILON
+      ) {
+        return;
+      }
+
       const defBefore = resolvedPanels[beforeIdx].defaultSize;
       const defTotal = defBefore + resolvedPanels[afterIdx].defaultSize;
       const targetBefore = defTotal === 0 ? total / 2 : total * (defBefore / defTotal);
