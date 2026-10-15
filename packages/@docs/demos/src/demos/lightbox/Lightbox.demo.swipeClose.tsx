@@ -10,9 +10,9 @@ import { Button, Group } from '@mantine/core';
 import { Lightbox, LightboxSlideData } from '@mantine/lightbox';
 
 const slides: LightboxSlideData[] = [
-  { src: 'https://raw.githubusercontent.com/mantinedev/mantine/master/.demo/images/bg-1.png' },
-  { src: 'https://raw.githubusercontent.com/mantinedev/mantine/master/.demo/images/bg-2.png' },
-  { src: 'https://raw.githubusercontent.com/mantinedev/mantine/master/.demo/images/bg-3.png' },
+  { src: 'https://raw.githubusercontent.com/mantinedev/mantine/master/.demo/images/bg-1.png', alt: 'Gallery image 1' },
+  { src: 'https://raw.githubusercontent.com/mantinedev/mantine/master/.demo/images/bg-2.png', alt: 'Gallery image 2' },
+  { src: 'https://raw.githubusercontent.com/mantinedev/mantine/master/.demo/images/bg-3.png', alt: 'Gallery image 3' },
 ];
 
 function Demo() {
@@ -45,7 +45,10 @@ function Demo() {
 }
 `;
 
-const slides: LightboxSlideData[] = images.slice(0, 3).map((src) => ({ src }));
+const slides: LightboxSlideData[] = images.slice(0, 3).map((src, index) => ({
+  src,
+  alt: `Gallery image ${index + 1}`,
+}));
 
 function Demo() {
   const [opened, setOpened] = useState(false);

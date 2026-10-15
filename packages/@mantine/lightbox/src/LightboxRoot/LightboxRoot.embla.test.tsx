@@ -349,4 +349,83 @@ describe('@mantine/lightbox/LightboxRoot embla integration', () => {
     expect(breakpoint.watchDrag({}, {})).toBe(true);
     expect(breakpointWatchDrag).toHaveBeenCalled();
   });
+
+  it('goes to the first and last slide with Home and End', async () => {
+    const onIndexChange = jest.fn();
+    await renderWithAct(
+      <Lightbox {...defaultProps} currentIndex={1} onIndexChange={onIndexChange} />
+    );
+
+    await userEvent.keyboard('{End}');
+    expect(onIndexChange).toHaveBeenLastCalledWith(2);
+
+    await userEvent.keyboard('{Home}');
+    expect(onIndexChange).toHaveBeenLastCalledWith(0);
+  });
+
+  it('goes to the first and last slide with Home and End when loop is enabled', async () => {
+    await renderWithAct(<Lightbox {...defaultProps} loop />);
+
+    await userEvent.keyboard('{End}');
+    expect(mockEmblaMain().selectedScrollSnap()).toBe(2);
+
+    await userEvent.keyboard('{Home}');
+    expect(mockEmblaMain().selectedScrollSnap()).toBe(0);
+  });
+
+  it('does not zoom a video slide, so arrow keys keep navigating', async () => {
+    const onIndexChange = jest.fn();
+    const mixedSlides = [
+      { type: 'video', src: 'video.mp4', label: 'Video' },
+      { src: 'image2.jpg', alt: 'Second image' },
+    ];
+
+    await renderWithAct(
+      <Lightbox {...defaultProps} slides={mixedSlides} withZoom onIndexChange={onIndexChange} />
+    );
+
+    await userEvent.keyboard('z');
+    await userEvent.keyboard('{ArrowRight}');
+
+    expect(onIndexChange).toHaveBeenLastCalledWith(1);
+  });
+
+  it('does not zoom when zoomMaxScale is not greater than 1', async () => {
+    const onIndexChange = jest.fn();
+    await renderWithAct(
+      <Lightbox {...defaultProps} withZoom zoomMaxScale={1} onIndexChange={onIndexChange} />
+    );
+
+    await userEvent.keyboard('z');
+    expect(screen.getByAltText('First image')).not.toHaveAttribute('data-zoomed');
+
+    await userEvent.keyboard('{ArrowRight}');
+    expect(onIndexChange).toHaveBeenLastCalledWith(1);
+  });
+
+  it('zooms image slides with Z and resets the zoom when the slide changes', async () => {
+    await renderWithAct(<Lightbox {...defaultProps} withZoom />);
+
+    await userEvent.keyboard('z');
+    expect(screen.getByAltText('First image')).toHaveAttribute('data-zoomed');
+
+    await userEvent.click(screen.getByLabelText('Next slide'));
+    expect(screen.getByAltText('First image')).not.toHaveAttribute('data-zoomed');
+    expect(screen.getByAltText('Second image')).not.toHaveAttribute('data-zoomed');
+  });
+
+  it('keeps an inactive navigation button focusable so Tab stays inside the dialog', async () => {
+    await renderWithAct(<Lightbox {...defaultProps} currentIndex={1} />);
+
+    const next = screen.getByLabelText('Next slide');
+    next.focus();
+    await userEvent.click(next);
+
+    expect(next).toHaveAttribute('aria-disabled', 'true');
+    expect(next).toHaveAttribute('tabindex', '0');
+    expect(next).toHaveFocus();
+
+    await userEvent.tab();
+    expect(screen.getByRole('dialog')).toContainElement(document.activeElement);
+  });
 });

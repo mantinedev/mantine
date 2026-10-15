@@ -19,15 +19,15 @@ export interface LightboxContextValue {
   withFullscreen: boolean;
   withDownload: boolean;
   thumbnailsVisible: boolean;
+  thumbnailsId: string;
   toggleThumbnails: () => void;
   isFullscreen: boolean;
   toggleFullscreen: () => void;
-  zoomState: { scale: number; isZoomed: boolean };
+  zoomed: boolean;
   toggleZoom: () => void;
   getImageZoomProps: () => Record<string, any>;
   onClose: () => void;
   loop: boolean;
-  closeOnClickOutside: boolean;
   closeOnSwipeDown: boolean;
   transitionDuration: number;
 }

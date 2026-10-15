@@ -13,9 +13,6 @@ export function VideoSlide({ slide, active, stylesApiProps }: VideoSlideProps) {
   const ctx = useLightboxContext();
   const videoRef = useRef<HTMLVideoElement>(null);
 
-  // With `transitionProps.keepMounted` the slides stay mounted while the lightbox is
-  // closed, so playback has to follow `opened` as well – otherwise a hidden autoplay video
-  // starts on its own and keeps playing after the lightbox is dismissed.
   const playing = active && ctx.opened;
 
   useEffect(() => {
@@ -30,9 +27,6 @@ export function VideoSlide({ slide, active, stylesApiProps }: VideoSlideProps) {
       return;
     }
 
-    // All slides are mounted up front, so the `autoPlay` attribute only ever fires for the
-    // slide that happens to be active on mount – playback has to be started explicitly
-    // when an already mounted video becomes the current slide.
     if (slide.autoPlay) {
       video.play().catch(() => {});
     }

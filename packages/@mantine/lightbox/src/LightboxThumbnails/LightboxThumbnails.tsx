@@ -12,6 +12,7 @@ import {
   useProps,
 } from '@mantine/core';
 import { useLightboxContext } from '../lightbox.context';
+import { getSlideThumbSrc } from '../slide-utils';
 import classes from '../Lightbox.module.css';
 
 export type LightboxThumbnailsStylesNames =
@@ -46,9 +47,6 @@ export const LightboxThumbnails = factory<LightboxThumbnailsFactory>((props) => 
 
   const { dir } = useDirection();
 
-  // The second carousel is only built when the strip can actually be shown – `active: false`
-  // makes Embla skip its listeners and measurements entirely, so a lightbox without
-  // thumbnails does not pay for an instance it never renders.
   const [thumbsRef, thumbsEmbla] = useEmblaCarousel({
     containScroll: 'keepSnaps',
     dragFree: true,
@@ -68,16 +66,14 @@ export const LightboxThumbnails = factory<LightboxThumbnailsFactory>((props) => 
 
   const thumbnails = ctx.slides.map((slide, index) => {
     const active = index === ctx.currentIndex;
-    const thumbSrc =
-      slide.thumbSrc ??
-      (slide.type === 'video' ? slide.poster : undefined) ??
-      (slide.type === 'image' || slide.type === undefined ? slide.src : undefined);
+    const thumbSrc = getSlideThumbSrc(slide);
 
     return (
       <UnstyledButton
         key={index}
         {...ctx.getStyles('thumbnail', stylesApiProps)}
         mod="reduce-motion"
+        tabIndex={0}
         data-active={active || undefined}
         aria-label={ctx.labels.thumbnailLabel(index + 1, ctx.slides.length)}
         aria-current={active || undefined}
@@ -103,11 +99,19 @@ export const LightboxThumbnails = factory<LightboxThumbnailsFactory>((props) => 
       expanded={ctx.thumbnailsVisible}
       transitionDuration={ctx.transitionDuration}
       keepMounted={false}
+      id={ctx.thumbnailsId}
+      data-lightbox-backdrop
       {...ctx.getStyles('thumbnails', { className, style, classNames, styles })}
       {...others}
     >
-      <div {...ctx.getStyles('thumbnailsViewport', stylesApiProps)} ref={thumbsRef}>
-        <div {...ctx.getStyles('thumbnailsContainer', stylesApiProps)}>{thumbnails}</div>
+      <div
+        {...ctx.getStyles('thumbnailsViewport', stylesApiProps)}
+        ref={thumbsRef}
+        data-lightbox-backdrop
+      >
+        <div {...ctx.getStyles('thumbnailsContainer', stylesApiProps)} data-lightbox-backdrop>
+          {thumbnails}
+        </div>
       </div>
     </Collapse>
   );

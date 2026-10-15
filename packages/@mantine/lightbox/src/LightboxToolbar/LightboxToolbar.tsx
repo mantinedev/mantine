@@ -77,48 +77,49 @@ export const LightboxToolbar = factory<LightboxToolbarFactory>((props) => {
           toggleThumbnails: ctx.toggleThumbnails,
           isFullscreen: ctx.isFullscreen,
           toggleFullscreen: ctx.toggleFullscreen,
-          zoomed: ctx.zoomState.isZoomed,
+          zoomed: ctx.zoomed,
           toggleZoom: ctx.toggleZoom,
           labels: ctx.labels,
         })
       : (toolbarItems ?? defaultItems);
+  const getToggleProps = (item: ToolbarItem) =>
+    item.key === 'thumbnails' && ctx.withThumbnails
+      ? { 'aria-expanded': ctx.thumbnailsVisible, 'aria-controls': ctx.thumbnailsId }
+      : null;
+
+  const renderItem = (item: ToolbarItem) => (
+    <UnstyledButton
+      key={item.key}
+      {...ctx.getStyles('toolbarButton', stylesApiProps)}
+      mod="reduce-motion"
+      tabIndex={0}
+      aria-label={item.label}
+      {...getToggleProps(item)}
+      onClick={item.onClick}
+    >
+      {item.icon}
+    </UnstyledButton>
+  );
+
   const leftItems = items.filter((item) => item.position === 'left');
   const rightItems = items.filter((item) => item.position !== 'left');
 
   return (
-    <Box {...ctx.getStyles('toolbar', { className, style, classNames, styles })} {...others}>
-      <div {...ctx.getStyles('toolbarGroup', stylesApiProps)}>
-        {leftItems.map((item) => (
-          <UnstyledButton
-            key={item.key}
-            {...ctx.getStyles('toolbarButton', stylesApiProps)}
-            mod="reduce-motion"
-            aria-label={item.label}
-            onClick={item.onClick}
-          >
-            {item.icon}
-          </UnstyledButton>
-        ))}
+    <Box
+      {...ctx.getStyles('toolbar', { className, style, classNames, styles })}
+      data-lightbox-backdrop
+      {...others}
+    >
+      <div {...ctx.getStyles('toolbarGroup', stylesApiProps)} data-lightbox-backdrop>
+        {leftItems.map(renderItem)}
       </div>
 
-      {/* An empty gallery has no slide to count – rendering the counter anyway would show
-          an impossible "1 / 0". */}
       <span {...ctx.getStyles('counter', stylesApiProps)} aria-hidden="true">
         {ctx.slides.length > 0 ? `${ctx.currentIndex + 1} / ${ctx.slides.length}` : null}
       </span>
 
-      <div {...ctx.getStyles('toolbarGroup', stylesApiProps)}>
-        {rightItems.map((item) => (
-          <UnstyledButton
-            key={item.key}
-            {...ctx.getStyles('toolbarButton', stylesApiProps)}
-            mod="reduce-motion"
-            aria-label={item.label}
-            onClick={item.onClick}
-          >
-            {item.icon}
-          </UnstyledButton>
-        ))}
+      <div {...ctx.getStyles('toolbarGroup', stylesApiProps)} data-lightbox-backdrop>
+        {rightItems.map(renderItem)}
       </div>
     </Box>
   );

@@ -33,7 +33,10 @@ const images = [
   'https://raw.githubusercontent.com/mantinedev/mantine/master/.demo/images/bg-3.png',
 ];
 
-const slides: LightboxSlideData[] = images.map((src) => ({ src }));
+const slides: LightboxSlideData[] = images.map((src, index) => ({
+  src,
+  alt: \`Gallery image \${index + 1}\`,
+}));
 
 function InfoIcon() {
   return (
@@ -85,7 +88,10 @@ function Demo() {
 `;
 
 const demoImages = images.slice(0, 3);
-const slides: LightboxSlideData[] = demoImages.map((src) => ({ src }));
+const slides: LightboxSlideData[] = demoImages.map((src, index) => ({
+  src,
+  alt: `Gallery image ${index + 1}`,
+}));
 
 function InfoIcon() {
   return (

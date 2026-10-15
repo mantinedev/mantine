@@ -1,12 +1,12 @@
 import { useState } from 'react';
-import { Image, SimpleGrid, Text } from '@mantine/core';
+import { Image, SimpleGrid, Text, UnstyledButton } from '@mantine/core';
 import { Lightbox, LightboxSlideData } from '@mantine/lightbox';
 import { MantineDemo } from '@mantinex/demo';
 import { images } from './_images';
 
 const code = `
 import { useState } from 'react';
-import { Image, SimpleGrid } from '@mantine/core';
+import { Image, SimpleGrid, Text, UnstyledButton } from '@mantine/core';
 import { Lightbox, LightboxSlideData } from '@mantine/lightbox';
 
 const images = [
@@ -17,7 +17,10 @@ const images = [
   'https://raw.githubusercontent.com/mantinedev/mantine/master/.demo/images/bg-5.png',
 ];
 
-const slides: LightboxSlideData[] = images.map((src) => ({ src }));
+const slides: LightboxSlideData[] = images.map((src, index) => ({
+  src,
+  alt: \`Gallery image \${index + 1}\`,
+}));
 
 function Demo() {
   const [opened, setOpened] = useState(false);
@@ -36,24 +39,31 @@ function Demo() {
 
       <SimpleGrid cols={3}>
         {images.map((src, i) => (
-          <Image
+          <UnstyledButton
             key={src}
-            src={src}
-            radius="md"
-            style={{ cursor: 'pointer' }}
             onClick={() => {
               setIndex(i);
               setOpened(true);
             }}
-          />
+          >
+            <Image src={src} alt={\`Gallery image \${i + 1}\`} radius="md" />
+          </UnstyledButton>
         ))}
       </SimpleGrid>
+
+      <Text size="sm" mt="xs">
+        Click image to zoom, scroll to adjust, drag to pan when zoomed. Press Z to toggle zoom via
+        keyboard.
+      </Text>
     </>
   );
 }
 `;
 
-const slides: LightboxSlideData[] = images.map((src) => ({ src }));
+const slides: LightboxSlideData[] = images.map((src, index) => ({
+  src,
+  alt: `Gallery image ${index + 1}`,
+}));
 
 function Demo() {
   const [opened, setOpened] = useState(false);
@@ -72,20 +82,19 @@ function Demo() {
 
       <SimpleGrid cols={3}>
         {images.map((src, i) => (
-          <Image
+          <UnstyledButton
             key={src}
-            src={src}
-            radius="md"
-            style={{ cursor: 'pointer' }}
             onClick={() => {
               setIndex(i);
               setOpened(true);
             }}
-          />
+          >
+            <Image src={src} alt={`Gallery image ${i + 1}`} radius="md" />
+          </UnstyledButton>
         ))}
       </SimpleGrid>
 
-      <Text size="sm" c="dimmed" mt="xs">
+      <Text size="sm" mt="xs">
         Click image to zoom, scroll to adjust, drag to pan when zoomed. Press Z to toggle zoom via
         keyboard.
       </Text>

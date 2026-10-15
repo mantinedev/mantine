@@ -26,9 +26,9 @@
 }
 
 .toolbar {
-  display: flex;
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
   align-items: center;
-  justify-content: space-between;
   height: var(--lightbox-toolbar-height);
   padding: 0 var(--mantine-spacing-md);
   flex-shrink: 0;
@@ -39,6 +39,10 @@
   display: flex;
   align-items: center;
   gap: var(--mantine-spacing-xs);
+
+  &:last-child {
+    justify-content: flex-end;
+  }
 }
 
 .toolbarButton {
@@ -213,11 +217,12 @@
 
   &[data-inactive] {
     opacity: 0.3;
-    pointer-events: none;
   }
 }
 
 .caption {
+  align-self: center;
+  max-width: 100%;
   text-align: center;
   padding: var(--mantine-spacing-xs) var(--mantine-spacing-md);
   font-size: var(--mantine-font-size-sm);

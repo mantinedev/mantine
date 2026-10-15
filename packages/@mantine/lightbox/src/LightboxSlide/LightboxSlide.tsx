@@ -37,7 +37,7 @@ export type LightboxSlideFactory = Factory<{
 }>;
 
 export const LightboxSlide = factory<LightboxSlideFactory>((props) => {
-  const { classNames, className, style, styles, vars, slide, index, onClick, ...others } = useProps(
+  const { classNames, className, style, styles, vars, slide, index, ...others } = useProps(
     'LightboxSlide',
     null,
     props
@@ -68,17 +68,8 @@ export const LightboxSlide = factory<LightboxSlideFactory>((props) => {
       data-lightbox-slide
       aria-label={ctx.labels.slideLabel(index + 1, ctx.slides.length)}
       inert={!active}
+      data-lightbox-backdrop
       {...others}
-      onClick={(event) => {
-        onClick?.(event);
-        if (
-          ctx.closeOnClickOutside &&
-          !event.defaultPrevented &&
-          event.target === event.currentTarget
-        ) {
-          ctx.onClose();
-        }
-      }}
     >
       {renderContent()}
     </Box>

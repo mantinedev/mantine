@@ -1,6 +1,11 @@
-import { useEffect } from 'react';
+import { useEffect, useMemo } from 'react';
 import { factory, Factory, useProps } from '@mantine/core';
-import { lightboxActions, LightboxStore, lightboxStore, useLightboxStore } from '../lightbox.store';
+import {
+  createLightboxActions,
+  LightboxStore,
+  lightboxStore,
+  useLightboxStore,
+} from '../lightbox.store';
 import { LightboxBase, LightboxProps } from '../LightboxBase';
 
 export interface LightboxProviderProps extends Omit<
@@ -27,10 +32,11 @@ export const LightboxProviderComponent = factory<LightboxProviderFactory>((_prop
   const { store, loop, ...others } = props;
 
   const state = useLightboxStore(store!);
+  const actions = useMemo(() => createLightboxActions(store!), [store]);
 
   useEffect(() => {
     if (store!.getState().loop !== !!loop) {
-      lightboxActions.updateState(() => ({ loop: !!loop }), store!);
+      store!.setState((current) => ({ ...current, loop: !!loop }));
     }
   }, [loop, store]);
 
@@ -39,10 +45,10 @@ export const LightboxProviderComponent = factory<LightboxProviderFactory>((_prop
       {...others}
       loop={loop}
       opened={state.opened}
-      onClose={() => lightboxActions.close(store!)}
+      onClose={actions.close}
       slides={state.slides}
       currentIndex={state.currentIndex}
-      onIndexChange={(index) => lightboxActions.setIndex(index, store!)}
+      onIndexChange={actions.setIndex}
     />
   );
 });

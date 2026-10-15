@@ -16,7 +16,7 @@ export type LightboxSlidesStylesNames = 'slides' | 'slidesViewport' | 'slidesCon
 
 export interface LightboxSlidesProps
   extends BoxProps, CompoundStylesApiProps<LightboxSlidesFactory>, ElementProps<'div'> {
-  /** Embla carousel ref callback */
+  /** Extra ref to the slides viewport element, merged with the internal Embla carousel ref. Embla is set up by `Lightbox.Root`, you do not need to wire it yourself. */
   emblaRef?: React.RefCallback<HTMLDivElement>;
 
   /** Slide components */
@@ -52,7 +52,7 @@ export const LightboxSlides = factory<LightboxSlidesFactory>((props) => {
   const { handleTouchStart, handleTouchEnd } = useLightboxSwipeClose({
     enabled: ctx.closeOnSwipeDown,
     onClose: ctx.onClose,
-    isZoomed: ctx.zoomState.isZoomed,
+    isZoomed: ctx.zoomed,
   });
 
   return (

@@ -1,6 +1,5 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { EmblaOptionsType } from 'embla-carousel';
-import useEmblaCarousel from 'embla-carousel-react';
 import {
   Box,
   BoxProps,
@@ -23,17 +22,21 @@ import {
 } from '@mantine/core';
 import {
   useFocusReturn,
-  useFullscreenDocument,
+  useId,
   useLatestRef,
+  useMergedRef,
   useReducedMotion,
   useUncontrolled,
 } from '@mantine/hooks';
 import { DEFAULT_LABELS } from '../default-labels';
+import { useLightboxEmbla } from '../hooks/use-lightbox-embla';
+import { useLightboxFullscreen } from '../hooks/use-lightbox-fullscreen';
 import { useLightboxKeyboard } from '../hooks/use-lightbox-keyboard';
 import { useLightboxLockScroll } from '../hooks/use-lightbox-lock-scroll';
 import { useLightboxZoom } from '../hooks/use-lightbox-zoom';
 import { LightboxContextProvider } from '../lightbox.context';
 import { LightboxLabels, LightboxSlideData } from '../lightbox.types';
+import { getSlideAccessibleName, isImageSlide } from '../slide-utils';
 import classes from '../Lightbox.module.css';
 
 export type LightboxRootStylesNames =
@@ -107,7 +110,7 @@ export interface LightboxRootProps
   /** Enables infinite loop navigation @default false @category behavior */
   loop?: boolean;
 
-  /** Closes lightbox when the empty space around the slide content is clicked @default false @category behavior */
+  /** Closes lightbox when an empty area is clicked: the space around the slide content and the background of the toolbar, caption and thumbnails bands. Clicks on media, controls and caption text never close it. @default false @category behavior */
   closeOnClickOutside?: boolean;
 
   /** Closes lightbox when swiping down on mobile @default true @category behavior */
@@ -171,28 +174,6 @@ export const lightboxRootDefaultProps = {
   withSlideTransition: false,
 } satisfies Partial<LightboxRootProps>;
 
-type WatchDragOption = EmblaOptionsType['watchDrag'];
-
-function createBreakpointWatchDrag(
-  query: string,
-  zoomIsActive: React.RefObject<boolean>,
-  watchDragRef: React.RefObject<Record<string, WatchDragOption>>
-): WatchDragOption {
-  return (emblaApi, event) => {
-    if (zoomIsActive.current) {
-      return false;
-    }
-
-    const option = watchDragRef.current[query];
-
-    if (typeof option === 'function') {
-      return option(emblaApi, event);
-    }
-
-    return option ?? true;
-  };
-}
-
 const defaultContentTransition: MantineTransition = {
   common: { transformOrigin: 'center center' },
   in: { opacity: 1, transform: 'scale(1)' },
@@ -200,17 +181,13 @@ const defaultContentTransition: MantineTransition = {
   transitionProperty: 'transform, opacity',
 };
 
-function exitDocumentFullscreen() {
-  const _document = document as any;
-  const exit =
-    _document.exitFullscreen ||
-    _document.msExitFullscreen ||
-    _document.webkitExitFullscreen ||
-    _document.mozCancelFullScreen;
+const CLICK_OUTSIDE_MOVE_THRESHOLD = 5;
 
-  if (typeof exit === 'function') {
-    Promise.resolve(exit.call(_document)).catch(() => {});
-  }
+function isLightboxBackdrop(target: EventTarget, content: HTMLElement) {
+  return (
+    target === content ||
+    (target instanceof HTMLElement && target.hasAttribute('data-lightbox-backdrop'))
+  );
 }
 
 const varsResolver = createVarsResolver<LightboxRootFactory>(
@@ -261,6 +238,7 @@ export const LightboxRoot = factory<LightboxRootFactory>((_props) => {
     attributes,
     mod,
     onClick,
+    onPointerDown,
     ref,
     ...others
   } = props;
@@ -275,16 +253,10 @@ export const LightboxRoot = factory<LightboxRootFactory>((_props) => {
     attributes,
     vars,
     varsResolver,
+    stable: true,
   });
 
   const _labels = useMemo(() => ({ ...DEFAULT_LABELS, ...labels }), [labels]);
-
-  const getStylesRef = useLatestRef(getStyles);
-
-  const stableGetStyles = useCallback<typeof getStyles>(
-    (...args) => getStylesRef.current(...args),
-    []
-  );
 
   const [_currentIndex, setCurrentIndex] = useUncontrolled({
     value: currentIndex,
@@ -293,25 +265,12 @@ export const LightboxRoot = factory<LightboxRootFactory>((_props) => {
     onChange: onIndexChange,
   });
 
-  const zoomIsActive = useRef(false);
   const currentIndexRef = useRef(_currentIndex);
-  const setCurrentIndexRef = useRef(setCurrentIndex);
-
-  // Embla emits `select` synchronously from `scrollTo`. When the scroll was requested for
-  // an index the consumer already knows about, that echo is suppressed for the duration
-  // of the call so `onIndexChange` is not reported twice for one navigation.
+  const setCurrentIndexRef = useLatestRef(setCurrentIndex);
   const suppressSelectRef = useRef<number | null>(null);
-  const fullscreenRequestedRef = useRef(false);
-  const ownsFullscreenRef = useRef(false);
-
-  // A `requestFullscreen` that is still in flight, and whether it should be undone as soon
-  // as it settles because the lightbox closed in the meantime.
-  const pendingFullscreenRef = useRef<Promise<void> | null>(null);
-  const exitOnSettleRef = useRef(false);
-
-  // Embla compares options by function source, so the `watchDrag` closure above must stay
-  // textually stable – the current user options are read through this ref instead.
-  const emblaOptionsRef = useRef(emblaOptions);
+  const pointerDownRef = useRef<{ target: EventTarget; x: number; y: number } | null>(null);
+  const contentRef = useRef<HTMLDivElement>(null);
+  const mergedContentRef = useMergedRef(ref, contentRef);
 
   const [startIndex, setStartIndex] = useState(_currentIndex);
   const [prevOpened, setPrevOpened] = useState(opened);
@@ -325,143 +284,49 @@ export const LightboxRoot = factory<LightboxRootFactory>((_props) => {
 
   const { dir } = useDirection();
 
-  const breakpointWatchDragRef = useRef<Record<string, WatchDragOption>>({});
+  const currentSlide = slides[_currentIndex];
 
-  const resolvedEmblaOptions = useMemo(() => {
-    if (!emblaOptions?.breakpoints) {
-      breakpointWatchDragRef.current = {};
-      return emblaOptions;
-    }
+  const zoom = useLightboxZoom({
+    enabled: !!withZoom && zoomMaxScale! > 1 && !!currentSlide && isImageSlide(currentSlide),
+    maxScale: zoomMaxScale!,
+    currentIndex: _currentIndex,
+  });
 
-    const watchDragOptions: Record<string, WatchDragOption> = {};
-
-    const breakpoints = Object.fromEntries(
-      Object.entries(emblaOptions.breakpoints).map(([query, value]) => {
-        const { loop: _loop, startIndex: _startIndex, watchDrag, ...rest } = value ?? {};
-        watchDragOptions[query] = watchDrag;
-
-        return [
-          query,
-          watchDrag === undefined
-            ? rest
-            : {
-                ...rest,
-                watchDrag: createBreakpointWatchDrag(query, zoomIsActive, breakpointWatchDragRef),
-              },
-        ];
-      })
-    );
-
-    breakpointWatchDragRef.current = watchDragOptions;
-    return { ...emblaOptions, breakpoints };
-  }, [emblaOptions]);
-
-  const [emblaRef, embla] = useEmblaCarousel({
-    // Placed before the user options so `emblaOptions.direction` can still override it,
-    // the same way `@mantine/carousel` wires direction up.
-    direction: dir,
-    ...resolvedEmblaOptions,
+  const [emblaRef, embla] = useLightboxEmbla({
+    emblaOptions,
     loop,
     startIndex,
-    watchDrag: (emblaApi, event) => {
-      // The zoom gesture lock always wins – dragging a zoomed image pans it
-      // instead of changing the slide.
-      if (zoomIsActive.current) {
-        return false;
-      }
+    dir,
+    zoomed: zoom.zoomed,
+  });
 
-      const userWatchDrag = emblaOptionsRef.current?.watchDrag;
-      if (typeof userWatchDrag === 'function') {
-        return userWatchDrag(emblaApi, event);
-      }
-
-      return userWatchDrag ?? true;
-    },
+  useEffect(() => {
+    currentIndexRef.current = _currentIndex;
   });
 
   const [thumbnailsVisible, setThumbnailsVisible] = useState(!!withThumbnails);
   const [prevWithThumbnails, setPrevWithThumbnails] = useState(withThumbnails);
 
-  // Toggling the feature while the lightbox is open used to leave the strip expanded with
-  // no way to collapse it – the toolbar button that toggles it is only rendered while
-  // `withThumbnails` is set.
   if (withThumbnails !== prevWithThumbnails) {
     setPrevWithThumbnails(withThumbnails);
     setThumbnailsVisible(!!withThumbnails);
   }
 
-  const { toggle: toggleFullscreenFn, fullscreen: isFullscreen } = useFullscreenDocument();
+  const { isFullscreen, toggleFullscreen, exitOwnedFullscreen } = useLightboxFullscreen();
+
+  const thumbnailsId = useId();
 
   const toggleThumbnails = useCallback(() => {
+    const thumbnails = document.getElementById(thumbnailsId);
+
+    if (thumbnails && document.activeElement && thumbnails.contains(document.activeElement)) {
+      const dialog = thumbnails.closest<HTMLElement>('[role="dialog"]');
+      const toggle = dialog?.querySelector<HTMLElement>(`[aria-controls="${thumbnailsId}"]`);
+      (toggle ?? dialog)?.focus();
+    }
+
     setThumbnailsVisible((prev) => !prev);
-  }, []);
-
-  const toggleFullscreen = useCallback(() => {
-    fullscreenRequestedRef.current = !isFullscreen;
-    if (isFullscreen) {
-      ownsFullscreenRef.current = false;
-    }
-
-    const request = toggleFullscreenFn()
-      .then(() => {
-        // Closing while `requestFullscreen` is still pending cannot exit anything yet – the
-        // browser has not entered fullscreen. The exit has to be retried once the request
-        // settles, or the page is left fullscreen with no lightbox on top of it.
-        if (pendingFullscreenRef.current === request && exitOnSettleRef.current) {
-          exitOnSettleRef.current = false;
-          exitDocumentFullscreen();
-        }
-      })
-      .catch(() => {
-        fullscreenRequestedRef.current = false;
-        exitOnSettleRef.current = false;
-      })
-      .finally(() => {
-        if (pendingFullscreenRef.current === request) {
-          pendingFullscreenRef.current = null;
-        }
-      });
-
-    pendingFullscreenRef.current = request;
-  }, [toggleFullscreenFn, isFullscreen]);
-
-  useEffect(() => {
-    if (!isFullscreen) {
-      fullscreenRequestedRef.current = false;
-      ownsFullscreenRef.current = false;
-    } else if (fullscreenRequestedRef.current) {
-      fullscreenRequestedRef.current = false;
-      ownsFullscreenRef.current = true;
-    }
-  }, [isFullscreen]);
-
-  const exitOwnedFullscreen = useCallback(() => {
-    if (!ownsFullscreenRef.current && !fullscreenRequestedRef.current) {
-      return;
-    }
-
-    // A request that has not settled yet cannot be exited now – it is exited when it does.
-    if (pendingFullscreenRef.current !== null && fullscreenRequestedRef.current) {
-      exitOnSettleRef.current = true;
-    }
-
-    fullscreenRequestedRef.current = false;
-    ownsFullscreenRef.current = false;
-    exitDocumentFullscreen();
-  }, []);
-
-  const zoom = useLightboxZoom({
-    enabled: !!withZoom,
-    maxScale: zoomMaxScale!,
-    currentIndex: _currentIndex,
-  });
-
-  useEffect(() => {
-    currentIndexRef.current = _currentIndex;
-    setCurrentIndexRef.current = setCurrentIndex;
-    zoomIsActive.current = zoom.zoomState.isZoomed;
-    emblaOptionsRef.current = emblaOptions;
-  });
+  }, [thumbnailsId]);
 
   const { resetZoom } = zoom;
 
@@ -472,8 +337,6 @@ export const LightboxRoot = factory<LightboxRootFactory>((_props) => {
       exitOwnedFullscreen();
     }
   }, [opened, resetZoom, withThumbnails, exitOwnedFullscreen]);
-
-  useEffect(() => exitOwnedFullscreen, [exitOwnedFullscreen]);
 
   const theme = useMantineTheme();
   const shouldReduceMotion = useReducedMotion();
@@ -488,13 +351,42 @@ export const LightboxRoot = factory<LightboxRootFactory>((_props) => {
     embla?.scrollPrev(!animateSlides);
   }, [embla, animateSlides]);
 
+  const setIndex = useCallback(
+    (index: number) => {
+      if (index === currentIndexRef.current) {
+        return;
+      }
+
+      setCurrentIndexRef.current(index);
+      suppressSelectRef.current = index;
+      embla?.scrollTo(index, !animateSlides);
+      suppressSelectRef.current = null;
+    },
+    [embla, animateSlides]
+  );
+
+  const handleFirst = useCallback(() => {
+    if (slides.length > 0) {
+      setIndex(0);
+    }
+  }, [setIndex, slides.length]);
+
+  const handleLast = useCallback(() => {
+    if (slides.length > 0) {
+      setIndex(slides.length - 1);
+    }
+  }, [setIndex, slides.length]);
+
   useLightboxKeyboard({
     opened,
     enabled: withKeyboardEvents!,
     dir,
+    contentRef,
     onClose,
     onNext: handleNext,
     onPrev: handlePrev,
+    onFirst: handleFirst,
+    onLast: handleLast,
     onToggleFullscreen: withFullscreen ? toggleFullscreen : undefined,
     onToggleThumbnails: withThumbnails ? toggleThumbnails : undefined,
     onToggleZoom: withZoom ? zoom.toggleZoom : undefined,
@@ -532,15 +424,12 @@ export const LightboxRoot = factory<LightboxRootFactory>((_props) => {
 
   useEffect(() => {
     if (embla && opened && embla.selectedScrollSnap() !== _currentIndex) {
-      // `_currentIndex` is already what the consumer asked for – do not echo it back
       suppressSelectRef.current = _currentIndex;
       embla.scrollTo(_currentIndex, !animateSlides);
       suppressSelectRef.current = null;
     }
   }, [_currentIndex, embla, opened, animateSlides]);
 
-  // Slides can be replaced or shortened while the lightbox is open – without this the
-  // index can point past the end, leaving no active slide and a counter like "3 / 2".
   useEffect(() => {
     if (slides.length > 0 && _currentIndex > slides.length - 1) {
       setCurrentIndexRef.current(slides.length - 1);
@@ -558,6 +447,7 @@ export const LightboxRoot = factory<LightboxRootFactory>((_props) => {
           ? transitionProps.duration
           : transitionDuration,
     exitDelay: typeof transitionProps?.exitDelay === 'number' ? transitionProps.exitDelay : 0,
+    reduceMotion,
   });
 
   const transition: TransitionOverride = {
@@ -577,27 +467,11 @@ export const LightboxRoot = factory<LightboxRootFactory>((_props) => {
     keepMounted: transition.keepMounted,
   };
 
-  const setIndex = useCallback(
-    (index: number) => {
-      setCurrentIndexRef.current(index);
-      suppressSelectRef.current = index;
-      embla?.scrollTo(index, !animateSlides);
-      suppressSelectRef.current = null;
-    },
-    [embla, animateSlides]
-  );
-
-  const currentSlide = slides[_currentIndex];
-  const currentSlideLabel =
-    currentSlide?.type === 'video'
-      ? currentSlide.label
-      : currentSlide?.type === 'custom'
-        ? undefined
-        : currentSlide?.alt;
+  const currentSlideLabel = getSlideAccessibleName(currentSlide);
 
   const contextValue = useMemo(
     () => ({
-      getStyles: stableGetStyles,
+      getStyles,
       labels: _labels,
       opened,
       slides,
@@ -612,20 +486,20 @@ export const LightboxRoot = factory<LightboxRootFactory>((_props) => {
       withFullscreen: !!withFullscreen,
       withDownload: !!withDownload,
       thumbnailsVisible,
+      thumbnailsId,
       toggleThumbnails,
       isFullscreen,
       toggleFullscreen,
-      zoomState: zoom.zoomState,
+      zoomed: zoom.zoomed,
       toggleZoom: zoom.toggleZoom,
       getImageZoomProps: zoom.getImageProps,
       onClose,
       loop: !!loop,
-      closeOnClickOutside: !!closeOnClickOutside,
       closeOnSwipeDown: !!closeOnSwipeDown,
       transitionDuration: transitionDuration!,
     }),
     [
-      stableGetStyles,
+      getStyles,
       _labels,
       opened,
       slides,
@@ -640,13 +514,13 @@ export const LightboxRoot = factory<LightboxRootFactory>((_props) => {
       withFullscreen,
       withDownload,
       thumbnailsVisible,
+      thumbnailsId,
       toggleThumbnails,
       isFullscreen,
       toggleFullscreen,
       zoom,
       onClose,
       loop,
-      closeOnClickOutside,
       closeOnSwipeDown,
       transitionDuration,
     ]
@@ -663,7 +537,7 @@ export const LightboxRoot = factory<LightboxRootFactory>((_props) => {
 
             <Transition mounted={opened} {...transition}>
               {(contentStyles) => (
-                <FocusTrap active={opened} innerRef={ref}>
+                <FocusTrap active={opened} innerRef={mergedContentRef}>
                   <Box
                     {...getStyles('content', {
                       className,
@@ -673,11 +547,31 @@ export const LightboxRoot = factory<LightboxRootFactory>((_props) => {
                     aria-modal="true"
                     aria-label={_labels.lightboxLabel}
                     tabIndex={-1}
+                    data-mantine-stop-propagation
                     {...others}
                     mod={mod}
+                    onPointerDown={(event) => {
+                      onPointerDown?.(event);
+                      pointerDownRef.current = {
+                        target: event.target,
+                        x: event.clientX,
+                        y: event.clientY,
+                      };
+                    }}
                     onClick={(event) => {
                       onClick?.(event);
-                      if (closeOnClickOutside && event.target === event.currentTarget) {
+                      const pressed = pointerDownRef.current;
+                      pointerDownRef.current = null;
+
+                      if (
+                        closeOnClickOutside &&
+                        !event.defaultPrevented &&
+                        pressed &&
+                        event.target === pressed.target &&
+                        Math.hypot(event.clientX - pressed.x, event.clientY - pressed.y) <=
+                          CLICK_OUTSIDE_MOVE_THRESHOLD &&
+                        isLightboxBackdrop(event.target, event.currentTarget)
+                      ) {
                         onClose();
                       }
                     }}

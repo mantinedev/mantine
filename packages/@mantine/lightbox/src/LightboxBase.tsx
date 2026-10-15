@@ -22,7 +22,7 @@ export interface LightboxProps extends Omit<LightboxRootProps, 'children'> {
   /** Custom toolbar items, overrides default toolbar. Can be a function that receives the current lightbox state and handlers. @category appearance */
   toolbarItems?: ToolbarItems;
 
-  /** Shows previous/next navigation arrows @default true @category appearance */
+  /** Shows previous/next navigation arrows, they are not rendered when there is only one slide @default true @category appearance */
   withNavigation?: boolean;
 
   /** Custom lightbox layout, overrides the default layout built from compound components @category appearance */

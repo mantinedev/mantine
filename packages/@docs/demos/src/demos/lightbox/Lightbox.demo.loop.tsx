@@ -10,11 +10,11 @@ import { Button } from '@mantine/core';
 import { Lightbox, LightboxSlideData } from '@mantine/lightbox';
 
 const slides: LightboxSlideData[] = [
-  { src: 'https://raw.githubusercontent.com/mantinedev/mantine/master/.demo/images/bg-1.png' },
-  { src: 'https://raw.githubusercontent.com/mantinedev/mantine/master/.demo/images/bg-2.png' },
-  { src: 'https://raw.githubusercontent.com/mantinedev/mantine/master/.demo/images/bg-3.png' },
-  { src: 'https://raw.githubusercontent.com/mantinedev/mantine/master/.demo/images/bg-4.png' },
-  { src: 'https://raw.githubusercontent.com/mantinedev/mantine/master/.demo/images/bg-5.png' },
+  { src: 'https://raw.githubusercontent.com/mantinedev/mantine/master/.demo/images/bg-1.png', alt: 'Gallery image 1' },
+  { src: 'https://raw.githubusercontent.com/mantinedev/mantine/master/.demo/images/bg-2.png', alt: 'Gallery image 2' },
+  { src: 'https://raw.githubusercontent.com/mantinedev/mantine/master/.demo/images/bg-3.png', alt: 'Gallery image 3' },
+  { src: 'https://raw.githubusercontent.com/mantinedev/mantine/master/.demo/images/bg-4.png', alt: 'Gallery image 4' },
+  { src: 'https://raw.githubusercontent.com/mantinedev/mantine/master/.demo/images/bg-5.png', alt: 'Gallery image 5' },
 ];
 
 function Demo() {
@@ -40,7 +40,10 @@ function Demo() {
 }
 `;
 
-const slides: LightboxSlideData[] = images.map((src) => ({ src }));
+const slides: LightboxSlideData[] = images.map((src, index) => ({
+  src,
+  alt: `Gallery image ${index + 1}`,
+}));
 
 function Demo() {
   const [opened, setOpened] = useState(false);

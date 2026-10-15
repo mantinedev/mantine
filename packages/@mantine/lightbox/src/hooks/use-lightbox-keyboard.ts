@@ -1,13 +1,17 @@
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
 
 interface UseLightboxKeyboardInput {
   opened: boolean;
   enabled: boolean;
   /** Text direction of the lightbox, arrow keys follow it the same way the navigation buttons do */
   dir: 'ltr' | 'rtl';
+  /** Lightbox content element, `Escape` coming from another layer inside or above it is left to that layer */
+  contentRef: React.RefObject<HTMLElement | null>;
   onClose: () => void;
   onNext: () => void;
   onPrev: () => void;
+  onFirst: () => void;
+  onLast: () => void;
   onToggleFullscreen?: () => void;
   onToggleThumbnails?: () => void;
   onToggleZoom?: () => void;
@@ -48,31 +52,45 @@ const SLIDE_WIDGET_SELECTOR = [
   '[role="gridcell"]',
 ].join(', ');
 
+const ESCAPE_LAYER_SELECTOR = '[data-mantine-stop-propagation="true"], [aria-modal="true"]';
+
 const ZOOM_PAN_STEP = 50;
 
 export function useLightboxKeyboard({
   opened,
   enabled,
   dir,
+  contentRef,
   onClose,
   onNext,
   onPrev,
+  onFirst,
+  onLast,
   onToggleFullscreen,
   onToggleThumbnails,
   onToggleZoom,
   onZoomPan,
 }: UseLightboxKeyboardInput) {
+  const layeredEscapeEventRef = useRef<KeyboardEvent | null>(null);
+
   useEffect(() => {
     if (!opened) {
       return undefined;
     }
 
-    // Slides advance along the reading direction, so in RTL the next slide is the one to the
-    // left – the arrow keys follow the same rule as the navigation chevrons, which are
-    // already mirrored. Zoom panning stays physical: an arrow always moves the image the way
-    // it points.
     const onLeadingArrow = dir === 'rtl' ? onNext : onPrev;
     const onTrailingArrow = dir === 'rtl' ? onPrev : onNext;
+
+    const isInsideOtherLayer = (target: EventTarget | null) => {
+      const layer = target instanceof Element ? target.closest(ESCAPE_LAYER_SELECTOR) : null;
+      return !!layer && layer !== contentRef.current;
+    };
+
+    const captureHandler = (event: KeyboardEvent) => {
+      if (event.key === 'Escape' && isInsideOtherLayer(event.target)) {
+        layeredEscapeEventRef.current = event;
+      }
+    };
 
     const handler = (event: KeyboardEvent) => {
       if (event.defaultPrevented) {
@@ -80,6 +98,10 @@ export function useLightboxKeyboard({
       }
 
       if (event.key === 'Escape') {
+        if (event === layeredEscapeEventRef.current || isInsideOtherLayer(event.target)) {
+          return;
+        }
+
         event.preventDefault();
         onClose();
         return;
@@ -125,6 +147,14 @@ export function useLightboxKeyboard({
             event.preventDefault();
           }
           break;
+        case 'Home':
+          event.preventDefault();
+          onFirst();
+          break;
+        case 'End':
+          event.preventDefault();
+          onLast();
+          break;
         case 'f':
         case 'F':
           if (onToggleFullscreen) {
@@ -151,15 +181,22 @@ export function useLightboxKeyboard({
       }
     };
 
+    window.addEventListener('keydown', captureHandler, true);
     document.addEventListener('keydown', handler);
-    return () => document.removeEventListener('keydown', handler);
+    return () => {
+      window.removeEventListener('keydown', captureHandler, true);
+      document.removeEventListener('keydown', handler);
+    };
   }, [
     opened,
     enabled,
     dir,
+    contentRef,
     onClose,
     onNext,
     onPrev,
+    onFirst,
+    onLast,
     onToggleFullscreen,
     onToggleThumbnails,
     onToggleZoom,

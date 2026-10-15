@@ -81,7 +81,7 @@ const slides: LightboxSlideData[] = [
 
 ## Zoom
 
-Set `withZoom` to enable image zoom. Click an image to zoom in, use the scroll wheel to adjust
+Set `withZoom` to enable zoom on image slides. Click an image to zoom in, use the scroll wheel to adjust
 the zoom level and drag to pan. On mobile, double-tap to zoom and pinch to adjust.
 Use `zoomMaxScale` to change the maximum zoom scale, `3` by default:
 
@@ -122,7 +122,8 @@ const slides: LightboxSlideData[] = [
 
 ## All features
 
-Zoom, thumbnails, fullscreen and download features can be combined:
+Zoom, thumbnails, fullscreen and download features can be combined.
+The download button saves files from your own origin. Files from other origins open in a new tab:
 
 <Demo data={LightboxDemos.allFeatures} />
 
@@ -195,8 +196,9 @@ On mobile, swiping down closes the lightbox. Set `closeOnSwipeDown={false}` to d
 
 ## Click outside to close
 
-Set `closeOnClickOutside` to close the lightbox when the empty space around the slide
-is clicked:
+Set `closeOnClickOutside` to close the lightbox when an empty area is clicked.
+This includes the space around the slide and the toolbar, caption and thumbnails backgrounds.
+Clicks on images, videos, controls and caption text do not close it:
 
 <Demo data={LightboxDemos.closeOnClickOutside} />
 
@@ -270,25 +272,9 @@ Custom slides do not have a default thumbnail, set `renderThumb` or `thumbSrc`:
 
 ## Custom toolbar
 
-Use `toolbarItems` prop to replace the default toolbar items. It accepts an array of items
-or a function that receives the lightbox state and handlers:
-
-```tsx
-interface ToolbarItemsPayload {
-  slides: LightboxSlideData[];
-  currentIndex: number;
-  setIndex: (index: number) => void;
-  next: () => void;
-  prev: () => void;
-  close: () => void;
-  thumbnailsVisible: boolean;
-  toggleThumbnails: () => void;
-  isFullscreen: boolean;
-  toggleFullscreen: () => void;
-  zoomed: boolean;
-  toggleZoom: () => void;
-}
-```
+Use `toolbarItems` prop to replace the default toolbar items, including the close button.
+It accepts an array of items or a function. The function receives slides and the current index,
+navigation and close handlers, thumbnails, fullscreen and zoom state with their toggles, and `labels`.
 
 Use the built-in toolbar item factories for common actions:
 
@@ -371,12 +357,14 @@ while focus is inside an input, a video or an interactive element of a custom sl
 <KeyboardEventsTable
   data={[
     { key: 'Escape', description: 'Close lightbox' },
-    { key: 'ArrowLeft', description: 'Previous slide, pan left when zoomed' },
-    { key: 'ArrowRight', description: 'Next slide, pan right when zoomed' },
+    { key: 'ArrowLeft', description: 'Previous slide (next slide in RTL), pan left when zoomed' },
+    { key: 'ArrowRight', description: 'Next slide (previous slide in RTL), pan right when zoomed' },
     { key: 'ArrowUp', description: 'Pan up when zoomed' },
     { key: 'ArrowDown', description: 'Pan down when zoomed' },
+    { key: 'Home', description: 'First slide' },
+    { key: 'End', description: 'Last slide' },
     { key: 'F', description: 'Toggle fullscreen (requires withFullscreen)' },
     { key: 'T', description: 'Toggle thumbnails (requires withThumbnails)' },
-    { key: 'Z', description: 'Toggle zoom (requires withZoom)' },
+    { key: 'Z', description: 'Toggle zoom on image slides (requires withZoom)' },
   ]}
 />

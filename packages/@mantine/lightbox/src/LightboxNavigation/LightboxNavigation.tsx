@@ -72,8 +72,6 @@ export const LightboxNavigation = factory<LightboxNavigationFactory>((props) => 
   const stylesApiProps = { classNames, styles };
   const { dir } = useDirection();
 
-  // Embla is direction-aware, so "previous" is the leading edge of the reading direction –
-  // the chevrons have to follow it rather than always pointing left/right.
   const PrevIcon = dir === 'rtl' ? ChevronRight : ChevronLeft;
   const NextIcon = dir === 'rtl' ? ChevronLeft : ChevronRight;
 
@@ -112,6 +110,10 @@ export const LightboxNavigation = factory<LightboxNavigationFactory>((props) => 
   const canPrev = scrollState ? scrollState.canPrev : fallbackCanPrev;
   const canNext = scrollState ? scrollState.canNext : fallbackCanNext;
 
+  if (ctx.slides.length < 2) {
+    return null;
+  }
+
   return (
     <Box {...ctx.getStyles('navigation', { className, style, classNames, styles })} {...others}>
       <UnstyledButton
@@ -120,7 +122,7 @@ export const LightboxNavigation = factory<LightboxNavigationFactory>((props) => 
         aria-disabled={!canPrev || undefined}
         data-inactive={!canPrev || undefined}
         mod="reduce-motion"
-        tabIndex={canPrev ? 0 : -1}
+        tabIndex={0}
         onClick={ctx.prev}
       >
         <PrevIcon />
@@ -132,7 +134,7 @@ export const LightboxNavigation = factory<LightboxNavigationFactory>((props) => 
         aria-disabled={!canNext || undefined}
         data-inactive={!canNext || undefined}
         mod="reduce-motion"
-        tabIndex={canNext ? 0 : -1}
+        tabIndex={0}
         onClick={ctx.next}
       >
         <NextIcon />

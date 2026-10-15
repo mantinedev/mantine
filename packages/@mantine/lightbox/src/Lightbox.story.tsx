@@ -1,8 +1,9 @@
 import { useState } from 'react';
-import { Button, Group, Select, Stack } from '@mantine/core';
+import { Button, Group, Modal, Select, Stack, Text } from '@mantine/core';
 import { Lightbox } from './Lightbox';
 import { lightbox } from './lightbox.store';
 import { LightboxSlideData, ToolbarItem } from './lightbox.types';
+import { createCloseToolbarItem } from './LightboxToolbar/toolbar-items';
 
 export default { title: 'Lightbox' };
 
@@ -205,6 +206,7 @@ export function CustomSlides() {
         onClose={() => setOpened(false)}
         slides={customSlides}
         withThumbnails
+        withZoom
       />
     </div>
   );
@@ -353,6 +355,7 @@ export function CustomThumbRendering() {
         onClose={() => setOpened(false)}
         slides={customSlides}
         withThumbnails
+        withZoom
       />
     </div>
   );
@@ -386,6 +389,26 @@ export function OverlayTransition() {
 
 export function CloseOnClickOutside() {
   const [opened, setOpened] = useState(false);
+  const mixedSlides: LightboxSlideData[] = [
+    slides[0],
+    {
+      type: 'video',
+      src: 'https://www.w3schools.com/html/mov_bbb.mp4',
+      poster: 'https://images.unsplash.com/photo-1506744038136-46273834b3fb?w=200',
+      label: 'Big Buck Bunny',
+      caption: 'Sample video',
+    },
+    {
+      type: 'custom',
+      render: () => (
+        <div style={{ padding: 40, background: 'rgba(255, 255, 255, 0.1)', color: 'white' }}>
+          Custom slide content
+        </div>
+      ),
+      caption: 'A custom rendered slide',
+    },
+    ...slides.slice(1),
+  ];
 
   return (
     <div style={{ padding: 40 }}>
@@ -393,7 +416,7 @@ export function CloseOnClickOutside() {
       <Lightbox
         opened={opened}
         onClose={() => setOpened(false)}
-        slides={slides}
+        slides={mixedSlides}
         closeOnClickOutside
         withThumbnails
       />
@@ -413,6 +436,78 @@ export function DisabledTransition() {
         slides={slides}
         transitionProps={{ duration: 0 }}
       />
+    </div>
+  );
+}
+
+export function InsideModal() {
+  const [modalOpened, setModalOpened] = useState(false);
+  const [lightboxOpened, setLightboxOpened] = useState(false);
+
+  return (
+    <div style={{ padding: 40 }}>
+      <Button onClick={() => setModalOpened(true)}>Open Modal</Button>
+      <Modal opened={modalOpened} onClose={() => setModalOpened(false)} title="Gallery">
+        <Stack>
+          <Text size="sm">Escape closes the lightbox first, the next Escape closes the modal.</Text>
+          <Button onClick={() => setLightboxOpened(true)}>Open Lightbox</Button>
+        </Stack>
+        <Lightbox
+          opened={lightboxOpened}
+          onClose={() => setLightboxOpened(false)}
+          slides={slides}
+          withThumbnails
+        />
+      </Modal>
+    </div>
+  );
+}
+
+export function LayersInsideLightbox() {
+  const [opened, setOpened] = useState(false);
+  const [detailsOpened, setDetailsOpened] = useState(false);
+
+  const layerSlides: LightboxSlideData[] = [
+    slides[0],
+    {
+      type: 'custom',
+      render: () => (
+        <div style={{ width: 280, padding: 16, background: 'white', borderRadius: 8 }}>
+          <Select
+            label="Album"
+            data={['Travel', 'Family', 'Nature']}
+            comboboxProps={{ zIndex: 1000 }}
+          />
+        </div>
+      ),
+    },
+  ];
+
+  const details: ToolbarItem = {
+    key: 'details',
+    icon: <span style={{ fontWeight: 700 }}>i</span>,
+    label: 'Details',
+    onClick: () => setDetailsOpened(true),
+    position: 'left',
+  };
+
+  return (
+    <div style={{ padding: 40 }}>
+      <Button onClick={() => setOpened(true)}>Open Lightbox</Button>
+      <Lightbox
+        opened={opened}
+        onClose={() => setOpened(false)}
+        slides={layerSlides}
+        toolbarItems={({ close, labels }) => [details, createCloseToolbarItem(close, labels)]}
+      />
+      <Modal
+        opened={detailsOpened}
+        onClose={() => setDetailsOpened(false)}
+        title="Image details"
+        zIndex={1000}
+      >
+        <Button onClick={() => setDetailsOpened(false)}>Done</Button>
+      </Modal>
     </div>
   );
 }
