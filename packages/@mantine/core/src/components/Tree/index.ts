@@ -1,4 +1,4 @@
-import type { CheckedNodeStatus } from './get-all-checked-nodes/get-all-checked-nodes';
+import type { CheckedNodeStatus } from './checked-state/checked-state';
 import type {
   RenderTreeNodePayload,
   TreeCssVariables,
@@ -7,7 +7,7 @@ import type {
   TreeProps,
   TreeStylesNames,
 } from './Tree';
-import type { TreeStore, UseTreeInput, UseTreeReturnType } from './use-tree';
+import type { TreeExpandedState, TreeStore, UseTreeInput, UseTreeReturnType } from './use-tree';
 
 export { Tree } from './Tree';
 export { useTree, getTreeExpandedState } from './use-tree';
@@ -27,6 +27,7 @@ export type {
   UseTreeInput,
   UseTreeReturnType,
   TreeStore,
+  TreeExpandedState,
   CheckedNodeStatus,
 };
 

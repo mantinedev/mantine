@@ -67,18 +67,18 @@ const data: TreeNodeData[] = [
   { label: 'tsconfig.json', value: 'tsconfig.json' },
 ];
 
-function flattenTreeData(nodes: TreeNodeData[]): TreeNodeData[] {
+function collectAllNodes(nodes: TreeNodeData[]): TreeNodeData[] {
   return nodes.reduce<TreeNodeData[]>((acc, node) => {
     acc.push(node);
     if (node.children) {
-      acc.push(...flattenTreeData(node.children));
+      acc.push(...collectAllNodes(node.children));
     }
     return acc;
   }, []);
 }
 
 function createFuzzyFilter(nodes: TreeNodeData[]): TreeNodeFilter {
-  const flatNodes = flattenTreeData(nodes);
+  const flatNodes = collectAllNodes(nodes);
   const fuse = new Fuse(flatNodes, {
     keys: ['label'],
     threshold: 0.3,
@@ -183,18 +183,18 @@ const data: TreeNodeData[] = [
   { label: 'tsconfig.json', value: 'tsconfig.json' },
 ];
 
-function flattenTreeData(nodes: TreeNodeData[]): TreeNodeData[] {
+function collectAllNodes(nodes: TreeNodeData[]): TreeNodeData[] {
   return nodes.reduce<TreeNodeData[]>((acc, node) => {
     acc.push(node);
     if (node.children) {
-      acc.push(...flattenTreeData(node.children));
+      acc.push(...collectAllNodes(node.children));
     }
     return acc;
   }, []);
 }
 
 function createFuzzyFilter(nodes: TreeNodeData[]): TreeNodeFilter {
-  const flatNodes = flattenTreeData(nodes);
+  const flatNodes = collectAllNodes(nodes);
   const fuse = new Fuse(flatNodes, {
     keys: ['label'],
     threshold: 0.3,

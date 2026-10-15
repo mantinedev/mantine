@@ -26,13 +26,9 @@ import { Pill } from '../Pill';
 import { PillsInput } from '../PillsInput';
 import { ScrollArea, ScrollAreaProps } from '../ScrollArea';
 import { TreeNodeData } from '../Tree';
+import { isNodeChecked, isNodeIndeterminate } from '../Tree/checked-state/checked-state';
 import { filterTreeData } from '../Tree/filter-tree-data/filter-tree-data';
-import {
-  findTreeNode,
-  getChildrenNodesValues,
-} from '../Tree/get-children-nodes-values/get-children-nodes-values';
-import { isNodeChecked } from '../Tree/is-node-checked/is-node-checked';
-import { isNodeIndeterminate } from '../Tree/is-node-indeterminate/is-node-indeterminate';
+import { findTreeNode, getLeafValues } from '../Tree/tree-walk/tree-walk';
 import { getTreeExpandedState, TreeExpandedState } from '../Tree/use-tree';
 import { flattenTreeSelectData } from './flatten-tree-select-data';
 import {
@@ -562,7 +558,7 @@ export const TreeSelect = genericFactory<TreeSelectFactory>((_props) => {
   const isNodeDisabled = (nodeValue: string) => !!nodeLookup[nodeValue]?.nodeProps?.disabled;
 
   const getEnabledChildrenValues = (nodeValue: string) =>
-    getChildrenNodesValues(nodeValue, data).filter((v) => !isNodeDisabled(v));
+    getLeafValues(nodeValue, data).filter((v) => !isNodeDisabled(v));
 
   const handleOptionSubmit = (val: string) => {
     if (mode === 'single') {

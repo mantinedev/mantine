@@ -1,5 +1,5 @@
-import { findTreeNode } from '../get-children-nodes-values/get-children-nodes-values';
 import type { TreeNodeData } from '../Tree';
+import { findTreeNode, isDescendant } from '../tree-walk/tree-walk';
 
 export type TreeDragDropPosition = 'before' | 'after' | 'inside';
 
@@ -12,29 +12,6 @@ export interface TreeDragDropPayload {
 
   /** Position relative to the target node */
   position: TreeDragDropPosition;
-}
-
-function isDescendant(data: TreeNodeData[], ancestorValue: string, value: string): boolean {
-  const ancestor = findTreeNode(ancestorValue, data);
-  if (!ancestor || !ancestor.children) {
-    return false;
-  }
-
-  function check(nodes: TreeNodeData[]): boolean {
-    for (const node of nodes) {
-      if (node.value === value) {
-        return true;
-      }
-
-      if (node.children && check(node.children)) {
-        return true;
-      }
-    }
-
-    return false;
-  }
-
-  return check(ancestor.children);
 }
 
 function removeNode(

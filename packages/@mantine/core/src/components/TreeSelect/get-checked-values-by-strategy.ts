@@ -1,14 +1,13 @@
 import { TreeNodeData } from '../Tree';
-import { getAllCheckedNodes } from '../Tree/get-all-checked-nodes/get-all-checked-nodes';
-import { getChildrenNodesValues } from '../Tree/get-children-nodes-values/get-children-nodes-values';
-import { isNodeChecked } from '../Tree/is-node-checked/is-node-checked';
+import { getAllCheckedNodes, isNodeChecked } from '../Tree/checked-state/checked-state';
+import { getLeafValues } from '../Tree/tree-walk/tree-walk';
 
 export type CheckedStrategy = 'all' | 'parent' | 'child';
 
 export function expandToLeafChecked(value: string[], data: TreeNodeData[]): string[] {
   const leaves = new Set<string>();
   for (const v of value) {
-    for (const leaf of getChildrenNodesValues(v, data)) {
+    for (const leaf of getLeafValues(v, data)) {
       leaves.add(leaf);
     }
   }
@@ -41,7 +40,7 @@ export function checkedToValue(
       return checkedState;
     case 'all':
       return getAllCheckedNodes(data, checkedState)
-        .result.filter((n) => n.checked)
+        .filter((n) => n.checked)
         .map((n) => n.value);
     case 'parent':
       return getTopmostCheckedParents(data, checkedState);

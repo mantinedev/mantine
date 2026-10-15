@@ -1,34 +1,22 @@
 import { Activity, useRef } from 'react';
-import { Box, findElementAncestor, GetStylesApi } from '../../core';
+import { Box, GetStylesApi } from '../../core';
 import { Loader } from '../Loader';
 import type { TreeDragDropPayload } from './move-tree-node/move-tree-node';
-import type { RenderNode, TreeDragState, TreeFactory, TreeNodeData } from './Tree';
+import type { RenderNode, TreeFactory, TreeNodeData } from './Tree';
+import {
+  activateTreeItem,
+  getRenderedTreeItems,
+  getTreeItemCheckedState,
+  getTreeRoot,
+  handleTreeItemBlur,
+  handleTreeItemFocus,
+  handleTreeItemKeyDown,
+  isTreeRangeSelection,
+  selectTreeItemsRange,
+} from './tree-item';
+import { nodeHasChildren } from './tree-walk/tree-walk';
 import type { TreeStore } from './use-tree';
-import { TreeAllowDrop, useTreeNodeDragDrop } from './use-tree-node-drag-drop';
-
-function getValuesRange(anchor: string | null, value: string | undefined, flatValues: string[]) {
-  if (!anchor || !value) {
-    return [];
-  }
-
-  const anchorIndex = flatValues.indexOf(anchor);
-  const valueIndex = flatValues.indexOf(value);
-  const start = Math.min(anchorIndex, valueIndex);
-  const end = Math.max(anchorIndex, valueIndex);
-
-  return flatValues.slice(start, end + 1);
-}
-
-function isVisibleTreeNode(node: HTMLElement, root: Element) {
-  for (let current: HTMLElement | null = node; current && current !== root;) {
-    if (current.style.display === 'none') {
-      return false;
-    }
-    current = current.parentElement;
-  }
-
-  return true;
-}
+import { TreeAllowDrop, TreeDragState, useTreeNodeDragDrop } from './use-tree-node-drag-drop';
 
 interface TreeNodeProps {
   node: TreeNodeData;
@@ -36,8 +24,6 @@ interface TreeNodeProps {
   rootIndex: number | undefined;
   store: TreeStore;
   expandOnClick: boolean | undefined;
-  flatValues: string[];
-  isSubtree?: boolean;
   level?: number;
   renderNode: RenderNode | undefined;
   selectOnClick: boolean | undefined;
@@ -59,10 +45,8 @@ export function TreeNode({
   store,
   expandOnClick,
   selectOnClick,
-  isSubtree,
   level = 1,
   renderNode,
-  flatValues,
   allowRangeSelection,
   expandOnSpace,
   checkOnSpace,
@@ -74,9 +58,7 @@ export function TreeNode({
   data,
 }: TreeNodeProps) {
   const ref = useRef<HTMLLIElement>(null);
-  const hasLoadedChildren = Array.isArray(node.children) && node.children.length > 0;
-  const hasAsyncChildren = !!node.hasChildren && !hasLoadedChildren;
-  const hasChildren = hasLoadedChildren || hasAsyncChildren;
+  const hasChildren = nodeHasChildren(node);
   const isLoading = store.isNodeLoading(node.value);
   const loadError = store.getNodeLoadError(node.value);
   const isExpanded = store.expandedState[node.value] || false;
@@ -85,13 +67,11 @@ export function TreeNode({
     <TreeNode
       key={child.value}
       node={child}
-      flatValues={flatValues}
       getStyles={getStyles}
       rootIndex={undefined}
       level={level + 1}
       store={store}
       expandOnClick={expandOnClick}
-      isSubtree
       renderNode={renderNode}
       selectOnClick={selectOnClick}
       allowRangeSelection={allowRangeSelection}
@@ -117,124 +97,34 @@ export function TreeNode({
     withDragHandle,
   });
 
-  const handleKeyDown = (event: React.KeyboardEvent) => {
-    if (event.nativeEvent.code === 'ArrowRight') {
-      event.stopPropagation();
-      event.preventDefault();
-
-      if (isExpanded) {
-        const nextNode = event.currentTarget.querySelector<HTMLLIElement>('[role=treeitem]');
-        nextNode?.setAttribute('data-focus-ring', 'true');
-        nextNode?.focus();
-      } else {
-        store.expand(node.value);
-      }
-    }
-
-    if (event.nativeEvent.code === 'ArrowLeft') {
-      event.stopPropagation();
-      event.preventDefault();
-      if (isExpanded && hasChildren) {
-        store.collapse(node.value);
-      } else if (isSubtree) {
-        const parentNode = findElementAncestor(
-          event.currentTarget as HTMLElement,
-          '[role=treeitem]'
-        );
-        parentNode?.setAttribute('data-focus-ring', 'true');
-        parentNode?.focus();
-      }
-    }
-
-    if (
-      event.nativeEvent.code === 'ArrowDown' ||
-      event.nativeEvent.code === 'ArrowUp' ||
-      ((event.nativeEvent.code === 'Home' || event.nativeEvent.code === 'End') &&
-        event.target === event.currentTarget)
-    ) {
-      const root = findElementAncestor(event.currentTarget as HTMLElement, '[data-tree-root]');
-
-      if (!root) {
-        return;
-      }
-
-      event.stopPropagation();
-      event.preventDefault();
-      const nodes = Array.from(root.querySelectorAll<HTMLLIElement>('[role=treeitem]')).filter(
-        (treeNode) => isVisibleTreeNode(treeNode, root)
-      );
-      const index = nodes.indexOf(event.currentTarget as HTMLLIElement);
-
-      if (index === -1) {
-        return;
-      }
-
-      const nextIndex =
-        event.nativeEvent.code === 'Home'
-          ? 0
-          : event.nativeEvent.code === 'End'
-            ? nodes.length - 1
-            : event.nativeEvent.code === 'ArrowDown'
-              ? index + 1
-              : index - 1;
-      const nextNode = nodes[nextIndex];
-      nextNode?.setAttribute('data-focus-ring', 'true');
-      nextNode?.focus();
-
-      const isArrow =
-        event.nativeEvent.code === 'ArrowDown' || event.nativeEvent.code === 'ArrowUp';
-
-      if (isArrow && event.shiftKey && allowRangeSelection && store.multiple && store.anchorNode) {
-        if (nextNode) {
-          store.setSelectedState(
-            getValuesRange(store.anchorNode, nextNode.dataset.value, flatValues)
-          );
-        }
-      }
-    }
-
-    if (event.nativeEvent.code === 'Enter' && event.target === event.currentTarget) {
-      event.stopPropagation();
-      event.preventDefault();
-
-      if (expandOnClick && hasChildren) {
-        store.toggleExpanded(node.value);
-      }
-
-      selectOnClick && store.select(node.value);
-    }
-
-    if (event.nativeEvent.code === 'Space') {
-      if (expandOnSpace) {
-        event.stopPropagation();
-        event.preventDefault();
-        store.toggleExpanded(node.value);
-      }
-
-      if (checkOnSpace) {
-        event.stopPropagation();
-        event.preventDefault();
-        store.isNodeChecked(node.value)
-          ? store.uncheckNode(node.value)
-          : store.checkNode(node.value);
-      }
-    }
+  const behaviorOptions = {
+    value: node.value,
+    hasChildren,
+    expanded: isExpanded,
+    store,
+    expandOnClick,
+    selectOnClick,
   };
+
+  const handleKeyDown = (event: React.KeyboardEvent<HTMLLIElement>) =>
+    handleTreeItemKeyDown(event, {
+      ...behaviorOptions,
+      expandOnSpace,
+      checkOnSpace,
+      allowRangeSelection,
+    });
 
   const handleNodeClick = (event: React.MouseEvent) => {
     event.stopPropagation();
+    const root = getTreeRoot(ref.current);
 
-    if (allowRangeSelection && event.shiftKey && store.anchorNode) {
-      store.setSelectedState(getValuesRange(store.anchorNode, node.value, flatValues));
-      ref.current?.focus();
+    if (root && isTreeRangeSelection(event, store, allowRangeSelection)) {
+      selectTreeItemsRange(store, getRenderedTreeItems(root), node.value);
     } else {
-      if (expandOnClick) {
-        store.toggleExpanded(node.value);
-      }
-
-      selectOnClick && store.select(node.value);
-      ref.current?.focus();
+      activateTreeItem(behaviorOptions);
     }
+
+    ref.current?.focus();
   };
 
   const selected = store.selectedState.includes(node.value);
@@ -257,16 +147,14 @@ export function TreeNode({
       aria-selected={selected}
       aria-expanded={hasChildren ? isExpanded : undefined}
       aria-busy={isLoading || undefined}
+      aria-checked={checkOnSpace ? getTreeItemCheckedState(store, node.value) : undefined}
       data-value={node.value}
       data-selected={selected || undefined}
       data-level={level}
       tabIndex={rootIndex === 0 ? 0 : -1}
       onKeyDown={handleKeyDown}
-      onBlur={(event) => {
-        if (!event.currentTarget.contains(event.relatedTarget as HTMLElement)) {
-          event.currentTarget.removeAttribute('data-focus-ring');
-        }
-      }}
+      onFocus={(event) => handleTreeItemFocus(event, node.value)}
+      onBlur={handleTreeItemBlur}
       ref={ref}
     >
       {typeof renderNode === 'function' ? (
@@ -290,6 +178,7 @@ export function TreeNode({
       {withLoadingIndicator && (
         <Box component="ul" role="group" {...getStyles('subtree')} data-level={level}>
           <li
+            role="none"
             {...getStyles('node', {
               style: { '--label-offset': `calc(var(--level-offset) * ${level})` },
             })}

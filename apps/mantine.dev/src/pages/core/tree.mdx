@@ -115,6 +115,7 @@ export interface RenderTreeNodePayload {
     'data-selected': boolean | undefined;
     'data-value': string;
     draggable?: boolean;
+    role?: 'none';
     onDragStart?: (event: React.DragEvent) => void;
     onDragOver?: (event: React.DragEvent) => void;
     onDragLeave?: (event: React.DragEvent) => void;
@@ -124,185 +125,74 @@ export interface RenderTreeNodePayload {
 
   /** Props to spread into the drag handle element when `withDragHandle` is set on `Tree`,
    * `undefined` otherwise */
-  dragHandleProps: { onMouseDown: (event: React.MouseEvent) => void } | undefined;
+  dragHandleProps:
+    | { onMouseDown: (event: React.MouseEvent) => void; tabIndex: -1; 'aria-hidden': true }
+    | undefined;
 }
 ```
+
+Inputs and buttons inside `renderNode` keep their own Space and arrow keys.
+Call `event.stopPropagation()` in a button's `onClick`, otherwise the click also selects or expands the node:
 
 <Demo data={TreeDemos.renderNode} />
 
 ## useTree hook
 
-`Tree` component supports the [store pattern](/guides/controllers#stores). Use the `useTree` hook to manage `Tree` state.
-
-The hook accepts an object with the following properties:
-
-```tsx
-export interface UseTreeInput {
-  /** Initial expanded state of all nodes, uncontrolled state */
-  initialExpandedState?: TreeExpandedState;
-
-  /** Expanded state of all nodes, controlled state */
-  expandedState?: TreeExpandedState;
-
-  /** Called when the tree expanded state changes */
-  onExpandedStateChange?: (expandedState: TreeExpandedState) => void;
-
-  /** Initial selected state of nodes */
-  initialSelectedState?: string[];
-
-  /** Selected state of all nodes, controlled state */
-  selectedState?: string[];
-
-  /** Called when the tree selected state changes */
-  onSelectedStateChange?: (selectedState: string[]) => void;
-
-  /** Initial checked state of nodes */
-  initialCheckedState?: string[];
-
-  /** Checked state of all nodes, controlled state */
-  checkedState?: string[];
-
-  /** Called when the tree checked state changes */
-  onCheckedStateChange?: (checkedState: string[]) => void;
-
-  /** Determines whether multiple node can be selected at a time */
-  multiple?: boolean;
-
-  /** Called with the node value when it is expanded */
-  onNodeExpand?: (value: string) => void;
-
-  /** Called with the node value when it is collapsed */
-  onNodeCollapse?: (value: string) => void;
-
-  /** Called when a node with `hasChildren: true` is expanded for the first time */
-  onLoadChildren?: (nodeValue: string) => Promise<void>;
-
-  /** When `true`, checking a parent does not affect children and vice versa.
-   * Each node's checked state is fully independent. @default false
-   */
-  checkStrictly?: boolean;
-}
-```
-
-And returns an object with the following properties:
-
-```tsx
-export interface UseTreeReturnType {
-  /** When `true`, each node's checked state is independent (no parent-child cascading) */
-  checkStrictly: boolean;
-
-  /** Determines whether multiple node can be selected at a time */
-  multiple: boolean;
-
-  /** A record of `node.value` and boolean values that represent nodes expanded state */
-  expandedState: TreeExpandedState;
-
-  /** An array of selected nodes values */
-  selectedState: string[];
-
-  /** An array of checked nodes values */
-  checkedState: string[];
-
-  /** A value of the node that was last clicked
-   * Anchor node is used to determine range of selected nodes for multiple selection
-   */
-  anchorNode: string | null;
-
-  /** Returns a record of `node.value` and boolean values that represent nodes expanded state */
-  getExpandedState: () => TreeExpandedState;
-
-  /** Returns an array of selected nodes values */
-  getSelectedState: () => string[];
-
-  /** Returns an array of checked nodes values */
-  getCheckedState: () => string[];
-
-  /** Returns the value of the node that was last clicked, `null` if there is none */
-  getAnchorNode: () => string | null;
-
-  /** Initializes tree state based on provided data, called automatically by the Tree component */
-  initialize: (data: TreeNodeData[]) => void;
-
-  /** Toggles expanded state of the node with provided value */
-  toggleExpanded: (value: string) => void;
-
-  /** Collapses node with provided value */
-  collapse: (value: string) => void;
-
-  /** Expands node with provided value */
-  expand: (value: string) => void;
-
-  /** Expands all nodes */
-  expandAllNodes: () => void;
-
-  /** Collapses all nodes */
-  collapseAllNodes: () => void;
-
-  /** Sets expanded state */
-  setExpandedState: (value: TreeExpandedState) => void;
-
-  /** Toggles selected state of the node with provided value */
-  toggleSelected: (value: string) => void;
-
-  /** Selects node with provided value */
-  select: (value: string) => void;
-
-  /** Deselects node with provided value */
-  deselect: (value: string) => void;
-
-  /** Clears selected state */
-  clearSelected: () => void;
-
-  /** Sets selected state */
-  setSelectedState: (value: string[]) => void;
-
-  /** Checks node with provided value */
-  checkNode: (value: string) => void;
-
-  /** Unchecks node with provided value */
-  uncheckNode: (value: string) => void;
-
-  /** Checks all nodes */
-  checkAllNodes: () => void;
-
-  /** Unchecks all nodes */
-  uncheckAllNodes: () => void;
-
-  /** Sets checked state */
-  setCheckedState: (value: string[]) => void;
-
-  /** Returns all checked nodes with status */
-  getCheckedNodes: () => CheckedNodeStatus[];
-
-  /** Returns `true` if node with provided value is checked */
-  isNodeChecked: (value: string) => boolean;
-
-  /** Returns `true` if node with provided value is indeterminate */
-  isNodeIndeterminate: (value: string) => boolean;
-
-  /** Returns `true` if the node's children are currently being loaded */
-  isNodeLoading: (value: string) => boolean;
-
-  /** Returns the error from the last failed load attempt, or `null` */
-  getNodeLoadError: (value: string) => Error | null;
-
-  /** Programmatically triggers loading of a node's children */
-  loadNode: (value: string) => Promise<void>;
-
-  /** Clears the loaded cache for a node, causing it to re-fetch on next expand */
-  invalidateNode: (value: string) => void;
-}
-```
-
-You can pass the store returned by the `useTree` hook to the `store` prop of the `Tree` component
-to control tree state:
+`Tree` component supports the [store pattern](/guides/controllers#stores). Use the `useTree` hook to manage `Tree` state:
 
 <Demo data={TreeDemos.controller} />
+
+`useTree` accepts initial and controlled state options, and returns actions and queries:
+
+```tsx
+import { Tree, useTree } from '@mantine/core';
+
+function Demo() {
+  const store = useTree({
+    initialExpandedState: { src: true }, // -> uncontrolled initial state
+    // expandedState, onExpandedStateChange -> controlled state,
+    // same pairs for selectedState and checkedState
+    multiple: true, // -> allow selecting several nodes
+    checkStrictly: true, // -> checking a parent does not check its children
+    // onNodeExpand, onNodeCollapse, onLoadChildren -> callbacks
+  });
+
+  return <Tree data={data} store={store} />;
+}
+```
+
+Call actions in event handlers or effects, queries return the current state:
+
+```tsx
+// Actions
+store.expand('src');
+store.collapse('src');
+store.toggleExpanded('src');
+store.expandAllNodes();
+store.select('src');
+store.clearSelected();
+store.checkNode('src');
+store.uncheckAllNodes();
+store.loadNode('src'); // -> loads children with onLoadChildren
+store.invalidateNode('src'); // -> children are loaded again on next expand
+
+// Queries
+store.getExpandedState(); // -> { src: true, ... }
+store.getSelectedState(); // -> string[]
+store.getCheckedState(); // -> string[]
+store.getCheckedNodes(); // -> checked nodes with their status
+store.isNodeChecked('src'); // -> boolean
+store.isNodeIndeterminate('src'); // -> boolean
+store.isNodeLoading('src'); // -> boolean
+```
 
 ## Checked state
 
 `Tree` can be used to display checked state with checkboxes.
-To implement checked state, you need to render `Checkbox.Indicator` in the `renderNode` function:
+To implement checked state, you need to render `Checkbox.Indicator` in the `renderNode` function.
+Set `checkOnSpace` and `expandOnSpace={false}` to let keyboard users check the focused node with Space.
+With `checkOnSpace`, screen readers also announce the checked state of each node.
+Nodes still expand and collapse with ArrowRight and ArrowLeft:
 
 <Demo data={TreeDemos.checked} />
 
@@ -464,6 +354,9 @@ restrict drag initiation to an element that spreads `dragHandleProps` from the `
 payload. This is useful when a node contains interactive controls (inputs, buttons) that
 would otherwise interfere with dragging.
 
+Drag-and-drop works with a mouse only, so `dragHandleProps` removes the handle from the tab order
+and hides it from screen readers. Render the handle as a non-interactive element, for example a `div`:
+
 <Demo data={TreeDemos.dragDropHandle} />
 
 ## Connecting lines
@@ -476,23 +369,31 @@ Lines adapt to `levelOffset` spacing automatically.
 ## Virtualization
 
 `Tree` does not depend on any virtualization library – you supply one yourself.
-Use the `flattenTreeData` utility to convert hierarchical data into a flat list of
-visible nodes based on the current expanded state, then render each node with
-`FlatTreeNode` which provides Tree's styles, aria attributes, click/keyboard
-handlers, and `renderNode` support.
+Use the `flattenTreeData` utility to convert data into a flat list of visible nodes.
+Render each node with `FlatTreeNode`. It provides the same styles, aria attributes,
+click and keyboard handlers and `renderNode` support as `Tree`.
+
+`FlatTreeNode` does not pass data to the store. Call `store.initialize(data)` so checking, expand all and async loading work:
 
 ```tsx
 import { FlatTreeNode, flattenTreeData, useTree } from '@mantine/core';
 
 const store = useTree();
+useEffect(() => {
+  store.initialize(data);
+}, [data, store.initialize]);
 const flatList = flattenTreeData(data, store.getExpandedState());
 // flatList is FlattenedTreeNodeData[] – spread each entry into FlatTreeNode
 ```
 
-`FlatTreeNode` accepts the same behavioral props as `Tree` (`expandOnClick`,
-`selectOnClick`, `expandOnSpace`, `checkOnSpace`, `renderNode`) and a `style` prop
-for virtualizer positioning. The container element must have `data-tree-root`
-and `role="tree"` attributes for keyboard navigation to work.
+`FlatTreeNode` accepts the same behavioral props as `Tree` and a `style` prop
+for virtualizer positioning. For keyboard navigation:
+
+- Add `data-tree-root` and `role="tree"` attributes to the container element.
+- Pass the whole flat list to `flatData`, so arrow keys, Home and End reach rows that are not rendered.
+- Scroll the virtualizer in `onScrollToIndex`. The row is focused once it is rendered.
+
+You do not need to set `tabIndex`: one node in the tree is always kept tabbable.
 
 <Demo data={TreeDemos.virtualized} />
 
@@ -502,9 +403,8 @@ and `role="tree"` attributes for keyboard navigation to work.
 
 ## Example: docs navigation editor
 
-The example below combines drag-and-drop, search with `Highlight`, single-selection,
-hover-revealed actions menu, a folder page count badge and `withLines` into a single
-documentation-navigation editor. The `renderNode` callback receives every payload field
-the component exposes, so most application-level UX can be assembled from these primitives.
+The example below combines drag-and-drop, search with `Highlight`, selection,
+a delete action and a page count badge in a documentation navigation editor.
+Press Delete on a focused node to remove it, focus moves to the next node:
 
 <Demo data={TreeDemos.docsEditor} />

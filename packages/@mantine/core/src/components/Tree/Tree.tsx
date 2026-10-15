@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef } from 'react';
+import { useEffect, useRef } from 'react';
 import { useClickOutside, useMergedRef } from '@mantine/hooks';
 import {
   Box,
@@ -15,9 +15,10 @@ import {
   useStyles,
 } from '../../core';
 import type { TreeDragDropPayload } from './move-tree-node/move-tree-node';
+import { syncTreeTabStop } from './tree-item';
 import { TreeNode } from './TreeNode';
 import { TreeStore, useTree } from './use-tree';
-import type { TreeAllowDrop, TreeDragHandleProps } from './use-tree-node-drag-drop';
+import type { TreeAllowDrop, TreeDragHandleProps, TreeDragState } from './use-tree-node-drag-drop';
 import classes from './Tree.module.css';
 
 export interface TreeNodeData {
@@ -63,6 +64,7 @@ export interface RenderTreeNodePayload {
     onClick: (event: React.MouseEvent) => void;
     'data-selected': boolean | undefined;
     'data-value': string;
+    role?: 'none';
     draggable?: boolean;
     onDragStart?: (event: React.DragEvent) => void;
     onDragOver?: (event: React.DragEvent) => void;
@@ -82,11 +84,6 @@ export type TreeStylesNames = 'root' | 'node' | 'subtree' | 'label';
 export type TreeCssVariables = {
   root: '--level-offset';
 };
-
-export interface TreeDragState {
-  draggedValue: string | null;
-  currentDropTarget: HTMLElement | null;
-}
 
 export interface TreeProps extends BoxProps, StylesApiProps<TreeFactory>, ElementProps<'ul'> {
   /** Data used to render nodes @category appearance */
@@ -135,16 +132,6 @@ export interface TreeProps extends BoxProps, StylesApiProps<TreeFactory>, Elemen
 
   /** If set, connecting lines are rendered showing parent-child relationships @default false @category appearance */
   withLines?: boolean;
-}
-
-function getFlatValues(data: TreeNodeData[]): string[] {
-  return data.reduce<string[]>((acc, item) => {
-    acc.push(item.value);
-    if (item.children) {
-      acc.push(...getFlatValues(item.children));
-    }
-    return acc;
-  }, []);
 }
 
 export type TreeFactory = Factory<{
@@ -217,13 +204,16 @@ export const Tree = factory<TreeFactory>((_props) => {
     () => clearSelectionOnOutsideClick && store.clearSelected()
   );
 
-  const mergedRef = useMergedRef(ref, clickOutsideRef);
+  const rootRef = useRef<HTMLUListElement>(null);
+  const mergedRef = useMergedRef(ref, clickOutsideRef, rootRef);
 
-  const flatValues = useMemo(() => getFlatValues(data), [data]);
+  useEffect(() => {
+    syncTreeTabStop(rootRef.current);
+  });
 
   useEffect(() => {
     store.initialize(data);
-  }, [data]);
+  }, [data, store.initialize]);
 
   const nodes = data.map((node, index) => (
     <TreeNode
@@ -235,7 +225,6 @@ export const Tree = factory<TreeFactory>((_props) => {
       selectOnClick={selectOnClick}
       store={store}
       renderNode={renderNode}
-      flatValues={flatValues}
       allowRangeSelection={allowRangeSelection}
       expandOnSpace={expandOnSpace}
       checkOnSpace={checkOnSpace}

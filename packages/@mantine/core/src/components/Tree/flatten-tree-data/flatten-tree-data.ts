@@ -1,4 +1,5 @@
 import { TreeNodeData } from '../Tree';
+import { hasLoadedChildren, nodeHasChildren } from '../tree-walk/tree-walk';
 import { TreeExpandedState } from '../use-tree';
 
 export type FlatTreeLineState = 'continuing' | 'closing' | 'none';
@@ -41,9 +42,8 @@ function flattenTreeDataTo(
   for (let i = 0; i < data.length; i++) {
     const node = data[i];
     const isLast = i === data.length - 1;
-    const hasLoadedChildren = Array.isArray(node.children) && node.children.length > 0;
-    const hasAsyncChildren = !!node.hasChildren && !hasLoadedChildren;
-    const hasChildren = hasLoadedChildren || hasAsyncChildren;
+    const withLoadedChildren = hasLoadedChildren(node);
+    const hasChildren = nodeHasChildren(node);
     const expanded = expandedState[node.value] || false;
 
     const linesPath: FlatTreeLineState[] = [];
@@ -57,7 +57,7 @@ function flattenTreeDataTo(
 
     acc.push({ node, level, parent, hasChildren, expanded, linesPath });
 
-    if (expanded && hasLoadedChildren) {
+    if (expanded && withLoadedChildren) {
       flattenTreeDataTo(acc, node.children!, expandedState, node.value, level + 1, [
         ...ancestorIsLast,
         isLast,

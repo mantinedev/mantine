@@ -1,4 +1,4 @@
-import { useMemo, useRef } from 'react';
+import { useEffect, useMemo, useRef } from 'react';
 import { useVirtualizer } from '@tanstack/react-virtual';
 import {
   flattenTreeData,
@@ -10,7 +10,7 @@ import {
 import { MantineDemo } from '@mantinex/demo';
 
 const code = `
-import { useMemo, useRef } from 'react';
+import { useEffect, useMemo, useRef } from 'react';
 import { useVirtualizer } from '@tanstack/react-virtual';
 import {
   FlatTreeNode,
@@ -64,6 +64,10 @@ function Demo() {
     initialExpandedState,
   });
 
+  useEffect(() => {
+    store.initialize(largeData);
+  }, []);
+
   const expandedState = store.getExpandedState();
   const flatList = useMemo(() => flattenTreeData(largeData, expandedState), [expandedState]);
 
@@ -94,7 +98,8 @@ function Demo() {
             store={store}
             expandOnClick
             selectOnClick
-            tabIndex={virtualItem.index === 0 ? 0 : -1}
+            flatData={flatList}
+            onScrollToIndex={(index) => virtualizer.scrollToIndex(index)}
             style={{
               position: 'absolute',
               top: 0,
@@ -150,6 +155,10 @@ function Demo() {
     initialExpandedState,
   });
 
+  useEffect(() => {
+    store.initialize(largeData);
+  }, []);
+
   const expandedState = store.getExpandedState();
   const flatList = useMemo(() => flattenTreeData(largeData, expandedState), [expandedState]);
 
@@ -177,7 +186,8 @@ function Demo() {
             store={store}
             expandOnClick
             selectOnClick
-            tabIndex={virtualItem.index === 0 ? 0 : -1}
+            flatData={flatList}
+            onScrollToIndex={(index) => virtualizer.scrollToIndex(index)}
             style={{
               position: 'absolute',
               top: 0,

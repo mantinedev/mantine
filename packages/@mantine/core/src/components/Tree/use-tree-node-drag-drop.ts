@@ -1,9 +1,14 @@
 import { useEffect, useState } from 'react';
-import { findTreeNode } from './get-children-nodes-values/get-children-nodes-values';
 import type { TreeDragDropPayload, TreeDragDropPosition } from './move-tree-node/move-tree-node';
-import type { TreeDragState, TreeNodeData } from './Tree';
+import type { TreeNodeData } from './Tree';
+import { isDescendant } from './tree-walk/tree-walk';
 
 export type TreeAllowDrop = (payload: TreeDragDropPayload) => boolean;
+
+export interface TreeDragState {
+  draggedValue: string | null;
+  currentDropTarget: HTMLElement | null;
+}
 
 interface UseTreeNodeDragDropInput {
   nodeValue: string;
@@ -18,33 +23,12 @@ interface UseTreeNodeDragDropInput {
 
 export interface TreeDragHandleProps {
   onMouseDown: (event: React.MouseEvent) => void;
-}
 
-function isDescendantOf(
-  data: TreeNodeData[],
-  ancestorValue: string,
-  descendantValue: string
-): boolean {
-  const ancestor = findTreeNode(ancestorValue, data);
-  if (!ancestor || !ancestor.children) {
-    return false;
-  }
+  /** Removes the handle from the tab order, drag-and-drop is not keyboard accessible */
+  tabIndex: -1;
 
-  function check(nodes: TreeNodeData[]): boolean {
-    for (const node of nodes) {
-      if (node.value === descendantValue) {
-        return true;
-      }
-
-      if (node.children && check(node.children)) {
-        return true;
-      }
-    }
-
-    return false;
-  }
-
-  return check(ancestor.children);
+  /** Hides the handle from assistive technologies, so it does not become part of the node name */
+  'aria-hidden': true;
 }
 
 function getDragDropPosition(
@@ -58,11 +42,6 @@ function getDragDropPosition(
   const height = rect.height;
 
   if (hasChildren) {
-    // Expanded folder: the subtree is visually below the label, so an 'after' drop
-    // on the label itself would be ambiguous — the indicator would render between
-    // the folder name and its first child, which reads as "as first child". Use
-    // 2 zones: 'before' (top half) and 'inside' (bottom half). To drop after an
-    // expanded folder, hover over the next sibling's 'before' position.
     if (isExpanded) {
       if (y < height * 0.5) {
         return 'before';
@@ -70,7 +49,6 @@ function getDragDropPosition(
       return 'inside';
     }
 
-    // Collapsed folder: full 3-zone behavior.
     if (y < height * 0.25) {
       return 'before';
     }
@@ -144,7 +122,7 @@ export function useTreeNodeDragDrop({
       return;
     }
 
-    if (isDescendantOf(data, draggedValue, nodeValue)) {
+    if (isDescendant(data, draggedValue, nodeValue)) {
       return;
     }
 
@@ -232,6 +210,7 @@ export function useTreeNodeDragDrop({
   };
 
   const elementProps = {
+    role: 'none' as const,
     draggable: withDragHandle ? isDragHandleActive : true,
     onDragStart: handleDragStart,
     onDragOver: handleDragOver,
@@ -241,7 +220,7 @@ export function useTreeNodeDragDrop({
   };
 
   const dragHandleProps: TreeDragHandleProps | undefined = withDragHandle
-    ? { onMouseDown: () => setIsDragHandleActive(true) }
+    ? { onMouseDown: () => setIsDragHandleActive(true), tabIndex: -1, 'aria-hidden': true }
     : undefined;
 
   return { elementProps, dragHandleProps };

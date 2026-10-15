@@ -15,9 +15,6 @@ const cssCode = `.handle {
   justify-content: center;
   width: 18px;
   height: 22px;
-  padding: 0;
-  border: 0;
-  background: transparent;
   border-radius: var(--mantine-radius-sm);
   color: light-dark(var(--mantine-color-gray-5), var(--mantine-color-dark-3));
   cursor: grab;
@@ -76,14 +73,9 @@ function Leaf({
 }: RenderTreeNodePayload) {
   return (
     <Group gap={4} {...elementProps}>
-      <button
-        type="button"
-        {...dragHandleProps}
-        className={classes.handle}
-        aria-label="Drag to reorder"
-      >
+      <div {...dragHandleProps} className={classes.handle}>
         <DotsSixVerticalIcon size={14} weight="bold" />
-      </button>
+      </div>
       {hasChildren ? (
         expanded ? (
           <FolderOpenIcon size={14} style={{ opacity: 0.75 }} />
@@ -144,14 +136,9 @@ function Leaf({
 }: RenderTreeNodePayload) {
   return (
     <Group gap={4} {...elementProps}>
-      <button
-        type="button"
-        {...dragHandleProps}
-        className={classes.handle}
-        aria-label="Drag to reorder"
-      >
+      <div {...dragHandleProps} className={classes.handle}>
         <DotsSixVerticalIcon size={14} weight="bold" />
-      </button>
+      </div>
       {hasChildren ? (
         expanded ? (
           <FolderOpenIcon size={14} style={{ opacity: 0.75 }} />

@@ -83,6 +83,8 @@ function Demo() {
         data={data}
         levelOffset={23}
         expandOnClick={false}
+        expandOnSpace={false}
+        checkOnSpace
         withLines
         renderNode={renderTreeNode}
       />
@@ -150,6 +152,8 @@ function Demo() {
         data={data}
         levelOffset={23}
         expandOnClick={false}
+        expandOnSpace={false}
+        checkOnSpace
         withLines
         renderNode={renderTreeNode}
       />

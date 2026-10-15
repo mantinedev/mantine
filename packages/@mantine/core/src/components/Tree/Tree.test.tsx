@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { act, fireEvent } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { render, screen, tests } from '@mantine-tests/core';
@@ -71,6 +72,24 @@ describe('@mantine/core/Tree', () => {
       await userEvent.keyboard('{ArrowUp}');
 
       expect(document.activeElement).toBe(nodes[1]);
+    });
+
+    it('reads the key, not the physical code, of keyboard events', () => {
+      render(<Tree data={complexTreeData} expandOnClick checkOnSpace />);
+      const nodes = screen.getAllByRole('treeitem');
+
+      nodes[0].focus();
+      fireEvent.keyDown(nodes[0], { key: 'ArrowDown', code: 'Numpad2' });
+      expect(document.activeElement).toBe(nodes[1]);
+
+      fireEvent.keyDown(nodes[1], { key: 'ArrowUp' });
+      expect(document.activeElement).toBe(nodes[0]);
+
+      fireEvent.keyDown(nodes[0], { key: 'Enter', code: 'NumpadEnter' });
+      expect(nodes[0]).toHaveAttribute('aria-expanded', 'true');
+
+      fireEvent.keyDown(nodes[0], { key: ' ' });
+      expect(nodes[0]).toHaveAttribute('aria-checked', 'true');
     });
 
     it('skips collapsed kept-mounted nodes during arrow navigation', async () => {
@@ -260,23 +279,32 @@ describe('@mantine/core/Tree', () => {
 
     const getSelected = () => JSON.parse(screen.getByTestId('selected').textContent!);
 
-    it('selects range including collapsed children with Shift + click', async () => {
+    it('selects only visible nodes with Shift + click', async () => {
       render(<RangeTree />);
 
       await userEvent.click(screen.getByText('Node 1'));
       fireEvent.click(screen.getByText('Node 3'), { shiftKey: true });
 
-      expect(getSelected()).toEqual([
-        'node-1',
-        'node-1-1',
-        'node-1-2',
-        'node-2',
-        'node-2-1',
-        'node-2-2',
-        'node-2-2-1',
-        'node-2-2-2',
-        'node-3',
-      ]);
+      expect(getSelected()).toEqual(['node-1', 'node-2', 'node-3']);
+    });
+
+    it('includes expanded children in the Shift + click range', async () => {
+      render(<RangeTree storeInput={{ initialExpandedState: { 'node-1': true } }} />);
+
+      await userEvent.click(screen.getByText('Node 1.2'));
+      fireEvent.click(screen.getByText('Node 1'), { shiftKey: true });
+
+      expect(getSelected()).toEqual(['node-1', 'node-1-1', 'node-1-2']);
+    });
+
+    it('selects a single node with Shift + click in single selection mode', async () => {
+      render(<RangeTree storeInput={{ multiple: false }} />);
+
+      await userEvent.click(screen.getByText('Node 2'));
+      fireEvent.click(screen.getByText('Node 3'), { shiftKey: true });
+
+      expect(getSelected()).toEqual(['node-3']);
+      expect(screen.getByRole('tree')).toHaveAttribute('aria-multiselectable', 'false');
     });
 
     it('extends selection with Shift + ArrowDown from the anchor node', async () => {
@@ -285,17 +313,7 @@ describe('@mantine/core/Tree', () => {
       await userEvent.click(screen.getByText('Node 1'));
       await userEvent.keyboard('{Shift>}{ArrowDown}{ArrowDown}{/Shift}');
 
-      expect(getSelected()).toEqual([
-        'node-1',
-        'node-1-1',
-        'node-1-2',
-        'node-2',
-        'node-2-1',
-        'node-2-2',
-        'node-2-2-1',
-        'node-2-2-2',
-        'node-3',
-      ]);
+      expect(getSelected()).toEqual(['node-1', 'node-2', 'node-3']);
       expect(document.activeElement).toHaveAttribute('data-value', 'node-3');
     });
 
@@ -765,5 +783,397 @@ describe('@mantine/core/Tree', () => {
         })
       );
     });
+  });
+
+  describe('Leaf nodes', () => {
+    function LeafTree({
+      storeInput,
+      ...props
+    }: Partial<TreeProps> & { storeInput?: UseTreeInput }) {
+      const store = useTree(storeInput);
+      return (
+        <div>
+          <Tree data={complexTreeData} store={store} {...props} />
+          <div data-testid="expanded">{JSON.stringify(store.expandedState)}</div>
+        </div>
+      );
+    }
+
+    it('does not expand leaf nodes on click, ArrowRight, Space and Enter', async () => {
+      const onNodeExpand = jest.fn();
+      const onNodeCollapse = jest.fn();
+      render(<LeafTree storeInput={{ onNodeExpand, onNodeCollapse }} />);
+
+      await userEvent.click(screen.getByText('Node 3'));
+      await userEvent.keyboard('{ArrowRight} {Enter}');
+
+      expect(onNodeExpand).not.toHaveBeenCalled();
+      expect(onNodeCollapse).not.toHaveBeenCalled();
+      expect(JSON.parse(screen.getByTestId('expanded').textContent!)['node-3']).toBe(false);
+      expect(document.activeElement).toHaveAttribute('data-value', 'node-3');
+    });
+
+    it('does not expand leaf FlatTreeNode on Space', async () => {
+      const onNodeExpand = jest.fn();
+      function FlatLeaf() {
+        const store = useTree({ onNodeExpand });
+        return (
+          <div role="tree" data-tree-root>
+            {flattenTreeData(complexTreeData, store.expandedState).map((item) => (
+              <FlatTreeNode key={item.node.value} {...item} store={store} />
+            ))}
+          </div>
+        );
+      }
+
+      render(<FlatLeaf />);
+      screen.getAllByRole('treeitem')[2].focus();
+      await userEvent.keyboard(' {ArrowRight}');
+
+      expect(onNodeExpand).not.toHaveBeenCalled();
+    });
+  });
+
+  describe('Interactive elements inside nodes', () => {
+    const renderWithInput: TreeProps['renderNode'] = ({ node, elementProps }) => (
+      <div {...elementProps}>
+        <input aria-label={String(node.label)} />
+      </div>
+    );
+
+    it('does not handle Space and arrow keys pressed on an input inside Tree node', async () => {
+      render(<Tree data={complexTreeData} renderNode={renderWithInput} />);
+      const input = screen.getByRole('textbox', { name: 'Node 1' });
+
+      input.focus();
+      await userEvent.keyboard(' a{ArrowLeft}{ArrowRight}{ArrowDown}');
+
+      expect(input).toHaveFocus();
+      expect(input).toHaveValue(' a');
+      expect(screen.getAllByRole('treeitem')[0]).toHaveAttribute('aria-expanded', 'false');
+    });
+
+    it('does not handle Space pressed on a button inside FlatTreeNode', async () => {
+      const onClick = jest.fn();
+      function FlatWithButton() {
+        const store = useTree();
+        return (
+          <div role="tree" data-tree-root>
+            {flattenTreeData(complexTreeData, store.expandedState).map((item) => (
+              <FlatTreeNode
+                key={item.node.value}
+                {...item}
+                store={store}
+                renderNode={({ node, elementProps }) => (
+                  <div {...elementProps}>
+                    <button
+                      type="button"
+                      onClick={(event) => {
+                        event.stopPropagation();
+                        onClick();
+                      }}
+                    >
+                      {`Action ${node.value}`}
+                    </button>
+                  </div>
+                )}
+              />
+            ))}
+          </div>
+        );
+      }
+
+      render(<FlatWithButton />);
+      screen.getByRole('button', { name: 'Action node-1' }).focus();
+      await userEvent.keyboard(' ');
+
+      expect(onClick).toHaveBeenCalledTimes(1);
+      expect(screen.getAllByRole('treeitem')[0]).toHaveAttribute('aria-expanded', 'false');
+    });
+  });
+
+  describe('Roving tab index', () => {
+    const getTabStops = () =>
+      screen
+        .getAllByRole('treeitem')
+        .filter((node) => node.getAttribute('tabindex') === '0')
+        .map((node) => node.dataset.value);
+
+    it('makes the last focused node the only tab stop', async () => {
+      render(
+        <>
+          <button type="button">before</button>
+          <Tree data={complexTreeData} />
+          <button type="button">after</button>
+        </>
+      );
+
+      expect(getTabStops()).toEqual(['node-1']);
+
+      screen.getAllByRole('treeitem')[0].focus();
+      await userEvent.keyboard('{ArrowDown}');
+      expect(getTabStops()).toEqual(['node-2']);
+
+      await userEvent.tab();
+      expect(screen.getByRole('button', { name: 'after' })).toHaveFocus();
+
+      await userEvent.tab({ shift: true });
+      expect(document.activeElement).toHaveAttribute('data-value', 'node-2');
+
+      await userEvent.tab({ shift: true });
+      expect(screen.getByRole('button', { name: 'before' })).toHaveFocus();
+    });
+
+    it('uses the selected node as the tab stop before any node is focused', () => {
+      function SelectedTree() {
+        const store = useTree({ initialSelectedState: ['node-3'] });
+        return <Tree data={complexTreeData} store={store} />;
+      }
+
+      render(<SelectedTree />);
+      expect(getTabStops()).toEqual(['node-3']);
+    });
+
+    it('falls back to the first visible node when the focused node is hidden', async () => {
+      function CollapsibleTree() {
+        const store = useTree({ initialExpandedState: { 'node-1': true } });
+        return (
+          <>
+            <Tree data={complexTreeData} store={store} />
+            <button type="button" onClick={() => store.collapse('node-1')}>
+              collapse
+            </button>
+          </>
+        );
+      }
+
+      render(<CollapsibleTree />);
+      screen.getAllByRole('treeitem')[1].focus();
+      expect(getTabStops()).toEqual(['node-1-1']);
+
+      await userEvent.click(screen.getByRole('button', { name: 'collapse' }));
+      expect(getTabStops()).toEqual(['node-1']);
+    });
+  });
+
+  describe('FlatTreeNode virtualization', () => {
+    const expandedState = { 'node-1': true, 'node-2': true, 'node-2-2': true };
+
+    function VirtualizedTree({
+      rendered,
+      onScrollToIndex,
+    }: {
+      rendered: string[];
+      onScrollToIndex?: (index: number) => void;
+    }) {
+      const store = useTree({ initialExpandedState: expandedState });
+      const flatData = flattenTreeData(complexTreeData, store.expandedState);
+      return (
+        <>
+          <div role="tree" data-tree-root>
+            {flatData
+              .filter((item) => rendered.includes(item.node.value))
+              .map((item) => (
+                <FlatTreeNode
+                  key={item.node.value}
+                  {...item}
+                  store={store}
+                  flatData={flatData}
+                  onScrollToIndex={onScrollToIndex}
+                />
+              ))}
+          </div>
+          <button type="button">after</button>
+        </>
+      );
+    }
+
+    it('sets aria-level, aria-setsize and aria-posinset from flatData', () => {
+      render(
+        <VirtualizedTree rendered={['node-1', 'node-1-2', 'node-2', 'node-2-2-1', 'node-3']} />
+      );
+      const attrs = screen
+        .getAllByRole('treeitem')
+        .map((node) => [
+          node.dataset.value,
+          node.getAttribute('aria-level'),
+          node.getAttribute('aria-setsize'),
+          node.getAttribute('aria-posinset'),
+        ]);
+
+      expect(attrs).toEqual([
+        ['node-1', '1', '3', '1'],
+        ['node-1-2', '2', '2', '2'],
+        ['node-2', '1', '3', '2'],
+        ['node-2-2-1', '3', '2', '1'],
+        ['node-3', '1', '3', '3'],
+      ]);
+    });
+
+    it('scrolls to rows that are not rendered on Home, End, ArrowDown and ArrowLeft', async () => {
+      const onScrollToIndex = jest.fn();
+      render(
+        <VirtualizedTree
+          rendered={['node-1-2', 'node-2', 'node-2-1']}
+          onScrollToIndex={onScrollToIndex}
+        />
+      );
+
+      screen.getAllByRole('treeitem')[1].focus();
+      await userEvent.keyboard('{End}');
+      expect(onScrollToIndex).toHaveBeenLastCalledWith(8);
+
+      await userEvent.keyboard('{Home}');
+      expect(onScrollToIndex).toHaveBeenLastCalledWith(0);
+
+      screen.getAllByRole('treeitem')[2].focus();
+      await userEvent.keyboard('{ArrowDown}');
+      expect(onScrollToIndex).toHaveBeenLastCalledWith(5);
+
+      screen.getAllByRole('treeitem')[0].focus();
+      await userEvent.keyboard('{ArrowLeft}');
+      expect(onScrollToIndex).toHaveBeenLastCalledWith(0);
+      expect(document.activeElement).toHaveAttribute('data-value', 'node-1-2');
+    });
+
+    it('focuses the target row once it is rendered after scrolling', async () => {
+      function ScrollingTree() {
+        const [rendered, setRendered] = useState(['node-1', 'node-1-1']);
+        return (
+          <VirtualizedTree
+            rendered={rendered}
+            onScrollToIndex={() => setRendered(['node-2-2-2', 'node-3'])}
+          />
+        );
+      }
+
+      render(<ScrollingTree />);
+      screen.getAllByRole('treeitem')[0].focus();
+      await userEvent.keyboard('{End}');
+
+      expect(document.activeElement).toHaveAttribute('data-value', 'node-3');
+      expect(document.activeElement).toHaveAttribute('tabindex', '0');
+    });
+
+    it('does not move focus to the target row when focus left the tree before it rendered', async () => {
+      function ScrollingTree() {
+        const [rendered, setRendered] = useState(['node-1', 'node-1-1']);
+        return (
+          <>
+            <VirtualizedTree rendered={rendered} onScrollToIndex={() => {}} />
+            <button type="button" onClick={() => setRendered(['node-2-2-2', 'node-3'])}>
+              scroll
+            </button>
+          </>
+        );
+      }
+
+      render(<ScrollingTree />);
+      screen.getAllByRole('treeitem')[0].focus();
+      await userEvent.keyboard('{End}');
+      await userEvent.click(screen.getByRole('button', { name: 'scroll' }));
+
+      expect(screen.getByRole('button', { name: 'scroll' })).toHaveFocus();
+    });
+
+    it('keeps a tab stop when the focused row is no longer rendered', async () => {
+      function ScrollingTree() {
+        const [rendered, setRendered] = useState(['node-1', 'node-1-1', 'node-1-2']);
+        return (
+          <>
+            <VirtualizedTree rendered={rendered} />
+            <button type="button" onClick={() => setRendered(['node-2-1', 'node-2-2'])}>
+              scroll
+            </button>
+          </>
+        );
+      }
+
+      render(<ScrollingTree />);
+      screen.getAllByRole('treeitem')[1].focus();
+      await userEvent.click(screen.getByRole('button', { name: 'scroll' }));
+      await act(async () => {});
+
+      const tabStops = screen
+        .getAllByRole('treeitem')
+        .filter((node) => node.getAttribute('tabindex') === '0')
+        .map((node) => node.dataset.value);
+      expect(tabStops).toEqual(['node-2-1']);
+    });
+  });
+
+  describe('Checkable trees', () => {
+    function CheckableTree({ checkStrictly }: { checkStrictly?: boolean }) {
+      const store = useTree({
+        initialExpandedState: { 'node-1': true },
+        initialCheckedState: ['node-1-1'],
+        checkStrictly,
+      });
+      return <Tree data={complexTreeData} store={store} checkOnSpace />;
+    }
+
+    const getChecked = () =>
+      Object.fromEntries(
+        screen
+          .getAllByRole('treeitem')
+          .map((node) => [node.dataset.value, node.getAttribute('aria-checked')])
+      );
+
+    it('sets aria-checked on tree items when checkOnSpace is set', async () => {
+      render(<CheckableTree />);
+
+      expect(getChecked()).toEqual({
+        'node-1': 'mixed',
+        'node-1-1': 'true',
+        'node-1-2': 'false',
+        'node-2': 'false',
+        'node-3': 'false',
+      });
+
+      screen.getAllByRole('treeitem')[2].focus();
+      await userEvent.keyboard(' ');
+      expect(getChecked()['node-1']).toBe('true');
+    });
+
+    it('does not set aria-checked without checkOnSpace', () => {
+      render(<Tree data={complexTreeData} />);
+      expect(screen.getAllByRole('treeitem')[0]).not.toHaveAttribute('aria-checked');
+    });
+
+    it('checks FlatTreeNode on Space and sets aria-checked', async () => {
+      function FlatCheckable() {
+        const store = useTree({ checkStrictly: true });
+        return (
+          <div role="tree" data-tree-root>
+            {flattenTreeData(complexTreeData, store.expandedState).map((item) => (
+              <FlatTreeNode key={item.node.value} {...item} store={store} checkOnSpace />
+            ))}
+          </div>
+        );
+      }
+
+      render(<FlatCheckable />);
+      const node = screen.getAllByRole('treeitem')[2];
+      expect(node).toHaveAttribute('aria-checked', 'false');
+
+      node.focus();
+      await userEvent.keyboard(' ');
+      expect(screen.getAllByRole('treeitem')[2]).toHaveAttribute('aria-checked', 'true');
+    });
+  });
+
+  it('renders the loading indicator item with role="none"', async () => {
+    const onLoadChildren = jest.fn(() => new Promise<void>(() => {}));
+    const loadingData: TreeNodeData[] = [{ label: 'Folder', value: 'folder', hasChildren: true }];
+    function LoadingTree() {
+      const store = useTree({ onLoadChildren });
+      return <Tree data={loadingData} store={store} />;
+    }
+
+    render(<LoadingTree />);
+    await userEvent.click(screen.getByText('Folder'));
+
+    const group = screen.getByRole('group');
+    expect(group.querySelector('li')).toHaveAttribute('role', 'none');
   });
 });

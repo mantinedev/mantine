@@ -1,6 +1,6 @@
-import { getChildrenNodesValues } from './get-children-nodes-values';
+import { getLeafValues } from './tree-walk';
 
-describe('@mantine/core/Tree/get-children-nodes-values', () => {
+describe('@mantine/core/Tree/tree-walk/getLeafValues', () => {
   it('returns nodes values for flat tree', () => {
     const data = [
       { value: '1', label: '1' },
@@ -8,7 +8,7 @@ describe('@mantine/core/Tree/get-children-nodes-values', () => {
       { value: '3', label: '3' },
     ];
 
-    expect(getChildrenNodesValues('1', data)).toStrictEqual(['1']);
+    expect(getLeafValues('1', data)).toStrictEqual(['1']);
   });
 
   it('returns nodes values for nested tree with one level of nesting', () => {
@@ -23,7 +23,7 @@ describe('@mantine/core/Tree/get-children-nodes-values', () => {
       },
     ];
 
-    expect(getChildrenNodesValues('1', data)).toStrictEqual(['2', '3']);
+    expect(getLeafValues('1', data)).toStrictEqual(['2', '3']);
   });
 
   it('returns nodes values for nested tree with multiple levels of nesting', () => {
@@ -46,7 +46,7 @@ describe('@mantine/core/Tree/get-children-nodes-values', () => {
       },
     ];
 
-    expect(getChildrenNodesValues('1', data)).toStrictEqual(['3', '4', '5', '6']);
-    expect(getChildrenNodesValues('2', data)).toStrictEqual(['3', '4', '5']);
+    expect(getLeafValues('1', data)).toStrictEqual(['3', '4', '5', '6']);
+    expect(getLeafValues('2', data)).toStrictEqual(['3', '4', '5']);
   });
 });

@@ -1,7 +1,11 @@
+import { createElement, useState } from 'react';
 import { act, renderHook } from '@testing-library/react';
-import { tests } from '@mantine-tests/core';
-import { TreeNodeData } from './Tree';
-import { getTreeExpandedState, useTree } from './use-tree';
+import { createRoot } from 'react-dom/client';
+import { render, tests } from '@mantine-tests/core';
+import { filterTreeData } from './filter-tree-data/filter-tree-data';
+import { mergeAsyncChildren } from './merge-async-children/merge-async-children';
+import { Tree, TreeNodeData } from './Tree';
+import { getTreeExpandedState, TreeExpandedState, useTree, UseTreeReturnType } from './use-tree';
 
 const data: TreeNodeData[] = [
   {
@@ -969,7 +973,7 @@ describe('@mantine/core/Tree/use-tree', () => {
       expect(result.current.checkedState).toStrictEqual(['package.json']);
     });
 
-    it('does not write through state the parent controls', () => {
+    it('composes calls on state the parent controls and keeps the controlled value', async () => {
       const onExpandedStateChange = jest.fn();
       const onSelectedStateChange = jest.fn();
       const onCheckedStateChange = jest.fn();
@@ -988,7 +992,7 @@ describe('@mantine/core/Tree/use-tree', () => {
       onExpandedStateChange.mockClear();
       onCheckedStateChange.mockClear();
 
-      act(() => {
+      await act(async () => {
         result.current.expand('a');
         result.current.expand('b');
         result.current.select('a');
@@ -997,12 +1001,306 @@ describe('@mantine/core/Tree/use-tree', () => {
         result.current.checkNode('src/hooks');
       });
 
-      expect(onExpandedStateChange).toHaveBeenLastCalledWith({ b: true });
-      expect(onSelectedStateChange).toHaveBeenLastCalledWith(['b']);
-      expect(onCheckedStateChange).toHaveBeenLastCalledWith(['src/hooks/use-state.ts']);
+      expect(onExpandedStateChange).toHaveBeenLastCalledWith(
+        expect.objectContaining({ a: true, b: true })
+      );
+      expect(onSelectedStateChange).toHaveBeenLastCalledWith(['a', 'b']);
+      expect(onCheckedStateChange).toHaveBeenLastCalledWith([
+        'package.json',
+        'src/hooks/use-state.ts',
+      ]);
       expect(result.current.getExpandedState()).toStrictEqual({});
       expect(result.current.getSelectedState()).toStrictEqual([]);
       expect(result.current.getCheckedState()).toStrictEqual([]);
     });
+  });
+});
+
+describe('@mantine/core/Tree/use-tree data changes', () => {
+  it('keeps checked values that the filtered data does not contain', () => {
+    const { result } = renderHook(() => useTree());
+    act(() => result.current.initialize(data));
+    act(() => result.current.checkNode('package.json'));
+
+    act(() => result.current.initialize(filterTreeData(data, 'Button')));
+    expect(result.current.getCheckedState()).toStrictEqual(['package.json']);
+
+    act(() => result.current.initialize(data));
+    expect(result.current.getCheckedState()).toStrictEqual(['package.json']);
+    expect(result.current.isNodeChecked('package.json')).toBe(true);
+  });
+
+  it('keeps expanded values that the filtered data does not contain', () => {
+    const { result } = renderHook(() => useTree());
+    act(() => result.current.initialize(data));
+    act(() => result.current.expand('src/hooks'));
+
+    act(() => result.current.initialize(filterTreeData(data, 'Button')));
+    act(() => result.current.initialize(data));
+    expect(result.current.getExpandedState()['src/hooks']).toBe(true);
+  });
+
+  it('keeps initialCheckedState when data arrives after mount', () => {
+    const { result } = renderHook(() =>
+      useTree({ initialCheckedState: ['src/hooks', 'package.json'] })
+    );
+    act(() => result.current.initialize([]));
+    expect(result.current.getCheckedState()).toStrictEqual(['src/hooks', 'package.json']);
+
+    act(() => result.current.initialize(data));
+    expect(result.current.getCheckedState()).toStrictEqual([
+      'src/hooks/use-state.ts',
+      'package.json',
+    ]);
+  });
+
+  it('does not report controlled checked state when data is empty', () => {
+    const onCheckedStateChange = jest.fn();
+    const { result } = renderHook(() =>
+      useTree({ checkedState: ['package.json'], onCheckedStateChange })
+    );
+    act(() => result.current.initialize([]));
+    act(() => result.current.initialize(data));
+    expect(onCheckedStateChange).not.toHaveBeenCalled();
+  });
+
+  it('expands a checked async parent to its children once they are loaded', () => {
+    const asyncData: TreeNodeData[] = [
+      { label: 'Documents', value: 'documents', hasChildren: true },
+      { label: 'readme.md', value: 'readme' },
+    ];
+    const { result } = renderHook(() => useTree({ initialCheckedState: ['documents'] }));
+    act(() => result.current.initialize(asyncData));
+    expect(result.current.getCheckedState()).toStrictEqual(['documents']);
+    expect(result.current.isNodeChecked('documents')).toBe(true);
+
+    act(() =>
+      result.current.initialize(
+        mergeAsyncChildren(asyncData, 'documents', [
+          { label: 'a.txt', value: 'documents/a.txt' },
+          { label: 'b.txt', value: 'documents/b.txt' },
+        ])
+      )
+    );
+    expect(result.current.getCheckedState()).toStrictEqual(['documents/a.txt', 'documents/b.txt']);
+    expect(result.current.isNodeChecked('documents')).toBe(true);
+  });
+
+  it('does not update state when initialized with structurally equal data', () => {
+    const onExpandedStateChange = jest.fn();
+    const onCheckedStateChange = jest.fn();
+    const { result } = renderHook(() =>
+      useTree({ onExpandedStateChange, onCheckedStateChange, initialCheckedState: ['src'] })
+    );
+    act(() => result.current.initialize(data));
+    const store = result.current;
+    onExpandedStateChange.mockClear();
+    onCheckedStateChange.mockClear();
+
+    act(() => result.current.initialize(JSON.parse(JSON.stringify(data))));
+    expect(result.current).toBe(store);
+    expect(onExpandedStateChange).not.toHaveBeenCalled();
+    expect(onCheckedStateChange).not.toHaveBeenCalled();
+  });
+
+  it('does not loop when an external store is used with inline data', () => {
+    function Demo() {
+      const store = useTree();
+      return createElement(Tree, {
+        data: [{ label: 'X', value: 'x', children: [{ label: 'Y', value: 'y' }] }],
+        store,
+      });
+    }
+
+    expect(() => render(createElement(Demo))).not.toThrow();
+  });
+});
+
+describe('@mantine/core/Tree/use-tree checked state normalisation', () => {
+  it('cascades a parent set through setCheckedState', () => {
+    const { result } = renderHook(() => useTree());
+    act(() => result.current.initialize(data));
+    act(() => result.current.setCheckedState(['src/components']));
+
+    expect(result.current.isNodeChecked('src/components/Button.tsx')).toBe(true);
+    expect(result.current.isNodeIndeterminate('src')).toBe(true);
+
+    act(() => result.current.uncheckNode('src/components'));
+    expect(result.current.getCheckedState()).toStrictEqual([]);
+  });
+
+  it('cascades a parent passed as controlled checkedState', () => {
+    const onCheckedStateChange = jest.fn();
+    const { result } = renderHook(() => useTree({ checkedState: ['src'], onCheckedStateChange }));
+    act(() => result.current.initialize(data));
+
+    expect(result.current.isNodeChecked('src/hooks/use-state.ts')).toBe(true);
+    expect(result.current.isNodeChecked('src')).toBe(true);
+
+    act(() => result.current.uncheckNode('src/components/Button.tsx'));
+    expect(onCheckedStateChange).toHaveBeenLastCalledWith([
+      'src/components/Input.tsx',
+      'src/hooks/use-state.ts',
+    ]);
+  });
+
+  it('unchecks a checked value that the current data does not contain', () => {
+    const { result } = renderHook(() => useTree({ initialCheckedState: ['package.json'] }));
+    act(() => result.current.initialize(filterTreeData(data, 'Button')));
+    act(() => result.current.uncheckNode('package.json'));
+    expect(result.current.getCheckedState()).toStrictEqual([]);
+  });
+});
+
+describe('@mantine/core/Tree/use-tree controlled chaining', () => {
+  it('composes consecutive calls on controlled state', () => {
+    const onExpandedStateChange = jest.fn();
+    const { result } = renderHook(() => useTree({ expandedState: {}, onExpandedStateChange }));
+
+    act(() => {
+      result.current.expand('a');
+      result.current.expand('b');
+      expect(result.current.getExpandedState()).toStrictEqual({ a: true, b: true });
+    });
+
+    expect(onExpandedStateChange).toHaveBeenLastCalledWith({ a: true, b: true });
+  });
+
+  it('returns the controlled value after the parent rejects the change', async () => {
+    const { result } = renderHook(() => useTree({ expandedState: {}, checkedState: [] }));
+    act(() => result.current.initialize(data));
+
+    await act(async () => {
+      result.current.expand('src');
+      result.current.checkNode('package.json');
+    });
+
+    expect(result.current.getExpandedState()).toStrictEqual({});
+    expect(result.current.getCheckedState()).toStrictEqual([]);
+  });
+});
+
+describe('@mantine/core/Tree/use-tree controlled chaining outside of events', () => {
+  const wait = () => new Promise((resolve) => setTimeout(resolve, 20));
+  let previousActEnvironment: unknown;
+
+  beforeEach(() => {
+    previousActEnvironment = (globalThis as any).IS_REACT_ACT_ENVIRONMENT;
+    (globalThis as any).IS_REACT_ACT_ENVIRONMENT = false;
+  });
+
+  afterEach(() => {
+    (globalThis as any).IS_REACT_ACT_ENVIRONMENT = previousActEnvironment;
+  });
+
+  const asyncData: TreeNodeData[] = [
+    {
+      label: 'src',
+      value: 'src',
+      children: [{ label: 'c', value: 'src/c', hasChildren: true }],
+    },
+  ];
+
+  function renderControlled(acceptChanges: boolean) {
+    const store: { tree: UseTreeReturnType | null; renders: number } = { tree: null, renders: 0 };
+
+    function Parent() {
+      const [expandedState, setExpandedState] = useState<TreeExpandedState>({});
+      store.renders += 1;
+      store.tree = useTree({
+        expandedState,
+        onExpandedStateChange: acceptChanges ? setExpandedState : undefined,
+        onLoadChildren: () => Promise.resolve(),
+      });
+      return null;
+    }
+
+    const root = createRoot(document.createElement('div'));
+    root.render(createElement(Parent));
+    return { store, root };
+  }
+
+  it('composes calls separated by an await when the parent renders later', async () => {
+    const { store, root } = renderControlled(true);
+    await wait();
+    store.tree!.initialize(asyncData);
+    await wait();
+
+    await store.tree!.loadNode('src');
+    store.tree!.expand('src');
+    await store.tree!.loadNode('src/c');
+    store.tree!.expand('src/c');
+    expect(store.tree!.getExpandedState()).toStrictEqual({ src: true, 'src/c': true });
+
+    await wait();
+    expect(store.tree!.getExpandedState()).toStrictEqual({ src: true, 'src/c': true });
+    expect(store.tree!.expandedState).toStrictEqual({ src: true, 'src/c': true });
+    root.unmount();
+  });
+
+  it('returns the controlled value once a parent that ignores the change has rendered', async () => {
+    const { store, root } = renderControlled(false);
+    await wait();
+
+    store.tree!.expand('src');
+    await Promise.resolve();
+    store.tree!.expand('src/c');
+    expect(store.tree!.getExpandedState()).toStrictEqual({ src: true, 'src/c': true });
+
+    await wait();
+    expect(store.tree!.getExpandedState()).toStrictEqual({});
+    root.unmount();
+  });
+});
+
+describe('@mantine/core/Tree/use-tree invalidateNode', () => {
+  const asyncData: TreeNodeData[] = [{ label: 'Documents', value: 'documents', hasChildren: true }];
+  const loadedData = mergeAsyncChildren(asyncData, 'documents', [
+    { label: 'a.txt', value: 'documents/a.txt' },
+  ]);
+
+  it('re-fetches an invalidated node on the next expand', async () => {
+    const onLoadChildren = jest.fn(() => Promise.resolve());
+    const { result } = renderHook(() => useTree({ onLoadChildren }));
+    act(() => result.current.initialize(asyncData));
+
+    await act(async () => {
+      result.current.expand('documents');
+    });
+    act(() => result.current.initialize(loadedData));
+
+    act(() => result.current.invalidateNode('documents'));
+    act(() => result.current.collapse('documents'));
+    await act(async () => {
+      result.current.expand('documents');
+    });
+
+    expect(onLoadChildren).toHaveBeenCalledTimes(2);
+  });
+
+  it('re-fetches a node invalidated while it was loading', async () => {
+    let resolveLoad = () => {};
+    const onLoadChildren = jest.fn(
+      () =>
+        new Promise<void>((resolve) => {
+          resolveLoad = resolve;
+        })
+    );
+    const { result } = renderHook(() => useTree({ onLoadChildren }));
+    act(() => result.current.initialize(asyncData));
+
+    act(() => result.current.expand('documents'));
+    act(() => result.current.invalidateNode('documents'));
+    await act(async () => {
+      resolveLoad();
+    });
+    act(() => result.current.initialize(loadedData));
+
+    act(() => result.current.collapse('documents'));
+    await act(async () => {
+      result.current.expand('documents');
+    });
+
+    expect(onLoadChildren).toHaveBeenCalledTimes(2);
   });
 });

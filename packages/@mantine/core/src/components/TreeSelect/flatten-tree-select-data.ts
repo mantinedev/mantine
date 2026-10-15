@@ -1,4 +1,5 @@
 import { TreeNodeData } from '../Tree';
+import { hasLoadedChildren, nodeHasChildren } from '../Tree/tree-walk/tree-walk';
 import { TreeExpandedState } from '../Tree/use-tree';
 
 export interface TreeSelectFlatNode {
@@ -22,9 +23,8 @@ function flattenTo(
   for (let i = 0; i < data.length; i++) {
     const node = data[i];
     const isLast = i === data.length - 1;
-    const hasLoadedChildren = Array.isArray(node.children) && node.children.length > 0;
-    const hasAsyncChildren = !!node.hasChildren && !hasLoadedChildren;
-    const hasChildren = hasLoadedChildren || hasAsyncChildren;
+    const withLoadedChildren = hasLoadedChildren(node);
+    const hasChildren = nodeHasChildren(node);
     const expanded = expandedState[node.value] || false;
 
     acc.push({
@@ -37,7 +37,7 @@ function flattenTo(
       lineGuides: parentGuides,
     });
 
-    if (expanded && hasLoadedChildren) {
+    if (expanded && withLoadedChildren) {
       const childGuides = level >= 2 ? [...parentGuides, !isLast] : [];
       flattenTo(acc, node.children!, expandedState, node.value, level + 1, childGuides);
     }

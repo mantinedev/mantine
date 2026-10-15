@@ -1,4 +1,4 @@
-import { useMemo, useRef, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import { CaretDownIcon } from '@phosphor-icons/react';
 import { useVirtualizer } from '@tanstack/react-virtual';
 import { Highlight, Stack, Text, TextInput } from '../..';
@@ -261,6 +261,22 @@ export function SelectOnClick() {
   );
 }
 
+export function MultipleSelection() {
+  const store = useTree({ multiple: true });
+
+  return (
+    <div style={{ padding: 40, maxWidth: 400 }}>
+      <Text size="sm" mb="md">
+        Click to select, Shift + click or Shift + ArrowUp/ArrowDown to select a range
+      </Text>
+      <Tree data={data} store={store} selectOnClick />
+      <Text size="sm" mt="md">
+        Selected: {store.getSelectedState().join(', ') || 'none'}
+      </Text>
+    </div>
+  );
+}
+
 export function DragDrop() {
   const [treeData, setTreeData] = useState(data);
   const store = useTree({ initialExpandedState: getTreeExpandedState(data, '*') });
@@ -414,6 +430,53 @@ export function AsyncLoading() {
   );
 }
 
+export function ControlledAsyncChain() {
+  const [expandedState, setExpandedState] = useState<Record<string, boolean>>({});
+  const [treeData, setTreeData] = useState<TreeNodeData[]>([
+    { label: 'Documents', value: 'documents', hasChildren: true },
+    { label: 'Images', value: 'images', hasChildren: true },
+  ]);
+
+  const store = useTree({
+    expandedState,
+    onExpandedStateChange: setExpandedState,
+    onLoadChildren: async (value) => {
+      await new Promise((resolve) => {
+        setTimeout(resolve, 300);
+      });
+      setTreeData((prev) =>
+        mergeAsyncChildren(prev, value, [
+          { label: `${value}/file1.txt`, value: `${value}/file1.txt` },
+          { label: `${value}/file2.txt`, value: `${value}/file2.txt` },
+        ])
+      );
+    },
+  });
+
+  const expandPath = async () => {
+    await store.loadNode('documents');
+    await store.loadNode('images');
+    store.expand('documents');
+    await store.loadNode('documents');
+    store.expand('images');
+  };
+
+  return (
+    <div style={{ padding: 40, maxWidth: 400 }}>
+      <Group mb="md">
+        <Button onClick={expandPath}>Expand path</Button>
+        <Button variant="default" onClick={() => setExpandedState({})}>
+          Collapse all
+        </Button>
+      </Group>
+      <Tree data={treeData} store={store} />
+      <Text size="sm" mt="md" data-testid="expanded-state">
+        {JSON.stringify(expandedState)}
+      </Text>
+    </div>
+  );
+}
+
 export function AsyncLoadingDefault() {
   const [treeData, setTreeData] = useState<TreeNodeData[]>([
     { label: 'Documents', value: 'documents', hasChildren: true },
@@ -511,8 +574,9 @@ export function AsyncLoadingWithError() {
   );
 }
 
+let invalidationCounter = 0;
+
 export function AsyncLoadingWithInvalidation() {
-  let counter = 0;
   const [treeData, setTreeData] = useState<TreeNodeData[]>([
     { label: 'Dynamic folder', value: 'dynamic', hasChildren: true },
   ]);
@@ -522,7 +586,8 @@ export function AsyncLoadingWithInvalidation() {
       await new Promise((resolve) => {
         setTimeout(resolve, 800);
       });
-      counter++;
+      invalidationCounter++;
+      const counter = invalidationCounter;
       setTreeData((prev) =>
         mergeAsyncChildren(prev, value, [
           { label: `item-${counter}-a`, value: `${value}/item-${counter}-a` },
@@ -729,6 +794,49 @@ export function SearchFilter() {
   );
 }
 
+export function CheckedWithFilter() {
+  const [search, setSearch] = useState('');
+  const store = useTree({ initialExpandedState: getTreeExpandedState(data, '*') });
+  const filteredData = useMemo(() => filterTreeData(data, search), [search]);
+
+  return (
+    <div style={{ padding: 40, maxWidth: 400 }}>
+      <TextInput
+        placeholder="Filter, checked state is kept"
+        mb="sm"
+        value={search}
+        onChange={(event) => setSearch(event.currentTarget.value)}
+      />
+      <Tree
+        data={filteredData}
+        store={store}
+        expandOnClick={false}
+        expandOnSpace={false}
+        checkOnSpace
+        renderNode={({ node, elementProps }) => {
+          const checked = store.isNodeChecked(node.value);
+          return (
+            <Group gap="xs" {...elementProps}>
+              <Checkbox.Indicator
+                size="xs"
+                checked={checked}
+                indeterminate={store.isNodeIndeterminate(node.value)}
+                onClick={() =>
+                  checked ? store.uncheckNode(node.value) : store.checkNode(node.value)
+                }
+              />
+              <span>{node.label}</span>
+            </Group>
+          );
+        }}
+      />
+      <Text size="sm" mt="md">
+        Checked: {store.getCheckedState().join(', ') || 'none'}
+      </Text>
+    </div>
+  );
+}
+
 const ITEM_HEIGHT = 30;
 
 function generateVirtualizedTreeData(count: number): TreeNodeData[] {
@@ -736,7 +844,7 @@ function generateVirtualizedTreeData(count: number): TreeNodeData[] {
   let id = 0;
 
   function addChildren(parent: TreeNodeData[], depth: number, remaining: { count: number }) {
-    const childCount = depth === 0 ? 20 : Math.floor(Math.random() * 8) + 2;
+    const childCount = depth === 0 ? Infinity : Math.floor(Math.random() * 8) + 2;
 
     for (let i = 0; i < childCount && remaining.count > 0; i++) {
       id++;
@@ -764,6 +872,10 @@ const virtualizedData = generateVirtualizedTreeData(10000);
 
 export function Virtualized() {
   const store = useTree({ initialExpandedState: getTreeExpandedState(virtualizedData, '*') });
+
+  useEffect(() => {
+    store.initialize(virtualizedData);
+  }, []);
   const flatList = useMemo(
     () => flattenTreeData(virtualizedData, store.expandedState),
     [store.expandedState]
@@ -804,7 +916,8 @@ export function Virtualized() {
               store={store}
               expandOnClick
               selectOnClick
-              tabIndex={virtualItem.index === 0 ? 0 : -1}
+              flatData={flatList}
+              onScrollToIndex={(index) => virtualizer.scrollToIndex(index)}
               style={{
                 position: 'absolute',
                 top: 0,

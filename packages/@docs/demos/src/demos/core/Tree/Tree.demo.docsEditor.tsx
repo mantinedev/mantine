@@ -1,11 +1,9 @@
 import { useMemo, useState } from 'react';
 import {
-  DotsThreeIcon,
   FileTextIcon,
   FolderOpenIcon,
   FolderSimpleIcon,
   MagnifyingGlassIcon,
-  PencilSimpleIcon,
   TrashIcon,
 } from '@phosphor-icons/react';
 import cx from 'clsx';
@@ -16,7 +14,6 @@ import {
   getTreeExpandedState,
   Group,
   Highlight,
-  Menu,
   moveTreeNode,
   RenderTreeNodePayload,
   TextInput,
@@ -128,9 +125,8 @@ const cssCode = `.root {
     color: var(--mantine-color-bright);
   }
 
-  &:hover {
-    background-color: light-dark(var(--mantine-color-gray-0), var(--mantine-color-dark-6));
-
+  &:hover,
+  &:focus-within {
     .actions {
       opacity: 1;
     }
@@ -138,6 +134,10 @@ const cssCode = `.root {
     .count {
       opacity: 0;
     }
+  }
+
+  &:hover {
+    background-color: light-dark(var(--mantine-color-gray-0), var(--mantine-color-dark-6));
   }
 }
 
@@ -160,12 +160,10 @@ const cssCode = `.root {
 const code = `
 import { useMemo, useState } from 'react';
 import {
-  DotsThreeIcon,
   FileTextIcon,
   FolderOpenIcon,
   FolderSimpleIcon,
   MagnifyingGlassIcon,
-  PencilSimpleIcon,
   TrashIcon,
 } from '@phosphor-icons/react';
 import cx from 'clsx';
@@ -176,7 +174,6 @@ import {
   getTreeExpandedState,
   Group,
   Highlight,
-  Menu,
   moveTreeNode,
   RenderTreeNodePayload,
   TextInput,
@@ -194,11 +191,27 @@ function countPages(node: TreeNodeData): number {
   return node.children.reduce((sum, child) => sum + countPages(child), 0);
 }
 
-interface LeafProps extends RenderTreeNodePayload {
-  search: string;
+function removeNode(data: TreeNodeData[], value: string): TreeNodeData[] {
+  return data
+    .filter((node) => node.value !== value)
+    .map((node) => (node.children ? { ...node, children: removeNode(node.children, value) } : node));
 }
 
-function Leaf({ node, expanded, hasChildren, elementProps, search }: LeafProps) {
+function focusNeighbourTreeItem(item: HTMLElement) {
+  const tree = item.closest('[role="tree"]');
+  const items = Array.from(tree?.querySelectorAll<HTMLElement>('[role="treeitem"]') ?? []).filter(
+    (element) => element === item || !item.contains(element)
+  );
+  const index = items.indexOf(item);
+  (items[index + 1] ?? items[index - 1])?.focus();
+}
+
+interface LeafProps extends RenderTreeNodePayload {
+  search: string;
+  onDelete: (value: string, element: HTMLElement) => void;
+}
+
+function Leaf({ node, expanded, hasChildren, elementProps, search, onDelete }: LeafProps) {
   const label = typeof node.label === 'string' ? node.label : node.value;
 
   return (
@@ -223,27 +236,21 @@ function Leaf({ node, expanded, hasChildren, elementProps, search }: LeafProps) 
         </Badge>
       )}
 
-      <Menu position="bottom-end" shadow="md" width={140} withinPortal>
-        <Menu.Target>
-          <ActionIcon
-            variant="subtle"
-            color="gray"
-            size="xs"
-            className={classes.actions}
-            onClick={(event) => event.stopPropagation()}
-            draggable={false}
-            aria-label={\`Actions for \${label}\`}
-          >
-            <DotsThreeIcon size={14} weight="bold" />
-          </ActionIcon>
-        </Menu.Target>
-        <Menu.Dropdown>
-          <Menu.Item leftSection={<PencilSimpleIcon size={14} />}>Rename</Menu.Item>
-          <Menu.Item leftSection={<TrashIcon size={14} />} color="red">
-            Delete
-          </Menu.Item>
-        </Menu.Dropdown>
-      </Menu>
+      <ActionIcon
+        variant="subtle"
+        color="red"
+        size="xs"
+        className={classes.actions}
+        onClick={(event) => {
+          event.stopPropagation();
+          onDelete(node.value, event.currentTarget);
+        }}
+        tabIndex={-1}
+        draggable={false}
+        aria-label={\`Delete \${label}\`}
+      >
+        <TrashIcon size={14} />
+      </ActionIcon>
     </Group>
   );
 }
@@ -261,6 +268,23 @@ function Demo() {
     [treeData, search]
   );
 
+  const handleDelete = (value: string, element: HTMLElement) => {
+    const item = element.closest<HTMLElement>('[role="treeitem"]');
+    item && focusNeighbourTreeItem(item);
+    setTreeData((current) => removeNode(current, value));
+  };
+
+  const handleKeyDown = (event: React.KeyboardEvent<HTMLUListElement>) => {
+    const target = event.target as HTMLElement;
+    if (
+      (event.key === 'Delete' || event.key === 'Backspace') &&
+      target.getAttribute('role') === 'treeitem'
+    ) {
+      event.preventDefault();
+      handleDelete(target.dataset.value!, target);
+    }
+  };
+
   const handleSearchChange = (value: string) => {
     setSearch(value);
     if (value.trim()) {
@@ -284,8 +308,9 @@ function Demo() {
         withLines
         selectOnClick
         clearSelectionOnOutsideClick
+        onKeyDown={handleKeyDown}
         onDragDrop={(payload) => setTreeData((current) => moveTreeNode(current, payload))}
-        renderNode={(payload) => <Leaf {...payload} search={search} />}
+        renderNode={(payload) => <Leaf {...payload} search={search} onDelete={handleDelete} />}
       />
     </div>
   );
@@ -299,11 +324,29 @@ function countPages(node: TreeNodeData): number {
   return node.children.reduce((sum, child) => sum + countPages(child), 0);
 }
 
-interface LeafProps extends RenderTreeNodePayload {
-  search: string;
+function removeNode(data: TreeNodeData[], value: string): TreeNodeData[] {
+  return data
+    .filter((node) => node.value !== value)
+    .map((node) =>
+      node.children ? { ...node, children: removeNode(node.children, value) } : node
+    );
 }
 
-function Leaf({ node, expanded, hasChildren, elementProps, search }: LeafProps) {
+function focusNeighbourTreeItem(item: HTMLElement) {
+  const tree = item.closest('[role="tree"]');
+  const items = Array.from(tree?.querySelectorAll<HTMLElement>('[role="treeitem"]') ?? []).filter(
+    (element) => element === item || !item.contains(element)
+  );
+  const index = items.indexOf(item);
+  (items[index + 1] ?? items[index - 1])?.focus();
+}
+
+interface LeafProps extends RenderTreeNodePayload {
+  search: string;
+  onDelete: (value: string, element: HTMLElement) => void;
+}
+
+function Leaf({ node, expanded, hasChildren, elementProps, search, onDelete }: LeafProps) {
   const label = typeof node.label === 'string' ? node.label : node.value;
 
   return (
@@ -328,27 +371,21 @@ function Leaf({ node, expanded, hasChildren, elementProps, search }: LeafProps) 
         </Badge>
       )}
 
-      <Menu position="bottom-end" shadow="md" width={140} withinPortal>
-        <Menu.Target>
-          <ActionIcon
-            variant="subtle"
-            color="gray"
-            size="xs"
-            className={classes.actions}
-            onClick={(event) => event.stopPropagation()}
-            draggable={false}
-            aria-label={`Actions for ${label}`}
-          >
-            <DotsThreeIcon size={14} weight="bold" />
-          </ActionIcon>
-        </Menu.Target>
-        <Menu.Dropdown>
-          <Menu.Item leftSection={<PencilSimpleIcon size={14} />}>Rename</Menu.Item>
-          <Menu.Item leftSection={<TrashIcon size={14} />} color="red">
-            Delete
-          </Menu.Item>
-        </Menu.Dropdown>
-      </Menu>
+      <ActionIcon
+        variant="subtle"
+        color="red"
+        size="xs"
+        className={classes.actions}
+        onClick={(event) => {
+          event.stopPropagation();
+          onDelete(node.value, event.currentTarget);
+        }}
+        tabIndex={-1}
+        draggable={false}
+        aria-label={`Delete ${label}`}
+      >
+        <TrashIcon size={14} />
+      </ActionIcon>
     </Group>
   );
 }
@@ -365,6 +402,23 @@ function Demo() {
     () => (search.trim() ? filterTreeData(treeData, search) : treeData),
     [treeData, search]
   );
+
+  const handleDelete = (value: string, element: HTMLElement) => {
+    const item = element.closest<HTMLElement>('[role="treeitem"]');
+    item && focusNeighbourTreeItem(item);
+    setTreeData((current) => removeNode(current, value));
+  };
+
+  const handleKeyDown = (event: React.KeyboardEvent<HTMLUListElement>) => {
+    const target = event.target as HTMLElement;
+    if (
+      (event.key === 'Delete' || event.key === 'Backspace') &&
+      target.getAttribute('role') === 'treeitem'
+    ) {
+      event.preventDefault();
+      handleDelete(target.dataset.value!, target);
+    }
+  };
 
   const handleSearchChange = (value: string) => {
     setSearch(value);
@@ -389,8 +443,9 @@ function Demo() {
         withLines
         selectOnClick
         clearSelectionOnOutsideClick
+        onKeyDown={handleKeyDown}
         onDragDrop={(payload) => setTreeData((current) => moveTreeNode(current, payload))}
-        renderNode={(payload) => <Leaf {...payload} search={search} />}
+        renderNode={(payload) => <Leaf {...payload} search={search} onDelete={handleDelete} />}
       />
     </div>
   );
