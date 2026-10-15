@@ -12,15 +12,20 @@ export default Layout(MDX_DATA.BulletChart);
 
 ## Data format
 
-`BulletChart` expects `ranges` as an array of objects with `value` and `color` properties:
+Each item in `ranges` sets the upper bound of a band with `value` and its `color`.
+The optional `label` names the band. It is read by screen readers and shown in the default tooltip.
+Visible labels always show the formatted range value.
 
 ```tsx
 const ranges = [
-  { value: 150000, color: 'red.8', label: 'Poor' },
-  { value: 225000, color: 'yellow.7', label: 'Average' },
+  { value: 100000, color: 'red.8', label: 'Poor' },
+  { value: 200000, color: 'yellow.8', label: 'Average' },
   { value: 300000, color: 'teal.8', label: 'Good' },
 ];
 ```
+
+The scale ends at the largest of the ranges, `value` and `target`.
+A value beyond all ranges extends the scale, and `NaN` or `Infinity` values are not displayed.
 
 ## Label
 
@@ -42,13 +47,13 @@ Use `barColor` prop to change the value bar color and `targetColor` to change th
 
 ## Chart size
 
-Use `size` prop to change the height of the track and `barSize` to change the height of the value bar:
+Use `size` prop to change the thickness of the track and `barSize` to change the thickness of the value bar:
 
 <Demo data={BulletChartDemos.barSize} />
 
 ## Value formatter
 
-Use `valueFormatter` prop to format values in labels and tooltip. Set `withTooltip` to display the tooltip on hover:
+Use `valueFormatter` prop to format values in labels and tooltip. Set `withTooltip` to display the tooltip on hover and keyboard focus:
 
 <Demo data={BulletChartDemos.valueFormatter} />
 
@@ -57,3 +62,12 @@ Use `valueFormatter` prop to format values in labels and tooltip. Set `withToolt
 The target marker is rendered only when the `target` prop is set:
 
 <Demo data={BulletChartDemos.noTarget} />
+
+## Accessibility
+
+`BulletChart` is announced as an image. Its accessible name is built from `label`, the formatted value, the range label and the target, for example "Revenue value $230k, in Good range, target $150k".
+Set `aria-label` to replace the generated name, for example to translate it:
+
+```tsx
+<BulletChart aria-label="Ingresos: 230k, objetivo 150k" value={230000} target={150000} ranges={ranges} />
+```

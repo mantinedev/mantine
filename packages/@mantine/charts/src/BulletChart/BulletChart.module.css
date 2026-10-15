@@ -1,4 +1,7 @@
 .root {
+  --bullet-label-row: calc(var(--mantine-font-size-xs) + rem(4px));
+  --bullet-label-column: calc(var(--mantine-font-size-xs) + rem(40px));
+
   display: flex;
   align-items: center;
   gap: var(--mantine-spacing-md);
@@ -21,16 +24,20 @@
 .trackWrapper {
   position: relative;
   flex: 1;
-  padding-top: calc(var(--mantine-font-size-xs) + rem(4px));
-  padding-bottom: calc(var(--mantine-font-size-xs) + rem(4px));
+  padding-top: var(--bullet-label-row);
+  padding-bottom: var(--bullet-label-row);
 
-  &[data-orientation='vertical'] {
-    flex: 1;
+  &[data-with-target] {
+    padding-bottom: calc(var(--bullet-label-row) * 2);
+  }
+
+  .root[data-orientation='vertical'] & {
     height: 100%;
-    padding-top: 0;
-    padding-bottom: 0;
-    padding-left: calc(var(--mantine-font-size-xs) + 40px);
-    padding-right: calc(var(--mantine-font-size-xs) + 40px);
+    padding: 0 var(--bullet-label-column);
+  }
+
+  .root[data-orientation='vertical'] &[data-with-target] {
+    padding-left: calc(var(--bullet-label-column) * 2);
   }
 }
 
@@ -39,8 +46,9 @@
   height: var(--bullet-size);
   border-radius: var(--mantine-radius-sm);
   overflow: hidden;
+  background-color: var(--mantine-color-gray-6);
 
-  [data-orientation='vertical'] > & {
+  .root[data-orientation='vertical'] & {
     width: var(--bullet-size);
     height: 100%;
   }
@@ -49,31 +57,33 @@
 .range {
   position: absolute;
   top: 0;
-  left: 0;
+  inset-inline-start: 0;
   height: 100%;
-  border-radius: var(--mantine-radius-sm);
 
-  [data-orientation='vertical'] > .track > & {
+  .root[data-orientation='vertical'] & {
     top: auto;
-    left: 0;
+    bottom: 0;
     width: 100%;
     height: auto;
-    border-radius: var(--mantine-radius-sm);
   }
 }
 
 .bar {
   position: absolute;
   top: 50%;
-  left: 0;
+  inset-inline-start: 0;
   height: var(--bullet-bar-size);
   transform: translateY(-50%);
-  border-radius: 0 var(--mantine-radius-xs) var(--mantine-radius-xs) 0;
+  border-start-end-radius: var(--mantine-radius-xs);
+  border-end-end-radius: var(--mantine-radius-xs);
+  background-color: var(--mantine-color-white);
   z-index: 1;
 
-  [data-orientation='vertical'] > .track > & {
+  .root[data-orientation='vertical'] & {
     top: auto;
+    bottom: 0;
     left: 50%;
+    right: auto;
     width: var(--bullet-bar-size);
     height: auto;
     transform: translateX(-50%);
@@ -84,72 +94,83 @@
 .target {
   position: absolute;
   top: 50%;
-  transform: translateY(-50%) translateX(-50%);
+  inset-inline-start: var(--bullet-position);
+  transform: translate(calc(var(--bullet-position) * -1), -50%);
   z-index: 2;
   border-radius: var(--mantine-radius-xs);
+  background-color: var(--mantine-color-black);
+  box-shadow: 0 0 0 rem(1px) var(--mantine-color-white);
 
-  @mixin where-light {
-    background-color: var(--mantine-color-dark-filled);
+  @mixin rtl {
+    transform: translate(var(--bullet-position), -50%);
   }
 
-  @mixin where-dark {
-    background-color: var(--mantine-color-white);
-  }
-
-  [data-orientation='vertical'] > .track > & {
+  .root[data-orientation='vertical'] & {
     top: auto;
+    bottom: var(--bullet-position);
     left: 50%;
-    transform: translateX(-50%) translateY(50%);
+    right: auto;
+    transform: translate(-50%, var(--bullet-position));
   }
 }
 
-.rangeLabel {
+.rangeLabel,
+.barLabel,
+.targetLabel {
   position: absolute;
-  top: 0;
-  transform: translateX(-50%);
+  inset-inline-start: var(--bullet-position);
+  transform: translateX(calc(var(--bullet-position) * -1));
   font-size: var(--mantine-font-size-xs);
-  color: var(--mantine-color-dimmed);
   white-space: nowrap;
   line-height: 1;
 
-  [data-orientation='vertical'] > & {
+  @mixin rtl {
+    transform: translateX(var(--bullet-position));
+  }
+
+  .root[data-orientation='vertical'] & {
+    inset-inline-start: auto;
+    bottom: var(--bullet-position);
+    transform: translateY(var(--bullet-position));
+  }
+}
+
+.rangeLabel,
+.targetLabel {
+  color: var(--mantine-color-dimmed);
+}
+
+.rangeLabel {
+  top: 0;
+
+  .root[data-orientation='vertical'] & {
     top: auto;
-    left: auto;
     right: 0;
-    transform: translateY(50%);
   }
 }
 
 .barLabel {
-  position: absolute;
   bottom: 0;
-  transform: translateX(-50%);
-  font-size: var(--mantine-font-size-xs);
   font-weight: var(--mantine-font-weight-bold);
   color: var(--mantine-color-text);
-  white-space: nowrap;
-  line-height: 1;
 
-  [data-orientation='vertical'] > & {
-    bottom: auto;
+  .root[data-orientation='vertical'] & {
     left: 0;
-    transform: translateY(50%);
+  }
+
+  [data-with-target] > & {
+    bottom: var(--bullet-label-row);
+  }
+
+  .root[data-orientation='vertical'] [data-with-target] > & {
+    left: var(--bullet-label-column);
   }
 }
 
 .targetLabel {
-  position: absolute;
-  top: 0;
-  transform: translateX(-50%);
-  font-size: var(--mantine-font-size-xs);
-  color: var(--mantine-color-dimmed);
-  white-space: nowrap;
-  line-height: 1;
+  bottom: 0;
 
-  [data-orientation='vertical'] > & {
-    top: auto;
-    left: auto;
-    right: 0;
-    transform: translateY(50%);
+  .root[data-orientation='vertical'] & {
+    left: 0;
   }
 }

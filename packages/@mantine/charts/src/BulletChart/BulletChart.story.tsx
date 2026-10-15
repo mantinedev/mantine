@@ -173,3 +173,93 @@ export function ChartSizeVsBarSize() {
     </div>
   );
 }
+
+function EdgeCase(
+  props: Omit<React.ComponentProps<typeof BulletChart>, 'ranges'> & {
+    ranges?: React.ComponentProps<typeof BulletChart>['ranges'];
+  }
+) {
+  return (
+    <div style={{ padding: 40, display: 'flex', gap: 40, alignItems: 'flex-start' }}>
+      <div style={{ display: 'flex', flexDirection: 'column', gap: 24 }}>
+        <div style={{ width: 320 }}>
+          <BulletChart ranges={ranges} {...props} />
+        </div>
+        <div style={{ width: 180 }}>
+          <BulletChart ranges={ranges} {...props} />
+        </div>
+      </div>
+      <div style={{ height: 300 }}>
+        <BulletChart ranges={ranges} orientation="vertical" {...props} />
+      </div>
+    </div>
+  );
+}
+
+export function ScaleEdges() {
+  return (
+    <>
+      <EdgeCase value={0} target={300000} label="Edges" />
+      <EdgeCase value={300000} target={0} label="Edges" />
+      <EdgeCase value={300000} target={300000} label="Max" />
+    </>
+  );
+}
+
+export function BeyondMax() {
+  return (
+    <>
+      <EdgeCase value={400000} target={500000} label="Beyond" />
+      <EdgeCase value={150000} target={450000} label="Target" />
+    </>
+  );
+}
+
+export function NonFiniteValues() {
+  return (
+    <>
+      <EdgeCase value={NaN} target={NaN} label="NaN" />
+      <EdgeCase value={150000} target={Infinity} label="Infinity" />
+    </>
+  );
+}
+
+export function EmptyRanges() {
+  return <EdgeCase value={100} target={50} ranges={[]} label="Empty" />;
+}
+
+export function NegativeValues() {
+  return <EdgeCase value={-50000} target={-10} label="Negative" />;
+}
+
+export function Formatted() {
+  return (
+    <EdgeCase
+      value={230000}
+      target={150000}
+      label="Revenue"
+      valueFormatter={(v) => `$${(v / 1000).toFixed(0)}k`}
+    />
+  );
+}
+
+export function TargetContrast() {
+  const darkRanges = [
+    { value: 100000, color: 'red.9' },
+    { value: 200000, color: 'yellow.3' },
+    { value: 300000, color: 'teal.9' },
+  ];
+
+  return (
+    <>
+      <EdgeCase value={0} target={50000} label="Red" />
+      <EdgeCase value={0} target={150000} label="Yellow" />
+      <EdgeCase value={0} target={250000} label="Teal" />
+      <EdgeCase value={100000} target={400000} label="Track" />
+      <EdgeCase value={250000} target={150000} label="Bar" />
+      <EdgeCase value={0} target={50000} ranges={darkRanges} label="Red 9" />
+      <EdgeCase value={0} target={150000} ranges={darkRanges} label="Yellow 3" />
+      <EdgeCase value={0} target={250000} ranges={darkRanges} label="Teal 9" />
+    </>
+  );
+}

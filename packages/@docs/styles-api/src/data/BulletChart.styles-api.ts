@@ -10,16 +10,23 @@ export const BulletChartStylesApi: StylesApiData<BulletChartFactory> = {
     range: 'Background range band',
     bar: 'Actual value bar',
     target: 'Target marker line',
-    rangeLabel: 'Value label at the end of each range',
+    rangeLabel: 'Formatted range value at the end of each range (range.label is not displayed)',
     barLabel: 'Value label for the actual value bar',
     targetLabel: 'Value label for the target marker',
   },
 
   vars: {
     root: {
-      '--bullet-size': 'Controls height of the chart track area',
-      '--bullet-bar-size': 'Controls height of the actual value bar',
+      '--bullet-size': 'Controls thickness of the chart track area',
+      '--bullet-bar-size': 'Controls thickness of the actual value bar',
     },
   },
-  modifiers: [],
+  modifiers: [
+    { modifier: 'data-orientation', selector: 'root', condition: '`orientation` prop value' },
+    {
+      modifier: 'data-with-target',
+      selector: 'trackWrapper',
+      condition: '`target` is a finite number',
+    },
+  ],
 };

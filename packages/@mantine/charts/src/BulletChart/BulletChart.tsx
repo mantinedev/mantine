@@ -14,6 +14,7 @@ import {
   useProps,
   useStyles,
 } from '@mantine/core';
+import { useId } from '@mantine/hooks';
 import classes from './BulletChart.module.css';
 
 export interface BulletChartRange {
@@ -23,7 +24,7 @@ export interface BulletChartRange {
   /** Background color of the range band */
   color: MantineColor;
 
-  /** Optional label for the range */
+  /** Range name, for example `'Good'`. Used in the accessible name and in the default tooltip for the range the value falls in. Visible range labels always display the formatted range value. */
   label?: string;
 }
 
@@ -54,7 +55,7 @@ export interface BulletChartProps
   /** Qualitative ranges displayed as background bands @category appearance */
   ranges: BulletChartRange[];
 
-  /** Orientation, @default 'horizontal' @category appearance */
+  /** Orientation @default 'horizontal' @category appearance */
   orientation?: 'horizontal' | 'vertical';
 
   /** Label displayed next to the chart @category appearance */
@@ -63,28 +64,28 @@ export interface BulletChartProps
   /** Value formatter for tooltip/display and labels @category appearance */
   valueFormatter?: (value: number) => string;
 
-  /** Color of the actual value bar, @default 'white' @category appearance */
+  /** Color of the actual value bar @default 'white' @category appearance */
   barColor?: MantineColor;
 
-  /** Color of the target marker, @default 'dark' for light, 'white' for dark @category appearance */
+  /** Color of the target marker @default 'black' @category appearance */
   targetColor?: MantineColor;
 
-  /** Height of the chart track area (ranges), @default 32 @category appearance */
+  /** Thickness of the chart track area (ranges) @default 32 @category appearance */
   size?: number | string;
 
-  /** Height of the actual value bar, @default 16 @category appearance */
+  /** Thickness of the actual value bar @default 16 @category appearance */
   barSize?: number | string;
 
-  /** Target marker size relative to chart size, @default 0.7 @category appearance */
+  /** Target marker length relative to the track thickness @default 0.7 @category appearance */
   targetRatio?: number;
 
-  /** Target marker thickness, @default 2 @category appearance */
+  /** Target marker thickness @default 2 @category appearance */
   targetSize?: number | string;
 
-  /** Whether to show tooltip on hover, @default false @category appearance */
+  /** If set, the chart displays a tooltip on hover and becomes focusable to display it on focus @default false @category behavior */
   withTooltip?: boolean;
 
-  /** Custom tooltip content @category appearance */
+  /** Custom tooltip content, called only when `withTooltip` is set. `value` is passed as is, a non-finite `target` is passed as `undefined` @category appearance */
   getTooltipLabel?: (data: { value: number; target?: number }) => React.ReactNode;
 }
 
@@ -136,6 +137,7 @@ export const BulletChart = factory<BulletChartFactory>((_props) => {
     withTooltip,
     getTooltipLabel,
     variant,
+    mod,
     ...others
   } = props;
 
@@ -156,143 +158,156 @@ export const BulletChart = factory<BulletChartFactory>((_props) => {
   });
 
   const isVertical = orientation === 'vertical';
-  const maxRange = Math.max(...ranges.map((r) => r.value), 0);
+  const labelId = useId();
+  const summaryId = useId();
+  const finiteValue = Number.isFinite(value) ? value : undefined;
+  const finiteTarget = typeof target === 'number' && Number.isFinite(target) ? target : undefined;
+  const finiteRanges = ranges.filter((range) => Number.isFinite(range.value));
+  const scaleMax = Math.max(
+    0,
+    ...finiteRanges.map((range) => range.value),
+    finiteValue ?? 0,
+    finiteTarget ?? 0
+  );
   const formatValue = (v: number) => (valueFormatter ? valueFormatter(v) : v.toString());
 
-  // Clamp positions/sizes to the track so out-of-range values and targets never overflow it
   const toPercentage = (v: number) =>
-    maxRange > 0 ? Math.max(0, Math.min((v / maxRange) * 100, 100)) : 0;
+    scaleMax > 0 ? Math.max(0, Math.min((v / scaleMax) * 100, 100)) : 0;
 
-  const resolvedBarColor = barColor ? getThemeColor(barColor, theme) : 'var(--mantine-color-white)';
+  const getLengthStyle = (percentage: number) =>
+    isVertical ? { height: `${percentage}%` } : { width: `${percentage}%` };
 
-  const resolvedTargetColor = targetColor ? getThemeColor(targetColor, theme) : undefined;
+  const getPositionStyle = (percentage: number) => ({ '--bullet-position': `${percentage}%` });
 
-  const sortedRanges = [...ranges].sort((a, b) => b.value - a.value);
+  const getColorStyle = (color: MantineColor | undefined) =>
+    color ? { backgroundColor: getThemeColor(color, theme) } : null;
 
-  const rangeBands = sortedRanges.map((range, index) => {
-    const percentage = toPercentage(range.value);
-    const sizeStyle = isVertical
-      ? { height: `${percentage}%`, bottom: 0 }
-      : { width: `${percentage}%` };
+  const rangesByValueDesc = [...finiteRanges].sort((a, b) => b.value - a.value);
+  const currentRange =
+    finiteValue !== undefined
+      ? [...rangesByValueDesc].reverse().find((range) => finiteValue <= range.value)
+      : undefined;
+  const currentRangeLabel = currentRange?.label;
 
-    return (
-      <div
-        key={index}
-        {...getStyles('range', {
-          style: {
-            ...sizeStyle,
-            backgroundColor: getThemeColor(range.color, theme),
-          },
-        })}
-      />
-    );
-  });
-
-  const rangeLabels = sortedRanges.map((range, index) => {
-    const percentage = toPercentage(range.value);
-    const positionStyle = isVertical ? { bottom: `${percentage}%` } : { left: `${percentage}%` };
-
-    return (
-      <div key={index} {...getStyles('rangeLabel', { style: positionStyle })}>
-        {formatValue(range.value)}
-      </div>
-    );
-  });
-
-  const barPercentage = toPercentage(value);
-  const barSizeStyle = isVertical
-    ? { height: `${barPercentage}%`, bottom: 0 }
-    : { width: `${barPercentage}%` };
-
-  const barElement = (
+  const rangeBands = rangesByValueDesc.map((range, index) => (
     <div
-      {...getStyles('bar', {
-        style: {
-          ...barSizeStyle,
-          backgroundColor: resolvedBarColor,
-        },
+      key={index}
+      {...getStyles('range', {
+        style: { ...getLengthStyle(toPercentage(range.value)), ...getColorStyle(range.color) },
       })}
     />
-  );
+  ));
 
-  const barLabelPosition = isVertical
-    ? { bottom: `${barPercentage}%` }
-    : { left: `${barPercentage}%` };
-
-  const barLabelElement = (
-    <div {...getStyles('barLabel', { style: barLabelPosition })}>{formatValue(value)}</div>
-  );
-
-  const targetPercentage = target != null ? toPercentage(target) : 0;
-
-  const targetElement =
-    target != null ? (
-      <div
-        {...getStyles('target', {
-          style: isVertical
-            ? {
-                bottom: `${targetPercentage}%`,
-                width: `${targetRatio! * 100}%`,
-                height: rem(targetSize),
-                backgroundColor: resolvedTargetColor,
-              }
-            : {
-                left: `${targetPercentage}%`,
-                height: `${targetRatio! * 100}%`,
-                width: rem(targetSize),
-                backgroundColor: resolvedTargetColor,
-              },
-        })}
-      />
-    ) : null;
-
-  const targetLabelElement =
-    target != null ? (
-      <div
-        {...getStyles('targetLabel', {
-          style: isVertical ? { bottom: `${targetPercentage}%` } : { left: `${targetPercentage}%` },
-        })}
-      >
-        {formatValue(target)}
-      </div>
-    ) : null;
-
-  const getDefaultTooltipLabel = () => {
-    const parts = [`Value: ${formatValue(value)}`];
-    if (target != null) {
-      parts.push(`Target: ${formatValue(target)}`);
-    }
-    return parts.join(' / ');
-  };
-
-  const tooltipLabel = getTooltipLabel
-    ? getTooltipLabel({ value, target })
-    : getDefaultTooltipLabel();
-
-  const trackWrapper = (
-    <div {...getStyles('trackWrapper')} data-orientation={orientation}>
-      {rangeLabels}
-      {targetLabelElement}
-      <div {...getStyles('track')} data-orientation={orientation}>
-        {rangeBands}
-        {barElement}
-        {targetElement}
-      </div>
-      {barLabelElement}
+  const rangeLabels = rangesByValueDesc.map((range, index) => (
+    <div
+      key={index}
+      {...getStyles('rangeLabel', { style: getPositionStyle(toPercentage(range.value)) })}
+    >
+      {formatValue(range.value)}
     </div>
+  ));
+
+  const barPercentage = finiteValue !== undefined ? toPercentage(finiteValue) : 0;
+  const targetPercentage = finiteTarget !== undefined ? toPercentage(finiteTarget) : 0;
+  const targetLength = `${targetRatio! * 100}%`;
+  const targetThickness = rem(targetSize);
+
+  const summary =
+    [
+      finiteValue !== undefined && `value ${formatValue(finiteValue)}`,
+      currentRangeLabel && `in ${currentRangeLabel} range`,
+      finiteTarget !== undefined && `target ${formatValue(finiteTarget)}`,
+    ]
+      .filter(Boolean)
+      .join(', ') || (label ? '' : 'No data');
+
+  const userLabelled = others['aria-label'] != null || others['aria-labelledby'] != null;
+
+  const getDefaultTooltipLabel = () =>
+    [
+      finiteValue !== undefined && `Value: ${formatValue(finiteValue)}`,
+      currentRangeLabel && `Range: ${currentRangeLabel}`,
+      finiteTarget !== undefined && `Target: ${formatValue(finiteTarget)}`,
+    ]
+      .filter(Boolean)
+      .join(' / ');
+
+  const chart = (
+    <Box
+      {...getStyles('root', { focusable: withTooltip })}
+      variant={variant}
+      mod={[{ orientation }, mod]}
+      role="img"
+      aria-labelledby={userLabelled ? undefined : label ? `${labelId} ${summaryId}` : summaryId}
+      tabIndex={withTooltip ? 0 : undefined}
+      {...others}
+    >
+      {label && (
+        <div {...getStyles('label')} id={labelId} aria-hidden>
+          {label}
+        </div>
+      )}
+      <span id={summaryId} hidden>
+        {summary}
+      </span>
+      <div
+        {...getStyles('trackWrapper')}
+        data-with-target={finiteTarget !== undefined || undefined}
+        aria-hidden
+      >
+        {rangeLabels}
+        <div {...getStyles('track')}>
+          {rangeBands}
+          {finiteValue !== undefined && (
+            <div
+              {...getStyles('bar', {
+                style: { ...getLengthStyle(barPercentage), ...getColorStyle(barColor) },
+              })}
+            />
+          )}
+          {finiteTarget !== undefined && (
+            <div
+              {...getStyles('target', {
+                style: {
+                  ...getPositionStyle(targetPercentage),
+                  width: isVertical ? targetLength : targetThickness,
+                  height: isVertical ? targetThickness : targetLength,
+                  ...getColorStyle(targetColor),
+                },
+              })}
+            />
+          )}
+        </div>
+        {finiteValue !== undefined && (
+          <div {...getStyles('barLabel', { style: getPositionStyle(barPercentage) })}>
+            {formatValue(finiteValue)}
+          </div>
+        )}
+        {finiteTarget !== undefined && (
+          <div {...getStyles('targetLabel', { style: getPositionStyle(targetPercentage) })}>
+            {formatValue(finiteTarget)}
+          </div>
+        )}
+      </div>
+    </Box>
   );
+
+  if (!withTooltip) {
+    return chart;
+  }
 
   return (
-    <Box {...getStyles('root')} variant={variant} mod={{ orientation }} {...others}>
-      {label && <div {...getStyles('label')}>{label}</div>}
-      {withTooltip ? (
-        <Tooltip label={tooltipLabel} position={isVertical ? 'right' : 'top'}>
-          {trackWrapper}
-        </Tooltip>
-      ) : (
-        trackWrapper
-      )}
-    </Box>
+    <Tooltip
+      label={
+        getTooltipLabel
+          ? getTooltipLabel({ value, target: finiteTarget })
+          : getDefaultTooltipLabel()
+      }
+      position={isVertical ? 'right' : 'top'}
+      events={{ hover: true, focus: true, touch: true }}
+    >
+      {chart}
+    </Tooltip>
   );
 });
 

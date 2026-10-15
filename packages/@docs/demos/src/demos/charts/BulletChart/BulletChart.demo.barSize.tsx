@@ -16,6 +16,7 @@ function Demo() {
         target={150000}
         ranges={ranges}
         size={20}
+        barSize={10}
         label="Small"
         valueFormatter={(value) => \`$\${(value / 1000).toFixed(0)}k\`}
       />
@@ -24,6 +25,7 @@ function Demo() {
         target={150000}
         ranges={ranges}
         size={32}
+        barSize={16}
         label="Default"
         valueFormatter={(value) => \`$\${(value / 1000).toFixed(0)}k\`}
       />
@@ -32,6 +34,7 @@ function Demo() {
         target={150000}
         ranges={ranges}
         size={48}
+        barSize={24}
         label="Large"
         valueFormatter={(value) => \`$\${(value / 1000).toFixed(0)}k\`}
       />
@@ -48,6 +51,7 @@ function Demo() {
         target={150000}
         ranges={ranges}
         size={20}
+        barSize={10}
         label="Small"
         valueFormatter={(value) => `$${(value / 1000).toFixed(0)}k`}
       />
@@ -56,6 +60,7 @@ function Demo() {
         target={150000}
         ranges={ranges}
         size={32}
+        barSize={16}
         label="Default"
         valueFormatter={(value) => `$${(value / 1000).toFixed(0)}k`}
       />
@@ -64,6 +69,7 @@ function Demo() {
         target={150000}
         ranges={ranges}
         size={48}
+        barSize={24}
         label="Large"
         valueFormatter={(value) => `$${(value / 1000).toFixed(0)}k`}
       />
