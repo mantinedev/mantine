@@ -1075,7 +1075,13 @@ describe('@mantine/core/Menu', () => {
   });
 
   describe('Menu.Sub keyboard navigation', () => {
-    function NestedSubMenu({ withSearch }: { withSearch?: boolean }) {
+    function NestedSubMenu({
+      withSearch,
+      subItemProps,
+    }: {
+      withSearch?: boolean;
+      subItemProps?: React.ComponentProps<typeof Menu.Sub.Item>;
+    }) {
       return (
         <Menu transitionProps={{ duration: 0 }} withinPortal={false} defaultOpened>
           <Menu.Target>
@@ -1086,7 +1092,7 @@ describe('@mantine/core/Menu', () => {
             <Menu.Item>Banana</Menu.Item>
             <Menu.Sub transitionProps={{ duration: 0 }}>
               <Menu.Sub.Target>
-                <Menu.Sub.Item>More</Menu.Sub.Item>
+                <Menu.Sub.Item {...subItemProps}>More</Menu.Sub.Item>
               </Menu.Sub.Target>
               <Menu.Sub.Dropdown>
                 <Menu.Item>Cherry</Menu.Item>
@@ -1106,10 +1112,14 @@ describe('@mantine/core/Menu', () => {
       );
     }
 
-    const renderMenu = (dir: 'ltr' | 'rtl', withSearch = false) =>
+    const renderMenu = (
+      dir: 'ltr' | 'rtl',
+      withSearch = false,
+      subItemProps?: React.ComponentProps<typeof Menu.Sub.Item>
+    ) =>
       render(
         <DirectionProvider initialDirection={dir} detectDirection={false}>
-          <NestedSubMenu withSearch={withSearch} />
+          <NestedSubMenu withSearch={withSearch} subItemProps={subItemProps} />
         </DirectionProvider>
       );
 
@@ -1221,6 +1231,80 @@ describe('@mantine/core/Menu', () => {
           expect(getButton('Cherry')).toHaveFocus();
           expect(getButton('Banana')).toBeInTheDocument();
         });
+      });
+
+      (['{Enter}', ' '] as const).forEach((key) => {
+        it(`${dir}: ${JSON.stringify(key)} on a sub item calls onClick once and opens the submenu`, async () => {
+          const onClick = jest.fn();
+          renderMenu(dir, false, { onClick });
+          await flushFocus();
+          getButton('More').focus();
+          await userEvent.keyboard(key);
+          await flushFocus();
+          expect(onClick).toHaveBeenCalledTimes(1);
+          expect(getButton('Cherry')).toHaveFocus();
+        });
+
+        it(`${dir}: ${JSON.stringify(key)} on a sub item with closeMenuOnClick calls onClick and closes the menu`, async () => {
+          const onClick = jest.fn();
+          renderMenu(dir, false, { onClick, closeMenuOnClick: true });
+          await flushFocus();
+          getButton('More').focus();
+          await userEvent.keyboard(key);
+          await flushFocus();
+          expect(onClick).toHaveBeenCalledTimes(1);
+          expect(screen.queryByText('Banana')).not.toBeInTheDocument();
+          expect(screen.queryByText('Cherry')).not.toBeInTheDocument();
+        });
+      });
+
+      it(`${dir}: Enter on a sub item with an already opened submenu keeps it opened`, async () => {
+        const onChange = jest.fn();
+        render(
+          <DirectionProvider initialDirection={dir} detectDirection={false}>
+            <Menu transitionProps={{ duration: 0 }} withinPortal={false} defaultOpened>
+              <Menu.Target>
+                <button type="button">test-target</button>
+              </Menu.Target>
+              <Menu.Dropdown>
+                <Menu.Sub transitionProps={{ duration: 0 }} onChange={onChange}>
+                  <Menu.Sub.Target>
+                    <Menu.Sub.Item>More</Menu.Sub.Item>
+                  </Menu.Sub.Target>
+                  <Menu.Sub.Dropdown>
+                    <Menu.Item>Cherry</Menu.Item>
+                  </Menu.Sub.Dropdown>
+                </Menu.Sub>
+              </Menu.Dropdown>
+            </Menu>
+          </DirectionProvider>
+        );
+        fireEvent.keyDown(getButton('More'), { key: forward });
+        await flushFocus();
+        getButton('More').focus();
+        await userEvent.keyboard('{Enter}');
+        await flushFocus();
+        expect(getButton('Cherry')).toHaveFocus();
+        expect(onChange).toHaveBeenLastCalledWith(true);
+      });
+
+      it(`${dir}: mouse click on a sub item with closeMenuOnClick calls onClick and closes the menu`, async () => {
+        const onClick = jest.fn();
+        renderMenu(dir, false, { onClick, closeMenuOnClick: true });
+        await userEvent.click(getButton('More'));
+        await flushFocus();
+        expect(onClick).toHaveBeenCalledTimes(1);
+        expect(screen.queryByText('Banana')).not.toBeInTheDocument();
+      });
+
+      it(`${dir}: Enter in Menu.Search on a sub item with closeMenuOnClick calls onClick and closes the menu`, async () => {
+        const onClick = jest.fn();
+        renderMenu(dir, true, { onClick, closeMenuOnClick: true });
+        screen.getByLabelText('search').focus();
+        await userEvent.keyboard('{ArrowDown}{ArrowDown}{Enter}');
+        await flushFocus();
+        expect(onClick).toHaveBeenCalledTimes(1);
+        expect(screen.queryByText('Banana')).not.toBeInTheDocument();
       });
 
       it(`${dir}: Enter in Menu.Search opens the highlighted submenu`, async () => {

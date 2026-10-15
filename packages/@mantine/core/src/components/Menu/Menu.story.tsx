@@ -248,6 +248,46 @@ export function WithSubMenu() {
   );
 }
 
+export function SubItemOnClick() {
+  const [log, setLog] = useState<string[]>([]);
+  const append = (entry: string) => setLog((current) => [...current, entry]);
+
+  return (
+    <div style={{ padding: 40 }}>
+      <Menu width={220} position="bottom-start">
+        <Menu.Target>
+          <Button>Toggle menu</Button>
+        </Menu.Target>
+        <Menu.Dropdown>
+          <Menu.Item>Item 1</Menu.Item>
+          <Menu.Sub>
+            <Menu.Sub.Target>
+              <Menu.Sub.Item onClick={() => append('Opens submenu')}>Opens submenu</Menu.Sub.Item>
+            </Menu.Sub.Target>
+            <Menu.Sub.Dropdown>
+              <Menu.Item>Sub 1</Menu.Item>
+              <Menu.Item>Sub 2</Menu.Item>
+            </Menu.Sub.Dropdown>
+          </Menu.Sub>
+          <Menu.Sub>
+            <Menu.Sub.Target>
+              <Menu.Sub.Item closeMenuOnClick onClick={() => append('Closes menu')}>
+                Closes menu
+              </Menu.Sub.Item>
+            </Menu.Sub.Target>
+            <Menu.Sub.Dropdown>
+              <Menu.Item>Sub 3</Menu.Item>
+            </Menu.Sub.Dropdown>
+          </Menu.Sub>
+        </Menu.Dropdown>
+      </Menu>
+      <Text mt="md" data-testid="sub-item-click-log">
+        {log.length === 0 ? 'No clicks' : log.join(', ')}
+      </Text>
+    </div>
+  );
+}
+
 function useDocumentRtl() {
   useEffect(() => {
     const previous = document.documentElement.getAttribute('dir');

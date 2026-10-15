@@ -300,8 +300,14 @@ When RTL direction is set, `ArrowLeft` and `ArrowRight` are swapped.
       condition: 'Focus within dropdown',
     },
     {
-      key: 'ArrowRight/Space/Enter',
+      key: 'ArrowRight',
       description: 'Opens the submenu and moves focus to its first item',
+      condition: 'Focus on Menu.Sub.Item',
+    },
+    {
+      key: 'Space/Enter',
+      description:
+        'Clicks the item, then opens the submenu and moves focus to its first item unless the item closes the menu on click',
       condition: 'Focus on Menu.Sub.Item',
     },
     {

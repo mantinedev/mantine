@@ -81,7 +81,16 @@ export const MenuSubItem = polymorphicFactory<MenuSubItemFactory>((props) => {
     const { forward: forwardKey, back: backKey } = getMenuArrowKeys(dir);
     const isActivationKey = event.key === 'Enter' || event.key === ' ';
 
-    if ((event.key === forwardKey || (isActivationKey && !dataDisabled)) && subCtx) {
+    if (isActivationKey && !dataDisabled && subCtx) {
+      event.preventDefault();
+      itemRef.current?.click();
+      if (!closeMenuOnClick) {
+        subCtx.open();
+        subCtx.focusFirstItem();
+      }
+    }
+
+    if (event.key === forwardKey && subCtx) {
       event.preventDefault();
       subCtx.open();
       subCtx.focusFirstItem();

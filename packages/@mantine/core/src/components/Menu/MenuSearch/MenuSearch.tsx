@@ -1,16 +1,8 @@
 import { useEffect, useRef } from 'react';
 import { useCallbackRef, useId, useMergedRef } from '@mantine/hooks';
-import {
-  createEventHandler,
-  ElementProps,
-  factory,
-  Factory,
-  useDirection,
-  useProps,
-} from '../../../core';
+import { createEventHandler, ElementProps, factory, Factory, useProps } from '../../../core';
 import { Input, InputProps } from '../../Input/Input';
 import { usePopoverContext } from '../../Popover/Popover.context';
-import { getMenuArrowKeys } from '../get-menu-arrow-keys';
 import { useMenuContext } from '../Menu.context';
 import classes from '../Menu.module.css';
 
@@ -91,7 +83,6 @@ export const MenuSearch = factory<MenuSearchFactory>((props) => {
   const mergedRef = useMergedRef(ref, inputRef);
   const emitChange = useCallbackRef(onChange);
   const popoverCtx = usePopoverContext();
-  const { dir } = useDirection();
   const itemIdPrefix = useId();
   const itemIdCounter = useRef(0);
   const getItemId = () => {
@@ -184,7 +175,7 @@ export const MenuSearch = factory<MenuSearchFactory>((props) => {
             target.focus();
             target.dispatchEvent(
               new KeyboardEvent('keydown', {
-                key: getMenuArrowKeys(dir).forward,
+                key: 'Enter',
                 bubbles: true,
               })
             );
