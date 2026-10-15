@@ -11,7 +11,7 @@ function Demo() {
     <WaffleChart
       data={data}
       withTooltip
-      getTooltipLabel={(cell) => \`\${cell.name}: \${cell.value}%\`}
+      getTooltipLabel={(cell) => \`\${cell.name}: \${cell.count} cells\`}
     />
   );
 }
@@ -22,7 +22,7 @@ function Demo() {
     <WaffleChart
       data={data}
       withTooltip
-      getTooltipLabel={(cell) => `${cell.name}: ${cell.value}%`}
+      getTooltipLabel={(cell) => `${cell.name}: ${cell.count} cells`}
     />
   );
 }

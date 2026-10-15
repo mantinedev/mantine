@@ -7,7 +7,7 @@ import { WaffleChart } from '@mantine/charts';
 import { data } from './data';
 
 function Demo() {
-  return <WaffleChart data={data} {{props}} />;
+  return <WaffleChart{{props}} data={data} />;
 }
 `;
 
@@ -31,6 +31,14 @@ export const gap: MantineDemo = {
       libraryValue: 2,
       min: 0,
       max: 5,
+    },
+    {
+      type: 'number',
+      prop: 'cellRadius',
+      initialValue: 0,
+      libraryValue: 0,
+      min: 0,
+      max: 10,
     },
     {
       type: 'number',

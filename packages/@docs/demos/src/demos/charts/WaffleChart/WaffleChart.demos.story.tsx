@@ -32,3 +32,8 @@ export const Demo_emptyColor = {
   name: '⭐ Demo: emptyColor',
   render: renderDemo(demos.emptyColor),
 };
+
+export const Demo_valueFormatter = {
+  name: '⭐ Demo: valueFormatter',
+  render: renderDemo(demos.valueFormatter),
+};

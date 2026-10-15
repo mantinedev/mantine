@@ -73,10 +73,13 @@ export interface WaffleChartProps
   /** Custom tooltip label formatter @category appearance */
   getTooltipLabel?: (cell: WaffleChartCell & { count: number }) => React.ReactNode;
 
+  /** Function to format values and the total in the default tooltip and the accessible label @category appearance */
+  valueFormatter?: (value: number) => string;
+
   /** Whether to show legend, @default true @category appearance */
   withLegend?: boolean;
 
-  /** Legend position, @default 'bottom' @category appearance */
+  /** Legend position, `left` and `right` are physical sides and do not flip in RTL, @default 'bottom' @category appearance */
   legendPosition?: 'top' | 'bottom' | 'left' | 'right';
 
   /** Fill direction, @default 'left-to-right' @category appearance */
@@ -113,59 +116,94 @@ const varsResolver = createVarsResolver<WaffleChartFactory>(
   })
 );
 
-interface AllocatedCell {
-  segmentIndex: number;
-}
-
-/**
- * A part-to-whole chart has no meaning for negative values, and letting them through would
- * allocate more cells than the grid can hold. Non-finite values are normalized to zero as
- * well – `Math.max(0, NaN)` is `NaN`, which would poison the sum and leave every segment
- * without cells instead of dropping just the offending one.
- */
 function normalizeSegmentValue(value: number) {
   return Number.isFinite(value) ? Math.max(0, value) : 0;
 }
 
-function allocateCells(
-  data: WaffleChartCell[],
-  gridCells: number,
-  totalValue?: number
-): AllocatedCell[] {
-  const values = data.map((d) => normalizeSegmentValue(d.value));
+function defaultValueFormatter(value: number) {
+  return String(Number(value.toFixed(10)));
+}
+
+function allocateCells(data: WaffleChartCell[], gridCells: number, total: number | undefined) {
+  const values = data.map((segment) => normalizeSegmentValue(segment.value));
   const sum = values.reduce((acc, value) => acc + value, 0);
+  const effectiveTotal = total != null && Number.isFinite(total) ? Math.max(total, sum) : sum;
+  const counts = values.map(() => 0);
 
   if (sum === 0) {
-    return Array.from({ length: gridCells }, () => ({ segmentIndex: -1 }));
+    return { cells: Array<number>(gridCells).fill(-1), counts, sum, effectiveTotal };
   }
 
-  const denominator = totalValue != null ? Math.max(totalValue, sum) : sum;
-  const filledTarget = Math.round((sum / denominator) * gridCells);
+  const filledTarget = Math.round((sum / effectiveTotal) * gridCells);
   const raw = values.map((value) => (value / sum) * filledTarget);
-  const floored = raw.map(Math.floor);
-  const remainder = filledTarget - floored.reduce((a, b) => a + b, 0);
+  raw.forEach((value, index) => {
+    counts[index] = Math.floor(value);
+  });
+  const remainder = filledTarget - counts.reduce((a, b) => a + b, 0);
 
-  const fractions = raw.map((v, i) => ({ i, frac: v - floored[i] }));
-  fractions.sort((a, b) => b.frac - a.frac);
+  const fractions = raw.map((value, index) => ({ index, fraction: value - counts[index] }));
+  fractions.sort((a, b) => b.fraction - a.fraction);
   for (let j = 0; j < Math.min(remainder, fractions.length); j++) {
-    floored[fractions[j].i]++;
+    counts[fractions[j].index]++;
   }
 
-  const cells: AllocatedCell[] = [];
-  data.forEach((_, i) => {
-    for (let j = 0; j < floored[i] && cells.length < gridCells; j++) {
-      cells.push({ segmentIndex: i });
+  const cells: number[] = [];
+  counts.forEach((count, index) => {
+    for (let j = 0; j < count; j++) {
+      cells.push(index);
     }
   });
 
   while (cells.length < gridCells) {
-    cells.push({ segmentIndex: -1 });
+    cells.push(-1);
   }
 
-  return cells;
+  return { cells, counts, sum, effectiveTotal };
+}
+
+function getCellPosition(
+  index: number,
+  fillDirection: WaffleChartProps['fillDirection'],
+  rows: number,
+  columns: number
+) {
+  switch (fillDirection) {
+    case 'top-to-bottom':
+      return { row: index % rows, col: Math.floor(index / rows) };
+    case 'bottom-to-top':
+      return { row: rows - 1 - (index % rows), col: Math.floor(index / rows) };
+    case 'right-to-left':
+      return { row: Math.floor(index / columns), col: columns - 1 - (index % columns) };
+    default:
+      return { row: Math.floor(index / columns), col: index % columns };
+  }
 }
 
 const DEFAULT_CELL_SIZE = 20;
+
+function getGridGeometry({
+  size,
+  rows,
+  columns,
+  gap,
+}: {
+  size: number | undefined;
+  rows: number;
+  columns: number;
+  gap: number;
+}) {
+  const resolvedGap =
+    size != null && (columns - 1) * gap > size && columns > 1 ? size / (columns - 1) : gap;
+  const cellSize =
+    size != null ? Math.max(0, (size - (columns - 1) * resolvedGap) / columns) : DEFAULT_CELL_SIZE;
+
+  return {
+    cellSize,
+    gap: resolvedGap,
+    width: columns * cellSize + (columns - 1) * resolvedGap,
+    height: rows * cellSize + (rows - 1) * resolvedGap,
+  };
+}
 
 export const WaffleChart = factory<WaffleChartFactory>((_props) => {
   const props = useProps('WaffleChart', defaultProps, _props);
@@ -186,11 +224,15 @@ export const WaffleChart = factory<WaffleChartFactory>((_props) => {
     emptyColor,
     withTooltip,
     getTooltipLabel,
+    valueFormatter,
     withLegend,
     legendPosition,
     fillDirection,
     size,
     variant,
+    mod,
+    'aria-label': ariaLabel,
+    'aria-labelledby': ariaLabelledBy,
     ...others
   } = props;
 
@@ -210,163 +252,117 @@ export const WaffleChart = factory<WaffleChartFactory>((_props) => {
     varsResolver,
   });
 
-  const [hoveredCell, setHoveredCell] = useState<(WaffleChartCell & { count: number }) | null>(
-    null
-  );
+  const [hoveredCellIndex, setHoveredCellIndex] = useState<number | null>(null);
   const [hoveredLegendIndex, setHoveredLegendIndex] = useState<number | null>(null);
 
   const resolvedRows = Math.max(1, Math.floor(rows!));
   const resolvedColumns = Math.max(1, Math.floor(columns!));
-  const resolvedGap = Math.max(0, gap!);
+  const formatValue = valueFormatter ?? defaultValueFormatter;
+  const geometry = getGridGeometry({
+    size,
+    rows: resolvedRows,
+    columns: resolvedColumns,
+    gap: Math.max(0, gap!),
+  });
+  const { cellSize } = geometry;
+  const { cells, counts, effectiveTotal } = allocateCells(
+    data,
+    resolvedRows * resolvedColumns,
+    total
+  );
 
-  const totalCells = resolvedRows * resolvedColumns;
+  const activeLegendIndex =
+    hoveredLegendIndex != null && hoveredLegendIndex < data.length ? hoveredLegendIndex : null;
 
-  // `size` is the total width of the grid, gaps included. When the gaps alone would exceed
-  // it, the gap shrinks too – clamping only the cell size would render a grid wider than
-  // the caller asked for. `size != null` rather than a truthiness check so `size={0}` is
-  // honored instead of silently falling back to the default cell size.
-  const hasSize = size != null;
-  const gapTotal = (resolvedColumns - 1) * resolvedGap;
-  const effectiveGap =
-    hasSize && gapTotal > size! && resolvedColumns > 1
-      ? size! / (resolvedColumns - 1)
-      : resolvedGap;
-  const cellSize = hasSize
-    ? Math.max(0, (size! - (resolvedColumns - 1) * effectiveGap) / resolvedColumns)
-    : DEFAULT_CELL_SIZE;
-  const allocated = allocateCells(data, totalCells, total);
-
-  const cellCounts = new Map<number, number>();
-  for (const cell of allocated) {
-    if (cell.segmentIndex >= 0) {
-      cellCounts.set(cell.segmentIndex, (cellCounts.get(cell.segmentIndex) || 0) + 1);
-    }
-  }
-
-  const svgWidth = resolvedColumns * cellSize + (resolvedColumns - 1) * effectiveGap;
-  const svgHeight = resolvedRows * cellSize + (resolvedRows - 1) * effectiveGap;
-
-  const cellElements = allocated.map((cell, index) => {
-    let row: number;
-    let col: number;
-
-    if (fillDirection === 'top-to-bottom') {
-      col = Math.floor(index / resolvedRows);
-      row = index % resolvedRows;
-    } else if (fillDirection === 'bottom-to-top') {
-      col = Math.floor(index / resolvedRows);
-      row = resolvedRows - 1 - (index % resolvedRows);
-    } else if (fillDirection === 'right-to-left') {
-      row = Math.floor(index / resolvedColumns);
-      col = resolvedColumns - 1 - (index % resolvedColumns);
-    } else {
-      row = Math.floor(index / resolvedColumns);
-      col = index % resolvedColumns;
-    }
-
-    const x = col * (cellSize + effectiveGap);
-    const y = row * (cellSize + effectiveGap);
-    const segmentIndex = cell.segmentIndex;
+  const cellElements = cells.map((segmentIndex, index) => {
+    const { row, col } = getCellPosition(index, fillDirection, resolvedRows, resolvedColumns);
     const isEmpty = segmentIndex < 0;
-    const color = isEmpty ? undefined : getThemeColor(data[segmentIndex].color, theme);
-
-    const dimmed = hoveredLegendIndex != null && segmentIndex !== hoveredLegendIndex;
 
     return (
       <rect
         key={index}
-        {...getStyles('cell', {
-          style: dimmed ? { opacity: 0.4 } : undefined,
-        })}
-        x={x}
-        y={y}
+        {...getStyles('cell')}
+        x={col * (cellSize + geometry.gap)}
+        y={row * (cellSize + geometry.gap)}
         width={cellSize}
         height={cellSize}
         rx={cellRadius}
         ry={cellRadius}
-        fill={color}
-        data-empty={isEmpty || undefined}
-        onMouseEnter={
-          withTooltip
-            ? () =>
-                isEmpty
-                  ? setHoveredCell(null)
-                  : setHoveredCell({
-                      ...data[segmentIndex],
-                      count: cellCounts.get(segmentIndex) || 0,
-                    })
-            : undefined
+        fill={
+          isEmpty
+            ? 'var(--waffle-empty-color, var(--mantine-color-default-border))'
+            : getThemeColor(data[segmentIndex].color, theme)
         }
+        data-empty={isEmpty || undefined}
+        data-dimmed={(activeLegendIndex != null && segmentIndex !== activeLegendIndex) || undefined}
+        onMouseEnter={withTooltip ? () => setHoveredCellIndex(index) : undefined}
       />
     );
   });
 
-  const tooltipLabel =
-    getTooltipLabel && hoveredCell && withTooltip
-      ? getTooltipLabel(hoveredCell)
-      : hoveredCell?.name;
-
-  const legendItems = withLegend
-    ? data.map((segment, index) => {
-        const legendDimmed = hoveredLegendIndex != null && hoveredLegendIndex !== index;
-
-        return (
-          <div
-            key={segment.key ?? index}
-            {...getStyles('legendItem', {
-              style: legendDimmed ? { opacity: 0.4 } : undefined,
-            })}
-            onMouseEnter={() => setHoveredLegendIndex(index)}
-            onMouseLeave={() => setHoveredLegendIndex(null)}
-          >
-            <span
-              {...getStyles('legendSwatch', {
-                style: { backgroundColor: getThemeColor(segment.color, theme) },
-              })}
-            />
-            <span {...getStyles('legendLabel')}>{segment.name}</span>
-          </div>
-        );
-      })
+  const hoveredSegmentIndex = hoveredCellIndex != null ? (cells[hoveredCellIndex] ?? -1) : -1;
+  const hoveredSegment = hoveredSegmentIndex >= 0 ? data[hoveredSegmentIndex] : undefined;
+  const tooltipLabel = hoveredSegment
+    ? getTooltipLabel
+      ? getTooltipLabel({ ...hoveredSegment, count: counts[hoveredSegmentIndex] })
+      : `${hoveredSegment.name}: ${formatValue(normalizeSegmentValue(hoveredSegment.value))}`
     : null;
 
+  const legend = withLegend ? (
+    <div {...getStyles('legend')} aria-hidden>
+      {data.map((segment, index) => (
+        <div
+          key={segment.key ?? index}
+          {...getStyles('legendItem')}
+          data-dimmed={(activeLegendIndex != null && activeLegendIndex !== index) || undefined}
+          onMouseEnter={() => setHoveredLegendIndex(index)}
+          onMouseLeave={() => setHoveredLegendIndex(null)}
+        >
+          <span
+            {...getStyles('legendSwatch', {
+              style: { backgroundColor: getThemeColor(segment.color, theme) },
+            })}
+          />
+          <span {...getStyles('legendLabel')}>{segment.name}</span>
+        </div>
+      ))}
+    </div>
+  ) : null;
+
   const isVertical = legendPosition === 'left' || legendPosition === 'right';
+  const isLegendFirst = legendPosition === 'top' || legendPosition === 'left';
 
-  // The cells carry no accessible information on their own, and the legend (when shown)
-  // exposes segment names but not their values – this gives assistive tech one readable
-  // summary of the data regardless of whether the legend is rendered. Values are reported
-  // as they are drawn, so a clamped negative or non-finite value is announced as 0.
   const segmentsLabel = data
-    .map((segment) => `${segment.name}: ${normalizeSegmentValue(segment.value)}`)
+    .map((segment) => `${segment.name}: ${formatValue(normalizeSegmentValue(segment.value))}`)
     .join(', ');
+  const gridLabel = segmentsLabel ? `${segmentsLabel}. Total: ${formatValue(effectiveTotal)}` : '';
 
-  // The denominator is what makes the filled/empty split readable – without it a listener
-  // hears "Completed: 68" while a sighted user sees 68 of 100 cells filled.
-  const segmentsTotal = data.reduce(
-    (acc, segment) => acc + normalizeSegmentValue(segment.value),
-    0
-  );
-  const effectiveTotal = total != null ? Math.max(total, segmentsTotal) : segmentsTotal;
-  const gridLabel = segmentsLabel ? `${segmentsLabel} of ${effectiveTotal}` : '';
-
-  // A plain div has an implicit `generic` role, which cannot carry an accessible name, so
-  // a caller-supplied label would be dropped. Promoting the root to a group lets their
-  // label describe the chart while the grid keeps the generated data summary.
-  const hasCallerLabel =
-    others['aria-label'] !== undefined || others['aria-labelledby'] !== undefined;
+  const hasCallerLabel = ariaLabel !== undefined || ariaLabelledBy !== undefined;
 
   const grid = (
     <Box
       component="svg"
-      width={svgWidth}
-      height={svgHeight}
-      role={gridLabel ? 'img' : undefined}
-      aria-label={gridLabel || undefined}
+      width={geometry.width}
+      height={geometry.height}
+      role={hasCallerLabel || gridLabel ? 'img' : undefined}
+      aria-label={hasCallerLabel ? ariaLabel : gridLabel || undefined}
+      aria-labelledby={ariaLabelledBy}
       {...getStyles('grid')}
     >
-      <Tooltip.Floating label={tooltipLabel} disabled={!withTooltip || !hoveredCell} position="top">
-        <g onMouseLeave={withTooltip ? () => setHoveredCell(null) : undefined}>
-          {withTooltip && <rect fill="transparent" width={svgWidth} height={svgHeight} />}
+      <Tooltip.Floating
+        label={tooltipLabel}
+        disabled={!withTooltip || !tooltipLabel}
+        position="top"
+      >
+        <g onMouseLeave={withTooltip ? () => setHoveredCellIndex(null) : undefined}>
+          {withTooltip && (
+            <rect
+              fill="transparent"
+              width={geometry.width}
+              height={geometry.height}
+              onMouseEnter={() => setHoveredCellIndex(null)}
+            />
+          )}
           {cellElements}
         </g>
       </Tooltip.Floating>
@@ -377,21 +373,15 @@ export const WaffleChart = factory<WaffleChartFactory>((_props) => {
     <Box
       {...getStyles('root')}
       variant={variant}
-      mod={{ 'legend-position': withLegend ? legendPosition : undefined, vertical: isVertical }}
-      role={hasCallerLabel ? 'group' : undefined}
+      mod={[
+        { 'legend-position': withLegend ? legendPosition : undefined, vertical: isVertical },
+        mod,
+      ]}
       {...others}
     >
-      {withLegend && (legendPosition === 'top' || legendPosition === 'left') && (
-        <div {...getStyles('legend')} aria-hidden>
-          {legendItems}
-        </div>
-      )}
+      {isLegendFirst && legend}
       {grid}
-      {withLegend && (legendPosition === 'bottom' || legendPosition === 'right') && (
-        <div {...getStyles('legend')} aria-hidden>
-          {legendItems}
-        </div>
-      )}
+      {!isLegendFirst && legend}
     </Box>
   );
 });

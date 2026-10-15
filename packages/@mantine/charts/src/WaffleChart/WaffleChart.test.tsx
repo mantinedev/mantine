@@ -1,3 +1,4 @@
+import { fireEvent, screen } from '@testing-library/react';
 import { render, tests } from '@mantine-tests/core';
 import { WaffleChart, WaffleChartProps, WaffleChartStylesNames } from './WaffleChart';
 
@@ -32,21 +33,6 @@ describe('@mantine/charts/WaffleChart', () => {
     expect(getCells(container)).toHaveLength(20);
   });
 
-  it('never renders more cells than the grid holds when values are negative', () => {
-    const { container } = render(
-      <WaffleChart
-        data={[
-          { name: 'A', value: 10, color: 'blue.6' },
-          { name: 'B', value: -5, color: 'red.6' },
-        ]}
-        rows={10}
-        columns={10}
-      />
-    );
-
-    expect(getCells(container)).toHaveLength(100);
-  });
-
   it('treats negative values as zero', () => {
     const { container } = render(
       <WaffleChart
@@ -59,9 +45,9 @@ describe('@mantine/charts/WaffleChart', () => {
       />
     );
 
-    // The whole grid is filled by segment A alone, none of it by the negative segment
-    const filled = getCells(container).filter((cell) => !cell.hasAttribute('data-empty'));
-    expect(filled).toHaveLength(100);
+    const cells = getCells(container);
+    expect(cells).toHaveLength(100);
+    expect(cells.filter((cell) => !cell.hasAttribute('data-empty'))).toHaveLength(100);
   });
 
   it('treats non-finite values as zero without emptying the whole grid', () => {
@@ -76,10 +62,9 @@ describe('@mantine/charts/WaffleChart', () => {
       />
     );
 
-    // Without normalization the NaN poisons the sum and no segment gets any cell at all
     const filled = getCells(container).filter((cell) => !cell.hasAttribute('data-empty'));
     expect(filled).toHaveLength(100);
-    expect(container.querySelector('svg')).toHaveAttribute('aria-label', 'A: 50, B: 0 of 50');
+    expect(container.querySelector('svg')).toHaveAttribute('aria-label', 'A: 50, B: 0. Total: 50');
   });
 
   it('keeps every cell inside the svg viewport', () => {
@@ -107,48 +92,49 @@ describe('@mantine/charts/WaffleChart', () => {
     expect(height).toBeGreaterThanOrEqual(0);
   });
 
-  it('does not produce negative cell dimensions when size is smaller than the gaps', () => {
-    const { container } = render(
-      <WaffleChart {...defaultProps} rows={10} columns={10} gap={2} size={10} />
-    );
-
-    getCells(container).forEach((cell) => {
-      expect(Number(cell.getAttribute('width'))).toBeGreaterThanOrEqual(0);
-      expect(Number(cell.getAttribute('height'))).toBeGreaterThanOrEqual(0);
-    });
-  });
-
   it('labels the grid with every segment name and value', () => {
     const { container } = render(<WaffleChart {...defaultProps} withLegend={false} />);
     const grid = container.querySelector('svg')!;
 
     expect(grid).toHaveAttribute('role', 'img');
-    expect(grid).toHaveAttribute('aria-label', 'A: 40, B: 60 of 100');
+    expect(grid).toHaveAttribute('aria-label', 'A: 40, B: 60. Total: 100');
   });
 
-  it('promotes the root to a group so a caller label is announced', () => {
+  it('replaces the generated grid name with a caller aria-label', () => {
     const { container } = render(<WaffleChart {...defaultProps} aria-label="Storage usage" />);
     const root = container.querySelector('.mantine-WaffleChart-root')!;
+    const grid = container.querySelector('svg')!;
 
-    // A plain div cannot carry an accessible name
-    expect(root).toHaveAttribute('role', 'group');
-    expect(root).toHaveAttribute('aria-label', 'Storage usage');
-    // The grid keeps the generated data summary rather than being overwritten by it
-    expect(container.querySelector('svg')).toHaveAttribute('aria-label', 'A: 40, B: 60 of 100');
+    expect(root).not.toHaveAttribute('role');
+    expect(root).not.toHaveAttribute('aria-label');
+    expect(grid).toHaveAttribute('role', 'img');
+    expect(grid).toHaveAttribute('aria-label', 'Storage usage');
+    expect(container.querySelectorAll('[role="img"]')).toHaveLength(1);
   });
 
-  it('supports aria-labelledby without losing the data summary', () => {
+  it('replaces the generated grid name with a caller aria-labelledby', () => {
     const { container } = render(
       <>
         <span id="waffle-title">Storage usage</span>
         <WaffleChart {...defaultProps} aria-labelledby="waffle-title" />
       </>
     );
-    const root = container.querySelector('.mantine-WaffleChart-root')!;
+    const grid = container.querySelector('svg')!;
 
-    expect(root).toHaveAttribute('role', 'group');
-    expect(root).toHaveAttribute('aria-labelledby', 'waffle-title');
-    expect(container.querySelector('svg')).toHaveAttribute('aria-label', 'A: 40, B: 60 of 100');
+    expect(container.querySelector('.mantine-WaffleChart-root')).not.toHaveAttribute(
+      'aria-labelledby'
+    );
+    expect(grid).toHaveAttribute('role', 'img');
+    expect(grid).toHaveAttribute('aria-labelledby', 'waffle-title');
+    expect(grid).not.toHaveAttribute('aria-label');
+  });
+
+  it('keeps a caller label on the grid when there is no data', () => {
+    const { container } = render(<WaffleChart data={[]} aria-label="Storage usage" />);
+    const grid = container.querySelector('svg')!;
+
+    expect(grid).toHaveAttribute('role', 'img');
+    expect(grid).toHaveAttribute('aria-label', 'Storage usage');
   });
 
   it('does not add a role to the root when there is no caller label', () => {
@@ -174,7 +160,7 @@ describe('@mantine/charts/WaffleChart', () => {
       />
     );
 
-    expect(container.querySelector('svg')).toHaveAttribute('aria-label', 'A: 40, B: 0 of 40');
+    expect(container.querySelector('svg')).toHaveAttribute('aria-label', 'A: 40, B: 0. Total: 40');
   });
 
   it('hides the legend from assistive tech because the grid label repeats it', () => {
@@ -183,13 +169,14 @@ describe('@mantine/charts/WaffleChart', () => {
   });
 
   it('reports the explicit total in the grid label', () => {
-    // 68 of 100 fills 68 cells and leaves 32 empty - the denominator is what makes that
-    // split readable to someone who cannot see the grid
     const { container } = render(
       <WaffleChart data={[{ name: 'Completed', value: 68, color: 'blue.6' }]} total={100} />
     );
 
-    expect(container.querySelector('svg')).toHaveAttribute('aria-label', 'Completed: 68 of 100');
+    expect(container.querySelector('svg')).toHaveAttribute(
+      'aria-label',
+      'Completed: 68. Total: 100'
+    );
   });
 
   it('honors size when the gaps alone would exceed it', () => {
@@ -198,11 +185,159 @@ describe('@mantine/charts/WaffleChart', () => {
     );
 
     expect(getSvgSize(container).width).toBeCloseTo(10, 5);
+    getCells(container).forEach((cell) => {
+      expect(Number(cell.getAttribute('width'))).toBeGreaterThanOrEqual(0);
+      expect(Number(cell.getAttribute('height'))).toBeGreaterThanOrEqual(0);
+    });
   });
 
   it('treats size={0} as an explicit size rather than falling back to the default', () => {
     const { container } = render(<WaffleChart {...defaultProps} gap={0} size={0} />);
 
     expect(getSvgSize(container).width).toBe(0);
+  });
+
+  it('keeps the legend layout attributes when a mod prop is passed', () => {
+    const { container } = render(
+      <WaffleChart {...defaultProps} legendPosition="right" mod={{ custom: true }} />
+    );
+    const root = container.querySelector('.mantine-WaffleChart-root')!;
+
+    expect(root).toHaveAttribute('data-custom');
+    expect(root).toHaveAttribute('data-vertical');
+    expect(root).toHaveAttribute('data-legend-position', 'right');
+  });
+
+  it('does not print floating point noise for the total', () => {
+    const { container } = render(
+      <WaffleChart
+        data={[
+          { name: 'A', value: 0.1, color: 'blue.6' },
+          { name: 'B', value: 0.2, color: 'red.6' },
+        ]}
+      />
+    );
+
+    expect(container.querySelector('svg')).toHaveAttribute(
+      'aria-label',
+      'A: 0.1, B: 0.2. Total: 0.3'
+    );
+  });
+
+  it('formats values and the total with valueFormatter', () => {
+    const { container } = render(
+      <WaffleChart {...defaultProps} valueFormatter={(value) => `${value.toFixed(1)}%`} />
+    );
+
+    expect(container.querySelector('svg')).toHaveAttribute(
+      'aria-label',
+      'A: 40.0%, B: 60.0%. Total: 100.0%'
+    );
+  });
+
+  it('treats a non-finite total as unset', () => {
+    const { container } = render(<WaffleChart {...defaultProps} total={NaN} />);
+
+    expect(getCells(container).filter((cell) => cell.hasAttribute('data-empty'))).toHaveLength(0);
+    expect(container.querySelector('svg')).toHaveAttribute(
+      'aria-label',
+      'A: 40, B: 60. Total: 100'
+    );
+  });
+
+  it('sets the cell radius on the element so it works without styles', () => {
+    const { container } = render(<WaffleChart {...defaultProps} cellRadius={4} unstyled />);
+    const cell = getCells(container)[0];
+
+    expect(cell).toHaveAttribute('rx', '4');
+    expect(cell).toHaveAttribute('ry', '4');
+  });
+
+  it('sets the fill of empty cells on the element so it works without styles', () => {
+    const { container } = render(
+      <WaffleChart {...defaultProps} total={200} emptyColor="gray.3" unstyled />
+    );
+    const rects = container.querySelectorAll('svg rect');
+
+    expect(rects[rects.length - 1]).toHaveAttribute(
+      'fill',
+      'var(--waffle-empty-color, var(--mantine-color-default-border))'
+    );
+  });
+
+  it('shows the hovered segment name and formatted value in the default tooltip', () => {
+    const { container } = render(
+      <WaffleChart {...defaultProps} withTooltip valueFormatter={(value) => `${value}%`} />
+    );
+
+    fireEvent.mouseEnter(getCells(container)[0]);
+    expect(screen.getByText('A: 40%')).toBeInTheDocument();
+  });
+
+  it('derives the tooltip from the current data while the pointer rests on a cell', () => {
+    const getTooltipLabel = (segment: { name: string; value: number; count: number }) =>
+      `${segment.name}=${segment.value}/${segment.count}`;
+    const { container, rerender } = render(
+      <WaffleChart {...defaultProps} withTooltip getTooltipLabel={getTooltipLabel} />
+    );
+
+    fireEvent.mouseEnter(getCells(container)[50]);
+    expect(screen.getByText('B=60/60')).toBeInTheDocument();
+
+    rerender(
+      <WaffleChart
+        data={[
+          { name: 'A', value: 90, color: 'blue.6' },
+          { name: 'B', value: 10, color: 'red.6' },
+        ]}
+        withTooltip
+        getTooltipLabel={getTooltipLabel}
+      />
+    );
+    expect(screen.getByText('A=90/90')).toBeInTheDocument();
+  });
+
+  it('clears the tooltip when the pointer moves from a cell into a gap', () => {
+    const { container } = render(<WaffleChart {...defaultProps} withTooltip />);
+
+    fireEvent.mouseEnter(getCells(container)[0]);
+    expect(screen.getByText('A: 40')).toBeInTheDocument();
+
+    fireEvent.mouseEnter(container.querySelector('svg g > rect:not(.mantine-WaffleChart-cell)')!);
+    expect(screen.queryByText('A: 40')).not.toBeInTheDocument();
+  });
+
+  it('stops dimming when the hovered legend item is removed from data', () => {
+    const { container, rerender } = render(<WaffleChart {...defaultProps} />);
+    fireEvent.mouseEnter(container.querySelectorAll('.mantine-WaffleChart-legendItem')[1]);
+    expect(getCells(container).filter((cell) => cell.hasAttribute('data-dimmed'))).toHaveLength(40);
+
+    rerender(<WaffleChart {...defaultProps} data={[defaultProps.data[0]]} />);
+    expect(container.querySelectorAll('[data-dimmed]')).toHaveLength(0);
+
+    rerender(<WaffleChart {...defaultProps} data={[]} />);
+    expect(container.querySelectorAll('[data-dimmed]')).toHaveLength(0);
+  });
+
+  it('keeps dimming when data shrinks but the hovered legend item remains', () => {
+    const data = [...defaultProps.data, { name: 'C', value: 0, color: 'green.6' }];
+    const { container, rerender } = render(<WaffleChart data={data} />);
+    fireEvent.mouseEnter(container.querySelectorAll('.mantine-WaffleChart-legendItem')[0]);
+
+    rerender(<WaffleChart data={defaultProps.data} />);
+    expect(getCells(container).filter((cell) => cell.hasAttribute('data-dimmed'))).toHaveLength(60);
+  });
+
+  it('dims cells and legend items of other segments when a legend item is hovered', () => {
+    const { container } = render(<WaffleChart {...defaultProps} />);
+    const legendItems = container.querySelectorAll('.mantine-WaffleChart-legendItem');
+
+    fireEvent.mouseEnter(legendItems[0]);
+    expect(getCells(container).filter((cell) => cell.hasAttribute('data-dimmed'))).toHaveLength(60);
+    expect(legendItems[1]).toHaveAttribute('data-dimmed');
+    expect(legendItems[0]).not.toHaveAttribute('data-dimmed');
+
+    fireEvent.mouseLeave(legendItems[0]);
+    expect(container.querySelectorAll('[data-dimmed]')).toHaveLength(0);
   });
 });

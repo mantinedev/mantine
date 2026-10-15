@@ -14,7 +14,7 @@ export function Usage() {
 }
 
 export function Legend() {
-  return <WaffleChart data={data} withLegend legendPosition="right" />;
+  return <WaffleChart data={data} legendPosition="right" />;
 }
 
 export function Tooltip() {
@@ -22,7 +22,7 @@ export function Tooltip() {
     <WaffleChart
       data={data}
       withTooltip
-      getTooltipLabel={(cell) => `${cell.name}: ${cell.value}%`}
+      getTooltipLabel={(cell) => `${cell.name}: ${cell.count} cells`}
     />
   );
 }
@@ -56,7 +56,39 @@ export function EmptyColor() {
     <WaffleChart
       data={[{ name: 'Completed', value: 68, color: 'teal' }]}
       total={100}
-      emptyColor="gray.3"
+      emptyColor="var(--mantine-color-teal-light)"
+    />
+  );
+}
+
+export function ValueFormatter() {
+  return (
+    <WaffleChart
+      data={[
+        { name: 'Chrome', value: 65.2, color: 'blue' },
+        { name: 'Safari', value: 19.1, color: 'teal' },
+        { name: 'Firefox', value: 10.4, color: 'orange' },
+        { name: 'Other', value: 5.3, color: 'gray' },
+      ]}
+      withTooltip
+      gap={6}
+      valueFormatter={(value) => `${value.toFixed(1)}%`}
+    />
+  );
+}
+
+export function LegendWithMod() {
+  return <WaffleChart data={data} legendPosition="left" mod={{ custom: true }} />;
+}
+
+export function Unstyled() {
+  return (
+    <WaffleChart
+      data={[{ name: 'Completed', value: 68, color: 'teal' }]}
+      total={100}
+      emptyColor="gray.5"
+      cellRadius={4}
+      unstyled
     />
   );
 }

@@ -9,7 +9,7 @@ function Demo() {
     <WaffleChart
       data={[{ name: 'Completed', value: 68, color: 'teal' }]}
       total={100}
-      emptyColor="gray.3"
+      emptyColor="var(--mantine-color-teal-light)"
     />
   );
 }
@@ -20,7 +20,7 @@ function Demo() {
     <WaffleChart
       data={[{ name: 'Completed', value: 68, color: 'teal' }]}
       total={100}
-      emptyColor="gray.3"
+      emptyColor="var(--mantine-color-teal-light)"
     />
   );
 }

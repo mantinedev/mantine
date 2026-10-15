@@ -7,7 +7,7 @@ import { WaffleChart } from '@mantine/charts';
 import { data } from './data';
 
 function Demo() {
-  return <WaffleChart data={data} {{props}} />;
+  return <WaffleChart{{props}} data={data} />;
 }
 `;
 

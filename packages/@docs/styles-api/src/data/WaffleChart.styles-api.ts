@@ -17,5 +17,23 @@ export const WaffleChartStylesApi: StylesApiData<WaffleChartFactory> = {
       '--waffle-empty-color': 'Controls empty cell background color',
     },
   },
-  modifiers: [],
+  modifiers: [
+    {
+      modifier: 'data-legend-position',
+      selector: 'root',
+      condition: '`legendPosition` prop value, set when `withLegend` is true',
+    },
+    { modifier: 'data-vertical', selector: 'root', condition: '`legendPosition` is left or right' },
+    { modifier: 'data-empty', selector: 'cell', condition: 'Cell is not filled by any segment' },
+    {
+      modifier: 'data-dimmed',
+      selector: 'cell',
+      condition: 'A legend item of another segment is hovered',
+    },
+    {
+      modifier: 'data-dimmed',
+      selector: 'legendItem',
+      condition: 'Another legend item is hovered',
+    },
+  ],
 };

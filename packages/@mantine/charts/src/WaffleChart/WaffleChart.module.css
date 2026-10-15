@@ -6,14 +6,22 @@
 
   &[data-vertical] {
     flex-direction: row;
+
+    @mixin rtl {
+      flex-direction: row-reverse;
+    }
   }
 }
 
 .cell {
   rx: var(--waffle-cell-radius);
+  ry: var(--waffle-cell-radius);
+}
 
-  &[data-empty] {
-    fill: var(--waffle-empty-color, var(--mantine-color-default-border));
+.cell,
+.legendItem {
+  &[data-dimmed] {
+    opacity: 0.4;
   }
 }
 
@@ -38,7 +46,7 @@
   display: block;
   width: rem(12px);
   height: rem(12px);
-  border-radius: var(--waffle-cell-radius, rem(2px));
+  border-radius: var(--waffle-cell-radius);
   flex-shrink: 0;
 }
 
