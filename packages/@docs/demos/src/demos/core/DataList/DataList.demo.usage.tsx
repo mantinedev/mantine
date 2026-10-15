@@ -50,7 +50,7 @@ export const usage: MantineDemo = {
   component: Wrapper,
   code,
   controls: [
-    { prop: 'size', type: 'size', libraryValue: 'md', initialValue: 'md' },
+    { prop: 'size', type: 'size', libraryValue: 'sm', initialValue: 'sm' },
     {
       prop: 'orientation',
       type: 'segmented',
@@ -58,7 +58,7 @@ export const usage: MantineDemo = {
         { value: 'vertical', label: 'Vertical' },
         { value: 'horizontal', label: 'Horizontal' },
       ],
-      initialValue: 'vertical',
+      initialValue: 'horizontal',
       libraryValue: 'horizontal',
     },
     { prop: 'withDivider', type: 'boolean', libraryValue: false, initialValue: false },

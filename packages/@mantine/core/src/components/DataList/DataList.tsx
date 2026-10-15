@@ -10,6 +10,7 @@ import {
   getSpacing,
   MantineSize,
   MantineSpacing,
+  rem,
   StylesApiProps,
   useProps,
   useStyles,
@@ -53,8 +54,8 @@ export interface DataListProps
   /** Adds border between items @default false */
   withDivider?: boolean;
 
-  /** Controls min-width of the label (dt) element, any valid CSS value @default '120px' */
-  labelWidth?: React.CSSProperties['minWidth'];
+  /** Width of the label (dt) column in horizontal orientation, numbers are converted to rem @default 120 */
+  labelWidth?: React.CSSProperties['width'];
 }
 
 export type DataListFactory = Factory<{
@@ -78,12 +79,7 @@ const varsResolver = createVarsResolver<DataListFactory>((_, { size, gap, labelW
     '--data-list-fz': getFontSize(size),
     '--data-list-lh': getLineHeight(size),
     '--data-list-gap': getSpacing(gap),
-    '--data-list-label-width':
-      labelWidth !== undefined
-        ? typeof labelWidth === 'number'
-          ? `${labelWidth}px`
-          : labelWidth
-        : undefined,
+    '--data-list-label-width': rem(labelWidth),
   },
 }));
 

@@ -14,7 +14,7 @@ export const DataListStylesApi: StylesApiData<DataListFactory> = {
       '--data-list-fz': 'Controls `font-size`',
       '--data-list-lh': 'Controls `line-height`',
       '--data-list-gap': 'Controls gap between items',
-      '--data-list-label-width': 'Controls `min-width` of `DataList.ItemLabel`',
+      '--data-list-label-width': 'Width of the `DataList.ItemLabel` column in horizontal orientation',
     },
   },
 

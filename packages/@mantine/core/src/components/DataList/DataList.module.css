@@ -26,25 +26,27 @@
 
 .root:where([data-orientation='vertical']) > .item {
   flex-direction: column;
+  align-items: stretch;
   gap: 0;
 }
 
 .itemLabel {
   color: var(--mantine-color-dimmed);
-  font-size: var(--data-list-fz);
-  line-height: var(--data-list-lh);
-  min-width: var(--data-list-label-width);
+  flex: 0 0 var(--data-list-label-width);
+  min-width: 0;
+  overflow-wrap: anywhere;
   margin: 0;
-}
-
-.root:where([data-orientation='vertical']) .itemLabel {
-  min-width: 100%;
 }
 
 .itemValue {
-  font-size: var(--data-list-fz);
-  line-height: var(--data-list-lh);
+  flex: 1 1 0;
+  min-width: 0;
+  overflow-wrap: anywhere;
   margin: 0;
+}
+
+.root:where([data-orientation='vertical']) > .item > :where(.itemLabel, .itemValue) {
+  flex: none;
 }
 
 .root:where([data-with-divider]) > .item:where(:not(:first-of-type)) {

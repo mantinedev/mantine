@@ -59,4 +59,18 @@ describe('@mantine/core/DataList', () => {
     expect(DataList.ItemLabel).toBe(DataListItemLabel);
     expect(DataList.ItemValue).toBe(DataListItemValue);
   });
+
+  it('converts numeric labelWidth to rem', () => {
+    const { container } = render(<DataList {...defaultProps} labelWidth={160} />);
+    expect(container.querySelector('.mantine-DataList-root')).toHaveStyle({
+      '--data-list-label-width': 'calc(10rem * var(--mantine-scale))',
+    });
+  });
+
+  it('passes string labelWidth through', () => {
+    const { container } = render(<DataList {...defaultProps} labelWidth="30%" />);
+    expect(container.querySelector('.mantine-DataList-root')).toHaveStyle({
+      '--data-list-label-width': '30%',
+    });
+  });
 });
