@@ -62,13 +62,11 @@ describe('@mantine/charts/GaugeChart', () => {
     );
     const [, , width, height] = getViewBox(container);
 
-    // Arc diameter (188) plus half the stroke (6) on both sides - with no `target` there is
-    // no needle to reserve room for, so the gauge fills exactly the requested size
     expect(width).toBeCloseTo(200, 5);
     expect(height).toBeCloseTo(200, 5);
   });
 
-  it('reserves room for the target needle only when a target is set', () => {
+  it('reserves room for the target marker only when a target is set', () => {
     const withoutTarget = render(
       <GaugeChart {...defaultProps} size={200} thickness={12} startAngle={0} endAngle={360} />
     );
@@ -84,7 +82,6 @@ describe('@mantine/charts/GaugeChart', () => {
     );
 
     expect(getViewBox(withoutTarget.container)[2]).toBeCloseTo(200, 5);
-    // The needle sticks out past the arc, so the viewBox has to grow to contain it
     expect(getViewBox(withTarget.container)[2]).toBeCloseTo(206, 5);
   });
 
@@ -288,8 +285,33 @@ describe('@mantine/charts/GaugeChart', () => {
     );
     const [, , width] = getViewBox(container);
 
-    // needleLength / 2 (9) + targetSize / 2 (6) of padding on each side
     expect(width).toBeCloseTo(188 + 15 * 2, 5);
+  });
+
+  it('does not render a zero-length value arc', () => {
+    expect(getSections(render(<GaugeChart value={0} roundCaps />).container)).toHaveLength(0);
+    expect(getSections(render(<GaugeChart value={-20} roundCaps />).container)).toHaveLength(0);
+    expect(
+      getSections(render(<GaugeChart value={50} min={50} max={50} roundCaps />).container)
+    ).toHaveLength(0);
+    expect(getSections(render(<GaugeChart value={1} roundCaps />).container)).toHaveLength(1);
+    expect(getSections(render(<GaugeChart value={100} roundCaps />).container)).toHaveLength(1);
+  });
+
+  it('does not render zero-span sections', () => {
+    const { container } = render(
+      <GaugeChart
+        value={0}
+        roundCaps
+        sections={[
+          { value: 0, color: 'teal' },
+          { value: 0, color: 'blue' },
+        ]}
+      />
+    );
+
+    expect(getSections(container)).toHaveLength(0);
+    expect(getSectionCaps(container)).toHaveLength(0);
   });
 
   it('sets meter role and value attributes', () => {
@@ -324,9 +346,9 @@ describe('@mantine/charts/GaugeChart', () => {
     expect(container.querySelector('svg')).toHaveAttribute('aria-valuetext', '100%');
   });
 
-  it('names the meter from a string label', () => {
-    const { container } = render(<GaugeChart value={72} label="CPU usage" />);
-    expect(container.querySelector('svg')).toHaveAttribute('aria-label', 'CPU usage');
+  it('does not use a string label as the accessible name', () => {
+    const { container } = render(<GaugeChart value={72} label="72%" />);
+    expect(container.querySelector('svg')).toHaveAttribute('aria-label', 'Gauge');
   });
 
   it('falls back to a generic name rather than leaving the meter unnamed', () => {
@@ -354,5 +376,128 @@ describe('@mantine/charts/GaugeChart', () => {
       <GaugeChart value={72} label="CPU usage" aria-label="Processor utilisation" />
     );
     expect(container.querySelector('svg')).toHaveAttribute('aria-label', 'Processor utilisation');
+  });
+
+  it('treats a non-finite value as missing', () => {
+    [NaN, Infinity, -Infinity].forEach((value) => {
+      const { container } = render(<GaugeChart value={value} />);
+      const svg = container.querySelector('svg')!;
+
+      expect(getSections(container)).toHaveLength(0);
+      expect(svg).not.toHaveAttribute('aria-valuenow');
+      expect(svg).toHaveAttribute('aria-valuetext', 'No data');
+      expect(container.querySelector('.mantine-GaugeChart-label')).toHaveTextContent('');
+      expect(svg.innerHTML).not.toContain('NaN');
+    });
+  });
+
+  it('falls back to the default range for non-finite min and max', () => {
+    const { container } = render(<GaugeChart value={72} min={NaN} max={Infinity} />);
+    const svg = container.querySelector('svg')!;
+
+    expect(svg).toHaveAttribute('aria-valuemin', '0');
+    expect(svg).toHaveAttribute('aria-valuemax', '100');
+    expect(svg).toHaveAttribute('aria-valuenow', '72');
+    expect(svg.innerHTML).not.toContain('NaN');
+  });
+
+  it('does not render the target marker for a non-finite target', () => {
+    const { container } = render(<GaugeChart value={72} target={NaN} />);
+    expect(container.querySelector('.mantine-GaugeChart-needle')).toBeNull();
+    expect(getViewBox(container)).toStrictEqual(
+      getViewBox(render(<GaugeChart value={72} />).container)
+    );
+  });
+
+  it('skips sections with a non-finite value', () => {
+    const { container } = render(
+      <GaugeChart
+        value={72}
+        sections={[
+          { value: 30, color: 'teal' },
+          { value: NaN, color: 'yellow' },
+          { value: 60, color: 'orange' },
+          { value: 100, color: 'red' },
+        ]}
+      />
+    );
+
+    const rendered = getSections(container);
+    expect(rendered).toHaveLength(3);
+    expect(rendered.map((section) => section.getAttribute('stroke'))).not.toContain(
+      'var(--mantine-color-yellow-filled)'
+    );
+    expect(container.innerHTML).not.toContain('NaN');
+  });
+
+  it('falls back to the default angles for non-finite angles', () => {
+    const { container } = render(<GaugeChart value={72} startAngle={NaN} endAngle={Infinity} />);
+    const reference = render(<GaugeChart value={72} />).container;
+
+    expect(getViewBox(container)).toStrictEqual(getViewBox(reference));
+    expect(getTrack(container).getAttribute('d')).toBe(getTrack(reference).getAttribute('d'));
+  });
+
+  it('swaps min and max when min is greater than max', () => {
+    const { container } = render(<GaugeChart value={30} min={100} max={0} />);
+    const reference = render(<GaugeChart value={30} min={0} max={100} />).container;
+    const svg = container.querySelector('svg')!;
+
+    expect(svg).toHaveAttribute('aria-valuemin', '0');
+    expect(svg).toHaveAttribute('aria-valuemax', '100');
+    expect(svg).toHaveAttribute('aria-valuenow', '30');
+    expect(svg).toHaveAttribute('aria-valuetext', '30');
+    expect(getSections(container)[0].getAttribute('d')).toBe(
+      getSections(reference)[0].getAttribute('d')
+    );
+  });
+
+  it('keeps the label box inside the inner area of the arc', () => {
+    const { container } = render(<GaugeChart value={72} size={200} thickness={12} />);
+    const box = container.querySelector('foreignObject')!;
+    const inscribed = 88 * Math.SQRT2;
+
+    expect(Number(box.getAttribute('width'))).toBeCloseTo(inscribed, 5);
+    expect(Number(box.getAttribute('x')) + Number(box.getAttribute('width')) / 2).toBeCloseTo(
+      100,
+      5
+    );
+  });
+
+  it('sizes the label box from the visible side of an asymmetric arc', () => {
+    const { container } = render(
+      <GaugeChart value={72} size={200} thickness={12} startAngle={0} endAngle={90} />
+    );
+    const box = container.querySelector('foreignObject')!;
+    const [viewBoxX] = getViewBox(container);
+
+    expect(Number(box.getAttribute('x'))).toBeGreaterThanOrEqual(viewBoxX);
+    expect(Number(box.getAttribute('width'))).toBeCloseTo((100 - viewBoxX) * 2, 5);
+  });
+
+  it('sets the aspect ratio from the arc bounding box', () => {
+    const { container } = render(<GaugeChart value={72} size={200} thickness={12} />);
+    const svg = container.querySelector('svg')!;
+    const [, , width, height] = getViewBox(container);
+
+    expect(svg.style.aspectRatio).toBe(`${width} / ${height}`);
+  });
+
+  it('applies trackColor as an inline stroke', () => {
+    const { container } = render(<GaugeChart value={72} trackColor="red.6" />);
+    expect((getTrack(container) as SVGPathElement).style.stroke).toBe('var(--mantine-color-red-6)');
+  });
+
+  it('renders sane geometry for degenerate input', () => {
+    const zeroSpan = render(<GaugeChart value={72} startAngle={30} endAngle={30} />).container;
+    const reference = render(<GaugeChart value={72} />).container;
+    expect(getViewBox(zeroSpan)).toStrictEqual(getViewBox(reference));
+
+    const thick = render(<GaugeChart value={72} size={200} thickness={250} />).container;
+    expect(getTrack(thick).getAttribute('stroke-width')).toBe('100');
+    expect(getTrack(thick).getAttribute('d')).toContain('A 50 50');
+
+    const zeroSize = render(<GaugeChart value={72} size={0} />).container;
+    expect(getViewBox(zeroSize)).toStrictEqual(getViewBox(reference));
   });
 });

@@ -37,3 +37,8 @@ export const Demo_roundCaps = {
   name: '⭐ Demo: roundCaps',
   render: renderDemo(demos.roundCaps),
 };
+
+export const Demo_valueFormatter = {
+  name: '⭐ Demo: valueFormatter',
+  render: renderDemo(demos.valueFormatter),
+};

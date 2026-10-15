@@ -51,9 +51,15 @@ function Demo() {
 
 ## Thickness
 
-`thickness` sets the width of the arc, `size` sets the width and height of the chart:
+`thickness` sets the width of the arc, `size` sets the width of the chart. The height follows the arc proportions:
 
 <Demo data={GaugeChartDemos.thickness} />
+
+## Value formatter
+
+Use `valueFormatter` to format the value in the center label. Screen readers announce the same formatted value:
+
+<Demo data={GaugeChartDemos.valueFormatter} />
 
 ## Custom label
 
@@ -69,7 +75,8 @@ Set `roundCaps` to round the endpoints of the arc:
 
 ## Accessibility
 
-The chart has `role="meter"`. Set `aria-label` to give it an accessible name:
+The chart has `role="meter"` and announces the formatted value.
+The `label` is not used as the accessible name, set `aria-label` to name the metric:
 
 ```tsx
 import { GaugeChart } from '@mantine/charts';

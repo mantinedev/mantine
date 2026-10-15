@@ -5,9 +5,9 @@ export const GaugeChartStylesApi: StylesApiData<GaugeChartFactory> = {
   selectors: {
     root: 'Root SVG element',
     track: 'Background arc path',
-    section: 'Filled section arc path',
+    section: 'Threshold section arc, or the value arc when `sections` is not set',
     sectionCap: 'Round-capped copy of the first and last sections, rendered when roundCaps is set',
-    needle: 'Target marker line',
+    needle: 'Target marker line (`target` prop)',
     label: 'Center label container',
   },
 

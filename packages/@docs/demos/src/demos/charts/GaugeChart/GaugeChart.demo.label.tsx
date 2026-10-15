@@ -10,10 +10,15 @@ function Demo() {
   return (
     <GaugeChart
       value={72}
+      aria-label="CPU usage"
       label={
         <div>
-          <Text ta="center" fz="xl" fw={700}>72%</Text>
-          <Text ta="center" fz="xs" c="dimmed">CPU Usage</Text>
+          <Text ta="center" fz="xl" fw="var(--mantine-font-weight-medium)" c="bright">
+            72%
+          </Text>
+          <Text ta="center" size="sm">
+            CPU Usage
+          </Text>
         </div>
       }
     />
@@ -25,12 +30,13 @@ function Demo() {
   return (
     <GaugeChart
       value={72}
+      aria-label="CPU usage"
       label={
         <div>
-          <Text ta="center" fz="xl" fw={700}>
+          <Text ta="center" fz="xl" fw="var(--mantine-font-weight-medium)" c="bright">
             72%
           </Text>
-          <Text ta="center" fz="xs" c="dimmed">
+          <Text ta="center" size="sm">
             CPU Usage
           </Text>
         </div>

@@ -7,12 +7,14 @@ import {
   Factory,
   getThemeColor,
   MantineColor,
+  MantineTheme,
   rem,
   StylesApiProps,
   useMantineTheme,
   useProps,
   useStyles,
 } from '@mantine/core';
+import { clamp } from '@mantine/hooks';
 import classes from './GaugeChart.module.css';
 
 export interface GaugeChartSection {
@@ -43,7 +45,7 @@ export interface GaugeChartProps
   /** Current value to display. Fills the arc from `min` up to `value`, unless `sections` is set – then the arc is colored by thresholds and the value is displayed only in the center label. @category state */
   value: number;
 
-  /** Minimum value of the gauge, @default 0 @category appearance */
+  /** Minimum value of the gauge. If `min` is greater than `max`, the two are swapped, @default 0 @category appearance */
   min?: number;
 
   /** Maximum value of the gauge, @default 100 @category appearance */
@@ -58,7 +60,7 @@ export interface GaugeChartProps
   /** Arc thickness in px, @default 12 @category appearance */
   thickness?: number;
 
-  /** Chart size (width and height), @default 200 @category appearance */
+  /** Chart width in px, the height is derived from the arc proportions, @default 200 @category appearance */
   size?: number;
 
   /** Start angle in degrees, @default -120 @category appearance */
@@ -70,7 +72,7 @@ export interface GaugeChartProps
   /** Label displayed in the center of the gauge @category appearance */
   label?: React.ReactNode;
 
-  /** Value formatter for default label, @default (v) => String(v) @category appearance */
+  /** Formats the value in the default label and `aria-valuetext`, @default (v) => String(v) @category appearance */
   valueFormatter?: (value: number) => string;
 
   /** Color of the gauge track (unfilled portion) @category appearance */
@@ -109,9 +111,21 @@ const defaultProps = {
 
 const varsResolver = createVarsResolver<GaugeChartFactory>((_theme, { size }) => ({
   root: {
-    '--gauge-size': rem(size),
+    '--gauge-size': rem(getSafeSize(size)),
   },
 }));
+
+function isFiniteNumber(value: unknown): value is number {
+  return typeof value === 'number' && Number.isFinite(value);
+}
+
+function getSafeSize(size: number | undefined) {
+  return isFiniteNumber(size) && size > 0 ? size : defaultProps.size;
+}
+
+function finiteOr(value: number | undefined, fallback: number) {
+  return isFiniteNumber(value) ? value : fallback;
+}
 
 function polarToCartesian(cx: number, cy: number, r: number, angleDeg: number) {
   const rad = ((angleDeg - 90) * Math.PI) / 180;
@@ -123,8 +137,6 @@ function describeArc(cx: number, cy: number, r: number, startAngle: number, endA
   const sweep = delta >= 0 ? 1 : 0;
   const start = polarToCartesian(cx, cy, r, startAngle);
 
-  // A single arc command cannot express a full circle – its endpoints would be identical
-  // and nothing would be rendered, so it is split into two half-circle arcs.
   if (Math.abs(delta) >= 360) {
     const mid = polarToCartesian(cx, cy, r, startAngle + (delta >= 0 ? 180 : -180));
     return `M ${start.x} ${start.y} A ${r} ${r} 0 0 ${sweep} ${mid.x} ${mid.y} A ${r} ${r} 0 0 ${sweep} ${start.x} ${start.y}`;
@@ -135,18 +147,24 @@ function describeArc(cx: number, cy: number, r: number, startAngle: number, endA
   return `M ${start.x} ${start.y} A ${r} ${r} 0 ${largeArc} ${sweep} ${end.x} ${end.y}`;
 }
 
-function valueToAngle(
-  value: number,
-  min: number,
-  max: number,
-  startAngle: number,
-  endAngle: number
-) {
+interface GaugeGeometry {
+  cx: number;
+  cy: number;
+  r: number;
+  min: number;
+  max: number;
+  startAngle: number;
+  endAngle: number;
+}
+
+function valueToAngle(value: number, geometry: GaugeGeometry) {
+  const { min, max, startAngle, endAngle } = geometry;
+
   if (max === min) {
     return startAngle;
   }
-  const clamped = Math.max(min, Math.min(max, value));
-  return startAngle + ((clamped - min) / (max - min)) * (endAngle - startAngle);
+
+  return startAngle + ((clamp(value, min, max) - min) / (max - min)) * (endAngle - startAngle);
 }
 
 function isAngleInArc(angle: number, start: number, end: number) {
@@ -156,21 +174,12 @@ function isAngleInArc(angle: number, start: number, end: number) {
     return true;
   }
 
-  // Distance from the start angle measured along the direction the arc sweeps,
-  // so that descending ranges (endAngle < startAngle) are handled the same way.
   const distance = delta >= 0 ? angle - start : start - angle;
   return ((distance % 360) + 360) % 360 <= Math.abs(delta);
 }
 
-function getArcBoundingBox(
-  cx: number,
-  cy: number,
-  r: number,
-  startAngle: number,
-  endAngle: number,
-  padding: number,
-  labelReserve: number
-) {
+function getArcBoundingBox(geometry: GaugeGeometry, padding: number, labelReserve: number) {
+  const { cx, cy, r, startAngle, endAngle } = geometry;
   const startPt = polarToCartesian(cx, cy, r, startAngle);
   const endPt = polarToCartesian(cx, cy, r, endAngle);
 
@@ -200,6 +209,58 @@ function getArcBoundingBox(
     y: minY - padding,
     width: maxX - minX + padding * 2,
     height: maxY - minY + padding * 2,
+  };
+}
+
+function getLabelBox(
+  geometry: GaugeGeometry,
+  innerRadius: number,
+  bbox: { x: number; y: number; width: number; height: number }
+) {
+  const { cx, cy } = geometry;
+  const inscribedHalf = (innerRadius * Math.SQRT2) / 2;
+  const halfWidth = Math.max(0, Math.min(inscribedHalf, cx - bbox.x, bbox.x + bbox.width - cx));
+  const halfHeight = Math.max(0, Math.min(inscribedHalf, cy - bbox.y, bbox.y + bbox.height - cy));
+
+  return {
+    x: cx - halfWidth,
+    y: cy - halfHeight,
+    width: halfWidth * 2,
+    height: halfHeight * 2,
+  };
+}
+
+function getSectionArcs(
+  sections: GaugeChartSection[],
+  geometry: GaugeGeometry,
+  theme: MantineTheme
+) {
+  const direction = geometry.endAngle >= geometry.startAngle ? 1 : -1;
+  const sortedSections = sections
+    .filter((section) => Number.isFinite(section.value))
+    .sort((a, b) => a.value - b.value);
+  const arcs: { path: string; color: string }[] = [];
+  let prevAngle = geometry.startAngle;
+
+  for (const section of sortedSections) {
+    const sectionEndAngle = valueToAngle(section.value, geometry);
+    if ((sectionEndAngle - prevAngle) * direction > 0) {
+      arcs.push({
+        path: describeArc(geometry.cx, geometry.cy, geometry.r, prevAngle, sectionEndAngle),
+        color: getThemeColor(section.color, theme),
+      });
+      prevAngle = sectionEndAngle;
+    }
+  }
+
+  return arcs;
+}
+
+function getTargetMarkerPoints(target: number, length: number, geometry: GaugeGeometry) {
+  const angle = valueToAngle(target, geometry);
+  return {
+    inner: polarToCartesian(geometry.cx, geometry.cy, geometry.r - length / 2, angle),
+    outer: polarToCartesian(geometry.cx, geometry.cy, geometry.r + length / 2, angle),
   };
 }
 
@@ -249,202 +310,166 @@ export const GaugeChart = factory<GaugeChartFactory>((_props) => {
     varsResolver,
   });
 
-  const svgSize = size!;
-  const cx = svgSize / 2;
-  const cy = svgSize / 2;
-  const r = (svgSize - thickness!) / 2;
-  const strokeLinecap = roundCaps ? 'round' : 'butt';
-  const needleLength = thickness! * 1.5;
-
-  // The needle sticks out past the arc radius, and a round cap adds half of its own
-  // width on top of that – both contribute at the same time. Only reserved when there is a
-  // target to draw, otherwise every gauge without one would get an oversized viewBox and
-  // render its arc smaller than the requested `size`.
-  const needleExtent = needleLength / 2 + (roundCaps ? targetSize! / 2 : 0);
-  const strokePadding = target != null ? Math.max(thickness! / 2, needleExtent) : thickness! / 2;
-
-  // A gauge cannot span more than a full turn – a larger range would wrap the arc onto
-  // itself and make later sections overwrite earlier ones.
-  const span = endAngle! - startAngle!;
-  const resolvedEndAngle = startAngle! + Math.max(-360, Math.min(360, span));
-
-  const labelReserve = Math.max(thickness!, svgSize * 0.11);
-  const bbox = getArcBoundingBox(
-    cx,
-    cy,
-    r,
-    startAngle!,
-    resolvedEndAngle,
-    strokePadding,
-    labelReserve
+  const safeSize = getSafeSize(size);
+  const safeThickness = Math.min(
+    isFiniteNumber(thickness) && thickness >= 0 ? thickness : defaultProps.thickness,
+    safeSize / 2
   );
+  const safeTargetSize = finiteOr(targetSize, defaultProps.targetSize);
+  const rawMin = finiteOr(min, defaultProps.min);
+  const rawMax = finiteOr(max, defaultProps.max);
+  const rangeMin = Math.min(rawMin, rawMax);
+  const rangeMax = Math.max(rawMin, rawMax);
+  const rawStartAngle = finiteOr(startAngle, defaultProps.startAngle);
+  const rawEndAngle = finiteOr(endAngle, defaultProps.endAngle);
+  const hasSpan = rawEndAngle !== rawStartAngle;
+  const resolvedStartAngle = hasSpan ? rawStartAngle : defaultProps.startAngle;
+  const resolvedEndAngle = hasSpan
+    ? resolvedStartAngle + clamp(rawEndAngle - rawStartAngle, -360, 360)
+    : defaultProps.endAngle;
+  const clampedValue = isFiniteNumber(value) ? clamp(value, rangeMin, rangeMax) : undefined;
+  const finiteTarget = isFiniteNumber(target) ? target : undefined;
 
-  const resolvedTrackColor = trackColor
-    ? getThemeColor(trackColor, theme)
-    : 'var(--mantine-color-default-border)';
+  const geometry: GaugeGeometry = {
+    cx: safeSize / 2,
+    cy: safeSize / 2,
+    r: (safeSize - safeThickness) / 2,
+    min: rangeMin,
+    max: rangeMax,
+    startAngle: resolvedStartAngle,
+    endAngle: resolvedEndAngle,
+  };
 
-  const trackPath = describeArc(cx, cy, r, startAngle!, resolvedEndAngle);
+  const strokeLinecap = roundCaps ? 'round' : 'butt';
+  const targetMarkerLength = safeThickness * 1.5;
+  const targetMarkerExtent = targetMarkerLength / 2 + (roundCaps ? safeTargetSize / 2 : 0);
+  const strokePadding =
+    finiteTarget !== undefined
+      ? Math.max(safeThickness / 2, targetMarkerExtent)
+      : safeThickness / 2;
 
-  const sectionElements =
-    sections && sections.length > 0 ? (
-      (() => {
-        const sortedSections = [...sections].sort((a, b) => a.value - b.value);
-        const direction = resolvedEndAngle >= startAngle! ? 1 : -1;
-        let prevAngle = startAngle!;
+  const labelReserve = Math.max(safeThickness, safeSize * 0.11);
+  const bbox = getArcBoundingBox(geometry, strokePadding, labelReserve);
+  const labelBox = getLabelBox(geometry, geometry.r - safeThickness / 2, bbox);
 
-        const resolvedSections = sortedSections.map((section) => {
-          const sectionEndAngle = valueToAngle(
-            section.value,
-            min!,
-            max!,
-            startAngle!,
-            resolvedEndAngle
-          );
-          if ((sectionEndAngle - prevAngle) * direction <= 0) {
-            return null;
-          }
-          const path = describeArc(cx, cy, r, prevAngle, sectionEndAngle);
-          prevAngle = sectionEndAngle;
-          return { path, color: getThemeColor(section.color, theme) };
-        });
+  const sectionArcs =
+    sections && sections.length > 0 ? getSectionArcs(sections, geometry, theme) : null;
+  const capArcs =
+    roundCaps && sectionArcs && sectionArcs.length > 0
+      ? sectionArcs.length > 1
+        ? [sectionArcs[0], sectionArcs[sectionArcs.length - 1]]
+        : sectionArcs
+      : [];
 
-        const visibleSections = resolvedSections.filter((section) => section !== null);
+  const valueEndAngle =
+    clampedValue !== undefined ? valueToAngle(clampedValue, geometry) : geometry.startAngle;
 
-        const capSections =
-          roundCaps && visibleSections.length > 0
-            ? visibleSections.length === 1
-              ? [visibleSections[0]]
-              : [visibleSections[0], visibleSections[visibleSections.length - 1]]
-            : [];
-
-        return (
-          <>
-            {capSections.map((section, index) => (
-              <path
-                key={index}
-                {...getStyles('sectionCap')}
-                d={section.path}
-                fill="none"
-                stroke={section.color}
-                strokeWidth={thickness}
-                strokeLinecap="round"
-              />
-            ))}
-            {resolvedSections.map((section, index) =>
-              section ? (
-                <path
-                  key={index}
-                  {...getStyles('section')}
-                  d={section.path}
-                  fill="none"
-                  stroke={section.color}
-                  strokeWidth={thickness}
-                  strokeLinecap="butt"
-                />
-              ) : null
-            )}
-          </>
-        );
-      })()
-    ) : (
-      <path
-        {...getStyles('section')}
-        d={describeArc(
-          cx,
-          cy,
-          r,
-          startAngle!,
-          valueToAngle(value, min!, max!, startAngle!, resolvedEndAngle)
-        )}
-        fill="none"
-        stroke={
-          filledColor ? getThemeColor(filledColor, theme) : 'var(--mantine-primary-color-filled)'
-        }
-        strokeWidth={thickness}
-        strokeLinecap={strokeLinecap}
-      />
-    );
-
-  const needleElement =
-    target != null
-      ? (() => {
-          const targetAngle = valueToAngle(target, min!, max!, startAngle!, resolvedEndAngle);
-          const inner = polarToCartesian(cx, cy, r - needleLength / 2, targetAngle);
-          const outer = polarToCartesian(cx, cy, r + needleLength / 2, targetAngle);
-          const resolvedTargetColor = targetColor
-            ? getThemeColor(targetColor, theme)
-            : 'var(--mantine-color-bright)';
-
-          return (
-            <line
-              {...getStyles('needle')}
-              x1={inner.x}
-              y1={inner.y}
-              x2={outer.x}
-              y2={outer.y}
-              stroke={resolvedTargetColor}
-              strokeWidth={targetSize}
-              strokeLinecap={strokeLinecap}
-            />
-          );
-        })()
+  const targetMarker =
+    finiteTarget !== undefined
+      ? getTargetMarkerPoints(finiteTarget, targetMarkerLength, geometry)
       : null;
 
   const formatValue = valueFormatter || ((v: number) => String(v));
-
-  // The arc is drawn from the clamped value, and `aria-valuetext` is defined as the
-  // human-readable equivalent of `aria-valuenow` – reporting the raw value in either the
-  // default label or `aria-valuetext` would contradict both the arc and `aria-valuenow`.
-  const clampedValue = Math.max(min!, Math.min(max!, value));
-  const formattedValue = formatValue(clampedValue);
+  const formattedValue = clampedValue !== undefined ? formatValue(clampedValue) : undefined;
   const labelContent = label !== undefined ? label : formattedValue;
 
-  // A meter with no accessible name is announced as "meter" and nothing else, so there is
-  // always a name. A string `label` names the metric ("CPU usage") and is used unless an
-  // explicit `aria-label` is given; the generic fallback covers the rest. The default label
-  // is the formatted value, which would only repeat `aria-valuetext`.
   const ariaLabel =
-    others['aria-labelledby'] !== undefined
-      ? undefined
-      : (others['aria-label'] ?? (typeof label === 'string' ? label : undefined) ?? 'Gauge');
+    others['aria-labelledby'] !== undefined ? undefined : (others['aria-label'] ?? 'Gauge');
 
   return (
     <Box
       component="svg"
       viewBox={`${bbox.x} ${bbox.y} ${bbox.width} ${bbox.height}`}
-      __vars={{ '--gauge-aspect-ratio': `${bbox.width} / ${bbox.height}` }}
-      {...getStyles('root')}
+      {...getStyles('root', { style: { aspectRatio: `${bbox.width} / ${bbox.height}` } })}
       variant={variant}
       role="meter"
       aria-label={ariaLabel}
       aria-valuenow={clampedValue}
-      aria-valuemin={min}
-      aria-valuemax={max}
-      aria-valuetext={formattedValue}
+      aria-valuemin={rangeMin}
+      aria-valuemax={rangeMax}
+      aria-valuetext={formattedValue ?? 'No data'}
       {...others}
     >
       <path
-        {...getStyles('track')}
-        d={trackPath}
+        {...getStyles('track', {
+          style: trackColor ? { stroke: getThemeColor(trackColor, theme) } : undefined,
+        })}
+        d={describeArc(
+          geometry.cx,
+          geometry.cy,
+          geometry.r,
+          geometry.startAngle,
+          geometry.endAngle
+        )}
         fill="none"
-        stroke={resolvedTrackColor}
-        strokeWidth={thickness}
+        stroke="var(--mantine-color-default-border)"
+        strokeWidth={safeThickness}
         strokeLinecap={strokeLinecap}
       />
 
-      {sectionElements}
-      {needleElement}
+      {sectionArcs ? (
+        <>
+          {capArcs.map((arc, index) => (
+            <path
+              key={index}
+              {...getStyles('sectionCap')}
+              d={arc.path}
+              fill="none"
+              stroke={arc.color}
+              strokeWidth={safeThickness}
+              strokeLinecap="round"
+            />
+          ))}
+          {sectionArcs.map((arc, index) => (
+            <path
+              key={index}
+              {...getStyles('section')}
+              d={arc.path}
+              fill="none"
+              stroke={arc.color}
+              strokeWidth={safeThickness}
+              strokeLinecap="butt"
+            />
+          ))}
+        </>
+      ) : (
+        valueEndAngle !== geometry.startAngle && (
+          <path
+            {...getStyles('section')}
+            d={describeArc(
+              geometry.cx,
+              geometry.cy,
+              geometry.r,
+              geometry.startAngle,
+              valueEndAngle
+            )}
+            fill="none"
+            stroke={
+              filledColor
+                ? getThemeColor(filledColor, theme)
+                : 'var(--mantine-primary-color-filled)'
+            }
+            strokeWidth={safeThickness}
+            strokeLinecap={strokeLinecap}
+          />
+        )
+      )}
 
-      <foreignObject x={bbox.x} y={bbox.y} width={bbox.width} height={bbox.height}>
-        <div
-          {...getStyles('label', {
-            style: {
-              transform: `translate(${cx - bbox.x - bbox.width / 2}px, ${cy - bbox.y - bbox.height / 2}px)`,
-            },
-          })}
-        >
-          {labelContent}
-        </div>
+      {targetMarker && (
+        <line
+          {...getStyles('needle')}
+          x1={targetMarker.inner.x}
+          y1={targetMarker.inner.y}
+          x2={targetMarker.outer.x}
+          y2={targetMarker.outer.y}
+          stroke={targetColor ? getThemeColor(targetColor, theme) : 'var(--mantine-color-bright)'}
+          strokeWidth={safeTargetSize}
+          strokeLinecap={strokeLinecap}
+        />
+      )}
+
+      <foreignObject x={labelBox.x} y={labelBox.y} width={labelBox.width} height={labelBox.height}>
+        <div {...getStyles('label')}>{labelContent}</div>
       </foreignObject>
     </Box>
   );
