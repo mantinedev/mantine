@@ -25,7 +25,7 @@ function Demo() {
       value={value}
       onChange={(val) => {
         setValue(val);
-        if (value === '') {
+        if (val !== '') {
           setDropdownOpened(false);
         }
       }}
@@ -53,7 +53,7 @@ function Demo() {
       value={value}
       onChange={(val) => {
         setValue(val);
-        if (value === '') {
+        if (val !== '') {
           setDropdownOpened(false);
         }
       }}

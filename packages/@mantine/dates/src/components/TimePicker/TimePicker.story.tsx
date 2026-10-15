@@ -168,6 +168,7 @@ export function MinMax() {
         value={value}
         onChange={setValue}
         label="12h format"
+        withDropdown
       />
       <div>{value}</div>
       <TimePicker
@@ -216,7 +217,7 @@ export function ControlledDropdown() {
       value={value}
       onChange={(val) => {
         setValue(val);
-        if (value === '') {
+        if (val !== '') {
           setDropdownOpened(false);
         }
       }}
@@ -294,6 +295,34 @@ export function DurationDefaultValue() {
         defaultValue="100:30:15"
         clearable
       />
+    </div>
+  );
+}
+
+export function RuntimeLabelsAndFormat() {
+  const [value, setValue] = useState('15:45');
+  const [hindi, setHindi] = useState(false);
+  const [format, setFormat] = useState<'12h' | '24h'>('12h');
+
+  return (
+    <div style={{ padding: 40 }}>
+      <TimePicker
+        label="Enter time"
+        value={value}
+        onChange={setValue}
+        format={format}
+        withDropdown
+        amPmLabels={hindi ? { am: 'पूर्वाह्न', pm: 'अपराह्न' } : { am: 'AM', pm: 'PM' }}
+      />
+      <div>Value: {value}</div>
+      <Group mt="md">
+        <Button variant="default" onClick={() => setHindi((h) => !h)}>
+          Toggle labels
+        </Button>
+        <Button variant="default" onClick={() => setFormat((f) => (f === '12h' ? '24h' : '12h'))}>
+          Toggle format
+        </Button>
+      </Group>
     </div>
   );
 }

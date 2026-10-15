@@ -1,3 +1,5 @@
+import { AmPm, to24Hours } from '../../TimePicker/utils/convert-hours/convert-hours';
+
 interface BuildDateStringInput {
   day: number | null;
   month: number | null;
@@ -8,8 +10,7 @@ interface BuildDateStringInput {
   withTime: boolean;
   withSeconds: boolean;
   format?: '24h' | '12h';
-  amPm?: string | null;
-  amPmLabels?: { am: string; pm: string };
+  amPm?: AmPm | null;
 }
 
 interface BuildDateStringResult {
@@ -75,12 +76,7 @@ export function buildDateString(input: BuildDateStringInput): BuildDateStringRes
   let hours = input.hours!;
 
   if (input.format === '12h') {
-    const amPmLabels = input.amPmLabels || { am: 'AM', pm: 'PM' };
-    if (input.amPm === amPmLabels.am) {
-      hours = hours === 12 ? 0 : hours;
-    } else {
-      hours = hours === 12 ? 12 : hours + 12;
-    }
+    hours = to24Hours(hours, input.amPm!);
   }
 
   const seconds = input.withSeconds ? input.seconds! : 0;

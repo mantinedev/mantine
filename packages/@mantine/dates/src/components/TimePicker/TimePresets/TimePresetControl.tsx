@@ -6,6 +6,7 @@ import { TimePickerAmPmLabels, TimePickerFormat } from '../TimePicker.types';
 interface TimePresetControlProps {
   value: string;
   active: boolean;
+  disabled: boolean;
   onChange: (value: string) => void;
   format: TimePickerFormat;
   amPmLabels: TimePickerAmPmLabels;
@@ -15,6 +16,7 @@ interface TimePresetControlProps {
 export function TimePresetControl({
   value,
   active,
+  disabled,
   onChange,
   format,
   amPmLabels,
@@ -24,8 +26,10 @@ export function TimePresetControl({
 
   return (
     <UnstyledButton
-      mod={{ active }}
-      onClick={() => onChange(value)}
+      mod={{ active, disabled }}
+      aria-disabled={disabled || undefined}
+      tabIndex={-1}
+      onClick={() => !disabled && onChange(value)}
       {...ctx.getStyles('presetControl')}
     >
       <TimeValue withSeconds={withSeconds} value={value} format={format} amPmLabels={amPmLabels} />

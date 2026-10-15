@@ -152,6 +152,53 @@ describe('@mantine/dates/MaskedDateInput/controller', () => {
     expect(onChange).toHaveBeenLastCalledWith('2024-04-01 10:20:00');
   });
 
+  it('does not move focus when field actions are called from outside', () => {
+    render(
+      <>
+        <ControllerTest options={{ withTime: true, withSeconds: true, format: '12h' }} />
+        <button type="button">outside</button>
+      </>
+    );
+    const outside = screen.getByRole('button', { name: 'outside' });
+    act(() => outside.focus());
+
+    act(() => {
+      currentController.setDay(15);
+      currentController.setMonth(3);
+      currentController.setYear(2024);
+      currentController.setHours(2);
+      currentController.setMinutes(30);
+      currentController.setSeconds(0);
+      currentController.setAmPm('pm');
+    });
+
+    expect(outside).toHaveFocus();
+    expect(currentController.getValue()).toBe('2024-03-15 14:30:00');
+    expect(screen.getByLabelText('test-am-pm')).toHaveValue('PM');
+  });
+
+  it('keeps the am/pm field when amPmLabels change', () => {
+    const { rerender } = render(
+      <ControllerTest
+        options={{ defaultValue: '2024-03-15 14:30:00', withTime: true, format: '12h' }}
+      />
+    );
+    expect(currentController.getAmPm()).toBe('pm');
+
+    rerender(
+      <ControllerTest
+        options={{
+          defaultValue: '2024-03-15 14:30:00',
+          withTime: true,
+          format: '12h',
+          amPmLabels: { am: 'ДП', pm: 'ПП' },
+        }}
+      />
+    );
+    expect(screen.getByLabelText('test-am-pm')).toHaveValue('ПП');
+    expect(currentController.getValue()).toBe('2024-03-15 14:30:00');
+  });
+
   it('moves focus to the given field with the focus action', () => {
     render(<ControllerTest />);
 

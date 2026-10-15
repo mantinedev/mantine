@@ -1,4 +1,5 @@
 import { createRef } from 'react';
+import { act, fireEvent } from '@testing-library/react';
 import { render, screen, tests, userEvent } from '@mantine-tests/core';
 import { TimePicker, TimePickerProps, TimePickerStylesNames } from './TimePicker';
 
@@ -1054,5 +1055,470 @@ describe('@mantine/dates/TimePicker', () => {
     expect(spy).toHaveBeenLastCalledWith('19:15');
     expect(screen.getByLabelText('test-hours')).toHaveValue('19');
     expect(screen.getByLabelText('test-minutes')).toHaveValue('15');
+  });
+
+  it('keeps focus on the next field after a temporary 0 in the hours field (12h format)', async () => {
+    render(<TimePicker {...defaultProps} format="12h" />);
+    const hours = screen.getByLabelText('test-hours');
+
+    await userEvent.click(hours);
+    await userEvent.keyboard('0');
+    expect(hours).toHaveValue('00');
+
+    await userEvent.keyboard('{ArrowRight}');
+    expect(hours).toHaveValue('12');
+    expect(screen.getByLabelText('test-minutes')).toHaveFocus();
+  });
+
+  it('replaces a temporary 0 in the hours field when focus leaves the component (12h format)', async () => {
+    render(
+      <>
+        <TimePicker {...defaultProps} format="12h" />
+        <button type="button">outside</button>
+      </>
+    );
+    const hours = screen.getByLabelText('test-hours');
+
+    await userEvent.click(hours);
+    await userEvent.keyboard('0');
+    await userEvent.click(screen.getByRole('button', { name: 'outside' }));
+
+    expect(hours).toHaveValue('12');
+    expect(screen.getByRole('button', { name: 'outside' })).toHaveFocus();
+  });
+
+  it('parses pasted time with an am/pm label (12h format)', async () => {
+    const spy = jest.fn();
+    render(<TimePicker {...defaultProps} format="12h" onChange={spy} />);
+
+    await userEvent.click(screen.getByLabelText('test-hours'));
+    await userEvent.paste('1:05 PM');
+    expect(screen.getByLabelText('test-hours')).toHaveValue('01');
+    expect(screen.getByLabelText('test-minutes')).toHaveValue('05');
+    expect(screen.getByLabelText('test-am-pm')).toHaveValue('PM');
+    expect(spy).toHaveBeenLastCalledWith('13:05');
+
+    await userEvent.click(screen.getByLabelText('test-hours'));
+    await userEvent.paste('12:30 am');
+    expect(screen.getByLabelText('test-hours')).toHaveValue('12');
+    expect(screen.getByLabelText('test-am-pm')).toHaveValue('AM');
+    expect(spy).toHaveBeenLastCalledWith('00:30');
+  });
+
+  it('ignores pasted text that is not a valid time', async () => {
+    const spy = jest.fn();
+    render(<TimePicker {...defaultProps} withSeconds defaultValue="10:20:30" onChange={spy} />);
+
+    for (const text of ['ab:cd', '12:3o', '12:30:x', '10:75:00', '13:00 PM', '']) {
+      await userEvent.click(screen.getByLabelText('test-hours'));
+      await userEvent.paste(text);
+    }
+
+    expect(spy).not.toHaveBeenCalled();
+    expect(screen.getByLabelText('test-hours')).toHaveValue('10');
+    expect(screen.getByLabelText('test-minutes')).toHaveValue('20');
+    expect(screen.getByLabelText('test-seconds')).toHaveValue('30');
+  });
+
+  it('does not change the value on paste when readOnly or disabled', async () => {
+    const spy = jest.fn();
+    const { rerender } = render(
+      <TimePicker {...defaultProps} readOnly defaultValue="10:20" onChange={spy} />
+    );
+
+    await userEvent.click(screen.getByLabelText('test-hours'));
+    await userEvent.paste('13:34');
+    expect(screen.getByLabelText('test-hours')).toHaveValue('10');
+
+    rerender(<TimePicker {...defaultProps} disabled defaultValue="10:20" onChange={spy} />);
+    fireEvent.paste(screen.getByLabelText('test-hours'), {
+      clipboardData: { getData: () => '13:34' },
+    });
+    expect(screen.getByLabelText('test-hours')).toHaveValue('10');
+    expect(spy).not.toHaveBeenCalled();
+  });
+
+  it('disables presets outside of min and max', async () => {
+    const spy = jest.fn();
+    render(
+      <TimePicker
+        {...defaultProps}
+        withDropdown
+        min="12:00"
+        max="18:00"
+        presets={['07:00', '13:00', '19:00']}
+        onChange={spy}
+      />
+    );
+
+    await userEvent.click(screen.getByLabelText('test-hours'));
+    const early = screen.getByText('07:00').closest('button')!;
+    expect(early).toHaveAttribute('aria-disabled', 'true');
+    expect(early).toHaveAttribute('data-disabled');
+    expect(screen.getByText('19:00').closest('button')).toHaveAttribute('aria-disabled', 'true');
+    expect(screen.getByText('13:00').closest('button')).not.toHaveAttribute('aria-disabled');
+
+    await userEvent.click(early);
+    expect(spy).not.toHaveBeenCalled();
+  });
+
+  it('keeps the dropdown open and focus in the field when a disabled preset is clicked', async () => {
+    const spy = jest.fn();
+    render(
+      <TimePicker
+        {...defaultProps}
+        withDropdown
+        min="12:00"
+        max="18:00"
+        presets={['07:00', '13:00']}
+        onChange={spy}
+      />
+    );
+
+    await userEvent.click(screen.getByLabelText('test-hours'));
+    const early = screen.getByText('07:00').closest('button')!;
+    expect(early).not.toHaveAttribute('disabled');
+    expect(early).toHaveAttribute('aria-disabled', 'true');
+    expect(fireEvent.mouseDown(early)).toBe(false);
+
+    await userEvent.click(early);
+    expect(spy).not.toHaveBeenCalled();
+    expect(screen.getByLabelText('test-hours')).toHaveFocus();
+    expect(screen.getByText('13:00')).toBeInTheDocument();
+  });
+
+  it('keeps the dropdown open and focus in the field when a disabled list control is clicked', async () => {
+    const spy = jest.fn();
+    render(
+      <TimePicker
+        {...defaultProps}
+        withDropdown
+        format="12h"
+        min="10:30"
+        max="18:30"
+        onChange={spy}
+      />
+    );
+
+    await userEvent.click(screen.getByLabelText('test-hours'));
+    const hour = document.querySelector(
+      '.mantine-TimePicker-controlsList [data-value="8"]'
+    ) as HTMLButtonElement;
+    expect(hour).not.toHaveAttribute('disabled');
+    expect(hour).toHaveAttribute('aria-disabled', 'true');
+    expect(fireEvent.mouseDown(hour)).toBe(false);
+
+    await userEvent.click(hour);
+    expect(spy).not.toHaveBeenCalled();
+    expect(screen.getByLabelText('test-hours')).toHaveValue('');
+    expect(screen.getByLabelText('test-hours')).toHaveFocus();
+    expect(document.querySelector('.mantine-TimePicker-controlsList')).toBeInTheDocument();
+  });
+
+  it('selects am/pm typed on a virtual keyboard that does not report keys', async () => {
+    const spy = jest.fn();
+    render(
+      <TimePicker {...defaultProps} format="12h" withDropdown defaultValue="10:30" onChange={spy} />
+    );
+    const amPm = screen.getByLabelText('test-am-pm');
+
+    fireEvent.keyDown(amPm, { key: 'Unidentified', keyCode: 229 });
+    fireEvent.change(amPm, { target: { value: 'AMp' } });
+    expect(amPm).toHaveValue('PM');
+    expect(spy).toHaveBeenLastCalledWith('22:30');
+
+    fireEvent.keyDown(amPm, { key: 'Unidentified', keyCode: 229 });
+    fireEvent.change(amPm, { target: { value: 'a' } });
+    expect(amPm).toHaveValue('AM');
+    expect(spy).toHaveBeenLastCalledWith('10:30');
+
+    fireEvent.keyDown(amPm, { key: 'Unidentified', keyCode: 229 });
+    fireEvent.change(amPm, { target: { value: 'AMx' } });
+    expect(amPm).toHaveValue('AM');
+
+    fireEvent.change(amPm, { target: { value: 'A' } });
+    fireEvent.change(amPm, { target: { value: '' } });
+    expect(amPm).toHaveValue('--');
+  });
+
+  it('resolves multi-character am/pm labels typed on a virtual keyboard', () => {
+    const spy = jest.fn();
+    render(
+      <TimePicker
+        {...defaultProps}
+        format="12h"
+        withDropdown
+        defaultValue="03:45"
+        amPmLabels={{ am: '午前', pm: '午後' }}
+        onChange={spy}
+      />
+    );
+    const amPm = screen.getByLabelText('test-am-pm');
+
+    fireEvent.change(amPm, { target: { value: '午前午' } });
+    expect(amPm).toHaveValue('午');
+    fireEvent.change(amPm, { target: { value: '午後' } });
+    expect(amPm).toHaveValue('午後');
+    expect(spy).toHaveBeenLastCalledWith('15:45');
+  });
+
+  it('clamps the selected preset to min and max', async () => {
+    const spy = jest.fn();
+    render(
+      <TimePicker
+        {...defaultProps}
+        withDropdown
+        min="12:00:30"
+        presets={['12:00:45']}
+        onChange={spy}
+      />
+    );
+
+    await userEvent.click(screen.getByLabelText('test-hours'));
+    await userEvent.click(screen.getByText('12:00'));
+    expect(spy).toHaveBeenCalledTimes(1);
+    expect(spy).toHaveBeenLastCalledWith('12:01');
+  });
+
+  it('disables dropdown controls outside of min and max', async () => {
+    render(<TimePicker {...defaultProps} withDropdown min="12:30" max="18:00" />);
+
+    await userEvent.click(screen.getByLabelText('test-hours'));
+    const lists = document.querySelectorAll('.mantine-TimePicker-controlsList');
+    const hourControl = (value: number) =>
+      lists[0].querySelector(`[data-value="${value}"]`) as HTMLButtonElement;
+    const minuteControl = (value: number) =>
+      lists[1].querySelector(`[data-value="${value}"]`) as HTMLButtonElement;
+
+    expect(hourControl(11)).toHaveAttribute('aria-disabled', 'true');
+    expect(hourControl(19)).toHaveAttribute('aria-disabled', 'true');
+    expect(hourControl(12)).not.toHaveAttribute('aria-disabled');
+    expect(hourControl(18)).not.toHaveAttribute('aria-disabled');
+    expect(minuteControl(0)).not.toHaveAttribute('aria-disabled');
+
+    await userEvent.click(hourControl(12));
+    expect(minuteControl(0)).toHaveAttribute('aria-disabled', 'true');
+    expect(minuteControl(30)).not.toHaveAttribute('aria-disabled');
+  });
+
+  it('keeps built-in key handlers when handlers are passed with input props', async () => {
+    const hoursKeyDown = jest.fn();
+    const amPmKeyDown = jest.fn();
+    render(
+      <TimePicker
+        {...defaultProps}
+        format="12h"
+        hoursInputProps={{ onKeyDown: hoursKeyDown }}
+        amPmSelectProps={{ onKeyDown: amPmKeyDown }}
+      />
+    );
+
+    await userEvent.click(screen.getByLabelText('test-hours'));
+    await userEvent.keyboard('{ArrowUp}');
+    expect(screen.getByLabelText('test-hours')).toHaveValue('01');
+    expect(hoursKeyDown).toHaveBeenCalled();
+
+    await userEvent.click(screen.getByLabelText('test-am-pm'));
+    await userEvent.keyboard('{End}');
+    expect(screen.getByLabelText('test-am-pm')).toHaveValue('PM');
+    expect(amPmKeyDown).toHaveBeenCalled();
+  });
+
+  it('keeps the am/pm value when amPmLabels change', () => {
+    const spy = jest.fn();
+    const { rerender } = render(
+      <TimePicker {...defaultProps} format="12h" defaultValue="15:45" onChange={spy} name="t" />
+    );
+    expect(screen.getByLabelText('test-am-pm')).toHaveValue('PM');
+
+    rerender(
+      <TimePicker
+        {...defaultProps}
+        format="12h"
+        defaultValue="15:45"
+        onChange={spy}
+        name="t"
+        amPmLabels={{ am: 'ДП', pm: 'ПП' }}
+      />
+    );
+    expect(screen.getByLabelText('test-am-pm')).toHaveValue('ПП');
+    expect(document.querySelector('input[name="t"]')).toHaveValue('15:45');
+    expect(spy).not.toHaveBeenCalled();
+  });
+
+  it('converts the fields when format changes', () => {
+    const { rerender } = render(
+      <TimePicker {...defaultProps} format="24h" defaultValue="15:45" name="t" />
+    );
+
+    rerender(<TimePicker {...defaultProps} format="12h" defaultValue="15:45" name="t" />);
+    expect(screen.getByLabelText('test-hours')).toHaveValue('03');
+    expect(screen.getByLabelText('test-am-pm')).toHaveValue('PM');
+    expect(document.querySelector('input[name="t"]')).toHaveValue('15:45');
+
+    rerender(<TimePicker {...defaultProps} format="24h" defaultValue="15:45" name="t" />);
+    expect(screen.getByLabelText('test-hours')).toHaveValue('15');
+    expect(document.querySelector('input[name="t"]')).toHaveValue('15:45');
+  });
+
+  it('ignores am/pm keys pressed with modifiers', async () => {
+    render(<TimePicker {...defaultProps} format="12h" defaultValue="15:45" />);
+    const amPm = screen.getByLabelText('test-am-pm');
+
+    await userEvent.click(amPm);
+    await userEvent.keyboard('{Control>}a{/Control}');
+    expect(amPm).toHaveValue('PM');
+
+    const event = new KeyboardEvent('keydown', {
+      key: 'p',
+      code: 'KeyP',
+      metaKey: true,
+      bubbles: true,
+      cancelable: true,
+    });
+    act(() => {
+      amPm.dispatchEvent(event);
+    });
+    expect(event.defaultPrevented).toBe(false);
+  });
+
+  it('matches typed am/pm labels by prefix in the select', async () => {
+    const spy = jest.fn();
+    render(
+      <TimePicker
+        {...defaultProps}
+        format="12h"
+        defaultValue="03:45"
+        amPmLabels={{ am: 'पूर्वाह्न', pm: 'अपराह्न' }}
+        onChange={spy}
+      />
+    );
+    const amPm = screen.getByLabelText('test-am-pm');
+
+    await userEvent.click(amPm);
+    await userEvent.keyboard('अ');
+    expect(amPm).toHaveValue('अपराह्न');
+    expect(spy).toHaveBeenLastCalledWith('15:45');
+  });
+
+  it('sets readOnly on the am/pm text input', () => {
+    render(<TimePicker {...defaultProps} format="12h" withDropdown readOnly />);
+    expect(screen.getByLabelText('test-am-pm')).toHaveAttribute('readonly');
+  });
+
+  it('removes preset buttons from the tab order', async () => {
+    render(<TimePicker {...defaultProps} withDropdown presets={['12:30']} />);
+    await userEvent.click(screen.getByLabelText('test-hours'));
+    expect(screen.getByText('12:30').closest('button')).toHaveAttribute('tabindex', '-1');
+  });
+
+  it.each(['25:00', '24:00', '100:00'])(
+    'clamps pasted hours greater than 23 to 23:59 in 12h format (%s)',
+    async (pasted) => {
+      const spy = jest.fn();
+      render(<TimePicker {...defaultProps} format="12h" onChange={spy} />);
+
+      await userEvent.click(screen.getByLabelText('test-hours'));
+      await userEvent.paste(pasted);
+      expect(screen.getByLabelText('test-hours')).toHaveValue('11');
+      expect(screen.getByLabelText('test-minutes')).toHaveValue('59');
+      expect(screen.getByLabelText('test-am-pm')).toHaveValue('PM');
+      expect(spy).toHaveBeenLastCalledWith('23:59');
+    }
+  );
+
+  it('clamps pasted hours greater than 23 to 23:59 in 24h format', async () => {
+    const spy = jest.fn();
+    render(<TimePicker {...defaultProps} format="24h" onChange={spy} />);
+
+    await userEvent.click(screen.getByLabelText('test-hours'));
+    await userEvent.paste('25:00');
+    expect(screen.getByLabelText('test-hours')).toHaveValue('23');
+    expect(screen.getByLabelText('test-minutes')).toHaveValue('59');
+    expect(spy).toHaveBeenLastCalledWith('23:59');
+  });
+
+  it.each(['12h', '24h'] as const)(
+    'clamps a value with hours greater than 23 to 23:59 (%s format)',
+    (format) => {
+      render(<TimePicker {...defaultProps} format={format} value="25:30" name="t" />);
+      expect(screen.getByLabelText('test-hours')).toHaveValue(format === '12h' ? '11' : '23');
+      expect(screen.getByLabelText('test-minutes')).toHaveValue('59');
+      expect(document.querySelector('input[name="t"]')).toHaveValue('23:59');
+    }
+  );
+
+  it('selects am/pm with Latin a and p keys when labels do not start with them', async () => {
+    const spy = jest.fn();
+    render(
+      <TimePicker
+        {...defaultProps}
+        format="12h"
+        defaultValue="03:45"
+        amPmLabels={{ am: 'पूर्वाह्न', pm: 'अपराह्न' }}
+        onChange={spy}
+      />
+    );
+    const amPm = screen.getByLabelText('test-am-pm');
+
+    await userEvent.click(amPm);
+    await userEvent.keyboard('p');
+    expect(amPm).toHaveValue('अपराह्न');
+    expect(spy).toHaveBeenLastCalledWith('15:45');
+
+    await userEvent.keyboard('A');
+    expect(amPm).toHaveValue('पूर्वाह्न');
+    expect(spy).toHaveBeenLastCalledWith('03:45');
+
+    await userEvent.keyboard('{Control>}p{/Control}');
+    expect(amPm).toHaveValue('पूर्वाह्न');
+  });
+
+  it('selects am/pm with Latin a and p keys in the text input when labels do not start with them', async () => {
+    render(
+      <TimePicker
+        {...defaultProps}
+        format="12h"
+        withDropdown
+        defaultValue="03:45"
+        amPmLabels={{ am: 'पूर्वाह्न', pm: 'अपराह्न' }}
+      />
+    );
+    const amPm = screen.getByLabelText('test-am-pm');
+
+    await userEvent.click(amPm);
+    await userEvent.keyboard('p');
+    expect(amPm).toHaveValue('अपराह्न');
+  });
+
+  it('removes the dropdown scroll containers from the tab order', async () => {
+    render(<TimePicker {...defaultProps} withDropdown withSeconds format="12h" />);
+    await userEvent.click(screen.getByLabelText('test-hours'));
+    const viewports = document.querySelectorAll('.mantine-ScrollArea-viewport');
+    expect(viewports).toHaveLength(3);
+    viewports.forEach((viewport) => expect(viewport).toHaveAttribute('tabindex', '-1'));
+  });
+
+  it('removes the presets scroll container from the tab order', async () => {
+    render(<TimePicker {...defaultProps} withDropdown presets={['12:30']} />);
+    await userEvent.click(screen.getByLabelText('test-hours'));
+    expect(document.querySelector('.mantine-ScrollArea-viewport')).toHaveAttribute(
+      'tabindex',
+      '-1'
+    );
+  });
+
+  it('reports the converted value when a format change completes it', async () => {
+    const spy = jest.fn();
+    const { rerender } = render(<TimePicker {...defaultProps} format="12h" onChange={spy} />);
+
+    await userEvent.type(screen.getByLabelText('test-hours'), '5');
+    await userEvent.type(screen.getByLabelText('test-minutes'), '30');
+    expect(spy).not.toHaveBeenCalled();
+
+    rerender(<TimePicker {...defaultProps} format="24h" onChange={spy} />);
+    expect(screen.getByLabelText('test-hours')).toHaveValue('05');
+    expect(spy).toHaveBeenCalledTimes(1);
+    expect(spy).toHaveBeenLastCalledWith('05:30');
   });
 });

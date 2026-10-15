@@ -38,10 +38,15 @@
   }
 
   @mixin hover {
-    &:where(:not([data-active])) {
+    &:where(:not([data-active], [data-disabled])) {
       color: var(--mantine-color-bright);
       background-color: var(--mantine-color-hover-strong);
     }
+  }
+
+  &:where([data-disabled]) {
+    opacity: var(--mantine-disabled-opacity);
+    cursor: not-allowed;
   }
 }
 
@@ -58,10 +63,15 @@
   }
 
   @mixin hover {
-    &:where(:not([data-active])) {
+    &:where(:not([data-active], [data-disabled])) {
       color: var(--mantine-color-bright);
       background-color: var(--mantine-color-hover-strong);
     }
+  }
+
+  &:where([data-disabled]) {
+    opacity: var(--mantine-disabled-opacity);
+    cursor: not-allowed;
   }
 }
 

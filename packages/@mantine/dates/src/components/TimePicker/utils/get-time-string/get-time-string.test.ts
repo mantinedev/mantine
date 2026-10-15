@@ -10,7 +10,6 @@ describe('@mantine/dates/get-time-string', () => {
         format: '24h',
         withSeconds: true,
         amPm: 'am',
-        amPmLabels: { am: 'am', pm: 'pm' },
       })
     ).toEqual({ valid: false, value: '' });
     expect(
@@ -21,7 +20,6 @@ describe('@mantine/dates/get-time-string', () => {
         format: '24h',
         withSeconds: true,
         amPm: 'am',
-        amPmLabels: { am: 'am', pm: 'pm' },
       })
     ).toEqual({ valid: false, value: '' });
   });
@@ -35,7 +33,6 @@ describe('@mantine/dates/get-time-string', () => {
         format: '24h',
         withSeconds: true,
         amPm: 'am',
-        amPmLabels: { am: 'am', pm: 'pm' },
       })
     ).toEqual({ valid: false, value: '' });
   });
@@ -49,7 +46,6 @@ describe('@mantine/dates/get-time-string', () => {
         format: '24h',
         withSeconds: true,
         amPm: 'am',
-        amPmLabels: { am: 'am', pm: 'pm' },
       })
     ).toEqual({ valid: false, value: '' });
     expect(
@@ -60,7 +56,6 @@ describe('@mantine/dates/get-time-string', () => {
         format: '24h',
         withSeconds: true,
         amPm: 'am',
-        amPmLabels: { am: 'am', pm: 'pm' },
       })
     ).toEqual({ valid: true, value: '10:10:10' });
   });
@@ -74,7 +69,6 @@ describe('@mantine/dates/get-time-string', () => {
         format: '12h',
         withSeconds: true,
         amPm: null,
-        amPmLabels: { am: 'am', pm: 'pm' },
       })
     ).toEqual({ valid: false, value: '' });
   });
@@ -88,7 +82,6 @@ describe('@mantine/dates/get-time-string', () => {
         format: '12h',
         withSeconds: true,
         amPm: 'am',
-        amPmLabels: { am: 'am', pm: 'pm' },
       })
     ).toEqual({ valid: true, value: '10:10:10' });
     expect(
@@ -99,7 +92,6 @@ describe('@mantine/dates/get-time-string', () => {
         format: '12h',
         withSeconds: false,
         amPm: 'am',
-        amPmLabels: { am: 'am', pm: 'pm' },
       })
     ).toEqual({ valid: true, value: '10:10' });
     expect(
@@ -110,8 +102,15 @@ describe('@mantine/dates/get-time-string', () => {
         format: '12h',
         withSeconds: true,
         amPm: 'pm',
-        amPmLabels: { am: 'am', pm: 'pm' },
       })
     ).toEqual({ valid: true, value: '22:10:10' });
+  });
+
+  it('returns valid: false for parts that are not integers in range', () => {
+    const base = { format: '24h' as const, withSeconds: true, amPm: null };
+    expect(getTimeString({ ...base, hours: NaN, minutes: 10, seconds: 10 }).valid).toBe(false);
+    expect(getTimeString({ ...base, hours: 10, minutes: 60, seconds: 10 }).valid).toBe(false);
+    expect(getTimeString({ ...base, hours: 10, minutes: 10, seconds: 1.5 }).valid).toBe(false);
+    expect(getTimeString({ ...base, hours: -1, minutes: 10, seconds: 10 }).valid).toBe(false);
   });
 });

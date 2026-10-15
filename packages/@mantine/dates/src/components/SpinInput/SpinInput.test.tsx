@@ -108,6 +108,32 @@ describe('@mantine/dates/SpinInput', () => {
     expect(getInput()).toHaveValue('00');
   });
 
+  it('does not move the value against the arrow direction when it is not aligned to the step', async () => {
+    render(<StatefulSpinInput initialValue={58} max={59} step={5} />);
+    await userEvent.click(getInput());
+
+    await userEvent.keyboard('{ArrowUp}');
+    expect(getInput()).toHaveValue('58');
+
+    await userEvent.keyboard('{ArrowDown}');
+    expect(getInput()).toHaveValue('53');
+
+    await userEvent.keyboard('{ArrowUp}');
+    expect(getInput()).toHaveValue('55');
+
+    await userEvent.keyboard('{ArrowUp}');
+    expect(getInput()).toHaveValue('55');
+
+    await userEvent.keyboard('{End}{ArrowUp}');
+    expect(getInput()).toHaveValue('59');
+
+    await userEvent.keyboard('{ArrowDown}');
+    expect(getInput()).toHaveValue('54');
+
+    await userEvent.keyboard('{Home}{ArrowDown}');
+    expect(getInput()).toHaveValue('00');
+  });
+
   it('clears value with Backspace and moves to previous input when empty', async () => {
     const onPreviousInput = jest.fn();
     render(<StatefulSpinInput initialValue={10} onPreviousInput={onPreviousInput} />);
@@ -140,5 +166,16 @@ describe('@mantine/dates/SpinInput', () => {
     rerender(<SpinInput {...defaultProps} value={null} />);
     expect(getInput()).not.toHaveAttribute('aria-valuenow');
     expect(getInput()).not.toHaveAttribute('aria-valuetext');
+  });
+
+  it('keeps the selection when the mouse button is released over the input', async () => {
+    const onMouseUp = jest.fn();
+    render(<StatefulSpinInput initialValue={14} onMouseUp={onMouseUp} />);
+    await userEvent.click(getInput());
+
+    const event = new MouseEvent('mouseup', { bubbles: true, cancelable: true });
+    getInput().dispatchEvent(event);
+    expect(event.defaultPrevented).toBe(true);
+    expect(onMouseUp).toHaveBeenCalled();
   });
 });

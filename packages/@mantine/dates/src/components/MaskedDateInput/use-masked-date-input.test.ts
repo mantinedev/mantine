@@ -49,7 +49,7 @@ describe('@mantine/dates/MaskedDateInput/use-masked-date-input', () => {
     expect(hook.result.current.getYear()).toBe(2024);
     expect(hook.result.current.getHours()).toBe(2);
     expect(hook.result.current.getMinutes()).toBe(35);
-    expect(hook.result.current.getAmPm()).toBe('PM');
+    expect(hook.result.current.getAmPm()).toBe('pm');
     expect(hook.result.current.getValue()).toBe('2024-03-15 14:35:00');
   });
 

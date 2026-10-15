@@ -44,7 +44,10 @@ import {
   TimePickerControllerOptions,
   useTimePicker,
 } from './use-time-picker';
+import { clampTime } from './utils/clamp-time/clamp-time';
+import { getHoursOfPeriod, to24Hours } from './utils/convert-hours/convert-hours';
 import { getParsedTime } from './utils/get-parsed-time/get-parsed-time';
+import { isTimeOutOfRange } from './utils/is-time-out-of-range/is-time-out-of-range';
 import { padTime } from './utils/pad-time/pad-time';
 import timeFieldsClasses from './TimeFields.module.css';
 import moduleClasses from './TimePicker.module.css';
@@ -377,12 +380,52 @@ export const TimePicker = factory<TimePickerFactory>((_props) => {
   };
 
   const handlePresetSelect = (timeString: string) => {
-    controller.setValue(timeString);
+    controller.setValue(
+      controller.min || controller.max
+        ? clampTime(timeString, controller.min, controller.max, controller.withSeconds).timeString
+        : timeString
+    );
 
     if (closeDropdownOnPresetSelect) {
       closeDropdown();
     }
   };
+
+  const canPaste = !readOnly && !disabled;
+  const getPasteHandler =
+    (handler: React.ClipboardEventHandler<any> | undefined) =>
+    (event: React.ClipboardEvent<any>) => {
+      handler?.(event);
+      if (canPaste) {
+        controller.onPaste(event);
+      }
+    };
+
+  const getHours24 = (hours: number) => {
+    if (controller.format === '24h') {
+      return [hours];
+    }
+
+    return controller.amPm === null
+      ? [to24Hours(hours, 'am'), to24Hours(hours, 'pm')]
+      : [to24Hours(hours, controller.amPm)];
+  };
+
+  const isOutOfRange = (
+    hours: number[],
+    minutes: number | null = null,
+    seconds: number | null = null
+  ) =>
+    hours.every((h) =>
+      isTimeOutOfRange({
+        hours: h,
+        minutes,
+        seconds,
+        min: controller.min,
+        max: controller.max,
+        withSeconds: controller.withSeconds,
+      })
+    );
 
   const handleBlur = (event: React.FocusEvent<HTMLDivElement>) => {
     if (!event.currentTarget.contains(event.relatedTarget)) {
@@ -489,18 +532,13 @@ export const TimePicker = factory<TimePickerFactory>((_props) => {
                   aria-label={hoursInputLabel}
                   readOnly={readOnly}
                   disabled={disabled}
-                  onPaste={controller.onPaste}
+                  onPaste={getPasteHandler(hoursInputProps?.onPaste)}
                   onFocus={(event) => {
                     handleFocus(event);
                     hoursInputProps?.onFocus?.(event);
                   }}
                   onBlur={(event) => {
-                    const actualInputValue = event.currentTarget.value;
-                    const numericValue = actualInputValue ? parseInt(actualInputValue, 10) : null;
-
-                    if (controller.format === '12h' && numericValue === 0) {
-                      controller.setHours(12);
-                    }
+                    controller.onHoursBlur();
                     hoursInputProps?.onBlur?.(event);
                   }}
                   placeholder={resolvedHoursPlaceholder}
@@ -526,7 +564,7 @@ export const TimePicker = factory<TimePickerFactory>((_props) => {
                   tabIndex={-1}
                   readOnly={readOnly}
                   disabled={disabled}
-                  onPaste={controller.onPaste}
+                  onPaste={getPasteHandler(minutesInputProps?.onPaste)}
                   onFocus={(event) => {
                     handleFocus(event);
                     minutesInputProps?.onFocus?.(event);
@@ -555,7 +593,7 @@ export const TimePicker = factory<TimePickerFactory>((_props) => {
                       tabIndex={-1}
                       readOnly={readOnly}
                       disabled={disabled}
-                      onPaste={controller.onPaste}
+                      onPaste={getPasteHandler(secondsInputProps?.onPaste)}
                       onFocus={(event) => {
                         handleFocus(event);
                         secondsInputProps?.onFocus?.(event);
@@ -582,7 +620,7 @@ export const TimePicker = factory<TimePickerFactory>((_props) => {
                     readOnly={readOnly}
                     disabled={disabled}
                     tabIndex={-1}
-                    onPaste={controller.onPaste}
+                    onPaste={getPasteHandler(amPmSelectProps?.onPaste)}
                     onFocus={(event) => {
                       handleFocus(event);
                       amPmSelectProps?.onFocus?.(event);
@@ -614,6 +652,8 @@ export const TimePicker = factory<TimePickerFactory>((_props) => {
                 presets={presets}
                 amPmLabels={controller.amPmLabels}
                 withSeconds={controller.withSeconds || false}
+                min={controller.min}
+                max={controller.max}
               />
             ) : (
               <div {...getStyles('controlsListGroup')}>
@@ -622,7 +662,11 @@ export const TimePicker = factory<TimePickerFactory>((_props) => {
                   max={controller.format === '12h' ? 12 : 23}
                   step={hoursStep}
                   value={controller.hours}
-                  onSelect={controller.setHours}
+                  onSelect={(hours) => {
+                    controller.setHours(hours);
+                    controller.focus('hours');
+                  }}
+                  isDisabled={(hours) => isOutOfRange(getHours24(hours))}
                   reversed={reverseTimeControlsList}
                 />
                 <TimeControlsList
@@ -630,7 +674,13 @@ export const TimePicker = factory<TimePickerFactory>((_props) => {
                   max={59}
                   step={minutesStep}
                   value={controller.minutes}
-                  onSelect={controller.setMinutes}
+                  onSelect={(minutes) => {
+                    controller.setMinutes(minutes);
+                    controller.focus('minutes');
+                  }}
+                  isDisabled={(minutes) =>
+                    controller.hours !== null && isOutOfRange(getHours24(controller.hours), minutes)
+                  }
                   reversed={reverseTimeControlsList}
                 />
                 {controller.withSeconds && (
@@ -639,7 +689,15 @@ export const TimePicker = factory<TimePickerFactory>((_props) => {
                     max={59}
                     step={secondsStep}
                     value={controller.seconds}
-                    onSelect={controller.setSeconds}
+                    onSelect={(seconds) => {
+                      controller.setSeconds(seconds);
+                      controller.focus('seconds');
+                    }}
+                    isDisabled={(seconds) =>
+                      controller.hours !== null &&
+                      controller.minutes !== null &&
+                      isOutOfRange(getHours24(controller.hours), controller.minutes, seconds)
+                    }
                     reversed={reverseTimeControlsList}
                   />
                 )}
@@ -647,7 +705,11 @@ export const TimePicker = factory<TimePickerFactory>((_props) => {
                   <AmPmControlsList
                     labels={controller.amPmLabels}
                     value={controller.amPm}
-                    onSelect={controller.setAmPm}
+                    onSelect={(amPm) => {
+                      controller.setAmPm(amPm);
+                      controller.focus('amPm');
+                    }}
+                    isDisabled={(amPm) => isOutOfRange(getHoursOfPeriod(amPm))}
                   />
                 )}
               </div>

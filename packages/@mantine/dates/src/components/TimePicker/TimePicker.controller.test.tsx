@@ -169,4 +169,29 @@ describe('@mantine/dates/TimePicker/controller', () => {
     expect(getHoursInput()).toHaveValue('');
     expect(controller.hasValue()).toBe(false);
   });
+
+  it('does not move focus when the field setters are called from outside', async () => {
+    let controller: TimePickerController = null as any;
+    render(
+      <>
+        <ControllerTest options={{ format: '12h' }} onController={(c) => (controller = c)} />
+        <button
+          type="button"
+          onClick={() => {
+            controller.setHours(5);
+            controller.setMinutes(30);
+            controller.setAmPm('pm');
+          }}
+        >
+          outside
+        </button>
+      </>
+    );
+
+    const button = screen.getByRole('button', { name: 'outside' });
+    await userEvent.click(button);
+    expect(button).toHaveFocus();
+    expect(controller.getValue()).toBe('17:30');
+    expect(screen.getByLabelText('test-am-pm')).toHaveValue('PM');
+  });
 });

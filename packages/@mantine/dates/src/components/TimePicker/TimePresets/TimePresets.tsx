@@ -7,6 +7,7 @@ import {
   TimePickerPresets,
 } from '../TimePicker.types';
 import { isSameTime } from '../utils/is-same-time/is-same-time';
+import { isPresetDisabled } from './is-preset-disabled';
 import { TimePresetControl } from './TimePresetControl';
 import { TimePresetGroup } from './TimePresetGroup';
 
@@ -16,6 +17,8 @@ interface TimePresetsProps {
   amPmLabels: TimePickerAmPmLabels;
   value: string;
   withSeconds: boolean;
+  min: string | undefined;
+  max: string | undefined;
   onChange: (value: string) => void;
 }
 
@@ -24,6 +27,8 @@ export function TimePresets({
   format,
   amPmLabels,
   withSeconds,
+  min,
+  max,
   value,
   onChange,
 }: TimePresetsProps) {
@@ -42,6 +47,7 @@ export function TimePresets({
         amPmLabels={amPmLabels}
         withSeconds={withSeconds}
         active={isSameTime({ time: item, compare: value, withSeconds })}
+        disabled={isPresetDisabled(item, min, max)}
         onChange={onChange}
       />
     ));
@@ -52,6 +58,7 @@ export function TimePresets({
         type="never"
         {...ctx.getStyles('scrollarea')}
         {...ctx.scrollAreaProps}
+        viewportProps={{ tabIndex: -1, ...ctx.scrollAreaProps?.viewportProps }}
       >
         <div {...ctx.getStyles('presetsRoot')}>
           <SimpleGrid cols={withSeconds ? 2 : 3} spacing={4}>
@@ -70,6 +77,8 @@ export function TimePresets({
       format={format}
       amPmLabels={amPmLabels}
       withSeconds={withSeconds}
+      min={min}
+      max={max}
       onChange={onChange}
     />
   ));
@@ -80,6 +89,7 @@ export function TimePresets({
       type="never"
       {...ctx.getStyles('scrollarea')}
       {...ctx.scrollAreaProps}
+      viewportProps={{ tabIndex: -1, ...ctx.scrollAreaProps?.viewportProps }}
     >
       <div {...ctx.getStyles('presetsRoot')}>{groups}</div>
     </ScrollArea.Autosize>

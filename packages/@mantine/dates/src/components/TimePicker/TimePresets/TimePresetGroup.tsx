@@ -2,6 +2,7 @@ import { SimpleGrid } from '@mantine/core';
 import { useTimePickerContext } from '../TimePicker.context';
 import { TimePickerAmPmLabels, TimePickerFormat, TimePickerPresetGroup } from '../TimePicker.types';
 import { isSameTime } from '../utils/is-same-time/is-same-time';
+import { isPresetDisabled } from './is-preset-disabled';
 import { TimePresetControl } from './TimePresetControl';
 
 interface TimePresetGroupProps {
@@ -11,6 +12,8 @@ interface TimePresetGroupProps {
   format: TimePickerFormat;
   amPmLabels: TimePickerAmPmLabels;
   withSeconds: boolean;
+  min: string | undefined;
+  max: string | undefined;
 }
 
 export function TimePresetGroup({
@@ -20,6 +23,8 @@ export function TimePresetGroup({
   format,
   amPmLabels,
   withSeconds,
+  min,
+  max,
 }: TimePresetGroupProps) {
   const ctx = useTimePickerContext();
 
@@ -31,6 +36,7 @@ export function TimePresetGroup({
       amPmLabels={amPmLabels}
       withSeconds={withSeconds}
       active={isSameTime({ time: item, compare: value, withSeconds })}
+      disabled={isPresetDisabled(item, min, max)}
       onChange={onChange}
     />
   ));

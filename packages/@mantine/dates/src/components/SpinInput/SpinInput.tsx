@@ -40,6 +40,10 @@ export function SpinInput({
   onNextInput,
   onPreviousInput,
   onFocus,
+  onKeyDown,
+  onClick,
+  onMouseDown,
+  onMouseUp,
   readOnly,
   allowTemporaryZero = false,
   placeholder = '--',
@@ -149,7 +153,7 @@ export function SpinInput({
 
     if (event.key === 'ArrowUp') {
       event.preventDefault();
-      const newValue = value === null ? min : clamp(value + step, min, arrowsMax);
+      const newValue = value === null ? min : Math.max(value, clamp(value + step, min, arrowsMax));
       emitChange(newValue);
     }
 
@@ -177,7 +181,10 @@ export function SpinInput({
       placeholder={placeholder}
       value={displayValue}
       onChange={(event) => handleChange(event.currentTarget.value)}
-      onKeyDown={handleKeyDown}
+      onKeyDown={(event) => {
+        handleKeyDown(event);
+        onKeyDown?.(event);
+      }}
       onFocus={(event) => {
         event.currentTarget.select();
         onFocus?.(event);
@@ -188,8 +195,16 @@ export function SpinInput({
         if (selectionStart !== 0 || selectionEnd !== inputValue.length) {
           event.currentTarget.select();
         }
+        onClick?.(event);
       }}
-      onMouseDown={(event) => event.stopPropagation()}
+      onMouseDown={(event) => {
+        event.stopPropagation();
+        onMouseDown?.(event);
+      }}
+      onMouseUp={(event) => {
+        event.preventDefault();
+        onMouseUp?.(event);
+      }}
       {...others}
     />
   );

@@ -128,7 +128,7 @@ function Demo() {
   controller.setHours(14);
   controller.setMinutes(30);
   controller.setSeconds(0);
-  controller.setAmPm('PM');
+  controller.setAmPm('pm'); // -> 'am' | 'pm' | null
   controller.clear(); // -> clears all fields and focuses the first field of fieldsOrder
   controller.focus('year'); // -> 'day' | 'month' | 'year' | 'hours' | 'minutes' | 'seconds' | 'amPm'
 
@@ -140,7 +140,7 @@ function Demo() {
   controller.getHours(); // -> number | null
   controller.getMinutes(); // -> number | null
   controller.getSeconds(); // -> number | null
-  controller.getAmPm(); // -> string | null, always null in 24h format
+  controller.getAmPm(); // -> 'am' | 'pm' | null, always null in 24h format
   controller.hasValue(); // -> boolean, true if at least one field has a value
 
   return <MaskedDateInput controller={controller} />;

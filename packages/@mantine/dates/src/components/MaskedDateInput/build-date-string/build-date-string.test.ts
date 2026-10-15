@@ -118,8 +118,7 @@ describe('@mantine/dates/buildDateString', () => {
         withTime: true,
         withSeconds: false,
         format: '12h',
-        amPm: 'AM',
-        amPmLabels: { am: 'AM', pm: 'PM' },
+        amPm: 'am',
       })
     ).toEqual({ valid: true, value: '2024-03-15 00:30:00' });
   });
@@ -136,8 +135,7 @@ describe('@mantine/dates/buildDateString', () => {
         withTime: true,
         withSeconds: false,
         format: '12h',
-        amPm: 'PM',
-        amPmLabels: { am: 'AM', pm: 'PM' },
+        amPm: 'pm',
       })
     ).toEqual({ valid: true, value: '2024-03-15 14:30:00' });
   });
@@ -155,7 +153,6 @@ describe('@mantine/dates/buildDateString', () => {
         withSeconds: false,
         format: '12h',
         amPm: null,
-        amPmLabels: { am: 'AM', pm: 'PM' },
       })
     ).toEqual({ valid: false, value: '' });
   });

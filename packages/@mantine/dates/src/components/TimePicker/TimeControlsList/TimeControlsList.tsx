@@ -38,6 +38,7 @@ interface TimeControlsListProps {
   step: number;
   value: number | null;
   onSelect: (value: number) => void;
+  isDisabled?: (value: number) => boolean;
   reversed: boolean | undefined;
 }
 
@@ -47,13 +48,20 @@ export function TimeControlsList({
   step,
   value,
   onSelect,
+  isDisabled,
   reversed,
 }: TimeControlsListProps) {
   const ctx = useTimePickerContext();
   const ref = useRef<HTMLDivElement>(null);
   const range = getValuesRange(min, max, step);
   const controls = (reversed ? range.reverse() : range).map((control) => (
-    <TimeControl key={control} value={control} active={value === control} onSelect={onSelect} />
+    <TimeControl
+      key={control}
+      value={control}
+      active={value === control}
+      disabled={isDisabled?.(control)}
+      onSelect={onSelect}
+    />
   ));
 
   useEffect(() => {
@@ -75,6 +83,7 @@ export function TimeControlsList({
       viewportRef={ref}
       {...ctx.getStyles('scrollarea')}
       {...ctx.scrollAreaProps}
+      viewportProps={{ tabIndex: -1, ...ctx.scrollAreaProps?.viewportProps }}
     >
       <div {...ctx.getStyles('controlsList')}>{controls}</div>
     </ScrollArea>

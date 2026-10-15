@@ -14,12 +14,9 @@ more.
 
 ## Controlled
 
-The `TimePicker` component value is a string in `hh:mm:ss` or `hh:mm` 24-hour format (for example `18:34:55`).
-An empty string is used to represent no value. The `onChange` function is called only when the entered value is valid.
-The input value is considered valid in the following cases:
-
-- All inputs are empty. In this case, `onChange` is called with an empty string.
-- All inputs are filled. For example, if the `withSeconds` prop is set and the user entered `12:34:56`, `onChange` will be called with `12:34:56`. But if the user entered `12:34`, `onChange` will not be called because the seconds value is missing.
+The `TimePicker` value is a string in `hh:mm:ss` or `hh:mm` 24-hour format (for example `18:34:55`).
+An empty string means no value. `onChange` is called with the time once all fields are filled.
+When a filled value becomes incomplete, `onChange` is called once with an empty string.
 
 ```tsx
 import { useState } from 'react';
@@ -33,79 +30,47 @@ function Demo() {
 
 ## Controlling with useTimePicker
 
-`TimePicker` component supports the [controller pattern](/guides/controllers). Use the `useTimePicker` hook to manage `TimePicker` state:
+`TimePicker` supports the [controller pattern](/guides/controllers) with the `useTimePicker` hook:
 
 <Demo data={TimePickerDemos.controller} />
-
-`useTimePicker` accepts the state options that `TimePicker` accepts as props, and returns the
-current state, actions and queries:
 
 ```tsx
 import { TimePicker, useTimePicker } from '@mantine/dates';
 
 function Demo() {
   const controller = useTimePicker({
-    defaultValue: '12:30', // -> uncontrolled initial value
-    // value, onChange -> controlled state, same as on TimePicker
-    // type, format, amPmLabels, withSeconds, min, max, pasteSplit -> same as on TimePicker
+    defaultValue: '12:30',
+    // value, onChange, type, format, amPmLabels, withSeconds, min, max, pasteSplit
   });
 
   // Actions
-  controller.setValue('14:30:00'); // -> sets all fields from a time string
+  controller.setValue('14:30:00');
   controller.setHours(14);
   controller.setMinutes(30);
   controller.setSeconds(0);
-  controller.setAmPm('PM');
+  controller.setAmPm('pm'); // -> 'am' | 'pm' | null
   controller.clear(); // -> clears all fields and focuses the hours field
   controller.clamp(); // -> clamps the current value to min and max
   controller.focus('minutes'); // -> 'hours' | 'minutes' | 'seconds' | 'amPm'
 
   // Queries
-  controller.getValue(); // -> current value in hh:mm:ss or hh:mm 24h format, '' if it is not complete
+  controller.getValue(); // -> hh:mm:ss or hh:mm, '' if it is not complete
   controller.getHours(); // -> number | null
   controller.getMinutes(); // -> number | null
   controller.getSeconds(); // -> number | null
-  controller.getAmPm(); // -> string | null, always null in 24h format
-  controller.hasValue(); // -> boolean, true if at least one field has a value
+  controller.getAmPm(); // -> 'am' | 'pm' | null, always null in 24h format
+  controller.hasValue(); // -> true if at least one field has a value
 
   return <TimePicker controller={controller} />;
 }
 ```
 
-The controller owns the state, so when the `controller` prop is set, the `value`, `defaultValue`,
-`onChange`, `type`, `format`, `amPmLabels`, `withSeconds`, `min`, `max` and `pasteSplit` props of
-`TimePicker` are ignored – pass them to `useTimePicker` instead. `type`, `format`, `withSeconds` and
-`amPmLabels` also decide which fields are rendered, so a controller created with `format: '12h'`
-renders the am/pm field even if the component is left with the default `format` prop.
-
-Options that reach `TimePicker` through `theme.components.TimePicker.defaultProps` do not reach a
-controller you create yourself – pass them to `useTimePicker` as well.
-
-`focus` is a no-op until a `TimePicker` is mounted with the controller, because it works on the
-fields that component renders.
-
-The controller is typed as `TimePickerController` and its options as `TimePickerControllerOptions`,
-both exported from `@mantine/dates`.
-
 ## Usage with forms
 
-`form.getInputProps()` returns `value`, `onChange`, `error`, `onFocus` and `onBlur`, which bind to
-the props of `TimePicker`. When the `controller` prop is set, the `value` and `onChange` props are
-ignored, so a controller and `form.getInputProps()` cannot be spread on the same component. Instead,
-create a component that accepts the same props as `TimePicker`, passes the props that the controller
-supersedes (`value`, `defaultValue`, `onChange`, `type`, `format`, `amPmLabels`, `withSeconds`,
-`min`, `max` and `pasteSplit`) to `useTimePicker` and forwards the rest to `TimePicker`. The form
-binds to the props of that component, and the component owns the controller. `error`, `onFocus` and
-`onBlur` reach `TimePicker` as usual, so validation errors and touched/dirty tracking work without
-extra code. `form.reset()` and `form.setFieldValue()` clear a partially entered time in both form
-modes. See the [Controllers guide](/guides/controllers#usage-with-forms) for the details of the
-pattern:
+To use a controller with [use-form](/form/use-form), pass the form props to `useTimePicker` in a wrapper component.
+See the [Controllers guide](/guides/controllers#usage-with-forms) for the pattern:
 
 <Demo data={TimePickerDemos.form} />
-
-The controller adds what the form cannot see on its own: a partially entered time is an empty string
-for the form, so validation reports it as missing, while `controller.hasValue()` lets the field
-replace that error with a more specific message.
 
 ## With seconds
 
@@ -146,7 +111,8 @@ To change am/pm labels, use the `amPmLabels` prop. Example of changing labels to
 
 ## Min and max values
 
-Set the `min` and `max` props to limit the available time range:
+Set the `min` and `max` props to limit the available time range.
+Dropdown options and presets outside the range are disabled:
 
 <Demo data={TimePickerDemos.minMax} />
 
@@ -219,8 +185,8 @@ to the input width:
 
 ## Paste events
 
-By default, `TimePicker` handles only time in 24-hour format (for example `17:33:43` or `19:22`) for paste events.
-With `pasteSplit` prop you can create a custom paste time parser:
+By default, `TimePicker` parses pasted time in 24-hour format (`17:33:43`) or with an am/pm label (`5:33 PM`).
+Use the `pasteSplit` prop to create a custom paste time parser:
 
 <Demo data={TimePickerDemos.pasteSplit} />
 

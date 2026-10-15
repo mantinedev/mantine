@@ -1,5 +1,12 @@
 import { useState } from 'react';
 import { useTimePickerContext } from '../TimePicker.context';
+import {
+  AmPm,
+  AmPmLabels,
+  findAmPmByLabelPrefix,
+  findAmPmLabelSuffix,
+  getAmPmFromLabel,
+} from '../utils/convert-hours/convert-hours';
 
 const CLEAR_BUFFER_KEYS = [
   'Home',
@@ -10,24 +17,28 @@ const CLEAR_BUFFER_KEYS = [
   'ArrowUp',
   'ArrowDown',
 ];
-const CLEAR_BUFFER_CODES = ['KeyA', 'KeyP'];
 
-function resolveTypedAmPm(typed: string, buffer: string, labels: { am: string; pm: string }) {
-  const options = [labels.am, labels.pm];
-  const normalized = typed.toLowerCase();
-  const exact = options.find((option) => normalized.endsWith(option.toLowerCase()));
+function isCharacterKey(event: React.KeyboardEvent) {
+  return (
+    Array.from(event.key).length === 1 &&
+    event.key !== ' ' &&
+    !event.ctrlKey &&
+    !event.metaKey &&
+    !event.altKey
+  );
+}
 
-  if (exact) {
-    return { value: exact, buffer: '' };
-  }
+const LATIN_AM_PM_KEYS: Record<string, AmPm> = { a: 'am', p: 'pm' };
 
-  const lastChar = typed.slice(-1);
-  const prefixes = buffer ? [buffer + lastChar, lastChar] : [lastChar];
+function resolveTypedAmPm(
+  key: string,
+  buffer: string,
+  labels: AmPmLabels
+): { value: AmPm | null; buffer: string } | null {
+  const prefixes = buffer ? [buffer + key, key] : [key];
 
   for (const prefix of prefixes) {
-    const matches = options.filter((option) =>
-      option.toLowerCase().startsWith(prefix.toLowerCase())
-    );
+    const matches = findAmPmByLabelPrefix(prefix, labels);
 
     if (matches.length === 1) {
       return { value: matches[0], buffer: '' };
@@ -38,14 +49,15 @@ function resolveTypedAmPm(typed: string, buffer: string, labels: { am: string; p
     }
   }
 
-  return null;
+  const latin = LATIN_AM_PM_KEYS[key.toLowerCase()];
+  return latin ? { value: latin, buffer: '' } : null;
 }
 
 interface AmPmInputProps extends Omit<React.ComponentProps<'select'>, 'value' | 'onChange'> {
-  labels: { am: string; pm: string };
-  value: string | null;
+  labels: AmPmLabels;
+  value: AmPm | null;
   inputType: 'select' | 'input';
-  onChange: (value: string | null) => void;
+  onChange: (value: AmPm | null) => void;
   readOnly?: boolean;
   onPreviousInput?: () => void;
 }
@@ -61,6 +73,8 @@ export function AmPmInput({
   onMouseDown,
   onTouchStart,
   onBlur,
+  onKeyDown,
+  onClick,
   inputType,
   ...others
 }: AmPmInputProps) {
@@ -72,21 +86,18 @@ export function AmPmInput({
       return;
     }
 
-    if (
-      typedBuffer &&
-      (CLEAR_BUFFER_KEYS.includes(event.key) || CLEAR_BUFFER_CODES.includes(event.code))
-    ) {
+    if (typedBuffer && CLEAR_BUFFER_KEYS.includes(event.key)) {
       setTypedBuffer('');
     }
 
     if (event.key === 'Home') {
       event.preventDefault();
-      onChange(labels.am);
+      onChange('am');
     }
 
     if (event.key === 'End') {
       event.preventDefault();
-      onChange(labels.pm);
+      onChange('pm');
     }
 
     if (event.key === 'Backspace' || event.key === 'Delete') {
@@ -105,22 +116,32 @@ export function AmPmInput({
 
     if (event.key === 'ArrowUp' || event.key === 'ArrowDown') {
       event.preventDefault();
-      onChange(value === labels.am ? labels.pm : labels.am);
+      onChange(value === 'am' ? 'pm' : 'am');
     }
 
-    if (event.code === 'KeyA') {
+    if (isCharacterKey(event)) {
       event.preventDefault();
-      onChange(labels.am);
-    }
+      const resolved = resolveTypedAmPm(event.key, typedBuffer, labels);
 
-    if (event.code === 'KeyP') {
-      event.preventDefault();
-      onChange(labels.pm);
+      if (resolved) {
+        setTypedBuffer(resolved.buffer);
+        resolved.value && onChange(resolved.value);
+      }
     }
   };
 
+  const handleClick = (event: React.MouseEvent<any>) => {
+    event.stopPropagation();
+    onClick?.(event);
+  };
+
+  const handleKeyDownWithProps = (event: React.KeyboardEvent<any>) => {
+    handleKeyDown(event);
+    onKeyDown?.(event);
+  };
+
   if (inputType === 'input') {
-    const displayValue = typedBuffer || value || '--';
+    const displayValue = typedBuffer || (value && labels[value]) || '--';
     const inputSize = displayValue.length + 1;
 
     return (
@@ -140,21 +161,35 @@ export function AmPmInput({
             return;
           }
 
-          const resolved = resolveTypedAmPm(typed, typedBuffer, labels);
+          const matched = findAmPmLabelSuffix(typed, labels);
 
-          if (!resolved) {
+          if (matched) {
+            setTypedBuffer('');
+            onChange(matched.amPm);
             return;
           }
 
-          setTypedBuffer(resolved.buffer);
-          resolved.value && onChange(resolved.value);
+          const inputType = (event.nativeEvent as InputEvent).inputType;
+          const lastCharacter = Array.from(typed).pop()!;
+
+          if (inputType?.startsWith('delete') || lastCharacter === ' ') {
+            return;
+          }
+
+          const resolved = resolveTypedAmPm(lastCharacter, typedBuffer, labels);
+
+          if (resolved) {
+            setTypedBuffer(resolved.buffer);
+            resolved.value && onChange(resolved.value);
+          }
         }}
         onBlur={(event) => {
           setTypedBuffer('');
           onBlur?.(event as any);
         }}
-        onClick={((event: any) => event.stopPropagation()) as any}
-        onKeyDown={handleKeyDown as any}
+        readOnly={readOnly}
+        onClick={handleClick}
+        onKeyDown={handleKeyDownWithProps}
         onMouseDown={(event) => {
           event.stopPropagation();
           onMouseDown?.(event as any);
@@ -168,10 +203,10 @@ export function AmPmInput({
   return (
     <select
       {...ctx.getStyles('field', { className, style })}
-      value={value || ''}
-      onChange={(event) => !readOnly && onChange(event.target.value || null)}
-      onClick={(event) => event.stopPropagation()}
-      onKeyDown={handleKeyDown}
+      value={value ? labels[value] : ''}
+      onChange={(event) => !readOnly && onChange(getAmPmFromLabel(event.target.value, labels))}
+      onClick={handleClick}
+      onKeyDown={handleKeyDownWithProps}
       onBlur={onBlur}
       onMouseDown={(event) => {
         event.stopPropagation();

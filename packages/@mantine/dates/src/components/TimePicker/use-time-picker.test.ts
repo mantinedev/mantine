@@ -22,6 +22,7 @@ describe('@mantine/dates/TimePicker/use-time-picker', () => {
       'hasValue',
       'refs',
       'onPaste',
+      'onHoursBlur',
     ],
     changeState: (controller) => controller.setValue('12:30'),
   });
@@ -85,7 +86,7 @@ describe('@mantine/dates/TimePicker/use-time-picker', () => {
     expect(hook.result.current.getHours()).toBe(2);
     expect(hook.result.current.getMinutes()).toBe(35);
     expect(hook.result.current.getSeconds()).toBe(45);
-    expect(hook.result.current.getAmPm()).toBe('PM');
+    expect(hook.result.current.getAmPm()).toBe('pm');
     expect(hook.result.current.hasValue()).toBe(true);
 
     act(() => hook.result.current.clear());
@@ -99,7 +100,7 @@ describe('@mantine/dates/TimePicker/use-time-picker', () => {
     const hook = renderHook(() => useTimePicker({ defaultValue: '14:35', format: '12h' }));
     expect(hook.result.current.hours).toBe(2);
     expect(hook.result.current.minutes).toBe(35);
-    expect(hook.result.current.amPm).toBe('PM');
+    expect(hook.result.current.amPm).toBe('pm');
     expect(hook.result.current.value).toBe('14:35');
   });
 
@@ -157,7 +158,7 @@ describe('@mantine/dates/TimePicker/use-time-picker', () => {
     const onChange = jest.fn();
     const hook = renderHook(() => useTimePicker({ defaultValue: '14:30', onChange }));
 
-    act(() => hook.result.current.setAmPm('AM'));
+    act(() => hook.result.current.setAmPm('am'));
     expect(hook.result.current.amPm).toBe(null);
     expect(hook.result.current.value).toBe('14:30');
     expect(onChange).not.toHaveBeenCalled();
@@ -169,9 +170,9 @@ describe('@mantine/dates/TimePicker/use-time-picker', () => {
       useTimePicker({ defaultValue: '14:30', format: '12h', onChange })
     );
 
-    expect(hook.result.current.amPm).toBe('PM');
-    act(() => hook.result.current.setAmPm('AM'));
-    expect(hook.result.current.amPm).toBe('AM');
+    expect(hook.result.current.amPm).toBe('pm');
+    act(() => hook.result.current.setAmPm('am'));
+    expect(hook.result.current.amPm).toBe('am');
     expect(onChange).toHaveBeenLastCalledWith('02:30');
   });
 
@@ -370,5 +371,154 @@ describe('@mantine/dates/TimePicker/use-time-picker', () => {
       other.result.current.clamp();
     });
     expect(other.result.current.getValue()).toBe('11:00');
+  });
+
+  it('ignores pasted text that is not a valid time', () => {
+    const onChange = jest.fn();
+    const hook = renderHook(() => useTimePicker({ defaultValue: '10:20', onChange }));
+
+    for (const text of ['ab:cd', '12:3o', '12:30:x', '10:75']) {
+      act(() => hook.result.current.onPaste(paste(text)));
+    }
+
+    expect(onChange).not.toHaveBeenCalled();
+    expect(hook.result.current.getValue()).toBe('10:20');
+  });
+
+  it('ignores pasteSplit results with parts that are not integers', () => {
+    const onChange = jest.fn();
+    const hook = renderHook(() =>
+      useTimePicker({
+        onChange,
+        pasteSplit: () => ({ hours: NaN, minutes: 10, seconds: null, amPm: null }),
+      })
+    );
+
+    act(() => hook.result.current.onPaste(paste('x')));
+    expect(onChange).not.toHaveBeenCalled();
+    expect(hook.result.current.hours).toBe(null);
+  });
+
+  it('parses pasted am/pm labels in 12h format', () => {
+    const onChange = jest.fn();
+    const hook = renderHook(() =>
+      useTimePicker({ format: '12h', amPmLabels: { am: 'ДП', pm: 'ПП' }, onChange })
+    );
+
+    act(() => hook.result.current.onPaste(paste('12:30 ПП')));
+    expect(hook.result.current.amPm).toBe('pm');
+    expect(onChange).toHaveBeenLastCalledWith('12:30');
+  });
+
+  it('does not move focus from the field setters', () => {
+    const hook = renderHook(() => useTimePicker({ format: '12h', withSeconds: true }));
+    const inputs = ['hours', 'minutes', 'seconds'].map(() => document.createElement('input'));
+    const select = document.createElement('select');
+    inputs.forEach((input) => document.body.appendChild(input));
+    document.body.appendChild(select);
+    (hook.result.current.refs.hours as any).current = inputs[0];
+    (hook.result.current.refs.minutes as any).current = inputs[1];
+    (hook.result.current.refs.seconds as any).current = inputs[2];
+    (hook.result.current.refs.amPm as any).current = select;
+
+    act(() => {
+      hook.result.current.setHours(1);
+      hook.result.current.setMinutes(2);
+      hook.result.current.setSeconds(3);
+      hook.result.current.setAmPm('pm');
+    });
+
+    expect(document.activeElement).toBe(document.body);
+    expect(hook.result.current.getValue()).toBe('13:02:03');
+  });
+
+  it('replaces a temporary 0 hours value with 12 on hours blur in 12h format', () => {
+    const onChange = jest.fn();
+    const hook = renderHook(() => useTimePicker({ format: '12h', onChange }));
+
+    act(() => hook.result.current.setHours(0));
+    act(() => hook.result.current.onHoursBlur());
+    expect(hook.result.current.hours).toBe(12);
+
+    const hook24 = renderHook(() => useTimePicker({ format: '24h' }));
+    act(() => hook24.result.current.setHours(0));
+    act(() => hook24.result.current.onHoursBlur());
+    expect(hook24.result.current.hours).toBe(0);
+  });
+
+  it('keeps the am/pm field when amPmLabels change', () => {
+    const onChange = jest.fn();
+    const hook = renderHook(
+      ({ amPmLabels }) =>
+        useTimePicker({ format: '12h', defaultValue: '15:45', amPmLabels, onChange }),
+      { initialProps: { amPmLabels: { am: 'AM', pm: 'PM' } } }
+    );
+
+    hook.rerender({ amPmLabels: { am: 'ДП', pm: 'ПП' } });
+    expect(hook.result.current.amPm).toBe('pm');
+    expect(hook.result.current.value).toBe('15:45');
+    expect(onChange).not.toHaveBeenCalled();
+  });
+
+  it('converts the fields when format changes', () => {
+    const onChange = jest.fn();
+    const hook = renderHook(
+      ({ format }) => useTimePicker({ format, defaultValue: '00:15', onChange }),
+      { initialProps: { format: '24h' as '12h' | '24h' } }
+    );
+
+    hook.rerender({ format: '12h' });
+    expect(hook.result.current.hours).toBe(12);
+    expect(hook.result.current.amPm).toBe('am');
+    expect(hook.result.current.value).toBe('00:15');
+
+    hook.rerender({ format: '24h' });
+    expect(hook.result.current.hours).toBe(0);
+    expect(hook.result.current.amPm).toBe(null);
+    expect(hook.result.current.value).toBe('00:15');
+    expect(onChange).not.toHaveBeenCalled();
+  });
+
+  it('converts partial fields when format changes', () => {
+    const hook = renderHook(({ format }) => useTimePicker({ format }), {
+      initialProps: { format: '24h' as '12h' | '24h' },
+    });
+
+    act(() => hook.result.current.setHours(15));
+    hook.rerender({ format: '12h' });
+    expect(hook.result.current.hours).toBe(3);
+    expect(hook.result.current.amPm).toBe('pm');
+    expect(hook.result.current.value).toBe('');
+  });
+
+  it('reports the value only when a format change changes it', () => {
+    const onChange = jest.fn();
+    const hook = renderHook(({ format }) => useTimePicker({ format, onChange }), {
+      initialProps: { format: '12h' as '12h' | '24h' },
+    });
+
+    act(() => {
+      hook.result.current.setHours(5);
+      hook.result.current.setMinutes(30);
+    });
+    expect(hook.result.current.value).toBe('');
+    onChange.mockClear();
+
+    hook.rerender({ format: '24h' });
+    expect(hook.result.current.value).toBe('05:30');
+    expect(onChange).toHaveBeenCalledTimes(1);
+    expect(onChange).toHaveBeenLastCalledWith('05:30');
+
+    hook.rerender({ format: '12h' });
+    expect(hook.result.current.value).toBe('05:30');
+    expect(onChange).toHaveBeenCalledTimes(1);
+  });
+
+  it('clamps values with hours greater than 23 unless type is duration', () => {
+    const time = renderHook(() => useTimePicker({ defaultValue: '30:15' }));
+    expect(time.result.current.value).toBe('23:59');
+
+    const duration = renderHook(() => useTimePicker({ type: 'duration', defaultValue: '30:15' }));
+    expect(duration.result.current.value).toBe('30:15');
   });
 });

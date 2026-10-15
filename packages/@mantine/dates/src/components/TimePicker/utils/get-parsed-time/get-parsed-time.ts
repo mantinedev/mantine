@@ -1,5 +1,10 @@
 import { TimePickerAmPmLabels, TimePickerFormat } from '../../TimePicker.types';
-import { splitTimeString } from '../split-time-string/split-time-string';
+import {
+  findAmPmLabelSuffix,
+  getAmPmLabel,
+  to12Hours,
+  to24Hours,
+} from '../convert-hours/convert-hours';
 
 interface GetParsedTimeInput {
   time: string;
@@ -7,45 +12,63 @@ interface GetParsedTimeInput {
   amPmLabels: TimePickerAmPmLabels;
 }
 
-interface ConvertTimeTo12HourFormatInput {
-  hours: number | null;
-  minutes: number | null;
+interface ParsedTime {
+  hours: number;
+  minutes: number;
   seconds: number | null;
-  amPmLabels: TimePickerAmPmLabels;
 }
 
-export function convertTimeTo12HourFormat({
-  hours,
-  minutes,
-  seconds,
-  amPmLabels,
-}: ConvertTimeTo12HourFormatInput) {
-  if (hours === null) {
-    return { hours: null, minutes: null, seconds: null, amPm: null };
+const EMPTY_TIME = { hours: null, minutes: null, seconds: null, amPm: null };
+const TIME_REGEXP = /^(\d+):(\d{1,2})(?::(\d{1,2}))?$/;
+
+export function clampToDay(time: ParsedTime): ParsedTime {
+  return time.hours > 23 ? { hours: 23, minutes: 59, seconds: 59 } : time;
+}
+
+export function parseTimeString(time: string, amPmLabels: TimePickerAmPmLabels): ParsedTime | null {
+  const trimmed = time.trim();
+  const suffix = findAmPmLabelSuffix(trimmed, amPmLabels);
+  const match = TIME_REGEXP.exec(suffix ? suffix.rest.trim() : trimmed);
+
+  if (!match) {
+    return null;
   }
 
-  const amPm = hours >= 12 ? amPmLabels.pm : amPmLabels.am;
-  const hour12 = hours % 12 === 0 ? 12 : hours % 12;
+  const hours = Number(match[1]);
+  const minutes = Number(match[2]);
+  const seconds = match[3] === undefined ? null : Number(match[3]);
 
-  return {
-    hours: hour12,
-    minutes: typeof minutes === 'number' ? minutes : null,
-    seconds: typeof seconds === 'number' ? seconds : null,
-    amPm,
-  };
+  if (!Number.isSafeInteger(hours) || minutes > 59 || (seconds !== null && seconds > 59)) {
+    return null;
+  }
+
+  if (suffix === null) {
+    return { hours, minutes, seconds };
+  }
+
+  if (hours < 1 || hours > 12) {
+    return null;
+  }
+
+  return { hours: to24Hours(hours, suffix.amPm), minutes, seconds };
 }
 
 export function getParsedTime({ time, format, amPmLabels }: GetParsedTimeInput) {
-  if (time === '') {
-    return { hours: null, minutes: null, seconds: null, amPm: null };
+  const parsed = parseTimeString(time, amPmLabels);
+
+  if (!parsed) {
+    return EMPTY_TIME;
   }
 
-  const { hours, minutes, seconds } = splitTimeString(time);
-
-  const parsed = { hours, minutes, seconds };
-
   if (format === '12h') {
-    return convertTimeTo12HourFormat({ ...parsed, amPmLabels });
+    const clamped = clampToDay(parsed);
+    const converted = to12Hours(clamped.hours);
+    return {
+      hours: converted.hours,
+      minutes: clamped.minutes,
+      seconds: clamped.seconds,
+      amPm: getAmPmLabel(converted.amPm, amPmLabels),
+    };
   }
 
   return { ...parsed, amPm: null };

@@ -2,6 +2,7 @@ import dayjs from 'dayjs';
 import { useCallback, useMemo, useRef, useState } from 'react';
 import { useCallbackRef, useDidUpdate, useFormField, useLatestRef } from '@mantine/hooks';
 import { DateStringValue, DateTimeStringValue } from '../../types';
+import { AmPm, to12Hours } from '../TimePicker/utils/convert-hours/convert-hours';
 import { buildDateString } from './build-date-string/build-date-string';
 import { getDaysInMonth } from './get-days-in-month/get-days-in-month';
 import { parseDateString } from './parse-date-string/parse-date-string';
@@ -88,7 +89,7 @@ export interface MaskedDateInputController {
   seconds: number | null;
 
   /** Am/pm field value, always `null` when `format` is `24h` */
-  amPm: string | null;
+  amPm: AmPm | null;
 
   /** Returns current value, `null` when the entered value is not complete or is outside of `minDate`/`maxDate` */
   getValue: () => MaskedDateInputValue;
@@ -112,7 +113,7 @@ export interface MaskedDateInputController {
   getSeconds: () => number | null;
 
   /** Returns am/pm field value, always `null` when `format` is `24h` */
-  getAmPm: () => string | null;
+  getAmPm: () => AmPm | null;
 
   /** Returns `true` when at least one field has a value, including values that are not complete */
   hasValue: () => boolean;
@@ -157,7 +158,7 @@ export interface MaskedDateInputController {
   setSeconds: (seconds: number | null) => void;
 
   /** Sets am/pm field value, ignored when `format` is `24h` */
-  setAmPm: (amPm: string | null) => void;
+  setAmPm: (amPm: AmPm | null) => void;
 
   /** Clears all fields and moves focus to the first date field */
   clear: () => void;
@@ -190,7 +191,7 @@ interface Fields {
   hours: number | null;
   minutes: number | null;
   seconds: number | null;
-  amPm: string | null;
+  amPm: AmPm | null;
 }
 
 const DEFAULT_FIELDS_ORDER: ('day' | 'month' | 'year')[] = ['day', 'month', 'year'];
@@ -207,42 +208,19 @@ const EMPTY_FIELDS: Fields = {
   amPm: null,
 };
 
-function convertTo12h(
-  hours24: number | null,
-  labels: MaskedDateInputAmPmLabels
-): { hours12: number | null; amPm: string | null } {
-  if (hours24 === null) {
-    return { hours12: null, amPm: null };
-  }
-  if (hours24 === 0) {
-    return { hours12: 12, amPm: labels.am };
-  }
-  if (hours24 < 12) {
-    return { hours12: hours24, amPm: labels.am };
-  }
-  if (hours24 === 12) {
-    return { hours12: 12, amPm: labels.pm };
-  }
-  return { hours12: hours24 - 12, amPm: labels.pm };
-}
-
 function toDateString(date: DateStringValue | Date | undefined) {
   return date ? (dayjs(date).format('YYYY-MM-DD') as DateStringValue) : undefined;
 }
 
-function parseFields(
-  value: string | null | undefined,
-  format: MaskedDateInputFormat,
-  amPmLabels: MaskedDateInputAmPmLabels
-): Fields {
+function parseFields(value: string | null | undefined, format: MaskedDateInputFormat): Fields {
   const parsed = parseDateString(value);
-  const converted = format === '12h' ? convertTo12h(parsed.hours, amPmLabels) : null;
+  const converted = format === '12h' && parsed.hours !== null ? to12Hours(parsed.hours) : null;
 
   return {
     day: parsed.day,
     month: parsed.month,
     year: parsed.year,
-    hours: converted ? converted.hours12 : parsed.hours,
+    hours: converted ? converted.hours : parsed.hours,
     minutes: parsed.minutes,
     seconds: parsed.seconds,
     amPm: converted ? converted.amPm : null,
@@ -269,7 +247,7 @@ export function useMaskedDateInput(
   const maxDate = toDateString(maxDateOption);
 
   const handleExternalWrite = useCallbackRef((external: MaskedDateInputValue) =>
-    commit(external ? parseFields(external, format, amPmLabels) : EMPTY_FIELDS, 'never')
+    commit(external ? parseFields(external, format) : EMPTY_FIELDS, 'never')
   );
 
   const formField = useFormField<MaskedDateInputValue>(onChange, {
@@ -277,8 +255,7 @@ export function useMaskedDateInput(
   });
   const valueProp = formField.subscribed ? formField.value : valueOption;
 
-  const build = (fields: Fields) =>
-    buildDateString({ ...fields, withTime, withSeconds, format, amPmLabels });
+  const build = (fields: Fields) => buildDateString({ ...fields, withTime, withSeconds, format });
 
   const isOutOfRange = (dateString: string) => {
     const dateOnly = dateString.split(' ')[0];
@@ -288,9 +265,7 @@ export function useMaskedDateInput(
     );
   };
 
-  const [initialFields] = useState(() =>
-    parseFields(valueProp ?? defaultValue, format, amPmLabels)
-  );
+  const [initialFields] = useState(() => parseFields(valueProp ?? defaultValue, format));
 
   const wasInvalidBefore = useRef(
     (() => {
@@ -305,7 +280,7 @@ export function useMaskedDateInput(
   const [hours, setHoursState] = useState<number | null>(initialFields.hours);
   const [minutes, setMinutesState] = useState<number | null>(initialFields.minutes);
   const [seconds, setSecondsState] = useState<number | null>(initialFields.seconds);
-  const [amPm, setAmPmState] = useState<string | null>(initialFields.amPm);
+  const [amPm, setAmPmState] = useState<AmPm | null>(initialFields.amPm);
 
   const dayRef = useRef<HTMLInputElement>(null);
   const monthRef = useRef<HTMLInputElement>(null);
@@ -397,41 +372,34 @@ export function useMaskedDateInput(
 
   const setDay = useCallbackRef((val: number | null) => {
     handleFieldChange('day', val);
-    focus('day');
   });
 
   const setMonth = useCallbackRef((val: number | null) => {
     handleFieldChange('month', val);
-    focus('month');
   });
 
   const setYear = useCallbackRef((val: number | null) => {
     handleFieldChange('year', val);
-    focus('year');
   });
 
   const setHours = useCallbackRef((val: number | null) => {
     handleFieldChange('hours', val);
-    focus('hours');
   });
 
   const setMinutes = useCallbackRef((val: number | null) => {
     handleFieldChange('minutes', val);
-    focus('minutes');
   });
 
   const setSeconds = useCallbackRef((val: number | null) => {
     handleFieldChange('seconds', val);
-    focus('seconds');
   });
 
-  const setAmPm = useCallbackRef((val: string | null) => {
+  const setAmPm = useCallbackRef((val: AmPm | null) => {
     if (format === '24h') {
       return;
     }
 
     handleFieldChange('amPm', val);
-    focus('amPm');
   });
 
   const clear = useCallbackRef(() => {
@@ -445,7 +413,7 @@ export function useMaskedDateInput(
       return;
     }
 
-    const parsed = parseFields(nextValue, format, amPmLabels);
+    const parsed = parseFields(nextValue, format);
     const hasTime = parsed.hours !== null || parsed.minutes !== null || parsed.seconds !== null;
     const next: Fields = hasTime
       ? parsed
@@ -474,8 +442,8 @@ export function useMaskedDateInput(
     let resolvedAmPm = fieldsRef.current.amPm;
 
     if (format === '12h' && resolvedHours !== null) {
-      const converted = convertTo12h(resolvedHours, amPmLabels);
-      resolvedHours = converted.hours12;
+      const converted = to12Hours(resolvedHours);
+      resolvedHours = converted.hours;
       resolvedAmPm = converted.amPm;
     }
 
@@ -508,7 +476,7 @@ export function useMaskedDateInput(
       return;
     }
 
-    commit(incoming === null ? EMPTY_FIELDS : parseFields(incoming, format, amPmLabels), 'never');
+    commit(incoming === null ? EMPTY_FIELDS : parseFields(incoming, format), 'never');
   }, [valueProp]);
 
   const latestGetEnteredValue = useLatestRef(getEnteredValue);
