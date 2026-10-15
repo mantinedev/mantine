@@ -1,7 +1,12 @@
-import { useCallback, useMemo, useState } from 'react';
-import { useLatestRef, useUncontrolled } from '@mantine/hooks';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { useUncontrolled } from '@mantine/hooks';
 import type { CascaderOption } from './Cascader';
-import { cascaderOptionHasChildren, getCascaderColumns } from './get-cascader-columns';
+import {
+  cascaderOptionHasChildren,
+  findEnabledCascaderOptionIndex,
+  getCascaderColumns,
+  getCascaderOptionText,
+} from './get-cascader-columns';
 import { getCascaderPathOptions } from './get-cascader-path-options';
 
 export interface UseCascaderInput {
@@ -12,24 +17,35 @@ export interface UseCascaderInput {
   changeOnSelect: boolean | undefined;
   allowDeselect: boolean | undefined;
   expandTrigger: 'click' | 'hover' | undefined;
-  onLeafSelect?: () => void;
+  searchable: boolean | undefined;
+  dir: 'ltr' | 'rtl';
+  onSelect?: () => void;
 }
+
+const TYPEAHEAD_TIMEOUT = 500;
 
 function pathsEqual(a: string[] | null, b: string[]): boolean {
   return !!a && a.length === b.length && a.every((item, index) => item === b[index]);
 }
 
-function findEnabledIndex(options: CascaderOption[], from: number, direction: 1 | -1): number {
-  let index = from + direction;
+function findOptionByText(options: CascaderOption[], query: string, from: number): number {
+  const isRepeatedChar = query.split('').every((char) => char === query[0]);
+  const search = isRepeatedChar ? query[0] : query;
+  const startIndex = isRepeatedChar ? from + 1 : Math.max(from, 0);
 
-  while (index >= 0 && index < options.length) {
-    if (!options[index].disabled) {
+  for (let offset = 0; offset < options.length; offset += 1) {
+    const index = (startIndex + offset) % options.length;
+    const option = options[index];
+    if (!option.disabled && getCascaderOptionText(option).toLowerCase().startsWith(search)) {
       return index;
     }
-    index += direction;
   }
 
   return -1;
+}
+
+function isPrintableKey(event: React.KeyboardEvent) {
+  return event.key.length === 1 && !event.ctrlKey && !event.metaKey && !event.altKey;
 }
 
 export function useCascader({
@@ -40,9 +56,15 @@ export function useCascader({
   changeOnSelect,
   allowDeselect,
   expandTrigger,
-  onLeafSelect,
+  searchable,
+  dir,
+  onSelect,
 }: UseCascaderInput) {
   const [keyboardNav, setKeyboardNav] = useState(false);
+  const typeahead = useRef('');
+  const typeaheadTimeout = useRef(-1);
+
+  useEffect(() => () => window.clearTimeout(typeaheadTimeout.current), []);
 
   const [_value, setValue] = useUncontrolled<string[] | null>({
     value: value as any,
@@ -52,50 +74,62 @@ export function useCascader({
   });
 
   const [activePath, setActivePath] = useState<string[]>(() => _value ?? []);
-  const activePathRef = useLatestRef(activePath);
 
   const resetActivePath = useCallback(() => {
     setActivePath(_value ?? []);
   }, [_value]);
 
   const selectPath = useCallback(
-    (path: string[]) => {
-      setValue(allowDeselect && pathsEqual(_value, path) ? null : path);
+    (path: string[], keepOpen = false) => {
+      const unchanged = pathsEqual(_value, path);
+
+      if (!unchanged || allowDeselect) {
+        setValue(unchanged ? null : path);
+      }
+
+      if (!keepOpen) {
+        onSelect?.();
+      }
     },
-    [allowDeselect, _value, setValue]
+    [allowDeselect, _value, setValue, onSelect]
   );
 
-  const expandOption = useCallback((level: number, option: CascaderOption) => {
-    const optionPath = [...activePathRef.current.slice(0, level), option.value];
-    const children = option.children;
+  const expandOption = useCallback(
+    (level: number, option: CascaderOption) => {
+      const optionPath = [...activePath.slice(0, level), option.value];
 
-    if (Array.isArray(children) && children.length > 0) {
-      const first = findEnabledIndex(children, -1, 1);
-      setActivePath(first >= 0 ? [...optionPath, children[first].value] : optionPath);
-    } else {
-      setActivePath(optionPath);
-    }
-  }, []);
+      if (cascaderOptionHasChildren(option)) {
+        const children = option.children!;
+        const first = findEnabledCascaderOptionIndex(children, -1, 1);
+        setActivePath(first >= 0 ? [...optionPath, children[first].value] : optionPath);
+      } else {
+        setActivePath(optionPath);
+      }
+    },
+    [activePath]
+  );
+
+  const activateOption = useCallback(
+    (level: number, option: CascaderOption) => {
+      const hasChildren = cascaderOptionHasChildren(option);
+
+      if (hasChildren) {
+        expandOption(level, option);
+      }
+
+      if (!hasChildren || changeOnSelect) {
+        selectPath([...activePath.slice(0, level), option.value], hasChildren);
+      }
+    },
+    [activePath, changeOnSelect, selectPath, expandOption]
+  );
 
   const handleOptionClick = useCallback(
     (level: number, option: CascaderOption) => {
       setKeyboardNav(false);
-      const path = [...activePath.slice(0, level), option.value];
-
-      if (cascaderOptionHasChildren(option)) {
-        if (changeOnSelect) {
-          selectPath(path);
-        }
-        expandOption(level, option);
-        if (changeOnSelect) {
-          onLeafSelect?.();
-        }
-      } else {
-        selectPath(path);
-        onLeafSelect?.();
-      }
+      activateOption(level, option);
     },
-    [activePath, changeOnSelect, selectPath, expandOption, onLeafSelect]
+    [activateOption]
   );
 
   const handleOptionMouseEnter = useCallback(
@@ -119,65 +153,82 @@ export function useCascader({
     (event: React.KeyboardEvent): boolean => {
       setKeyboardNav(true);
       const columns = getCascaderColumns(data, activePath);
-      const focusedLevel = Math.max(0, activePath.length - 1);
-      const currentColumn = columns[focusedLevel] ?? columns[0] ?? [];
-      const focusedIndex = currentColumn.findIndex(
-        (item) => item.value === activePath[focusedLevel]
+      const currentLevel = Math.max(0, activePath.length - 1);
+      const currentColumn = columns[currentLevel] ?? columns[0] ?? [];
+      const currentIndex = currentColumn.findIndex(
+        (item) => item.value === activePath[currentLevel]
       );
-      const focusedOption = focusedIndex >= 0 ? currentColumn[focusedIndex] : undefined;
+      const currentOption = currentIndex >= 0 ? currentColumn[currentIndex] : undefined;
 
-      switch (event.key) {
+      const forwardKey = dir === 'rtl' ? 'ArrowLeft' : 'ArrowRight';
+      const backKey = dir === 'rtl' ? 'ArrowRight' : 'ArrowLeft';
+      const setCurrentIndex = (index: number) => {
+        if (index >= 0) {
+          setActivePath([...activePath.slice(0, currentLevel), currentColumn[index].value]);
+        }
+      };
+
+      if (!searchable && isPrintableKey(event) && (event.key !== ' ' || typeahead.current)) {
+        window.clearTimeout(typeaheadTimeout.current);
+        typeahead.current += event.key.toLowerCase();
+        typeaheadTimeout.current = window.setTimeout(() => {
+          typeahead.current = '';
+        }, TYPEAHEAD_TIMEOUT);
+        setCurrentIndex(findOptionByText(currentColumn, typeahead.current, currentIndex));
+        return true;
+      }
+
+      const key = !searchable && event.key === ' ' ? 'Enter' : event.key;
+
+      switch (key) {
         case 'ArrowDown': {
-          const next = findEnabledIndex(currentColumn, focusedIndex, 1);
-          if (next >= 0) {
-            setActivePath([...activePath.slice(0, focusedLevel), currentColumn[next].value]);
-          }
+          setCurrentIndex(findEnabledCascaderOptionIndex(currentColumn, currentIndex, 1));
           return true;
         }
         case 'ArrowUp': {
-          const from = focusedIndex < 0 ? currentColumn.length : focusedIndex;
-          const prev = findEnabledIndex(currentColumn, from, -1);
-          if (prev >= 0) {
-            setActivePath([...activePath.slice(0, focusedLevel), currentColumn[prev].value]);
+          const from = currentIndex < 0 ? currentColumn.length : currentIndex;
+          setCurrentIndex(findEnabledCascaderOptionIndex(currentColumn, from, -1));
+          return true;
+        }
+        case 'Home': {
+          if (searchable) {
+            return false;
+          }
+          setCurrentIndex(findEnabledCascaderOptionIndex(currentColumn, -1, 1));
+          return true;
+        }
+        case 'End': {
+          if (searchable) {
+            return false;
+          }
+          setCurrentIndex(findEnabledCascaderOptionIndex(currentColumn, currentColumn.length, -1));
+          return true;
+        }
+        case forwardKey: {
+          if (currentOption && cascaderOptionHasChildren(currentOption)) {
+            expandOption(currentLevel, currentOption);
           }
           return true;
         }
-        case 'ArrowRight': {
-          if (focusedOption && cascaderOptionHasChildren(focusedOption)) {
-            expandOption(focusedLevel, focusedOption);
-          }
-          return true;
-        }
-        case 'ArrowLeft': {
+        case backKey: {
           if (activePath.length > 1) {
             setActivePath(activePath.slice(0, -1));
           }
           return true;
         }
         case 'Enter': {
-          if (!focusedOption) {
+          if (!currentOption) {
             return false;
           }
 
-          if (cascaderOptionHasChildren(focusedOption)) {
-            if (changeOnSelect) {
-              selectPath([...activePath.slice(0, focusedLevel), focusedOption.value]);
-            }
-            expandOption(focusedLevel, focusedOption);
-            if (changeOnSelect) {
-              onLeafSelect?.();
-            }
-          } else {
-            selectPath([...activePath.slice(0, focusedLevel), focusedOption.value]);
-            onLeafSelect?.();
-          }
+          activateOption(currentLevel, currentOption);
           return true;
         }
         default:
           return false;
       }
     },
-    [data, activePath, changeOnSelect, selectPath, expandOption, onLeafSelect]
+    [data, activePath, searchable, dir, expandOption, activateOption]
   );
 
   const pathOptions = useMemo(() => getCascaderPathOptions(data, _value), [data, _value]);

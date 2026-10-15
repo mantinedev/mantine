@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Cascader, CascaderOption } from './Cascader';
 
 export default { title: 'Cascader' };
@@ -74,10 +74,74 @@ export function ChangeOnSelect() {
   );
 }
 
+export function ChangeOnSelectCloseOnSelect() {
+  const [calls, setCalls] = useState<string[]>([]);
+  return (
+    <div style={{ padding: 40, maxWidth: 340 }}>
+      <Cascader
+        changeOnSelect
+        allowDeselect={false}
+        label="Location"
+        placeholder="Pick location"
+        data={data}
+        onChange={(value) => setCalls((current) => [...current, JSON.stringify(value)])}
+      />
+      <div data-testid="calls">{calls.join(' | ')}</div>
+    </div>
+  );
+}
+
+export function AsyncData() {
+  const [asyncData, setAsyncData] = useState<CascaderOption[]>([]);
+
+  useEffect(() => {
+    const timeout = window.setTimeout(() => setAsyncData(data), 1000);
+    return () => window.clearTimeout(timeout);
+  }, []);
+
+  return (
+    <div style={{ padding: 40, maxWidth: 340 }}>
+      <Cascader
+        searchable
+        label="Location"
+        placeholder="Search location"
+        defaultValue={['europe', 'fr', 'paris']}
+        data={asyncData}
+      />
+    </div>
+  );
+}
+
 export function HoverExpand() {
   return (
     <div style={{ padding: 40, maxWidth: 340 }}>
       <Cascader expandTrigger="hover" label="Location" placeholder="Pick location" data={data} />
+    </div>
+  );
+}
+
+const longColumnData: CascaderOption[] = [
+  {
+    value: 'asia',
+    label: 'Asia',
+    children: Array.from({ length: 30 }, (_, index) => ({
+      value: `city-${index + 1}`,
+      label: `City ${index + 1}`,
+    })),
+  },
+  { value: 'europe', label: 'Europe', children: [{ value: 'paris', label: 'Paris' }] },
+];
+
+export function HoverLongColumn() {
+  return (
+    <div style={{ padding: 40, maxWidth: 340 }}>
+      <Cascader
+        expandTrigger="hover"
+        label="Location"
+        placeholder="Pick location"
+        maxDropdownHeight={180}
+        data={longColumnData}
+      />
     </div>
   );
 }

@@ -15,7 +15,7 @@ export const CascaderStylesApi: StylesApiData<CascaderFactory> = {
     columnOption: 'Option control inside a column',
     columnOptionLabel: 'Label of the column option',
     columnOptionIcon: 'Expand chevron of the column option',
-    columnOptionCheck: 'Check icon displayed on the selected leaf option',
+    columnOptionCheck: 'Check icon displayed on the selected option',
     columnEmpty: 'Empty state of a column',
     flatOption: 'Option content in the flat list (search results / `withColumns={false}`)',
   },
@@ -24,9 +24,9 @@ export const CascaderStylesApi: StylesApiData<CascaderFactory> = {
 
   modifiers: [
     {
-      modifier: 'data-active',
+      modifier: 'data-current',
       selector: 'columnOption',
-      condition: 'Option is highlighted in the column that is currently being navigated',
+      condition: 'Option is the keyboard-current option in the column that is being navigated',
     },
     {
       modifier: 'data-in-path',

@@ -17,7 +17,6 @@ function countCities(option: CascaderOption): number {
   return option.children.reduce((acc, child) => acc + countCities(child), 0);
 }
 
-// Regions display the number of cities, countries display a flag, cities display nothing extra
 const renderCascaderOption: CascaderProps['renderOption'] = (option, level) => (
   <Group gap="xs" justify="space-between" wrap="nowrap" flex="1">
     <Group gap={6} wrap="nowrap">
@@ -25,7 +24,7 @@ const renderCascaderOption: CascaderProps['renderOption'] = (option, level) => (
       <span>{option.label}</span>
     </Group>
     {level === 0 && (
-      <Badge size="xs" variant="light" color="gray">
+      <Badge size="xs" variant="default" flex="none">
         {countCities(option)} cities
       </Badge>
     )}
@@ -40,6 +39,7 @@ function Demo() {
       label="Location"
       placeholder="Pick location"
       renderOption={renderCascaderOption}
+      columnWidth={240}
       data={data}
     />
   );
@@ -69,7 +69,7 @@ const renderCascaderOption: CascaderProps['renderOption'] = (option, level) => (
       <span>{option.label}</span>
     </Group>
     {level === 0 && (
-      <Badge size="xs" variant="light" color="gray">
+      <Badge size="xs" variant="default" flex="none">
         {countCities(option)} cities
       </Badge>
     )}
@@ -84,6 +84,7 @@ function Demo() {
       label="Location"
       placeholder="Pick location"
       renderOption={renderCascaderOption}
+      columnWidth={240}
       data={data}
     />
   );

@@ -1,5 +1,10 @@
 import { CascaderOption } from './Cascader';
-import { cascaderOptionHasChildren, getCascaderColumns } from './get-cascader-columns';
+import {
+  cascaderOptionHasChildren,
+  findEnabledCascaderOptionIndex,
+  getCascaderColumns,
+  getCascaderIndexPath,
+} from './get-cascader-columns';
 
 const data: CascaderOption[] = [
   {
@@ -28,5 +33,26 @@ describe('@mantine/core/Cascader/getCascaderColumns', () => {
     expect(cascaderOptionHasChildren({ value: 'x' })).toBe(false);
     expect(cascaderOptionHasChildren({ value: 'x', children: [] })).toBe(false);
     expect(cascaderOptionHasChildren({ value: 'x', children: [{ value: 'y' }] })).toBe(true);
+  });
+
+  it('resolves a value path to an index path', () => {
+    expect(getCascaderIndexPath(data, [])).toStrictEqual([]);
+    expect(getCascaderIndexPath(data, ['europe'])).toStrictEqual([1]);
+    expect(getCascaderIndexPath(data, ['asia', 'jp', 'tokyo'])).toStrictEqual([0, 0, 0]);
+    expect(getCascaderIndexPath(data, ['asia', 'missing', 'tokyo'])).toStrictEqual([0]);
+    expect(getCascaderIndexPath(data, ['europe', 'paris'])).toStrictEqual([1]);
+  });
+
+  it('finds the next enabled option in both directions', () => {
+    const options = [
+      { value: 'a', disabled: true },
+      { value: 'b' },
+      { value: 'c', disabled: true },
+    ];
+    expect(findEnabledCascaderOptionIndex(options, -1, 1)).toBe(1);
+    expect(findEnabledCascaderOptionIndex(options, options.length, -1)).toBe(1);
+    expect(findEnabledCascaderOptionIndex(options, 1, 1)).toBe(-1);
+    expect(findEnabledCascaderOptionIndex(options, 1, -1)).toBe(-1);
+    expect(findEnabledCascaderOptionIndex([], -1, 1)).toBe(-1);
   });
 });

@@ -11,7 +11,7 @@ function Demo() {
   return (
     <Cascader
       withColumns={withColumns}
-      closeOnSelect={false}
+      closeOnSelect
       label="Location"
       placeholder="Pick location"
       data={data}
@@ -25,7 +25,7 @@ function Demo() {
   return (
     <Cascader
       withColumns={withColumns}
-      closeOnSelect={false}
+      closeOnSelect
       label="Location"
       placeholder="Pick location"
       data={data}

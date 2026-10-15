@@ -85,7 +85,7 @@
   cursor: pointer;
 
   @mixin hover {
-    &:where(:not([data-disabled], [data-active])) {
+    &:where(:not([data-disabled], [data-current])) {
       background-color: var(--mantine-color-hover);
     }
   }
@@ -95,8 +95,8 @@
     background-color: var(--mantine-color-selected);
   }
 
-  /* Option in the column that is currently being navigated */
-  &:where([data-active]) {
+  /* Keyboard-current option in the column that is being navigated */
+  &:where([data-current]) {
     background-color: var(--mantine-primary-color-filled);
     color: var(--mantine-color-white);
 
@@ -135,7 +135,7 @@
   color: var(--mantine-color-dimmed);
   transform: rotate(-90deg);
 
-  :where([data-active]) & {
+  :where([data-current]) & {
     color: inherit;
   }
 
@@ -150,7 +150,7 @@
   height: 0.8em;
   opacity: 0.4;
 
-  :where([data-active]) &,
+  :where([data-current]) &,
   :where([data-combobox-selected]) & {
     opacity: 1;
   }

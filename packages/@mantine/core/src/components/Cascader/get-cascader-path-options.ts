@@ -1,4 +1,5 @@
 import type { CascaderOption } from './Cascader';
+import { findCascaderOption } from './get-cascader-columns';
 
 export function getCascaderPathOptions(
   data: CascaderOption[],
@@ -12,11 +13,9 @@ export function getCascaderPathOptions(
   let level: CascaderOption[] | undefined = data;
 
   for (const currentValue of value) {
-    if (!level) {
-      break;
-    }
-
-    const node: CascaderOption | undefined = level.find((option) => option.value === currentValue);
+    const node: CascaderOption | undefined = level
+      ? findCascaderOption(level, currentValue)
+      : undefined;
 
     if (!node) {
       break;

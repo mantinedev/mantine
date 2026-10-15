@@ -1,4 +1,5 @@
 import type { CascaderOption } from './Cascader';
+import { cascaderOptionHasChildren } from './get-cascader-columns';
 
 export interface CascaderFlatPath {
   /** Values from root to node */
@@ -27,7 +28,7 @@ export function flattenCascaderPaths(data: CascaderOption[]): CascaderFlatPath[]
       const path = [...parentPath, node.value];
       const options = [...parentOptions, node];
       const disabled = parentDisabled || !!node.disabled;
-      const hasChildren = Array.isArray(node.children) && node.children.length > 0;
+      const hasChildren = cascaderOptionHasChildren(node);
 
       result.push({ path, options, leaf: !hasChildren, disabled });
 

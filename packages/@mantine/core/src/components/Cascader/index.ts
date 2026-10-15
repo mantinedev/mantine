@@ -4,6 +4,7 @@ import type {
   CascaderFormatValueInput,
   CascaderOption,
   CascaderProps,
+  CascaderSafeAreaPolygonOptions,
   CascaderStylesNames,
 } from './Cascader';
 
@@ -18,6 +19,7 @@ export type {
   CascaderOption,
   CascaderFormatValue,
   CascaderFormatValueInput,
+  CascaderSafeAreaPolygonOptions,
 };
 
 export namespace Cascader {

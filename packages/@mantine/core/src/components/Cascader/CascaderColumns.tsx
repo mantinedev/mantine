@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
+import { useCallbackRef } from '@mantine/hooks';
 import { GetStylesApi } from '../../core';
 import { AccordionChevron } from '../Accordion';
 import { CheckIcon } from '../Checkbox/CheckIcon';
@@ -10,7 +11,12 @@ import type {
   CascaderSafeAreaPolygonOptions,
   CascaderStylesNames,
 } from './Cascader';
-import { cascaderOptionHasChildren, getCascaderColumns } from './get-cascader-columns';
+import {
+  cascaderOptionHasChildren,
+  getCascaderColumns,
+  getCascaderIndexPath,
+  getCascaderOptionText,
+} from './get-cascader-columns';
 import { useCascaderSafeArea } from './use-cascader-safe-area';
 
 type CascaderColumnsGetStyles = GetStylesApi<{ props: any; stylesNames: CascaderStylesNames }>;
@@ -20,6 +26,7 @@ export interface CascaderColumnsProps {
   activePath: string[];
   value: string[] | null;
   keyboardNav: boolean;
+  currentOptionId: string | undefined;
   withCheckIcon: boolean | undefined;
   checkIconPosition: 'left' | 'right' | undefined;
   renderOption: ((option: CascaderOption, level: number) => React.ReactNode) | undefined;
@@ -37,11 +44,31 @@ export interface CascaderColumnsProps {
   onColumnsMouseLeave: (() => void) | undefined;
   onPointerActivity: (() => void) | undefined;
   listId: string | undefined;
+  labelId: string | undefined;
+  ariaLabel: string | undefined;
   safeAreaPolygon: boolean | CascaderSafeAreaPolygonOptions | undefined;
 }
 
-export function getCascaderOptionId(listId: string | undefined, level: number, value: string) {
-  return listId ? `${listId}-${level}-${value}` : undefined;
+interface CascaderPointerState {
+  locked: boolean;
+  lastMove: { x: number; y: number } | null;
+  resting: { x: number; y: number } | null;
+  pending: { level: number; option: CascaderOption; element: HTMLElement } | null;
+}
+
+function isSamePosition(
+  position: { x: number; y: number } | null,
+  event: React.MouseEvent | MouseEvent
+) {
+  return !!position && position.x === event.clientX && position.y === event.clientY;
+}
+
+export function getCascaderOptionId(listId: string | undefined, indexPath: number[]) {
+  return listId && indexPath.length > 0 ? `${listId}-option-${indexPath.join('-')}` : undefined;
+}
+
+function getCascaderColumnId(listId: string | undefined, level: number) {
+  return listId ? `${listId}-column-${level}` : undefined;
 }
 
 export function CascaderColumns({
@@ -49,6 +76,7 @@ export function CascaderColumns({
   activePath,
   value,
   keyboardNav,
+  currentOptionId,
   withCheckIcon,
   checkIconPosition,
   renderOption,
@@ -66,6 +94,8 @@ export function CascaderColumns({
   onColumnsMouseLeave,
   onPointerActivity,
   listId,
+  labelId,
+  ariaLabel,
   safeAreaPolygon,
 }: CascaderColumnsProps) {
   const allColumns = getCascaderColumns(data, activePath);
@@ -73,19 +103,20 @@ export function CascaderColumns({
   const maxLevels =
     maxDisplayedLevels && maxDisplayedLevels > 0 ? maxDisplayedLevels : totalColumns;
   const maxOffset = Math.max(0, totalColumns - maxLevels);
-  const focusedLevel = activePath.length - 1;
+  const currentLevel = activePath.length - 1;
   const showCheckIcon = withCheckIcon !== false;
 
-  // Manual left/right scrolling of the visible window. It is reset synchronously whenever the
-  // active path changes so that the focused column always stays visible during navigation.
   const activePathKey = JSON.stringify(activePath);
-  const [windowState, setWindowState] = useState({ key: activePathKey, offset: 0 });
-  const windowOffset = windowState.key === activePathKey ? windowState.offset : 0;
-  if (windowState.key !== activePathKey) {
-    setWindowState({ key: activePathKey, offset: 0 });
+  const [offsetForActivePath, setOffsetForActivePath] = useState({
+    key: activePathKey,
+    offset: 0,
+  });
+  const windowOffset = offsetForActivePath.key === activePathKey ? offsetForActivePath.offset : 0;
+  if (offsetForActivePath.key !== activePathKey) {
+    setOffsetForActivePath({ key: activePathKey, offset: 0 });
   }
   const setWindowOffset = (updater: (current: number) => number) =>
-    setWindowState((current) => ({ key: activePathKey, offset: updater(current.offset) }));
+    setOffsetForActivePath((current) => ({ key: activePathKey, offset: updater(current.offset) }));
 
   const clampedOffset = Math.min(windowOffset, maxOffset);
   const windowStart = Math.max(0, maxOffset - clampedOffset);
@@ -97,18 +128,72 @@ export function CascaderColumns({
   const check = showCheckIcon ? <CheckIcon {...getStyles('columnOptionCheck')} /> : null;
 
   const columnRefs = useRef<Record<number, HTMLDivElement | null>>({});
+  const currentOptionRef = useRef<HTMLButtonElement>(null);
+  const pointer = useRef<CascaderPointerState>({
+    locked: false,
+    lastMove: null,
+    resting: null,
+    pending: null,
+  });
   const safeArea = useCascaderSafeArea({ safeAreaPolygon, onFlush: onOptionMouseEnter });
+
+  const applyHover = useCallbackRef((level: number, option: CascaderOption) => {
+    if (safeArea.isBlocked(level)) {
+      safeArea.setPending(level, option);
+    } else {
+      onOptionMouseEnter(level, option);
+    }
+  });
   const ctx = useComboboxContext();
-  const firstColumnId = listId ? `${listId}-column` : undefined;
+  const visibleColumnIds = listId
+    ? visibleColumns.map((_, index) => getCascaderColumnId(listId, windowStart + index)).join(' ')
+    : undefined;
+  const activeIndexPath = getCascaderIndexPath(data, activePath);
 
   useEffect(() => {
-    if (!firstColumnId) {
+    if (keyboardNav) {
+      pointer.current.locked = true;
+    } else {
+      pointer.current.resting = pointer.current.lastMove;
+    }
+  }, [activePathKey, keyboardNav]);
+
+  useEffect(() => {
+    const handleMouseMove = (event: MouseEvent) => {
+      const state = pointer.current;
+      if (isSamePosition(state.lastMove, event)) {
+        return;
+      }
+
+      const pending = state.pending;
+      state.lastMove = { x: event.clientX, y: event.clientY };
+      state.locked = false;
+      state.resting = null;
+      state.pending = null;
+
+      if (pending?.element.isConnected) {
+        applyHover(pending.level, pending.option);
+      }
+    };
+
+    document.addEventListener('mousemove', handleMouseMove);
+    return () => document.removeEventListener('mousemove', handleMouseMove);
+  }, []);
+
+  useEffect(() => {
+    if (!visibleColumnIds) {
       return undefined;
     }
 
-    ctx.setListId(firstColumnId);
-    return () => ctx.setListId((current) => (current === firstColumnId ? null : current));
-  }, [firstColumnId]);
+    ctx.setListId(visibleColumnIds);
+    return () => ctx.setListId((current) => (current === visibleColumnIds ? null : current));
+  }, [visibleColumnIds]);
+
+  useEffect(() => {
+    if (currentOptionId) {
+      currentOptionRef.current?.scrollIntoView({ block: 'nearest' });
+    }
+  }, [currentOptionId]);
 
   return (
     <div
@@ -116,9 +201,15 @@ export function CascaderColumns({
       role="presentation"
       onMouseLeave={() => {
         safeArea.disarm();
-        onColumnsMouseLeave?.();
+        if (!pointer.current.locked) {
+          onColumnsMouseLeave?.();
+        }
       }}
-      onMouseMove={onPointerActivity}
+      onMouseMove={(event) => {
+        if (!isSamePosition(pointer.current.lastMove, event)) {
+          onPointerActivity?.();
+        }
+      }}
     >
       {hiddenBefore > 0 && (
         <UnstyledButton
@@ -138,6 +229,10 @@ export function CascaderColumns({
       {visibleColumns.map((options, index) => {
         const level = windowStart + index;
         const isLastColumn = index === visibleColumns.length - 1 && hiddenAfter === 0;
+        const parentOption =
+          level > 0
+            ? allColumns[level - 1].find((item) => item.value === activePath[level - 1])
+            : undefined;
 
         return (
           <div
@@ -151,23 +246,25 @@ export function CascaderColumns({
             })}
           >
             <ScrollArea.Autosize
-              mah={maxDropdownHeight ?? 260}
+              mah={maxDropdownHeight}
               type="scroll"
               scrollbarSize="var(--combobox-padding)"
               role="listbox"
-              id={index === 0 ? firstColumnId : undefined}
+              id={getCascaderColumnId(listId, level)}
+              aria-labelledby={level === 0 ? labelId : undefined}
+              aria-label={
+                parentOption ? getCascaderOptionText(parentOption) : labelId ? undefined : ariaLabel
+              }
               {...scrollAreaProps}
               {...getStyles('columnScroll')}
             >
               {options.length === 0 ? (
                 <div {...getStyles('columnEmpty')}>{nothingFoundMessage}</div>
               ) : (
-                options.map((option) => {
-                  const isActive = activePath[level] === option.value;
-                  const isCurrent = isActive && level === focusedLevel && keyboardNav;
-                  // The trail only covers ancestor columns; the deepest column is not highlighted
-                  // during mouse navigation (only via the keyboard "current" state)
-                  const isInPath = isActive && level < focusedLevel;
+                options.map((option, optionIndex) => {
+                  const isOnActivePath = activePath[level] === option.value;
+                  const isCurrent = isOnActivePath && level === currentLevel && keyboardNav;
+                  const isInPath = isOnActivePath && level < currentLevel;
                   const hasChildren = cascaderOptionHasChildren(option);
                   const isSelected =
                     !!value && value.length === level + 1 && value[level] === option.value;
@@ -175,11 +272,15 @@ export function CascaderColumns({
                   return (
                     <UnstyledButton
                       key={option.value}
-                      id={getCascaderOptionId(listId, level, option.value)}
+                      ref={isCurrent ? currentOptionRef : undefined}
+                      id={getCascaderOptionId(listId, [
+                        ...activeIndexPath.slice(0, level),
+                        optionIndex,
+                      ])}
                       role="option"
-                      aria-selected={isCurrent || undefined}
+                      aria-selected={isSelected}
                       aria-disabled={option.disabled || undefined}
-                      data-active={isCurrent || undefined}
+                      data-current={isCurrent || undefined}
                       data-in-path={isInPath || undefined}
                       data-selected={isSelected || undefined}
                       data-disabled={option.disabled || undefined}
@@ -191,19 +292,23 @@ export function CascaderColumns({
                           onOptionClick(level, option);
                         }
                       }}
-                      onMouseEnter={() => {
+                      onMouseEnter={(event) => {
                         if (option.disabled) {
                           return;
                         }
 
-                        if (safeArea.isBlocked(level)) {
-                          safeArea.setPending(level, option);
+                        const state = pointer.current;
+                        if (state.locked || isSamePosition(state.resting, event)) {
+                          state.pending = { level, option, element: event.currentTarget };
                           return;
                         }
 
-                        onOptionMouseEnter(level, option);
+                        applyHover(level, option);
                       }}
                       onMouseLeave={(event) => {
+                        if (pointer.current.pending?.element === event.currentTarget) {
+                          pointer.current.pending = null;
+                        }
                         safeArea.clearPending(level, option);
 
                         if (!safeArea.enabled || option.disabled) {

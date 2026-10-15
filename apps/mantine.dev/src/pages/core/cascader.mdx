@@ -6,9 +6,7 @@ export default Layout(MDX_DATA.Cascader);
 
 ## Usage
 
-`Cascader` lets users select a value from hierarchical data. Picking an option in one column
-reveals its children in the next column. The value is a path from the root option to the
-selected one, for example `['asia', 'jp', 'tokyo']`.
+`Cascader` lets users select a value from hierarchical data. Picking an option in one column reveals its children in the next column. The value is a path from the root option to the selected one, for example `['asia', 'jp', 'tokyo']`.
 
 Demos on this page switch to the [flat list layout](#flat-list-layout) on small screens:
 
@@ -16,8 +14,7 @@ Demos on this page switch to the [flat list layout](#flat-list-layout) on small 
 
 ## Data prop
 
-`data` is an array of options. Each option must have a unique `value` across the whole tree,
-`children` contains nested options:
+`data` is an array of options. Each option must have a unique `value` across the whole tree, `children` contains nested options:
 
 ```tsx
 import { CascaderOption } from '@mantine/core';
@@ -39,8 +36,7 @@ const data: CascaderOption[] = [
 
 ## Value and onChange
 
-The value is an array of option values or `null` when nothing is selected.
-`onChange` is called with the selected path and the corresponding options:
+The value is an array of option values or `null` when nothing is selected. `onChange` is called with the selected path and the corresponding options:
 
 ```tsx
 import { useState } from 'react';
@@ -60,46 +56,39 @@ function Demo() {
 
 ## Change on select
 
-By default, only leaf options can be selected and clicking a parent option expands the next column.
-Set `changeOnSelect` to allow selecting any option:
+By default, only leaf options can be selected and clicking a parent option expands the next column. Set `changeOnSelect` to allow selecting any option:
 
 <Demo data={CascaderDemos.changeOnSelect} />
 
 ## Close on select
 
-Set `closeOnSelect` to close the dropdown after a value is selected:
+By default, the dropdown stays open after a value is selected. Set `closeOnSelect` to close it when an option without children is selected:
 
 <Demo data={CascaderDemos.closeOnSelect} />
 
 ## Allow deselect
 
-By default, clicking the selected option again removes the value. Set `allowDeselect={false}` to
-disable this behavior:
+By default, clicking the selected option again removes the value. Set `allowDeselect={false}` to disable this behavior:
 
 <Demo data={CascaderDemos.allowDeselect} />
 
 ## Expand trigger
 
-Set `expandTrigger="hover"` to open the next column on hover instead of click.
-Selecting a leaf still requires a click:
+Set `expandTrigger="hover"` to open the next column on hover instead of click. Selecting a leaf still requires a click:
 
 <Demo data={CascaderDemos.hoverExpand} />
 
-With `expandTrigger="hover"`, the open column stays in place while the cursor moves diagonally
-toward it. Set `safeAreaPolygon={false}` to disable this behavior or pass an object with
-[safePolygon](https://floating-ui.com/docs/useHover#safepolygon) options:
+With `expandTrigger="hover"`, the open column stays in place while the cursor moves diagonally toward it. Set `safeAreaPolygon={false}` to disable this behavior or pass an object with [safePolygon](https://floating-ui.com/docs/useHover#safepolygon) options:
 
 <Demo data={CascaderDemos.safeAreaPolygon} />
 
 ## Flat list layout
 
-Columns do not fit narrow screens. Set `withColumns={false}` to render options
-as a flat list of full paths instead:
+Columns do not fit narrow screens. Set `withColumns={false}` to render options as a flat list of full paths instead:
 
 <Demo data={CascaderDemos.flatList} />
 
-Combine `withColumns` with the [use-matches](/styles/responsive/#use-matches-hook) hook to render columns
-on desktop and the flat list on mobile:
+Combine `withColumns` with the [use-matches](/styles/responsive/#use-matches-hook) hook to render columns on desktop and the flat list on mobile:
 
 ```tsx
 import { Cascader, useMatches } from '@mantine/core';
@@ -112,20 +101,17 @@ function Demo() {
 
 ## Max displayed levels
 
-Use `maxDisplayedLevels` to limit the number of columns displayed next to each other.
-When the limit is exceeded, the first columns are hidden behind a control on the left:
+Use `maxDisplayedLevels` to limit the number of columns displayed next to each other. When the limit is exceeded, the first columns are hidden behind a control on the left:
 
 <Demo data={CascaderDemos.maxDisplayedLevels} />
 
 ## Searchable
 
-Set the `searchable` prop to allow filtering options. In search mode, the columns are replaced
-with a flat list of full paths that match the query:
+Set the `searchable` prop to allow filtering options. In search mode, the columns are replaced with a flat list of full paths that match the query:
 
 <Demo data={CascaderDemos.searchable} />
 
-Use the `filter` prop to customize how paths are matched and `renderSearchOption` to customize
-how search results are rendered:
+Use the `filter` prop to customize how paths are matched and `renderSearchOption` to customize how search results are rendered:
 
 ```tsx
 import { Cascader, CascaderOption } from '@mantine/core';
@@ -173,29 +159,25 @@ Set the `nothingFoundMessage` prop to display a message when no options match th
 
 ## Display value
 
-The input displays option labels joined by the `separator`. Use `formatValue` to
-fully customize the input label:
+The input displays option labels joined by the `separator`. Use `formatValue` to fully customize the input label:
 
 <Demo data={CascaderDemos.formatValue} />
 
 ## Column width
 
-Use `columnWidth` to set a fixed width for every column and `maxDropdownHeight`
-to set the max height of a column:
+Use `columnWidth` to set a fixed width for every column and `maxDropdownHeight` to set the max height of a column:
 
 <Demo data={CascaderDemos.columnWidth} />
 
 ## Custom option rendering
 
-Use the `renderOption` prop to customize how options are rendered in columns. The function receives
-the option and its column level:
+Use the `renderOption` prop to customize how options are rendered in columns. The function receives the option and its column level:
 
 <Demo data={CascaderDemos.renderOption} />
 
 ## Check icon
 
-Use the `withCheckIcon` prop to toggle the check icon on the selected option and `checkIconPosition`
-to change its position (`left` or `right`):
+Use the `withCheckIcon` prop to toggle the check icon on the selected option and `checkIconPosition` to change its position (`left` or `right`):
 
 <Demo data={CascaderDemos.checkIcon} />
 
@@ -223,14 +205,13 @@ Use the `clearSectionMode` prop to control how the clear button and `rightSectio
 
 ## Scrollable columns
 
-Use `scrollAreaProps` to pass props down to the [ScrollArea](/core/scroll-area) of each column:
+A column scrolls when its options are taller than `maxDropdownHeight`. Use `scrollAreaProps` to pass props down to the [ScrollArea](/core/scroll-area) of each column:
 
 <Demo data={CascaderDemos.scrollArea} />
 
 ## Control dropdown opened state
 
-Use `dropdownOpened`, `defaultDropdownOpened`, `onDropdownOpen` and `onDropdownClose` props to
-control the dropdown opened state:
+Use `dropdownOpened`, `defaultDropdownOpened`, `onDropdownOpen` and `onDropdownClose` props to control the dropdown opened state:
 
 ```tsx
 import { useState } from 'react';
@@ -251,8 +232,7 @@ function Demo() {
 
 ## Dropdown position
 
-Use `comboboxProps` to pass props down to the underlying [Combobox](/core/combobox) and
-[Popover](/core/popover). For example, set `position` to change the dropdown position:
+Use `comboboxProps` to pass props down to the underlying [Combobox](/core/combobox) and [Popover](/core/popover). For example, set `position` to change the dropdown position:
 
 <Demo data={CascaderDemos.dropdownPosition} />
 
@@ -262,8 +242,7 @@ Use `comboboxProps` to pass props down to the underlying [Combobox](/core/combob
 
 ## Dropdown width
 
-In columns mode the dropdown is sized to the columns. In flat list mode, set the width
-with `comboboxProps={{ width }}`:
+In columns mode the dropdown is sized to the columns. In flat list mode, set the width with `comboboxProps={{ width }}`:
 
 <Demo data={CascaderDemos.dropdownWidth} />
 
@@ -348,14 +327,31 @@ function Demo() {
       key: 'ArrowDown/ArrowUp',
       description: 'Opens the dropdown, then moves between options in the current column',
     },
-    { key: 'ArrowRight', description: 'Expands the highlighted option into the next column' },
+    {
+      key: 'Home/End',
+      description: 'Moves to the first/last option in the current column, if not searchable',
+    },
+    {
+      key: 'ArrowRight',
+      description: 'Expands the highlighted option into the next column (ArrowLeft in RTL)',
+    },
     {
       key: 'ArrowLeft',
-      description: 'Collapses the current column and moves back to the previous one',
+      description:
+        'Collapses the current column and moves back to the previous one (ArrowRight in RTL)',
     },
     {
       key: 'Enter',
-      description: 'Expands a parent option or selects the highlighted leaf option',
+      description:
+        'Expands a parent option or selects the highlighted leaf option (any option with changeOnSelect)',
+    },
+    {
+      key: 'Space',
+      description: 'Same as Enter, if not searchable',
+    },
+    {
+      key: 'Printable characters',
+      description: 'Moves to the option that starts with the typed text, if not searchable',
     },
     { key: 'Escape', description: 'Closes the dropdown' },
   ]}

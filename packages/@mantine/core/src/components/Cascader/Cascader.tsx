@@ -1,4 +1,4 @@
-import { Fragment, useEffect, useMemo } from 'react';
+import { Fragment, useEffect, useMemo, useRef } from 'react';
 import { SafePolygonOptions } from '@floating-ui/react';
 import { useId, useUncontrolled } from '@mantine/hooks';
 import {
@@ -9,12 +9,14 @@ import {
   factory,
   MantineColor,
   StylesApiProps,
+  useDirection,
   useProps,
   useResolvedStylesApi,
   useStyles,
 } from '../../core';
 import { CheckIcon } from '../Checkbox/CheckIcon';
-import { Combobox, ComboboxLikeStylesNames, useCombobox } from '../Combobox';
+import { Combobox, ComboboxLikeStylesNames, ComboboxProps, useCombobox } from '../Combobox';
+import { getComboboxLabelId } from '../Combobox/get-combobox-label-id/get-combobox-label-id';
 import { isExternalInputChange } from '../Combobox/is-external-input-change/is-external-input-change';
 import {
   __BaseInputProps,
@@ -25,9 +27,13 @@ import {
 } from '../Input';
 import { InputBase } from '../InputBase';
 import { ScrollArea, ScrollAreaProps } from '../ScrollArea';
-import { CascaderColumns } from './CascaderColumns';
+import { CascaderColumns, getCascaderOptionId } from './CascaderColumns';
 import { flattenCascaderPaths } from './flatten-cascader-paths';
-import { getCascaderPathOptions } from './get-cascader-path-options';
+import {
+  findEnabledCascaderOptionIndex,
+  getCascaderIndexPath,
+  getCascaderOptionText,
+} from './get-cascader-columns';
 import { useCascader } from './use-cascader';
 import classes from './Cascader.module.css';
 
@@ -183,7 +189,7 @@ export interface CascaderProps
   onDropdownClose?: () => void;
 
   /** Props passed down to the underlying `Combobox` component */
-  comboboxProps?: Record<string, any>;
+  comboboxProps?: ComboboxProps;
 
   /** Props passed down to the dropdown `ScrollArea` */
   scrollAreaProps?: ScrollAreaProps;
@@ -223,27 +229,8 @@ const defaultProps = {
   size: 'sm',
 } satisfies Partial<CascaderProps>;
 
-function optionLabelToString(option: CascaderOption): string {
-  return typeof option.label === 'string' || typeof option.label === 'number'
-    ? String(option.label)
-    : option.value;
-}
-
-function firstEnabledOptionIndex(options: CascaderOption[]): number {
-  return options.findIndex((option) => !option.disabled);
-}
-
-function lastEnabledOptionIndex(options: CascaderOption[]): number {
-  for (let index = options.length - 1; index >= 0; index -= 1) {
-    if (!options[index].disabled) {
-      return index;
-    }
-  }
-  return -1;
-}
-
 function joinPathLabels(options: CascaderOption[], separator: string): string {
-  return options.map(optionLabelToString).join(` ${separator} `);
+  return options.map(getCascaderOptionText).join(` ${separator} `);
 }
 
 function defaultCascaderFilter(
@@ -361,6 +348,7 @@ export const Cascader = factory<CascaderFactory>((_props) => {
   } = props;
 
   const _id = useId(id);
+  const { dir } = useDirection();
   const separatorString =
     typeof separator === 'string' || typeof separator === 'number' ? String(separator) : '/';
 
@@ -373,13 +361,10 @@ export const Cascader = factory<CascaderFactory>((_props) => {
     },
     onDropdownClose: () => {
       onDropdownClose?.();
-      if (searchable) {
-        setSearchValue(cascader.value ? displayString : '');
-      }
+      syncSearchToValue();
     },
   });
 
-  // When `allowDeselect` is enabled, keep the dropdown open by default so the value can be toggled
   const shouldCloseOnSelect = closeOnSelect ?? !allowDeselect;
 
   const cascader = useCascader({
@@ -390,7 +375,9 @@ export const Cascader = factory<CascaderFactory>((_props) => {
     changeOnSelect,
     allowDeselect,
     expandTrigger,
-    onLeafSelect: () => {
+    searchable,
+    dir,
+    onSelect: () => {
       if (shouldCloseOnSelect) {
         store.closeDropdown();
       }
@@ -431,12 +418,7 @@ export const Cascader = factory<CascaderFactory>((_props) => {
     return joinPathLabels(cascader.pathOptions, separatorString);
   }, [cascader.pathOptions, cascader.value, formatValue, separatorString]);
 
-  const initialSearchValue = useMemo(() => {
-    if (!searchable || !defaultValue) {
-      return '';
-    }
-    return joinPathLabels(getCascaderPathOptions(data, defaultValue), separatorString);
-  }, []);
+  const initialSearchValue = useMemo(() => (searchable ? displayString : ''), []);
 
   const [_searchValue, setSearchValue] = useUncontrolled({
     value: searchValue,
@@ -445,16 +427,30 @@ export const Cascader = factory<CascaderFactory>((_props) => {
     onChange: onSearchChange,
   });
 
+  const syncSearchToValue = () => {
+    if (searchable) {
+      setSearchValue(displayString);
+    }
+  };
+
   const isSearching =
     !!searchable && _searchValue.trim().length > 0 && _searchValue !== displayString;
 
-  useEffect(() => {
-    if (searchable) {
-      setSearchValue(cascader.value ? displayString : '');
-    }
-  }, [cascader.value]);
+  const valueKey = cascader.value ? JSON.stringify(cascader.value) : null;
+  const synced = useRef({ valueKey, displayString });
 
-  // The dropdown renders a flat list of paths when searching or when `withColumns` is disabled
+  useEffect(() => {
+    const previous = synced.current;
+    if (previous.valueKey === valueKey && previous.displayString === displayString) {
+      return;
+    }
+    synced.current = { valueKey, displayString };
+
+    if (previous.valueKey !== valueKey || !store.dropdownOpened) {
+      syncSearchToValue();
+    }
+  }, [valueKey, displayString]);
+
   const showFlatList = isSearching || !withColumns;
 
   const flatPaths = useMemo(() => flattenCascaderPaths(data), [data]);
@@ -478,6 +474,7 @@ export const Cascader = factory<CascaderFactory>((_props) => {
 
   const handleSearchChange = (nextValue: string) => {
     setSearchValue(nextValue);
+    store.resetSelectedOption();
     if (canInteract) {
       store.openDropdown();
     }
@@ -499,7 +496,7 @@ export const Cascader = factory<CascaderFactory>((_props) => {
       const opensDropdown =
         event.key === 'ArrowDown' ||
         event.key === 'ArrowUp' ||
-        event.key === 'ArrowRight' ||
+        event.key === (dir === 'rtl' ? 'ArrowLeft' : 'ArrowRight') ||
         event.key === 'Enter' ||
         (!searchable && event.key === ' ');
 
@@ -511,8 +508,8 @@ export const Cascader = factory<CascaderFactory>((_props) => {
         if (!cascader.value && (event.key === 'ArrowDown' || event.key === 'ArrowUp')) {
           const rootIndex =
             event.key === 'ArrowDown'
-              ? firstEnabledOptionIndex(data)
-              : lastEnabledOptionIndex(data);
+              ? findEnabledCascaderOptionIndex(data, -1, 1)
+              : findEnabledCascaderOptionIndex(data, data.length, -1);
           if (rootIndex >= 0) {
             cascader.setActivePath([data[rootIndex].value]);
           }
@@ -523,7 +520,7 @@ export const Cascader = factory<CascaderFactory>((_props) => {
 
     if (cascader.handleColumnsKeyDown(event)) {
       event.preventDefault();
-    } else if (!searchable && event.key === ' ') {
+    } else if (!searchable && (event.key === ' ' || event.key === 'Enter')) {
       event.preventDefault();
     }
   };
@@ -545,17 +542,22 @@ export const Cascader = factory<CascaderFactory>((_props) => {
   const _clearable = clearable && hasValue && !disabled && !readOnly;
 
   const listId = _id ? `${_id}-cascader-list` : undefined;
-  const valueKey = cascader.value ? JSON.stringify(cascader.value) : null;
+  const currentOptionId =
+    !showFlatList && store.dropdownOpened && cascader.keyboardNav && cascader.activePath.length > 0
+      ? getCascaderOptionId(listId, getCascaderIndexPath(data, cascader.activePath))
+      : undefined;
+
+  const hasOptions = showFlatList ? flatListItems.length > 0 : data.length > 0;
 
   const dropdown = (
     <Combobox.Dropdown
-      hidden={readOnly || disabled}
+      hidden={readOnly || disabled || (!hasOptions && !nothingFoundMessage)}
       style={showFlatList ? undefined : { padding: 0 }}
     >
       {showFlatList ? (
         <Combobox.Options aria-label={typeof label === 'string' ? label : undefined}>
           <ScrollArea.Autosize
-            mah={maxDropdownHeight ?? 260}
+            mah={maxDropdownHeight}
             type="scroll"
             scrollbarSize="var(--combobox-padding)"
             offsetScrollbars="y"
@@ -598,6 +600,7 @@ export const Cascader = factory<CascaderFactory>((_props) => {
           activePath={cascader.activePath}
           value={cascader.value}
           keyboardNav={cascader.keyboardNav}
+          currentOptionId={currentOptionId}
           withCheckIcon={withCheckIcon}
           checkIconPosition={checkIconPosition}
           renderOption={renderOption}
@@ -614,11 +617,13 @@ export const Cascader = factory<CascaderFactory>((_props) => {
           onOptionMouseEnter={cascader.handleOptionMouseEnter}
           onColumnsMouseLeave={() => {
             if (expandTrigger === 'hover') {
-              cascader.setActivePath(cascader.value ?? []);
+              cascader.resetActivePath();
             }
           }}
           onPointerActivity={() => cascader.setKeyboardNav(false)}
           listId={listId}
+          labelId={getComboboxLabelId({ id: _id, label, labelProps, inputWrapperOrder })}
+          ariaLabel={rest['aria-label']}
           safeAreaPolygon={expandTrigger === 'hover' ? safeAreaPolygon : false}
         />
       )}
@@ -646,9 +651,6 @@ export const Cascader = factory<CascaderFactory>((_props) => {
           }
           cascader.selectPath(flatPath.path);
           cascader.setActivePath(flatPath.path);
-          if (shouldCloseOnSelect) {
-            store.closeDropdown();
-          }
         }}
         {...comboboxProps}
       >
@@ -656,6 +658,7 @@ export const Cascader = factory<CascaderFactory>((_props) => {
           targetType={searchable ? 'input' : 'button'}
           withKeyboardNavigation={showFlatList}
           autoComplete={autoComplete}
+          {...(showFlatList ? null : { 'aria-activedescendant': currentOptionId })}
         >
           <InputBase
             id={_id}

@@ -11,7 +11,7 @@ function Demo() {
     <Cascader
       label="Location"
       placeholder="Pick location"
-      allowDeselect
+      allowDeselect={false}
       defaultValue={['asia', 'jp', 'tokyo']}
       data={data}
     />
@@ -24,7 +24,7 @@ function Demo() {
     <Cascader
       label="Location"
       placeholder="Pick location"
-      allowDeselect
+      allowDeselect={false}
       defaultValue={['asia', 'jp', 'tokyo']}
       data={data}
     />
