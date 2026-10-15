@@ -17,7 +17,7 @@ function Demo() {
         <Button variant="default" onClick={() => setOpenIndex(null)}>Close all</Button>
       </Group>
 
-      <Menubar openIndex={openIndex} onOpenChange={setOpenIndex}>
+      <Menubar aria-label="Application menu" openIndex={openIndex} onOpenChange={setOpenIndex}>
         <Menubar.Menu width={220}>
           <Menubar.Target>File</Menubar.Target>
           <Menubar.Dropdown>
@@ -56,7 +56,7 @@ function Demo() {
         </Button>
       </Group>
 
-      <Menubar openIndex={openIndex} onOpenChange={setOpenIndex}>
+      <Menubar aria-label="Application menu" openIndex={openIndex} onOpenChange={setOpenIndex}>
         <Menubar.Menu width={220}>
           <Menubar.Target>File</Menubar.Target>
           <Menubar.Dropdown>

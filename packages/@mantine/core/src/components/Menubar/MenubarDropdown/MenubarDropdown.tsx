@@ -1,8 +1,13 @@
 import { createEventHandler, useDirection } from '../../../core';
 import { Menu, MenuDropdownProps } from '../../Menu';
+import { getMenuArrowKeys } from '../../Menu/get-menu-arrow-keys';
 import { useMenubarContext, useMenubarMenuContext } from '../Menubar.context';
 
 export interface MenubarDropdownProps extends MenuDropdownProps {}
+
+function isEditable(node: HTMLElement) {
+  return node.isContentEditable || node.tagName === 'INPUT' || node.tagName === 'TEXTAREA';
+}
 
 export function MenubarDropdown(props: MenubarDropdownProps) {
   const { onKeyDown, onMouseEnter, onMouseLeave, ...others } = props;
@@ -29,22 +34,17 @@ export function MenubarDropdown(props: MenubarDropdownProps) {
   const handleKeyDown = createEventHandler<any>(onKeyDown, (event) => {
     const target = event.target as HTMLElement;
 
-    // Tabbing out of an open menu dismisses it. Focus is moved to the trigger first
-    // so the browser continues the tab sequence from the menubar position.
     if (event.key === 'Tab') {
       ctx.controller.focusTarget(menuCtx.index);
       ctx.controller.closeMenu();
       return;
     }
 
-    // Only handle navigation when focus is on a top-level item of this dropdown,
-    // submenu items keep ArrowLeft/ArrowRight for their own open/close behavior
-    if (target.closest('[data-menu-dropdown]') !== event.currentTarget) {
+    if (event.defaultPrevented || isEditable(target)) {
       return;
     }
 
-    const forwardKey = dir === 'rtl' ? 'ArrowLeft' : 'ArrowRight';
-    const backKey = dir === 'rtl' ? 'ArrowRight' : 'ArrowLeft';
+    const { forward: forwardKey, back: backKey } = getMenuArrowKeys(dir);
 
     if (event.key === forwardKey) {
       if (target.closest('[data-menu-item]')?.hasAttribute('data-sub-menu-item')) {
@@ -53,6 +53,9 @@ export function MenubarDropdown(props: MenubarDropdownProps) {
       event.preventDefault();
       switchToAdjacent(1);
     } else if (event.key === backKey) {
+      if (target.closest('[data-menu-dropdown]') !== event.currentTarget) {
+        return;
+      }
       event.preventDefault();
       switchToAdjacent(-1);
     }

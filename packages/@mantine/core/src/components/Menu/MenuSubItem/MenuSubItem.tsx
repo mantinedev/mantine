@@ -14,6 +14,7 @@ import {
 } from '../../../core';
 import { AccordionChevron } from '../../Accordion';
 import { UnstyledButton } from '../../UnstyledButton';
+import { getMenuArrowKeys } from '../get-menu-arrow-keys';
 import { getMenuItemVars } from '../get-menu-item-vars';
 import { useMenuContext } from '../Menu.context';
 import { SubMenuContext } from '../MenuSub/MenuSub.context';
@@ -77,12 +78,17 @@ export const MenuSubItem = polymorphicFactory<MenuSubItemFactory>((props) => {
   const _others: any = others;
 
   const handleKeydown = createEventHandler<any>(_others.onKeyDown, (event) => {
-    if (event.key === 'ArrowRight') {
-      subCtx?.open();
-      subCtx?.focusFirstItem();
+    const { forward: forwardKey, back: backKey } = getMenuArrowKeys(dir);
+    const isActivationKey = event.key === 'Enter' || event.key === ' ';
+
+    if ((event.key === forwardKey || (isActivationKey && !dataDisabled)) && subCtx) {
+      event.preventDefault();
+      subCtx.open();
+      subCtx.focusFirstItem();
     }
 
-    if (event.key === 'ArrowLeft' && subCtx?.parentContext) {
+    if (event.key === backKey && subCtx?.parentContext) {
+      event.preventDefault();
       subCtx.parentContext.close();
       subCtx.parentContext.focusParentItem();
     }

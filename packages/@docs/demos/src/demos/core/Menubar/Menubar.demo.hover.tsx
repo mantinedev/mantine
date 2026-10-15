@@ -6,7 +6,7 @@ import { Menu, Menubar } from '@mantine/core';
 
 function Demo() {
   return (
-    <Menubar trigger="hover">
+    <Menubar aria-label="Application menu" trigger="hover">
       <Menubar.Menu width={220}>
         <Menubar.Target>File</Menubar.Target>
         <Menubar.Dropdown>
@@ -41,7 +41,7 @@ function Demo() {
 
 function Demo() {
   return (
-    <Menubar trigger="hover">
+    <Menubar aria-label="Application menu" trigger="hover">
       <Menubar.Menu width={220}>
         <Menubar.Target>File</Menubar.Target>
         <Menubar.Dropdown>

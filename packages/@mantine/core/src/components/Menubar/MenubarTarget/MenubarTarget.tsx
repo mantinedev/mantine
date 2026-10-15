@@ -5,6 +5,7 @@ import {
   useDirection,
   useProps,
 } from '../../../core';
+import { getMenuArrowKeys } from '../../Menu/get-menu-arrow-keys';
 import { Popover } from '../../Popover';
 import { UnstyledButton } from '../../UnstyledButton';
 import { useMenubarContext, useMenubarMenuContext } from '../Menubar.context';
@@ -36,6 +37,18 @@ function getTargetLabel(node: HTMLElement) {
   return (node.textContent ?? '').trim().toLowerCase();
 }
 
+function isFocusInMenubar(target: HTMLElement, menubarId: string) {
+  const active = document.activeElement;
+  if (!active || active === target) {
+    return false;
+  }
+
+  return (
+    !!target.closest('[data-menubar]')?.contains(active) ||
+    !!active.closest(`[data-menubar-dropdown="${menubarId}"]`)
+  );
+}
+
 export function MenubarTarget(props: MenubarTargetProps) {
   const {
     children,
@@ -59,18 +72,10 @@ export function MenubarTarget(props: MenubarTargetProps) {
   const isDisabled = disabled || dataDisabled;
   const isActive = ctx.controller.activeIndex === menuCtx.index;
 
-  // Before the menu indexes resolve from the DOM (first render / SSR HTML), every target
-  // would otherwise compute `tabIndex={-1}`, leaving the menubar with no tab stop until
-  // effects run. Keep unresolved targets focusable so keyboard users can enter the menubar.
   const isUnresolvedTabStop = menuCtx.index === -1 && !isDisabled;
 
-  const moveToAdjacent = (direction: 1 | -1) => {
-    const nextIndex = ctx.controller.getAdjacentIndex(menuCtx.index, direction);
-    ctx.controller.focusMenu(nextIndex);
-    if (ctx.controller.openIndex !== null) {
-      ctx.controller.openMenu(nextIndex);
-    }
-  };
+  const moveToAdjacent = (direction: 1 | -1) =>
+    ctx.controller.focusMenu(ctx.controller.getAdjacentIndex(menuCtx.index, direction));
 
   const openAndFocusItem = (itemPosition: 'first' | 'last') => {
     ctx.controller.openMenu(menuCtx.index);
@@ -94,11 +99,8 @@ export function MenubarTarget(props: MenubarTargetProps) {
         getTargetLabel(node).startsWith(char)
       ) {
         event.preventDefault();
-        ctx.controller.setActiveIndex(index);
-        node.focus();
-        if (ctx.controller.openIndex !== null) {
-          ctx.controller.openMenu(index);
-        }
+        event.stopPropagation();
+        ctx.controller.focusMenu(index);
         break;
       }
     }
@@ -115,19 +117,21 @@ export function MenubarTarget(props: MenubarTargetProps) {
     }
   });
 
-  const handleMouseEnter = createEventHandler<any>(onMouseEnter, () => {
+  const handleMouseEnter = createEventHandler<any>(onMouseEnter, (event) => {
     if (isDisabled) {
       return;
     }
     ctx.cancelClose();
+    const target = event.currentTarget as HTMLButtonElement;
+    const shouldMoveFocus = isFocusInMenubar(target, ctx.controller.id);
     if (ctx.trigger === 'hover') {
       ctx.controller.openMenu(menuCtx.index, 'hover');
     } else if (ctx.controller.openIndex !== null && ctx.controller.openIndex !== menuCtx.index) {
-      // Hover-switching with trigger="click" continues a click-driven interaction:
-      // keep 'click' as the open source so that the next click on the target
-      // closes the menu, same as a click-opened menu (desktop application pattern)
       ctx.controller.openMenu(menuCtx.index);
+    } else {
+      return;
     }
+    shouldMoveFocus && target.focus();
   });
 
   const handleMouseLeave = createEventHandler<any>(onMouseLeave, () => {
@@ -144,14 +148,15 @@ export function MenubarTarget(props: MenubarTargetProps) {
     if (isDisabled) {
       return;
     }
-    const forwardKey = dir === 'rtl' ? 'ArrowLeft' : 'ArrowRight';
-    const backKey = dir === 'rtl' ? 'ArrowRight' : 'ArrowLeft';
+    const { forward: forwardKey, back: backKey } = getMenuArrowKeys(dir);
 
     if (event.key === forwardKey) {
       event.preventDefault();
+      event.stopPropagation();
       moveToAdjacent(1);
     } else if (event.key === backKey) {
       event.preventDefault();
+      event.stopPropagation();
       moveToAdjacent(-1);
     } else if (event.key === 'ArrowDown' || event.key === 'Enter' || event.key === ' ') {
       event.preventDefault();
@@ -161,9 +166,11 @@ export function MenubarTarget(props: MenubarTargetProps) {
       openAndFocusItem('last');
     } else if (event.key === 'Home') {
       event.preventDefault();
+      event.stopPropagation();
       ctx.controller.focusFirstMenu();
     } else if (event.key === 'End') {
       event.preventDefault();
+      event.stopPropagation();
       ctx.controller.focusLastMenu();
     } else if (event.key === 'Escape') {
       if (menuCtx.opened) {

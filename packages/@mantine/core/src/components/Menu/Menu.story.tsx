@@ -1,6 +1,7 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { MagnifyingGlassIcon, TableIcon } from '@phosphor-icons/react';
 import { useDisclosure } from '@mantine/hooks';
+import { DirectionProvider } from '../../core';
 import { Button } from '../Button';
 import { Input } from '../Input';
 import { Text } from '../Text';
@@ -244,6 +245,58 @@ export function WithSubMenu() {
         </Menu.Dropdown>
       </Menu>
     </div>
+  );
+}
+
+function useDocumentRtl() {
+  useEffect(() => {
+    const previous = document.documentElement.getAttribute('dir');
+    document.documentElement.setAttribute('dir', 'rtl');
+    return () => {
+      if (previous === null) {
+        document.documentElement.removeAttribute('dir');
+      } else {
+        document.documentElement.setAttribute('dir', previous);
+      }
+    };
+  }, []);
+}
+
+export function WithSubMenuRtl() {
+  useDocumentRtl();
+  return (
+    <DirectionProvider initialDirection="rtl" detectDirection={false}>
+      <div dir="rtl" style={{ padding: 400 }}>
+        <Menu width={200} position="bottom-start">
+          <Menu.Target>
+            <Button>Toggle menu</Button>
+          </Menu.Target>
+          <Menu.Dropdown>
+            <Menu.Item>Item 1</Menu.Item>
+            <Menu.Sub>
+              <Menu.Sub.Target>
+                <Menu.Sub.Item>Sub Menu item</Menu.Sub.Item>
+              </Menu.Sub.Target>
+
+              <Menu.Sub.Dropdown>
+                <Menu.Item closeMenuOnClick={false}>Sub 1</Menu.Item>
+                <Menu.Sub>
+                  <Menu.Sub.Target>
+                    <Menu.Sub.Item>Nested sub item</Menu.Sub.Item>
+                  </Menu.Sub.Target>
+
+                  <Menu.Sub.Dropdown>
+                    <Menu.Item closeMenuOnClick={false}>Nested 1</Menu.Item>
+                    <Menu.Item closeMenuOnClick={false}>Nested 2</Menu.Item>
+                  </Menu.Sub.Dropdown>
+                </Menu.Sub>
+              </Menu.Sub.Dropdown>
+            </Menu.Sub>
+            <Menu.Item>Item 3</Menu.Item>
+          </Menu.Dropdown>
+        </Menu>
+      </div>
+    </DirectionProvider>
   );
 }
 

@@ -265,6 +265,8 @@ If you are using the Menu to build navigation, you can use the options from the 
 
 ### Keyboard interactions
 
+When RTL direction is set, `ArrowLeft` and `ArrowRight` are swapped.
+
 <KeyboardEventsTable
   data={[
     {
@@ -296,6 +298,16 @@ If you are using the Menu to build navigation, you can use the options from the 
       key: 'End',
       description: 'Moves focus to last menu item',
       condition: 'Focus within dropdown',
+    },
+    {
+      key: 'ArrowRight/Space/Enter',
+      description: 'Opens the submenu and moves focus to its first item',
+      condition: 'Focus on Menu.Sub.Item',
+    },
+    {
+      key: 'ArrowLeft',
+      description: 'Closes the submenu and moves focus to its Menu.Sub.Item',
+      condition: 'Focus within submenu',
     },
     {
       key: 'ArrowUp/ArrowDown',

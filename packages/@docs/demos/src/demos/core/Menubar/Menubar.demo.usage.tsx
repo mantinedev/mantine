@@ -6,12 +6,12 @@ import { Menu, Menubar, Text } from '@mantine/core';
 
 function Demo() {
   return (
-    <Menubar>
+    <Menubar aria-label="Application menu">
       <Menubar.Menu width={220}>
         <Menubar.Target>File</Menubar.Target>
         <Menubar.Dropdown>
-          <Menu.Item rightSection={<Text size="xs" c="dimmed">⌘N</Text>}>New file</Menu.Item>
-          <Menu.Item rightSection={<Text size="xs" c="dimmed">⌘⇧N</Text>}>New window</Menu.Item>
+          <Menu.Item rightSection={<Text size="xs">⌘N</Text>}>New file</Menu.Item>
+          <Menu.Item rightSection={<Text size="xs">⌘⇧N</Text>}>New window</Menu.Item>
           <Menu.Sub>
             <Menu.Sub.Target>
               <Menu.Sub.Item>Open recent</Menu.Sub.Item>
@@ -23,7 +23,7 @@ function Demo() {
             </Menu.Sub.Dropdown>
           </Menu.Sub>
           <Menu.Divider />
-          <Menu.Item rightSection={<Text size="xs" c="dimmed">⌘S</Text>}>Save</Menu.Item>
+          <Menu.Item rightSection={<Text size="xs">⌘S</Text>}>Save</Menu.Item>
           <Menu.Item>Save as…</Menu.Item>
         </Menubar.Dropdown>
       </Menubar.Menu>
@@ -31,8 +31,8 @@ function Demo() {
       <Menubar.Menu width={220}>
         <Menubar.Target>Edit</Menubar.Target>
         <Menubar.Dropdown>
-          <Menu.Item rightSection={<Text size="xs" c="dimmed">⌘Z</Text>}>Undo</Menu.Item>
-          <Menu.Item rightSection={<Text size="xs" c="dimmed">⌘⇧Z</Text>}>Redo</Menu.Item>
+          <Menu.Item rightSection={<Text size="xs">⌘Z</Text>}>Undo</Menu.Item>
+          <Menu.Item rightSection={<Text size="xs">⌘⇧Z</Text>}>Redo</Menu.Item>
           <Menu.Divider />
           <Menu.Item>Cut</Menu.Item>
           <Menu.Item>Copy</Menu.Item>
@@ -55,28 +55,12 @@ function Demo() {
 
 function Demo() {
   return (
-    <Menubar>
+    <Menubar aria-label="Application menu">
       <Menubar.Menu width={220}>
         <Menubar.Target>File</Menubar.Target>
         <Menubar.Dropdown>
-          <Menu.Item
-            rightSection={
-              <Text size="xs" c="dimmed">
-                ⌘N
-              </Text>
-            }
-          >
-            New file
-          </Menu.Item>
-          <Menu.Item
-            rightSection={
-              <Text size="xs" c="dimmed">
-                ⌘⇧N
-              </Text>
-            }
-          >
-            New window
-          </Menu.Item>
+          <Menu.Item rightSection={<Text size="xs">⌘N</Text>}>New file</Menu.Item>
+          <Menu.Item rightSection={<Text size="xs">⌘⇧N</Text>}>New window</Menu.Item>
           <Menu.Sub>
             <Menu.Sub.Target>
               <Menu.Sub.Item>Open recent</Menu.Sub.Item>
@@ -88,15 +72,7 @@ function Demo() {
             </Menu.Sub.Dropdown>
           </Menu.Sub>
           <Menu.Divider />
-          <Menu.Item
-            rightSection={
-              <Text size="xs" c="dimmed">
-                ⌘S
-              </Text>
-            }
-          >
-            Save
-          </Menu.Item>
+          <Menu.Item rightSection={<Text size="xs">⌘S</Text>}>Save</Menu.Item>
           <Menu.Item>Save as…</Menu.Item>
         </Menubar.Dropdown>
       </Menubar.Menu>
@@ -104,24 +80,8 @@ function Demo() {
       <Menubar.Menu width={220}>
         <Menubar.Target>Edit</Menubar.Target>
         <Menubar.Dropdown>
-          <Menu.Item
-            rightSection={
-              <Text size="xs" c="dimmed">
-                ⌘Z
-              </Text>
-            }
-          >
-            Undo
-          </Menu.Item>
-          <Menu.Item
-            rightSection={
-              <Text size="xs" c="dimmed">
-                ⌘⇧Z
-              </Text>
-            }
-          >
-            Redo
-          </Menu.Item>
+          <Menu.Item rightSection={<Text size="xs">⌘Z</Text>}>Undo</Menu.Item>
+          <Menu.Item rightSection={<Text size="xs">⌘⇧Z</Text>}>Redo</Menu.Item>
           <Menu.Divider />
           <Menu.Item>Cut</Menu.Item>
           <Menu.Item>Copy</Menu.Item>

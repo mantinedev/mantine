@@ -72,6 +72,7 @@ describe('@mantine/core/Menubar/use-menubar', () => {
       'getMenuIndex',
       'getAdjacentIndex',
       'focusTarget',
+      'getMenuDropdown',
     ],
     changeState: (controller) => controller.openMenu(1),
   });
@@ -183,6 +184,20 @@ describe('@mantine/core/Menubar/use-menubar', () => {
     expect(hook.result.current.getMenuIndex('unknown')).toBe(-1);
   });
 
+  it('getMenuDropdown finds the dropdown through the target aria-controls', () => {
+    const { hook, root } = renderMenubar();
+    const dropdown = document.createElement('div');
+    dropdown.id = 'edit-dropdown';
+    document.body.appendChild(dropdown);
+
+    expect(hook.result.current.getMenuDropdown(1)).toBeNull();
+
+    root.querySelectorAll('button')[1].setAttribute('aria-controls', 'edit-dropdown');
+    expect(hook.result.current.getMenuDropdown(1)).toBe(dropdown);
+    expect(hook.result.current.getMenuDropdown(0)).toBeNull();
+    expect(hook.result.current.getMenuDropdown(5)).toBeNull();
+  });
+
   it('getEnabledIndexes skips disabled targets', () => {
     const { hook } = renderMenubar(undefined, [
       { id: 'file' },
@@ -262,6 +277,41 @@ describe('@mantine/core/Menubar/use-menubar', () => {
 
     expect(hook.result.current.openIndex).toBe(1);
     expect(hook.result.current.activeIndex).toBe(1);
+  });
+
+  it('focusMenu switches the opened menu when one is opened', () => {
+    const { hook, root } = renderMenubar();
+
+    act(() => hook.result.current.openMenu(0, 'hover'));
+    act(() => hook.result.current.focusMenu(2));
+
+    expect(hook.result.current.openIndex).toBe(2);
+    expect(hook.result.current.activeIndex).toBe(2);
+    expect(hook.result.current.getOpenSource()).toBe('click');
+    expect(document.activeElement).toBe(root.children[2]);
+  });
+
+  it('focusMenu keeps the open source when the given menu is already opened', () => {
+    const { hook } = renderMenubar();
+
+    act(() => hook.result.current.openMenu(1, 'hover'));
+    act(() => hook.result.current.focusMenu(1));
+
+    expect(hook.result.current.openIndex).toBe(1);
+    expect(hook.result.current.getOpenSource()).toBe('hover');
+  });
+
+  it('focusFirstMenu and focusLastMenu switch the opened menu when one is opened', () => {
+    const { hook } = renderMenubar();
+
+    act(() => hook.result.current.openMenu(0));
+    act(() => hook.result.current.focusLastMenu());
+    expect(hook.result.current.openIndex).toBe(2);
+    expect(hook.result.current.activeIndex).toBe(2);
+
+    act(() => hook.result.current.focusFirstMenu());
+    expect(hook.result.current.openIndex).toBe(0);
+    expect(hook.result.current.activeIndex).toBe(0);
   });
 
   it('focusNextMenu does not open a menu when all menus are closed', () => {

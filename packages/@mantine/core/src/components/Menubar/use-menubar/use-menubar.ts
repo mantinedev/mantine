@@ -27,7 +27,7 @@ export interface MenubarController {
   /** DOM order index of the menu that holds the single menubar tab stop */
   activeIndex: number;
 
-  /** Moves the menubar tab stop to the given menu without moving DOM focus */
+  /** Moves the menubar tab stop to the given menu without moving DOM focus, used internally by `Menubar` and `Menubar.Target` to mirror DOM focus. Use `focusMenu` to move the tab stop and focus together */
   setActiveIndex: (index: number) => void;
 
   /** Returns the DOM order index of the opened menu, `null` when all menus are closed */
@@ -39,7 +39,7 @@ export interface MenubarController {
   /** Resolved `loop` option, controls whether menu navigation wraps around, used internally by `Menubar.Menu` */
   loop: boolean;
 
-  /** Opens the menu at the given index and moves the tab stop to it. `source` records whether the menu was opened by click or hover: it decides whether dropdown transitions play and whether the next click on the target closes the menu. */
+  /** Opens the menu at the given index and moves the tab stop to it. `source` records whether the menu was opened by click or hover: a hover-opened menu is not closed by the next click on its target */
   openMenu: (index: number, source?: MenubarOpenSource) => void;
 
   /** Closes the opened menu, keeps the tab stop where it is */
@@ -48,19 +48,19 @@ export interface MenubarController {
   /** Closes the menu at the given index if it is opened, opens it otherwise */
   toggleMenu: (index: number, source?: MenubarOpenSource) => void;
 
-  /** Moves the tab stop to the given menu and focuses its target, no-op when no `Menubar` is mounted with the controller */
+  /** Moves the tab stop to the given menu and focuses its target. If another menu is opened, opens the given menu instead. No-op when no `Menubar` is mounted with the controller */
   focusMenu: (index: number) => void;
 
-  /** Focuses the next enabled menu relative to `activeIndex`, respects `loop` */
+  /** Focuses the next enabled menu relative to `activeIndex`, respects `loop`. Switches the opened menu like `focusMenu` */
   focusNextMenu: () => void;
 
-  /** Focuses the previous enabled menu relative to `activeIndex`, respects `loop` */
+  /** Focuses the previous enabled menu relative to `activeIndex`, respects `loop`. Switches the opened menu like `focusMenu` */
   focusPreviousMenu: () => void;
 
-  /** Focuses the first enabled menu */
+  /** Focuses the first enabled menu. Switches the opened menu like `focusMenu` */
   focusFirstMenu: () => void;
 
-  /** Focuses the last enabled menu */
+  /** Focuses the last enabled menu. Switches the opened menu like `focusMenu` */
   focusLastMenu: () => void;
 
   /** Focuses the first or last item of the menu at the given index once its dropdown is rendered. Call it after `openMenu`: it is a no-op if the menu is not opened by the time the dropdown renders. @default 'first' */
@@ -95,6 +95,9 @@ export interface MenubarController {
 
   /** Focuses the target at the given index without moving the tab stop, used internally by `Menubar.Dropdown` */
   focusTarget: (index: number) => void;
+
+  /** Returns the dropdown element of the menu at the given index found through its target `aria-controls`, `null` when the menu is closed. Internal, used by `Menubar.Menu` and `focusMenuItem` */
+  getMenuDropdown: (index: number) => HTMLElement | null;
 }
 
 const FOCUS_MENU_ITEM_MAX_FRAMES = 60;
@@ -173,6 +176,14 @@ export function useMenubar(options: MenubarControllerOptions = {}): MenubarContr
     [getTargets]
   );
 
+  const getMenuDropdown = useCallback(
+    (index: number) => {
+      const controls = getTargets()[index]?.getAttribute('aria-controls');
+      return controls ? document.getElementById(controls) : null;
+    },
+    [getTargets]
+  );
+
   const writeOpenIndex = useCallbackRef(
     (index: number | null, source: MenubarOpenSource | null) => {
       openSourceRef.current = source;
@@ -231,17 +242,17 @@ export function useMenubar(options: MenubarControllerOptions = {}): MenubarContr
   });
 
   const focusMenu = useCallbackRef((index: number) => {
-    setActiveIndex(index);
+    if (openIndexRef.current !== null && openIndexRef.current !== index) {
+      openMenu(index, 'click');
+    } else {
+      setActiveIndex(index);
+    }
+
     focusTarget(index);
   });
 
   const focusAdjacentMenu = useCallbackRef((direction: 1 | -1) => {
-    const next = getAdjacentIndex(activeIndexRef.current, direction);
-    focusMenu(next);
-
-    if (openIndexRef.current !== null) {
-      openMenu(next, 'click');
-    }
+    focusMenu(getAdjacentIndex(activeIndexRef.current, direction));
   });
 
   const focusNextMenu = useCallbackRef(() => focusAdjacentMenu(1));
@@ -278,10 +289,8 @@ export function useMenubar(options: MenubarControllerOptions = {}): MenubarContr
         return;
       }
 
-      const target = getTargets()[index];
-      const controls = target?.getAttribute('aria-controls');
-      const dropdown = controls
-        ? document.getElementById(controls)
+      const dropdown = getTargets()[index]?.getAttribute('aria-controls')
+        ? getMenuDropdown(index)
         : document.querySelector<HTMLElement>(`[data-menubar-dropdown="${id}"]`);
       const items = dropdown?.querySelectorAll<HTMLElement>(
         '[data-menu-item]:not([data-disabled])'
@@ -339,6 +348,7 @@ export function useMenubar(options: MenubarControllerOptions = {}): MenubarContr
       getMenuIndex,
       getAdjacentIndex,
       focusTarget,
+      getMenuDropdown,
     }),
     [openIndex, activeIndex, loop, id]
   );

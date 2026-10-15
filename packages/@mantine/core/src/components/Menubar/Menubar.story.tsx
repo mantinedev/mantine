@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { DirectionProvider } from '../../core';
 import { Menu } from '../Menu';
 import { Menubar } from './Menubar';
@@ -114,7 +114,22 @@ export function Controlled() {
   );
 }
 
+function useDocumentRtl() {
+  useEffect(() => {
+    const previous = document.documentElement.getAttribute('dir');
+    document.documentElement.setAttribute('dir', 'rtl');
+    return () => {
+      if (previous === null) {
+        document.documentElement.removeAttribute('dir');
+      } else {
+        document.documentElement.setAttribute('dir', previous);
+      }
+    };
+  }, []);
+}
+
 export function Rtl() {
+  useDocumentRtl();
   return (
     <DirectionProvider initialDirection="rtl">
       <div dir="rtl" style={{ padding: 40 }}>

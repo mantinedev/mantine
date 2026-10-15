@@ -7,7 +7,7 @@ import { Menu, Menubar } from '@mantine/core';
 
 function Demo() {
   return (
-    <Menubar{{props}}>
+    <Menubar aria-label="Application menu"{{props}}>
       <Menubar.Menu width={220}>
         <Menubar.Target>File</Menubar.Target>
         <Menubar.Dropdown>
@@ -30,7 +30,7 @@ function Demo() {
 
 function Demo(props: any) {
   return (
-    <Menubar {...props}>
+    <Menubar aria-label="Application menu" {...props}>
       <Menubar.Menu width={220}>
         <Menubar.Target>File</Menubar.Target>
         <Menubar.Dropdown>

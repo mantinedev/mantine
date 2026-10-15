@@ -21,7 +21,7 @@ function Demo() {
 
   return (
     <Stack>
-      <Menubar controller={controller}>
+      <Menubar aria-label="Application menu" controller={controller}>
         <Menubar.Menu width={220}>
           <Menubar.Target>File</Menubar.Target>
           <Menubar.Dropdown>
@@ -91,7 +91,7 @@ function Demo() {
 
   return (
     <Stack>
-      <Menubar controller={controller}>
+      <Menubar aria-label="Application menu" controller={controller}>
         <Menubar.Menu width={220}>
           <Menubar.Target>File</Menubar.Target>
           <Menubar.Dropdown>

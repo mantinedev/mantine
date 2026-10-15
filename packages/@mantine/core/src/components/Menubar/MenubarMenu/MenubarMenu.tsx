@@ -29,13 +29,20 @@ export function MenubarMenu({ children, transitionProps, ...others }: MenubarMen
   const handleChange = (value: boolean) => {
     if (value) {
       ctx.controller.openMenu(index);
-    } else {
-      ctx.controller.closeMenu();
+      return;
     }
+
+    if (ctx.controller.getOpenIndex() !== index) {
+      return;
+    }
+
+    if (ctx.controller.getMenuDropdown(index)?.contains(document.activeElement)) {
+      ctx.controller.focusTarget(index);
+    }
+
+    ctx.controller.closeMenu();
   };
 
-  // Transitions should only play when the whole bar opens or closes, not when
-  // switching between sibling menus while one is already open.
   const baseDuration = transitionProps?.duration ?? DEFAULT_TRANSITION_DURATION;
   const baseExitDuration = transitionProps?.exitDuration ?? baseDuration;
   const animateEnter = ctx.getPreviousOpenIndex() === null;

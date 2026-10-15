@@ -149,7 +149,7 @@ export function MenuSub(_props: MenuSubProps) {
 
   const focusParentItem = () =>
     window.setTimeout(() => {
-      document.getElementById(`${id}-target`)?.focus();
+      document.getElementById(id)?.focus();
     }, 16);
 
   return (

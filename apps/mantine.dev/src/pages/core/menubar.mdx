@@ -108,10 +108,9 @@ function Demo() {
   controller.closeMenu();
   controller.toggleMenu(1);
   controller.setOpenIndex(1); // -> sets the index directly, null closes all menus
-  controller.setActiveIndex(1); // -> moves the tab stop without moving DOM focus
 
   // Focus actions
-  controller.focusMenu(1); // -> moves the tab stop to the menu and focuses its target
+  controller.focusMenu(1); // -> focuses the target, switches the open menu if one is open
   controller.focusNextMenu(); // -> next enabled menu, respects loop
   controller.focusPreviousMenu();
   controller.focusFirstMenu();
@@ -156,12 +155,12 @@ When RTL direction is set, `ArrowLeft` and `ArrowRight` are swapped.
 
 <KeyboardEventsTable
   data={[
-    { key: 'ArrowRight', description: 'Move to the next top-level menu, switch the open menu if one is open' },
-    { key: 'ArrowLeft', description: 'Move to the previous top-level menu, switch the open menu if one is open' },
+    { key: 'ArrowRight', description: 'On a target: move to the next top-level menu, switch the open menu if one is open. In a dropdown: open the submenu of a submenu item, otherwise open the next menu' },
+    { key: 'ArrowLeft', description: 'On a target: move to the previous top-level menu, switch the open menu if one is open. In a dropdown: close the submenu, or open the previous menu from a top-level dropdown' },
     { key: 'ArrowDown / Enter / Space', description: 'Open the focused menu and move focus to its first item' },
     { key: 'ArrowUp', description: 'Open the focused menu and move focus to its last item' },
     { key: 'Escape', description: 'Close the open menu and return focus to its target' },
-    { key: 'Home / End', description: 'Move to the first / last top-level menu' },
+    { key: 'Home / End', description: 'Move to the first / last top-level menu, switch the open menu if one is open' },
     { key: 'Character keys', description: 'Move focus to the next top-level menu that starts with the typed character' },
     { key: 'Tab', description: 'Move focus into or out of the menu bar (single tab stop)' },
   ]}
@@ -178,3 +177,13 @@ When RTL direction is set, `ArrowLeft` and `ArrowRight` are swapped.
 - The root element has `role="menubar"`
 - Each `Menubar.Target` has `role="menuitem"`, `aria-haspopup="menu"` and `aria-expanded`
 - `Menubar.Target` children are used as accessible names of the triggers
+
+Set `aria-label` on `Menubar` to give the bar an accessible name:
+
+```tsx
+import { Menubar } from '@mantine/core';
+
+function Demo() {
+  return <Menubar aria-label="Application menu">{/* ...menus */}</Menubar>;
+}
+```

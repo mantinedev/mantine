@@ -135,8 +135,6 @@ export const Menubar = factory<MenubarFactory>((_props) => {
       return;
     }
 
-    // While a menu is open, the single tab stop must stay on the opened menu's target,
-    // including when it was opened programmatically via openIndex/defaultOpenIndex.
     if (menubar.openIndex !== null && enabled.includes(menubar.openIndex)) {
       if (menubar.activeIndex !== menubar.openIndex) {
         menubar.setActiveIndex(menubar.openIndex);

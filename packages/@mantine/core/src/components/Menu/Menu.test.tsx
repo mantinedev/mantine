@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { act, cleanup, createEvent, fireEvent } from '@testing-library/react';
 import { render, screen, tests, userEvent } from '@mantine-tests/core';
+import { DirectionProvider } from '../../core';
 import { Menu, MenuProps } from './Menu';
 import { MenuDivider } from './MenuDivider/MenuDivider';
 import { MenuDropdown } from './MenuDropdown/MenuDropdown';
@@ -1070,6 +1071,166 @@ describe('@mantine/core/Menu', () => {
 
       expect(subDropdown).not.toBe(parentDropdown);
       expect(parentDropdown.contains(subDropdown)).toBe(true);
+    });
+  });
+
+  describe('Menu.Sub keyboard navigation', () => {
+    function NestedSubMenu({ withSearch }: { withSearch?: boolean }) {
+      return (
+        <Menu transitionProps={{ duration: 0 }} withinPortal={false} defaultOpened>
+          <Menu.Target>
+            <button type="button">test-target</button>
+          </Menu.Target>
+          <Menu.Dropdown>
+            {withSearch && <Menu.Search aria-label="search" />}
+            <Menu.Item>Banana</Menu.Item>
+            <Menu.Sub transitionProps={{ duration: 0 }}>
+              <Menu.Sub.Target>
+                <Menu.Sub.Item>More</Menu.Sub.Item>
+              </Menu.Sub.Target>
+              <Menu.Sub.Dropdown>
+                <Menu.Item>Cherry</Menu.Item>
+                <Menu.CheckboxItem checked={false}>Grape</Menu.CheckboxItem>
+                <Menu.Sub transitionProps={{ duration: 0 }}>
+                  <Menu.Sub.Target>
+                    <Menu.Sub.Item>Even more</Menu.Sub.Item>
+                  </Menu.Sub.Target>
+                  <Menu.Sub.Dropdown>
+                    <Menu.Item>Kiwi</Menu.Item>
+                  </Menu.Sub.Dropdown>
+                </Menu.Sub>
+              </Menu.Sub.Dropdown>
+            </Menu.Sub>
+          </Menu.Dropdown>
+        </Menu>
+      );
+    }
+
+    const renderMenu = (dir: 'ltr' | 'rtl', withSearch = false) =>
+      render(
+        <DirectionProvider initialDirection={dir} detectDirection={false}>
+          <NestedSubMenu withSearch={withSearch} />
+        </DirectionProvider>
+      );
+
+    const getButton = (name: string) => screen.getByText(name).closest('button')!;
+    const flushFocus = () =>
+      act(async () => {
+        await new Promise((resolve) => setTimeout(resolve, 30));
+      });
+
+    const keys = {
+      ltr: { forward: 'ArrowRight', back: 'ArrowLeft' },
+      rtl: { forward: 'ArrowLeft', back: 'ArrowRight' },
+    } as const;
+
+    (['ltr', 'rtl'] as const).forEach((dir) => {
+      const { forward, back } = keys[dir];
+
+      it(`${dir}: opens the submenu with ${forward} and focuses its first item`, async () => {
+        renderMenu(dir);
+        const subTarget = getButton('More');
+        subTarget.focus();
+        const event = createEvent.keyDown(subTarget, { key: forward });
+        fireEvent(subTarget, event);
+        expect(event.defaultPrevented).toBe(true);
+        await flushFocus();
+        expect(getButton('Cherry')).toHaveFocus();
+      });
+
+      it(`${dir}: does not open the submenu with ${back}`, async () => {
+        renderMenu(dir);
+        const subTarget = getButton('More');
+        subTarget.focus();
+        fireEvent.keyDown(subTarget, { key: back });
+        await flushFocus();
+        expect(screen.queryByText('Cherry')).not.toBeInTheDocument();
+      });
+
+      it(`${dir}: ${back} on a submenu item closes the submenu and returns focus to its sub item`, async () => {
+        renderMenu(dir);
+        const subTarget = getButton('More');
+        subTarget.focus();
+        fireEvent.keyDown(subTarget, { key: forward });
+        await flushFocus();
+
+        const cherry = getButton('Cherry');
+        const event = createEvent.keyDown(cherry, { key: back });
+        fireEvent(cherry, event);
+        expect(event.defaultPrevented).toBe(true);
+        await flushFocus();
+        expect(screen.queryByText('Cherry')).not.toBeInTheDocument();
+        expect(getButton('More')).toHaveFocus();
+      });
+
+      it(`${dir}: ${back} on a selectable submenu item returns focus to its sub item`, async () => {
+        renderMenu(dir);
+        getButton('More').focus();
+        fireEvent.keyDown(getButton('More'), { key: forward });
+        await flushFocus();
+
+        fireEvent.keyDown(getButton('Grape'), { key: back });
+        await flushFocus();
+        expect(screen.queryByText('Grape')).not.toBeInTheDocument();
+        expect(getButton('More')).toHaveFocus();
+      });
+
+      it(`${dir}: ${back} on a nested sub item closes its submenu and returns focus to the parent sub item`, async () => {
+        renderMenu(dir);
+        getButton('More').focus();
+        fireEvent.keyDown(getButton('More'), { key: forward });
+        await flushFocus();
+
+        fireEvent.keyDown(getButton('Even more'), { key: back });
+        await flushFocus();
+        expect(screen.queryByText('Even more')).not.toBeInTheDocument();
+        expect(getButton('More')).toHaveFocus();
+      });
+
+      it(`${dir}: ${back} in a nested submenu closes only the nested submenu`, async () => {
+        renderMenu(dir);
+        getButton('More').focus();
+        fireEvent.keyDown(getButton('More'), { key: forward });
+        await flushFocus();
+        fireEvent.keyDown(getButton('Even more'), { key: forward });
+        await flushFocus();
+        expect(getButton('Kiwi')).toHaveFocus();
+
+        fireEvent.keyDown(getButton('Kiwi'), { key: back });
+        await flushFocus();
+        expect(screen.queryByText('Kiwi')).not.toBeInTheDocument();
+        expect(getButton('Even more')).toHaveFocus();
+      });
+
+      it(`${dir}: ${back} on a top-level item is not handled`, () => {
+        renderMenu(dir);
+        const banana = getButton('Banana');
+        banana.focus();
+        const event = createEvent.keyDown(banana, { key: back });
+        fireEvent(banana, event);
+        expect(event.defaultPrevented).toBe(false);
+      });
+
+      (['{Enter}', ' '] as const).forEach((key) => {
+        it(`${dir}: ${JSON.stringify(key)} on a sub item opens the submenu and focuses its first item`, async () => {
+          renderMenu(dir);
+          await flushFocus();
+          getButton('More').focus();
+          await userEvent.keyboard(key);
+          await flushFocus();
+          expect(getButton('Cherry')).toHaveFocus();
+          expect(getButton('Banana')).toBeInTheDocument();
+        });
+      });
+
+      it(`${dir}: Enter in Menu.Search opens the highlighted submenu`, async () => {
+        renderMenu(dir, true);
+        const search = screen.getByLabelText('search');
+        search.focus();
+        await userEvent.keyboard('{ArrowDown}{ArrowDown}{Enter}');
+        await flushFocus();
+        expect(getButton('Cherry')).toHaveFocus();
+      });
     });
   });
 

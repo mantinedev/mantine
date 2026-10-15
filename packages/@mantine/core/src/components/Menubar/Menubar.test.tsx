@@ -1,8 +1,9 @@
 import { useState } from 'react';
 import { act, fireEvent, waitFor } from '@testing-library/react';
 import { flushSync } from 'react-dom';
+import { renderToString } from 'react-dom/server';
 import { render, screen, tests, userEvent } from '@mantine-tests/core';
-import { DirectionProvider } from '../../core';
+import { DirectionProvider, MantineProvider } from '../../core';
 import { Menu } from '../Menu';
 import { Modal } from '../Modal';
 import { Menubar, MenubarProps, MenubarStylesNames } from './Menubar';
@@ -68,6 +69,61 @@ function pressEscapeWithBrowserFlush(element: HTMLElement) {
     element.removeEventListener('keydown', flush);
     globalScope.IS_REACT_ACT_ENVIRONMENT = actEnvironment;
   }
+}
+
+function pressKeyWithBrowserFlush(element: HTMLElement, key: string) {
+  const globalScope = globalThis as { IS_REACT_ACT_ENVIRONMENT?: boolean };
+  const actEnvironment = globalScope.IS_REACT_ACT_ENVIRONMENT;
+  const flush = () => flushSync(() => {});
+  globalScope.IS_REACT_ACT_ENVIRONMENT = false;
+  document.body.addEventListener('keydown', flush);
+
+  try {
+    element.dispatchEvent(new KeyboardEvent('keydown', { key, bubbles: true, cancelable: true }));
+  } finally {
+    document.body.removeEventListener('keydown', flush);
+    globalScope.IS_REACT_ACT_ENVIRONMENT = actEnvironment;
+  }
+}
+
+function SubmenuContainer(props: Partial<MenubarProps>) {
+  return (
+    <Menubar {...props}>
+      <Menubar.Menu withinPortal={false} transitionProps={{ duration: 0 }}>
+        <Menubar.Target>File</Menubar.Target>
+        <Menubar.Dropdown>
+          <Menu.Item>New file</Menu.Item>
+          <Menu.Sub transitionProps={{ duration: 0 }}>
+            <Menu.Sub.Target>
+              <Menu.Sub.Item>Share</Menu.Sub.Item>
+            </Menu.Sub.Target>
+            <Menu.Sub.Dropdown>
+              <Menu.Item>Email</Menu.Item>
+            </Menu.Sub.Dropdown>
+          </Menu.Sub>
+        </Menubar.Dropdown>
+      </Menubar.Menu>
+
+      <Menubar.Menu withinPortal={false} transitionProps={{ duration: 0 }}>
+        <Menubar.Target>Edit</Menubar.Target>
+        <Menubar.Dropdown>
+          <Menu.Item>Undo</Menu.Item>
+        </Menubar.Dropdown>
+      </Menubar.Menu>
+    </Menubar>
+  );
+}
+
+const getItem = (text: string) => screen.getByText(text).closest('button')!;
+
+async function openShareSubmenu() {
+  focusElement(getTarget('File'));
+  await userEvent.keyboard('{ArrowDown}');
+  await waitFor(() => expect(getItem('New file')).toHaveFocus());
+  await userEvent.keyboard('{ArrowDown}');
+  await waitFor(() => expect(getItem('Share')).toHaveFocus());
+  await userEvent.keyboard('{ArrowRight}');
+  await waitFor(() => expect(getItem('Email')).toHaveFocus());
 }
 
 describe('@mantine/core/Menubar', () => {
@@ -627,5 +683,274 @@ describe('@mantine/core/Menubar', () => {
 
       expect(onClose).toHaveBeenCalledTimes(1);
     });
+  });
+  it.each([
+    ['ArrowRight', 'Edit', 'Undo'],
+    ['ArrowLeft', 'View', 'Zoom in'],
+    ['v', 'View', 'Zoom in'],
+    ['End', 'View', 'Zoom in'],
+  ])(
+    'switches the open menu with %s on a target when effects flush during the keydown',
+    async (key, targetName, itemText) => {
+      render(<TestContainer />);
+      await userEvent.click(getTarget('File'));
+      focusElement(getTarget('File'));
+
+      pressKeyWithBrowserFlush(getTarget('File'), key);
+      await waitFor(() => expect(getTarget(targetName)).toHaveFocus());
+      expectMenuOpen(itemText);
+      expect(getTarget(targetName)).toHaveAttribute('aria-expanded', 'true');
+      expect(getTarget(targetName)).toHaveAttribute('tabindex', '0');
+      expect(screen.queryByText('New file')).not.toBeInTheDocument();
+    }
+  );
+
+  it('switches the open menu with Home on a target', async () => {
+    render(<TestContainer />);
+    await userEvent.click(getTarget('View'));
+    focusElement(getTarget('View'));
+
+    fireEvent.keyDown(getTarget('View'), { key: 'Home' });
+    expect(getTarget('File')).toHaveFocus();
+    expectMenuOpen('New file');
+    expect(getTarget('File')).toHaveAttribute('tabindex', '0');
+    expect(getTarget('View')).toHaveAttribute('tabindex', '-1');
+    expect(screen.queryByText('Zoom in')).not.toBeInTheDocument();
+  });
+
+  it('does not close the open menu when a menu that is not open requests to close', async () => {
+    render(
+      <Menubar>
+        <Menubar.Menu withinPortal={false} keepMounted transitionProps={{ duration: 0 }}>
+          <Menubar.Target>File</Menubar.Target>
+          <Menubar.Dropdown>
+            <Menu.Item>New file</Menu.Item>
+          </Menubar.Dropdown>
+        </Menubar.Menu>
+        <Menubar.Menu withinPortal={false} transitionProps={{ duration: 0 }}>
+          <Menubar.Target>Edit</Menubar.Target>
+          <Menubar.Dropdown>
+            <Menu.Item>Undo</Menu.Item>
+          </Menubar.Dropdown>
+        </Menubar.Menu>
+      </Menubar>
+    );
+
+    await userEvent.click(getTarget('Edit'));
+    expectMenuOpen('Undo');
+
+    fireEvent.click(getItem('New file'));
+    expectMenuOpen('Undo');
+    expect(getTarget('Edit')).toHaveAttribute('aria-expanded', 'true');
+  });
+
+  it.each(['{Enter}', ' '])(
+    'returns focus to the target when an item is activated with %s',
+    async (key) => {
+      render(<TestContainer />);
+      focusElement(getTarget('File'));
+      await userEvent.keyboard('{ArrowDown}');
+      await waitFor(() => expect(getItem('New file')).toHaveFocus());
+
+      await userEvent.keyboard(key);
+      expectAllClosed();
+      expect(getTarget('File')).toHaveFocus();
+    }
+  );
+
+  it('returns focus to the target when a submenu item is activated with Enter', async () => {
+    render(<SubmenuContainer />);
+    await openShareSubmenu();
+
+    await userEvent.keyboard('{Enter}');
+    expectAllClosed();
+    expect(getTarget('File')).toHaveFocus();
+  });
+
+  it('keeps focus moved by the item onClick handler', async () => {
+    render(
+      <>
+        <input data-testid="input" />
+        <Menubar>
+          <Menubar.Menu withinPortal={false} transitionProps={{ duration: 0 }}>
+            <Menubar.Target>File</Menubar.Target>
+            <Menubar.Dropdown>
+              <Menu.Item onClick={() => screen.getByTestId('input').focus()}>New file</Menu.Item>
+            </Menubar.Dropdown>
+          </Menubar.Menu>
+        </Menubar>
+      </>
+    );
+
+    focusElement(getTarget('File'));
+    await userEvent.keyboard('{ArrowDown}');
+    await waitFor(() => expect(getItem('New file')).toHaveFocus());
+
+    await userEvent.keyboard('{Enter}');
+    expectAllClosed();
+    expect(screen.getByTestId('input')).toHaveFocus();
+  });
+
+  it('moves focus to the hovered target when focus was on another target (trigger="click")', async () => {
+    render(<TestContainer />);
+    await userEvent.click(getTarget('File'));
+    focusElement(getTarget('File'));
+
+    await userEvent.hover(getTarget('View'));
+    expectMenuOpen('Zoom in');
+    expect(getTarget('View')).toHaveFocus();
+    expect(getTarget('View')).toHaveAttribute('tabindex', '0');
+
+    await userEvent.keyboard('{ArrowDown}');
+    await waitFor(() => expect(getItem('Zoom in')).toHaveFocus());
+  });
+
+  it('moves focus to the hovered target when focus was inside the open dropdown', async () => {
+    render(<TestContainer />);
+    focusElement(getTarget('File'));
+    await userEvent.keyboard('{ArrowDown}');
+    await waitFor(() => expect(getItem('New file')).toHaveFocus());
+
+    await userEvent.hover(getTarget('Edit'));
+    expectMenuOpen('Undo');
+    expect(getTarget('Edit')).toHaveFocus();
+  });
+
+  it('does not move focus to the hovered target when focus is outside of the menubar', async () => {
+    render(
+      <>
+        <input data-testid="input" />
+        <TestContainer trigger="hover" />
+      </>
+    );
+    focusElement(screen.getByTestId('input'));
+
+    await userEvent.hover(getTarget('Edit'));
+    expectMenuOpen('Undo');
+    expect(screen.getByTestId('input')).toHaveFocus();
+  });
+
+  it('does not switch menus with ArrowLeft/ArrowRight in a text input inside the dropdown', async () => {
+    render(
+      <Menubar>
+        <Menubar.Menu withinPortal={false} transitionProps={{ duration: 0 }}>
+          <Menubar.Target>File</Menubar.Target>
+          <Menubar.Dropdown>
+            <Menu.Search placeholder="Search" />
+            <Menu.Item>New file</Menu.Item>
+          </Menubar.Dropdown>
+        </Menubar.Menu>
+        <Menubar.Menu withinPortal={false} transitionProps={{ duration: 0 }}>
+          <Menubar.Target>Edit</Menubar.Target>
+          <Menubar.Dropdown>
+            <Menu.Item>Undo</Menu.Item>
+          </Menubar.Dropdown>
+        </Menubar.Menu>
+      </Menubar>
+    );
+
+    await userEvent.click(getTarget('File'));
+    const input = screen.getByPlaceholderText('Search');
+    focusElement(input);
+
+    for (const key of ['ArrowRight', 'ArrowLeft']) {
+      const notPrevented = fireEvent.keyDown(input, { key });
+      expect(notPrevented).toBe(true);
+      expectMenuOpen('New file');
+      expect(screen.queryByText('Undo')).not.toBeInTheDocument();
+    }
+  });
+
+  it('opens the next menu with ArrowRight on a plain item inside a submenu', async () => {
+    render(<SubmenuContainer />);
+    await openShareSubmenu();
+
+    await userEvent.keyboard('{ArrowRight}');
+    await waitFor(() => expect(getItem('Undo')).toHaveFocus());
+    expect(screen.queryByText('New file')).not.toBeInTheDocument();
+  });
+
+  it.each(['{Enter}', ' '])(
+    'opens the submenu with %s on a sub item and keeps the menu open',
+    async (key) => {
+      render(<SubmenuContainer />);
+      focusElement(getTarget('File'));
+      await userEvent.keyboard('{ArrowDown}');
+      await waitFor(() => expect(getItem('New file')).toHaveFocus());
+      await userEvent.keyboard('{ArrowDown}');
+      await waitFor(() => expect(getItem('Share')).toHaveFocus());
+
+      await userEvent.keyboard(key);
+      await waitFor(() => expect(getItem('Email')).toHaveFocus());
+      expectMenuOpen('New file');
+    }
+  );
+
+  it('closes only the submenu with ArrowLeft inside a submenu', async () => {
+    render(<SubmenuContainer />);
+    await openShareSubmenu();
+
+    await userEvent.keyboard('{ArrowLeft}');
+    expectMenuOpen('New file');
+    expect(screen.queryByText('Email')).not.toBeInTheDocument();
+    expect(screen.queryByText('Undo')).not.toBeInTheDocument();
+  });
+
+  it('opens the previous menu with ArrowLeft on a top-level item', async () => {
+    render(<SubmenuContainer />);
+    await userEvent.click(getTarget('Edit'));
+    focusElement(getItem('Undo'));
+
+    await userEvent.keyboard('{ArrowLeft}');
+    await waitFor(() => expect(getItem('New file')).toHaveFocus());
+    expect(screen.queryByText('Undo')).not.toBeInTheDocument();
+  });
+
+  it('does not play the dropdown transition when switching between open menus', async () => {
+    render(
+      <Menubar>
+        <Menubar.Menu withinPortal={false}>
+          <Menubar.Target>File</Menubar.Target>
+          <Menubar.Dropdown>
+            <Menu.Item>New file</Menu.Item>
+          </Menubar.Dropdown>
+        </Menubar.Menu>
+        <Menubar.Menu withinPortal={false}>
+          <Menubar.Target>Edit</Menubar.Target>
+          <Menubar.Dropdown>
+            <Menu.Item>Undo</Menu.Item>
+          </Menubar.Dropdown>
+        </Menubar.Menu>
+      </Menubar>,
+      undefined,
+      { env: 'default' }
+    );
+
+    const getDropdown = (text: string) =>
+      Array.from(document.querySelectorAll<HTMLElement>('[data-menu-dropdown]')).find(
+        (node) => node.textContent === text
+      );
+
+    await userEvent.click(getTarget('File'));
+    await waitFor(() => expect(getDropdown('New file')).toBeDefined());
+    expect(getDropdown('New file')!.style.transitionDuration).toBe('150ms');
+
+    await userEvent.hover(getTarget('Edit'));
+    expect(getDropdown('Undo')).toBeDefined();
+    expect(getDropdown('Undo')!.style.transitionDuration).toBe('');
+  });
+
+  it('keeps every target focusable in server-rendered HTML', () => {
+    const html = renderToString(
+      <MantineProvider>
+        <TestContainer />
+      </MantineProvider>
+    );
+    const container = document.createElement('div');
+    container.innerHTML = html;
+    const targets = Array.from(container.querySelectorAll('[data-menubar-target]'));
+
+    expect(targets).toHaveLength(3);
+    targets.forEach((target) => expect(target).toHaveAttribute('tabindex', '0'));
   });
 });

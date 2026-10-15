@@ -13,6 +13,7 @@ import {
   useProps,
 } from '../../../core';
 import { UnstyledButton } from '../../UnstyledButton';
+import { getMenuArrowKeys } from '../get-menu-arrow-keys';
 import { getMenuItemVars } from '../get-menu-item-vars';
 import { useMenuContext } from '../Menu.context';
 import { SubMenuContext } from '../MenuSub/MenuSub.context';
@@ -112,7 +113,8 @@ export const MenuItem = polymorphicFactory<MenuItemFactory>((props) => {
   });
 
   const handleKeydown = createEventHandler<any>(_others.onKeyDown, (event) => {
-    if (event.key === 'ArrowLeft' && subCtx) {
+    if (event.key === getMenuArrowKeys(dir).back && subCtx) {
+      event.preventDefault();
       subCtx.close();
       subCtx.focusParentItem();
     }
