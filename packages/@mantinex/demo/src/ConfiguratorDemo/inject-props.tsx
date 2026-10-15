@@ -32,17 +32,15 @@ export function injectProps(props: any, code: string) {
       : replacedChildrenCode.replace(/{{props}}/g, '');
   }
 
-  const placeholderRegex = /^(\s*){{props}}(\s*)$/gm;
+  const placeholderRegex = /^([ \t]*){{props}}[ \t]*(\r?\n)?/gm;
 
-  const result = replacedChildrenCode.replace(placeholderRegex, (_, before, after) => {
-    const propsWithWhitespace = propStrings
-      .map(
-        (propString, index) =>
-          `${before}${propString}${index !== propStrings.length - 1 ? '\n' : ''}`
-      )
-      .join('');
-    return `${propsWithWhitespace}${after}`;
-  });
+  const result = replacedChildrenCode.replace(
+    placeholderRegex,
+    (_, indent: string, newline: string | undefined) =>
+      propStrings.length === 0
+        ? ''
+        : `${propStrings.map((propString) => `${indent}${propString}`).join('\n')}${newline || ''}`
+  );
 
   return result.trim().replace('\n\n', '\n');
 }
