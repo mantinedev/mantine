@@ -18,7 +18,6 @@ import {
   isLightColor,
   MantineColor,
   MantineTheme,
-  parseThemeColor,
   rem,
   StylesApiProps,
   useMantineTheme,
@@ -27,6 +26,7 @@ import {
   useStyles,
 } from '@mantine/core';
 import { ChartTooltip, ChartTooltipStylesNames } from '../ChartTooltip/ChartTooltip';
+import { resolveChartNodeFill } from '../utils';
 import classes from './Treemap.module.css';
 
 export interface TreemapData {
@@ -110,7 +110,6 @@ const varsResolver = createVarsResolver<TreemapFactory>((theme, { strokeColor, h
   },
 }));
 
-const FALLBACK_COLORS = ['blue', 'teal', 'orange', 'grape', 'cyan', 'pink', 'lime', 'indigo'];
 const LABEL_FONT_SIZE = 12;
 const LABEL_LINE_HEIGHT = 16;
 const LABEL_PADDING = 4;
@@ -207,13 +206,12 @@ function resolveData(
   parentFill?: string
 ): ResolvedTreemapNode[] {
   return data.map((item, index) => {
-    const fill = item.color
-      ? parseThemeColor({ color: item.color, theme: options.theme }).value
-      : parentFill ||
-        parseThemeColor({
-          color: `${FALLBACK_COLORS[index % FALLBACK_COLORS.length]}.6`,
-          theme: options.theme,
-        }).value;
+    const fill = resolveChartNodeFill({
+      color: item.color,
+      parentFill,
+      index,
+      theme: options.theme,
+    });
 
     const labelColor =
       options.textColor ||

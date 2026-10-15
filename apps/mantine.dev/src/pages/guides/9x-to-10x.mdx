@@ -470,6 +470,20 @@ If you set your own `data-empty` attribute on `TimeInput`, rename it. The compon
 
 `DataList` `labelWidth` now sets a fixed width of the label column instead of its minimum width. Long labels wrap instead of pushing values to the right. If your labels now wrap, increase `labelWidth`. Numbers are converted to rem, so they scale with `scale` from the theme.
 
+## SunburstChart endAngle
+
+[SunburstChart](/charts/sunburst-chart) `endAngle` is now the angle at which the chart ends, as in `PieChart`. Before, the chart ended at `startAngle + endAngle`. If you set both props, pass the sum as `endAngle`. Setting only `startAngle` still draws a full circle:
+
+```tsx
+// 9.x
+<SunburstChart data={data} startAngle={90} endAngle={180} />
+
+// 10.0
+<SunburstChart data={data} startAngle={90} endAngle={270} />
+```
+
+Set `startAngle`, `endAngle` and `innerRadius` with the component props. `sunburstChartProps` no longer accepts them, and `textOptions` from it is ignored because labels are drawn by Mantine.
+
 ## Combobox store listId and selectedOptionIndex
 
 Replace `combobox.listId` and `combobox.selectedOptionIndex` with the `getListId()` and

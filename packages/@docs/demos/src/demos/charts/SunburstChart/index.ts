@@ -5,3 +5,6 @@ export { strokeColor } from './SunburstChart.demo.strokeColor';
 export { size } from './SunburstChart.demo.size';
 export { gap } from './SunburstChart.demo.gap';
 export { withLabels } from './SunburstChart.demo.withLabels';
+export { innerRadius } from './SunburstChart.demo.innerRadius';
+export { angles } from './SunburstChart.demo.angles';
+export { valueFormatter } from './SunburstChart.demo.valueFormatter';

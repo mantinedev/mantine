@@ -1,4 +1,4 @@
-import { useMemo } from 'react';
+import { useMemo, useState } from 'react';
 import {
   ResponsiveContainer,
   SunburstChart as RechartsSunburstChart,
@@ -15,8 +15,6 @@ import {
   Factory,
   getThemeColor,
   MantineColor,
-  MantineTheme,
-  parseThemeColor,
   rem,
   StylesApiProps,
   useMantineTheme,
@@ -25,6 +23,9 @@ import {
   useStyles,
 } from '@mantine/core';
 import { ChartTooltip, ChartTooltipStylesNames } from '../ChartTooltip/ChartTooltip';
+import { getSunburstGeometry } from './get-sunburst-geometry';
+import { getSunburstLabels } from './get-sunburst-labels';
+import { getSunburstRechartsDataKey, resolveSunburstData } from './resolve-sunburst-data';
 import classes from './SunburstChart.module.css';
 
 export interface SunburstChartData {
@@ -58,7 +59,12 @@ export interface SunburstChartProps
   tooltipProps?: Omit<TooltipProps<any, any>, 'ref'>;
 
   /** Props passed down to recharts `SunburstChart` component */
-  sunburstChartProps?: Partial<Omit<RechartsSunburstChartProps, 'ref' | 'data' | 'dataKey'>>;
+  sunburstChartProps?: Partial<
+    Omit<
+      RechartsSunburstChartProps,
+      'ref' | 'data' | 'dataKey' | 'startAngle' | 'endAngle' | 'innerRadius' | 'textOptions'
+    >
+  >;
 
   /** Controls color of the sectors stroke, by default depends on color scheme @category appearance */
   strokeColor?: MantineColor;
@@ -75,7 +81,7 @@ export interface SunburstChartProps
   /** Angle in degrees from which the chart should start @default 0 @category appearance */
   startAngle?: number;
 
-  /** Angle in degrees at which the chart should end @default 360 @category appearance */
+  /** Angle in degrees at which the chart should end @default startAngle + 360 @category appearance */
   endAngle?: number;
 
   /** Determines whether value labels are displayed inside each sector @default false @category appearance */
@@ -103,7 +109,6 @@ const defaultProps = {
   innerRadius: 50,
   gap: 1,
   startAngle: 0,
-  endAngle: 360,
 } satisfies Partial<SunburstChartProps>;
 
 const varsResolver = createVarsResolver<SunburstChartFactory>((theme, { strokeColor, size }) => ({
@@ -113,41 +118,8 @@ const varsResolver = createVarsResolver<SunburstChartFactory>((theme, { strokeCo
   },
 }));
 
-function resolveData(
-  data: SunburstChartData[],
-  theme: MantineTheme,
-  dataKey: string,
-  parentFill?: string
-): { resolved: any[]; total: number } {
-  let total = 0;
-
-  const resolved = data.map((item) => {
-    const resolvedColor = item.color
-      ? parseThemeColor({ color: item.color, theme }).value
-      : parentFill;
-    const fill = resolvedColor || undefined;
-
-    const result: any = {
-      ...item,
-      fill,
-    };
-
-    if (item.children) {
-      const child = resolveData(item.children, theme, dataKey, fill);
-      result.children = child.resolved;
-      if (result[dataKey] == null) {
-        result[dataKey] = child.total;
-      }
-      total += child.total;
-    } else {
-      total += Number(item[dataKey]) || 0;
-    }
-
-    return result;
-  });
-
-  return { resolved, total };
-}
+const CHART_STROKE = 'var(--chart-stroke-color, var(--mantine-color-body))';
+const LABEL_FONT_SIZE_PX = 10.4;
 
 export const SunburstChart = factory<SunburstChartFactory>((_props) => {
   const props = useProps('SunburstChart', defaultProps, _props);
@@ -199,41 +171,70 @@ export const SunburstChart = factory<SunburstChartFactory>((_props) => {
     props,
   });
 
-  const rootData = useMemo(() => {
-    const { resolved, total } = resolveData(data, theme, dataKey!);
-    return {
-      name: 'root',
-      [dataKey!]: total,
-      children: resolved,
-    };
-  }, [data, theme, dataKey]);
+  const [containerSize, setContainerSize] = useState<{ width: number; height: number } | null>(
+    null
+  );
+
+  const resolved = useMemo(
+    () => resolveSunburstData(data, theme, dataKey!),
+    [data, theme, dataKey]
+  );
+
+  const width = containerSize?.width ?? size!;
+  const height = containerSize?.height ?? size!;
+  const ringPadding = sunburstChartProps?.ringPadding ?? 0;
+  const { thickness, rechartsOuterRadius } = getSunburstGeometry({
+    width,
+    height,
+    innerRadius: innerRadius!,
+    outerRadius: sunburstChartProps?.outerRadius,
+    ringPadding,
+    depth: resolved.depth,
+  });
+  const angleSpan = (endAngle ?? startAngle! + 360) - startAngle!;
+
+  const labels = withLabels
+    ? getSunburstLabels({
+        root: resolved.root,
+        cx: sunburstChartProps?.cx ?? width / 2,
+        cy: sunburstChartProps?.cy ?? height / 2,
+        innerRadius: innerRadius!,
+        thickness,
+        ringPadding,
+        startAngle: startAngle!,
+        angleSpan,
+        fontSize: LABEL_FONT_SIZE_PX,
+        valueFormatter,
+      })
+    : [];
 
   return (
-    <Box size={size} {...getStyles('root')} {...others}>
-      <ResponsiveContainer>
+    <Box
+      size={size}
+      role={others['aria-label'] || others['aria-labelledby'] ? 'img' : undefined}
+      {...getStyles('root')}
+      {...others}
+    >
+      <ResponsiveContainer
+        onResize={(nextWidth, nextHeight) => {
+          const next = { width: Math.round(nextWidth), height: Math.round(nextHeight) };
+          setContainerSize((current) =>
+            current?.width === next.width && current?.height === next.height ? current : next
+          );
+        }}
+      >
         <RechartsSunburstChart
-          data={rootData as any}
-          dataKey={dataKey as any}
-          innerRadius={innerRadius}
+          data={resolved.root as any}
+          dataKey={getSunburstRechartsDataKey(dataKey!)}
           padding={gap}
           ringPadding={0}
-          startAngle={startAngle}
-          endAngle={endAngle}
-          stroke="var(--chart-stroke-color, var(--mantine-color-body))"
-          textOptions={
-            withLabels
-              ? {
-                  fontWeight: 'bold',
-                  fontSize: '.65rem',
-                  paintOrder: 'stroke fill',
-                  stroke: 'var(--chart-stroke-color, var(--mantine-color-body))',
-                  strokeWidth: 1,
-                  fill: 'var(--mantine-color-bright)',
-                  pointerEvents: 'none',
-                }
-              : { display: 'none' }
-          }
+          stroke={CHART_STROKE}
           {...sunburstChartProps}
+          innerRadius={innerRadius}
+          startAngle={startAngle}
+          endAngle={angleSpan}
+          outerRadius={rechartsOuterRadius}
+          textOptions={{ display: 'none' }}
         >
           {withTooltip && (
             <Tooltip
@@ -245,7 +246,7 @@ export const SunburstChart = factory<SunburstChartFactory>((_props) => {
                     payload?.map((item) => ({
                       name: item.name as string,
                       value: item.value as number,
-                      color: (item.payload as any)?.fill || 'var(--mantine-color-blue-6)',
+                      color: (item.payload as any)?.fill,
                     })) || []
                   }
                   classNames={resolvedClassNames}
@@ -257,6 +258,29 @@ export const SunburstChart = factory<SunburstChartFactory>((_props) => {
               )}
               {...tooltipProps}
             />
+          )}
+
+          {labels.length > 0 && (
+            <g pointerEvents="none">
+              {labels.map((label) => (
+                <text
+                  key={label.key}
+                  data-sunburst-label
+                  x={label.x}
+                  y={label.y}
+                  textAnchor="middle"
+                  dominantBaseline="central"
+                  fontSize={LABEL_FONT_SIZE_PX}
+                  fontWeight="bold"
+                  paintOrder="stroke fill"
+                  stroke={CHART_STROKE}
+                  strokeWidth={1}
+                  fill="var(--mantine-color-bright)"
+                >
+                  {label.text}
+                </text>
+              ))}
+            </g>
           )}
 
           {children}

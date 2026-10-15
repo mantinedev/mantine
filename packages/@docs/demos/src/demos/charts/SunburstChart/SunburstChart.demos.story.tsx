@@ -37,3 +37,18 @@ export const Demo_withLabels = {
   name: '⭐ Demo: withLabels',
   render: renderDemo(demos.withLabels),
 };
+
+export const Demo_innerRadius = {
+  name: '⭐ Demo: innerRadius',
+  render: renderDemo(demos.innerRadius),
+};
+
+export const Demo_angles = {
+  name: '⭐ Demo: angles',
+  render: renderDemo(demos.angles),
+};
+
+export const Demo_valueFormatter = {
+  name: '⭐ Demo: valueFormatter',
+  render: renderDemo(demos.valueFormatter),
+};

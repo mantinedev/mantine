@@ -13,7 +13,7 @@ It displays hierarchical data as concentric rings, similar to a treemap plotted 
 
 ## Data format
 
-Each root node has `name`, `color` and `children`. Leaf nodes have `name` and `value`:
+Each node has a `name`. Leaf nodes have a `value`. Nodes with `children` show the sum of their children, or their own `value` if it is larger. Nodes can be nested to any depth, and top-level nodes can be leaves:
 
 ```tsx
 export const data = [
@@ -39,7 +39,7 @@ export const data = [
 
 ## Node color
 
-`color` accepts theme colors and any valid CSS color. Children inherit the color of their parent node:
+`color` accepts theme colors and any valid CSS color. Children inherit the color of their parent node unless they set their own. Top-level nodes without `color` get colors from a default palette:
 
 <Demo data={SunburstChartDemos.color} />
 
@@ -61,11 +61,29 @@ Use `gap` prop to control the spacing between sectors and rings:
 
 <Demo data={SunburstChartDemos.gap} />
 
+## Inner radius
+
+Use `innerRadius` prop to control the size of the empty circle in the center of the chart:
+
+<Demo data={SunburstChartDemos.innerRadius} />
+
+## Start and end angle
+
+Use `startAngle` and `endAngle` props to draw a part of the ring. Angles are in degrees, `0` points to the right and angles grow counterclockwise. Without `endAngle`, the chart draws a full circle from `startAngle`:
+
+<Demo data={SunburstChartDemos.angles} />
+
 ## Labels
 
-Set `withLabels` to display value labels inside sectors. Increase `size` to give labels enough space:
+Set `withLabels` to display value labels inside sectors. Labels that do not fit their sector are hidden. Increase `size` to give labels enough space:
 
 <Demo data={SunburstChartDemos.withLabels} />
+
+## Value formatter
+
+Use `valueFormatter` to format values in the tooltip and labels:
+
+<Demo data={SunburstChartDemos.valueFormatter} />
 
 ## Disable tooltip
 

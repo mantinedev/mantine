@@ -3,24 +3,67 @@ import { MantineDemo } from '@mantinex/demo';
 
 const code = `
 import { SunburstChart } from '@mantine/charts';
-
-const data = [
-  { name: 'Sales', value: 500, color: 'violet.6' },
-  { name: 'Marketing', value: 300, color: 'grape.6' },
-  { name: 'Engineering', value: 400, color: 'pink.6' },
-  { name: 'Support', value: 200, color: 'red.6' },
-];
+import { data } from './data';
 
 function Demo() {
   return <SunburstChart data={data} />;
 }
 `;
 
+const dataCode = `
+export const data = [
+  {
+    name: 'Sales',
+    color: 'violet.6',
+    children: [
+      { name: 'Europe', value: 300 },
+      { name: 'Asia', value: 200 },
+    ],
+  },
+  {
+    name: 'Marketing',
+    color: '#fd7e14',
+    children: [
+      { name: 'Ads', value: 180 },
+      { name: 'Events', value: 120 },
+    ],
+  },
+  {
+    name: 'Engineering',
+    color: 'teal.6',
+    children: [
+      { name: 'Frontend', value: 250 },
+      { name: 'Backend', value: 150, color: 'cyan.6' },
+    ],
+  },
+];
+`;
+
 const data = [
-  { name: 'Sales', value: 500, color: 'violet.6' },
-  { name: 'Marketing', value: 300, color: 'grape.6' },
-  { name: 'Engineering', value: 400, color: 'pink.6' },
-  { name: 'Support', value: 200, color: 'red.6' },
+  {
+    name: 'Sales',
+    color: 'violet.6',
+    children: [
+      { name: 'Europe', value: 300 },
+      { name: 'Asia', value: 200 },
+    ],
+  },
+  {
+    name: 'Marketing',
+    color: '#fd7e14',
+    children: [
+      { name: 'Ads', value: 180 },
+      { name: 'Events', value: 120 },
+    ],
+  },
+  {
+    name: 'Engineering',
+    color: 'teal.6',
+    children: [
+      { name: 'Frontend', value: 250 },
+      { name: 'Backend', value: 150, color: 'cyan.6' },
+    ],
+  },
 ];
 
 function Demo() {
@@ -31,5 +74,8 @@ export const color: MantineDemo = {
   type: 'code',
   component: Demo,
   centered: true,
-  code,
+  code: [
+    { fileName: 'Demo.tsx', code, language: 'tsx' },
+    { fileName: 'data.ts', code: dataCode, language: 'tsx' },
+  ],
 };
