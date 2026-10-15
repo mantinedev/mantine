@@ -59,9 +59,7 @@ export function getRenderSlots({
   const slots: RenderSlot[] = [];
 
   if (prefix) {
-    for (let i = 0; i < prefix.length; i++) {
-      slots.push({ type: 'char', key: `prefix-${i}`, char: prefix[i], empty: false });
-    }
+    slots.push({ type: 'char', key: 'prefix', char: prefix, empty: false });
   }
 
   if (current.negative || previous.negative) {
@@ -111,9 +109,7 @@ export function getRenderSlots({
   }
 
   if (suffix) {
-    for (let i = 0; i < suffix.length; i++) {
-      slots.push({ type: 'char', key: `suffix-${i}`, char: suffix[i], empty: false });
-    }
+    slots.push({ type: 'char', key: 'suffix', char: suffix, empty: false });
   }
 
   return slots;

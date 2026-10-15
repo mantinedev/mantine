@@ -1,19 +1,25 @@
 .root {
   position: relative;
-  display: inline-flex;
-  align-items: baseline;
-  overflow: hidden;
+  display: inline-block;
+  white-space: nowrap;
+  line-height: 1;
 
   &[data-tabular-numbers] {
     font-variant-numeric: tabular-nums;
   }
 }
 
+.inner {
+  direction: ltr;
+  unicode-bidi: isolate;
+}
+
 .copyValue {
-  position: absolute;
-  inset: 0;
+  position: relative;
   z-index: 1;
-  overflow: hidden;
+  display: inline-block;
+  width: 0;
+  vertical-align: top;
   white-space: pre;
   color: transparent;
   forced-color-adjust: none;
@@ -26,6 +32,7 @@
   width: 1ch;
   height: 1em;
   overflow: hidden;
+  vertical-align: top;
   line-height: 1;
   pointer-events: none;
   user-select: none;
@@ -42,15 +49,21 @@
 
 .digitColumn {
   position: relative;
-  display: flex;
-  flex-direction: column;
-  animation: mantine-rolling-number-roll var(--rn-duration) var(--rn-timing-function);
+  display: inline-block;
+  width: 1ch;
+  vertical-align: top;
+  white-space: normal;
+
+  &[data-direction] {
+    animation: mantine-rolling-number-roll var(--rn-duration) var(--rn-timing-function);
+  }
 
   & > span {
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    display: inline-block;
+    width: 1ch;
     height: 1em;
+    vertical-align: top;
+    text-align: center;
   }
 }
 
@@ -58,7 +71,10 @@
   position: relative;
   z-index: 2;
   display: inline-block;
+  height: 1em;
   overflow: hidden;
+  vertical-align: top;
+  line-height: 1;
   white-space: pre;
   pointer-events: none;
   user-select: none;

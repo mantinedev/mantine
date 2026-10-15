@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Button, Group, Stack } from '../../../src';
+import { Button, Group, Stack, Text } from '../../../src';
 import { RollingNumber } from './RollingNumber';
 
 export default { title: 'RollingNumber' };
@@ -145,6 +145,82 @@ export function LiveRegion() {
         <Group>
           <Button onClick={() => setValue((v) => v + 1)}>+1</Button>
           <Button onClick={() => setValue((v) => v + 10)}>+10</Button>
+        </Group>
+      </Stack>
+    </div>
+  );
+}
+
+export function RightToLeft() {
+  const [value, setValue] = useState(1234.56);
+
+  return (
+    <div style={{ padding: 40 }} dir="rtl">
+      <Stack>
+        <RollingNumber value={value} prefix="$" thousandSeparator decimalScale={2} fz="36px" />
+        <RollingNumber value={-value} suffix=" USD" thousandSeparator decimalScale={2} fz="36px" />
+        <Text fz="24px" data-testid="rtl-running-text">
+          الرصيد: <RollingNumber value={value} prefix="$" thousandSeparator decimalScale={2} />{' '}
+          اليوم
+        </Text>
+        <Group>
+          <Button onClick={() => setValue((v) => v + 1)}>+1</Button>
+          <Button onClick={() => setValue((v) => v - 1)}>-1</Button>
+        </Group>
+      </Stack>
+    </div>
+  );
+}
+
+export function InRunningText() {
+  const [value, setValue] = useState(1234.56);
+
+  return (
+    <div style={{ padding: 40 }}>
+      <Stack>
+        <Text fz="24px" data-testid="running-text">
+          Balance: <RollingNumber value={value} prefix="$" thousandSeparator decimalScale={2} />{' '}
+          today
+        </Text>
+        <Text fz="24px" ta="right" data-testid="right-aligned-text">
+          Balance: <RollingNumber value={value} prefix="$" thousandSeparator decimalScale={2} />
+        </Text>
+        <Group>
+          <Button onClick={() => setValue((v) => v + 1)}>+1</Button>
+          <Button onClick={() => setValue((v) => v - 1)}>-1</Button>
+        </Group>
+      </Stack>
+    </div>
+  );
+}
+
+export function EmojiAffixes() {
+  const [value, setValue] = useState(42);
+
+  return (
+    <div style={{ padding: 40 }}>
+      <Stack>
+        <RollingNumber value={value} prefix="💰 " suffix=" 👍🏽" fz="36px" />
+        <Button onClick={() => setValue((v) => v + 1)}>+1</Button>
+      </Stack>
+    </div>
+  );
+}
+
+export function RerenderDuringAnimation() {
+  const [value, setValue] = useState(10);
+  const [renders, setRenders] = useState(0);
+
+  return (
+    <div style={{ padding: 40 }}>
+      <Stack>
+        <RollingNumber value={value} fz="72px" animationDuration={2000} />
+        <Text>Parent renders: {renders}</Text>
+        <Group>
+          <Button onClick={() => setValue((v) => v + 1)}>+1</Button>
+          <Button onClick={() => setValue((v) => v - 1)}>-1</Button>
+          <Button onClick={() => setValue((v) => v + 8)}>+8</Button>
+          <Button onClick={() => setRenders((r) => r + 1)}>Re-render parent</Button>
         </Group>
       </Stack>
     </div>

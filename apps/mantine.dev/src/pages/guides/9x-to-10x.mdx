@@ -462,6 +462,10 @@ Remove the `beforeMaskedStateChange` option from `useMask` and the prop from `Ma
 If you set your own `data-empty` attribute on `TimeInput`, rename it. The component now sets
 `data-empty` on the input element while it has no value.
 
+## RollingNumber root element
+
+`RollingNumber` now renders a `span` root element, so it can be placed inside text. If you type its `ref` as `HTMLDivElement`, change it to `HTMLSpanElement`.
+
 ## DataList labelWidth
 
 `DataList` `labelWidth` now sets a fixed width of the label column instead of its minimum width. Long labels wrap instead of pushing values to the right. If your labels now wrap, increase `labelWidth`. Numbers are converted to rem, so they scale with `scale` from the theme.

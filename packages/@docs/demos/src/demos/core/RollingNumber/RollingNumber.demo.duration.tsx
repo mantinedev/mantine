@@ -12,15 +12,15 @@ function Demo() {
   return (
     <Stack>
       <div>
-        <Text size="sm" c="dimmed">200ms</Text>
+        <Text size="sm">200ms</Text>
         <RollingNumber value={value} animationDuration={200} fz="28px" />
       </div>
       <div>
-        <Text size="sm" c="dimmed">600ms (default)</Text>
+        <Text size="sm">600ms (default)</Text>
         <RollingNumber value={value} animationDuration={600} fz="28px" />
       </div>
       <div>
-        <Text size="sm" c="dimmed">1200ms</Text>
+        <Text size="sm">1200ms</Text>
         <RollingNumber value={value} animationDuration={1200} fz="28px" />
       </div>
       <Group>
@@ -37,21 +37,15 @@ function Demo() {
   return (
     <Stack>
       <div>
-        <Text size="sm" c="dimmed">
-          200ms
-        </Text>
+        <Text size="sm">200ms</Text>
         <RollingNumber value={value} animationDuration={200} fz="28px" />
       </div>
       <div>
-        <Text size="sm" c="dimmed">
-          600ms (default)
-        </Text>
+        <Text size="sm">600ms (default)</Text>
         <RollingNumber value={value} animationDuration={600} fz="28px" />
       </div>
       <div>
-        <Text size="sm" c="dimmed">
-          1200ms
-        </Text>
+        <Text size="sm">1200ms</Text>
         <RollingNumber value={value} animationDuration={1200} fz="28px" />
       </div>
       <Group>

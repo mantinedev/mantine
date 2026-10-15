@@ -24,8 +24,13 @@ describe('getRenderSlots', () => {
     const current = getDigitParts({ value: 5 });
     const slots = getRenderSlots({ current, previous: current, prefix: '$ ' });
     const chars = charSlots(slots);
-    expect(chars[0]).toEqual({ type: 'char', key: 'prefix-0', char: '$', empty: false });
-    expect(chars[1]).toEqual({ type: 'char', key: 'prefix-1', char: ' ', empty: false });
+    expect(chars).toEqual([{ type: 'char', key: 'prefix', char: '$ ', empty: false }]);
+  });
+
+  it('keeps surrogate pairs and combining sequences of affixes in a single slot', () => {
+    const current = getDigitParts({ value: 5 });
+    const slots = getRenderSlots({ current, previous: current, prefix: '💰 ', suffix: ' 👍🏽' });
+    expect(charSlots(slots).map((c) => c.char)).toEqual(['💰 ', ' 👍🏽']);
   });
 
   it('adds suffix chars', () => {
@@ -34,7 +39,7 @@ describe('getRenderSlots', () => {
     const chars = charSlots(slots);
     expect(chars[chars.length - 1]).toEqual({
       type: 'char',
-      key: 'suffix-0',
+      key: 'suffix',
       char: '%',
       empty: false,
     });
@@ -182,8 +187,8 @@ describe('getRenderSlotsFromValues', () => {
 
     const chars = charSlots(slots);
     const charKeys = chars.map((c) => c.key);
-    expect(charKeys).toContain('prefix-0');
-    expect(charKeys).toContain('suffix-0');
+    expect(charKeys).toContain('prefix');
+    expect(charKeys).toContain('suffix');
     expect(charKeys).toContain('sep-3');
     expect(charKeys).toContain('dec');
   });

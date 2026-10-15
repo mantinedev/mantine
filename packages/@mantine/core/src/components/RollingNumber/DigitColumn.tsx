@@ -1,7 +1,8 @@
+import { useState } from 'react';
 import { useStyles } from '../../core';
 import type { RollingNumberFactory } from './RollingNumber';
 
-const STRIP_CELLS = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '0', '1'];
+const STRIP_CELLS = Array.from({ length: 20 }, (_, index) => String(index % 10));
 
 interface DigitColumnProps {
   digit: string;
@@ -21,14 +22,31 @@ export function DigitColumn({
   const digitIndex = parseInt(digit, 10);
   const previousDigitIndex = previousDigit !== null ? parseInt(previousDigit, 10) : digitIndex;
 
-  const wrapsForward =
-    valueDirection === 'up' &&
-    previousDigit !== null &&
-    digitIndex < previousDigitIndex &&
-    digitIndex <= 1;
+  const steps =
+    valueDirection === 'up'
+      ? (digitIndex - previousDigitIndex + 10) % 10
+      : -((previousDigitIndex - digitIndex + 10) % 10);
 
-  const animateToIndex = wrapsForward ? digitIndex + 10 : digitIndex;
-  const direction = digitIndex >= previousDigitIndex ? 'up' : 'down';
+  const startIndex = previousDigitIndex + steps < 0 ? previousDigitIndex + 10 : previousDigitIndex;
+  const [roll, setRoll] = useState({ digit, startIndex, endIndex: startIndex + steps });
+
+  const nextRoll =
+    steps !== 0
+      ? { digit, startIndex, endIndex: startIndex + steps }
+      : roll.digit === digit
+        ? roll
+        : { digit, startIndex: digitIndex, endIndex: digitIndex };
+
+  if (
+    nextRoll.digit !== roll.digit ||
+    nextRoll.startIndex !== roll.startIndex ||
+    nextRoll.endIndex !== roll.endIndex
+  ) {
+    setRoll(nextRoll);
+  }
+
+  const rollSteps = nextRoll.endIndex - nextRoll.startIndex;
+  const rollDirection = rollSteps > 0 ? 'up' : rollSteps < 0 ? 'down' : undefined;
 
   const digitStyles = getStyles('digit');
   const columnStyles = getStyles('digitColumn');
@@ -41,10 +59,10 @@ export function DigitColumn({
         style={{
           ...columnStyles.style,
           top: `${-digitIndex}em`,
-          ['--rn-roll-from' as any]: `translateY(${digitIndex - previousDigitIndex}em)`,
-          ['--rn-roll-to' as any]: `translateY(${digitIndex - animateToIndex}em)`,
+          ['--rn-roll-from' as any]: `translateY(${digitIndex - nextRoll.startIndex}em)`,
+          ['--rn-roll-to' as any]: `translateY(${digitIndex - nextRoll.endIndex}em)`,
         }}
-        data-direction={direction}
+        data-direction={rollDirection}
         data-reduce-motion
       >
         {STRIP_CELLS.map((d, i) => (

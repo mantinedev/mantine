@@ -28,3 +28,19 @@ Set `animationDuration` (in milliseconds) and `timingFunction` props to change t
 
 Selecting and copying `RollingNumber` always produces the value as it is displayed,
 for example `$ 1,234.56 USD`.
+
+## Accessibility
+
+By default, the root element has `role="img"` and the formatted value in `aria-label`.
+Screen readers read the current value but do not announce updates.
+
+Set `withLiveRegion` to announce value changes. The root element becomes a polite live
+region (`role="status"`) with the formatted value as its text:
+
+```tsx
+import { RollingNumber } from '@mantine/core';
+
+function Demo() {
+  return <RollingNumber value={42} withLiveRegion />;
+}
+```

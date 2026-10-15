@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react';
+import { useState } from 'react';
 import {
   Box,
   BoxProps,
@@ -16,13 +16,19 @@ import { getDigitParts } from './get-digit-parts';
 import { getRenderSlots } from './get-render-slots';
 import classes from './RollingNumber.module.css';
 
-export type RollingNumberStylesNames = 'root' | 'copyValue' | 'digit' | 'digitColumn' | 'char';
+export type RollingNumberStylesNames =
+  | 'root'
+  | 'inner'
+  | 'copyValue'
+  | 'digit'
+  | 'digitColumn'
+  | 'char';
 export type RollingNumberCssVariables = {
   root: '--rn-duration' | '--rn-timing-function';
 };
 
 export interface RollingNumberProps
-  extends BoxProps, StylesApiProps<RollingNumberFactory>, ElementProps<'div'> {
+  extends BoxProps, StylesApiProps<RollingNumberFactory>, ElementProps<'span'> {
   /** Number value to display @category state */
   value: number;
 
@@ -53,13 +59,13 @@ export interface RollingNumberProps
   /** If set, use tabular (monospace) numbers @default true @category appearance */
   tabularNumbers?: boolean;
 
-  /** If set, the root element acts as an `aria-live="polite"` region (`role="status"`) and screen readers announce every value change. When `false`, the root uses `role="img"` so the current value is still accessible but updates are not announced. @default false @category accessibility */
+  /** If set, the root element acts as an `aria-live="polite"` region (`role="status"`) with the formatted value as its text content, so screen readers announce value changes. When `false`, the root uses `role="img"` with the value in `aria-label` so the current value is still accessible but updates are not announced. @default false @category accessibility */
   withLiveRegion?: boolean;
 }
 
 export type RollingNumberFactory = Factory<{
   props: RollingNumberProps;
-  ref: HTMLDivElement;
+  ref: HTMLSpanElement;
   stylesNames: RollingNumberStylesNames;
   vars: RollingNumberCssVariables;
 }>;
@@ -119,14 +125,15 @@ export const RollingNumber = factory<RollingNumberFactory>((_props) => {
     varsResolver,
   });
 
-  const previousValueRef = useRef(value);
-  const previousValue = previousValueRef.current;
+  const [transition, setTransition] = useState({ from: value, to: value });
 
-  useEffect(() => {
-    previousValueRef.current = value;
-  });
+  let previousValue = transition.from;
+  if (!Object.is(transition.to, value)) {
+    previousValue = transition.to;
+    setTransition({ from: transition.to, to: value });
+  }
 
-  const valueDirection: 'up' | 'down' = value >= previousValue ? 'up' : 'down';
+  const valueDirection: 'up' | 'down' = Math.abs(value) >= Math.abs(previousValue) ? 'up' : 'down';
 
   const current = getDigitParts({ value, decimalScale, fixedDecimalScale });
   const prev = getDigitParts({ value: previousValue, decimalScale, fixedDecimalScale });
@@ -152,41 +159,44 @@ export const RollingNumber = factory<RollingNumberFactory>((_props) => {
 
   return (
     <Box
+      component="span"
       {...getStyles('root')}
       mod={[{ 'tabular-numbers': tabularNumbers }, mod]}
       role={withLiveRegion ? 'status' : 'img'}
-      aria-label={accessibleValue}
+      aria-label={withLiveRegion ? undefined : accessibleValue}
       {...others}
     >
-      <span {...getStyles('copyValue')} aria-hidden="true">
-        {accessibleValue}
-      </span>
-      {slots.map((slot) => {
-        if (slot.type === 'digit') {
-          return (
-            <DigitColumn
-              key={slot.key}
-              digit={slot.digit}
-              previousDigit={slot.previousDigit}
-              getStyles={getStyles}
-              empty={slot.empty}
-              valueDirection={valueDirection}
-            />
-          );
-        }
+      <span {...getStyles('inner')}>
+        <span {...getStyles('copyValue')} aria-hidden={withLiveRegion ? undefined : true}>
+          {accessibleValue}
+        </span>
+        {slots.map((slot) => {
+          if (slot.type === 'digit') {
+            return (
+              <DigitColumn
+                key={slot.key}
+                digit={slot.digit}
+                previousDigit={slot.previousDigit}
+                getStyles={getStyles}
+                empty={slot.empty}
+                valueDirection={valueDirection}
+              />
+            );
+          }
 
-        return (
-          <span
-            key={slot.key}
-            {...getStyles('char')}
-            data-empty={slot.empty || undefined}
-            data-reduce-motion
-            aria-hidden="true"
-          >
-            {slot.char}
-          </span>
-        );
-      })}
+          return (
+            <span
+              key={slot.key}
+              {...getStyles('char')}
+              data-empty={slot.empty || undefined}
+              data-reduce-motion
+              aria-hidden="true"
+            >
+              {slot.char}
+            </span>
+          );
+        })}
+      </span>
     </Box>
   );
 });
