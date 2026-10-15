@@ -21,7 +21,7 @@ function Demo() {
     <>
       <TextInput ref={ref} label="Credit card number" placeholder="Enter card number" />
       <Text size="sm" mt="sm">Raw value: {rawValue}</Text>
-      <Text size="xs" c="dimmed">Try starting with 34 or 37 for Amex format</Text>
+      <Text size="sm">Try starting with 34 or 37 for Amex format</Text>
     </>
   );
 }
@@ -44,9 +44,7 @@ function Demo() {
       <Text size="sm" mt="sm">
         Raw value: {rawValue}
       </Text>
-      <Text size="xs" c="dimmed">
-        Try starting with 34 or 37 for Amex format
-      </Text>
+      <Text size="sm">Try starting with 34 or 37 for Amex format</Text>
     </>
   );
 }

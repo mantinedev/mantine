@@ -8,7 +8,7 @@ export default Layout(MDX_DATA.MaskInput);
 
 `MaskInput` is an input with a fixed format, for example a phone number or a credit card.
 The `mask` string defines the format, see [mask pattern syntax](#mask-pattern-syntax).
-All [useMask](/hooks/use-mask) options and standard input props are supported:
+The component is built on top of the [useMask](/hooks/use-mask) hook:
 
 <Demo data={MaskInputDemos.usage} />
 
@@ -50,10 +50,34 @@ to uppercase letters so that the `A` token accepts lowercase input:
 
 <Demo data={MaskInputDemos.success} />
 
+## Controlled
+
+`value`, `defaultValue` and `onChange` work with the raw value without the mask, for example
+`1234567890` for `(123) 456-7890`. Use `onChangeRaw` to get both raw and masked values:
+
+```tsx
+import { useState } from 'react';
+import { MaskInput } from '@mantine/core';
+
+function Demo() {
+  const [value, setValue] = useState('');
+
+  return (
+    <MaskInput
+      mask="(999) 999-9999"
+      value={value}
+      onChange={setValue}
+      onChangeRaw={(raw, masked) => console.log(raw, masked)}
+      onComplete={(masked, raw) => console.log(masked, raw)}
+    />
+  );
+}
+```
+
 ## Reset value
 
-`MaskInput` is uncontrolled, setting `value` from a parent does not clear it.
-Use the `resetRef` prop to get a function that clears the input:
+To clear a controlled input, set `value` to an empty string.
+In uncontrolled mode, use the `resetRef` prop to get a function that clears the input:
 
 <Demo data={MaskInputDemos.resetRef} />
 
@@ -61,7 +85,7 @@ Use the `resetRef` prop to get a function that clears the input:
 
 `MaskInput` works with [use-form](/form/use-form) like any other input. The form receives
 the raw value without the mask, for example `1234567890` for `(123) 456-7890`.
-`form.setFieldValue` and `form.reset` accept both raw and masked values:
+Values passed to `initialValues`, `form.setFieldValue` and `form.reset` must be raw values too:
 
 <Demo data={MaskInputDemos.withUseForm} />
 
@@ -80,7 +104,9 @@ a fixed character inserted automatically.
 
 ### Optional segments
 
-Append `?` after the last required character to mark remaining slots as optional:
+Append `?` after the last required character to mark remaining slots as optional.
+When the input is not focused, the empty optional part is hidden.
+With `alwaysShowMask`, it stays visible with slot characters:
 
 ```tsx
 <MaskInput mask="(999) 999-9999? x9999" /> // Extension is optional

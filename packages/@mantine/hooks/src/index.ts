@@ -290,7 +290,7 @@ export type {
   UseHorizontalCollapseReturnValue,
   UseHorizontalCollapseState,
 } from './use-collapse/use-horizontal-collapse';
-export type { UseMaskOptions, UseMaskReturnValue, MaskState } from './use-mask/use-mask';
+export type { UseMaskOptions, UseMaskReturnValue } from './use-mask/use-mask';
 export type {
   UseRovingIndexInput,
   UseRovingIndexGetItemPropsInput,

@@ -9,7 +9,7 @@ function Demo() {
     <MaskInput
       label="Time (HH:MM)"
       placeholder="__:__"
-      mask={[/[0-2]/, /\\\\d/, ':', /[0-5]/, /\\\\d/]}
+      mask={[/[0-2]/, /\\d/, ':', /[0-5]/, /\\d/]}
     />
   );
 }

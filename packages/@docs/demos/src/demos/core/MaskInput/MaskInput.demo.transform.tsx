@@ -3,7 +3,6 @@ import { MantineDemo } from '@mantinex/demo';
 
 const code = `
 import { MaskInput, Text } from '@mantine/core';
-import { formatMask, isMaskComplete } from '@mantine/hooks';
 
 function Demo() {
   return (
@@ -15,7 +14,7 @@ function Demo() {
         transform={(char) => char.toUpperCase()}
         slotChar="XXX-0000"
       />
-      <Text size="sm" mt="sm" c="dimmed">
+      <Text size="sm" mt="sm">
         Type lowercase letters – they will be auto-uppercased
       </Text>
     </>
@@ -33,7 +32,7 @@ function Demo() {
         transform={(char) => char.toUpperCase()}
         slotChar="XXX-0000"
       />
-      <Text size="sm" mt="sm" c="dimmed">
+      <Text size="sm" mt="sm">
         Type lowercase letters – they will be auto-uppercased
       </Text>
     </>

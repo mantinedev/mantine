@@ -1,6 +1,6 @@
 import { BoxProps, ElementProps, factory, Factory, StylesApiProps, useProps } from '../../core';
 import { __BaseInputProps, __InputStylesNames, InputVariant } from '../Input';
-import { InputBase } from '../InputBase';
+import { InputBase, InputBaseProps } from '../InputBase';
 import { useMaskInputProps } from './use-mask-input-props';
 
 export interface MaskInputProps
@@ -8,14 +8,14 @@ export interface MaskInputProps
     BoxProps,
     __BaseInputProps,
     StylesApiProps<MaskInputFactory>,
-    ElementProps<'input', 'size'> {
+    ElementProps<'input', 'size' | 'value' | 'defaultValue' | 'onChange'> {
   /** Mask pattern string or array of string literals and RegExp objects @category behavior */
   mask: string | Array<string | RegExp>;
 
   /** Override or extend the default token map @category behavior */
   tokens?: Record<string, RegExp>;
 
-  /** Called before masking on each keystroke, can return overrides for mask options @category behavior */
+  /** Called with the raw (unmasked) value every time the mask state is computed, returns overrides for `mask`, `tokens` and `slotChar`. Must be a pure function. @category behavior */
   modify?: (
     value: string
   ) => Partial<Pick<MaskInputProps, 'mask' | 'tokens' | 'slotChar'>> | undefined;
@@ -35,21 +35,23 @@ export interface MaskInputProps
   /** Clear value on blur when mask is incomplete, `false` by default @category behavior */
   autoClear?: boolean;
 
-  /** Called on every change with raw and masked values @category state */
+  /** Controlled raw (unmasked) value @category state */
+  value?: string;
+
+  /** Uncontrolled raw (unmasked) default value @category state */
+  defaultValue?: string;
+
+  /** Called with the raw (unmasked) value on every edit @category state */
+  onChange?: (value: string) => void;
+
+  /** Called on every edit, the first argument is the raw (unmasked) value, the second is the masked value displayed in the input @category state */
   onChangeRaw?: (rawValue: string, maskedValue: string) => void;
 
-  /** Called when all required mask slots are filled @category state */
+  /** Called when all required mask slots are filled, the first argument is the masked value, the second is the raw (unmasked) value @category state */
   onComplete?: (maskedValue: string, rawValue: string) => void;
 
-  /** Escape hatch for advanced cursor/value manipulation @category behavior */
-  beforeMaskedStateChange?: (states: {
-    previousState: { value: string; selection: { start: number; end: number } | null };
-    currentState: { value: string; selection: { start: number; end: number } | null };
-    nextState: { value: string; selection: { start: number; end: number } | null };
-  }) => { value: string; selection: { start: number; end: number } | null };
-
   /** Assigns a function that clears the input value to the given ref */
-  resetRef?: React.RefObject<(() => void) | null>;
+  resetRef?: React.Ref<() => void>;
 }
 
 export type MaskInputFactory = Factory<{
@@ -69,7 +71,7 @@ export const MaskInput = factory<MaskInputFactory>((props) => {
     <InputBase
       component="input"
       ref={maskRef}
-      {...(elementProps as any)}
+      {...(elementProps as InputBaseProps)}
       __staticSelector="MaskInput"
     />
   );
@@ -77,3 +79,8 @@ export const MaskInput = factory<MaskInputFactory>((props) => {
 
 MaskInput.classes = InputBase.classes;
 MaskInput.displayName = '@mantine/core/MaskInput';
+
+export namespace MaskInput {
+  export type Props = MaskInputProps;
+  export type Factory = MaskInputFactory;
+}

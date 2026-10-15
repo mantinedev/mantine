@@ -1,5 +1,6 @@
 import { createRef, useState } from 'react';
 import { act, fireEvent } from '@testing-library/react';
+import { renderToString } from 'react-dom/server';
 import { useForm } from '@mantine/form';
 import {
   inputDefaultProps,
@@ -9,6 +10,7 @@ import {
   tests,
   userEvent,
 } from '@mantine-tests/core';
+import { MantineProvider } from '../../core';
 import { __InputStylesNames } from '../Input';
 import { MaskInput, MaskInputProps } from './MaskInput';
 
@@ -111,7 +113,7 @@ describe('@mantine/core/MaskInput', () => {
     expect(screen.getByLabelText('Code')).toHaveValue('ABC-123');
   });
 
-  it('clears the input value when resetRef is called', () => {
+  it('clears the input value and keeps the focused placeholder when resetRef is called', () => {
     const resetRef = createRef<() => void>();
     const onChangeRaw = jest.fn();
     const { container } = render(
@@ -130,8 +132,11 @@ describe('@mantine/core/MaskInput', () => {
       resetRef.current?.();
     });
 
+    expect(input.value).toBe('___-___');
+    expect(onChangeRaw).toHaveBeenLastCalledWith('', '___-___');
+
+    act(() => input.blur());
     expect(input.value).toBe('');
-    expect(onChangeRaw).toHaveBeenLastCalledWith('', '');
   });
 
   it('submits raw values with uncontrolled form updates', async () => {
@@ -200,7 +205,7 @@ describe('@mantine/core/MaskInput', () => {
       expect(form.isTouched()).toBe(false);
 
       act(() => form.setFieldValue('phone', ''));
-      expect(screen.getByLabelText('Phone')).toHaveValue('');
+      expect(screen.getByLabelText('Phone')).toHaveValue('(___) ___-____');
 
       await userEvent.click(screen.getByRole('button', { name: 'Submit' }));
       expect(handleSubmit.mock.calls[0][0]).toStrictEqual({ phone: '' });
@@ -303,4 +308,245 @@ describe('@mantine/core/MaskInput', () => {
       expect(form.getValues().phone).toBe('5551234567');
     }
   );
+  it('calls onChange with the raw value on every edit without a form', async () => {
+    const onChange = jest.fn();
+    render(<MaskInput mask="(999) 999-9999" label="Phone" onChange={onChange} />);
+
+    const input = screen.getByLabelText('Phone');
+    await userEvent.click(input);
+    await userEvent.keyboard('12');
+    expect(onChange).toHaveBeenLastCalledWith('12');
+
+    await userEvent.keyboard('{Backspace}');
+    expect(onChange).toHaveBeenLastCalledWith('1');
+
+    await userEvent.paste('234');
+    expect(onChange).toHaveBeenLastCalledWith('1234');
+  });
+
+  it('formats values set with fireEvent.change and calls onChange', () => {
+    const onChange = jest.fn();
+    render(<MaskInput mask="(999) 999-9999" label="Phone" onChange={onChange} />);
+
+    const input = screen.getByLabelText('Phone');
+    fireEvent.change(input, { target: { value: '1234567890' } });
+    expect(input).toHaveValue('(123) 456-7890');
+    expect(onChange).toHaveBeenCalledTimes(1);
+    expect(onChange).toHaveBeenLastCalledWith('1234567890');
+  });
+
+  it('supports controlled raw value with useState', async () => {
+    const onChangeRaw = jest.fn();
+
+    function Controlled() {
+      const [value, setValue] = useState('');
+      return (
+        <>
+          <MaskInput
+            mask="(999) 999-9999"
+            label="Phone"
+            value={value}
+            onChange={setValue}
+            onChangeRaw={onChangeRaw}
+          />
+          <div data-testid="raw">{value}</div>
+          <button type="button" onClick={() => setValue('')}>
+            Reset
+          </button>
+          <button type="button" onClick={() => setValue('5551234567')}>
+            Fill
+          </button>
+        </>
+      );
+    }
+
+    render(<Controlled />);
+    const input = screen.getByLabelText('Phone');
+
+    await userEvent.click(input);
+    await userEvent.keyboard('1234');
+    expect(input).toHaveValue('(123) 4__-____');
+    expect(screen.getByTestId('raw')).toHaveTextContent('1234');
+
+    await userEvent.keyboard('{Backspace}');
+    expect(input).toHaveValue('(123) ___-____');
+    expect(screen.getByTestId('raw')).toHaveTextContent('123');
+
+    await userEvent.click(screen.getByRole('button', { name: 'Fill' }));
+    expect(input).toHaveValue('(555) 123-4567');
+    expect(screen.getByTestId('raw')).toHaveTextContent('5551234567');
+
+    onChangeRaw.mockClear();
+    await userEvent.click(screen.getByRole('button', { name: 'Reset' }));
+    expect(input).toHaveValue('');
+    expect(onChangeRaw).not.toHaveBeenCalled();
+  });
+
+  it('formats the initial controlled value', () => {
+    render(
+      <MaskInput mask="(999) 999-9999" label="Phone" value="1234567890" onChange={() => {}} />
+    );
+    expect(screen.getByLabelText('Phone')).toHaveValue('(123) 456-7890');
+  });
+
+  it('restores the controlled value when the parent rejects the change', async () => {
+    render(<MaskInput mask="(999) 999-9999" label="Phone" value="123" onChange={() => {}} />);
+    const input = screen.getByLabelText('Phone');
+    await userEvent.click(input);
+    await userEvent.keyboard('{End}4');
+    expect((input as HTMLInputElement).value.replace(/[^0-9]/g, '')).toBe('123');
+  });
+
+  it('sets aria-invalid when error is set', () => {
+    render(<MaskInput mask="999" label="Code" error="Invalid" />);
+    expect(screen.getByLabelText('Code')).toHaveAttribute('aria-invalid', 'true');
+  });
+
+  it('sets aria-invalid with use-form validation errors', async () => {
+    let form: any;
+
+    function TestForm() {
+      form = useForm({
+        initialValues: { phone: '' },
+        validate: { phone: (value: string) => (value.length < 10 ? 'Too short' : null) },
+      });
+      return <MaskInput mask="(999) 999-9999" label="Phone" {...form.getInputProps('phone')} />;
+    }
+
+    render(<TestForm />);
+    expect(screen.getByLabelText('Phone')).not.toHaveAttribute('aria-invalid', 'true');
+    act(() => form.validate());
+    expect(screen.getByLabelText('Phone')).toHaveAttribute('aria-invalid', 'true');
+  });
+
+  it.each([
+    ['9123456789', '+7 (912) 345-67-89'],
+    ['+7 (912) 345-67-89', '+7 (791) 234-56-78'],
+  ])('treats form value %s as raw on mount, setFieldValue and reset', (initial, expected) => {
+    let form: any;
+
+    function TestForm() {
+      form = useForm({ mode: 'uncontrolled', initialValues: { phone: initial } });
+      return <MaskInput mask="+7 (999) 999-99-99" label="Phone" {...form.getInputProps('phone')} />;
+    }
+
+    render(<TestForm />);
+    const input = screen.getByLabelText('Phone');
+    expect(input).toHaveValue(expected);
+
+    act(() => form.setFieldValue('phone', '1'));
+    act(() => form.setFieldValue('phone', initial));
+    expect(input).toHaveValue(expected);
+
+    act(() => form.setFieldValue('phone', '1'));
+    act(() => form.reset());
+    expect(input).toHaveValue(expected);
+  });
+
+  it('formats the value of a growing dynamic mask on mount and on value change', () => {
+    const modify = (value: string) =>
+      value.length >= 10 ? { mask: '(99) 99999-9999' } : undefined;
+    const { rerender } = render(
+      <MaskInput mask="(99) 9999-9999" modify={modify} label="Phone" defaultValue="11987654321" />
+    );
+    expect(screen.getByLabelText('Phone')).toHaveValue('(11) 98765-4321');
+
+    rerender(
+      <MaskInput
+        mask="(99) 9999-9999"
+        modify={modify}
+        label="Phone"
+        value="21987654321"
+        onChange={() => {}}
+      />
+    );
+    expect(screen.getByLabelText('Phone')).toHaveValue('(21) 98765-4321');
+  });
+
+  it('drops the empty optional part of an unfocused value', () => {
+    render(<MaskInput mask="(999) 999-9999? x9999" label="Phone" defaultValue="5551234567" />);
+    expect(screen.getByLabelText('Phone')).toHaveValue('(555) 123-4567');
+  });
+
+  it('renders the formatted value on the server', () => {
+    const html = renderToString(
+      <MantineProvider>
+        <MaskInput mask="(999) 999-9999" label="Phone" defaultValue="5551234567" />
+      </MantineProvider>
+    );
+    expect(html).toContain('value="(555) 123-4567"');
+  });
+
+  it('renders the same text on the server and on the first client render', () => {
+    const element = (
+      <MantineProvider>
+        <MaskInput
+          mask="(999) 999-9999"
+          label="Phone"
+          defaultValue="1234"
+          alwaysShowMask
+          slotChar="#"
+        />
+      </MantineProvider>
+    );
+    expect(renderToString(element)).toContain('value="(123) 4##-####"');
+    render(element);
+    expect(screen.getByLabelText('Phone')).toHaveValue('(123) 4##-####');
+  });
+
+  it('keeps an empty slot in the middle when the emitted value is written back', async () => {
+    function Form() {
+      const form = useForm({ mode: 'uncontrolled', initialValues: { code: 'XYZ1234' } });
+      const [key, setKey] = useState(0);
+      return (
+        <>
+          <MaskInput key={key} mask="AAA-9999" label="Code" {...form.getInputProps('code')} />
+          <button type="button" onClick={() => form.setFieldValue('code', form.getValues().code)}>
+            Write
+          </button>
+          <button type="button" onClick={() => setKey((k) => k + 1)}>
+            Remount
+          </button>
+        </>
+      );
+    }
+
+    render(<Form />);
+    const input = screen.getByLabelText('Code') as HTMLInputElement;
+    await userEvent.click(input);
+    input.setSelectionRange(3, 3);
+    await userEvent.keyboard('{Backspace}');
+    expect(input).toHaveValue('XY_-1234');
+
+    await userEvent.click(screen.getByRole('button', { name: 'Write' }));
+    expect(input).toHaveValue('XY_-1234');
+
+    await userEvent.click(screen.getByRole('button', { name: 'Remount' }));
+    expect(screen.getByLabelText('Code')).toHaveValue('XY_-1234');
+  });
+
+  it('shows the focused placeholder when the controlled value is cleared', async () => {
+    function Controlled() {
+      const [value, setValue] = useState('123');
+      return (
+        <>
+          <MaskInput mask="(999) 999-9999" label="Phone" value={value} onChange={setValue} />
+          <button
+            type="button"
+            onMouseDown={(e) => e.preventDefault()}
+            onClick={() => setValue('')}
+          >
+            Clear
+          </button>
+        </>
+      );
+    }
+
+    render(<Controlled />);
+    const input = screen.getByLabelText('Phone');
+    await userEvent.click(input);
+    await userEvent.click(screen.getByRole('button', { name: 'Clear' }));
+    expect(input).toHaveFocus();
+    expect(input).toHaveValue('(___) ___-____');
+  });
 });

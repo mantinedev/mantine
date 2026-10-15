@@ -1,4 +1,12 @@
-import { assignRef, useDidUpdate, useFormField, useMask, useMergedRef } from '@mantine/hooks';
+import { useRef, useState } from 'react';
+import {
+  assignRef,
+  formatMask,
+  useFormField,
+  useIsomorphicEffect,
+  useMask,
+  useMergedRef,
+} from '@mantine/hooks';
 import type { MaskInputProps } from './MaskInput';
 
 export function useMaskInputProps(props: MaskInputProps & { ref?: React.Ref<HTMLInputElement> }) {
@@ -13,7 +21,6 @@ export function useMaskInputProps(props: MaskInputProps & { ref?: React.Ref<HTML
     autoClear,
     onChangeRaw,
     onComplete,
-    beforeMaskedStateChange,
     resetRef,
     ref,
     value,
@@ -22,16 +29,13 @@ export function useMaskInputProps(props: MaskInputProps & { ref?: React.Ref<HTML
     ...others
   } = props;
 
-  const formField = useFormField<string>(onChange, {
-    onExternalWrite: (external) => setValue(external == null ? '' : String(external)),
-  });
-  const fieldValue = formField.value == null ? '' : String(formField.value);
+  const initializedRef = useRef(false);
+  const lastValueRef = useRef('');
 
   const {
     ref: maskCallbackRef,
     reset,
     setValue,
-    rawValue,
   } = useMask({
     mask,
     tokens,
@@ -42,26 +46,53 @@ export function useMaskInputProps(props: MaskInputProps & { ref?: React.Ref<HTML
     transform,
     autoClear,
     onChangeRaw: (rawValue, maskedValue) => {
+      lastValueRef.current = rawValue;
       onChangeRaw?.(rawValue, maskedValue);
-      formField.bound && (onChange as any)(rawValue);
+      onChange?.(rawValue);
     },
     onComplete,
-    beforeMaskedStateChange,
   });
 
-  useDidUpdate(() => {
-    if (formField.subscribed && fieldValue !== rawValue) {
-      setValue(fieldValue);
+  const applyExternalValue = (next: string) => {
+    lastValueRef.current = next;
+    setValue(next);
+  };
+
+  const formField = useFormField<string>(onChange, {
+    onExternalWrite: (external) => applyExternalValue(external == null ? '' : String(external)),
+  });
+
+  const controlledValue = formField.subscribed
+    ? formField.value == null
+      ? ''
+      : String(formField.value)
+    : formField.bound
+      ? undefined
+      : value;
+
+  useIsomorphicEffect(() => {
+    if (!initializedRef.current) {
+      initializedRef.current = true;
+      applyExternalValue(controlledValue ?? defaultValue ?? '');
+    } else if (controlledValue !== undefined && controlledValue !== lastValueRef.current) {
+      applyExternalValue(controlledValue);
     }
-  }, [formField.subscribed, fieldValue]);
+  });
 
   assignRef(resetRef, reset);
 
   const maskRef = useMergedRef(ref, maskCallbackRef);
 
-  const elementProps = formField.bound
-    ? { ...others, defaultValue: defaultValue ?? value }
-    : { ...others, value, defaultValue, onChange };
+  const [initialDisplay] = useState(() =>
+    formatMask(controlledValue ?? defaultValue ?? '', {
+      mask,
+      tokens,
+      modify,
+      transform,
+      slotChar,
+      alwaysShowMask,
+    })
+  );
 
-  return { maskRef, elementProps };
+  return { maskRef, elementProps: { ...others, defaultValue: initialDisplay } };
 }

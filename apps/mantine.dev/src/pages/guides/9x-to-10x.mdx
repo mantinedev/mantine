@@ -435,6 +435,28 @@ const value = useMatches({ base: 'a', sm: 'b' });
 
 `useScroller` now tracks dragging on the document, so `dragHandlers` contains only `onMouseDown`. If you passed the handlers one by one, keep `onMouseDown` and remove `onMouseMove`, `onMouseUp` and `onMouseLeave`. Spreading `{...dragHandlers}` works as before. The hook no longer sets the cursor on the container: use the `isDragging` value to set it.
 
+## MaskInput value and onChange
+
+`MaskInput` `value`, `defaultValue` and `onChange` now work with the raw value without the mask. `onChange` receives a string instead of an event:
+
+```tsx
+import { MaskInput } from '@mantine/core';
+
+// Before
+<MaskInput mask="(999) 999-9999" onChange={(event) => setValue(event.currentTarget.value)} />
+
+// After, value is "1234567890" instead of "(123) 456-7890"
+<MaskInput mask="(999) 999-9999" value={value} onChange={setValue} />
+```
+
+Use `onChangeRaw` if you need the masked value.
+
+Masked strings are no longer parsed: `value`, `defaultValue` and use-form values (`initialValues`, `form.setFieldValue`, `form.reset`) must be raw. Store `1234567890`, not `(123) 456-7890`. Use `unformatMask` to convert stored masked values. `useMask` `setValue` accepts a raw value as well.
+
+## beforeMaskedStateChange removed
+
+Remove the `beforeMaskedStateChange` option from `useMask` and the prop from `MaskInput`. It was never called. The `MaskState` type is no longer exported.
+
 ## TimeInput data-empty attribute
 
 If you set your own `data-empty` attribute on `TimeInput`, rename it. The component now sets
