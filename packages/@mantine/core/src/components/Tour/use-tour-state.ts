@@ -169,8 +169,10 @@ export function useTourState({
         showTooltip &&
         closeOnEscape &&
         !event.isComposing &&
-        (event.target as HTMLElement | null)?.getAttribute?.('data-mantine-stop-propagation') !==
-          'true'
+        !(
+          event.target instanceof Element &&
+          event.target.closest('[data-mantine-stop-propagation="true"]')
+        )
       ) {
         close();
       }

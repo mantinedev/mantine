@@ -390,6 +390,22 @@ describe('@mantine/core/Tour', () => {
       expect(onClose).toHaveBeenCalled();
     });
 
+    it('does not close the tour on Escape from inside a stop-propagation container', async () => {
+      const onClose = jest.fn();
+      await renderWithAct(
+        <>
+          <div data-mantine-stop-propagation="true">
+            <button type="button">Inside</button>
+          </div>
+          <DefaultTour onClose={onClose} />
+        </>
+      );
+
+      screen.getByRole('button', { name: 'Inside' }).focus();
+      await userEvent.keyboard('{Escape}');
+      expect(onClose).not.toHaveBeenCalled();
+    });
+
     it('does not respond to keyboard when withKeyboardNavigation is false', async () => {
       const onStepChange = jest.fn();
       const onClose = jest.fn();

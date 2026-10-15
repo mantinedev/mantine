@@ -137,10 +137,9 @@ export const ActionBar = factory<ActionBarFactory>((_props) => {
         return;
       }
 
-      const target = event.target as HTMLElement | null;
       if (
-        target?.getAttribute?.('data-mantine-stop-propagation') === 'true' ||
-        target?.closest?.('[aria-modal="true"]')
+        event.target instanceof Element &&
+        event.target.closest('[data-mantine-stop-propagation="true"], [aria-modal="true"]')
       ) {
         return;
       }

@@ -214,6 +214,20 @@ describe('@mantine/core/ActionBar', () => {
     expect(spy).not.toHaveBeenCalled();
   });
 
+  it('ignores Escape from inside a data-mantine-stop-propagation container', async () => {
+    const spy = jest.fn();
+    render(
+      <ActionBar {...defaultProps} onClose={spy} closeOnEscape>
+        <div data-mantine-stop-propagation="true">
+          <input />
+        </div>
+      </ActionBar>
+    );
+
+    await userEvent.type(screen.getByRole('textbox'), '{Escape}');
+    expect(spy).not.toHaveBeenCalled();
+  });
+
   it('ignores Escape from inside a modal dialog', async () => {
     const spy = jest.fn();
     render(

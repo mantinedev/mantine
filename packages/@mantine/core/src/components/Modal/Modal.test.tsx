@@ -266,6 +266,24 @@ describe('@mantine/core/Modal behavior', () => {
     expect(onClose).toHaveBeenCalledTimes(1);
   });
 
+  it('does not close on Escape from an element inside a container that stops propagation', async () => {
+    const onClose = jest.fn();
+    render(
+      <>
+        <Modal {...defaultProps} onClose={onClose} />
+        <div data-mantine-stop-propagation="true">
+          <button type="button">nested</button>
+        </div>
+      </>
+    );
+
+    fireEvent.keyDown(screen.getByRole('button', { name: 'nested' }), { key: 'Escape' });
+    expect(onClose).not.toHaveBeenCalled();
+
+    fireEvent.keyDown(document.body, { key: 'Escape' });
+    expect(onClose).toHaveBeenCalledTimes(1);
+  });
+
   it('labels the dialog with title and describes it with body', () => {
     render(<Modal {...defaultProps}>modal-body</Modal>);
     const dialog = screen.getByRole('dialog', { name: 'test-title' });

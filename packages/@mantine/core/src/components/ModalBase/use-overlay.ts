@@ -65,8 +65,10 @@ export function useOverlay({
         opened &&
         !handledEscapeEvents?.has(event)
       ) {
-        const shouldTrigger =
-          (event.target as HTMLElement)?.getAttribute('data-mantine-stop-propagation') !== 'true';
+        const shouldTrigger = !(
+          event.target instanceof Element &&
+          event.target.closest('[data-mantine-stop-propagation="true"]')
+        );
         if (shouldTrigger) {
           handledEscapeEvents?.add(event);
           onClose();
