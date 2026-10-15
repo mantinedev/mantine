@@ -7,3 +7,4 @@ export { getCellProps } from './MatrixChart.demo.getCellProps';
 export { legend } from './MatrixChart.demo.legend';
 export { domain } from './MatrixChart.demo.domain';
 export { xLabelsRotation } from './MatrixChart.demo.xLabelsRotation';
+export { xLabelsPosition } from './MatrixChart.demo.xLabelsPosition';

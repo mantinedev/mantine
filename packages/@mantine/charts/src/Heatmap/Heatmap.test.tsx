@@ -42,6 +42,23 @@ describe('@mantine/core/Heatmap', () => {
     filledRects.forEach((rect) => expect(rect.getAttribute('fill')).toBeTruthy());
   });
 
+  it('paints all-equal values with the lowest palette color', () => {
+    const { container } = render(
+      <Heatmap
+        data={{ '2024-06-01': 5, '2024-06-02': 5, '2024-06-03': 5 }}
+        startDate="2024-06-01"
+        endDate="2024-06-03"
+        colors={['low', 'mid', 'high']}
+      />
+    );
+
+    const fills = Array.from(
+      container.querySelectorAll('[data-id="week"] rect:not([data-empty])')
+    ).map((rect) => rect.getAttribute('fill'));
+
+    expect(fills).toStrictEqual(['low', 'low', 'low']);
+  });
+
   it('adds extra column between months when splitMonths is set', () => {
     const commonProps: HeatmapProps = {
       data: {},

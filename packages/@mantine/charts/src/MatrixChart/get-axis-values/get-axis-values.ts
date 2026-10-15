@@ -1,6 +1,6 @@
 import type { MatrixChartCell } from '../MatrixChart';
 
-export function getUniqueValues(
+export function getAxisValues(
   data: MatrixChartCell[],
   axis: 'x' | 'y',
   labels?: string[]

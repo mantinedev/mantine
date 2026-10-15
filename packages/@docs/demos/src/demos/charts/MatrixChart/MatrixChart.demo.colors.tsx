@@ -11,7 +11,8 @@ function Demo() {
     <MatrixChart
       data={data}
       xLabels={xLabels}
-      yLabels={yLabels} withYLabels
+      yLabels={yLabels}
+      withYLabels
       withXLabels
       colors={[
         'var(--mantine-color-orange-2)',

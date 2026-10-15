@@ -24,18 +24,23 @@ interface MatrixChartCell {
 
 - `x` – column identifier
 - `y` – row identifier
-- `value` – numeric value for color interpolation, `null` for empty cells
+- `value` – numeric value that defines the cell color, `null` for empty cells
 
 ## Labels
 
-Set `withXLabels` and `withYLabels` to display axis labels. Use `xLabels` and `yLabels` props to override labels taken from the data,
-and `xLabelsPosition="top"` to display x-axis labels above the chart:
+Set `withXLabels` and `withYLabels` to display axis labels. Use `xLabels` and `yLabels` props to override labels taken from the data.
+Increase `yLabelsWidth` and `xLabelsHeight` if your labels are longer than the reserved space:
 
 <Demo data={MatrixChartDemos.labels} />
 
+Set `xLabelsPosition="top"` to display x-axis labels above the chart:
+
+<Demo data={MatrixChartDemos.xLabelsPosition} />
+
 ## X-axis labels rotation
 
-Use `xLabelsRotation` prop to change the angle of x-axis labels, for example, `0` for horizontal labels:
+Use `xLabelsRotation` prop to change the angle of x-axis labels, for example, `0` for horizontal labels.
+Horizontal labels overlap when they are wider than a cell, rotate long labels instead:
 
 <Demo data={MatrixChartDemos.xLabelsRotation} />
 
@@ -47,13 +52,14 @@ Set `withTooltip` prop and provide `getTooltipLabel` function to display a toolt
 
 ## Colors
 
-Use `colors` prop to change the palette. Cell colors are interpolated between the given colors:
+Use `colors` prop to change the palette. Each cell is painted with the palette color nearest to its value:
 
 <Demo data={MatrixChartDemos.colors} />
 
 ## Values domain
 
-Use `domain` prop to set a custom `[min, max]` range for color interpolation:
+By default, the palette spans from the lowest to the highest displayed value.
+Use `domain` prop to set a custom `[min, max]` range. A reversed domain (`[max, min]`) inverts the colors:
 
 <Demo data={MatrixChartDemos.domain} />
 
@@ -77,13 +83,24 @@ Set `withLegend` prop to display a color legend below the chart. Use `legendLabe
 
 ## Accessibility
 
-Cells are not announced by screen readers. Set `aria-label` or `aria-labelledby`
-to describe what the chart shows:
+Cells are not announced by screen readers. Instead, the chart gets a generated summary, for example, "Matrix chart, 8 columns by 7 rows, values from 1 to 35". Use `valueFormatter` to format the values in the summary:
 
 ```tsx
 import { MatrixChart } from '@mantine/charts';
+import { data } from './data';
 
 function Demo() {
-  return <MatrixChart data={[]} aria-label="Deployments per service and weekday" />;
+  return <MatrixChart data={data} valueFormatter={(value) => `${value} visitors`} />;
+}
+```
+
+Set `aria-label` or `aria-labelledby` to replace the summary with your own description:
+
+```tsx
+import { MatrixChart } from '@mantine/charts';
+import { data } from './data';
+
+function Demo() {
+  return <MatrixChart data={data} aria-label="Website visitors by weekday and hour" />;
 }
 ```

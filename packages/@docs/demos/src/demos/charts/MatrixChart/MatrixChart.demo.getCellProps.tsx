@@ -11,7 +11,8 @@ function Demo() {
     <MatrixChart
       data={data}
       xLabels={xLabels}
-      yLabels={yLabels} withYLabels
+      yLabels={yLabels}
+      withYLabels
       withXLabels
       getCellProps={(cell) => {
         if (cell.value === null) {

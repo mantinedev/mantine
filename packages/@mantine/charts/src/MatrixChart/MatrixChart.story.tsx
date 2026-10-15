@@ -1,3 +1,4 @@
+import { useEffect, useState } from 'react';
 import { MatrixChart, MatrixChartCell } from './MatrixChart';
 
 export default { title: 'MatrixChart' };
@@ -135,6 +136,134 @@ export function Legend() {
   return (
     <div style={{ padding: 40 }}>
       <MatrixChart data={data} xLabels={xLabels} yLabels={yLabels} withYLabels withLegend />
+    </div>
+  );
+}
+
+export function XLabelsPosition() {
+  return (
+    <div style={{ padding: 40, display: 'flex', flexDirection: 'column', gap: 40 }}>
+      {[-90, -45, 0, 45, 90].map((rotation) => (
+        <div key={rotation} style={{ display: 'flex', gap: 40 }}>
+          <MatrixChart
+            data={data}
+            xLabels={[...xLabels.slice(0, -1), 'Late evening']}
+            yLabels={yLabels}
+            withYLabels
+            withXLabels
+            xLabelsPosition="top"
+            xLabelsRotation={rotation}
+          />
+          <MatrixChart
+            data={data}
+            xLabels={[...xLabels.slice(0, -1), 'Late evening']}
+            yLabels={yLabels}
+            withYLabels
+            withXLabels
+            xLabelsPosition="bottom"
+            xLabelsRotation={rotation}
+          />
+        </div>
+      ))}
+    </div>
+  );
+}
+
+export function LegendLongLabels() {
+  return (
+    <div style={{ padding: 40 }}>
+      <MatrixChart data={data.slice(0, 16)} withLegend legendLabels={['Few WWWW', 'Many WWWW']} />
+    </div>
+  );
+}
+
+export function CellPropsClassName() {
+  return (
+    <div style={{ padding: 40 }}>
+      <MatrixChart
+        data={data}
+        xLabels={xLabels}
+        yLabels={yLabels}
+        withYLabels
+        withTooltip
+        getTooltipLabel={({ x, y, value }) => `${y} ${x}: ${value ?? 'No data'}`}
+        getCellProps={() => ({ className: 'custom-cell', onPointerEnter: () => {} })}
+      />
+    </div>
+  );
+}
+
+export function DataEdgeCases() {
+  const cases: { title: string; props: Partial<React.ComponentProps<typeof MatrixChart>> }[] = [
+    {
+      title: 'Hidden outlier',
+      props: { data: [...data, { x: 'Midnight', y: 'Mon', value: 1000 }] },
+    },
+    {
+      title: 'Duplicate overwritten',
+      props: { data: [{ x: '6 AM', y: 'Mon', value: 1000 }, ...data] },
+    },
+    { title: 'All equal', props: { data: data.map((cell) => ({ ...cell, value: 5 })) } },
+    { title: 'All null', props: { data: data.map((cell) => ({ ...cell, value: null })) } },
+    { title: 'NaN domain', props: { data, domain: [NaN, 10] } },
+    { title: 'Reversed domain', props: { data, domain: [35, 0] } },
+    {
+      title: 'Single cell',
+      props: { data: [{ x: '6 AM', y: 'Mon', value: 3 }], xLabels: ['6 AM'], yLabels: ['Mon'] },
+    },
+    {
+      title: 'valueFormatter',
+      props: { data, valueFormatter: (value: number) => `${value} visitors` },
+    },
+  ];
+
+  return (
+    <div style={{ padding: 40, display: 'flex', flexWrap: 'wrap', gap: 40 }}>
+      {cases.map(({ title, props }) => (
+        <div key={title} data-case={title}>
+          <div style={{ marginBottom: 8 }}>{title}</div>
+          <MatrixChart
+            data={data}
+            xLabels={xLabels}
+            yLabels={yLabels}
+            withYLabels
+            withXLabels
+            withLegend
+            {...props}
+          />
+        </div>
+      ))}
+    </div>
+  );
+}
+
+export function LiveTooltip() {
+  const [tick, setTick] = useState(0);
+
+  useEffect(() => {
+    const interval = window.setInterval(() => setTick((current) => current + 1), 1000);
+    return () => window.clearInterval(interval);
+  }, []);
+
+  const liveData = data.map((cell) => ({ ...cell, value: (cell.value ?? 0) + tick }));
+
+  return (
+    <div style={{ padding: 40, display: 'flex', gap: 40 }}>
+      {[true, false].map((withinPortal) => (
+        <div key={String(withinPortal)} data-within-portal={String(withinPortal)}>
+          <div style={{ marginBottom: 8 }}>withinPortal: {String(withinPortal)}</div>
+          <MatrixChart
+            data={liveData}
+            xLabels={xLabels}
+            yLabels={yLabels}
+            withYLabels
+            withXLabels
+            withTooltip
+            tooltipProps={{ withinPortal }}
+            getTooltipLabel={({ x, y, value }) => `${y} ${x}: ${value ?? 'No data'}`}
+          />
+        </div>
+      ))}
     </div>
   );
 }

@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react';
+import { useMemo, useRef, useState } from 'react';
 import {
   Box,
   BoxProps,
@@ -14,11 +14,16 @@ import {
   useProps,
   useStyles,
 } from '@mantine/core';
-import { getHeatColor } from '../Heatmap/get-heat-color/get-heat-color';
+import { useIsomorphicEffect } from '@mantine/hooks';
+import { getHeatColor } from '../utils/get-heat-color/get-heat-color';
 import { buildCellMap, getCellKey } from './build-cell-map/build-cell-map';
-import { getDomain } from './get-domain/get-domain';
-import { getLegendWidth } from './get-legend-width/get-legend-width';
-import { getUniqueValues } from './get-unique-values/get-unique-values';
+import { getAxisValues } from './get-axis-values/get-axis-values';
+import { getDataRange, getDomain } from './get-domain/get-domain';
+import {
+  estimateTextWidth,
+  getLegendLayout,
+  measureTextWidth,
+} from './get-legend-layout/get-legend-layout';
 import classes from './MatrixChart.module.css';
 
 export interface MatrixChartCell {
@@ -52,10 +57,10 @@ export interface MatrixChartProps
   /** Labels for y-axis (rows), displayed along left side @category appearance */
   yLabels?: string[];
 
-  /** Value domain [min, max] for color interpolation, auto-calculated if not set @category appearance */
+  /** Value domain [min, max] mapped to the colors palette, a reversed domain (`[max, min]`) inverts the scale, calculated from the displayed cells by default @category appearance */
   domain?: [number, number];
 
-  /** Array of colors for value interpolation, by default 4 shades of green colors are used @category appearance */
+  /** Colors palette, each value is painted with the nearest palette color, by default 4 shades of green colors are used @category appearance */
   colors?: MantineColor[];
 
   /** Cell size in px, @default 20 @category appearance */
@@ -108,6 +113,9 @@ export interface MatrixChartProps
 
   /** Rotation angle for x-axis labels in degrees, @default -90 @category appearance */
   xLabelsRotation?: number;
+
+  /** Function to format values in the generated accessible summary @category appearance */
+  valueFormatter?: (value: number) => string;
 }
 
 export type MatrixChartFactory = Factory<{
@@ -135,7 +143,15 @@ const defaultProps = {
 } satisfies Partial<MatrixChartProps>;
 
 const LEGEND_PADDING = 10;
-const TEXT_GAP = 6;
+const ROTATION_EPSILON = 1e-6;
+
+function defaultValueFormatter(value: number) {
+  return String(Number(value.toFixed(10)));
+}
+
+function pluralize(count: number, word: string) {
+  return `${count} ${word}${count === 1 ? '' : 's'}`;
+}
 
 export const MatrixChart = factory<MatrixChartFactory>((_props) => {
   const props = useProps('MatrixChart', defaultProps, _props);
@@ -168,7 +184,10 @@ export const MatrixChart = factory<MatrixChartFactory>((_props) => {
     withXLabels,
     withYLabels,
     xLabelsRotation,
+    valueFormatter,
     attributes,
+    'aria-label': ariaLabel,
+    'aria-labelledby': ariaLabelledBy,
     ...others
   } = props;
 
@@ -185,14 +204,52 @@ export const MatrixChart = factory<MatrixChartFactory>((_props) => {
     vars,
   });
 
-  const [hoveredCell, setHoveredCell] = useState<MatrixChartCell | null>(null);
+  const [hoveredKey, setHoveredKey] = useState<{ x: string; y: string } | null>(null);
+  const [measuredLabels, setMeasuredLabels] = useState<{
+    less: number | null;
+    more: number | null;
+    lastXLabel: number | null;
+  } | null>(null);
+  const lessLabelRef = useRef<SVGTextElement>(null);
+  const moreLabelRef = useRef<SVGTextElement>(null);
+  const lastXLabelRef = useRef<SVGTextElement>(null);
 
-  const xValues = useMemo(() => getUniqueValues(data, 'x', xLabelsProp), [data, xLabelsProp]);
+  const measureLabels = () => {
+    const less = measureTextWidth(lessLabelRef.current);
+    const more = measureTextWidth(moreLabelRef.current);
+    const lastXLabel = measureTextWidth(lastXLabelRef.current);
+    setMeasuredLabels((current) =>
+      current && current.less === less && current.more === more && current.lastXLabel === lastXLabel
+        ? current
+        : { less, more, lastXLabel }
+    );
+  };
 
-  const yValues = useMemo(() => getUniqueValues(data, 'y', yLabelsProp), [data, yLabelsProp]);
+  useIsomorphicEffect(() => {
+    if (withLegend || withXLabels) {
+      measureLabels();
+    }
+  });
+
+  useIsomorphicEffect(() => {
+    let active = true;
+    document.fonts?.ready?.then(() => active && measureLabels());
+    return () => {
+      active = false;
+    };
+  }, []);
+
+  const xValues = useMemo(() => getAxisValues(data, 'x', xLabelsProp), [data, xLabelsProp]);
+
+  const yValues = useMemo(() => getAxisValues(data, 'y', yLabelsProp), [data, yLabelsProp]);
 
   const cellMap = useMemo(() => buildCellMap(data), [data]);
-  const [min, max] = useMemo(() => getDomain(data, domain), [data, domain]);
+  const rows = useMemo(
+    () => yValues.map((y) => xValues.map((x) => cellMap.get(getCellKey(x, y)))),
+    [cellMap, xValues, yValues]
+  );
+  const dataRange = useMemo(() => getDataRange(rows.flat()), [rows]);
+  const [min, max] = getDomain(dataRange, domain);
 
   const theme = useMantineTheme();
 
@@ -201,70 +258,96 @@ export const MatrixChart = factory<MatrixChartFactory>((_props) => {
     return palette.map((color) => getThemeColor(color, theme));
   }, [colors, theme]);
 
-  const resolvedEmptyColor = emptyColor ? getThemeColor(emptyColor, theme) : undefined;
+  const hasEmptyColor = !!emptyColor;
+  const resolvedEmptyColor = hasEmptyColor ? getThemeColor(emptyColor, theme) : undefined;
 
-  const resolvedCellSize = cellSize!;
-  const resolvedGap = gap!;
-  const cellSizeWithGap = resolvedCellSize + resolvedGap;
+  const cellSizeWithGap = cellSize + gap;
 
   const hasXLabels = withXLabels === true && xValues.length > 0;
   const hasYLabels = withYLabels === true && yValues.length > 0;
-  const isRotated = xLabelsRotation !== 0 && xLabelsRotation !== undefined;
+  const isRotated = xLabelsRotation !== 0;
+  const rotationRadians = (xLabelsRotation * Math.PI) / 180;
+  const rotationSin = Math.sin(rotationRadians);
+  const rotationCos = Math.cos(rotationRadians);
+  const isSideways = Math.abs(rotationSin) > ROTATION_EPSILON;
 
-  const yOffset = hasYLabels ? yLabelsWidth! : 0;
+  const gridX = hasYLabels ? yLabelsWidth : 0;
   const xLabelAtTop = hasXLabels && xLabelsPosition === 'top';
   const xLabelAtBottom = hasXLabels && xLabelsPosition === 'bottom';
-  const xTopOffset = xLabelAtTop ? xLabelsHeight! : 0;
-  const xBottomHeight = xLabelAtBottom ? xLabelsHeight! : 0;
+  const gridY = xLabelAtTop ? xLabelsHeight : 0;
+  const xBottomHeight = xLabelAtBottom ? xLabelsHeight : 0;
+  const xLabelsAway = xLabelAtTop ? -1 : 1;
+  const xLabelsAnchor = isSideways ? (rotationSin * xLabelsAway > 0 ? 'start' : 'end') : 'middle';
 
-  const legendHeight = withLegend ? LEGEND_PADDING + resolvedCellSize : 0;
+  const legendHeight = withLegend ? LEGEND_PADDING + cellSize : 0;
 
-  const gridWidth = Math.max(0, xValues.length * cellSizeWithGap - resolvedGap);
-  const gridHeight = Math.max(0, yValues.length * cellSizeWithGap - resolvedGap);
+  const gridWidth = Math.max(0, xValues.length * cellSizeWithGap - gap);
+  const gridHeight = Math.max(0, yValues.length * cellSizeWithGap - gap);
+  const xLabelsY = xLabelAtTop ? gridY - 8 : gridY + gridHeight + 8;
 
-  const legendWidth = withLegend
-    ? getLegendWidth({
-        legendLabels: legendLabels!,
-        fontSize: fontSize!,
-        colorsCount: resolvedColors.length,
-        cellSize: resolvedCellSize,
-        gap: resolvedGap,
-      })
-    : 0;
+  const [lessLabel, moreLabel] = legendLabels;
+  const lessWidth = measuredLabels?.less ?? estimateTextWidth(lessLabel, fontSize);
+  const moreWidth = measuredLabels?.more ?? estimateTextWidth(moreLabel, fontSize);
 
-  const svgWidth = Math.max(yOffset + gridWidth, legendWidth);
-  const svgHeight = xTopOffset + gridHeight + xBottomHeight + legendHeight;
+  const legendLayout = getLegendLayout({
+    lessWidth,
+    moreWidth,
+    colorsCount: resolvedColors.length,
+    cellSize,
+    gap,
+  });
+  const legendWidth = withLegend ? legendLayout.width : 0;
+
+  const lastXLabel = hasXLabels ? xValues[xValues.length - 1] : '';
+  const lastXLabelWidth = measuredLabels?.lastXLabel ?? estimateTextWidth(lastXLabel, fontSize);
+  const lastXLabelReach =
+    (xLabelsAnchor === 'start'
+      ? Math.max(0, rotationCos) * lastXLabelWidth
+      : xLabelsAnchor === 'end'
+        ? Math.max(0, -rotationCos) * lastXLabelWidth
+        : (Math.abs(rotationCos) * lastXLabelWidth) / 2) +
+    (Math.abs(rotationSin) * fontSize) / 2;
+  const xLabelsOverhang = hasXLabels ? Math.max(0, Math.ceil(lastXLabelReach - cellSize / 2)) : 0;
+
+  const svgWidth = Math.max(gridX + gridWidth + xLabelsOverhang, legendWidth);
+  const svgHeight = gridY + gridHeight + xBottomHeight + legendHeight;
 
   const cellNodes = yValues.map((yVal, rowIndex) =>
     xValues.map((xVal, colIndex) => {
-      const cell = cellMap.get(getCellKey(xVal, yVal));
+      const cell = rows[rowIndex][colIndex];
       const value = cell?.value ?? null;
-      // Non-finite values are excluded from the domain, so they cannot be interpolated
-      // to a color either – they are treated the same way as missing cells.
       const isEmpty = value === null || !Number.isFinite(value);
 
       const fill = isEmpty
         ? resolvedEmptyColor
         : getHeatColor({ value, min, max, colors: resolvedColors });
 
-      const extraProps = getCellProps && cell ? getCellProps(cell) : {};
+      const {
+        className: cellClassName,
+        style: cellStyle,
+        onPointerEnter,
+        ...extraProps
+      } = getCellProps && cell ? getCellProps(cell) : ({} as React.ComponentProps<'rect'>);
 
       return (
         <rect
           key={`${colIndex}-${rowIndex}`}
-          x={yOffset + colIndex * cellSizeWithGap}
-          y={xTopOffset + rowIndex * cellSizeWithGap}
-          width={resolvedCellSize}
-          height={resolvedCellSize}
+          x={gridX + colIndex * cellSizeWithGap}
+          y={gridY + rowIndex * cellSizeWithGap}
+          width={cellSize}
+          height={cellSize}
           rx={cellRadius}
           fill={fill}
-          data-empty={(isEmpty && !emptyColor) || undefined}
+          data-empty={(isEmpty && !hasEmptyColor) || undefined}
           onPointerEnter={
-            withTooltip
-              ? () => setHoveredCell(cell || { x: xVal, y: yVal, value: null })
+            withTooltip || onPointerEnter
+              ? (event) => {
+                  withTooltip && setHoveredKey({ x: xVal, y: yVal });
+                  onPointerEnter?.(event);
+                }
               : undefined
           }
-          {...getStyles('cell')}
+          {...getStyles('cell', { className: cellClassName, style: cellStyle })}
           {...extraProps}
         />
       );
@@ -275,8 +358,8 @@ export const MatrixChart = factory<MatrixChartFactory>((_props) => {
     ? yValues.map((label, index) => (
         <text
           key={index}
-          x={yOffset - 8}
-          y={xTopOffset + index * cellSizeWithGap + resolvedCellSize / 2}
+          x={gridX - 8}
+          y={gridY + index * cellSizeWithGap + cellSize / 2}
           fontSize={fontSize}
           textAnchor="end"
           dominantBaseline="central"
@@ -289,18 +372,20 @@ export const MatrixChart = factory<MatrixChartFactory>((_props) => {
 
   const xLabelNodes = hasXLabels
     ? xValues.map((label, index) => {
-        const x = yOffset + index * cellSizeWithGap + resolvedCellSize / 2;
-        const y = xLabelAtTop ? xLabelsHeight! - 8 : xTopOffset + gridHeight + 8;
+        const x = gridX + index * cellSizeWithGap + cellSize / 2;
 
         return (
           <text
             key={index}
+            ref={index === xValues.length - 1 ? lastXLabelRef : undefined}
             x={x}
-            y={y}
+            y={xLabelsY}
             fontSize={fontSize}
-            textAnchor={isRotated ? 'end' : 'middle'}
-            dominantBaseline={isRotated ? 'central' : xLabelAtTop ? 'auto' : 'hanging'}
-            transform={isRotated ? `rotate(${xLabelsRotation}, ${x}, ${y})` : undefined}
+            textAnchor={xLabelsAnchor}
+            dominantBaseline={
+              isSideways ? 'central' : rotationCos * xLabelsAway > 0 ? 'hanging' : 'auto'
+            }
+            transform={isRotated ? `rotate(${xLabelsRotation}, ${x}, ${xLabelsY})` : undefined}
             {...getStyles('xLabel')}
           >
             {label}
@@ -309,44 +394,45 @@ export const MatrixChart = factory<MatrixChartFactory>((_props) => {
       })
     : null;
 
-  const label = getTooltipLabel && hoveredCell && withTooltip ? getTooltipLabel(hoveredCell) : null;
+  const hoveredCell =
+    hoveredKey && xValues.includes(hoveredKey.x) && yValues.includes(hoveredKey.y)
+      ? (cellMap.get(getCellKey(hoveredKey.x, hoveredKey.y)) ?? { ...hoveredKey, value: null })
+      : null;
+  const tooltipLabel =
+    getTooltipLabel && hoveredCell && withTooltip ? getTooltipLabel(hoveredCell) : null;
 
-  const charWidth = fontSize! * 0.6;
-  const lessLabel = legendLabels![0];
-  const moreLabel = legendLabels![1];
-  const lessWidth = lessLabel.length * charWidth;
-  const allColors = [resolvedEmptyColor, ...resolvedColors];
-  const rectsWidth = allColors.length * resolvedCellSize + (allColors.length - 1) * resolvedGap;
+  const legendColors = min > max ? [...resolvedColors].reverse() : resolvedColors;
   const legendX = svgWidth - legendWidth;
-  const legendY = xTopOffset + gridHeight + xBottomHeight + LEGEND_PADDING;
+  const legendY = gridY + gridHeight + xBottomHeight + LEGEND_PADDING;
 
   const legendNode = withLegend ? (
     <g transform={`translate(${legendX}, ${legendY})`} data-id="legend" {...getStyles('legend')}>
       <text
+        ref={lessLabelRef}
         x={0}
-        y={resolvedCellSize / 2}
+        y={cellSize / 2}
         fontSize={fontSize}
         dominantBaseline="central"
         {...getStyles('legendLabel')}
       >
         {lessLabel}
       </text>
-      {allColors.map((color, i) => (
+      {legendColors.map((color, i) => (
         <rect
           key={i}
-          x={lessWidth + TEXT_GAP + i * (resolvedCellSize + resolvedGap)}
+          x={legendLayout.rectsX + i * (cellSize + gap)}
           y={0}
-          width={resolvedCellSize}
-          height={resolvedCellSize}
+          width={cellSize}
+          height={cellSize}
           rx={cellRadius}
           fill={color}
-          data-empty={color === undefined || undefined}
           {...getStyles('legendRect')}
         />
       ))}
       <text
-        x={lessWidth + TEXT_GAP + rectsWidth + TEXT_GAP}
-        y={resolvedCellSize / 2}
+        ref={moreLabelRef}
+        x={legendLayout.moreLabelX}
+        y={cellSize / 2}
         fontSize={fontSize}
         dominantBaseline="central"
         {...getStyles('legendLabel')}
@@ -356,53 +442,47 @@ export const MatrixChart = factory<MatrixChartFactory>((_props) => {
     </g>
   ) : null;
 
-  // Individual cells carry no accessible information, so the chart is announced as one image
-  // rather than letting assistive tech walk a grid of anonymous rectangles. Listing every
-  // cell would be unusable on a large matrix, so the generated summary describes its shape
-  // and value range instead – the same approach as `WaffleChart`, bounded for a 2D grid.
-  // A caller-supplied `aria-label` or `aria-labelledby` always wins.
-  const isLabelled = others['aria-label'] !== undefined || others['aria-labelledby'] !== undefined;
-  const gridLabel =
+  const formatValue = valueFormatter ?? defaultValueFormatter;
+  const hasCallerLabel = ariaLabel !== undefined || ariaLabelledBy !== undefined;
+  const valuesSummary = dataRange
+    ? dataRange[0] === dataRange[1]
+      ? `, all values ${formatValue(dataRange[0])}`
+      : `, values from ${formatValue(dataRange[0])} to ${formatValue(dataRange[1])}`
+    : '';
+  const summary =
     xValues.length > 0 && yValues.length > 0
-      ? `Heatmap, ${xValues.length} columns by ${yValues.length} rows, values from ${min} to ${max}`
+      ? `Matrix chart, ${pluralize(xValues.length, 'column')} by ${pluralize(yValues.length, 'row')}${valuesSummary}`
       : undefined;
 
   return (
-    <Box
-      component="svg"
-      width={svgWidth}
-      height={svgHeight}
-      role={isLabelled || gridLabel ? 'img' : undefined}
-      aria-label={isLabelled ? undefined : gridLabel}
-      {...getStyles('root')}
-      {...others}
+    <Tooltip.Floating
+      label={tooltipLabel}
+      disabled={!withTooltip || tooltipLabel == null}
+      position="top"
+      {...tooltipProps}
     >
-      <Tooltip.Floating
-        label={label}
-        disabled={!withTooltip || label == null}
-        position="top"
-        {...tooltipProps}
+      <Box
+        component="svg"
+        width={svgWidth}
+        height={svgHeight}
+        role={hasCallerLabel || summary ? 'img' : undefined}
+        aria-label={hasCallerLabel ? ariaLabel : summary}
+        aria-labelledby={ariaLabelledBy}
+        direction="ltr"
+        {...getStyles('root')}
+        {...others}
       >
-        <g
-          data-id="all-cells"
-          onPointerLeave={withTooltip ? () => setHoveredCell(null) : undefined}
-        >
+        <g data-id="all-cells" onPointerLeave={withTooltip ? () => setHoveredKey(null) : undefined}>
           {withTooltip && (
-            <rect
-              fill="transparent"
-              x={yOffset}
-              y={xTopOffset}
-              width={gridWidth}
-              height={gridHeight}
-            />
+            <rect fill="transparent" x={gridX} y={gridY} width={gridWidth} height={gridHeight} />
           )}
           {cellNodes}
         </g>
-      </Tooltip.Floating>
-      {yLabelNodes}
-      {xLabelNodes}
-      {legendNode}
-    </Box>
+        {yLabelNodes}
+        {xLabelNodes}
+        {legendNode}
+      </Box>
+    </Tooltip.Floating>
   );
 });
 

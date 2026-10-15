@@ -1,4 +1,4 @@
-import { getHeatColor } from './get-heat-color/get-heat-color';
+import { getHeatColor } from '../utils/get-heat-color/get-heat-color';
 import { HeatmapWeeksSharedProps } from './HeatmapWeeks.types';
 
 export function HeatmapWeeks({

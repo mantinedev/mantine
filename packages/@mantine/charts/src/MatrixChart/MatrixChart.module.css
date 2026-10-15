@@ -34,9 +34,3 @@
   user-select: none;
   fill: var(--mantine-color-dimmed);
 }
-
-.legendRect {
-  &:where([data-empty]) {
-    fill: var(--matrix-empty-bg);
-  }
-}

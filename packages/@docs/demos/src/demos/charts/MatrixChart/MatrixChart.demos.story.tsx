@@ -47,3 +47,8 @@ export const Demo_xLabelsRotation = {
   name: '⭐ Demo: xLabelsRotation',
   render: renderDemo(demos.xLabelsRotation),
 };
+
+export const Demo_xLabelsPosition = {
+  name: '⭐ Demo: xLabelsPosition',
+  render: renderDemo(demos.xLabelsPosition),
+};

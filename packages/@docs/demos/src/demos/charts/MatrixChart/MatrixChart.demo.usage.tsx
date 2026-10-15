@@ -328,7 +328,7 @@ export const usage: MantineDemo = {
   type: 'code',
   component: Demo,
   centered: true,
-  overflow: 'hidden',
+  overflow: 'auto',
   code: [
     { fileName: 'Demo.tsx', code, language: 'tsx' },
     { fileName: 'data.ts', code: dataCode, language: 'tsx' },
