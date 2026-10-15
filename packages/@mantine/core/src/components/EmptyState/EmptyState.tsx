@@ -65,7 +65,7 @@ export interface EmptyStateProps
   /** Controls indicator size, gap between elements and font sizes of title and description @default 'md' */
   size?: MantineSize;
 
-  /** Content alignment. `center` stacks the content in a centered column, `left`/`right` place the indicator on the side with the content next to it @default 'center' */
+  /** Content alignment. `center` stacks the content in a centered column, `left`/`right` place the indicator on the side with the content next to it. `left` and `right` are mirrored in RTL @default 'center' */
   align?: 'left' | 'center' | 'right';
 
   /** Controls the indicator appearance. `filled` and `light` display a colored circular background behind the icon. If not set, the icon is displayed with dimmed color */
@@ -86,7 +86,7 @@ export interface EmptyStateProps
   /** If set, a neutral circular background is displayed behind the indicator. Setting `variant` always displays a colored background regardless of this prop @default false */
   withIndicatorBackground?: boolean;
 
-  /** `EmptyState` compound components, rendered after the shorthand props content */
+  /** `EmptyState` compound components, rendered after the shorthand props content. `EmptyState.Indicator` is always rendered first, outside of the body; if `icon` is set, it is rendered instead of the `EmptyState.Indicator` child */
   children?: React.ReactNode;
 }
 
@@ -108,6 +108,10 @@ const defaultProps = {
   size: 'md',
   align: 'center',
 } satisfies Partial<EmptyStateProps>;
+
+function isContentSet(value: React.ReactNode) {
+  return value != null && value !== false && value !== '';
+}
 
 function flattenChildren(children: React.ReactNode): React.ReactNode[] {
   const flat: React.ReactNode[] = [];
@@ -194,8 +198,14 @@ export const EmptyState = factory<EmptyStateFactory>((_props) => {
     }
   });
 
-  const indicator = icon ? <EmptyStateIndicator>{icon}</EmptyStateIndicator> : childrenIndicator;
-  const hasBody = title != null || description != null || bodyChildren.length > 0;
+  const hasTitle = isContentSet(title);
+  const hasDescription = isContentSet(description);
+  const indicator = isContentSet(icon) ? (
+    <EmptyStateIndicator>{icon}</EmptyStateIndicator>
+  ) : (
+    childrenIndicator
+  );
+  const hasBody = hasTitle || hasDescription || bodyChildren.length > 0;
 
   return (
     <EmptyStateProvider
@@ -205,8 +215,8 @@ export const EmptyState = factory<EmptyStateFactory>((_props) => {
         {indicator}
         {hasBody && (
           <div {...getStyles('body')}>
-            {title && <EmptyStateTitle>{title}</EmptyStateTitle>}
-            {description && <EmptyStateDescription>{description}</EmptyStateDescription>}
+            {hasTitle && <EmptyStateTitle>{title}</EmptyStateTitle>}
+            {hasDescription && <EmptyStateDescription>{description}</EmptyStateDescription>}
             {bodyChildren}
           </div>
         )}

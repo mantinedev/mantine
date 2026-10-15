@@ -14,7 +14,7 @@ export type EmptyStateIndicatorStylesNames = 'indicator';
 
 export interface EmptyStateIndicatorProps
   extends BoxProps, CompoundStylesApiProps<EmptyStateIndicatorFactory>, ElementProps<'div'> {
-  /** Icon or illustration displayed inside the indicator */
+  /** Icon or illustration displayed inside the indicator. The indicator is decorative and has `aria-hidden` set by default */
   children?: React.ReactNode;
 }
 
@@ -34,6 +34,7 @@ export const EmptyStateIndicator = factory<EmptyStateIndicatorFactory>((_props) 
   return (
     <Box
       mod={[{ 'with-background': ctx.withIndicatorBackground }, mod]}
+      aria-hidden
       {...ctx.getStyles('indicator', { className, style, classNames, styles })}
       {...others}
     >

@@ -23,7 +23,7 @@ export interface EmptyStateTitleProps
 
 export type EmptyStateTitleFactory = Factory<{
   props: EmptyStateTitleProps;
-  ref: HTMLDivElement;
+  ref: HTMLHeadingElement | HTMLDivElement;
   stylesNames: EmptyStateTitleStylesNames;
   compound: true;
 }>;
@@ -35,7 +35,7 @@ export const EmptyStateTitle = factory<EmptyStateTitleFactory>((_props) => {
   const ctx = useEmptyStateContext();
 
   return (
-    <Box<any>
+    <Box
       component={order ? `h${order}` : 'div'}
       mod={mod}
       {...ctx.getStyles('title', { className, style, classNames, styles })}

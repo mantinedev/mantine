@@ -17,12 +17,14 @@ const code = `
 import { EmptyState } from '@mantine/core';
 import { MagnifyingGlassIcon } from '@phosphor-icons/react';
 
+
 function Demo() {
   return (
     <EmptyState
+      {{props}}
       icon={<MagnifyingGlassIcon />}
       title="No results found"
-      description="We couldn't find anything matching your search. Try adjusting your filters or searching with different keywords to see more results."{{props}}
+      description="We couldn't find anything matching your search. Try adjusting your filters or searching with different keywords to see more results."
     />
   );
 }
@@ -43,7 +45,7 @@ export const variant: MantineDemo = {
         { value: 'light', label: 'Light' },
       ],
       initialValue: 'light',
-      libraryValue: 'light',
+      libraryValue: null,
     },
     { prop: 'color', type: 'color', initialValue: 'blue', libraryValue: null },
   ],

@@ -162,4 +162,58 @@ describe('@mantine/core/EmptyState', () => {
       'data-with-background'
     );
   });
+  it('hides the indicator from assistive technologies by default', () => {
+    const { container, rerender } = render(<EmptyState icon={<svg data-testid="icon" />} />);
+    expect(container.querySelector('.mantine-EmptyState-indicator')).toHaveAttribute(
+      'aria-hidden',
+      'true'
+    );
+
+    rerender(
+      <EmptyState>
+        <EmptyState.Indicator aria-hidden={false} role="img" aria-label="Search">
+          <svg />
+        </EmptyState.Indicator>
+      </EmptyState>
+    );
+    expect(container.querySelector('.mantine-EmptyState-indicator')).toHaveAttribute(
+      'aria-hidden',
+      'false'
+    );
+  });
+
+  it('renders numeric shorthand content inside title and description elements', () => {
+    const { container } = render(<EmptyState title={0} description={0} />);
+    expect(container.querySelector('.mantine-EmptyState-title')).toHaveTextContent('0');
+    expect(container.querySelector('.mantine-EmptyState-description')).toHaveTextContent('0');
+    expect(container.querySelector('.mantine-EmptyState-body')?.childNodes).toHaveLength(2);
+  });
+
+  it('does not render the body element for empty string or false shorthand props', () => {
+    const { container, rerender } = render(<EmptyState title="" description="" />);
+    expect(container.querySelector('.mantine-EmptyState-body')).toBe(null);
+
+    rerender(<EmptyState title={false} description={null} icon="" />);
+    expect(container.querySelector('.mantine-EmptyState-body')).toBe(null);
+    expect(container.querySelector('.mantine-EmptyState-indicator')).toBe(null);
+  });
+
+  it('renders the icon prop instead of an Indicator passed as a child, before the body', () => {
+    const { container } = render(
+      <EmptyState icon={<svg data-testid="prop-icon" />}>
+        <EmptyState.Title>Title</EmptyState.Title>
+        <EmptyState.Indicator>
+          <svg data-testid="child-icon" />
+        </EmptyState.Indicator>
+      </EmptyState>
+    );
+
+    const indicators = container.querySelectorAll('.mantine-EmptyState-indicator');
+    expect(indicators).toHaveLength(1);
+    expect(screen.getByTestId('prop-icon')).toBeInTheDocument();
+    expect(screen.queryByTestId('child-icon')).toBe(null);
+    expect(container.querySelector('.mantine-EmptyState-root')?.firstElementChild).toBe(
+      indicators[0]
+    );
+  });
 });

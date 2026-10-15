@@ -3,7 +3,7 @@ import type { EmptyStateFactory } from './EmptyState';
 
 interface EmptyStateContextValue {
   getStyles: GetStylesApi<EmptyStateFactory>;
-  withIndicatorBackground: boolean | undefined;
+  withIndicatorBackground: boolean;
 }
 
 export const [EmptyStateProvider, useEmptyStateContext] = createSafeContext<EmptyStateContextValue>(

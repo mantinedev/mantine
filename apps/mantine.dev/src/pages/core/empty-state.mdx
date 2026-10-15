@@ -17,7 +17,8 @@ For full control over the content, use compound components instead of the shorth
 
 <Demo data={EmptyStateDemos.compound} />
 
-Both can be combined, `children` are rendered after the content from the props:
+Both can be combined, `children` are rendered after the content from the props.
+`EmptyState.Indicator` is always rendered first, and the `icon` prop replaces it when both are set:
 
 ```tsx
 import { Button, EmptyState } from '@mantine/core';
@@ -69,5 +70,7 @@ function Demo() {
 
 ## Accessibility
 
-- `EmptyState.Title` is not a heading by default, set the `order` prop to change that
+- The `title` prop never renders a heading, use `EmptyState.Title` with `order` when the page needs one
+- The indicator is decorative and hidden from screen readers
+- If the empty state replaces live results (for example, a search with no matches), render it inside an element with `role="status"` that is always in the DOM, so screen readers announce it
 - Make sure that action buttons have accessible labels
