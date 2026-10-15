@@ -286,4 +286,39 @@ describe('@mantine/core/Splitter', () => {
     expect(onCollapseChange).toHaveBeenLastCalledWith(1, false);
     expect(screen.getByText('Right')).not.toHaveAttribute('inert');
   });
+
+  it('makes a non-collapsible pane at size 0 inert without marking it collapsed', () => {
+    const ref = createRef<UseSplitterReturnValue>();
+    render(
+      <Splitter splitterRef={ref}>
+        <Splitter.Pane defaultSize={50}>Left</Splitter.Pane>
+        <Splitter.Pane defaultSize={50}>Right</Splitter.Pane>
+      </Splitter>
+    );
+
+    act(() => ref.current!.setSizes([100, 0]));
+    expect(ref.current!.collapsed).toEqual([false, false]);
+    expect(screen.getByText('Right')).toHaveAttribute('inert');
+    expect(screen.getByText('Right')).not.toHaveAttribute('data-collapsed');
+  });
+
+  it('renders a pane added at runtime with its default size', () => {
+    function Harness({ withThird }: { withThird: boolean }) {
+      return (
+        <Splitter>
+          <Splitter.Pane defaultSize={30}>First</Splitter.Pane>
+          <Splitter.Pane defaultSize={30}>Second</Splitter.Pane>
+          {withThird && <Splitter.Pane defaultSize={40}>Third</Splitter.Pane>}
+        </Splitter>
+      );
+    }
+
+    const { rerender } = render(<Harness withThird={false} />);
+    rerender(<Harness withThird />);
+    expect(screen.getByText('Third')).toHaveStyle({ flexBasis: '40%' });
+    expect(screen.getAllByRole('separator')).toHaveLength(2);
+    rerender(<Harness withThird={false} />);
+    expect(screen.getByText('First')).toHaveStyle({ flexBasis: '30%' });
+    expect(screen.getByText('Second')).toHaveStyle({ flexBasis: '30%' });
+  });
 });

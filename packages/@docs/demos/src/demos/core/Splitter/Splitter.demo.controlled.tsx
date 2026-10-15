@@ -7,7 +7,7 @@ function Demo() {
 
   return (
     <>
-      <Splitter sizes={sizes} onSizeChange={(next) => setSizes(next as number[])} h={200}>
+      <Splitter sizes={sizes} onSizeChange={(next) => setSizes(next.map(Number))} h={200}>
         <Splitter.Pane
           defaultSize={50}
           min={20}
@@ -56,7 +56,7 @@ function Demo() {
 
   return (
     <>
-      <Splitter sizes={sizes} onSizeChange={setSizes} h={200}>
+      <Splitter sizes={sizes} onSizeChange={(next) => setSizes(next.map(Number))} h={200}>
         <Splitter.Pane defaultSize={50} min={20} bg="blue">
           Panel A ({Math.round(sizes[0])}%)
         </Splitter.Pane>

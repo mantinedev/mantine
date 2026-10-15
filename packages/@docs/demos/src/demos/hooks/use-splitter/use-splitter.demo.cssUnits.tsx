@@ -1,22 +1,14 @@
 import React from 'react';
 import { DotsSixVerticalIcon } from '@phosphor-icons/react';
-import { SplitterPaneSize, useSplitter } from '@mantine/hooks';
+import { useSplitter } from '@mantine/hooks';
 import { MantineDemo } from '@mantinex/demo';
 
 const code = `
 import React from 'react';
 import { DotsSixVerticalIcon } from '@phosphor-icons/react';
-import { SplitterPaneSize, useSplitter } from '@mantine/hooks';
+import { useSplitter } from '@mantine/hooks';
 
 const colors = ['var(--mantine-color-blue-filled)', 'var(--mantine-color-teal-filled)'];
-
-function getPaneStyle(size: SplitterPaneSize): React.CSSProperties {
-  if (typeof size === 'string' && (size.endsWith('px') || size.endsWith('rem'))) {
-    return { flexGrow: 0, flexShrink: 1, flexBasis: size };
-  }
-  const weight = typeof size === 'number' ? size : parseFloat(size);
-  return { flexGrow: weight, flexShrink: 1, flexBasis: 0 };
-}
 
 function Demo() {
   const splitter = useSplitter({
@@ -38,7 +30,7 @@ function Demo() {
         overflow: 'hidden',
       }}
     >
-      {splitter.sizes.map((size, i) => (
+      {splitter.sizes.map((_, i) => (
         <React.Fragment key={i}>
           {i > 0 && (
             <div
@@ -75,7 +67,7 @@ function Demo() {
           )}
           <div
             style={{
-              ...getPaneStyle(size),
+              ...splitter.getPaneStyle(i),
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
@@ -96,14 +88,6 @@ function Demo() {
 
 const colors = ['var(--mantine-color-blue-filled)', 'var(--mantine-color-teal-filled)'];
 
-function getPaneStyle(size: SplitterPaneSize): React.CSSProperties {
-  if (typeof size === 'string' && (size.endsWith('px') || size.endsWith('rem'))) {
-    return { flexGrow: 0, flexShrink: 1, flexBasis: size };
-  }
-  const weight = typeof size === 'number' ? size : parseFloat(size);
-  return { flexGrow: weight, flexShrink: 1, flexBasis: 0 };
-}
-
 function Demo() {
   const splitter = useSplitter({
     panels: [{ defaultSize: '240px', min: '160px', max: '50%' }, { defaultSize: 100 }],
@@ -121,7 +105,7 @@ function Demo() {
         overflow: 'hidden',
       }}
     >
-      {splitter.sizes.map((size, i) => (
+      {splitter.sizes.map((_, i) => (
         <React.Fragment key={i}>
           {i > 0 && (
             <div
@@ -158,7 +142,7 @@ function Demo() {
           )}
           <div
             style={{
-              ...getPaneStyle(size),
+              ...splitter.getPaneStyle(i),
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',

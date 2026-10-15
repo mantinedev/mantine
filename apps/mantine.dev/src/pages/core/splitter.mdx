@@ -6,7 +6,8 @@ export default Layout(MDX_DATA.Splitter);
 
 ## Usage
 
-`Splitter` is a resizable split pane layout:
+`Splitter` is a resizable split pane layout. Double-click a handle to restore its two panes
+to their default ratio, set `resetOnDoubleClick={false}` to disable it:
 
 <Demo data={SplitterDemos.usage} />
 
@@ -35,7 +36,8 @@ Set `collapsible` prop on `Splitter.Pane` to collapse the pane when it is dragge
 
 ## Controlled
 
-Use `sizes` and `onSizeChange` props to control pane sizes:
+Use `sizes` and `onSizeChange` props to control pane sizes. `sizes` must have one value
+per pane, update it when you add or remove a pane:
 
 <Demo data={SplitterDemos.controlled} />
 

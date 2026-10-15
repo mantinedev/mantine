@@ -1,5 +1,11 @@
+import { Fragment, useState } from 'react';
 import { act, fireEvent, render, renderHook, screen } from '@testing-library/react';
-import { useSplitter, UseSplitterOptions, UseSplitterReturnValue } from './use-splitter';
+import {
+  SplitterPaneSize,
+  useSplitter,
+  UseSplitterOptions,
+  UseSplitterReturnValue,
+} from './use-splitter';
 
 function TestComponent(props: UseSplitterOptions) {
   const splitter = useSplitter(props);
@@ -655,17 +661,22 @@ describe('useSplitter', () => {
     }
 
     beforeAll(() => {
-      rectSpy = jest.spyOn(HTMLElement.prototype, 'getBoundingClientRect').mockReturnValue({
-        width: 1000,
-        height: 600,
-        top: 0,
-        left: 0,
-        right: 1000,
-        bottom: 600,
-        x: 0,
-        y: 0,
-        toJSON: () => ({}),
-      } as DOMRect);
+      rectSpy = jest
+        .spyOn(HTMLElement.prototype, 'getBoundingClientRect')
+        .mockImplementation(function getRect(this: HTMLElement) {
+          const width = this.getAttribute('role') === 'separator' ? 0 : 1000;
+          return {
+            width,
+            height: 600,
+            top: 0,
+            left: 0,
+            right: width,
+            bottom: 600,
+            x: 0,
+            y: 0,
+            toJSON: () => ({}),
+          } as DOMRect;
+        });
     });
 
     afterAll(() => {
@@ -1259,6 +1270,1147 @@ describe('useSplitter', () => {
 
       fireEvent.doubleClick(handle);
       expect(handle.getAttribute('aria-valuenow')).toBe('30');
+    });
+  });
+
+  describe('measured container', () => {
+    let rectSpy: jest.SpyInstance;
+    let containerWidth = 1000;
+    let handleWidth = 0;
+    let resizeCallbacks: (() => void)[] = [];
+    const OriginalResizeObserver = window.ResizeObserver;
+
+    class CapturingResizeObserver {
+      callback: () => void;
+      constructor(callback: () => void) {
+        this.callback = callback;
+      }
+      observe() {
+        resizeCallbacks.push(this.callback);
+      }
+      unobserve() {}
+      disconnect() {
+        resizeCallbacks = resizeCallbacks.filter((cb) => cb !== this.callback);
+      }
+    }
+
+    function Harness({
+      onSplitter,
+      ...props
+    }: UseSplitterOptions & { onSplitter: (splitter: UseSplitterReturnValue) => void }) {
+      const splitter = useSplitter(props);
+      onSplitter(splitter);
+
+      return (
+        <div ref={splitter.ref} data-testid="container">
+          {props.panels.map((_, index) => (
+            <Fragment key={index}>
+              {index > 0 && (
+                <div
+                  data-testid={`handle-${index - 1}`}
+                  {...splitter.getHandleProps({ index: index - 1 })}
+                />
+              )}
+              <div data-testid={`pane-${index}`} />
+            </Fragment>
+          ))}
+        </div>
+      );
+    }
+
+    function setup(props: UseSplitterOptions) {
+      const ref: { current: UseSplitterReturnValue } = { current: null as any };
+      const utils = render(
+        <Harness
+          {...props}
+          onSplitter={(splitter) => {
+            ref.current = splitter;
+          }}
+        />
+      );
+      return { splitter: ref, ...utils };
+    }
+
+    function toPx(size: SplitterPaneSize, container: number) {
+      if (typeof size === 'number') {
+        return (size / 100) * container;
+      }
+      if (size.endsWith('px')) {
+        return parseFloat(size);
+      }
+      if (size.endsWith('rem')) {
+        return parseFloat(size) * 16;
+      }
+      return (parseFloat(size) / 100) * container;
+    }
+
+    function isFixed(size: SplitterPaneSize) {
+      return typeof size === 'string' && (size.endsWith('px') || size.endsWith('rem'));
+    }
+
+    function layout(sizes: SplitterPaneSize[], pixelMode: boolean, container = containerWidth) {
+      if (!pixelMode) {
+        return sizes.map((size) => toPx(size, container));
+      }
+      const fixedTotal = sizes.reduce<number>(
+        (acc, size) => acc + (isFixed(size) ? toPx(size, container) : 0),
+        0
+      );
+      const weights = sizes.reduce<number>(
+        (acc, size) => acc + (isFixed(size) ? 0 : parseFloat(String(size))),
+        0
+      );
+      const scale = fixedTotal > container ? container / fixedTotal : 1;
+      const leftover = Math.max(0, container - fixedTotal);
+      return sizes.map((size) =>
+        isFixed(size)
+          ? toPx(size, container) * scale
+          : weights > 0
+            ? (parseFloat(String(size)) / weights) * leftover
+            : 0
+      );
+    }
+
+    function rendered(splitter: { current: UseSplitterReturnValue }) {
+      return layout(splitter.current.sizes, splitter.current.pixelMode);
+    }
+
+    function expectLayout(actual: number[], expected: number[]) {
+      expect(actual).toHaveLength(expected.length);
+      actual.forEach((value, index) => expect(value).toBeCloseTo(expected[index], 1));
+    }
+
+    function drag(handleIndex: number, dx: number, startX = 500) {
+      const handle = screen.getByTestId(`handle-${handleIndex}`);
+      fireEvent(
+        handle,
+        new MouseEvent('pointerdown', { bubbles: true, button: 0, clientX: startX, clientY: 100 })
+      );
+      act(() => {
+        fireEvent(
+          document,
+          new MouseEvent('pointerup', { bubbles: true, clientX: startX + dx, clientY: 100 })
+        );
+      });
+    }
+
+    async function resizeContainer(width: number) {
+      containerWidth = width;
+      await act(async () => {
+        resizeCallbacks.forEach((cb) => cb());
+        await new Promise((resolve) => setTimeout(resolve, 50));
+      });
+    }
+
+    beforeEach(() => {
+      containerWidth = 1000;
+      resizeCallbacks = [];
+      window.ResizeObserver = CapturingResizeObserver as any;
+      handleWidth = 0;
+      rectSpy = jest
+        .spyOn(HTMLElement.prototype, 'getBoundingClientRect')
+        .mockImplementation(function getRect(this: HTMLElement) {
+          const width = this.getAttribute('role') === 'separator' ? handleWidth : containerWidth;
+          return {
+            width,
+            height: 600,
+            top: 0,
+            left: 0,
+            right: width,
+            bottom: 600,
+            x: 0,
+            y: 0,
+            toJSON: () => ({}),
+          } as DOMRect;
+        });
+    });
+
+    afterEach(() => {
+      rectSpy.mockRestore();
+      window.ResizeObserver = OriginalResizeObserver;
+    });
+
+    describe('size resolution', () => {
+      it('keeps untouched flexible panes in place when a drag next to a fixed pane re-encodes weights', () => {
+        const { splitter } = setup({
+          panels: [{ defaultSize: '200px' }, { defaultSize: 50 }, { defaultSize: 50 }],
+        });
+        drag(0, 100);
+        expectLayout(rendered(splitter), [300, 300, 400]);
+      });
+
+      it('keeps flexible pane ratios consistent with uneven weights after a drag', () => {
+        const { splitter } = setup({
+          panels: [{ defaultSize: '200px' }, { defaultSize: 40 }, { defaultSize: 60 }],
+        });
+        drag(0, 100);
+        expectLayout(rendered(splitter), [300, 220, 480]);
+      });
+
+      it('keeps untouched flexible panes in place on keyboard resize next to a fixed pane', () => {
+        const { splitter } = setup({
+          panels: [{ defaultSize: '200px' }, { defaultSize: 40 }, { defaultSize: 60 }],
+          step: '100px',
+        });
+        fireEvent.keyDown(screen.getByTestId('handle-0'), { key: 'ArrowRight' });
+        expectLayout(rendered(splitter), [300, 220, 480]);
+      });
+
+      it('resets mixed-unit panes to the rendered default layout', () => {
+        const { splitter } = setup({
+          panels: [{ defaultSize: '240px' }, { defaultSize: 100 }],
+        });
+        drag(0, 150);
+        expectLayout(rendered(splitter), [390, 610]);
+        fireEvent.doubleClick(screen.getByTestId('handle-0'));
+        expectLayout(rendered(splitter), [240, 760]);
+      });
+
+      it('restores the pixel size of a flexible pane on expand in mixed units', () => {
+        const { splitter } = setup({
+          panels: [
+            { defaultSize: '200px' },
+            { defaultSize: 40, collapsible: true },
+            { defaultSize: 60 },
+          ],
+        });
+        expectLayout(rendered(splitter), [200, 320, 480]);
+        act(() => splitter.current.collapse(1));
+        expect(splitter.current.collapsed).toEqual([false, true, false]);
+        act(() => splitter.current.expand(1));
+        expectLayout(rendered(splitter), [200, 320, 480]);
+      });
+
+      it('expands a middle pane by borrowing from the neighbor that received its space', () => {
+        const onCollapseChange = jest.fn();
+        const { splitter } = setup({
+          panels: [
+            { defaultSize: 30, min: 30 },
+            { defaultSize: 30, min: 20, collapsible: true },
+            { defaultSize: 40 },
+          ],
+          onCollapseChange,
+        });
+        drag(1, -150);
+        expect(splitter.current.sizes).toEqual([30, 0, 70]);
+        act(() => splitter.current.expand(1));
+        expect(splitter.current.sizes).toEqual([30, 30, 40]);
+        expect(onCollapseChange.mock.calls).toEqual([
+          [1, true],
+          [1, false],
+        ]);
+      });
+
+      it('does not collapse a pane by drag when the receiving pane would exceed its max', () => {
+        const { splitter } = setup({
+          panels: [
+            { defaultSize: 50, max: 60 },
+            { defaultSize: 50, min: 20, collapsible: true },
+          ],
+        });
+        drag(0, 450);
+        expect(splitter.current.sizes).toEqual([60, 40]);
+        expect(splitter.current.collapsed).toEqual([false, false]);
+      });
+
+      it('does not collapse a pane programmatically when the receiving pane would exceed its max', () => {
+        const onCollapseChange = jest.fn();
+        const { splitter } = setup({
+          panels: [
+            { defaultSize: 50, max: 60 },
+            { defaultSize: 50, min: 20, collapsible: true },
+          ],
+          onCollapseChange,
+        });
+        act(() => splitter.current.collapse(1));
+        expect(splitter.current.sizes).toEqual([50, 50]);
+        expect(onCollapseChange).not.toHaveBeenCalled();
+      });
+
+      it.each([undefined, 'nearest', 'equal'] as const)(
+        'collapses by drag below min with the default threshold (redistribute: %s)',
+        (redistribute) => {
+          const { splitter } = setup({
+            panels: [{ defaultSize: 30, min: 20, collapsible: true }, { defaultSize: 70 }],
+            redistribute,
+          });
+          drag(0, -150);
+          expect(splitter.current.sizes).toEqual([0, 100]);
+        }
+      );
+
+      it('re-applies constraints when the container shrinks', async () => {
+        const onSizeChange = jest.fn();
+        const { splitter } = setup({
+          panels: [{ defaultSize: '240px', min: '160px', max: '50%' }, { defaultSize: 100 }],
+          onSizeChange,
+        });
+        await resizeContainer(400);
+        expectLayout(rendered(splitter), [200, 200]);
+        expect(onSizeChange).toHaveBeenCalled();
+        const handle = screen.getByTestId('handle-0');
+        expect(handle.getAttribute('aria-valuenow')).toBe('200');
+        expect(handle.getAttribute('aria-valuemax')).toBe('200');
+        fireEvent.keyDown(handle, { key: 'ArrowLeft' });
+        expect(Number(handle.getAttribute('aria-valuenow'))).toBeLessThan(200);
+      });
+
+      it('does not change sizes or fire size callbacks on a click without movement', () => {
+        const onSizeChange = jest.fn();
+        const onResizeStart = jest.fn();
+        const onResizeEnd = jest.fn();
+        const onCollapseChange = jest.fn();
+        const { splitter } = setup({
+          panels: [{ defaultSize: 0, min: 20, collapsible: true }, { defaultSize: 100 }],
+          onSizeChange,
+          onResizeStart,
+          onResizeEnd,
+          onCollapseChange,
+        });
+        drag(0, 0);
+        drag(0, 0);
+        expect(splitter.current.sizes).toEqual([0, 100]);
+        expect(onSizeChange).not.toHaveBeenCalled();
+        expect(onResizeStart).not.toHaveBeenCalled();
+        expect(onResizeEnd).not.toHaveBeenCalled();
+        expect(onCollapseChange).not.toHaveBeenCalled();
+      });
+
+      it('keeps double-click reset working after a click without movement', () => {
+        const { splitter } = setup({
+          panels: [{ defaultSize: 30 }, { defaultSize: 70 }],
+        });
+        drag(0, 100);
+        expect(splitter.current.sizes).toEqual([40, 60]);
+        drag(0, 0);
+        drag(0, 0);
+        fireEvent.doubleClick(screen.getByTestId('handle-0'));
+        expect(splitter.current.sizes).toEqual([30, 70]);
+      });
+
+      it('fires resize callbacks once a drag moves', () => {
+        const onResizeStart = jest.fn();
+        const onResizeEnd = jest.fn();
+        setup({
+          panels: [{ defaultSize: 30 }, { defaultSize: 70 }],
+          onResizeStart,
+          onResizeEnd,
+        });
+        drag(0, 100);
+        expect(onResizeStart).toHaveBeenCalledTimes(1);
+        expect(onResizeStart).toHaveBeenCalledWith(0);
+        expect(onResizeEnd).toHaveBeenCalledTimes(1);
+        expect(onResizeEnd).toHaveBeenCalledWith(0, [40, 60]);
+      });
+
+      it('gives open panes their min when the container shrinks', async () => {
+        containerWidth = 500;
+        const { splitter } = setup({
+          panels: [
+            { defaultSize: '300px', min: '100px' },
+            { defaultSize: 100, min: '100px' },
+          ],
+        });
+        await resizeContainer(300);
+        expectLayout(rendered(splitter), [200, 100]);
+      });
+
+      it('resolves sizes against the space left after the handles', () => {
+        containerWidth = 1004;
+        handleWidth = 2;
+        const { splitter } = setup({
+          panels: [
+            { defaultSize: '200px' },
+            { defaultSize: 40, min: 10, collapsible: true },
+            { defaultSize: 60, min: 10 },
+          ],
+        });
+        expectLayout(layout(splitter.current.sizes, true, 1000), [200, 320, 480]);
+        act(() => splitter.current.collapse(1));
+        expectLayout(layout(splitter.current.sizes, true, 1000), [520, 0, 480]);
+      });
+
+      it('returns pane styles that decide units in one place', () => {
+        const { splitter } = setup({
+          panels: [{ defaultSize: '200px' }, { defaultSize: 40 }],
+        });
+        expect(splitter.current.getPaneStyle(0)).toEqual({
+          flexGrow: 0,
+          flexShrink: 1,
+          flexBasis: '200px',
+        });
+        expect(splitter.current.getPaneStyle(1)).toEqual({
+          flexGrow: 40,
+          flexShrink: 1,
+          flexBasis: 0,
+        });
+
+        const percent = setup({ panels: [{ defaultSize: 30 }, { defaultSize: '70%' }] });
+        expect(percent.splitter.current.getPaneStyle(0)).toEqual({ flexBasis: '30%' });
+        expect(percent.splitter.current.getPaneStyle(1)).toEqual({ flexBasis: '70%' });
+      });
+    });
+    describe('interaction', () => {
+      describe('pointer drag lifecycle', () => {
+        function pointer(type: string, clientX: number, pointerId = 1) {
+          const event = new MouseEvent(type, { bubbles: true, button: 0, clientX, clientY: 100 });
+          Object.defineProperty(event, 'pointerId', { value: pointerId });
+          return event;
+        }
+
+        it('captures the pointer on the handle and ends the drag when the capture is lost', () => {
+          const onResizeEnd = jest.fn();
+          const { splitter } = setup({ panels: defaultPanels, onResizeEnd });
+          const handle = screen.getByTestId('handle-0');
+          const setPointerCapture = jest.fn();
+          (handle as any).setPointerCapture = setPointerCapture;
+
+          fireEvent(handle, pointer('pointerdown', 500, 7));
+          expect(setPointerCapture).toHaveBeenCalledWith(7);
+          expect(handle.getAttribute('data-active')).toBe('true');
+
+          act(() => {
+            fireEvent(handle, pointer('lostpointercapture', 0, 7));
+          });
+          expect(handle.getAttribute('data-active')).toBeNull();
+          expect(document.body.style.cursor).toBe('');
+          expect(document.body.style.userSelect).toBe('');
+
+          act(() => {
+            fireEvent(document, pointer('pointerup', 800, 7));
+          });
+          expect(splitter.current.sizes).toEqual([50, 50]);
+          expect(onResizeEnd).not.toHaveBeenCalled();
+        });
+
+        it('ends the drag without resizing on pointercancel', () => {
+          const { splitter } = setup({ panels: defaultPanels });
+          const handle = screen.getByTestId('handle-0');
+          fireEvent(handle, pointer('pointerdown', 500));
+          act(() => {
+            fireEvent(document, pointer('pointercancel', 0));
+          });
+          expect(splitter.current.sizes).toEqual([50, 50]);
+          expect(handle.getAttribute('data-active')).toBeNull();
+          expect(document.body.style.cursor).toBe('');
+        });
+
+        it('ignores other pointers while a drag is active', () => {
+          const { splitter } = setup({ panels: defaultPanels });
+          const handle = screen.getByTestId('handle-0');
+          fireEvent(handle, pointer('pointerdown', 500, 1));
+          fireEvent(handle, pointer('pointerdown', 300, 2));
+          act(() => {
+            fireEvent(document, pointer('pointerup', 900, 2));
+          });
+          expect(splitter.current.sizes).toEqual([50, 50]);
+          expect(handle.getAttribute('data-active')).toBe('true');
+          act(() => {
+            fireEvent(document, pointer('pointerup', 600, 1));
+          });
+          expect(splitter.current.sizes).toEqual([60, 40]);
+          expect(handle.getAttribute('data-active')).toBeNull();
+        });
+      });
+
+      describe('latest onSizeChange', () => {
+        it('calls the latest onSizeChange on pointer drag in uncontrolled mode', () => {
+          const first = jest.fn();
+          const second = jest.fn();
+          const { rerender } = setup({ panels: defaultPanels, onSizeChange: first });
+          rerender(<Harness panels={defaultPanels} onSizeChange={second} onSplitter={() => {}} />);
+          drag(0, 100);
+          expect(first).not.toHaveBeenCalled();
+          expect(second).toHaveBeenCalledWith([60, 40]);
+        });
+
+        it('calls the latest onSizeChange on pointer drag in controlled mode', () => {
+          const first = jest.fn();
+          const second = jest.fn();
+          const { rerender } = setup({
+            panels: defaultPanels,
+            sizes: [50, 50],
+            onSizeChange: first,
+          });
+          rerender(
+            <Harness
+              panels={defaultPanels}
+              sizes={[50, 50]}
+              onSizeChange={second}
+              onSplitter={() => {}}
+            />
+          );
+          drag(0, 100);
+          expect(first).not.toHaveBeenCalled();
+          expect(second).toHaveBeenCalledWith([60, 40]);
+        });
+
+        it('calls the latest onSizeChange when the container resize clamps sizes', async () => {
+          const first = jest.fn();
+          const second = jest.fn();
+          const panels: UseSplitterOptions['panels'] = [
+            { defaultSize: '240px', min: '160px', max: '50%' },
+            { defaultSize: 100 },
+          ];
+          const { rerender } = setup({ panels, onSizeChange: first });
+          first.mockClear();
+          rerender(<Harness panels={panels} onSizeChange={second} onSplitter={() => {}} />);
+          await resizeContainer(400);
+          expect(first).not.toHaveBeenCalled();
+          expect(second).toHaveBeenCalled();
+        });
+      });
+
+      describe('direction', () => {
+        function setupWithDirection(props: UseSplitterOptions) {
+          const ref: { current: UseSplitterReturnValue } = { current: null as any };
+          function DirHarness() {
+            const splitter = useSplitter(props);
+            ref.current = splitter;
+            return (
+              <div ref={splitter.ref} style={{ direction: 'rtl' }}>
+                <div />
+                <div data-testid="handle-0" {...splitter.getHandleProps({ index: 0 })} />
+                <div />
+              </div>
+            );
+          }
+          render(<DirHarness />);
+          return ref;
+        }
+
+        it('reads the container direction when dir is not set', () => {
+          const splitter = setupWithDirection({ panels: defaultPanels });
+          drag(0, 100);
+          expect(splitter.current.sizes).toEqual([40, 60]);
+          fireEvent.keyDown(screen.getByTestId('handle-0'), { key: 'ArrowRight' });
+          expect(splitter.current.sizes).toEqual([39, 61]);
+        });
+
+        it('prefers the dir option over the container direction', () => {
+          const splitter = setupWithDirection({ panels: defaultPanels, dir: 'ltr' });
+          drag(0, 100);
+          expect(splitter.current.sizes).toEqual([60, 40]);
+          fireEvent.keyDown(screen.getByTestId('handle-0'), { key: 'ArrowRight' });
+          expect(splitter.current.sizes).toEqual([61, 39]);
+        });
+      });
+
+      describe('pane count change', () => {
+        it('re-derives uncontrolled sizes from defaults when a pane is added', () => {
+          const two = [{ defaultSize: 40 }, { defaultSize: 60 }];
+          const three = [{ defaultSize: 30 }, { defaultSize: 30 }, { defaultSize: 40 }];
+          const { splitter, rerender } = setup({ panels: two });
+          drag(0, 100);
+          expect(splitter.current.sizes).toEqual([50, 50]);
+          rerender(
+            <Harness
+              panels={three}
+              onSplitter={(s) => {
+                splitter.current = s;
+              }}
+            />
+          );
+          expect(splitter.current.sizes).toEqual([30, 30, 40]);
+          expect(splitter.current.getPaneStyle(2)).toEqual({ flexBasis: '40%' });
+          drag(1, 100);
+          expect(splitter.current.sizes).toEqual([30, 40, 30]);
+        });
+
+        it('re-derives uncontrolled sizes from defaults when a leading pane is removed', () => {
+          const three = [{ defaultSize: 20 }, { defaultSize: 30 }, { defaultSize: 50 }];
+          const two = [{ defaultSize: 30 }, { defaultSize: 70 }];
+          const { splitter, rerender } = setup({ panels: three });
+          drag(0, 100);
+          expect(splitter.current.sizes).toEqual([30, 20, 50]);
+          rerender(
+            <Harness
+              panels={two}
+              onSplitter={(s) => {
+                splitter.current = s;
+              }}
+            />
+          );
+          expect(splitter.current.sizes).toEqual([30, 70]);
+          drag(0, -100);
+          expect(splitter.current.sizes).toEqual([20, 80]);
+        });
+      });
+
+      describe('separator range', () => {
+        it('reports the range reachable with the neighbor constraints', () => {
+          setup({
+            panels: [
+              { defaultSize: 50, min: 20 },
+              { defaultSize: 50, min: 20 },
+            ],
+          });
+          const handle = screen.getByTestId('handle-0');
+          expect(handle.getAttribute('aria-valuemin')).toBe('20');
+          expect(handle.getAttribute('aria-valuemax')).toBe('80');
+          fireEvent.keyDown(handle, { key: 'End' });
+          expect(handle.getAttribute('aria-valuenow')).toBe('80');
+          fireEvent.keyDown(handle, { key: 'Home' });
+          expect(handle.getAttribute('aria-valuenow')).toBe('20');
+        });
+
+        it('accounts for the neighbor max', () => {
+          setup({ panels: [{ defaultSize: 50 }, { defaultSize: 50, max: 70 }] });
+          const handle = screen.getByTestId('handle-0');
+          expect(handle.getAttribute('aria-valuemin')).toBe('30');
+          expect(handle.getAttribute('aria-valuemax')).toBe('100');
+        });
+
+        it('includes space borrowed from further panes with redistribute', () => {
+          const panels = [
+            { defaultSize: 30, min: 10 },
+            { defaultSize: 30, min: 10 },
+            { defaultSize: 40, min: 10 },
+          ];
+          setup({ panels, redistribute: 'nearest' });
+          const handle = screen.getByTestId('handle-0');
+          expect(handle.getAttribute('aria-valuemax')).toBe('80');
+          fireEvent.keyDown(handle, { key: 'End' });
+          expect(handle.getAttribute('aria-valuenow')).toBe('80');
+        });
+
+        it('keeps the current value inside the range when a pane is collapsed', () => {
+          const { splitter } = setup({
+            panels: [{ defaultSize: 30, min: 20, collapsible: true }, { defaultSize: 70 }],
+          });
+          act(() => splitter.current.collapse(0));
+          const handle = screen.getByTestId('handle-0');
+          expect(handle.getAttribute('aria-valuenow')).toBe('0');
+          expect(handle.getAttribute('aria-valuemin')).toBe('0');
+        });
+      });
+
+      describe('invariants under random operation sequences', () => {
+        function createRandom(seed: number) {
+          let state = seed;
+          return () => {
+            state = (state * 1664525 + 1013904223) % 4294967296;
+            return state / 4294967296;
+          };
+        }
+
+        const configs: { name: string; options: Omit<UseSplitterOptions, 'redistribute'> }[] = [
+          {
+            name: 'percent',
+            options: {
+              panels: [
+                { defaultSize: 25, min: 10, max: 60, collapsible: true },
+                { defaultSize: 35, min: 15 },
+                { defaultSize: 40, min: 10, max: 70, collapsible: true, collapseThreshold: 15 },
+              ],
+            },
+          },
+          {
+            name: 'mixed units',
+            options: {
+              panels: [
+                { defaultSize: '200px', min: '120px', max: '40%', collapsible: true },
+                { defaultSize: 50, min: 10 },
+                { defaultSize: 50, min: '80px', collapsible: true },
+                { defaultSize: '10rem', min: '5rem', max: '20rem' },
+              ],
+              step: '25px',
+              shiftStep: '10%',
+            },
+          },
+        ];
+
+        function getViolations(
+          splitter: { current: UseSplitterReturnValue },
+          options: UseSplitterOptions
+        ) {
+          const values = rendered(splitter);
+          const violations: string[] = [];
+          const sum = values.reduce((acc, value) => acc + value, 0);
+          if (Math.abs(sum - containerWidth) > 0.01) {
+            violations.push(`sum ${sum} !== ${containerWidth}`);
+          }
+          values.forEach((value, index) => {
+            const panel = options.panels[index];
+            if (splitter.current.collapsed[index]) {
+              if (value !== 0) {
+                violations.push(`collapsed pane ${index} is ${value}`);
+              }
+              return;
+            }
+            const min = panel.min != null ? toPx(panel.min, containerWidth) : 0;
+            const max = panel.max != null ? toPx(panel.max, containerWidth) : Infinity;
+            if (value < min - 0.01 || value > max + 0.01) {
+              violations.push(`pane ${index} is ${value}, expected [${min}, ${max}]`);
+            }
+          });
+          return violations;
+        }
+
+        configs.forEach(({ name, options: baseOptions }) => {
+          (['adjacent', 'nearest', 'equal'] as const).forEach((strategy) => {
+            it(`${name}, ${strategy}: sizes respect min/max and fill the container`, async () => {
+              const options: UseSplitterOptions = {
+                ...baseOptions,
+                redistribute: strategy === 'adjacent' ? undefined : strategy,
+              };
+              const { splitter } = setup(options);
+              const random = createRandom(name.length * 31 + strategy.length);
+              const keys = ['ArrowLeft', 'ArrowRight', 'Home', 'End', 'Enter'];
+              const handles = options.panels.length - 1;
+              const log: string[] = [];
+
+              const violations: string[] = getViolations(splitter, options).map(
+                (violation) => `initial: ${violation}`
+              );
+
+              for (let i = 0; i < 120; i += 1) {
+                const op = Math.floor(random() * 7);
+                const handle = Math.floor(random() * handles);
+                const pane = Math.floor(random() * options.panels.length);
+                if (op === 0 || op === 1) {
+                  const dx = Math.round((random() - 0.5) * 700);
+                  log.push(`drag(${handle}, ${dx})`);
+                  drag(handle, dx);
+                } else if (op === 2) {
+                  const key = keys[Math.floor(random() * keys.length)];
+                  const shiftKey = random() > 0.5;
+                  log.push(`key(${handle}, ${key}, ${shiftKey})`);
+                  fireEvent.keyDown(screen.getByTestId(`handle-${handle}`), { key, shiftKey });
+                } else if (op === 3) {
+                  log.push(`toggle(${pane})`);
+                  act(() => splitter.current.toggleCollapse(pane));
+                } else if (op === 4) {
+                  log.push(`reset(${handle})`);
+                  fireEvent.doubleClick(screen.getByTestId(`handle-${handle}`));
+                } else if (op === 5 && splitter.current.pixelMode) {
+                  const width = 700 + Math.round(random() * 700);
+                  log.push(`resize(${width})`);
+                  await resizeContainer(width);
+                } else {
+                  log.push(`click(${handle})`);
+                  drag(handle, 0);
+                }
+                getViolations(splitter, options).forEach((violation) =>
+                  violations.push(`${log.slice(-6).join(' > ')}: ${violation}`)
+                );
+              }
+
+              expect(violations).toEqual([]);
+            });
+          });
+        });
+      });
+      describe('collapsed state', () => {
+        function pointer(type: string, clientX: number) {
+          return new MouseEvent(type, { bubbles: true, button: 0, clientX, clientY: 100 });
+        }
+
+        async function nextFrame() {
+          await act(async () => {
+            await new Promise((resolve) => setTimeout(resolve, 50));
+          });
+        }
+
+        const strategies = [undefined, 'nearest', 'equal'] as const;
+
+        it.each(strategies)(
+          'does not expand a collapsed pane on the key that shrinks it (redistribute: %s)',
+          (redistribute) => {
+            const onCollapseChange = jest.fn();
+            const { splitter } = setup({
+              panels: [{ defaultSize: 30, min: 20, collapsible: true }, { defaultSize: 70 }],
+              redistribute,
+              onCollapseChange,
+            });
+            act(() => splitter.current.collapse(0));
+            fireEvent.keyDown(screen.getByTestId('handle-0'), { key: 'ArrowLeft' });
+            expect(splitter.current.sizes).toEqual([0, 100]);
+            expect(onCollapseChange.mock.calls).toEqual([[0, true]]);
+          }
+        );
+
+        it.each(strategies)(
+          'does not expand a collapsed pane after the handle on the key that shrinks it (redistribute: %s)',
+          (redistribute) => {
+            const { splitter } = setup({
+              panels: [{ defaultSize: 70 }, { defaultSize: 30, min: 20, collapsible: true }],
+              redistribute,
+            });
+            act(() => splitter.current.collapse(1));
+            fireEvent.keyDown(screen.getByTestId('handle-0'), { key: 'ArrowRight' });
+            expect(splitter.current.sizes).toEqual([100, 0]);
+          }
+        );
+
+        it.each(strategies)(
+          'opens a collapsed pane to its min with the key that grows it (redistribute: %s)',
+          (redistribute) => {
+            const onCollapseChange = jest.fn();
+            const { splitter } = setup({
+              panels: [{ defaultSize: 70 }, { defaultSize: 30, min: 20, collapsible: true }],
+              redistribute,
+              onCollapseChange,
+            });
+            act(() => splitter.current.collapse(1));
+            fireEvent.keyDown(screen.getByTestId('handle-0'), { key: 'ArrowLeft' });
+            expect(splitter.current.sizes).toEqual([80, 20]);
+            expect(onCollapseChange.mock.calls).toEqual([
+              [1, true],
+              [1, false],
+            ]);
+          }
+        );
+
+        it.each(strategies)(
+          'keeps a collapsed pane collapsed on drag jitter (redistribute: %s)',
+          (redistribute) => {
+            const onCollapseChange = jest.fn();
+            const { splitter } = setup({
+              panels: [{ defaultSize: 30, min: 20, collapsible: true }, { defaultSize: 70 }],
+              redistribute,
+              onCollapseChange,
+            });
+            act(() => splitter.current.collapse(0));
+            drag(0, -1, 0);
+            drag(0, 1, 0);
+            drag(0, 150, 0);
+            expect(splitter.current.sizes).toEqual([0, 100]);
+            expect(onCollapseChange.mock.calls).toEqual([[0, true]]);
+            drag(0, 250, 0);
+            expect(splitter.current.sizes).toEqual([25, 75]);
+          }
+        );
+
+        it.each(strategies)(
+          'opens a collapsed pane to its min once the threshold is reached (redistribute: %s)',
+          (redistribute) => {
+            const { splitter } = setup({
+              panels: [
+                { defaultSize: 30, min: 20, collapsible: true, collapseThreshold: 10 },
+                { defaultSize: 70 },
+              ],
+              redistribute,
+            });
+            act(() => splitter.current.collapse(0));
+            drag(0, 50, 0);
+            expect(splitter.current.sizes).toEqual([0, 100]);
+            drag(0, 150, 0);
+            expect(splitter.current.sizes).toEqual([20, 80]);
+          }
+        );
+
+        it('collapses a pane again when a drag that opened it returns below the threshold', async () => {
+          const onCollapseChange = jest.fn();
+          const { splitter } = setup({
+            panels: [{ defaultSize: 30, min: 20, collapsible: true }, { defaultSize: 70 }],
+            onCollapseChange,
+          });
+          act(() => splitter.current.collapse(0));
+          const handle = screen.getByTestId('handle-0');
+          fireEvent(handle, pointer('pointerdown', 0));
+          fireEvent(document, pointer('pointermove', 300));
+          await nextFrame();
+          expect(splitter.current.sizes).toEqual([30, 70]);
+          act(() => {
+            fireEvent(document, pointer('pointerup', 50));
+          });
+          expect(splitter.current.sizes).toEqual([0, 100]);
+          expect(onCollapseChange.mock.calls).toEqual([
+            [0, true],
+            [0, false],
+            [0, true],
+          ]);
+        });
+
+        it('collapses a pane with Enter when the neighbor is squeezed to zero', () => {
+          const { splitter } = setup({
+            panels: [{ defaultSize: 30, min: 15, collapsible: true }, { defaultSize: 70 }],
+          });
+          const handle = screen.getByTestId('handle-0');
+          fireEvent.keyDown(handle, { key: 'End' });
+          expect(splitter.current.sizes).toEqual([100, 0]);
+          fireEvent.keyDown(handle, { key: 'Enter' });
+          expect(splitter.current.sizes).toEqual([0, 100]);
+          fireEvent.keyDown(handle, { key: 'Enter' });
+          expect(splitter.current.sizes).toEqual([100, 0]);
+        });
+
+        it('does not restore a size saved by a drag collapse after the pane was opened by drag', () => {
+          const { splitter } = setup({
+            panels: [{ defaultSize: 40, min: 20, collapsible: true }, { defaultSize: 60 }],
+          });
+          act(() => splitter.current.setSizes([30, 70]));
+          drag(0, -250, 300);
+          expect(splitter.current.sizes).toEqual([0, 100]);
+          drag(0, 500, 0);
+          expect(splitter.current.sizes).toEqual([50, 50]);
+          act(() => splitter.current.setSizes([0, 100]));
+          act(() => splitter.current.expand(0));
+          expect(splitter.current.sizes).toEqual([40, 60]);
+        });
+
+        it('does not restore a size saved by a drag collapse after the pane was opened by reset', () => {
+          const { splitter } = setup({
+            panels: [{ defaultSize: 40, min: 20, collapsible: true }, { defaultSize: 60 }],
+          });
+          act(() => splitter.current.setSizes([30, 70]));
+          drag(0, -250, 300);
+          fireEvent.doubleClick(screen.getByTestId('handle-0'));
+          expect(splitter.current.sizes).toEqual([40, 60]);
+          act(() => splitter.current.setSizes([0, 100]));
+          act(() => splitter.current.expand(0));
+          expect(splitter.current.sizes).toEqual([40, 60]);
+        });
+
+        it.each(strategies)(
+          'moves Home/End to exactly the reported range (redistribute: %s)',
+          (redistribute) => {
+            const panels = [
+              { defaultSize: 30, min: 10 },
+              { defaultSize: 30, min: 10 },
+              { defaultSize: 40, min: 10 },
+            ];
+            const { splitter } = setup({ panels, redistribute });
+            [0, 1].forEach((index) => {
+              (['Home', 'End'] as const).forEach((key) => {
+                act(() => splitter.current.setSizes([30, 30, 40]));
+                const handle = screen.getByTestId(`handle-${index}`);
+                const expected = handle.getAttribute(
+                  key === 'Home' ? 'aria-valuemin' : 'aria-valuemax'
+                );
+                fireEvent.keyDown(handle, { key });
+                expect(handle.getAttribute('aria-valuenow')).toBe(expected);
+              });
+            });
+          }
+        );
+
+        it('moves Home with equal redistribute to the reported minimum', () => {
+          const { splitter } = setup({
+            panels: [
+              { defaultSize: 30, min: 10 },
+              { defaultSize: 30, min: 10 },
+              { defaultSize: 40, min: 10 },
+            ],
+            redistribute: 'equal',
+          });
+          const handle = screen.getByTestId('handle-1');
+          expect(handle.getAttribute('aria-valuemin')).toBe('10');
+          fireEvent.keyDown(handle, { key: 'Home' });
+          expect(splitter.current.sizes).toEqual([10, 10, 80]);
+        });
+
+        describe('collapse edge cases', () => {
+          it('builds keyboard steps on the controlled value when the parent rejects a change', async () => {
+            const onResizeEnd = jest.fn();
+            const ref: { current: UseSplitterReturnValue } = { current: null as any };
+            function Controlled() {
+              const [sizes, setSizes] = useState<SplitterPaneSize[]>([60, 40]);
+              return (
+                <Harness
+                  panels={[{ defaultSize: 60 }, { defaultSize: 40 }]}
+                  sizes={sizes}
+                  onSizeChange={(next) => setSizes((prev) => (Number(next[0]) > 60 ? prev : next))}
+                  onResizeEnd={onResizeEnd}
+                  onSplitter={(splitter) => {
+                    ref.current = splitter;
+                  }}
+                />
+              );
+            }
+            render(<Controlled />);
+            const handle = screen.getByTestId('handle-0');
+            const press = async (key: string) => {
+              await act(async () => {
+                fireEvent.keyDown(handle, { key });
+              });
+            };
+            await press('ArrowRight');
+            await press('ArrowRight');
+            await press('ArrowRight');
+            expect(ref.current.sizes).toEqual([60, 40]);
+            await press('ArrowLeft');
+            expect(ref.current.sizes).toEqual([59, 41]);
+            drag(0, -100);
+            expect(ref.current.sizes).toEqual([49, 51]);
+            expect(onResizeEnd).toHaveBeenCalledWith(0, [49, 51]);
+          });
+
+          it('builds back-to-back imperative calls on each other in controlled mode', () => {
+            const onCollapseChange = jest.fn();
+            const ref: { current: UseSplitterReturnValue } = { current: null as any };
+            function Controlled() {
+              const [sizes, setSizes] = useState<SplitterPaneSize[]>([25, 50, 25]);
+              return (
+                <Harness
+                  panels={[
+                    { defaultSize: 25, collapsible: true },
+                    { defaultSize: 50 },
+                    { defaultSize: 25, collapsible: true },
+                  ]}
+                  sizes={sizes}
+                  onSizeChange={setSizes}
+                  onCollapseChange={onCollapseChange}
+                  onSplitter={(splitter) => {
+                    ref.current = splitter;
+                  }}
+                />
+              );
+            }
+            render(<Controlled />);
+            act(() => {
+              ref.current.collapse(0);
+              ref.current.collapse(2);
+            });
+            expect(ref.current.sizes).toEqual([0, 100, 0]);
+            expect(onCollapseChange.mock.calls).toEqual([
+              [0, true],
+              [2, true],
+            ]);
+            act(() => {
+              ref.current.setSizes([20, 60, 20]);
+              ref.current.collapse(2);
+            });
+            expect(ref.current.sizes).toEqual([20, 80, 0]);
+          });
+
+          it('reports a collapsible pane drained to 0 by redistribute', () => {
+            const onCollapseChange = jest.fn();
+            const { splitter } = setup({
+              panels: [
+                { defaultSize: 40 },
+                { defaultSize: 30, min: 10 },
+                { defaultSize: 30, collapsible: true },
+              ],
+              redistribute: 'nearest',
+              shiftStep: 60,
+              onCollapseChange,
+            });
+            fireEvent.keyDown(screen.getByTestId('handle-0'), {
+              key: 'ArrowRight',
+              shiftKey: true,
+            });
+            expect(splitter.current.sizes).toEqual([90, 10, 0]);
+            expect(splitter.current.collapsed).toEqual([false, false, true]);
+            expect(onCollapseChange.mock.calls).toEqual([[2, true]]);
+          });
+
+          it('reports a collapsible donor drained to 0 by expand', () => {
+            const onCollapseChange = jest.fn();
+            const { splitter } = setup({
+              panels: [
+                { defaultSize: 50, collapsible: true },
+                { defaultSize: 10, collapsible: true },
+                { defaultSize: 40 },
+              ],
+              onCollapseChange,
+            });
+            act(() => splitter.current.collapse(0));
+            act(() => splitter.current.setSizes([0, 5, 95]));
+            act(() => splitter.current.expand(0));
+            expect(splitter.current.sizes).toEqual([50, 0, 50]);
+            expect(onCollapseChange.mock.calls).toEqual([
+              [0, true],
+              [0, false],
+              [1, true],
+            ]);
+            act(() => splitter.current.expand(1));
+            expect(onCollapseChange.mock.calls.at(-1)).toEqual([1, false]);
+            expect(splitter.current.sizes[1]).toBeCloseTo(5);
+          });
+
+          it('persists the collapse of a pane already squeezed to 0px', async () => {
+            containerWidth = 500;
+            const onCollapseChange = jest.fn();
+            const { splitter } = setup({
+              panels: [{ defaultSize: '600px' }, { defaultSize: 100, collapsible: true }],
+              onCollapseChange,
+            });
+            act(() => splitter.current.collapse(1));
+            expect(onCollapseChange.mock.calls).toEqual([[1, true]]);
+            expect(splitter.current.sizes).toEqual(['600px', 0]);
+            expect(splitter.current.collapsed).toEqual([false, true]);
+            await resizeContainer(800);
+            expectLayout(rendered(splitter), [600, 0]);
+            act(() => splitter.current.collapse(1));
+            expect(onCollapseChange).toHaveBeenCalledTimes(1);
+          });
+
+          it.each(['ArrowLeft', 'Home', 'Shift+ArrowLeft', 'drag'])(
+            'does not open a collapsed pane by pushing the donor below its min (%s)',
+            (action) => {
+              const onCollapseChange = jest.fn();
+              const { splitter } = setup({
+                panels: [
+                  { defaultSize: '200px', min: '120px', max: '50%' },
+                  { defaultSize: 40, min: 10, collapsible: true },
+                  { defaultSize: 60, min: 10 },
+                ],
+                onCollapseChange,
+              });
+              act(() => splitter.current.setSizes(['200px', 0, 60]));
+              const handle = screen.getByTestId('handle-0');
+              expect(handle.getAttribute('aria-valuemin')).toBe('200');
+              if (action === 'drag') {
+                drag(0, -150);
+              } else {
+                fireEvent.keyDown(handle, {
+                  key: action.replace('Shift+', ''),
+                  shiftKey: action.startsWith('Shift+'),
+                });
+              }
+              expect(splitter.current.sizes).toEqual(['200px', 0, 60]);
+              expect(onCollapseChange).not.toHaveBeenCalled();
+            }
+          );
+
+          it('opens a collapsed pane when the donor and the pane both fit their mins', () => {
+            const { splitter } = setup({
+              panels: [
+                { defaultSize: '300px', min: '120px', max: '50%' },
+                { defaultSize: 40, min: 10, collapsible: true },
+                { defaultSize: 60, min: 10 },
+              ],
+            });
+            act(() => splitter.current.setSizes(['300px', 0, 60]));
+            const handle = screen.getByTestId('handle-0');
+            expect(handle.getAttribute('aria-valuemin')).toBe('120');
+            fireEvent.keyDown(handle, { key: 'ArrowLeft' });
+            expectLayout(rendered(splitter), [200, 100, 700]);
+          });
+
+          it('spreads space beyond the receiver max to further panes on drag collapse', () => {
+            const onCollapseChange = jest.fn();
+            const { splitter } = setup({
+              panels: [
+                { defaultSize: 40, max: 50 },
+                { defaultSize: 20, min: 10, collapsible: true },
+                { defaultSize: 40 },
+              ],
+              onCollapseChange,
+            });
+            drag(0, 500);
+            expect(splitter.current.sizes).toEqual([50, 0, 50]);
+            expect(onCollapseChange.mock.calls).toEqual([[1, true]]);
+          });
+
+          it('refuses drag collapse when the freed space cannot be placed', () => {
+            const onCollapseChange = jest.fn();
+            const { splitter } = setup({
+              panels: [
+                { defaultSize: 40, max: 50 },
+                { defaultSize: 20, min: 10, collapsible: true },
+                { defaultSize: 40, max: 40 },
+              ],
+              onCollapseChange,
+            });
+            drag(0, 500);
+            expect(splitter.current.sizes).toEqual([50, 10, 40]);
+            expect(onCollapseChange).not.toHaveBeenCalled();
+          });
+        });
+      });
     });
   });
 });

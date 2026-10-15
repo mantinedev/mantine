@@ -32,27 +32,6 @@ import {
 } from './SplitterPane/SplitterPane';
 import classes from './Splitter.module.css';
 
-const PX_RE = /^(-?[\d.]+)px$/;
-const REM_RE = /^(-?[\d.]+)rem$/;
-
-function isFixedPaneSize(size: SplitterPaneSize): boolean {
-  return typeof size === 'string' && (PX_RE.test(size) || REM_RE.test(size));
-}
-
-function getPaneFlexStyle(size: SplitterPaneSize, pixelMode: boolean): React.CSSProperties {
-  const magnitude = typeof size === 'number' ? size : parseFloat(size);
-
-  if (!pixelMode) {
-    return { flexBasis: `${magnitude}%` };
-  }
-
-  if (isFixedPaneSize(size)) {
-    return { flexGrow: 0, flexShrink: 1, flexBasis: size as string };
-  }
-
-  return { flexGrow: magnitude, flexShrink: 1, flexBasis: 0 };
-}
-
 export type SplitterStylesNames = 'root' | 'handle' | 'thumb' | SplitterPaneStylesNames;
 
 export type SplitterCssVariables = {
@@ -199,9 +178,6 @@ export const Splitter = factory<SplitterFactory>((_props) => {
 
   useImperativeHandle(splitterRef, () => splitter, [splitter]);
 
-  const getPaneStyle = (index: number) =>
-    getPaneFlexStyle(splitter.sizes[index], splitter.pixelMode);
-
   const mergedRef = useMergedRef(ref, splitter.ref);
 
   const getStyles = useStyles<SplitterFactory>({
@@ -271,7 +247,7 @@ export const Splitter = factory<SplitterFactory>((_props) => {
         sizes: splitter.sizes,
         collapsed: splitter.collapsed,
         orientation: orientation!,
-        getPaneStyle,
+        getPaneStyle: splitter.getPaneStyle,
       }}
     >
       <Box ref={mergedRef} {...getStyles('root')} mod={[{ orientation }, mod]} {...others}>

@@ -65,6 +65,8 @@ export const SplitterPane = factory<SplitterPaneFactory>((_props) => {
 
   const ctx = useSplitterContext();
   const isCollapsed = ctx.collapsed[__index!];
+  const size = ctx.sizes[__index!];
+  const isEmpty = size != null && parseFloat(String(size)) === 0;
 
   const sizeStyle = ctx.getPaneStyle(__index!);
 
@@ -78,7 +80,7 @@ export const SplitterPane = factory<SplitterPaneFactory>((_props) => {
         props,
       })}
       mod={[{ collapsed: isCollapsed || undefined }, mod]}
-      inert={isCollapsed || undefined}
+      inert={isEmpty || undefined}
       {...others}
     >
       {children}

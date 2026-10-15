@@ -15,7 +15,8 @@ minimum and maximum sizes:
 
 `defaultSize`, `min` and `max` accept CSS units. A number or `%` string is a flexible size
 that shares the leftover space. A `px` or `rem` string is a fixed size that does not change
-when the container is resized. Sizes are reported in the unit they were declared in:
+when the container is resized. Sizes are reported in the unit they were declared in.
+Spread `getPaneStyle(index)` on each panel to apply its size:
 
 <Demo data={UseSplitterDemos.cssUnits} />
 
@@ -87,7 +88,8 @@ A collapsible file explorer sidebar, a code editor panel and a terminal:
 
 ## Controlled mode
 
-Pass `sizes` and `onSizeChange` to control panel sizes. Call `setSizes` to update them:
+Pass `sizes` and `onSizeChange` to control panel sizes. Call `setSizes` to update them.
+`sizes` must have one value per panel, update it when you add or remove a panel:
 
 <Demo data={UseSplitterDemos.controlled} />
 
@@ -98,9 +100,21 @@ Handles follow the WAI-ARIA Window Splitter pattern:
 - ArrowLeft/ArrowRight – resize by `step` (horizontal)
 - ArrowUp/ArrowDown – resize by `step` (vertical)
 - Shift + Arrow – resize by `shiftStep`
-- Home – shrink the panel before the handle to its min
-- End – grow the panel before the handle to its max
+- Home – move the handle to the smallest size the panel before it can reach
+- End – move the handle to the largest size the panel before it can reach
 - Enter – toggle collapse of the smaller adjacent collapsible panel
+
+Double-clicking a handle restores its two panels to their default ratio. Set
+`resetOnDoubleClick: false` to disable it, or call `reset(handleIndex)` to do it from code.
+
+## RTL
+
+Drag and ArrowLeft/ArrowRight follow the text direction of the container element.
+Set `dir` to override it, for example when the container direction is not known yet:
+
+```tsx
+const splitter = useSplitter({ panels, dir: 'rtl' });
+```
 
 ## Touch support
 
@@ -138,8 +152,8 @@ interface UseSplitterPanel {
 /** Panel config resolved to numeric units (percent or pixels) */
 interface UseSplitterResolvedPanel {
   defaultSize: number;
-  min?: number;
-  max?: number;
+  min: number;
+  max: number;
   collapsible?: boolean;
   collapseThreshold?: number;
 }
@@ -158,7 +172,7 @@ interface UseSplitterOptions {
   panels: UseSplitterPanel[];
   /** Layout direction, `'horizontal'` by default */
   orientation?: 'horizontal' | 'vertical';
-  /** Controlled sizes, each value keeps the unit it was declared in */
+  /** Controlled sizes, each value keeps the unit it was declared in. Must have one value per panel. */
   sizes?: SplitterPaneSize[];
   /** Called during resize with updated sizes, each value keeps its declared unit */
   onSizeChange?: (sizes: SplitterPaneSize[]) => void;
@@ -174,8 +188,10 @@ interface UseSplitterOptions {
   step?: SplitterStep;
   /** Shift+arrow step size, a `number`/`%` is a percentage, `px`/`rem` is pixels, `10` by default */
   shiftStep?: SplitterStep;
-  /** Text direction for keyboard nav, `'ltr'` by default */
+  /** Text direction for pointer drag and keyboard navigation, read from the container's computed `direction` by default */
   dir?: 'ltr' | 'rtl';
+  /** Restore the two panels adjacent to a handle to their default ratio when the handle is double-clicked, `true` by default */
+  resetOnDoubleClick?: boolean;
   /** Enable/disable the hook, `true` by default */
   enabled?: boolean;
 }
@@ -188,12 +204,26 @@ interface UseSplitterReturnValue<T extends HTMLElement = any> {
   /** Whether sizes are tracked in pixels because any pane size, `min`, `max`, `step`, `shiftStep`
    * or `collapseThreshold` uses a fixed `px`/`rem` unit */
   pixelMode: boolean;
-  /** Which panels are currently collapsed */
+  /** Whether each panel is collapsed: `true` for a `collapsible` panel whose size is `0` */
   collapsed: boolean[];
   /** Index of handle being dragged, or -1 */
   activeHandle: number;
   /** Get props to spread on each resize handle */
-  getHandleProps: (input: { index: number }) => HandleProps;
+  getHandleProps: (input: { index: number }) => {
+    ref: React.RefCallback<HTMLElement>;
+    role: 'separator';
+    'aria-orientation': 'horizontal' | 'vertical';
+    'aria-valuenow': number;
+    'aria-valuemin': number;
+    'aria-valuemax': number;
+    tabIndex: number;
+    onKeyDown: React.KeyboardEventHandler;
+    onDoubleClick: React.MouseEventHandler;
+    'data-active': boolean | undefined;
+    'data-orientation': 'horizontal' | 'vertical';
+  };
+  /** Returns flex styles for the pane at the given index, resolved from its current size and unit */
+  getPaneStyle: (index: number) => React.CSSProperties;
   /** Programmatically set sizes */
   setSizes: (sizes: SplitterPaneSize[]) => void;
   /** Collapse a panel */
@@ -202,6 +232,8 @@ interface UseSplitterReturnValue<T extends HTMLElement = any> {
   expand: (panelIndex: number) => void;
   /** Toggle collapse of a panel */
   toggleCollapse: (panelIndex: number) => void;
+  /** Reset the two panels adjacent to a handle to their default ratio */
+  reset: (handleIndex: number) => void;
 }
 
 function useSplitter<T extends HTMLElement = any>(

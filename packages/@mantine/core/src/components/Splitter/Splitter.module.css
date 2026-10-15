@@ -1,5 +1,6 @@
 .root {
   display: flex;
+  isolation: isolate;
 
   &:where([data-orientation='horizontal']) {
     flex-direction: row;
@@ -26,18 +27,46 @@
   outline: none;
   background-color: var(--splitter-handle-color, var(--mantine-color-body));
 
+  &::before,
+  &::after {
+    content: '';
+    position: absolute;
+  }
+
+  &::before {
+    z-index: 1;
+  }
+
+  &::after {
+    inset: 0;
+    z-index: 3;
+  }
+
   &:where([data-orientation='horizontal']) {
     cursor: col-resize;
+
+    &::before {
+      inset: 0 rem(-4px);
+    }
   }
 
   &:where([data-orientation='vertical']) {
     cursor: row-resize;
+
+    &::before {
+      inset: rem(-4px) 0;
+    }
+  }
+
+  &:focus-visible:not(:has(> .thumb))::after {
+    outline: rem(2px) solid var(--mantine-color-focus-ring);
+    outline-offset: rem(2px);
   }
 }
 
 .thumb {
   position: absolute;
-  z-index: 1;
+  z-index: 2;
   display: flex;
   align-items: center;
   justify-content: center;
