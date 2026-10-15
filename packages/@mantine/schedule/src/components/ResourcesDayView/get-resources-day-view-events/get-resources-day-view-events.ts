@@ -1,12 +1,15 @@
-import dayjs from 'dayjs';
 import {
   AnyDateValue,
   DayPositionedEventData,
   ScheduleEventData,
   ScheduleResourceData,
 } from '../../../types';
-import { getDayPosition, isAllDayEvent, isEventInTimeRange, validateEvent } from '../../../utils';
-import { getDayPositionedEvents } from '../../DayView/get-day-view-events/get-day-positioned-events';
+import { validateEvent } from '../../../utils';
+import {
+  classifyDayEvents,
+  isEventVisibleOnDay,
+} from '../../DayView/get-day-view-events/classify-day-events';
+import { DayLayoutEventData } from '../../DayView/get-day-view-events/get-day-positioned-events';
 
 interface GetResourcesDayViewEventsInput {
   events: ScheduleEventData[] | undefined;
@@ -18,8 +21,11 @@ interface GetResourcesDayViewEventsInput {
 }
 
 export interface ResourcesDayViewEventsResult {
-  regularEvents: Record<string | number, DayPositionedEventData[]>;
-  allDayEvents: Record<string | number, DayPositionedEventData[]>;
+  /** Timed events with their original start and end, `position.displayStart`/`position.displayEnd` hold the range clipped to the day */
+  regularEvents: Record<string | number, DayLayoutEventData[]>;
+
+  /** All-day events (including multi-day events that cover the whole day) with their original start and end */
+  allDayEvents: Record<string | number, DayLayoutEventData[]>;
   backgroundTimedEvents: Record<string | number, DayPositionedEventData[]>;
   backgroundAllDayEvents: Record<string | number, DayPositionedEventData[]>;
 }
@@ -50,15 +56,10 @@ export function getResourcesDayViewEvents({
     return result;
   }
 
-  const dayStart = dayjs(date).startOf('day');
-  const dayEnd = dayjs(date).endOf('day');
-
   const eventsByResource: Record<string | number, ScheduleEventData[]> = {};
-  const backgroundByResource: Record<string | number, ScheduleEventData[]> = {};
 
   for (const resource of resources) {
     eventsByResource[resource.id] = [];
-    backgroundByResource[resource.id] = [];
   }
 
   const ids = new Set<string | number>();
@@ -72,108 +73,36 @@ export function getResourcesDayViewEvents({
       continue;
     }
 
-    const eventStart = dayjs(event.start);
-    const eventEnd = dayjs(event.end);
-
-    const isOnDay = eventStart.isSame(dayStart, 'day');
-    const overlapsDay = eventStart.isBefore(dayEnd) && eventEnd.isAfter(dayStart);
-
-    if (isOnDay || overlapsDay) {
-      if (isOnDay && !isEventInTimeRange({ event, startTime, endTime })) {
-        continue;
-      }
-
-      const validated = validateEvent(event);
-
-      if (!ids.has(event.id)) {
-        ids.add(event.id);
-      } else {
-        throw new Error(
-          `[@mantine/schedule] ResourcesDayView: Duplicated event ids found: ${event.id}`
-        );
-      }
-
-      if (event.display === 'background') {
-        backgroundByResource[event.resourceId].push(validated);
-      } else if (isOnDay) {
-        eventsByResource[event.resourceId].push(validated);
-      } else {
-        const clippedStart = eventStart.isBefore(dayStart) ? dayStart : eventStart;
-        const clippedEnd = eventEnd.isAfter(dayEnd) ? dayEnd : eventEnd;
-
-        const clippedEvent = {
-          ...validated,
-          start: clippedStart.format('YYYY-MM-DD HH:mm:ss'),
-          end: clippedEnd.format('YYYY-MM-DD HH:mm:ss'),
-        };
-
-        if (isEventInTimeRange({ event: clippedEvent, startTime, endTime })) {
-          eventsByResource[event.resourceId].push(clippedEvent);
-        }
-      }
+    if (!isEventVisibleOnDay(event, { date, startTime, endTime })) {
+      continue;
     }
+
+    const validated = validateEvent(event);
+
+    if (!ids.has(event.id)) {
+      ids.add(event.id);
+    } else {
+      throw new Error(
+        `[@mantine/schedule] ResourcesDayView: Duplicated event ids found: ${event.id}`
+      );
+    }
+
+    eventsByResource[event.resourceId].push(validated);
   }
 
   for (const resource of resources) {
-    const positioned = getDayPositionedEvents({
+    const classified = classifyDayEvents({
       events: eventsByResource[resource.id],
+      date,
       startTime,
       endTime,
-      date,
       intervalMinutes,
     });
 
-    for (const event of positioned) {
-      if (event.position.allDay) {
-        result.allDayEvents[resource.id].push(event);
-      } else {
-        result.regularEvents[resource.id].push(event);
-      }
-    }
-
-    for (const event of backgroundByResource[resource.id]) {
-      const eventStart = dayjs(event.start);
-      const eventEnd = dayjs(event.end);
-      const clippedStart = eventStart.isBefore(dayStart) ? dayStart : eventStart;
-      const clippedEnd = eventEnd.isAfter(dayEnd) ? dayEnd : eventEnd;
-
-      const clippedEvent = {
-        ...event,
-        start: clippedStart.format('YYYY-MM-DD HH:mm:ss'),
-        end: clippedEnd.format('YYYY-MM-DD HH:mm:ss'),
-      };
-
-      const allDay = isAllDayEvent({ event: clippedEvent, date });
-
-      if (allDay) {
-        result.backgroundAllDayEvents[resource.id].push({
-          ...event,
-          position: {
-            top: 0,
-            height: 100,
-            allDay: true,
-            width: 100,
-            offset: 0,
-            column: 0,
-            overlaps: 1,
-          },
-        });
-      } else {
-        const { top, height } = getDayPosition({
-          event: clippedEvent,
-          startTime,
-          endTime,
-          intervalMinutes,
-        });
-        if (height <= 0) {
-          continue;
-        }
-        result.backgroundTimedEvents[resource.id].push({
-          ...event,
-          position: { top, height, allDay: false, width: 100, offset: 0, column: 0, overlaps: 1 },
-        });
-      }
-    }
+    result.regularEvents[resource.id] = classified.regularEvents;
+    result.allDayEvents[resource.id] = classified.allDayEvents;
+    result.backgroundTimedEvents[resource.id] = classified.backgroundTimedEvents;
+    result.backgroundAllDayEvents[resource.id] = classified.backgroundAllDayEvents;
   }
 
   return result;

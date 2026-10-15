@@ -21,9 +21,10 @@ import {
   useStyles,
 } from '@mantine/core';
 import { useDatesContext } from '@mantine/dates';
-import { useInterval, useIsomorphicEffect, useMergedRef, useMounted } from '@mantine/hooks';
+import { useIsomorphicEffect, useMergedRef } from '@mantine/hooks';
 import { useDragDropHandlers } from '../../hooks/use-drag-drop-handlers';
 import { useHorizontalEventResize } from '../../hooks/use-horizontal-event-resize';
+import { useNow } from '../../hooks/use-now';
 import { useSlotDragSelect } from '../../hooks/use-slot-drag-select';
 import { getLabel, ScheduleLabelsOverride } from '../../labels';
 import {
@@ -56,16 +57,24 @@ import {
   getIndexFromDragPoint,
   getOrderedResources,
   getOverlapClusters,
-  getTimeAxisEventStyle,
   getWeekDays,
   handleResourcesGridKeyDown,
   isAllDayEvent,
-  isInTimeRange,
   nextWeek,
   previousWeek,
   ResourcesGridControlsRef,
   toDateString,
 } from '../../utils';
+import { getClippedEdges } from '../../utils/clip-event-to-day/clip-event-to-day';
+import { resolveNow } from '../../utils/resolve-now/resolve-now';
+import {
+  getInlineTimeAxisEventStyle,
+  scrollCellIntoInlineView,
+  scrollCellToInlineStart,
+} from '../../utils/resources-view-utils/resources-view-utils';
+import { CurrentTimeIndicator } from '../CurrentTimeIndicator/CurrentTimeIndicator';
+import { getCurrentTimeFormat } from '../CurrentTimeIndicator/get-current-time-format';
+import { getIndicatorStylesApiProps } from '../CurrentTimeIndicator/get-indicator-styles-api-props';
 import { DragContext, DragContextValue } from '../DragContext/DragContext';
 import { MoreEvents, MoreEventsProps, MoreEventsStylesNames } from '../MoreEvents/MoreEvents';
 import { ScheduleBackgroundEvent } from '../ScheduleBackgroundEvent';
@@ -306,7 +315,7 @@ const defaultProps = {
   intervalMinutes: 60,
   minEventSize: 1,
   withHeader: true,
-  weekLabelFormat: 'MMM DD',
+  weekLabelFormat: 'MMM D',
   weekdayFormat: 'ddd D',
   highlightBusinessHours: false,
   businessHours: ['09:00:00', '17:00:00'],
@@ -468,25 +477,11 @@ export const ResourcesWeekView = factory<ResourcesWeekViewFactory>((_props) => {
 
   const totalSlotsPerDay = slots.length;
 
-  const resolveNow = () => (getCurrentTime ? dayjs(getCurrentTime()) : dayjs());
-  const now = resolveNow();
+  const now = useNow(getCurrentTime);
   const isToday = weekdays.some((day) => dayjs(day).isSame(now, 'day'));
   const withCurrentTimeIndicator = _withCurrentTimeIndicator ?? isToday;
-
-  const mounted = useMounted();
-  const [, setTimeIndicatorTick] = useState(0);
-  useInterval(() => setTimeIndicatorTick((tick) => tick + 1), 60000, { autoInvoke: true });
   const timeIndicatorOffset = getCurrentTimePosition({ startTime, endTime, intervalMinutes, now });
-
   const todayDayIndex = weekdays.findIndex((day) => dayjs(day).isSame(now, 'day'));
-  const showTimeIndicator =
-    mounted &&
-    withCurrentTimeIndicator &&
-    todayDayIndex >= 0 &&
-    isInTimeRange({ date: now.toDate(), startTime, endTime });
-  const formattedCurrentTime = withCurrentTimeBubble
-    ? formatDate({ locale: ctx.getLocale(locale), date: now, format: slotLabelFormat })
-    : '';
 
   type DropTargetSlot = { resourceId: string | number; slotIndex: number };
 
@@ -703,15 +698,14 @@ export const ResourcesWeekView = factory<ResourcesWeekViewFactory>((_props) => {
   const weekViewEvents = useMemo(
     () =>
       getResourcesWeekViewEvents({
-        events,
+        events: expandedEvents,
         resources,
         weekdays,
         startTime,
         endTime,
         intervalMinutes,
-        expansionLimit: recurrenceExpansionLimit,
       }),
-    [events, resources, weekdays, startTime, endTime, intervalMinutes, recurrenceExpansionLimit]
+    [expandedEvents, resources, weekdays, startTime, endTime, intervalMinutes]
   );
 
   const dayLabels = weekdays.map((day) => {
@@ -721,8 +715,8 @@ export const ResourcesWeekView = factory<ResourcesWeekViewFactory>((_props) => {
 
     return (
       <Box
-        {...getStyles('resourcesWeekViewDayLabel')}
         key={day}
+        {...getStyles('resourcesWeekViewDayLabel')}
         mod={{ today, weekend }}
         style={{ width: `calc(var(--resources-week-view-slot-width) * ${totalSlotsPerDay})` }}
       >
@@ -743,8 +737,8 @@ export const ResourcesWeekView = factory<ResourcesWeekViewFactory>((_props) => {
 
       return (
         <Box
-          {...getStyles('resourcesWeekViewTimeLabel')}
           key={`${day}-${interval.startTime}`}
+          {...getStyles('resourcesWeekViewTimeLabel')}
           mod={{
             'hour-start': interval.isHourStart,
             ...getBusinessHoursMod({
@@ -766,6 +760,11 @@ export const ResourcesWeekView = factory<ResourcesWeekViewFactory>((_props) => {
   const mergedViewportRef = useMergedRef(viewportRef, scrollAreaProps?.viewportRef);
 
   const firstSlotIndex = { resourceIndex: 0, slotIndex: 0 };
+
+  const getStickyInlineSize = () =>
+    viewportRef.current
+      ?.querySelector(`.${classes.resourcesWeekViewCorner}`)
+      ?.getBoundingClientRect().width ?? 0;
 
   useIsomorphicEffect(() => {
     if (!startScrollDateTime || !viewportRef.current) {
@@ -791,13 +790,10 @@ export const ResourcesWeekView = factory<ResourcesWeekViewFactory>((_props) => {
     if (!targetSlot) {
       return;
     }
-    const slotRect = targetSlot.getBoundingClientRect();
-    const viewportRect = viewportRef.current.getBoundingClientRect();
-    const cornerEl = viewportRef.current.querySelector(`.${classes.resourcesWeekViewCorner}`);
-    const labelWidth = cornerEl ? cornerEl.getBoundingClientRect().width : 0;
-    viewportRef.current.scrollTo({
-      left: slotRect.left - viewportRect.left + viewportRef.current.scrollLeft - labelWidth,
-      top: 0,
+    scrollCellToInlineStart({
+      viewport: viewportRef.current,
+      cell: targetSlot,
+      stickyInlineSize: getStickyInlineSize(),
     });
   }, []);
 
@@ -825,11 +821,17 @@ export const ResourcesWeekView = factory<ResourcesWeekViewFactory>((_props) => {
     resourceIndex: number,
     slotIndex: number
   ) => {
-    handleResourcesGridKeyDown({
+    const focusedSlot = handleResourcesGridKeyDown({
       controlsRef: slotsRef,
       resourceIndex,
       slotIndex,
       event,
+      dir,
+    });
+    scrollCellIntoInlineView({
+      viewport: viewportRef.current,
+      cell: focusedSlot,
+      stickyInlineSize: getStickyInlineSize(),
     });
   };
 
@@ -852,7 +854,11 @@ export const ResourcesWeekView = factory<ResourcesWeekViewFactory>((_props) => {
 
       const pushBackgroundEvent = (event: DayPositionedEventData, allDay: boolean) => {
         const backgroundEventDate = dayjs(day).format('YYYY-MM-DD');
-        const isResizable = !allDay && eventResize.isResizableEvent(event);
+        const clippedEdges = getClippedEdges(event, day);
+        const isResizable =
+          !allDay &&
+          !(clippedEdges.start && clippedEdges.end) &&
+          eventResize.isResizableEvent(event);
         const resizePosition = eventResize.getResizePosition(event.id, backgroundEventDate);
         const effectiveLeft = resizePosition ? resizePosition.left : event.position.top;
         const effectiveWidth = resizePosition ? resizePosition.width : event.position.height;
@@ -882,7 +888,7 @@ export const ResourcesWeekView = factory<ResourcesWeekViewFactory>((_props) => {
               isResizable
                 ? (edge, e) => {
                     const container = rowSlotsContainersRef.current[resourceIndex];
-                    if (container) {
+                    if (container && !clippedEdges[edge]) {
                       eventResize.handleResizeStart({
                         event,
                         edge,
@@ -898,9 +904,10 @@ export const ResourcesWeekView = factory<ResourcesWeekViewFactory>((_props) => {
                   }
                 : undefined
             }
+            mod={{ 'continues-before': clippedEdges.start, 'continues-after': clippedEdges.end }}
             {...getStyles('resourcesWeekViewBackgroundEvent', {
               style: {
-                left: `${dayOffsetPercent + (effectiveLeft / 100) * dayWidthPercent}%`,
+                insetInlineStart: `${dayOffsetPercent + (effectiveLeft / 100) * dayWidthPercent}%`,
                 width: `${(effectiveWidth / 100) * dayWidthPercent}%`,
                 top: 0,
                 height: '100%',
@@ -961,7 +968,7 @@ export const ResourcesWeekView = factory<ResourcesWeekViewFactory>((_props) => {
             __vars={eventColors ? { '--event-color': eventColors.color } : undefined}
             data-resizing={isThisEventResizing || undefined}
             style={{
-              ...getTimeAxisEventStyle({
+              ...getInlineTimeAxisEventStyle({
                 start: eventLeft,
                 span: eventWidth,
                 minSize: minEventSize,
@@ -1074,7 +1081,7 @@ export const ResourcesWeekView = factory<ResourcesWeekViewFactory>((_props) => {
                 onEventClick={onEventClick}
                 style={{
                   position: 'absolute',
-                  left: `calc(${leftPercent}% + 1px)`,
+                  insetInlineStart: `calc(${leftPercent}% + 1px)`,
                   width: `calc(${rightPercent - leftPercent}% - 2px)`,
                   bottom: 0,
                   height: '22px',
@@ -1103,7 +1110,7 @@ export const ResourcesWeekView = factory<ResourcesWeekViewFactory>((_props) => {
           key={`all-day-${bar.event.id}-${bar.startDayIndex}`}
           {...getStyles('resourcesWeekViewAllDayEvent', {
             style: {
-              left: `calc(${leftPercent}% + 1px)`,
+              insetInlineStart: `calc(${leftPercent}% + 1px)`,
               width: `calc(${widthPercent}% - 2px)`,
               top: `calc(${bar.row} * (var(--resources-week-view-all-day-height) + 2px) + 2px)`,
             },
@@ -1147,6 +1154,7 @@ export const ResourcesWeekView = factory<ResourcesWeekViewFactory>((_props) => {
     return (
       <ResourcesWeekViewRow
         key={resource.id}
+        locale={ctx.getLocale(locale)}
         resource={resource}
         resourceIndex={resourceIndex}
         weekdays={weekdays}
@@ -1219,11 +1227,7 @@ export const ResourcesWeekView = factory<ResourcesWeekViewFactory>((_props) => {
                     position: 'absolute',
                     insetBlockStart: 0,
                     insetBlockEnd: 0,
-                    ...getTimeAxisEventStyle({
-                      start: eventLeft,
-                      span: eventWidth,
-                      axis: 'horizontal',
-                    }),
+                    ...getInlineTimeAxisEventStyle({ start: eventLeft, span: eventWidth }),
                   };
                 })(),
               })}
@@ -1260,7 +1264,7 @@ export const ResourcesWeekView = factory<ResourcesWeekViewFactory>((_props) => {
           navigationHandlers={{
             previous: () => previousWeek(date, ctx.getFirstDayOfWeek(firstDayOfWeek)),
             next: () => nextWeek(date, ctx.getFirstDayOfWeek(firstDayOfWeek)),
-            today: () => toDateString(resolveNow()),
+            today: () => toDateString(resolveNow(getCurrentTime)),
           }}
           control={{
             miw: 180,
@@ -1295,8 +1299,8 @@ export const ResourcesWeekView = factory<ResourcesWeekViewFactory>((_props) => {
           <div {...getStyles('resourcesWeekViewInner')}>
             <div {...getStyles('resourcesWeekViewHeaderRows')}>
               <div
-                {...getStyles('resourcesWeekViewCorner')}
                 key="corner"
+                {...getStyles('resourcesWeekViewCorner')}
                 style={
                   hasGroups
                     ? {
@@ -1320,31 +1324,31 @@ export const ResourcesWeekView = factory<ResourcesWeekViewFactory>((_props) => {
 
             {rows}
 
-            {showTimeIndicator && (
-              <Box
-                {...getStyles('resourcesWeekViewCurrentTimeIndicator')}
-                __vars={{
-                  '--indicator-left-offset': hasGroups
-                    ? `calc(var(--resources-week-view-resource-label-width) + var(--resources-week-view-group-label-width) + (100% - var(--resources-week-view-resource-label-width) - var(--resources-week-view-group-label-width)) * ${indicatorLeftPercent} / 100)`
-                    : `calc(var(--resources-week-view-resource-label-width) + (100% - var(--resources-week-view-resource-label-width)) * ${indicatorLeftPercent} / 100)`,
-                  '--_time-bubble-width': formattedCurrentTime
-                    ?.toString()
-                    .toLowerCase()
-                    .includes('m')
-                    ? '64px'
-                    : '46px',
-                }}
-              >
-                {withCurrentTimeBubble && (
-                  <div {...getStyles('resourcesWeekViewCurrentTimeIndicatorTimeBubble')}>
-                    {formattedCurrentTime}
-                  </div>
-                )}
-                {!withCurrentTimeBubble && (
-                  <div {...getStyles('resourcesWeekViewCurrentTimeIndicatorThumb')} />
-                )}
-                <div {...getStyles('resourcesWeekViewCurrentTimeIndicatorLine')} />
-              </Box>
+            {withCurrentTimeIndicator && todayDayIndex >= 0 && (
+              <CurrentTimeIndicator
+                __staticSelector={__staticSelector}
+                {...getIndicatorStylesApiProps({
+                  currentTimeIndicator: getStyles('resourcesWeekViewCurrentTimeIndicator', {
+                    style: {
+                      '--indicator-left-offset': `calc(var(--resources-week-view-resource-label-width)${hasGroups ? ' + var(--resources-week-view-group-label-width)' : ''} + var(--resources-week-view-slot-width) * ${(weekdays.length * totalSlotsPerDay * indicatorLeftPercent) / 100})`,
+                    } as React.CSSProperties,
+                  }),
+                  currentTimeIndicatorLine: getStyles('resourcesWeekViewCurrentTimeIndicatorLine'),
+                  currentTimeIndicatorThumb: getStyles(
+                    'resourcesWeekViewCurrentTimeIndicatorThumb'
+                  ),
+                  currentTimeIndicatorTimeBubble: getStyles(
+                    'resourcesWeekViewCurrentTimeIndicatorTimeBubble'
+                  ),
+                })}
+                currentTimeFormat={getCurrentTimeFormat(slotLabelFormat)}
+                withTimeBubble={withCurrentTimeBubble}
+                withThumb={!withCurrentTimeBubble}
+                locale={locale}
+                startTime={startTime}
+                endTime={endTime}
+                getCurrentTime={() => now.toDate()}
+              />
             )}
           </div>
         </ScrollArea>

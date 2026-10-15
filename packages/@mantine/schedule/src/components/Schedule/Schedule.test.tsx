@@ -472,4 +472,88 @@ describe('@mantine/schedule/Schedule', () => {
       expect(onEventDrop).not.toHaveBeenCalled();
     });
   });
+
+  it('calls onViewChange once per view change in uncontrolled and controlled mode', async () => {
+    const uncontrolledSpy = jest.fn();
+    const { unmount } = render(
+      <Schedule {...defaultProps} defaultView="week" onViewChange={uncontrolledSpy} />
+    );
+    await userEvent.click(screen.getByRole('tab', { name: 'Switch to day view' }));
+    expect(uncontrolledSpy.mock.calls).toEqual([['day']]);
+    unmount();
+
+    const controlledSpy = jest.fn();
+    render(<Schedule {...defaultProps} view="week" onViewChange={controlledSpy} />);
+    await userEvent.click(screen.getByRole('tab', { name: 'Switch to month view' }));
+    expect(controlledSpy.mock.calls).toEqual([['month']]);
+  });
+
+  it('calls onViewChange once when a month is clicked in year view', async () => {
+    const spy = jest.fn();
+    render(<Schedule {...defaultProps} defaultView="year" onViewChange={spy} />);
+    await userEvent.click(screen.getByRole('button', { name: 'March' }));
+    expect(spy.mock.calls).toEqual([['month']]);
+  });
+
+  it('does not pass unsupported props to the DOM of any view', () => {
+    const errorSpy = jest.spyOn(console, 'error').mockImplementation(() => {});
+    const views = ['day', 'week', 'month', 'year'] as const;
+
+    views.forEach((view) => {
+      const { container, unmount } = render(
+        <Schedule
+          {...defaultProps}
+          view={view}
+          withEventsDragAndDrop
+          withEventResize
+          withDragSlotSelect
+          withAgenda
+          onEventDrop={() => {}}
+          onEventResize={() => {}}
+          canResizeEvent={() => true}
+          onTimeSlotClick={() => {}}
+          onAllDaySlotClick={() => {}}
+          onDayClick={() => {}}
+          onExternalEventDrop={() => {}}
+          onSlotDragEnd={() => {}}
+          canDropEvent={() => true}
+          canResizeEventTo={() => true}
+        />
+      );
+
+      container.querySelectorAll('*').forEach((node) => {
+        expect(node.hasAttribute('view')).toBe(false);
+      });
+      unmount();
+    });
+
+    expect(errorSpy).not.toHaveBeenCalled();
+    errorSpy.mockRestore();
+  });
+
+  it('keeps focus on the view control after switching views with the keyboard', async () => {
+    render(<Schedule {...defaultProps} defaultView="week" />);
+    screen.getByRole('tab', { name: 'Switch to week view' }).focus();
+    await userEvent.keyboard('{ArrowLeft}');
+    expect(screen.getByRole('tab', { name: 'Switch to day view' })).toHaveFocus();
+    await userEvent.keyboard('{Enter}');
+    expect(screen.getByRole('tab', { name: 'Switch to day view' })).toHaveAttribute(
+      'aria-selected',
+      'true'
+    );
+    expect(screen.getByRole('tab', { name: 'Switch to day view' })).toHaveFocus();
+
+    await userEvent.keyboard('{ArrowRight}{ArrowRight} ');
+    expect(screen.getByRole('tab', { name: 'Switch to month view' })).toHaveAttribute(
+      'aria-selected',
+      'true'
+    );
+    expect(screen.getByRole('tab', { name: 'Switch to month view' })).toHaveFocus();
+  });
+
+  it('does not move focus to the view control when the view changes from outside', () => {
+    const { rerender } = render(<Schedule {...defaultProps} view="week" />);
+    rerender(<Schedule {...defaultProps} view="day" />);
+    expect(document.body).toHaveFocus();
+  });
 });

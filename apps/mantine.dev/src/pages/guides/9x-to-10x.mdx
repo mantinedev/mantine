@@ -503,6 +503,14 @@ highlighted with the keyboard. Query `[data-current]` to find the highlighted op
 
 Set `startAngle`, `endAngle` and `innerRadius` with the component props. `sunburstChartProps` no longer accepts them, and `textOptions` from it is ignored because labels are drawn by Mantine.
 
+## @mantine/schedule changes
+
+- `isAfterMinDate` and `isBeforeMaxDate` are no longer exported. Compare dates with `dayjs` instead.
+- `ScheduleHeader.varsResolver` and the `ScheduleHeaderCssVariables` type are removed. The header has no CSS variables.
+- The `data-all-day-dragging` attribute is removed from `WeekView`. Use `data-event-interaction` to style the view while an event is dragged.
+- `WeekView` and `ResourcesWeekView` `weekLabelFormat` defaults to `MMM D` instead of `MMM DD`. Set `weekLabelFormat="MMM DD"` to keep zero-padded days.
+- `MobileMonthView` calls `onDateChange` when a day is selected. If you pass a controlled `date`, update it in `onDateChange`.
+
 ## Combobox store listId and selectedOptionIndex
 
 Replace `combobox.listId` and `combobox.selectedOptionIndex` with the `getListId()` and

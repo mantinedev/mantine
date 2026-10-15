@@ -8,6 +8,12 @@ interface CalculateEventPositionInput {
   weekStart: dayjs.Dayjs;
   weekEnd: dayjs.Dayjs;
   isMultiday: boolean;
+
+  /** If set, the event continues before `eventStart` even when it starts within the week */
+  hangingStart?: boolean;
+
+  /** If set, the event continues after `eventEnd` even when it ends within the week */
+  hangingEnd?: boolean;
 }
 
 interface EventPositionInWeek {
@@ -24,12 +30,14 @@ export function calculateEventPositionInWeek({
   weekStart,
   weekEnd,
   isMultiday,
+  hangingStart: continuesBefore = false,
+  hangingEnd: continuesAfter = false,
 }: CalculateEventPositionInput): EventPositionInWeek {
   let displayStart = eventStart;
   let displayEnd = eventEnd;
 
-  const hangingStart = eventStart.isBefore(weekStart);
-  const hangingEnd = eventEnd.isAfter(weekEnd);
+  const hangingStart = continuesBefore || eventStart.isBefore(weekStart);
+  const hangingEnd = continuesAfter || eventEnd.isAfter(weekEnd);
   const hanging: HangingStatus =
     hangingStart && hangingEnd ? 'both' : hangingStart ? 'start' : hangingEnd ? 'end' : 'none';
 

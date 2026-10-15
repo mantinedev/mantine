@@ -1,5 +1,6 @@
 import dayjs from 'dayjs';
 import { DateStringValue, DateTimeStringValue, ScheduleEventData } from '../../types';
+import { isStartOfDay } from '../get-event-end-day/get-event-end-day';
 
 export type MonthResizeEdge = 'start' | 'end';
 
@@ -24,10 +25,6 @@ export interface CalculateMonthResizeDatesResult {
 
 const DATE_TIME_FORMAT = 'YYYY-MM-DD HH:mm:ss';
 
-function isExclusiveMidnight(value: dayjs.Dayjs): boolean {
-  return value.hour() === 0 && value.minute() === 0 && value.second() === 0;
-}
-
 function withTimeOf(day: dayjs.Dayjs, source: dayjs.Dayjs): dayjs.Dayjs {
   return day
     .startOf('day')
@@ -47,7 +44,7 @@ export function calculateMonthResizeDates({
   const target = dayjs(targetDay).startOf('day');
 
   const startDay = originalStart.startOf('day');
-  const endAtMidnight = isExclusiveMidnight(originalEnd);
+  const endAtMidnight = isStartOfDay(originalEnd);
   const endDay = endAtMidnight
     ? originalEnd.startOf('day').subtract(1, 'day')
     : originalEnd.startOf('day');

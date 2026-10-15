@@ -54,13 +54,13 @@ import { ScheduleEventData, ScheduleResourceData } from '@mantine/schedule';
 
 const today = dayjs().format('YYYY-MM-DD');
 
-const resources: ScheduleResourceData[] = [
+export const resources: ScheduleResourceData[] = [
   { id: 'tokyo', label: 'Meeting room: Tokyo' },
   { id: 'paris', label: 'Meeting room: Paris' },
   { id: 'new-york', label: 'Meeting room: New York' },
 ];
 
-const events: ScheduleEventData[] = [
+export const events: ScheduleEventData[] = [
   {
     id: 'maintenance',
     title: 'Maintenance',

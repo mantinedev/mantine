@@ -47,6 +47,7 @@ const initialEvents: ScheduleEventData[] = [
 ];
 
 function Demo() {
+  const [date, setDate] = useState(dayjs().format('YYYY-MM-DD'));
   const [events, setEvents] = useState(initialEvents);
 
   const handleEventDrop = ({ eventId, newStart, newEnd }: { eventId: string | number; newStart: string; newEnd: string }) => {
@@ -57,11 +58,12 @@ function Demo() {
     );
   };
 
-  return <MonthView date={new Date()} events={events} withEventsDragAndDrop onEventDrop={handleEventDrop} />;
+  return <MonthView date={date} onDateChange={setDate} events={events} withEventsDragAndDrop onEventDrop={handleEventDrop} />;
 }
 `;
 
 function Demo() {
+  const [date, setDate] = useState(dayjs().format('YYYY-MM-DD'));
   const [events, setEvents] = useState(initialEvents);
 
   const handleEventDrop = ({
@@ -82,7 +84,8 @@ function Demo() {
 
   return (
     <MonthView
-      date={new Date()}
+      date={date}
+      onDateChange={setDate}
       events={events}
       withEventsDragAndDrop
       onEventDrop={handleEventDrop}

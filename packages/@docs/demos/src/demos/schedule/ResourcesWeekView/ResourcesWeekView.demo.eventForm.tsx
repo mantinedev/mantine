@@ -4,11 +4,11 @@ import { Select } from '@mantine/core';
 import { ResourcesWeekView, ScheduleEventData } from '@mantine/schedule';
 import { MantineDemo } from '@mantinex/demo';
 import { _eventFormCode, EventData, EventForm } from '../_EventForm';
-import { dataCode, resourceEvents, resources } from './_data';
+import { dataCode, resourceEvents as events, resources } from './_data';
 
 function Demo() {
   const [date, setDate] = useState(dayjs().format('YYYY-MM-DD'));
-  const [events, setEvents] = useState<ScheduleEventData[]>(resourceEvents);
+  const [allEvents, setAllEvents] = useState<ScheduleEventData[]>(events);
   const [formOpened, setFormOpened] = useState(false);
   const [selectedEventData, setSelectedEventData] = useState<EventData | null>(null);
   const [selectedResourceId, setSelectedResourceId] = useState<string | null>(
@@ -49,7 +49,7 @@ function Demo() {
 
   const handleSubmit = (values: EventData) => {
     if (values.id) {
-      setEvents((prev) =>
+      setAllEvents((prev) =>
         prev.map((event) =>
           event.id === values.id
             ? {
@@ -64,7 +64,7 @@ function Demo() {
         )
       );
     } else {
-      setEvents((prev) => [
+      setAllEvents((prev) => [
         ...prev,
         {
           id: Date.now(),
@@ -80,7 +80,7 @@ function Demo() {
 
   const handleDeleteEvent = () => {
     if (selectedEventData?.id) {
-      setEvents((prev) => prev.filter((event) => event.id !== selectedEventData.id));
+      setAllEvents((prev) => prev.filter((event) => event.id !== selectedEventData.id));
     }
   };
 
@@ -109,7 +109,7 @@ function Demo() {
         date={date}
         onDateChange={setDate}
         resources={resources}
-        events={events}
+        events={allEvents}
         startTime="08:00:00"
         endTime="18:00:00"
         startScrollDateTime={`${dayjs().format('YYYY-MM-DD')} 08:00:00`}
@@ -140,30 +140,34 @@ function Demo() {
   );
 }
 
-const code = `import dayjs from 'dayjs';
+const code = `
+import dayjs from 'dayjs';
 import { useState } from 'react';
 import { Select } from '@mantine/core';
 import { ResourcesWeekView, ScheduleEventData } from '@mantine/schedule';
 import { EventData, EventForm } from './EventForm';
-import { events as initialEvents, resources } from './data';
+import { events, resources } from './data';
 
 function Demo() {
-  const today = dayjs().format('YYYY-MM-DD');
-  const [date, setDate] = useState(today);
-  const [events, setEvents] = useState<ScheduleEventData[]>(initialEvents);
+  const [date, setDate] = useState(dayjs().format('YYYY-MM-DD'));
+  const [allEvents, setAllEvents] = useState<ScheduleEventData[]>(events);
   const [formOpened, setFormOpened] = useState(false);
   const [selectedEventData, setSelectedEventData] = useState<EventData | null>(null);
   const [selectedResourceId, setSelectedResourceId] = useState<string | null>(
     String(resources[0].id)
   );
 
-  const handleTimeSlotClick = (
-    slotStart: string,
-    slotEnd: string,
-    _e: React.MouseEvent,
-    resourceId?: string | number
-  ) => {
-    setSelectedResourceId(resourceId ? String(resourceId) : String(resources[0].id));
+  const handleTimeSlotClick = ({
+    slotStart,
+    slotEnd,
+    resourceId: _resourceId,
+  }: {
+    slotStart: string;
+    slotEnd: string;
+    nativeEvent: React.MouseEvent;
+    resourceId?: string | number;
+  }) => {
+    setSelectedResourceId(_resourceId ? String(_resourceId) : String(resources[0].id));
     setSelectedEventData({
       title: '',
       start: new Date(slotStart),
@@ -187,7 +191,7 @@ function Demo() {
 
   const handleSubmit = (values: EventData) => {
     if (values.id) {
-      setEvents((prev) =>
+      setAllEvents((prev) =>
         prev.map((event) =>
           event.id === values.id
             ? {
@@ -202,7 +206,7 @@ function Demo() {
         )
       );
     } else {
-      setEvents((prev) => [
+      setAllEvents((prev) => [
         ...prev,
         {
           id: Date.now(),
@@ -216,12 +220,22 @@ function Demo() {
     }
   };
 
-  const handleSlotDragEnd = (
-    rangeStart: string,
-    rangeEnd: string,
-    resourceId?: string | number
-  ) => {
-    setSelectedResourceId(resourceId ? String(resourceId) : String(resources[0].id));
+  const handleDeleteEvent = () => {
+    if (selectedEventData?.id) {
+      setAllEvents((prev) => prev.filter((event) => event.id !== selectedEventData.id));
+    }
+  };
+
+  const handleSlotDragEnd = ({
+    rangeStart,
+    rangeEnd,
+    resourceId: _resourceId,
+  }: {
+    rangeStart: string;
+    rangeEnd: string;
+    resourceId?: string | number;
+  }) => {
+    setSelectedResourceId(_resourceId ? String(_resourceId) : String(resources[0].id));
     setSelectedEventData({
       title: '',
       start: new Date(rangeStart),
@@ -231,22 +245,16 @@ function Demo() {
     setFormOpened(true);
   };
 
-  const handleDeleteEvent = () => {
-    if (selectedEventData?.id) {
-      setEvents((prev) => prev.filter((event) => event.id !== selectedEventData.id));
-    }
-  };
-
   return (
     <>
       <ResourcesWeekView
         date={date}
         onDateChange={setDate}
         resources={resources}
-        events={events}
+        events={allEvents}
         startTime="08:00:00"
         endTime="18:00:00"
-        startScrollDateTime={\`\${today} 08:00:00\`}
+        startScrollDateTime={\`\${dayjs().format('YYYY-MM-DD')} 08:00:00\`}
         withDragSlotSelect
         onTimeSlotClick={handleTimeSlotClick}
         onSlotDragEnd={handleSlotDragEnd}
@@ -272,7 +280,8 @@ function Demo() {
       </EventForm>
     </>
   );
-}`;
+}
+`;
 
 export const eventForm: MantineDemo = {
   defaultExpanded: false,

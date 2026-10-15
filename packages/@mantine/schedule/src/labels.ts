@@ -19,6 +19,7 @@ export interface ScheduleLabels {
   viewSelectLabel: string;
   noEvents: string;
   moreLabel: (hiddenEventsCount: number) => string;
+  weekNumber: (weekNumber: number) => string;
   resource?: string;
   resources?: string;
   resourceSlot?: string;
@@ -46,6 +47,7 @@ export const DEFAULT_SCHEDULE_LABELS: ScheduleLabels = {
   viewSelectLabel: 'Calendar view',
   noEvents: 'No events',
   moreLabel: (hiddenEventsCount: number) => `+${hiddenEventsCount} more`,
+  weekNumber: (weekNumber: number) => `Week ${weekNumber}`,
   resource: 'Resource',
   resources: 'Resources',
   resourceSlot: 'Resource time slot',

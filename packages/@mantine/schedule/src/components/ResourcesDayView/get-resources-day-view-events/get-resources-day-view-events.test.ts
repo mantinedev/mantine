@@ -264,4 +264,42 @@ describe('@mantine/schedule/get-resources-day-view-events', () => {
     expect(result.regularEvents[2]).toHaveLength(1);
     expect(result.regularEvents[2][0].id).toBe('evt-2');
   });
+
+  it('keeps the original start and end of carry-over events and exposes the clipped range', () => {
+    const events = [
+      testUtils.createEvent({
+        id: 'carry-over',
+        start: '2025-11-03 22:00:00',
+        end: '2025-11-04 02:00:00',
+        resourceId: 'room-a',
+      }),
+      testUtils.createEvent({
+        id: 'multi-day',
+        start: '2025-11-03 00:00:00',
+        end: '2025-11-06 00:00:00',
+        resourceId: 'room-b',
+      }),
+      testUtils.createEvent({
+        id: 'ends-at-day-start',
+        start: '2025-11-03 22:00:00',
+        end: '2025-11-04 00:00:00',
+        resourceId: 'room-b',
+      }),
+    ];
+
+    const result = getResourcesDayViewEvents({ events, resources, date: '2025-11-04' });
+
+    expect(result.regularEvents['room-a']).toHaveLength(1);
+    const carryOver = result.regularEvents['room-a'][0];
+    expect(carryOver.start).toBe('2025-11-03 22:00:00');
+    expect(carryOver.end).toBe('2025-11-04 02:00:00');
+    expect(carryOver.position.displayStart).toBe('2025-11-04 00:00:00');
+    expect(carryOver.position.displayEnd).toBe('2025-11-04 02:00:00');
+    expect(carryOver.position.top).toBe(0);
+
+    expect(result.regularEvents['room-b']).toStrictEqual([]);
+    expect(result.allDayEvents['room-b']).toHaveLength(1);
+    expect(result.allDayEvents['room-b'][0].start).toBe('2025-11-03 00:00:00');
+    expect(result.allDayEvents['room-b'][0].end).toBe('2025-11-06 00:00:00');
+  });
 });

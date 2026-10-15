@@ -84,20 +84,22 @@ const eventData: ScheduleEventData[] = [
 ];
 
 const code = `
-import { useState } from 'react';
 import dayjs from 'dayjs';
+import { useState } from 'react';
 import { HoverCard, UnstyledButton } from '@mantine/core';
 import { MonthView, ScheduleEventData } from '@mantine/schedule';
 import { EventDetails } from './EventDetails';
 import { eventsData } from './events';
 
 function Demo() {
-  const [events, setEvents] = useState<ScheduleEventData[]>(eventData);
+  const [date, setDate] = useState(dayjs().format('YYYY-MM-DD'));
+  const [events, setEvents] = useState<ScheduleEventData[]>(eventsData);
 
   return (
     <MonthView
-      date={new Date()}
-      events={selectedEvents}
+      date={date}
+      onDateChange={setDate}
+      events={events}
       withEventsDragAndDrop
       onEventDrop={({ eventId, newStart, newEnd }) => {
         setEvents((current) =>
@@ -128,11 +130,13 @@ function Demo() {
 `;
 
 function Demo() {
+  const [date, setDate] = useState(dayjs().format('YYYY-MM-DD'));
   const [events, setEvents] = useState<ScheduleEventData[]>(eventData);
 
   return (
     <MonthView
-      date={new Date()}
+      date={date}
+      onDateChange={setDate}
       events={events}
       withEventsDragAndDrop
       onEventDrop={({ eventId, newStart, newEnd }) => {

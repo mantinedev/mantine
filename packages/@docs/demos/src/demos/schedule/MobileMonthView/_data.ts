@@ -50,17 +50,18 @@ export const regularEvents: ScheduleEventData[] = [
     id: 7,
     title: 'Workshop Day',
     start: `${thisMonth}-25 00:00:00`,
-    end: `${thisMonth}-25 00:00:00`,
+    end: `${thisMonth}-26 00:00:00`,
     color: 'yellow',
   },
 ];
 
 export const dataCode = `
 import dayjs from 'dayjs';
+import { ScheduleEventData } from '@mantine/schedule';
 
 const thisMonth = dayjs().format('YYYY-MM');
 
-export const events = [
+export const events: ScheduleEventData[] = [
   {
     id: 1,
     title: 'Team Meeting',
@@ -82,6 +83,33 @@ export const events = [
     end: \`\${thisMonth}-12 00:00:00\`,
     color: 'violet',
   },
-  // ... more events
+  {
+    id: 4,
+    title: 'Lunch with Client',
+    start: \`\${thisMonth}-15 12:00:00\`,
+    end: \`\${thisMonth}-15 13:30:00\`,
+    color: 'orange',
+  },
+  {
+    id: 5,
+    title: 'Sprint Planning',
+    start: \`\${thisMonth}-15 15:00:00\`,
+    end: \`\${thisMonth}-15 17:00:00\`,
+    color: 'cyan',
+  },
+  {
+    id: 6,
+    title: 'Code Review',
+    start: \`\${thisMonth}-20 10:00:00\`,
+    end: \`\${thisMonth}-20 11:00:00\`,
+    color: 'pink',
+  },
+  {
+    id: 7,
+    title: 'Workshop Day',
+    start: \`\${thisMonth}-25 00:00:00\`,
+    end: \`\${thisMonth}-26 00:00:00\`,
+    color: 'yellow',
+  },
 ];
 `;

@@ -63,6 +63,7 @@ const initialEvents: ScheduleEventData[] = [
 ];
 
 function Demo() {
+  const [date, setDate] = useState(today);
   const [events, setEvents] = useState(initialEvents);
 
   const handleEventResize = ({ eventId, newStart, newEnd }: { eventId: string | number; newStart: string; newEnd: string }) => {
@@ -75,7 +76,8 @@ function Demo() {
 
   return (
     <DayView
-      date={today}
+      date={date}
+      onDateChange={setDate}
       events={events}
       startTime="08:00:00"
       endTime="18:00:00"
@@ -89,6 +91,7 @@ function Demo() {
 `;
 
 function Demo() {
+  const [date, setDate] = useState(today);
   const [events, setEvents] = useState(initialEvents);
 
   const handleEventResize = ({
@@ -109,7 +112,8 @@ function Demo() {
 
   return (
     <DayView
-      date={today}
+      date={date}
+      onDateChange={setDate}
       events={events}
       startTime="08:00:00"
       endTime="18:00:00"

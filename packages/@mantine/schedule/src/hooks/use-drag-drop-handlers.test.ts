@@ -2,6 +2,7 @@ import { act, renderHook } from '@testing-library/react';
 import { testUtils } from '../test-utils';
 import { ScheduleEventData } from '../types';
 import { useDragDropHandlers } from './use-drag-drop-handlers';
+import { useDragState } from './use-drag-state';
 
 const noopCalc = () => ({ start: new Date(), end: new Date() });
 
@@ -510,5 +511,126 @@ describe('@mantine/schedule/use-drag-drop-handlers placement validation', () => 
 
     expect(result.current.dropValid).toBe(true);
     expect(result.current.dragPreview).toBeNull();
+  });
+});
+
+describe('@mantine/schedule/use-drag-drop-handlers drag lifecycle', () => {
+  const draggedEvent = testUtils.createEvent({
+    id: 'dragged',
+    start: '2025-01-15 10:00:00',
+    end: '2025-01-15 11:00:00',
+  });
+
+  const dropEvent = (types: string[] = ['application/json']) =>
+    ({ preventDefault: jest.fn(), dataTransfer: { types, dropEffect: 'none' } }) as any;
+
+  it('calls onEventDragEnd once per drop, even when the drag end is reported again', () => {
+    const onEventDragEnd = jest.fn();
+    const { result } = renderHook(() =>
+      useDragDropHandlers({
+        enabled: true,
+        mode: 'default',
+        calculateDropTarget: noopCalc,
+        onEventDrop: jest.fn(),
+        onEventDragEnd,
+      })
+    );
+
+    act(() => result.current.handleDragStart(draggedEvent));
+    act(() => result.current.handleDrop(dropEvent(), 0));
+    act(() => result.current.handleDragEnd());
+    act(() => result.current.dragContextValue.onDragEnd?.());
+
+    expect(onEventDragEnd).toHaveBeenCalledTimes(1);
+  });
+
+  it('calls onEventDragEnd once when the drag is cancelled', () => {
+    const onEventDragEnd = jest.fn();
+    const { result } = renderHook(() =>
+      useDragDropHandlers({
+        enabled: true,
+        mode: 'default',
+        calculateDropTarget: noopCalc,
+        onEventDragEnd,
+      })
+    );
+
+    act(() => {
+      result.current.handleDragStart(draggedEvent);
+    });
+    act(() => {
+      result.current.handleDragEnd();
+      result.current.handleDragEnd();
+    });
+
+    expect(onEventDragEnd).toHaveBeenCalledTimes(1);
+    expect(result.current.dragContextValue.isDragging).toBe(false);
+  });
+
+  it('does not call onEventDragEnd when no drag was started', () => {
+    const onEventDragEnd = jest.fn();
+    const { result } = renderHook(() =>
+      useDragDropHandlers({
+        enabled: true,
+        mode: 'static',
+        calculateDropTarget: noopCalc,
+        onEventDragEnd,
+      })
+    );
+
+    act(() => result.current.handleDragStart(draggedEvent));
+    act(() => result.current.handleDragEnd());
+
+    expect(onEventDragEnd).not.toHaveBeenCalled();
+  });
+
+  it('treats an event dragged from another handler with a shared drag state as an internal drop', () => {
+    const onEventDrop = jest.fn();
+    const onExternalDrop = jest.fn();
+    const onEventDragEnd = jest.fn();
+
+    const { result } = renderHook(() => {
+      const dragState = useDragState();
+      const timed = useDragDropHandlers<number>({
+        enabled: true,
+        mode: 'default',
+        calculateDropTarget: noopCalc,
+        onEventDrop,
+        onExternalDrop,
+        onEventDragEnd,
+        dragState,
+      });
+      const allDay = useDragDropHandlers<string>({
+        enabled: true,
+        mode: 'default',
+        calculateDropTarget: (day) => ({
+          start: new Date(`${day}T10:00:00`),
+          end: new Date(`${day}T11:00:00`),
+        }),
+        onEventDrop,
+        onExternalDrop,
+        onEventDragEnd,
+        dragState,
+      });
+      return { timed, allDay };
+    });
+
+    act(() => result.current.timed.handleDragStart(draggedEvent));
+    expect(result.current.allDay.dragContextValue.isDragging).toBe(true);
+
+    act(() => result.current.allDay.handleDrop(dropEvent(), '2025-01-17'));
+    act(() => {
+      result.current.timed.handleDragEnd();
+      result.current.allDay.handleDragEnd();
+    });
+
+    expect(onExternalDrop).not.toHaveBeenCalled();
+    expect(onEventDrop).toHaveBeenCalledTimes(1);
+    expect(onEventDrop.mock.calls[0][0]).toMatchObject({
+      eventId: 'dragged',
+      newStart: '2025-01-17 10:00:00',
+      newEnd: '2025-01-17 11:00:00',
+    });
+    expect(onEventDragEnd).toHaveBeenCalledTimes(1);
   });
 });

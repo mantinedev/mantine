@@ -27,6 +27,7 @@ const sidebarItems = [
 ];
 
 function Demo() {
+  const [date, setDate] = useState(today);
   const [events, setEvents] = useState<ScheduleEventData[]>([]);
   const nextId = useRef(1);
 
@@ -88,7 +89,8 @@ function Demo() {
       </Grid.Col>
       <Grid.Col span={{ base: 12, sm: 9 }}>
         <DayView
-          date={new Date()}
+          date={date}
+          onDateChange={setDate}
           events={events}
           startTime="08:00:00"
           endTime="18:00:00"
@@ -103,6 +105,7 @@ function Demo() {
 `;
 
 function Demo() {
+  const [date, setDate] = useState(today);
   const [events, setEvents] = useState<ScheduleEventData[]>([]);
   const nextId = useRef(1);
 
@@ -176,7 +179,8 @@ function Demo() {
       </Grid.Col>
       <Grid.Col span={{ base: 12, sm: 9 }}>
         <DayView
-          date={today}
+          date={date}
+          onDateChange={setDate}
           events={events}
           startTime="08:00:00"
           endTime="18:00:00"

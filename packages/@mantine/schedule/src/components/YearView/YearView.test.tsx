@@ -1,5 +1,6 @@
 import dayjs from 'dayjs';
 import 'dayjs/locale/ru';
+import { DirectionProvider } from '@mantine/core';
 import { DatesProvider } from '@mantine/dates';
 import { render, screen, tests, userEvent } from '@mantine-tests/core';
 import { DateStringValue, ScheduleEventData } from '../../types';
@@ -474,7 +475,7 @@ describe('@mantine/schedule/YearView', () => {
     expect(getIndicators('November 6, 2025')).toHaveLength(0);
   });
 
-  it('renders indicator for each day a multiday event spans', () => {
+  it('renders indicator for each day a multiday event spans, end at midnight is exclusive', () => {
     const events = [
       {
         id: '1',
@@ -486,8 +487,6 @@ describe('@mantine/schedule/YearView', () => {
       },
     ];
     render(<YearView {...defaultProps} events={events} />);
-    // The event appears on 3 days (Nov 5, 6, 7), with 1 indicator per day in this case
-    // But since each day button has its own indicators container, we need to count per day
     const nov5Button = screen.getAllByRole('button', { name: 'November 5, 2025' })[0];
     const nov5Indicators = nov5Button.querySelectorAll('.mantine-YearView-yearViewDayIndicator');
     expect(nov5Indicators).toHaveLength(1);
@@ -498,7 +497,7 @@ describe('@mantine/schedule/YearView', () => {
 
     const nov7Button = screen.getAllByRole('button', { name: 'November 7, 2025' })[0];
     const nov7Indicators = nov7Button.querySelectorAll('.mantine-YearView-yearViewDayIndicator');
-    expect(nov7Indicators).toHaveLength(1);
+    expect(nov7Indicators).toHaveLength(0);
   });
 
   it('shows maximum 3 indicators per day when multiple events exist', () => {
@@ -773,5 +772,134 @@ describe('@mantine/schedule/YearView', () => {
       await userEvent.keyboard('{ArrowUp}');
       expect(getInsideDayButton('November 15, 2025')).toHaveFocus();
     });
+  });
+
+  it('uses labels.weekNumber for week number buttons', () => {
+    render(
+      <YearView
+        {...defaultProps}
+        withWeekNumbers
+        labels={{ weekNumber: (weekNumber) => `Semaine ${weekNumber}` }}
+      />
+    );
+
+    const week3 = screen.getAllByRole('button', { name: 'Semaine 3' })[0];
+    expect(week3).toHaveAttribute('title', 'Semaine 3');
+    expect(screen.queryByRole('button', { name: /^Week / })).not.toBeInTheDocument();
+  });
+
+  it('renders a hidden placeholder instead of a week number for weeks without visible days', () => {
+    const { container } = render(
+      <YearView date="2021-01-01" withWeekNumbers withOutsideDays={false} />
+    );
+
+    const february = container.querySelectorAll('.mantine-YearView-yearViewMonth')[1];
+    const weekNumbers = february.querySelectorAll('.mantine-YearView-yearViewWeekNumber');
+    expect(weekNumbers).toHaveLength(6);
+    expect(Array.from(weekNumbers).filter((node) => node.hasAttribute('data-hidden'))).toHaveLength(
+      2
+    );
+    expect(weekNumbers[5]).toHaveAttribute('aria-hidden');
+    expect(weekNumbers[5].tagName).toBe('DIV');
+  });
+
+  describe('keyboard navigation without outside days', () => {
+    it('ArrowLeft and ArrowRight cross month boundaries', async () => {
+      render(<YearView date="2025-01-01" withOutsideDays={false} />);
+
+      screen.getByRole('button', { name: 'February 1, 2025' }).focus();
+      await userEvent.keyboard('{ArrowLeft}');
+      expect(screen.getByRole('button', { name: 'January 31, 2025' })).toHaveFocus();
+
+      await userEvent.keyboard('{ArrowRight}');
+      expect(screen.getByRole('button', { name: 'February 1, 2025' })).toHaveFocus();
+    });
+
+    it('ArrowUp and ArrowDown cross month boundaries', async () => {
+      render(<YearView date="2025-01-01" withOutsideDays={false} />);
+
+      screen.getByRole('button', { name: 'February 1, 2025' }).focus();
+      await userEvent.keyboard('{ArrowUp}');
+      expect(screen.getByRole('button', { name: 'January 31, 2025' })).toHaveFocus();
+
+      await userEvent.keyboard('{ArrowDown}');
+      expect(screen.getByRole('button', { name: 'February 7, 2025' })).toHaveFocus();
+    });
+
+    it('stays on the first and last day of the year', async () => {
+      render(<YearView date="2025-01-01" withOutsideDays={false} />);
+
+      screen.getByRole('button', { name: 'January 1, 2025' }).focus();
+      await userEvent.keyboard('{ArrowLeft}');
+      expect(screen.getByRole('button', { name: 'January 1, 2025' })).toHaveFocus();
+
+      screen.getByRole('button', { name: 'December 31, 2025' }).focus();
+      await userEvent.keyboard('{ArrowRight}');
+      expect(screen.getByRole('button', { name: 'December 31, 2025' })).toHaveFocus();
+    });
+
+    it('crosses months when weekend days are hidden', async () => {
+      render(<YearView date="2025-01-01" withOutsideDays={false} withWeekendDays={false} />);
+
+      screen.getByRole('button', { name: 'March 3, 2025' }).focus();
+      await userEvent.keyboard('{ArrowLeft}');
+      expect(screen.getByRole('button', { name: 'February 28, 2025' })).toHaveFocus();
+    });
+  });
+});
+
+describe('@mantine/schedule/YearView events on outside days of other years', () => {
+  const getOutsideIndicators = (container: HTMLElement, name: string) =>
+    Array.from(container.querySelectorAll<HTMLButtonElement>(`[aria-label="${name}"]`))
+      .find((button) => button.hasAttribute('data-outside'))!
+      .querySelectorAll('.mantine-YearView-yearViewDayIndicator');
+
+  const events = [
+    {
+      id: 'prev',
+      title: 'Previous year',
+      start: '2025-12-29 10:00:00',
+      end: '2025-12-29 11:00:00',
+      color: 'blue',
+    },
+    {
+      id: 'weekly',
+      title: 'Weekly',
+      start: '2025-12-02 10:00:00',
+      end: '2025-12-02 11:00:00',
+      color: 'red',
+      recurrence: { rrule: 'FREQ=WEEKLY;COUNT=70' },
+    },
+  ];
+
+  it('renders indicators on outside days of the previous and next year', () => {
+    const { container } = render(
+      <YearView date="2026-06-01" firstDayOfWeek={1} withOutsideDays events={events} />
+    );
+    expect(getOutsideIndicators(container, 'December 29, 2025')).toHaveLength(1);
+    expect(getOutsideIndicators(container, 'December 30, 2025')).toHaveLength(1);
+    expect(getOutsideIndicators(container, 'January 5, 2027')).toHaveLength(1);
+    expect(getOutsideIndicators(container, 'January 6, 2027')).toHaveLength(0);
+  });
+});
+
+describe('@mantine/schedule/YearView RTL arrow keys', () => {
+  it('mirrors ArrowLeft and ArrowRight', async () => {
+    render(
+      <DirectionProvider initialDirection="rtl">
+        <YearView {...defaultProps} />
+      </DirectionProvider>
+    );
+
+    const getVisibleDayButton = (name: string) => {
+      const buttons = screen.getAllByRole('button', { name });
+      return buttons.find((button) => !button.hasAttribute('data-outside')) || buttons[0];
+    };
+
+    getVisibleDayButton('November 12, 2025').focus();
+    await userEvent.keyboard('{ArrowLeft}');
+    expect(getVisibleDayButton('November 13, 2025')).toHaveFocus();
+    await userEvent.keyboard('{ArrowRight}{ArrowRight}');
+    expect(getVisibleDayButton('November 11, 2025')).toHaveFocus();
   });
 });

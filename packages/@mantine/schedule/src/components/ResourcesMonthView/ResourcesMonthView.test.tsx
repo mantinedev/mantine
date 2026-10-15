@@ -1,6 +1,8 @@
 import dayjs from 'dayjs';
 import 'dayjs/locale/ru';
+import { useState } from 'react';
 import { createEvent, fireEvent } from '@testing-library/react';
+import { DirectionProvider } from '@mantine/core';
 import { DatesProvider } from '@mantine/dates';
 import { render, screen, userEvent } from '@mantine-tests/core';
 import { ResourcesMonthView, ResourcesMonthViewProps } from './ResourcesMonthView';
@@ -1468,5 +1470,197 @@ describe('@mantine/schedule/ResourcesMonthView', () => {
       expect(canDropEvent).toHaveBeenCalledWith(expect.objectContaining({ resourceId: 'room-b' }));
       expect(onEventDrop).not.toHaveBeenCalled();
     });
+  });
+
+  it('mode="static" shows the "+N more" indicator for events past the per-day limit', () => {
+    const events = [1, 2, 3].map((index) => ({
+      id: `s${index}`,
+      title: `Static ${index}`,
+      start: `2025-01-10 1${index}:00:00`,
+      end: `2025-01-10 1${index}:30:00`,
+      color: 'blue',
+      payload: {},
+      resourceId: 'room-a',
+    }));
+
+    render(<ResourcesMonthView {...defaultProps} mode="static" events={events} />);
+    expect(screen.queryByText('Static 3')).not.toBeInTheDocument();
+    expect(screen.getByText('+1 more')).toBeInTheDocument();
+  });
+
+  it('localizes day cell aria-labels', () => {
+    render(<ResourcesMonthView {...defaultProps} locale="ru" />);
+    expect(screen.getByRole('button', { name: 'Room A январь 15, 2025' })).toBeInTheDocument();
+  });
+
+  it('does not treat an event ending at midnight of the next day as multi-day', () => {
+    const { container } = render(
+      <ResourcesMonthView
+        {...defaultProps}
+        events={[
+          {
+            id: 'evening',
+            title: 'Evening',
+            start: '2025-01-10 17:00:00',
+            end: '2025-01-11 00:00:00',
+            color: 'blue',
+            payload: {},
+            resourceId: 'room-a',
+          },
+        ]}
+      />
+    );
+    expect(screen.getAllByText('Evening')).toHaveLength(1);
+    expect(
+      container.querySelectorAll('.mantine-ResourcesMonthView-resourcesMonthViewEventWrapper')
+    ).toHaveLength(1);
+  });
+
+  describe('scroll position', () => {
+    const originalScrollTo = HTMLElement.prototype.scrollTo;
+    let scrollTo: jest.Mock;
+    let rectSpy: jest.SpyInstance;
+
+    beforeEach(() => {
+      scrollTo = jest.fn();
+      HTMLElement.prototype.scrollTo = scrollTo as any;
+      rectSpy = jest
+        .spyOn(HTMLElement.prototype, 'getBoundingClientRect')
+        .mockImplementation(function getRect(this: HTMLElement) {
+          const has = (name: string) =>
+            this.classList.contains(`mantine-ResourcesMonthView-${name}`);
+          let left = 0;
+          let width = 0;
+          if (has('resourcesMonthViewDayLabel') || has('resourcesMonthViewCell')) {
+            const source = this.getAttribute('aria-label') ?? this.textContent ?? '';
+            left = Number(source.match(/(\d+)(?:,|$)/)?.[1]) * 100;
+            width = 100;
+          } else if (has('resourcesMonthViewCorner')) {
+            width = 120;
+          } else if (this.classList.contains('mantine-ScrollArea-viewport')) {
+            width = 500;
+          }
+          return { left, right: left + width, width, top: 0, bottom: 0, height: 0 } as DOMRect;
+        });
+    });
+
+    afterEach(() => {
+      HTMLElement.prototype.scrollTo = originalScrollTo;
+      rectSpy.mockRestore();
+      jest.useRealTimers();
+    });
+
+    it('scrolls to today after the Today control switches the month', async () => {
+      jest.useFakeTimers().setSystemTime(new Date('2025-01-15 12:00:00'));
+
+      function Wrapper() {
+        const [date, setDate] = useState('2024-12-01');
+        return <ResourcesMonthView {...defaultProps} date={date} onDateChange={setDate} />;
+      }
+
+      render(<Wrapper />);
+      await userEvent
+        .setup({ advanceTimers: jest.advanceTimersByTime })
+        .click(screen.getByRole('button', { name: 'Today' }));
+
+      expect(screen.getByRole('button', { name: 'Room A January 15, 2025' })).toBeInTheDocument();
+      expect(scrollTo).toHaveBeenLastCalledWith({ left: 1380 });
+    });
+
+    it('scrolls to today when the Today control is clicked in the current month', async () => {
+      jest.useFakeTimers().setSystemTime(new Date('2025-01-15 12:00:00'));
+      render(<ResourcesMonthView {...defaultProps} date="2025-01-01" onDateChange={() => {}} />);
+      await userEvent
+        .setup({ advanceTimers: jest.advanceTimersByTime })
+        .click(screen.getByRole('button', { name: 'Today' }));
+      expect(scrollTo).toHaveBeenLastCalledWith({ left: 1380 });
+    });
+
+    it('does not scroll when a controlled parent rejects the month change', async () => {
+      jest.useFakeTimers().setSystemTime(new Date('2025-01-15 12:00:00'));
+      render(<ResourcesMonthView {...defaultProps} date="2024-12-01" onDateChange={() => {}} />);
+      await userEvent
+        .setup({ advanceTimers: jest.advanceTimersByTime })
+        .click(screen.getByRole('button', { name: 'Today' }));
+      expect(scrollTo).not.toHaveBeenCalled();
+    });
+
+    it('scrolls a cell focused with arrow keys out from under the sticky resource label', () => {
+      const { container } = render(<ResourcesMonthView {...defaultProps} />);
+      const viewport = container.querySelector('.mantine-ScrollArea-viewport') as HTMLElement;
+      let scrollLeft = 500;
+      Object.defineProperty(viewport, 'scrollLeft', {
+        configurable: true,
+        get: () => scrollLeft,
+        set: (value: number) => {
+          scrollLeft = value;
+        },
+      });
+
+      const cell = screen.getByRole('button', { name: 'Room A January 2, 2025' });
+      cell.focus();
+      fireEvent.keyDown(cell, { key: 'ArrowLeft' });
+      expect(screen.getByRole('button', { name: 'Room A January 1, 2025' })).toHaveFocus();
+      expect(scrollLeft).toBe(480);
+    });
+  });
+});
+
+describe('@mantine/schedule/ResourcesMonthView RTL arrow keys', () => {
+  it('mirrors ArrowLeft and ArrowRight', async () => {
+    const { container } = render(
+      <DirectionProvider initialDirection="rtl">
+        <ResourcesMonthView {...defaultProps} />
+      </DirectionProvider>
+    );
+    const cells = container.querySelectorAll<HTMLButtonElement>(
+      '.mantine-ResourcesMonthView-resourcesMonthViewCell'
+    );
+
+    cells[0].focus();
+    await userEvent.keyboard('{ArrowLeft}');
+    expect(cells[1]).toHaveFocus();
+    await userEvent.keyboard('{ArrowRight}');
+    expect(cells[0]).toHaveFocus();
+  });
+});
+
+describe('@mantine/schedule/ResourcesMonthView day membership', () => {
+  it('shows a zero-length event that starts at midnight on its day', () => {
+    render(
+      <ResourcesMonthView
+        {...defaultProps}
+        events={[
+          {
+            id: 'zero',
+            title: 'Zero length',
+            start: '2025-01-15 00:00:00',
+            end: '2025-01-15 00:00:00',
+            color: 'blue',
+            resourceId: 'room-a',
+          },
+        ]}
+      />
+    );
+    expect(screen.getAllByText('Zero length')).toHaveLength(1);
+  });
+
+  it('does not show an event on the day of its exclusive midnight end', () => {
+    render(
+      <ResourcesMonthView
+        {...defaultProps}
+        events={[
+          {
+            id: 'all-day',
+            title: 'All day',
+            start: '2025-01-15 00:00:00',
+            end: '2025-01-17 00:00:00',
+            color: 'blue',
+            resourceId: 'room-a',
+          },
+        ]}
+      />
+    );
+    expect(spanWidthPercent(screen.getByText('All day'))).toBeCloseTo((2 / 31) * 100);
   });
 });

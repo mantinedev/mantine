@@ -1,5 +1,5 @@
 import dayjs from 'dayjs';
-import React, { useRef } from 'react';
+import React, { useEffect, useMemo, useRef, useState } from 'react';
 import {
   AccordionChevron,
   Box,
@@ -41,6 +41,7 @@ import {
   sortEvents,
   toDateString,
 } from '../../utils';
+import { groupEventsByDay } from '../../utils/group-events-by-day/group-events-by-day';
 import {
   handleMonthViewKeyDown,
   MonthViewControlsRef,
@@ -248,6 +249,8 @@ export const MobileMonthView = factory<MobileMonthViewFactory>((_props) => {
     onChange: (value) => onSelectedDateChange?.(value ? toDateString(dayjs(value)) : null),
   });
 
+  const { dir } = useDirection();
+
   const getStyles = useStyles<MobileMonthViewFactory>({
     name: __staticSelector,
     classes,
@@ -264,34 +267,105 @@ export const MobileMonthView = factory<MobileMonthViewFactory>((_props) => {
   });
 
   const daysRef: MonthViewControlsRef = useRef<HTMLButtonElement[][]>([]);
-  const firstDayPosition = useRef<{ weekIndex: number; dayIndex: number } | null>(null);
+  const [focusedDay, setFocusedDay] = useState<{ month: string; day: string | null }>({
+    month: dayjs(date).format('YYYY-MM'),
+    day: null,
+  });
+  const pendingFocusDayRef = useRef<string | null>(null);
 
-  const expandedEvents = expandRecurringEvents({
-    events,
-    rangeStart: dayjs(date).startOf('month').toDate(),
-    rangeEnd: dayjs(date).endOf('month').toDate(),
-    expansionLimit: recurrenceExpansionLimit,
+  const resolvedFirstDayOfWeek = ctx.getFirstDayOfWeek(firstDayOfWeek);
+
+  const displayedMonth = dayjs(date).startOf('month').format('YYYY-MM-DD');
+  const monthDays = getMonthDays({
+    month: displayedMonth,
+    firstDayOfWeek: resolvedFirstDayOfWeek,
+    consistentWeeks,
   });
 
-  const groupedEvents = getMobileMonthViewEvents({ date, events: expandedEvents });
+  const displayedRangeStart = monthDays[0][0];
+  const displayedRangeEnd = monthDays[monthDays.length - 1][6];
+
+  const groupedEvents = useMemo(() => {
+    const expandedEvents = expandRecurringEvents({
+      events,
+      rangeStart: dayjs(displayedRangeStart).startOf('day').toDate(),
+      rangeEnd: dayjs(displayedRangeEnd).endOf('day').toDate(),
+      expansionLimit: recurrenceExpansionLimit,
+    });
+
+    return getMobileMonthViewEvents({
+      date: displayedMonth,
+      events: expandedEvents,
+      firstDayOfWeek: resolvedFirstDayOfWeek,
+      consistentWeeks,
+    });
+  }, [
+    events,
+    displayedMonth,
+    displayedRangeStart,
+    displayedRangeEnd,
+    resolvedFirstDayOfWeek,
+    consistentWeeks,
+    recurrenceExpansionLimit,
+  ]);
 
   const weekdays = withWeekDays
     ? getWeekdaysNames({
         locale: ctx.getLocale(locale),
         format: weekdayFormat,
-        firstDayOfWeek: ctx.getFirstDayOfWeek(firstDayOfWeek),
+        firstDayOfWeek: resolvedFirstDayOfWeek,
       }).map((day, index) => (
-        <div {...getStyles('mobileMonthViewWeekday')} key={index}>
+        <div key={index} {...getStyles('mobileMonthViewWeekday')}>
           {day}
         </div>
       ))
     : null;
 
-  const weeks = getMonthDays({
-    month: dayjs(date).format('YYYY-MM-DD'),
-    firstDayOfWeek: ctx.getFirstDayOfWeek(firstDayOfWeek),
-    consistentWeeks,
-  }).map((week, weekIndex) => {
+  const currentMonth = dayjs(date).format('YYYY-MM');
+  if (focusedDay.month !== currentMonth) {
+    setFocusedDay({ month: currentMonth, day: null });
+  }
+
+  const isDayVisible = (dayDate: string) => withOutsideDays || isSameMonth(dayDate, date);
+  const daysProps = monthDays.map((week) =>
+    week.map((dayDate) => getDayProps?.(dayjs(dayDate).format('YYYY-MM-DD')) || {})
+  );
+  const focusableDays = monthDays
+    .flatMap((week, weekIndex) =>
+      week.filter((_dayDate, dayIndex) => !daysProps[weekIndex][dayIndex].disabled)
+    )
+    .filter(isDayVisible);
+  const findFocusableDay = (candidate: Date | string | null | undefined) =>
+    candidate
+      ? focusableDays.find((dayDate) => dayjs(dayDate).isSame(dayjs(candidate), 'day'))
+      : undefined;
+
+  const tabStopDay =
+    findFocusableDay(focusedDay.month === currentMonth ? focusedDay.day : null) ??
+    findFocusableDay(_selectedDate) ??
+    findFocusableDay(today.toDate()) ??
+    findFocusableDay(dayjs(date).startOf('month').toDate()) ??
+    focusableDays.find((dayDate) => isSameMonth(dayDate, date)) ??
+    focusableDays[0];
+
+  useEffect(() => {
+    const pendingDay = pendingFocusDayRef.current;
+    pendingFocusDayRef.current = null;
+
+    if (!pendingDay || (document.activeElement && document.activeElement !== document.body)) {
+      return;
+    }
+
+    monthDays.forEach((week, weekIndex) =>
+      week.forEach((dayDate, dayIndex) => {
+        if (dayDate === pendingDay && isDayVisible(dayDate)) {
+          daysRef.current[weekIndex]?.[dayIndex]?.focus();
+        }
+      })
+    );
+  });
+
+  const weeks = monthDays.map((week, weekIndex) => {
     const days = week.map((dayDate, dayIndex) => {
       const outside = !isSameMonth(dayDate, date);
       const weekend = ctx.getWeekendDays(weekendDays).includes(dayjs(dayDate).day());
@@ -299,35 +373,47 @@ export const MobileMonthView = factory<MobileMonthViewFactory>((_props) => {
         .locale(locale || ctx.locale)
         .format('MMMM D, YYYY');
 
-      const dayProps = getDayProps?.(dayjs(dayDate).format('YYYY-MM-DD')) || {};
+      const dayProps = daysProps[weekIndex][dayIndex];
       const isToday = dayjs(dayDate).isSame(today, 'day') && highlightToday;
       const isSelected = _selectedDate && dayjs(dayDate).isSame(dayjs(_selectedDate), 'day');
       const dayEvents = groupedEvents[dayjs(dayDate).format('YYYY-MM-DD')] || [];
 
       const shouldRender = withOutsideDays || !outside;
-
-      if (shouldRender && firstDayPosition.current === null) {
-        firstDayPosition.current = { weekIndex, dayIndex };
-      }
-
-      const isFirstDay =
-        firstDayPosition.current?.weekIndex === weekIndex &&
-        firstDayPosition.current?.dayIndex === dayIndex;
+      const isTabStop = dayDate === tabStopDay;
 
       const indicators = dayEvents.slice(0, 3).map((event) => (
         <div
+          key={event.id}
           {...getStyles('mobileMonthViewDayIndicator', {
             style: { backgroundColor: getThemeColor(event.color, theme) },
           })}
-          key={event.id}
         />
       ));
 
       const handleDayClick = (event: React.MouseEvent<HTMLButtonElement>) => {
         const dateStr = dayjs(dayDate).format('YYYY-MM-DD');
+        if (
+          event.currentTarget === document.activeElement &&
+          dayjs(dayDate).format('YYYY-MM') !== currentMonth
+        ) {
+          pendingFocusDayRef.current = dayDate;
+          window.setTimeout(() => {
+            if (pendingFocusDayRef.current === dayDate) {
+              pendingFocusDayRef.current = null;
+            }
+          }, 0);
+        }
         _setSelectedDate(dateStr);
+        onDateChange?.(dateStr);
         onDayClick?.(dateStr, event);
         dayProps.onClick?.(event);
+      };
+
+      const handleDayFocus = (event: React.FocusEvent<HTMLButtonElement>) => {
+        if (focusedDay.month !== currentMonth || focusedDay.day !== dayDate) {
+          setFocusedDay({ month: currentMonth, day: dayDate });
+        }
+        dayProps.onFocus?.(event);
       };
 
       const handleDayKeyDown = (event: React.KeyboardEvent<HTMLButtonElement>) => {
@@ -336,11 +422,13 @@ export const MobileMonthView = factory<MobileMonthViewFactory>((_props) => {
           weekIndex,
           dayIndex,
           event,
+          dir,
         });
       };
 
       return (
         <UnstyledButton
+          key={dayDate}
           aria-label={ariaLabel}
           aria-selected={isSelected || undefined}
           {...dayProps}
@@ -348,7 +436,6 @@ export const MobileMonthView = factory<MobileMonthViewFactory>((_props) => {
             className: dayProps.className,
             style: dayProps.style,
           })}
-          key={dayDate}
           ref={(node) => {
             if (node) {
               if (!daysRef.current[weekIndex]) {
@@ -368,8 +455,9 @@ export const MobileMonthView = factory<MobileMonthViewFactory>((_props) => {
             },
             dayProps.mod,
           ]}
-          tabIndex={mode === 'static' || !shouldRender ? -1 : isFirstDay ? 0 : -1}
+          tabIndex={mode === 'static' || !shouldRender ? -1 : isTabStop ? 0 : -1}
           onClick={mode === 'static' || !shouldRender ? undefined : handleDayClick}
+          onFocus={mode === 'static' || !shouldRender ? dayProps.onFocus : handleDayFocus}
           onKeyDown={mode === 'static' || !shouldRender ? undefined : handleDayKeyDown}
         >
           {shouldRender ? dayjs(dayDate).format('D') : null}
@@ -380,13 +468,17 @@ export const MobileMonthView = factory<MobileMonthViewFactory>((_props) => {
 
     const weekNumberProps = getWeekNumberProps?.(dayjs(week[0]).format('YYYY-MM-DD')) || {};
     const weekNumber = getWeekNumber(week);
+    const hasVisibleDays = week.some(isDayVisible);
 
     return (
-      <div {...getStyles('mobileMonthViewWeek')} key={weekIndex}>
-        {withWeekNumbers && (
+      <div key={weekIndex} {...getStyles('mobileMonthViewWeek')}>
+        {withWeekNumbers && !hasVisibleDays && (
+          <div {...getStyles('mobileMonthViewWeekNumber')} data-hidden aria-hidden />
+        )}
+        {withWeekNumbers && hasVisibleDays && (
           <UnstyledButton
             key={weekNumber}
-            aria-label={`Week ${weekNumber}`}
+            aria-label={getLabel('weekNumber', labels)(weekNumber)}
             {...weekNumberProps}
             onClick={
               mode === 'static'
@@ -411,9 +503,37 @@ export const MobileMonthView = factory<MobileMonthViewFactory>((_props) => {
     );
   });
 
-  const selectedDateEvents = _selectedDate
-    ? sortEvents(groupedEvents[dayjs(_selectedDate).format('YYYY-MM-DD')] || [])
-    : [];
+  const selectedDay = _selectedDate ? dayjs(_selectedDate).format('YYYY-MM-DD') : null;
+  const isSelectedDayDisplayed =
+    selectedDay !== null &&
+    !dayjs(selectedDay).isBefore(displayedRangeStart, 'day') &&
+    !dayjs(selectedDay).isAfter(displayedRangeEnd, 'day');
+
+  const selectedDateEvents = useMemo(() => {
+    if (selectedDay === null) {
+      return [];
+    }
+
+    if (isSelectedDayDisplayed) {
+      return sortEvents(groupedEvents[selectedDay] || []);
+    }
+
+    const expandedEvents = expandRecurringEvents({
+      events,
+      rangeStart: dayjs(selectedDay).startOf('day').toDate(),
+      rangeEnd: dayjs(selectedDay).endOf('day').toDate(),
+      expansionLimit: recurrenceExpansionLimit,
+    });
+
+    return sortEvents(
+      groupEventsByDay({
+        events: expandedEvents,
+        rangeStart: selectedDay,
+        rangeEnd: selectedDay,
+        componentName: 'MobileMonthView',
+      })[selectedDay] || []
+    );
+  }, [selectedDay, isSelectedDayDisplayed, groupedEvents, events, recurrenceExpansionLimit]);
 
   const eventsList = selectedDateEvents.map((event) => {
     const startTime = dayjs(event.start).format('HH:mm');
@@ -452,7 +572,7 @@ export const MobileMonthView = factory<MobileMonthViewFactory>((_props) => {
       return <React.Fragment key={event.id}>{renderEvent(event, rootProps)}</React.Fragment>;
     }
 
-    return <UnstyledButton {...rootProps} key={event.id} />;
+    return <UnstyledButton key={event.id} {...rootProps} />;
   });
 
   const eventsHeader = _selectedDate
@@ -462,8 +582,6 @@ export const MobileMonthView = factory<MobileMonthViewFactory>((_props) => {
         format: eventsHeaderFormat,
       })
     : '';
-
-  const { dir } = useDirection();
 
   const headerLabel = formatDate({ locale: ctx.getLocale(locale), date, format: 'MMMM YYYY' });
 

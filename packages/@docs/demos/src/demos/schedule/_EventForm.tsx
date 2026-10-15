@@ -119,26 +119,26 @@ export function EventForm({
   );
 }
 
-export const _eventFormCode = `import { useEffect } from 'react';
-import { Modal, TextInput, Button, Stack, Group, Checkbox } from '@mantine/core';
-import { DateTimePicker } from '@mantine/dates';
-import { useForm } from '@mantine/form';
+export const _eventFormCode = `
+import dayjs from 'dayjs';
+import { ReactNode, useEffect } from 'react';
+import { Button, Group, Modal, ModalProps, Stack, TextInput } from '@mantine/core';
+import { DateTimePicker, DateValue } from '@mantine/dates';
+import { isNotEmpty, useForm } from '@mantine/form';
 
-interface EventData {
+export interface EventData {
   id?: string | number;
   title: string;
-  start: Date;
-  end: Date;
+  start: DateValue;
+  end: DateValue;
   color?: string;
-  isAllDay?: boolean;
 }
 
-interface EventFormProps {
-  opened: boolean;
-  onClose: () => void;
-  initialData: EventData | null;
-  onSave: (data: EventData) => void;
+interface EventFormProps extends Omit<ModalProps, 'onSubmit'> {
+  values: EventData | null;
+  onSubmit: (values: EventData) => void;
   onDelete?: () => void;
+  children?: ReactNode;
 }
 
 export function EventForm({
@@ -147,6 +147,7 @@ export function EventForm({
   values,
   onSubmit,
   onDelete,
+  children,
   ...others
 }: EventFormProps) {
   const form = useForm({
@@ -217,12 +218,10 @@ export function EventForm({
             {...form.getInputProps('title')}
           />
 
-          <DateTimePicker
-            label="Start Time"
-            clearable
-            {...form.getInputProps('start')}
-          />
+          <DateTimePicker label="Start Time" clearable {...form.getInputProps('start')} />
           <DateTimePicker label="End Time" {...form.getInputProps('end')} clearable />
+
+          {children}
 
           <Group justify="flex-end" gap="sm">
             {form.values.id && onDelete && (
@@ -234,12 +233,11 @@ export function EventForm({
             <Button variant="default" onClick={onClose}>
               Cancel
             </Button>
-            <Button type="submit">
-              {form.values.id ? 'Update' : 'Create'}
-            </Button>
+            <Button type="submit">{form.values.id ? 'Update' : 'Create'}</Button>
           </Group>
         </Stack>
       </form>
     </Modal>
   );
-}`;
+}
+`;

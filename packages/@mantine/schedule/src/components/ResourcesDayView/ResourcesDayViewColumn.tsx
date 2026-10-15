@@ -7,9 +7,11 @@ import {
   ResourceGroupInfo,
   ResourcesGridControlsRef,
 } from '../../utils';
+import { getResourceSlotLabel } from '../../utils/resources-view-utils/resources-view-utils';
 import type { ResourcesDayViewFactory } from './ResourcesDayView';
 
 export interface ResourcesDayViewRowProps {
+  locale: string;
   resource: ScheduleResourceData;
   resourceIndex: number;
   date: string;
@@ -61,6 +63,7 @@ export interface ResourcesDayViewRowProps {
 }
 
 export function ResourcesDayViewRow({
+  locale,
   resource,
   resourceIndex,
   date,
@@ -130,7 +133,14 @@ export function ResourcesDayViewRow({
           'drag-selected': isDragSelected,
           static: mode === 'static',
         }}
-        aria-label={`${getLabel('resourceSlot', labels)} ${resource.label} ${date} ${slot.startTime} - ${slot.endTime}`}
+        aria-label={getResourceSlotLabel({
+          prefix: getLabel('resourceSlot', labels),
+          resourceLabel: resource.label,
+          date: date,
+          startTime: slot.startTime,
+          endTime: slot.endTime,
+          locale,
+        })}
         tabIndex={mode === 'static' ? -1 : isFirstSlot ? 0 : -1}
         data-drag-slot-index={withDragSlotSelect && mode !== 'static' ? slotIndex : undefined}
         data-drag-slot-group={withDragSlotSelect && mode !== 'static' ? slotGroup : undefined}

@@ -1,6 +1,7 @@
 import dayjs from 'dayjs';
 import 'dayjs/locale/ru';
 import { act, createEvent, fireEvent } from '@testing-library/react';
+import { DirectionProvider, MantineProvider } from '@mantine/core';
 import { DatesProvider } from '@mantine/dates';
 import { render, screen, userEvent } from '@mantine-tests/core';
 import { toDateString } from '../../utils';
@@ -77,8 +78,8 @@ describe('@mantine/schedule/ResourcesDayView', () => {
 
     expect(getRowLabel(eventA)).toHaveTextContent('Room A');
     expect(getRowLabel(eventB)).toHaveTextContent('Room B');
-    expect(parseFloat(eventA.style.left)).toBeCloseTo(25, 2);
-    expect(parseFloat(eventB.style.left)).toBeCloseTo(50, 2);
+    expect(parseFloat(eventA.style.insetInlineStart)).toBeCloseTo(25, 2);
+    expect(parseFloat(eventB.style.insetInlineStart)).toBeCloseTo(50, 2);
   });
 
   it('renders all-day events as full-width bars', () => {
@@ -446,13 +447,13 @@ describe('@mantine/schedule/ResourcesDayView', () => {
     );
 
     const firstSlot = screen.getByRole('button', {
-      name: 'Resource time slot Room A 2025-01-15 08:00:00 - 09:00:00',
+      name: 'Resource time slot Room A January 15, 2025 08:00 - 09:00',
     });
     const secondSlot = screen.getByRole('button', {
-      name: 'Resource time slot Room A 2025-01-15 09:00:00 - 10:00:00',
+      name: 'Resource time slot Room A January 15, 2025 09:00 - 10:00',
     });
     const roomBFirstSlot = screen.getByRole('button', {
-      name: 'Resource time slot Room B 2025-01-15 08:00:00 - 09:00:00',
+      name: 'Resource time slot Room B January 15, 2025 08:00 - 09:00',
     });
 
     firstSlot.focus();
@@ -1495,5 +1496,302 @@ describe('@mantine/schedule/ResourcesDayView', () => {
       });
       expect(rejection).not.toHaveProperty('end');
     });
+  });
+
+  describe('events carried over from other days', () => {
+    const rect = {
+      top: 0,
+      left: 0,
+      right: 240,
+      bottom: 240,
+      width: 240,
+      height: 240,
+      x: 0,
+      y: 0,
+      toJSON: () => {},
+    };
+
+    const carryOver = {
+      id: 'carry',
+      title: 'Carry over',
+      start: '2025-01-14 22:00:00',
+      end: '2025-01-15 10:00:00',
+      color: 'blue',
+      payload: {},
+      resourceId: 'room-a',
+    };
+
+    it('passes the original event to onEventClick', async () => {
+      const spy = jest.fn();
+      render(<ResourcesDayView {...defaultProps} events={[carryOver]} onEventClick={spy} />);
+      await userEvent.click(screen.getByText('Carry over'));
+      expect(spy).toHaveBeenCalledWith(
+        expect.objectContaining({ start: '2025-01-14 22:00:00', end: '2025-01-15 10:00:00' }),
+        expect.anything()
+      );
+    });
+
+    it('does not render a resize handle on the clipped edge', () => {
+      const { container } = render(
+        <ResourcesDayView {...defaultProps} events={[carryOver]} withEventResize />
+      );
+      expect(container.querySelector('[data-edge="start"]')).not.toBeInTheDocument();
+      expect(container.querySelector('[data-edge="end"]')).toBeInTheDocument();
+    });
+
+    it('keeps the original start when the end edge is resized', () => {
+      const spy = jest
+        .spyOn(HTMLElement.prototype, 'getBoundingClientRect')
+        .mockReturnValue(rect as DOMRect);
+      const onEventResize = jest.fn();
+      const { container } = render(
+        <ResourcesDayView
+          {...defaultProps}
+          events={[carryOver]}
+          withEventResize
+          onEventResize={onEventResize}
+        />
+      );
+
+      fireEvent.pointerDown(container.querySelector('[data-edge="end"]')!);
+      act(() => {
+        document.dispatchEvent(new MouseEvent('pointermove', { clientX: 180 }));
+        document.dispatchEvent(new MouseEvent('pointerup'));
+      });
+
+      expect(onEventResize).toHaveBeenCalledWith(
+        expect.objectContaining({ newStart: '2025-01-14 22:00:00', newEnd: '2025-01-15 11:00:00' })
+      );
+      spy.mockRestore();
+    });
+
+    it('does not resize a background event from its clipped edge', () => {
+      const spy = jest
+        .spyOn(HTMLElement.prototype, 'getBoundingClientRect')
+        .mockReturnValue(rect as DOMRect);
+      const onEventResize = jest.fn();
+      const { container } = render(
+        <ResourcesDayView
+          {...defaultProps}
+          events={[{ ...carryOver, display: 'background' }]}
+          withEventResize
+          withInteractiveBackgroundEvents
+          onEventResize={onEventResize}
+        />
+      );
+
+      fireEvent.pointerDown(container.querySelector('[data-edge="start"]')!);
+      act(() => {
+        document.dispatchEvent(new MouseEvent('pointermove', { clientX: 60 }));
+        document.dispatchEvent(new MouseEvent('pointerup'));
+      });
+
+      expect(onEventResize).not.toHaveBeenCalled();
+      spy.mockRestore();
+    });
+  });
+
+  it('positions events with logical inline insets so they mirror in RTL', () => {
+    render(
+      <ResourcesDayView
+        {...defaultProps}
+        events={[
+          {
+            id: 1,
+            title: 'Logical',
+            start: '2025-01-15 09:00:00',
+            end: '2025-01-15 10:00:00',
+            color: 'blue',
+            payload: {},
+            resourceId: 'room-a',
+          },
+        ]}
+      />
+    );
+    const wrapper = screen
+      .getByText('Logical')
+      .closest('.mantine-ResourcesDayView-resourcesDayViewEventWrapper') as HTMLElement;
+    expect(wrapper.style.insetInlineStart).toBe('25%');
+    expect(wrapper.style.insetInlineEnd).toBe('50%');
+    expect(wrapper.style.left).toBe('');
+    expect(wrapper.style.right).toBe('');
+  });
+
+  it('localizes slot aria-labels', () => {
+    render(<ResourcesDayView {...defaultProps} locale="ru" />);
+    expect(
+      screen.getByRole('button', {
+        name: 'Resource time slot Room A январь 15, 2025 08:00 - 09:00',
+      })
+    ).toBeInTheDocument();
+  });
+
+  it('shows minutes in the current time bubble and places the indicator by slot width', () => {
+    const { container } = render(
+      <ResourcesDayView
+        {...defaultProps}
+        slotLabelFormat="h A"
+        withCurrentTimeIndicator
+        getCurrentTime={() => '2025-01-15 10:30:00'}
+      />
+    );
+    expect(screen.getByText('10:30 AM')).toBeInTheDocument();
+    const indicator = container.querySelector(
+      '.mantine-ResourcesDayView-resourcesDayViewCurrentTimeIndicator'
+    ) as HTMLElement;
+    expect(indicator.style.getPropertyValue('--indicator-left-offset')).toBe(
+      'calc(var(--resources-day-view-resource-label-width) + var(--resources-day-view-slot-width) * 2.5)'
+    );
+  });
+});
+
+describe('@mantine/schedule/ResourcesDayView RTL arrow keys', () => {
+  it('mirrors ArrowLeft and ArrowRight', async () => {
+    render(
+      <DirectionProvider initialDirection="rtl">
+        <ResourcesDayView
+          {...defaultProps}
+          startTime="08:00:00"
+          endTime="10:00:00"
+          intervalMinutes={60}
+        />
+      </DirectionProvider>
+    );
+
+    const firstSlot = screen.getByRole('button', {
+      name: 'Resource time slot Room A January 15, 2025 08:00 - 09:00',
+    });
+    const secondSlot = screen.getByRole('button', {
+      name: 'Resource time slot Room A January 15, 2025 09:00 - 10:00',
+    });
+
+    firstSlot.focus();
+    await userEvent.keyboard('{ArrowLeft}');
+    expect(secondSlot).toHaveFocus();
+    await userEvent.keyboard('{ArrowRight}');
+    expect(firstSlot).toHaveFocus();
+    await userEvent.keyboard('{ArrowRight}');
+    expect(firstSlot).toHaveFocus();
+  });
+});
+
+describe('@mantine/schedule/ResourcesDayView background events clipped edges', () => {
+  it('marks the clipped edge of a background event from the previous day', () => {
+    const { container } = render(
+      <ResourcesDayView
+        {...defaultProps}
+        withEventResize
+        withInteractiveBackgroundEvents
+        events={[
+          {
+            id: 'bg-carry',
+            title: 'Maintenance',
+            start: '2025-01-14 22:00:00',
+            end: '2025-01-15 10:00:00',
+            color: 'gray',
+            display: 'background',
+            resourceId: 'room-a',
+          },
+        ]}
+      />
+    );
+
+    const node = container.querySelector(
+      '.mantine-ResourcesDayView-resourcesDayViewBackgroundEvent'
+    )!;
+    expect(node).toHaveAttribute('data-continues-before');
+    expect(node).not.toHaveAttribute('data-continues-after');
+  });
+});
+
+describe('@mantine/schedule/ResourcesDayView current time indicator Styles API', () => {
+  it('moves the indicator and updates the bubble every minute', () => {
+    jest.useFakeTimers();
+    let current = '2025-01-15 10:30:00';
+    const { container } = render(
+      <ResourcesDayView
+        {...defaultProps}
+        slotLabelFormat="HH:mm"
+        withCurrentTimeIndicator
+        getCurrentTime={() => current}
+      />
+    );
+    const getIndicator = () =>
+      container.querySelector(
+        '.mantine-ResourcesDayView-resourcesDayViewCurrentTimeIndicator'
+      ) as HTMLElement;
+    const initialOffset = getIndicator().style.getPropertyValue('--indicator-left-offset');
+    expect(screen.getByText('10:30')).toBeInTheDocument();
+
+    current = '2025-01-15 11:15:00';
+    act(() => {
+      jest.advanceTimersByTime(60000);
+    });
+
+    expect(screen.getByText('11:15')).toBeInTheDocument();
+    expect(getIndicator().style.getPropertyValue('--indicator-left-offset')).not.toBe(
+      initialOffset
+    );
+    jest.useRealTimers();
+  });
+
+  it('applies classNames, styles and attributes to every indicator part', () => {
+    const { container } = render(
+      <MantineProvider
+        theme={{
+          components: {
+            ResourcesDayView: {
+              classNames: { resourcesDayViewCurrentTimeIndicatorLine: 'theme-line' },
+            },
+          },
+        }}
+      >
+        <ResourcesDayView
+          {...defaultProps}
+          withCurrentTimeIndicator
+          withCurrentTimeBubble={false}
+          getCurrentTime={() => '2025-01-15 10:30:00'}
+          classNames={{
+            resourcesDayViewCurrentTimeIndicator: 'custom-root',
+            resourcesDayViewCurrentTimeIndicatorLine: 'custom-line',
+            resourcesDayViewCurrentTimeIndicatorThumb: 'custom-thumb',
+          }}
+          styles={{ resourcesDayViewCurrentTimeIndicatorLine: { opacity: 0.5 } }}
+          attributes={{ resourcesDayViewCurrentTimeIndicatorThumb: { 'data-test': 'thumb' } }}
+        />
+      </MantineProvider>
+    );
+
+    const root = container.querySelector(
+      '.mantine-ResourcesDayView-resourcesDayViewCurrentTimeIndicator'
+    )!;
+    expect(root).toHaveClass('custom-root');
+    const line = root.querySelector(
+      '.mantine-ResourcesDayView-resourcesDayViewCurrentTimeIndicatorLine'
+    )!;
+    expect(line).toHaveClass('custom-line', 'theme-line');
+    expect(line).toHaveStyle({ opacity: '0.5' });
+    const thumb = root.querySelector(
+      '.mantine-ResourcesDayView-resourcesDayViewCurrentTimeIndicatorThumb'
+    )!;
+    expect(thumb).toHaveClass('custom-thumb');
+    expect(thumb).toHaveAttribute('data-test', 'thumb');
+  });
+
+  it('applies classNames to the time bubble', () => {
+    const { container } = render(
+      <ResourcesDayView
+        {...defaultProps}
+        withCurrentTimeIndicator
+        getCurrentTime={() => '2025-01-15 10:30:00'}
+        classNames={{ resourcesDayViewCurrentTimeIndicatorTimeBubble: 'custom-bubble' }}
+      />
+    );
+
+    expect(
+      container.querySelector(
+        '.mantine-ResourcesDayView-resourcesDayViewCurrentTimeIndicatorTimeBubble'
+      )
+    ).toHaveClass('custom-bubble');
   });
 });

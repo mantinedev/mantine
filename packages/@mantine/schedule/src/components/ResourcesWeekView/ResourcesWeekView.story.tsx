@@ -260,6 +260,38 @@ export function EventResize() {
   );
 }
 
+export function ResizeBackgroundEventsAcrossMidnight() {
+  const [resized, setResized] = useState<string | null>(null);
+
+  return (
+    <div>
+      <Text size="sm" mb="xs">
+        Resized: {resized ?? 'none'}
+      </Text>
+      <ResourcesWeekView
+        date={today}
+        resources={resources}
+        withEventResize
+        withInteractiveBackgroundEvents
+        onEventResize={({ eventId, newStart, newEnd }) =>
+          setResized(`${eventId} ${newStart} → ${newEnd}`)
+        }
+        events={[
+          {
+            id: 'maintenance',
+            title: 'Overnight maintenance',
+            start: `${today} 20:00:00`,
+            end: `${tomorrow} 04:00:00`,
+            color: 'gray',
+            display: 'background',
+            resourceId: resources[0].id,
+          },
+        ]}
+      />
+    </div>
+  );
+}
+
 export function SlotDragSelect() {
   const [date, setDate] = useState(toDateString(new Date()));
   const [lastAction, setLastAction] = useState('');

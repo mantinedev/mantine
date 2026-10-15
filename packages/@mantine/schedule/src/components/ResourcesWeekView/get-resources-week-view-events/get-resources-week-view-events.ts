@@ -1,12 +1,11 @@
-import dayjs from 'dayjs';
 import { ScheduleEventData, ScheduleResourceData } from '../../../types';
-import { expandRecurringEvents, isMultidayEvent } from '../../../utils';
+import { isMultidayEvent } from '../../../utils';
+import { calculateEventDays } from '../../../utils/calculate-event-days/calculate-event-days';
+import { getEventEndDay } from '../../../utils/get-event-end-day/get-event-end-day';
 import {
   getResourcesDayViewEvents,
   ResourcesDayViewEventsResult,
 } from '../../ResourcesDayView/get-resources-day-view-events/get-resources-day-view-events';
-import { calculateEventDays } from '../../WeekView/get-week-view-events/calculate-event-days';
-import { getEventEndDate } from '../../WeekView/get-week-view-events/get-event-end-date';
 
 /** A single all-day bar (single-day all-day event or a multi-day event) spanning one or more
  * consecutive visible weekdays, placed on a shared row so overlapping bars do not collide. */
@@ -51,13 +50,13 @@ function assignAllDayRows(bars: ResourcesWeekViewAllDayBar[]): void {
 }
 
 interface GetResourcesWeekViewEventsInput {
+  /** Events with recurring series already expanded for the week */
   events: ScheduleEventData[] | undefined;
   resources: ScheduleResourceData[];
   weekdays: string[];
   startTime?: string;
   endTime?: string;
   intervalMinutes?: number;
-  expansionLimit?: number;
 }
 
 export function getResourcesWeekViewEvents({
@@ -67,23 +66,10 @@ export function getResourcesWeekViewEvents({
   startTime,
   endTime,
   intervalMinutes,
-  expansionLimit,
 }: GetResourcesWeekViewEventsInput): ResourcesWeekViewEventsResult {
-  const rangeStart = dayjs(weekdays[0]).startOf('day').toDate();
-  const rangeEnd = dayjs(weekdays[weekdays.length - 1])
-    .endOf('day')
-    .toDate();
-
-  const expandedEvents = expandRecurringEvents({
-    events,
-    rangeStart,
-    rangeEnd,
-    expansionLimit,
-  });
-
-  if (expandedEvents) {
+  if (events) {
     const seenIds = new Set<string | number>();
-    for (const event of expandedEvents) {
+    for (const event of events) {
       if (seenIds.has(event.id)) {
         throw new Error(
           `[@mantine/schedule] ResourcesWeekView: Duplicated event ids found: ${event.id}`
@@ -95,39 +81,15 @@ export function getResourcesWeekViewEvents({
 
   const byDay: Record<string, ResourcesDayViewEventsResult> = {};
 
-  const assignedIds = new Set<string | number>();
-
   // Multi-day regular events are rendered as a single all-day bar spanning the days they cover
   // (matching the base WeekView, which treats any multi-day event as all-day), so they are excluded
   // from the per-day timed flow and collected as spanning bars below.
   const isSpanningRegularEvent = (event: ScheduleEventData) =>
     event.display !== 'background' && isMultidayEvent(event);
 
+  const dayEvents = events?.filter((event) => !isSpanningRegularEvent(event));
+
   for (const day of weekdays) {
-    const dayEvents = expandedEvents?.filter((event) => {
-      if (assignedIds.has(event.id) || isSpanningRegularEvent(event)) {
-        return false;
-      }
-
-      const eventStart = dayjs(event.start);
-      const dayStart = dayjs(day).startOf('day');
-
-      if (eventStart.isSame(dayStart, 'day')) {
-        assignedIds.add(event.id);
-        return true;
-      }
-
-      if (
-        event.display === 'background' &&
-        eventStart.isBefore(dayjs(day).endOf('day')) &&
-        dayjs(event.end).isAfter(dayStart)
-      ) {
-        return true;
-      }
-
-      return false;
-    });
-
     byDay[day] = getResourcesDayViewEvents({
       events: dayEvents,
       resources,
@@ -159,8 +121,8 @@ export function getResourcesWeekViewEvents({
   });
 
   // Multi-day regular events become a single bar spanning the visible days they cover.
-  if (expandedEvents) {
-    for (const event of expandedEvents) {
+  if (events) {
+    for (const event of events) {
       if (
         !isSpanningRegularEvent(event) ||
         event.resourceId === undefined ||
@@ -169,7 +131,7 @@ export function getResourcesWeekViewEvents({
         continue;
       }
 
-      const actualEndDate = getEventEndDate(event);
+      const actualEndDate = getEventEndDay(event);
       const eventWeekDays = calculateEventDays({ event, weekDays: weekdays, actualEndDate });
       if (eventWeekDays.length === 0) {
         continue;

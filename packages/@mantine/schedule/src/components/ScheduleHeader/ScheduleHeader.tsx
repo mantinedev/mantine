@@ -1,7 +1,6 @@
 import {
   Box,
   BoxProps,
-  createVarsResolver,
   ElementProps,
   factory,
   Factory,
@@ -29,9 +28,6 @@ export type CombinedScheduleHeaderStylesNames =
   | MonthYearSelectStylesNames;
 
 export type ScheduleHeaderStylesNames = 'header';
-export type ScheduleHeaderCssVariables = {
-  scheduleHeader: '--test';
-};
 
 export interface ScheduleHeaderProps
   extends BoxProps, StylesApiProps<ScheduleHeaderFactory>, ElementProps<'div'> {
@@ -45,7 +41,6 @@ export type ScheduleHeaderFactory = Factory<{
   props: ScheduleHeaderProps;
   ref: HTMLDivElement;
   stylesNames: ScheduleHeaderStylesNames;
-  vars: ScheduleHeaderCssVariables;
   staticComponents: {
     Control: typeof HeaderControl;
     Previous: typeof ScheduleHeaderPrevious;
@@ -59,12 +54,6 @@ export type ScheduleHeaderFactory = Factory<{
 const defaultProps = {
   __staticSelector: 'ScheduleHeader',
 } satisfies Partial<ScheduleHeaderProps>;
-
-const varsResolver = createVarsResolver<ScheduleHeaderFactory>(() => ({
-  scheduleHeader: {
-    '--test': 'test',
-  },
-}));
 
 export const ScheduleHeader = factory<ScheduleHeaderFactory>((_props) => {
   const props = useProps('ScheduleHeader', defaultProps, _props);
@@ -91,7 +80,6 @@ export const ScheduleHeader = factory<ScheduleHeaderFactory>((_props) => {
     styles,
     unstyled,
     vars,
-    varsResolver,
     attributes,
     rootSelector: 'header',
   });
@@ -105,7 +93,6 @@ export const ScheduleHeader = factory<ScheduleHeaderFactory>((_props) => {
 
 ScheduleHeader.displayName = '@mantine/schedule/ScheduleHeader';
 ScheduleHeader.classes = classes;
-ScheduleHeader.varsResolver = varsResolver;
 ScheduleHeader.Control = HeaderControl;
 ScheduleHeader.Next = ScheduleHeaderNext;
 ScheduleHeader.Previous = ScheduleHeaderPrevious;

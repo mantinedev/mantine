@@ -1,5 +1,6 @@
 import dayjs from 'dayjs';
 import { DateTimeStringValue, PreventEventOverlap, ScheduleEventData } from '../../types';
+import { isStartOfDay } from '../get-event-end-day/get-event-end-day';
 import { isEventsOverlap } from '../is-events-overlap/is-events-overlap';
 
 export interface IsEventPlacementAllowedInput {
@@ -52,19 +53,15 @@ function isSameEvent(event: ScheduleEventData, other: ScheduleEventData) {
   );
 }
 
-function isMidnight(value: dayjs.Dayjs) {
-  return value.hour() === 0 && value.minute() === 0 && value.second() === 0;
-}
-
 function spansWholeDays(event: ScheduleEventData) {
   const start = dayjs(event.start);
   const end = dayjs(event.end);
 
-  if (!isMidnight(start)) {
+  if (!isStartOfDay(start)) {
     return false;
   }
 
-  return isMidnight(end) || (end.hour() === 23 && end.minute() === 59 && end.second() === 59);
+  return isStartOfDay(end) || (end.hour() === 23 && end.minute() === 59 && end.second() === 59);
 }
 
 export function isEventPlacementAllowed({

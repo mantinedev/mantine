@@ -12,7 +12,7 @@ import { events } from './data';
 
 function Demo() {
   const [date, setDate] = useState(dayjs().format('YYYY-MM-DD'));
-  const [selectedDate, setSelectedDate] = useState<string | null>(dayjs().format('YYYY-MM-DD'));
+  const [selectedDate, setSelectedDate] = useState<string | null>(null);
 
   return (
     <MobileMonthView
@@ -29,7 +29,7 @@ function Demo() {
 
 function Demo() {
   const [date, setDate] = useState(dayjs().format('YYYY-MM-DD'));
-  const [selectedDate, setSelectedDate] = useState<string | null>(dayjs().format('YYYY-MM-DD'));
+  const [selectedDate, setSelectedDate] = useState<string | null>(null);
 
   return (
     <MobileMonthView

@@ -63,7 +63,7 @@ export interface MonthYearSelectProps
   /** Called with month value (0-11) when month is selected in the dropdown */
   onMonthChange?: (month: number) => void;
 
-  /** Format for displaying months in the dropdown, dayjs format or custom formatter function @default 'MMM' */
+  /** Format for displaying months in the dropdown, dayjs format or custom formatter function @default 'MMMM' */
   monthsListFormat?: DateLabelFormat;
 
   /** Format for displaying month label in the control, dayjs format @default 'MMMM YYYY' */
@@ -202,6 +202,7 @@ export const MonthYearSelect = factory<MonthYearSelectFactory>((_props) => {
             onClick={() => onMonthChange?.(month.month)}
             mod={{ type: 'month', active: month.month === monthValue }}
             tabIndex={month.month === monthValue ? 0 : -1}
+            {...controlProps}
             onKeyDown={createScopedKeydownHandler({
               siblingSelector: '[data-type="month"]:not(:disabled)',
               parentSelector: '[data-list]',
@@ -210,7 +211,6 @@ export const MonthYearSelect = factory<MonthYearSelectFactory>((_props) => {
               orientation: 'vertical',
               onKeyDown: controlProps?.onKeyDown,
             })}
-            {...controlProps}
             {...getStyles('monthYearSelectControl', {
               className: controlProps?.className,
               style: controlProps?.style,

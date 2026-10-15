@@ -243,3 +243,39 @@ export function RenderDay() {
     </div>
   );
 }
+
+export function WithoutOutsideDays() {
+  return (
+    <div style={{ padding: 40 }}>
+      <YearView date="2021-01-01" withOutsideDays={false} withWeekNumbers />
+    </div>
+  );
+}
+
+export function OutsideDaysOfOtherYears() {
+  const events: ScheduleEventData[] = [
+    {
+      id: 1,
+      title: 'Previous year',
+      start: '2025-12-29 10:00:00',
+      end: '2025-12-29 11:00:00',
+      color: 'blue',
+    },
+    {
+      id: 2,
+      title: 'Next year',
+      start: '2027-01-05 10:00:00',
+      end: '2027-01-05 11:00:00',
+      color: 'red',
+    },
+  ];
+
+  return (
+    <div style={{ padding: 40 }}>
+      <Text size="sm" mb="md">
+        December 29, 2025 in the January grid and January 5, 2027 in the December grid show a dot.
+      </Text>
+      <YearView date="2026-01-01" events={events} />
+    </div>
+  );
+}

@@ -72,19 +72,21 @@ const eventData: ScheduleEventData[] = [
 ];
 
 const code = `
-import { useState } from 'react';
 import dayjs from 'dayjs';
-import { HoverCard, Text, Stack, Badge, Group, UnstyledButton } from '@mantine/core';
+import { useState } from 'react';
+import { HoverCard, UnstyledButton } from '@mantine/core';
 import { WeekView, ScheduleEventData } from '@mantine/schedule';
 import { EventDetails } from './EventDetails';
 import { eventsData } from './events';
 
 function Demo() {
-  const [events, setEvents] = useState<ScheduleEventData[]>(eventData);
+  const [date, setDate] = useState(dayjs().format('YYYY-MM-DD'));
+  const [events, setEvents] = useState<ScheduleEventData[]>(eventsData);
 
   return (
     <WeekView
-      date={new Date()}
+      date={date}
+      onDateChange={setDate}
       events={events}
       startTime="08:00:00"
       endTime="18:00:00"
@@ -118,11 +120,13 @@ function Demo() {
 `;
 
 function Demo() {
+  const [date, setDate] = useState(dayjs().format('YYYY-MM-DD'));
   const [events, setEvents] = useState<ScheduleEventData[]>(eventData);
 
   return (
     <WeekView
-      date={new Date()}
+      date={date}
+      onDateChange={setDate}
       events={events}
       startTime="08:00:00"
       endTime="18:00:00"

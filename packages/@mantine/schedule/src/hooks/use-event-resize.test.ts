@@ -440,3 +440,114 @@ describe('@mantine/schedule/use-event-resize placement validation', () => {
     expect(canResizeEventTo).not.toHaveBeenCalled();
   });
 });
+
+describe('@mantine/schedule/use-event-resize gesture lifecycle', () => {
+  function startBottomResize(result: any, container: HTMLElement) {
+    act(() => {
+      result.current.handleResizeStart({
+        event,
+        edge: 'bottom',
+        container,
+        originalTop: ORIGINAL_TOP,
+        originalHeight: ORIGINAL_HEIGHT,
+        eventDate: '2024-01-15',
+        pointerEvent: { preventDefault() {}, stopPropagation() {} } as any,
+      });
+    });
+    act(() => {
+      document.dispatchEvent(new MouseEvent('pointermove', { clientY: 120 }));
+    });
+  }
+
+  function renderResize(onEventResize = jest.fn(), endTime = '17:00:00') {
+    return renderHook(() =>
+      useEventResize({
+        enabled: true,
+        startTime: '09:00:00',
+        endTime,
+        intervalMinutes: 30,
+        onEventResize,
+      })
+    );
+  }
+
+  it('commits the real end of the grid when resized to the bottom edge', () => {
+    const onEventResize = jest.fn();
+    const { result } = renderHook(() =>
+      useEventResize({
+        enabled: true,
+        startTime: '00:00:00',
+        endTime: '23:59:59',
+        intervalMinutes: 30,
+        onEventResize,
+      })
+    );
+    const container = document.createElement('div');
+    container.getBoundingClientRect = () => ({ ...RECT, bottom: 1440, height: 1440 }) as DOMRect;
+
+    dragBottom(result, container, 1440);
+    expect(onEventResize).toHaveBeenCalledWith(
+      expect.objectContaining({ newStart: '2024-01-15 09:00:00', newEnd: '2024-01-15 23:59:59' })
+    );
+  });
+
+  it('cancels the resize on Escape without committing it on pointerup', () => {
+    const onEventResize = jest.fn();
+    const { result } = renderResize(onEventResize);
+    startBottomResize(result, makeContainer());
+    expect(result.current.getResizePosition(1)).not.toBeNull();
+
+    act(() => {
+      document.dispatchEvent(new KeyboardEvent('keydown', { key: 'Escape' }));
+    });
+    expect(result.current.isResizing).toBe(false);
+    expect(result.current.wasResizing()).toBe(true);
+
+    act(() => {
+      document.dispatchEvent(new MouseEvent('pointerup'));
+    });
+    expect(onEventResize).not.toHaveBeenCalled();
+    expect(result.current.wasResizing()).toBe(true);
+  });
+
+  it('cancels the resize on pointercancel', () => {
+    const onEventResize = jest.fn();
+    const { result } = renderResize(onEventResize);
+    startBottomResize(result, makeContainer());
+
+    act(() => {
+      document.dispatchEvent(new Event('pointercancel'));
+    });
+    expect(result.current.isResizing).toBe(false);
+
+    act(() => {
+      document.dispatchEvent(new MouseEvent('pointerup'));
+    });
+    expect(onEventResize).not.toHaveBeenCalled();
+  });
+
+  it('restores body styles when the resize ends', () => {
+    document.body.style.cursor = 'help';
+    document.body.style.userSelect = 'text';
+    const { result } = renderResize();
+    startBottomResize(result, makeContainer());
+    expect(document.body.style.cursor).toBe('ns-resize');
+    expect(document.body.style.userSelect).toBe('none');
+
+    act(() => {
+      document.dispatchEvent(new MouseEvent('pointerup'));
+    });
+    expect(document.body.style.cursor).toBe('help');
+    expect(document.body.style.userSelect).toBe('text');
+    document.body.style.cursor = '';
+    document.body.style.userSelect = '';
+  });
+
+  it('restores body styles when unmounted during a resize', () => {
+    const { result, unmount } = renderResize();
+    startBottomResize(result, makeContainer());
+    unmount();
+    expect(document.body.style.cursor).toBe('');
+    expect(document.body.style.userSelect).toBe('');
+  });
+});

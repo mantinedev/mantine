@@ -164,6 +164,30 @@ describe('@mantine/schedule/MonthYearSelect', () => {
     );
   });
 
+  it('keeps arrow navigation when getMonthControlProps and getYearControlProps return onKeyDown', async () => {
+    const onMonthKeyDown = jest.fn();
+    const onYearKeyDown = jest.fn();
+    render(
+      <MonthYearSelect
+        {...defaultProps}
+        startYear={2024}
+        endYear={2026}
+        getMonthControlProps={() => ({ onKeyDown: onMonthKeyDown })}
+        getYearControlProps={() => ({ onKeyDown: onYearKeyDown })}
+      />
+    );
+
+    await userEvent.click(screen.getByRole('button', { name: /select month november/i }));
+    await userEvent.keyboard('{ArrowDown}');
+    expect(screen.getByRole('button', { name: /select month december/i })).toHaveFocus();
+    expect(onMonthKeyDown).toHaveBeenCalledTimes(1);
+
+    await userEvent.click(screen.getByRole('button', { name: /select year 2025/i }));
+    await userEvent.keyboard('{ArrowDown}');
+    expect(screen.getByRole('button', { name: /select year 2026/i })).toHaveFocus();
+    expect(onYearKeyDown).toHaveBeenCalledTimes(1);
+  });
+
   it('supports keyboard navigation for year controls', async () => {
     render(<MonthYearSelect {...defaultProps} startYear={2020} endYear={2023} />);
     await userEvent.click(screen.getByRole('button', { name: /select year 2023/i }));

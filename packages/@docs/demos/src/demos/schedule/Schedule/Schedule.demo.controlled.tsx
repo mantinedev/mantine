@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { Text } from '@mantine/core';
 import { Schedule, ScheduleViewLevel } from '@mantine/schedule';
 import { MantineDemo } from '@mantinex/demo';
-import { events } from './_data';
+import { dataCode, events } from './_data';
 
 const code = `
 import { useState } from 'react';
@@ -57,5 +57,8 @@ export const controlled: MantineDemo = {
   defaultExpanded: false,
   type: 'code',
   component: Demo,
-  code,
+  code: [
+    { code, language: 'tsx', fileName: 'Demo.tsx' },
+    { code: dataCode, language: 'tsx', fileName: 'data.ts' },
+  ],
 };

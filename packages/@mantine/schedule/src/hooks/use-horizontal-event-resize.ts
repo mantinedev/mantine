@@ -1,9 +1,10 @@
 import dayjs from 'dayjs';
-import { useCallback, useEffect, useEffectEvent, useRef, useState } from 'react';
+import { useCallback, useEffectEvent, useRef, useState } from 'react';
 import { DateTimeStringValue, ScheduleEventData, ScheduleMode } from '../types';
 import { clampIntervalMinutes } from '../utils/clamp-interval-minutes/clamp-interval-minutes';
 import { getDayRelativePercent } from '../utils/get-day-relative-percent/get-day-relative-percent';
 import { parseTimeString } from '../utils/parse-time-string/parse-time-string';
+import { useResizeGesture } from './use-resize-gesture';
 import { EventResizeValidationOptions, validateEventResize } from './validate-event-resize';
 
 type ResizeEdge = 'start' | 'end';
@@ -22,6 +23,7 @@ interface ResizeState {
   originalEnd: DateTimeStringValue;
   dayIndex: number;
   dayCount: number;
+  dir: 'ltr' | 'rtl';
 }
 
 export interface UseHorizontalEventResizeInput extends EventResizeValidationOptions {
@@ -59,7 +61,6 @@ export function useHorizontalEventResize({
   const [resizeState, setResizeState] = useState<ResizeState | null>(null);
   const [resizeValid, setResizeValid] = useState(true);
   const resizeRef = useRef<ResizeState | null>(null);
-  const justResizedRef = useRef(false);
   const stableOnEventResize = useEffectEvent(onEventResize || (() => {}));
   const stableOnEventPlacementRejected = useEffectEvent(onEventPlacementRejected || (() => {}));
 
@@ -109,9 +110,10 @@ export function useHorizontalEventResize({
       const totalMins = startMinutes + snappedMinutes;
       const hours = Math.floor(totalMins / 60);
       const mins = totalMins % 60;
-      return `${eventDate} ${String(hours).padStart(2, '0')}:${String(mins).padStart(2, '0')}:00`;
+      const seconds = snappedMinutes === literalRange ? parsedEndTime.seconds : 0;
+      return `${eventDate} ${String(hours).padStart(2, '0')}:${String(mins).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
     },
-    [totalMinutes, startMinutes, clampAndSnap]
+    [totalMinutes, startMinutes, clampAndSnap, literalRange, parsedEndTime.seconds]
   );
 
   const snapEdgeMinutes = useCallback(
@@ -179,6 +181,7 @@ export function useHorizontalEventResize({
         originalEnd: dayjs(event.end).format('YYYY-MM-DD HH:mm:ss'),
         dayIndex,
         dayCount,
+        dir: getComputedStyle(container).direction === 'rtl' ? 'rtl' : 'ltr',
       };
 
       resizeRef.current = state;
@@ -204,110 +207,94 @@ export function useHorizontalEventResize({
 
   const isResizing = resizeState !== null;
 
-  useEffect(() => {
-    if (!isResizing) {
-      return undefined;
+  const handlePointerMove = (e: PointerEvent) => {
+    const state = resizeRef.current;
+    if (!state) {
+      return;
     }
 
-    const savedUserSelect = document.body.style.userSelect;
-    const savedCursor = document.body.style.cursor;
-    document.body.style.userSelect = 'none';
-    document.body.style.cursor = 'ew-resize';
+    const containerRect = state.container.getBoundingClientRect();
+    const rawPercent = getDayRelativePercent({
+      clientX: e.clientX,
+      containerLeft: containerRect.left,
+      containerWidth: containerRect.width,
+      dayIndex: state.dayIndex,
+      dayCount: state.dayCount,
+      dir: state.dir,
+    });
+    const draggedMinutes = clampAndSnap(percentToMinutes(rawPercent));
 
-    const handlePointerMove = (e: PointerEvent) => {
-      const state = resizeRef.current;
-      if (!state) {
-        return;
-      }
+    let newLeft = state.originalLeft;
+    let newWidth = state.originalWidth;
 
-      const containerRect = state.container.getBoundingClientRect();
-      const rawPercent = getDayRelativePercent({
-        clientX: e.clientX,
-        containerLeft: containerRect.left,
-        containerWidth: containerRect.width,
-        dayIndex: state.dayIndex,
-        dayCount: state.dayCount,
-      });
-      const draggedMinutes = clampAndSnap(percentToMinutes(rawPercent));
+    if (state.edge === 'end') {
+      const leftMinutes = percentToMinutes(state.originalLeft);
+      const minEndMinutes = snapEdgeMinutes(leftMinutes + clampedResizeInterval, 'up');
+      const endMinutes = Math.max(draggedMinutes, minEndMinutes);
+      newWidth = Math.max(0, minutesToPercent(endMinutes) - state.originalLeft);
+    } else {
+      const rightMinutes = percentToMinutes(state.originalLeft + state.originalWidth);
+      const maxStartMinutes = snapEdgeMinutes(rightMinutes - clampedResizeInterval, 'down');
+      const startMinutesValue = Math.min(draggedMinutes, maxStartMinutes);
+      newLeft = minutesToPercent(startMinutesValue);
+      newWidth = Math.max(0, state.originalLeft + state.originalWidth - newLeft);
+    }
 
-      let newLeft = state.originalLeft;
-      let newWidth = state.originalWidth;
+    resizeRef.current = { ...state, currentLeft: newLeft, currentWidth: newWidth };
+    setResizeState(resizeRef.current);
 
-      if (state.edge === 'end') {
-        const leftMinutes = percentToMinutes(state.originalLeft);
-        const minEndMinutes = snapEdgeMinutes(leftMinutes + clampedResizeInterval, 'up');
-        const endMinutes = Math.max(draggedMinutes, minEndMinutes);
-        newWidth = Math.max(0, minutesToPercent(endMinutes) - state.originalLeft);
-      } else {
-        const rightMinutes = percentToMinutes(state.originalLeft + state.originalWidth);
-        const maxStartMinutes = snapEdgeMinutes(rightMinutes - clampedResizeInterval, 'down');
-        const startMinutesValue = Math.min(draggedMinutes, maxStartMinutes);
-        newLeft = minutesToPercent(startMinutesValue);
-        newWidth = Math.max(0, state.originalLeft + state.originalWidth - newLeft);
-      }
+    const range = getResizeRange(resizeRef.current);
+    setResizeValid(validateResize(state.event, range.start, range.end, state.edge).valid);
+  };
 
-      resizeRef.current = { ...state, currentLeft: newLeft, currentWidth: newWidth };
-      setResizeState(resizeRef.current);
+  const commitResize = () => {
+    const state = resizeRef.current;
+    if (state) {
+      if (state.currentLeft !== state.originalLeft || state.currentWidth !== state.originalWidth) {
+        const { start: newStart, end: newEnd } = getResizeRange(state);
+        const { valid, conflicts, reason } = validateResize(
+          state.event,
+          newStart,
+          newEnd,
+          state.edge
+        );
 
-      const range = getResizeRange(resizeRef.current);
-      setResizeValid(validateResize(state.event, range.start, range.end, state.edge).valid);
-    };
-
-    const handlePointerUp = () => {
-      const state = resizeRef.current;
-      if (state) {
-        if (
-          state.currentLeft !== state.originalLeft ||
-          state.currentWidth !== state.originalWidth
-        ) {
-          const { start: newStart, end: newEnd } = getResizeRange(state);
-          const { valid, conflicts, reason } = validateResize(
-            state.event,
+        if (valid) {
+          stableOnEventResize({
+            eventId: state.eventId,
             newStart,
             newEnd,
-            state.edge
-          );
-
-          if (valid) {
-            stableOnEventResize({
-              eventId: state.eventId,
-              newStart,
-              newEnd,
-              event: state.event,
-            });
-          } else {
-            stableOnEventPlacementRejected({
-              action: 'resize',
-              event: state.event,
-              start: newStart,
-              end: newEnd,
-              edge: state.edge,
-              resourceId: state.event.resourceId,
-              conflicts,
-              reason: reason!,
-            });
-          }
+            event: state.event,
+          });
+        } else {
+          stableOnEventPlacementRejected({
+            action: 'resize',
+            event: state.event,
+            start: newStart,
+            end: newEnd,
+            edge: state.edge,
+            resourceId: state.event.resourceId,
+            conflicts,
+            reason: reason!,
+          });
         }
       }
-      resizeRef.current = null;
-      setResizeState(null);
-      setResizeValid(true);
-      justResizedRef.current = true;
-      requestAnimationFrame(() => {
-        justResizedRef.current = false;
-      });
-    };
+    }
+  };
 
-    document.addEventListener('pointermove', handlePointerMove);
-    document.addEventListener('pointerup', handlePointerUp);
+  const endResize = () => {
+    resizeRef.current = null;
+    setResizeState(null);
+    setResizeValid(true);
+  };
 
-    return () => {
-      document.body.style.userSelect = savedUserSelect;
-      document.body.style.cursor = savedCursor;
-      document.removeEventListener('pointermove', handlePointerMove);
-      document.removeEventListener('pointerup', handlePointerUp);
-    };
-  }, [isResizing]);
+  const wasResizing = useResizeGesture({
+    active: isResizing,
+    cursor: 'ew-resize',
+    onMove: handlePointerMove,
+    onCommit: commitResize,
+    onEnd: endResize,
+  });
 
   const getResizePosition = useCallback(
     (eventId: string | number, eventDate?: string) => {
@@ -334,8 +321,6 @@ export function useHorizontalEventResize({
     },
     [enabled, mode, canResizeEvent, withBackgroundEvents]
   );
-
-  const wasResizing = useCallback(() => justResizedRef.current, []);
 
   return {
     handleResizeStart,

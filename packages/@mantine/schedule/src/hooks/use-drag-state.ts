@@ -1,4 +1,4 @@
-import { useCallback, useState } from 'react';
+import { useCallback, useRef, useState } from 'react';
 import { DateStringValue, ScheduleEventData } from '../types';
 
 export interface DropTarget {
@@ -33,8 +33,8 @@ export interface UseDragStateReturn {
   /** Start dragging an event */
   startDrag: (event: ScheduleEventData) => void;
 
-  /** End dragging */
-  endDrag: () => void;
+  /** End dragging, returns `true` if a drag was in progress */
+  endDrag: () => boolean;
 
   /** Set the current drop target */
   setDropTarget: (target: DropTarget | null) => void;
@@ -52,8 +52,10 @@ const initialState: DragState = {
 
 export function useDragState(): UseDragStateReturn {
   const [state, setState] = useState<DragState>(initialState);
+  const activeRef = useRef(false);
 
   const startDrag = useCallback((event: ScheduleEventData) => {
+    activeRef.current = true;
     setState({
       isDragging: true,
       draggedEventId: event.id,
@@ -63,7 +65,10 @@ export function useDragState(): UseDragStateReturn {
   }, []);
 
   const endDrag = useCallback(() => {
+    const wasActive = activeRef.current;
+    activeRef.current = false;
     setState(initialState);
+    return wasActive;
   }, []);
 
   const setDropTarget = useCallback((target: DropTarget | null) => {

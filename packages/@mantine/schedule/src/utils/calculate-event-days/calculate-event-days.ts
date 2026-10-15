@@ -1,5 +1,5 @@
 import dayjs, { Dayjs } from 'dayjs';
-import { DateStringValue, ScheduleEventData } from '../../../types';
+import { DateStringValue, ScheduleEventData } from '../../types';
 
 interface CalculateEventDaysInput {
   event: ScheduleEventData;

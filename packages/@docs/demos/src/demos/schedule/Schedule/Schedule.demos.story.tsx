@@ -58,3 +58,8 @@ export const Demo_withAgenda = {
   name: '⭐ Demo: withAgenda',
   render: renderDemo(demos.withAgenda),
 };
+
+export const Demo_dragDrop = {
+  name: '⭐ Demo: dragDrop',
+  render: renderDemo(demos.dragDrop),
+};

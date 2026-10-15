@@ -166,10 +166,10 @@ export interface DayEventPositionData {
   /** Event left offset in %, represents event position in overlap group */
   offset: number;
 
-  /** Number of events in the overlap group */
+  /** Number of columns in the overlap group */
   overlaps: number;
 
-  /** Column index in the overlap group, 1-based */
+  /** Column index in the overlap group, 0-based */
   column: number;
 }
 

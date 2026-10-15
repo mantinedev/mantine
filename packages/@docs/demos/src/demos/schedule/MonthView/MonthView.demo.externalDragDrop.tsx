@@ -23,6 +23,7 @@ const sidebarItems = [
 ];
 
 function Demo() {
+  const [date, setDate] = useState(dayjs().format('YYYY-MM-DD'));
   const [events, setEvents] = useState<ScheduleEventData[]>([]);
   const nextId = useRef(1);
 
@@ -83,7 +84,8 @@ function Demo() {
       </Grid.Col>
       <Grid.Col span={{ base: 12, sm: 9 }}>
         <MonthView
-          date={new Date()}
+          date={date}
+          onDateChange={setDate}
           events={events}
           withEventsDragAndDrop
           onEventDrop={handleEventDrop}
@@ -96,6 +98,7 @@ function Demo() {
 `;
 
 function Demo() {
+  const [date, setDate] = useState(dayjs().format('YYYY-MM-DD'));
   const [events, setEvents] = useState<ScheduleEventData[]>([]);
   const nextId = useRef(1);
 
@@ -168,7 +171,8 @@ function Demo() {
       </Grid.Col>
       <Grid.Col span={{ base: 12, sm: 9 }}>
         <MonthView
-          date={new Date()}
+          date={date}
+          onDateChange={setDate}
           events={events}
           withEventsDragAndDrop
           onEventDrop={handleEventDrop}

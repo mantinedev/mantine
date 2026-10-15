@@ -1,6 +1,7 @@
+import dayjs from 'dayjs';
 import 'dayjs/locale/ru';
 import { useState } from 'react';
-import { Box, Stack, Text } from '@mantine/core';
+import { Box, Button, Group, Stack, Switch, Text } from '@mantine/core';
 import { ScheduleEventData } from '../../types';
 import { MobileMonthView } from './MobileMonthView';
 
@@ -102,6 +103,44 @@ export function Usage() {
         events={november2025Events}
       />
     </Box>
+  );
+}
+
+export function ControlledMonthNavigation() {
+  const [date, setDate] = useState('2025-11-01');
+  const [withOutsideDays, setWithOutsideDays] = useState(false);
+  return (
+    <Stack>
+      <Group>
+        <Button
+          variant="default"
+          onClick={() => setDate(dayjs(date).subtract(1, 'month').format('YYYY-MM-DD'))}
+        >
+          Previous month
+        </Button>
+        <Button
+          variant="default"
+          onClick={() => setDate(dayjs(date).add(1, 'month').format('YYYY-MM-DD'))}
+        >
+          Next month
+        </Button>
+        <Switch
+          label="withOutsideDays"
+          checked={withOutsideDays}
+          onChange={(event) => setWithOutsideDays(event.currentTarget.checked)}
+        />
+      </Group>
+      <Text size="sm">date: {date}</Text>
+      <Box style={{ width: 375, height: 600, border: '1px solid #ccc' }}>
+        <MobileMonthView
+          date={date}
+          onDateChange={setDate}
+          events={november2025Events}
+          withWeekNumbers
+          withOutsideDays={withOutsideDays}
+        />
+      </Box>
+    </Stack>
   );
 }
 
@@ -221,5 +260,79 @@ export function WithoutWeekDays() {
         withWeekDays={false}
       />
     </Box>
+  );
+}
+
+export function OutsideDaysEvents() {
+  return (
+    <Box style={{ width: 375, height: 600, border: '1px solid #ccc' }}>
+      <MobileMonthView
+        date="2026-10-01"
+        firstDayOfWeek={0}
+        withOutsideDays
+        events={[
+          {
+            id: 1,
+            title: 'Sunday before the month',
+            start: '2026-09-27 10:00:00',
+            end: '2026-09-27 11:00:00',
+            color: 'blue',
+          },
+          {
+            id: 2,
+            title: 'First of November',
+            start: '2026-11-01 10:00:00',
+            end: '2026-11-01 11:00:00',
+            color: 'red',
+          },
+          {
+            id: 3,
+            title: 'Daily recurring',
+            start: '2026-10-30 08:00:00',
+            end: '2026-10-30 08:30:00',
+            color: 'green',
+            recurrence: { rrule: 'FREQ=DAILY;COUNT=5' },
+          },
+        ]}
+      />
+    </Box>
+  );
+}
+
+export function DisabledWeekends() {
+  return (
+    <Stack>
+      <Text size="sm">
+        Weekends are disabled and the selected day (Saturday, November 8) is one of them. Tab enters
+        the grid on Monday, November 3.
+      </Text>
+      <Box style={{ width: 375, height: 600, border: '1px solid #ccc' }}>
+        <MobileMonthView
+          date="2025-11-01"
+          defaultSelectedDate="2025-11-08"
+          events={november2025Events}
+          getDayProps={(date) => ({ disabled: [0, 6].includes(dayjs(date).day()) })}
+        />
+      </Box>
+    </Stack>
+  );
+}
+
+export function SelectedDateOutsideMonth() {
+  const [date, setDate] = useState('2025-12-01');
+  return (
+    <Stack>
+      <Text size="sm">
+        December is displayed and November 5 is selected. The list shows the events of November 5.
+      </Text>
+      <Box style={{ width: 375, height: 600, border: '1px solid #ccc' }}>
+        <MobileMonthView
+          date={date}
+          onDateChange={setDate}
+          defaultSelectedDate="2025-11-05"
+          events={november2025Events}
+        />
+      </Box>
+    </Stack>
   );
 }

@@ -1,4 +1,5 @@
 import dayjs from 'dayjs';
+import { useState } from 'react';
 import { MonthView, ScheduleEventData } from '@mantine/schedule';
 import { MantineDemo } from '@mantinex/demo';
 
@@ -43,6 +44,8 @@ const demoEvents: ScheduleEventData[] = [
 ];
 
 const code = `
+import dayjs from 'dayjs';
+import { useState } from 'react';
 import { MonthView, ScheduleEventData } from '@mantine/schedule';
 
 const events: ScheduleEventData[] = [
@@ -50,9 +53,12 @@ const events: ScheduleEventData[] = [
 ];
 
 function Demo() {
+  const [date, setDate] = useState(dayjs().format('YYYY-MM-DD'));
+
   return (
     <MonthView
-      date={new Date()}
+      date={date}
+      onDateChange={setDate}
       events={events}
       maxEventsPerDay={4}
     />
@@ -61,7 +67,9 @@ function Demo() {
 `;
 
 function Demo() {
-  return <MonthView date={new Date()} events={demoEvents} maxEventsPerDay={4} />;
+  const [date, setDate] = useState(dayjs().format('YYYY-MM-DD'));
+
+  return <MonthView date={date} onDateChange={setDate} events={demoEvents} maxEventsPerDay={4} />;
 }
 
 export const maxEventsPerDay: MantineDemo = {

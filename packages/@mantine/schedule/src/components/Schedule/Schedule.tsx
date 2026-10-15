@@ -239,11 +239,11 @@ export type ScheduleFactory = Factory<{
   stylesNames: ScheduleStylesNames;
 }>;
 
-const defaultProps: Partial<ScheduleProps> = {
+const defaultProps = {
   defaultView: 'week',
   mode: 'default',
   layout: 'default',
-};
+} satisfies Partial<ScheduleProps>;
 
 export const Schedule = factory<ScheduleFactory>((_props) => {
   const props = useProps('Schedule', defaultProps, _props);
@@ -330,7 +330,6 @@ export const Schedule = factory<ScheduleFactory>((_props) => {
 
   const handleViewChange = (newView: ScheduleViewLevel) => {
     _setView(newView);
-    onViewChange?.(newView);
   };
 
   const handleMonthClick = (monthDate: DateStringValue) => {
@@ -338,82 +337,67 @@ export const Schedule = factory<ScheduleFactory>((_props) => {
     handleViewChange('month');
   };
 
-  const commonProps = {
+  const sharedProps = {
     date: _date,
     onDateChange: handleDateChange,
-    view: _view,
     onViewChange: handleViewChange,
     events,
     locale,
     radius,
     labels,
+    recurrenceExpansionLimit,
+    mode,
+  };
+
+  const eventProps = {
+    ...sharedProps,
     renderEventBody,
     withEventsDragAndDrop: mode === 'static' ? false : withEventsDragAndDrop,
     onEventDrop,
     canDragEvent,
     onEventDragStart,
     onEventDragEnd,
-    onTimeSlotClick,
-    onAllDaySlotClick,
-    onDayClick,
     onEventClick,
     withDragSlotSelect,
     onSlotDragEnd,
     onExternalEventDrop,
-    withEventResize: mode === 'static' ? false : withEventResize,
-    onEventResize,
-    canResizeEvent,
-    recurrenceExpansionLimit,
-    mode,
     withAgenda,
-  };
-
-  const dropValidationProps = {
     canDropEvent,
     canDropExternalEvent,
     preventEventOverlap,
     onEventPlacementRejected,
+    withInteractiveBackgroundEvents: mode === 'static' ? false : withInteractiveBackgroundEvents,
   };
 
-  const placementValidationProps = { ...dropValidationProps, canResizeEventTo };
+  const timeGridProps = {
+    ...eventProps,
+    onTimeSlotClick,
+    onAllDaySlotClick,
+    withEventResize: mode === 'static' ? false : withEventResize,
+    onEventResize,
+    canResizeEvent,
+    canResizeEventTo,
+  };
+
+  const yearView = (
+    <YearView
+      {...sharedProps}
+      onDayClick={onDayClick}
+      onMonthClick={handleMonthClick}
+      {...yearViewProps}
+    />
+  );
 
   const desktopContent = (() => {
     switch (_view) {
       case 'day':
-        return (
-          <DayView
-            {...commonProps}
-            {...placementValidationProps}
-            withInteractiveBackgroundEvents={
-              mode === 'static' ? false : withInteractiveBackgroundEvents
-            }
-            {...dayViewProps}
-          />
-        );
+        return <DayView {...timeGridProps} {...dayViewProps} />;
       case 'week':
-        return (
-          <WeekView
-            {...commonProps}
-            {...placementValidationProps}
-            withInteractiveBackgroundEvents={
-              mode === 'static' ? false : withInteractiveBackgroundEvents
-            }
-            {...weekViewProps}
-          />
-        );
+        return <WeekView {...timeGridProps} {...weekViewProps} />;
       case 'month':
-        return (
-          <MonthView
-            {...commonProps}
-            {...dropValidationProps}
-            withInteractiveBackgroundEvents={
-              mode === 'static' ? false : withInteractiveBackgroundEvents
-            }
-            {...monthViewProps}
-          />
-        );
+        return <MonthView {...eventProps} onDayClick={onDayClick} {...monthViewProps} />;
       case 'year':
-        return <YearView {...commonProps} onMonthClick={handleMonthClick} {...yearViewProps} />;
+        return yearView;
       default:
         return null;
     }
@@ -440,7 +424,7 @@ export const Schedule = factory<ScheduleFactory>((_props) => {
           />
         );
       case 'year':
-        return <YearView {...commonProps} onMonthClick={handleMonthClick} {...yearViewProps} />;
+        return yearView;
       default:
         return null;
     }

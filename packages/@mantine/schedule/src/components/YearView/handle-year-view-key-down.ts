@@ -1,4 +1,5 @@
 import { RefObject } from 'react';
+import { getLogicalArrowKey } from '../../utils/get-logical-arrow-key/get-logical-arrow-key';
 
 /** Reference to a 3D array of day buttons: [monthIndex][weekIndex][dayIndex] */
 export type YearViewControlsRef = RefObject<HTMLButtonElement[][][]>;
@@ -30,9 +31,13 @@ function getControlsSize(controlsRef: YearViewControlsRef): number[][] | null {
   if (!controlsRef.current) {
     return null;
   }
-  return controlsRef.current.map((month) =>
-    month ? month.map((week) => (week ? week.length : 0)) : []
+  return Array.from(controlsRef.current, (month) =>
+    month ? Array.from(month, (week) => (week ? week.length : 0)) : []
   );
+}
+
+function clampDayIndex(dayIndex: number, weekSize: number) {
+  return weekSize > 0 ? Math.min(dayIndex, weekSize - 1) : dayIndex;
 }
 
 interface GetNextPositionInput {
@@ -67,7 +72,7 @@ function getNextPosition({
         }
 
         const lastWeekIndex = prevMonthSize.length - 1;
-        const clampedDayIndex = Math.min(dayIndex, prevMonthSize[lastWeekIndex] - 1);
+        const clampedDayIndex = clampDayIndex(dayIndex, prevMonthSize[lastWeekIndex]);
         return {
           monthIndex: monthIndex - 1,
           weekIndex: lastWeekIndex,
@@ -76,7 +81,7 @@ function getNextPosition({
       }
 
       const prevWeekSize = currentMonthSize[weekIndex - 1];
-      const clampedDayIndex = Math.min(dayIndex, prevWeekSize - 1);
+      const clampedDayIndex = clampDayIndex(dayIndex, prevWeekSize);
       return {
         monthIndex,
         weekIndex: weekIndex - 1,
@@ -94,7 +99,7 @@ function getNextPosition({
           return null;
         }
 
-        const clampedDayIndex = Math.min(dayIndex, nextMonthSize[0] - 1);
+        const clampedDayIndex = clampDayIndex(dayIndex, nextMonthSize[0]);
         return {
           monthIndex: monthIndex + 1,
           weekIndex: 0,
@@ -103,7 +108,7 @@ function getNextPosition({
       }
 
       const nextWeekSize = currentMonthSize[weekIndex + 1];
-      const clampedDayIndex = Math.min(dayIndex, nextWeekSize - 1);
+      const clampedDayIndex = clampDayIndex(dayIndex, nextWeekSize);
       return {
         monthIndex,
         weekIndex: weekIndex + 1,
@@ -112,7 +117,7 @@ function getNextPosition({
     }
 
     case 'left': {
-      if (dayIndex === 0) {
+      if (dayIndex <= 0) {
         if (weekIndex === 0) {
           if (monthIndex === 0) {
             return null;
@@ -146,7 +151,7 @@ function getNextPosition({
     case 'right': {
       const currentWeekSize = currentMonthSize[weekIndex];
 
-      if (dayIndex === currentWeekSize - 1) {
+      if (dayIndex >= currentWeekSize - 1) {
         if (weekIndex === currentMonthSize.length - 1) {
           if (monthIndex === size.length - 1) {
             return null;
@@ -215,11 +220,8 @@ function focusOnNextFocusableControl({
       nextPosition.dayIndex
     ];
 
-  if (!controlToFocus) {
-    return;
-  }
-
   if (
+    !controlToFocus ||
     controlToFocus.disabled ||
     controlToFocus.getAttribute('data-hidden') ||
     controlToFocus.getAttribute('data-outside') ||
@@ -244,6 +246,9 @@ export interface HandleYearViewKeyDownInput {
   weekIndex: number;
   dayIndex: number;
   event: React.KeyboardEvent<HTMLButtonElement>;
+
+  /** Text direction, `ArrowLeft` and `ArrowRight` are swapped in `rtl` @default 'ltr' */
+  dir?: 'ltr' | 'rtl';
 }
 
 export function handleYearViewKeyDown({
@@ -252,8 +257,9 @@ export function handleYearViewKeyDown({
   weekIndex,
   dayIndex,
   event,
+  dir,
 }: HandleYearViewKeyDownInput): void {
-  const direction = getDirection(event.key);
+  const direction = getDirection(getLogicalArrowKey(event.key, dir));
 
   if (direction) {
     event.preventDefault();

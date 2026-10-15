@@ -31,9 +31,16 @@ function Demo() {
         today: 'Hoy',
         previous: 'Anterior',
         next: 'Siguiente',
+        selectMonth: 'Seleccionar mes',
+        selectYear: 'Seleccionar año',
+        switchToDayView: 'Cambiar a vista de día',
+        switchToWeekView: 'Cambiar a vista de semana',
+        switchToMonthView: 'Cambiar a vista de mes',
+        switchToYearView: 'Cambiar a vista de año',
+        viewSelectLabel: 'Vista del calendario',
         more: 'Más',
-        resources: 'Recursos',
         moreLabel: (hiddenEventsCount) => \`+\${hiddenEventsCount} más\`,
+        resources: 'Recursos',
       }}
       startScrollDate={dayjs().format('YYYY-MM-DD')}
     />
@@ -59,9 +66,16 @@ function Demo() {
         today: 'Hoy',
         previous: 'Anterior',
         next: 'Siguiente',
+        selectMonth: 'Seleccionar mes',
+        selectYear: 'Seleccionar año',
+        switchToDayView: 'Cambiar a vista de día',
+        switchToWeekView: 'Cambiar a vista de semana',
+        switchToMonthView: 'Cambiar a vista de mes',
+        switchToYearView: 'Cambiar a vista de año',
+        viewSelectLabel: 'Vista del calendario',
         more: 'Más',
-        resources: 'Recursos',
         moreLabel: (hiddenEventsCount) => `+${hiddenEventsCount} más`,
+        resources: 'Recursos',
       }}
       startScrollDate={dayjs().format('YYYY-MM-DD')}
     />

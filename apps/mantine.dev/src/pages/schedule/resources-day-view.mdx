@@ -140,7 +140,8 @@ Set `highlightBusinessHours` to highlight business hours:
 
 ## Current time indicator
 
-Set `withCurrentTimeIndicator` to display a line at the current time.
+A line at the current time is displayed for today by default.
+Set `withCurrentTimeIndicator` to display it on any date.
 Set `withCurrentTimeBubble={false}` to hide the time bubble:
 
 <Demo data={ResourcesDayViewDemos.currentTimeIndicator} />
@@ -194,6 +195,6 @@ and `labels` to override built-in labels:
 
 ## Static mode
 
-Set `mode="static"` to disable all interactions:
+Set `mode="static"` to disable interactions with events and time slots. Header navigation still works:
 
 <Demo data={ResourcesDayViewDemos.staticMode} />

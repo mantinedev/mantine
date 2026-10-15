@@ -71,7 +71,7 @@ import { ScheduleEventData, ScheduleResourceData } from '@mantine/schedule';
 const monday = dayjs().startOf('week').add(1, 'day');
 const day = (offset: number) => monday.add(offset, 'day').format('YYYY-MM-DD');
 
-const resources: ScheduleResourceData[] = [
+export const resources: ScheduleResourceData[] = [
   { id: 'tokyo', label: 'Meeting room: Tokyo' },
   { id: 'paris', label: 'Meeting room: Paris' },
   { id: 'new-york', label: 'Meeting room: New York' },
@@ -81,7 +81,7 @@ const resources: ScheduleResourceData[] = [
 // A foreground all-day event renders as a full-width bar pinned to the top of its day
 // column and stacks when there are several; all-day events with display: 'background'
 // tint the whole day column.
-const events: ScheduleEventData[] = [
+export const events: ScheduleEventData[] = [
   { id: 1, title: 'Offsite', start: \`\${day(1)} 00:00:00\`, end: \`\${day(2)} 00:00:00\`, color: 'blue', resourceId: 'tokyo' },
   { id: 2, title: 'Review', start: \`\${day(1)} 00:00:00\`, end: \`\${day(2)} 00:00:00\`, color: 'grape', resourceId: 'tokyo' },
   { id: 3, title: 'Sprint Planning', start: \`\${day(0)} 10:00:00\`, end: \`\${day(0)} 11:30:00\`, color: 'green', resourceId: 'tokyo' },

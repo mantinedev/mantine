@@ -7,9 +7,11 @@ import {
   ResourceGroupInfo,
   ResourcesGridControlsRef,
 } from '../../utils';
+import { getResourceSlotLabel } from '../../utils/resources-view-utils/resources-view-utils';
 import type { ResourcesWeekViewFactory } from './ResourcesWeekView';
 
 export interface ResourcesWeekViewRowProps {
+  locale: string;
   resource: ScheduleResourceData;
   resourceIndex: number;
   weekdays: string[];
@@ -62,6 +64,7 @@ export interface ResourcesWeekViewRowProps {
 }
 
 export function ResourcesWeekViewRow({
+  locale,
   resource,
   resourceIndex,
   weekdays,
@@ -133,7 +136,14 @@ export function ResourcesWeekViewRow({
             'drag-selected': isDragSelected,
             static: mode === 'static',
           }}
-          aria-label={`${getLabel('resourceSlot', labels)} ${resource.label} ${day} ${slot.startTime} - ${slot.endTime}`}
+          aria-label={getResourceSlotLabel({
+            prefix: getLabel('resourceSlot', labels),
+            resourceLabel: resource.label,
+            date: day,
+            startTime: slot.startTime,
+            endTime: slot.endTime,
+            locale,
+          })}
           tabIndex={mode === 'static' ? -1 : isFirstSlot ? 0 : -1}
           data-drag-slot-index={withDragSlotSelect && mode !== 'static' ? flatIndex : undefined}
           data-drag-slot-group={withDragSlotSelect && mode !== 'static' ? slotGroup : undefined}

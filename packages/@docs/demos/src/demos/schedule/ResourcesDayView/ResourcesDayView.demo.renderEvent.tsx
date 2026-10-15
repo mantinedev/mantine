@@ -77,8 +77,8 @@ const eventData: ScheduleEventData[] = [
 ];
 
 const code = `
-import { useState } from 'react';
 import dayjs from 'dayjs';
+import { useState } from 'react';
 import { HoverCard, UnstyledButton } from '@mantine/core';
 import { ResourcesDayView, ScheduleEventData } from '@mantine/schedule';
 import { EventDetails } from './EventDetails';
@@ -164,7 +164,7 @@ export const renderEvent: MantineDemo = {
     { fileName: 'EventDetails.tsx', code: _eventDetailsCode, language: 'tsx' },
     {
       fileName: 'data.ts',
-      code: `import { ScheduleEventData } from '@mantine/schedule';\n\nexport const eventsData: ScheduleEventData[] = ${JSON.stringify(eventData, null, 2)};`,
+      code: `import { ScheduleEventData, ScheduleResourceData } from '@mantine/schedule';\n\nexport const resources: ScheduleResourceData[] = ${JSON.stringify(resources, null, 2)};\n\nexport const events: ScheduleEventData[] = ${JSON.stringify(eventData, null, 2)};`,
       language: 'tsx',
     },
   ],

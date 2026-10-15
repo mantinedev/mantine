@@ -33,7 +33,7 @@ const sidebarItems = [
 ];
 
 function Demo() {
-  const [date, setDate] = useState(dayjs().format('YYYY-MM-DD'));
+  const [date, setDate] = useState(today);
   const [events, setEvents] = useState<ScheduleEventData[]>([]);
   const nextId = useRef(1);
 

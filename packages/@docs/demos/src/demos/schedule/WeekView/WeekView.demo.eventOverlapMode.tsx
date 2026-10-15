@@ -1,16 +1,19 @@
+import dayjs from 'dayjs';
 import { useState } from 'react';
 import { SegmentedControl, Stack } from '@mantine/core';
 import { ScheduleEventOverlapMode, WeekView } from '@mantine/schedule';
 import { MantineDemo } from '@mantinex/demo';
-import { denseOverlappingEvents } from './_data';
+import { denseOverlappingEvents, denseOverlappingEventsCode } from './_data';
 
 const code = `
+import dayjs from 'dayjs';
 import { useState } from 'react';
 import { SegmentedControl, Stack } from '@mantine/core';
 import { ScheduleEventOverlapMode, WeekView } from '@mantine/schedule';
 import { events } from './data';
 
 function Demo() {
+  const [date, setDate] = useState(dayjs().format('YYYY-MM-DD'));
   const [mode, setMode] = useState<ScheduleEventOverlapMode>('cascade');
 
   return (
@@ -25,7 +28,8 @@ function Demo() {
       />
 
       <WeekView
-        date={new Date()}
+        date={date}
+        onDateChange={setDate}
         events={events}
         startTime="08:00:00"
         endTime="14:00:00"
@@ -37,6 +41,7 @@ function Demo() {
 `;
 
 function Demo() {
+  const [date, setDate] = useState(dayjs().format('YYYY-MM-DD'));
   const [mode, setMode] = useState<ScheduleEventOverlapMode>('cascade');
 
   return (
@@ -51,7 +56,8 @@ function Demo() {
       />
 
       <WeekView
-        date={new Date()}
+        date={date}
+        onDateChange={setDate}
         events={denseOverlappingEvents}
         startTime="08:00:00"
         endTime="14:00:00"
@@ -65,5 +71,8 @@ export const eventOverlapMode: MantineDemo = {
   defaultExpanded: false,
   type: 'code',
   component: Demo,
-  code,
+  code: [
+    { code, language: 'tsx', fileName: 'Demo.tsx' },
+    { code: denseOverlappingEventsCode, language: 'tsx', fileName: 'data.ts' },
+  ],
 };

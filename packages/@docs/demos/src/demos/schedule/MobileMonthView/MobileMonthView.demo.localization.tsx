@@ -32,7 +32,16 @@ function Demo() {
         today: 'Hoy',
         previous: 'Anterior',
         next: 'Siguiente',
-        noEvents: 'Sin eventos',
+        selectMonth: 'Seleccionar mes',
+        selectYear: 'Seleccionar año',
+        switchToDayView: 'Cambiar a vista de día',
+        switchToWeekView: 'Cambiar a vista de semana',
+        switchToMonthView: 'Cambiar a vista de mes',
+        switchToYearView: 'Cambiar a vista de año',
+        viewSelectLabel: 'Vista del calendario',
+        allDay: 'Todo el día',
+        noEvents: 'No hay eventos',
+        weekNumber: (weekNumber) => \`Semana \${weekNumber}\`,
       }}
     />
   );
@@ -59,7 +68,16 @@ function Demo() {
         today: 'Hoy',
         previous: 'Anterior',
         next: 'Siguiente',
-        noEvents: 'Sin eventos',
+        selectMonth: 'Seleccionar mes',
+        selectYear: 'Seleccionar año',
+        switchToDayView: 'Cambiar a vista de día',
+        switchToWeekView: 'Cambiar a vista de semana',
+        switchToMonthView: 'Cambiar a vista de mes',
+        switchToYearView: 'Cambiar a vista de año',
+        viewSelectLabel: 'Vista del calendario',
+        allDay: 'Todo el día',
+        noEvents: 'No hay eventos',
+        weekNumber: (weekNumber) => `Semana ${weekNumber}`,
       }}
     />
   );

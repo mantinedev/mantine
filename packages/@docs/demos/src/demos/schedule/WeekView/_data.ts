@@ -210,11 +210,15 @@ export const businessEvents: ScheduleEventData[] = [
 
 export const dataCode = `
 import dayjs from 'dayjs';
+import { ScheduleEventData } from '@mantine/schedule';
 
-const startOfWeek = dayjs().subtract((dayjs().day() + 6) % 7, 'day').format('YYYY-MM-DD');
+const startOfWeek = dayjs()
+  .subtract((dayjs().day() + 6) % 7, 'day')
+  .format('YYYY-MM-DD');
 const dayAfterStartOfWeek = dayjs(startOfWeek).add(1, 'day').format('YYYY-MM-DD');
+const dayAfterDayAfterStartOfWeek = dayjs(startOfWeek).add(2, 'day').format('YYYY-MM-DD');
 
-const events = [
+export const events: ScheduleEventData[] = [
   {
     id: 1,
     title: 'Morning Standup',
@@ -231,17 +235,217 @@ const events = [
   },
   {
     id: 3,
+    title: 'Lunch Break',
+    start: \`\${startOfWeek} 12:00:00\`,
+    end: \`\${startOfWeek} 13:00:00\`,
+    color: 'orange',
+  },
+  {
+    id: 4,
     title: 'Code Review',
     start: \`\${dayAfterStartOfWeek} 14:00:00\`,
     end: \`\${dayAfterStartOfWeek} 15:00:00\`,
     color: 'violet',
   },
   {
-    id: 4,
+    id: 5,
+    title: 'Client Call',
+    start: \`\${dayAfterStartOfWeek} 15:30:00\`,
+    end: \`\${dayAfterStartOfWeek} 16:30:00\`,
+    color: 'cyan',
+  },
+  {
+    id: 6,
+    title: 'Project Planning',
+    start: \`\${dayAfterDayAfterStartOfWeek} 10:00:00\`,
+    end: \`\${dayAfterDayAfterStartOfWeek} 12:00:00\`,
+    color: 'pink',
+  },
+  {
+    id: 7,
     title: 'All Day Conference',
     start: \`\${startOfWeek} 00:00:00\`,
     end: dayjs(startOfWeek).add(1, 'day').startOf('day').format('YYYY-MM-DD HH:mm:ss'),
     color: 'red',
+  },
+];
+`;
+
+export const overlappingEventsCode = `
+import dayjs from 'dayjs';
+import { ScheduleEventData } from '@mantine/schedule';
+
+const startOfWeek = dayjs()
+  .subtract((dayjs().day() + 6) % 7, 'day')
+  .format('YYYY-MM-DD');
+const dayAfterStartOfWeek = dayjs(startOfWeek).add(1, 'day').format('YYYY-MM-DD');
+
+export const events: ScheduleEventData[] = [
+  {
+    id: 1,
+    title: 'Workshop Session 1',
+    start: \`\${startOfWeek} 10:00:00\`,
+    end: \`\${startOfWeek} 11:30:00\`,
+    color: 'blue',
+  },
+  {
+    id: 2,
+    title: 'Workshop Session 2',
+    start: \`\${startOfWeek} 11:00:00\`,
+    end: \`\${startOfWeek} 12:30:00\`,
+    color: 'violet',
+  },
+  {
+    id: 3,
+    title: 'Workshop Session 3',
+    start: \`\${startOfWeek} 11:30:00\`,
+    end: \`\${startOfWeek} 13:00:00\`,
+    color: 'cyan',
+  },
+  {
+    id: 4,
+    title: 'Tomorrow Event 1',
+    start: \`\${dayAfterStartOfWeek} 09:00:00\`,
+    end: \`\${dayAfterStartOfWeek} 10:30:00\`,
+    color: 'green',
+  },
+  {
+    id: 5,
+    title: 'Tomorrow Event 2',
+    start: \`\${dayAfterStartOfWeek} 09:30:00\`,
+    end: \`\${dayAfterStartOfWeek} 11:00:00\`,
+    color: 'orange',
+  },
+];
+`;
+
+export const businessEventsCode = `
+import dayjs from 'dayjs';
+import { ScheduleEventData } from '@mantine/schedule';
+
+const startOfWeek = dayjs()
+  .subtract((dayjs().day() + 6) % 7, 'day')
+  .format('YYYY-MM-DD');
+const dayAfterStartOfWeek = dayjs(startOfWeek).add(1, 'day').format('YYYY-MM-DD');
+
+export const events: ScheduleEventData[] = [
+  {
+    id: 1,
+    title: 'Early Morning Meeting',
+    start: \`\${startOfWeek} 08:30:00\`,
+    end: \`\${startOfWeek} 09:00:00\`,
+    color: 'blue',
+  },
+  {
+    id: 2,
+    title: 'Business Hours Task 1',
+    start: \`\${startOfWeek} 10:00:00\`,
+    end: \`\${startOfWeek} 11:00:00\`,
+    color: 'green',
+  },
+  {
+    id: 3,
+    title: 'Business Hours Task 2',
+    start: \`\${dayAfterStartOfWeek} 14:00:00\`,
+    end: \`\${dayAfterStartOfWeek} 15:00:00\`,
+    color: 'violet',
+  },
+  {
+    id: 4,
+    title: 'Evening Sync',
+    start: \`\${dayAfterStartOfWeek} 17:30:00\`,
+    end: \`\${dayAfterStartOfWeek} 18:00:00\`,
+    color: 'orange',
+  },
+];
+`;
+
+export const denseOverlappingEventsCode = `
+import dayjs from 'dayjs';
+import { ScheduleEventData } from '@mantine/schedule';
+
+const startOfWeek = dayjs()
+  .subtract((dayjs().day() + 6) % 7, 'day')
+  .format('YYYY-MM-DD');
+const dayAfterStartOfWeek = dayjs(startOfWeek).add(1, 'day').format('YYYY-MM-DD');
+
+export const events: ScheduleEventData[] = [
+  {
+    id: 1,
+    title: 'Product sync',
+    start: \`\${startOfWeek} 09:00:00\`,
+    end: \`\${startOfWeek} 12:00:00\`,
+    color: 'blue',
+  },
+  {
+    id: 2,
+    title: 'Design review',
+    start: \`\${startOfWeek} 09:30:00\`,
+    end: \`\${startOfWeek} 11:30:00\`,
+    color: 'violet',
+  },
+  {
+    id: 3,
+    title: 'Customer call',
+    start: \`\${startOfWeek} 10:00:00\`,
+    end: \`\${startOfWeek} 11:00:00\`,
+    color: 'cyan',
+  },
+  {
+    id: 4,
+    title: 'Sprint planning',
+    start: \`\${startOfWeek} 10:00:00\`,
+    end: \`\${startOfWeek} 12:30:00\`,
+    color: 'teal',
+  },
+  {
+    id: 5,
+    title: 'Interview: frontend',
+    start: \`\${startOfWeek} 10:30:00\`,
+    end: \`\${startOfWeek} 11:30:00\`,
+    color: 'green',
+  },
+  {
+    id: 6,
+    title: 'Budget review',
+    start: \`\${startOfWeek} 10:45:00\`,
+    end: \`\${startOfWeek} 12:00:00\`,
+    color: 'orange',
+  },
+  {
+    id: 7,
+    title: '1:1 with Anna',
+    start: \`\${startOfWeek} 11:00:00\`,
+    end: \`\${startOfWeek} 11:45:00\`,
+    color: 'red',
+  },
+  {
+    id: 8,
+    title: 'Release retro',
+    start: \`\${startOfWeek} 11:15:00\`,
+    end: \`\${startOfWeek} 12:45:00\`,
+    color: 'grape',
+  },
+  {
+    id: 9,
+    title: 'Roadmap workshop',
+    start: \`\${dayAfterStartOfWeek} 09:00:00\`,
+    end: \`\${dayAfterStartOfWeek} 11:00:00\`,
+    color: 'indigo',
+  },
+  {
+    id: 10,
+    title: 'Support triage',
+    start: \`\${dayAfterStartOfWeek} 09:30:00\`,
+    end: \`\${dayAfterStartOfWeek} 10:30:00\`,
+    color: 'pink',
+  },
+  {
+    id: 11,
+    title: 'Marketing sync',
+    start: \`\${dayAfterStartOfWeek} 10:00:00\`,
+    end: \`\${dayAfterStartOfWeek} 11:30:00\`,
+    color: 'lime',
   },
 ];
 `;

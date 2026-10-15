@@ -240,10 +240,10 @@ export type ResourcesScheduleFactory = Factory<{
   stylesNames: ResourcesScheduleStylesNames;
 }>;
 
-const defaultProps: Partial<ResourcesScheduleProps> = {
+const defaultProps = {
   defaultView: 'day',
   mode: 'default',
-};
+} satisfies Partial<ResourcesScheduleProps>;
 
 export const ResourcesSchedule = factory<ResourcesScheduleFactory>((_props) => {
   const props = useProps('ResourcesSchedule', defaultProps, _props);

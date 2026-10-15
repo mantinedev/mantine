@@ -46,6 +46,40 @@ export interface CalculateDropTimeResult {
   end: Date;
 }
 
+function toWallClockMs(date: Date) {
+  return Date.UTC(
+    date.getFullYear(),
+    date.getMonth(),
+    date.getDate(),
+    date.getHours(),
+    date.getMinutes(),
+    date.getSeconds(),
+    date.getMilliseconds()
+  );
+}
+
+export function moveEventRange(
+  event: Pick<ScheduleEventData, 'start' | 'end'>,
+  newStart: Date
+): CalculateDropTimeResult {
+  const duration =
+    toWallClockMs(dayjs(event.end).toDate()) - toWallClockMs(dayjs(event.start).toDate());
+  const wallClockEnd = new Date(toWallClockMs(newStart) + duration);
+
+  return {
+    start: newStart,
+    end: new Date(
+      wallClockEnd.getUTCFullYear(),
+      wallClockEnd.getUTCMonth(),
+      wallClockEnd.getUTCDate(),
+      wallClockEnd.getUTCHours(),
+      wallClockEnd.getUTCMinutes(),
+      wallClockEnd.getUTCSeconds(),
+      wallClockEnd.getUTCMilliseconds()
+    ),
+  };
+}
+
 export function calculateDropTime({
   draggedEvent,
   targetDate,
@@ -59,8 +93,6 @@ export function calculateDropTime({
   startTime,
   endTime,
 }: CalculateDropTimeInput): CalculateDropTimeResult {
-  const eventDuration = dayjs(draggedEvent.end).diff(dayjs(draggedEvent.start), 'millisecond');
-
   const parsedTime = parseTimeString(targetSlotTime);
   const targetDay = dayjs(targetDate).startOf('day');
 
@@ -120,11 +152,5 @@ export function calculateDropTime({
     finalTargetTime = baseTargetTime.add(offsetMinutes, 'minute');
   }
 
-  const newStart = finalTargetTime.toDate();
-  const newEnd = finalTargetTime.add(eventDuration, 'millisecond').toDate();
-
-  return {
-    start: newStart,
-    end: newEnd,
-  };
+  return moveEventRange(draggedEvent, finalTargetTime.toDate());
 }

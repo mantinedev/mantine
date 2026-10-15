@@ -197,3 +197,8 @@ export const Demo_subHourGridLines = {
   name: '⭐ Demo: subHourGridLines',
   render: renderDemo(demos.subHourGridLines),
 };
+
+export const Demo_getTimeSlotProps = {
+  name: '⭐ Demo: getTimeSlotProps',
+  render: renderDemo(demos.getTimeSlotProps),
+};

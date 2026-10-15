@@ -1,5 +1,5 @@
 import dayjs from 'dayjs';
-import { Box, GetStylesApi, UnstyledButton } from '@mantine/core';
+import { Box, createEventHandler, GetStylesApi, UnstyledButton } from '@mantine/core';
 import { useDatesContext } from '@mantine/dates';
 import { getLabel, ScheduleLabelsOverride } from '../../labels';
 import { DateStringValue, DateTimeStringValue, DayOfWeek, ScheduleMode } from '../../types';
@@ -18,6 +18,9 @@ export interface WeekViewDayProps {
 
   /** Index of this day in the week */
   dayIndex: number;
+
+  /** If set, the day is marked with `data-today` */
+  today?: boolean;
 
   /** Slots intervals */
   slots: DayTimeInterval[];
@@ -106,6 +109,7 @@ export interface WeekViewDayProps {
 export function WeekViewDay({
   day,
   dayIndex,
+  today,
   slots,
   intervalMinutes,
   getStyles,
@@ -134,7 +138,6 @@ export function WeekViewDay({
   const ctx = useDatesContext();
   const dayOfWeek = dayjs(day).day() as DayOfWeek;
   const weekend = ctx.getWeekendDays(weekendDays).includes(dayOfWeek);
-  const today = dayjs(day).isSame(dayjs(), 'day');
 
   const dayGroup = dayjs(day).format('YYYY-MM-DD');
 
@@ -145,8 +148,13 @@ export function WeekViewDay({
     const isDragSelected = isSlotDragSelected?.(slotIndex, dayGroup) || false;
     const slotStart = `${dayGroup} ${slot.startTime}` as DateTimeStringValue;
     const slotEnd = `${dayGroup} ${slot.endTime}` as DateTimeStringValue;
-    const { onClick: externalOnClick, ...externalSlotProps } =
-      getTimeSlotProps?.({ start: slotStart, end: slotEnd }) || {};
+    const {
+      onClick: externalOnClick,
+      onKeyDown: externalOnKeyDown,
+      onPointerDown: externalOnPointerDown,
+      onDragOver: externalOnDragOver,
+      ...externalSlotProps
+    } = getTimeSlotProps?.({ start: slotStart, end: slotEnd }) || {};
 
     const handleClick =
       mode === 'static'
@@ -185,24 +193,26 @@ export function WeekViewDay({
         tabIndex={mode === 'static' ? -1 : isFirstSlot ? 0 : -1}
         data-drag-slot-index={withDragSlotSelect && mode !== 'static' ? slotIndex : undefined}
         data-drag-slot-group={withDragSlotSelect && mode !== 'static' ? dayGroup : undefined}
-        onKeyDown={(e) => {
-          if (slotIndex === 0 && e.key === 'ArrowUp' && onFirstSlotArrowUp) {
-            e.preventDefault();
+        {...externalSlotProps}
+        onKeyDown={createEventHandler<React.KeyboardEvent<HTMLButtonElement>>((e) => {
+          if (slotIndex === 0 && e!.key === 'ArrowUp' && onFirstSlotArrowUp) {
+            e!.preventDefault();
             onFirstSlotArrowUp(dayIndex);
           } else if (onSlotKeyDown) {
-            onSlotKeyDown(e, dayIndex, slotIndex);
+            onSlotKeyDown(e!, dayIndex, slotIndex);
           }
-        }}
-        onPointerDown={
+        }, externalOnKeyDown)}
+        onPointerDown={createEventHandler<React.PointerEvent<HTMLButtonElement>>(
           withDragSlotSelect && mode !== 'static'
-            ? (e) => onSlotPointerDown?.(e, slotIndex, dayGroup)
-            : undefined
-        }
+            ? (e) => onSlotPointerDown?.(e!, slotIndex, dayGroup)
+            : undefined,
+          externalOnPointerDown
+        )}
         onClick={handleClick}
-        onDragOver={
-          withEventsDragAndDrop && mode !== 'static' ? (e) => e.preventDefault() : undefined
-        }
-        {...externalSlotProps}
+        onDragOver={createEventHandler<React.DragEvent<HTMLButtonElement>>(
+          withEventsDragAndDrop && mode !== 'static' ? (e) => e!.preventDefault() : undefined,
+          externalOnDragOver
+        )}
       />
     );
   });

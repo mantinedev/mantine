@@ -1,4 +1,5 @@
 import dayjs from 'dayjs';
+import { useState } from 'react';
 import { Box, UnstyledButton } from '@mantine/core';
 import { MonthView, ScheduleEventData } from '@mantine/schedule';
 import { MantineDemo } from '@mantinex/demo';
@@ -72,6 +73,7 @@ function isAllDayEvent(event: ScheduleEventData) {
 
 const code = `
 import dayjs from 'dayjs';
+import { useState } from 'react';
 import { Box, UnstyledButton } from '@mantine/core';
 import { MonthView, ScheduleEventData } from '@mantine/schedule';
 
@@ -84,9 +86,12 @@ function isAllDayEvent(event: ScheduleEventData) {
 const events: ScheduleEventData[] = [/* ...events */];
 
 function Demo() {
+  const [date, setDate] = useState(dayjs().format('YYYY-MM-DD'));
+
   return (
     <MonthView
-      date={new Date()}
+      date={date}
+      onDateChange={setDate}
       events={events}
       renderEvent={(event, props) => {
         if (isAllDayEvent(event)) {
@@ -120,7 +125,7 @@ function Demo() {
                 flexShrink: 0,
               }}
             />
-            <span style={{ width: 28, flexShrink: 0 }}>{dayjs(event.start).format('h:mm')}</span>
+            <span style={{ width: 28, flexShrink: 0 }}>{dayjs(event.start).format('HH:mm')}</span>
             <span style={{ overflow: 'hidden', textOverflow: 'ellipsis' }}>
               {event.title}
             </span>
@@ -133,9 +138,12 @@ function Demo() {
 `;
 
 function Demo() {
+  const [date, setDate] = useState(dayjs().format('YYYY-MM-DD'));
+
   return (
     <MonthView
-      date={new Date()}
+      date={date}
+      onDateChange={setDate}
       events={eventData}
       renderEvent={(event, props) => {
         if (isAllDayEvent(event)) {
@@ -169,7 +177,7 @@ function Demo() {
                 flexShrink: 0,
               }}
             />
-            <span style={{ width: 28, flexShrink: 0 }}>{dayjs(event.start).format('h:mm')}</span>
+            <span style={{ width: 28, flexShrink: 0 }}>{dayjs(event.start).format('HH:mm')}</span>
             <span style={{ overflow: 'hidden', textOverflow: 'ellipsis' }}>{event.title}</span>
           </UnstyledButton>
         );
@@ -186,7 +194,7 @@ export const timedEvents: MantineDemo = {
     { fileName: 'Demo.tsx', code, language: 'tsx' },
     {
       fileName: 'events.ts',
-      code: `import dayjs from 'dayjs';\nimport { ScheduleEventData } from '@mantine/schedule';\n\nconst startOfMonth = dayjs().startOf('month');\n\nexport const events: ScheduleEventData[] = ${JSON.stringify(eventData, null, 2)};`,
+      code: `import { ScheduleEventData } from '@mantine/schedule';\n\nexport const events: ScheduleEventData[] = ${JSON.stringify(eventData, null, 2)};`,
       language: 'tsx',
     },
   ],

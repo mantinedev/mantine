@@ -912,4 +912,52 @@ describe('@mantine/schedule/get-month-positioned-events', () => {
       }
     );
   });
+
+  describe('event order and day membership', () => {
+    it('sorts events by start time before assigning rows', () => {
+      const events = [
+        testUtils.createEvent({
+          id: 'late',
+          start: '2025-01-15 15:00:00',
+          end: '2025-01-15 16:00:00',
+        }),
+        testUtils.createEvent({
+          id: 'early',
+          start: '2025-01-15 09:00:00',
+          end: '2025-01-15 10:00:00',
+        }),
+      ];
+
+      const result = getMonthPositionedEvents({ date: testMonth, events });
+      const positioned = Object.values(result.groupedByWeek).flat();
+
+      expect(positioned.find((event) => event.id === 'early')!.position.row).toBe(0);
+      expect(positioned.find((event) => event.id === 'late')!.position.row).toBe(1);
+      expect(result.groupedByDay['2025-01-15 00:00:00'].map((event) => event.id)).toStrictEqual([
+        'early',
+        'late',
+      ]);
+    });
+
+    it('includes zero-length events at midnight', () => {
+      const events = [
+        testUtils.createEvent({ id: 1, start: '2025-01-15 00:00:00', end: '2025-01-15 00:00:00' }),
+      ];
+
+      const result = getMonthPositionedEvents({ date: testMonth, events });
+      expect(result.groupedByDay['2025-01-15 00:00:00'].map((event) => event.id)).toStrictEqual([
+        1,
+      ]);
+    });
+
+    it('does not add an event ending at midnight to the end day', () => {
+      const events = [
+        testUtils.createEvent({ id: 1, start: '2025-01-14 10:00:00', end: '2025-01-16 00:00:00' }),
+      ];
+
+      const result = getMonthPositionedEvents({ date: testMonth, events });
+      expect(result.groupedByDay['2025-01-15 00:00:00']).toHaveLength(1);
+      expect(result.groupedByDay['2025-01-16 00:00:00']).toHaveLength(0);
+    });
+  });
 });

@@ -57,6 +57,7 @@ function Demo() {
   // getCurrentTime is called on every tick, so the indicator keeps updating
   const getCurrentTime = () => dayjs().tz(tz).format('YYYY-MM-DD HH:mm:ss');
   const currentDate = getCurrentTime().split(' ')[0];
+  const [date, setDate] = useState(currentDate);
 
   return (
     <Stack>
@@ -64,12 +65,16 @@ function Demo() {
         label="Display timezone"
         data={timezones}
         value={tz}
-        onChange={(value) => setTz(value!)}
+        onChange={(value) => {
+          setTz(value!);
+          setDate(dayjs().tz(value!).format('YYYY-MM-DD'));
+        }}
         allowDeselect={false}
       />
 
       <WeekView
-        date={currentDate}
+        date={date}
+        onDateChange={setDate}
         events={getEvents(currentDate)}
         getCurrentTime={getCurrentTime}
         startScrollTime={dayjs(getCurrentTime()).subtract(2, 'hour').format('HH:mm:ss')}
@@ -82,7 +87,6 @@ function Demo() {
 `;
 
 const dataCode = `
-import dayjs from 'dayjs';
 import { ScheduleEventData } from '@mantine/schedule';
 
 export function getEvents(date: string): ScheduleEventData[] {
@@ -99,6 +103,7 @@ function Demo() {
 
   const getCurrentTime = () => dayjs().tz(tz).format('YYYY-MM-DD HH:mm:ss');
   const currentDate = getCurrentTime().split(' ')[0];
+  const [date, setDate] = useState(currentDate);
 
   return (
     <Stack>
@@ -106,12 +111,16 @@ function Demo() {
         label="Display timezone"
         data={timezones}
         value={tz}
-        onChange={(value) => setTz(value!)}
+        onChange={(value) => {
+          setTz(value!);
+          setDate(dayjs().tz(value!).format('YYYY-MM-DD'));
+        }}
         allowDeselect={false}
       />
 
       <WeekView
-        date={currentDate}
+        date={date}
+        onDateChange={setDate}
         events={getEvents(currentDate)}
         getCurrentTime={getCurrentTime}
         startScrollTime={dayjs(getCurrentTime()).subtract(2, 'hour').format('HH:mm:ss')}

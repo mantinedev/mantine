@@ -1,5 +1,7 @@
 import {
   AnyDateValue,
+  DateTimeStringValue,
+  DayEventPositionData,
   DayPositionedEventData,
   ScheduleEventData,
   ScheduleEventOverlapMode,
@@ -7,10 +9,25 @@ import {
 import {
   applyCascadeLayout,
   getDayPosition,
+  getOverlapClusters,
   isAllDayEvent,
   isEventsOverlap,
   sortEvents,
 } from '../../../utils';
+import { clipEventToDay } from '../../../utils/clip-event-to-day/clip-event-to-day';
+
+export interface DayLayoutEventPositionData extends DayEventPositionData {
+  /** Event start clipped to the displayed day, the position is calculated from it */
+  displayStart: DateTimeStringValue;
+
+  /** Event end clipped to the displayed day (23:59:59 at most), the position is calculated from it */
+  displayEnd: DateTimeStringValue;
+}
+
+/** Original event data (start and end are not clipped) with the position on the displayed day */
+export type DayLayoutEventData = ScheduleEventData & {
+  position: DayLayoutEventPositionData;
+};
 
 interface ColumnHasConflictOptions {
   columns: ScheduleEventData[][];
@@ -44,11 +61,25 @@ function columnHasConflict({
   });
 }
 
+function toOriginalEvents(
+  positioned: DayPositionedEventData[],
+  originals: Map<DayPositionedEventData, ScheduleEventData>
+): DayLayoutEventData[] {
+  return positioned.map((clipped) => ({
+    ...originals.get(clipped)!,
+    position: {
+      ...clipped.position,
+      displayStart: clipped.start as DateTimeStringValue,
+      displayEnd: clipped.end as DateTimeStringValue,
+    },
+  }));
+}
+
 interface GetDayPositionedEventsInput {
   /** Date at which events are positioned, used to check if events are all-day */
   date: AnyDateValue;
 
-  /** List of all events that belong to the given date, extra events must be filtered out before passing to the function */
+  /** List of all events that overlap the given date, extra events must be filtered out before passing to the function. Events that start before or end after the date are laid out clipped to it. */
   events: ScheduleEventData[];
 
   /** Start time of the day view, used to calculate event positions */
@@ -71,11 +102,17 @@ export function getDayPositionedEvents({
   intervalMinutes,
   date,
   eventOverlapMode = 'columns',
-}: GetDayPositionedEventsInput) {
+}: GetDayPositionedEventsInput): DayLayoutEventData[] {
   const columns: ScheduleEventData[][] = [];
   const positioned: DayPositionedEventData[] = [];
+  const originals = new Map<DayPositionedEventData, ScheduleEventData>();
+  const clippedToOriginal = new Map<ScheduleEventData, ScheduleEventData>();
 
-  const sorted = sortEvents(events);
+  for (const event of events) {
+    clippedToOriginal.set(clipEventToDay(event, date), event);
+  }
+
+  const sorted = sortEvents([...clippedToOriginal.keys()]);
 
   for (const event of sorted) {
     const allDay = isAllDayEvent({ event, date });
@@ -96,7 +133,7 @@ export function getDayPositionedEvents({
       ? { top: 0, height: 100 }
       : getDayPosition({ event, startTime, endTime, intervalMinutes });
 
-    positioned.push({
+    const positionedEvent: DayPositionedEventData = {
       ...event,
       position: {
         ...verticalPosition,
@@ -108,7 +145,10 @@ export function getDayPositionedEvents({
         offset: 0,
         overlaps: 0,
       },
-    });
+    };
+
+    positioned.push(positionedEvent);
+    originals.set(positionedEvent, clippedToOriginal.get(event)!);
   }
   for (const positionedEvent of positioned) {
     if (positionedEvent.position.allDay) {
@@ -120,66 +160,36 @@ export function getDayPositionedEvents({
 
   if (eventOverlapMode === 'cascade') {
     applyCascadeLayout(positioned);
-    return positioned;
+    return toOriginalEvents(positioned, originals);
   }
 
-  for (const positionedEvent of positioned) {
-    const { allDay, column } = positionedEvent.position;
+  const timedEvents = positioned.filter((event) => !event.position.allDay);
 
-    if (allDay) {
-      continue;
-    }
+  for (const cluster of getOverlapClusters(timedEvents)) {
+    const totalColumns = Math.max(...cluster.map((event) => event.position.column)) + 1;
 
-    // Find events that directly overlap with this event
-    const directlyOverlapping: DayPositionedEventData[] = [];
+    for (const positionedEvent of cluster) {
+      const { column } = positionedEvent.position;
+      let nextOccupiedColumn = totalColumns;
 
-    for (const otherEvent of positioned) {
-      if (otherEvent === positionedEvent || otherEvent.position.allDay) {
-        continue;
-      }
-
-      if (isEventsOverlap(otherEvent, positionedEvent)) {
-        directlyOverlapping.push(otherEvent);
-      }
-    }
-
-    // Find the max column by also checking overlaps of overlapping events
-    // This ensures we account for the full column group
-    let maxColumn = column;
-
-    for (const overlappingEvent of directlyOverlapping) {
-      maxColumn = Math.max(maxColumn, overlappingEvent.position.column);
-
-      // Check what overlaps with each overlapping event
-      for (const otherEvent of positioned) {
-        if (otherEvent === overlappingEvent || otherEvent.position.allDay) {
-          continue;
-        }
-
-        if (isEventsOverlap(otherEvent, overlappingEvent)) {
-          maxColumn = Math.max(maxColumn, otherEvent.position.column);
+      for (const other of cluster) {
+        if (
+          other !== positionedEvent &&
+          other.position.column > column &&
+          other.position.column < nextOccupiedColumn &&
+          isEventsOverlap(other, positionedEvent)
+        ) {
+          nextOccupiedColumn = other.position.column;
         }
       }
+
+      const columnsSpanned = nextOccupiedColumn - column;
+
+      positionedEvent.position.overlaps = totalColumns;
+      positionedEvent.position.width = (columnsSpanned / totalColumns) * 100;
+      positionedEvent.position.offset = (column * 100) / totalColumns;
     }
-
-    const totalColumns = maxColumn + 1;
-
-    // Find the first occupied column to the right of this event
-    // Events expand to fill empty columns but stop at the next occupied column
-    let nextOccupiedColumn = totalColumns;
-
-    for (const other of directlyOverlapping) {
-      if (other.position.column > column && other.position.column < nextOccupiedColumn) {
-        nextOccupiedColumn = other.position.column;
-      }
-    }
-
-    const columnsSpanned = nextOccupiedColumn - column;
-
-    positionedEvent.position.overlaps = totalColumns;
-    positionedEvent.position.width = (columnsSpanned / totalColumns) * 100;
-    positionedEvent.position.offset = (column * 100) / totalColumns;
   }
 
-  return positioned;
+  return toOriginalEvents(positioned, originals);
 }

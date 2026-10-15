@@ -98,13 +98,14 @@ export const manyEvents: ScheduleEventData[] = [
 
 export const dataCode = `
 import dayjs from 'dayjs';
+import { ScheduleEventData } from '@mantine/schedule';
 
 const today = dayjs().format('YYYY-MM-DD');
 const startOfMonth = dayjs().startOf('month').format('YYYY-MM-DD');
 const midMonth = dayjs().date(15).format('YYYY-MM-DD');
 const endOfMonth = dayjs().endOf('month').format('YYYY-MM-DD');
 
-export const events = [
+export const events: ScheduleEventData[] = [
   {
     id: 1,
     title: 'Team Meeting',
@@ -152,10 +153,11 @@ export const events = [
 
 export const manyEventsCode = `
 import dayjs from 'dayjs';
+import { ScheduleEventData } from '@mantine/schedule';
 
 const today = dayjs().format('YYYY-MM-DD');
 
-export const events = [
+export const events: ScheduleEventData[] = [
   {
     id: 1,
     title: 'Event 1',

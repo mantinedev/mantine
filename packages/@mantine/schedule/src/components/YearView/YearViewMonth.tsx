@@ -1,7 +1,7 @@
 import dayjs from 'dayjs';
 import { Box, GetStylesApi, getThemeColor, UnstyledButton, useMantineTheme } from '@mantine/core';
 import { useDatesContext } from '@mantine/dates';
-import { ScheduleLabelsOverride } from '../../labels';
+import { getLabel, ScheduleLabelsOverride } from '../../labels';
 import {
   DateLabelFormat,
   DateStringValue,
@@ -136,6 +136,7 @@ export function YearViewMonth({
   onMonthClick,
   getWeekNumberProps,
   highlightToday,
+  labels,
   groupedEvents,
   mode,
   withOutsideDays,
@@ -166,7 +167,7 @@ export function YearViewMonth({
       })
         .filter((_, index) => !hiddenColumns.has(index))
         .map((day, index) => (
-          <div {...getStyles('yearViewWeekday')} key={index}>
+          <div key={index} {...getStyles('yearViewWeekday')}>
             {day}
           </div>
         ))
@@ -187,7 +188,7 @@ export function YearViewMonth({
       const outside = !isSameMonth(date, month);
 
       if (outside && !withOutsideDays) {
-        return <div {...getStyles('yearViewDay')} data-day-placeholder key={date} />;
+        return <div key={date} {...getStyles('yearViewDay')} data-day-placeholder />;
       }
 
       const weekend = resolvedWeekendDays.includes(dayjs(date).day() as DayOfWeek);
@@ -217,10 +218,10 @@ export function YearViewMonth({
             <div {...getStyles('yearViewDayIndicators')}>
               {dayEvents.slice(0, 3).map((event) => (
                 <div
+                  key={event.id}
                   {...getStyles('yearViewDayIndicator', {
                     style: { backgroundColor: getThemeColor(event.color, theme) },
                   })}
-                  key={event.id}
                 />
               ))}
             </div>
@@ -229,10 +230,10 @@ export function YearViewMonth({
 
       return (
         <UnstyledButton
+          key={date}
           aria-label={ariaLabel}
           {...dayProps}
           {...getStyles('yearViewDay', { className: dayProps.className, style: dayProps.style })}
-          key={date}
           mod={[{ outside, weekend, today: isToday, static: mode === 'static' }, dayProps.mod]}
           tabIndex={isInTabOrder ? 0 : -1}
           ref={(node) => (node ? __getDayRef?.(weekIndex, dayIndex, node) : undefined)}
@@ -256,14 +257,19 @@ export function YearViewMonth({
 
     const weekNumberProps = getWeekNumberProps?.(dayjs(week[0]).format('YYYY-MM-DD')) || {};
     const weekNumber = getWeekNumber(week);
+    const weekNumberLabel = getLabel('weekNumber', labels)(weekNumber);
+    const hasVisibleDays = withOutsideDays || visibleDays.some((date) => isSameMonth(date, month));
 
     return (
-      <div {...getStyles('yearViewWeek')} key={weekIndex}>
-        {withWeekNumbers && (
+      <div key={weekIndex} {...getStyles('yearViewWeek')}>
+        {withWeekNumbers && !hasVisibleDays && (
+          <div {...getStyles('yearViewWeekNumber')} data-hidden aria-hidden />
+        )}
+        {withWeekNumbers && hasVisibleDays && (
           <UnstyledButton
             key={weekNumber}
-            aria-label={`Week ${weekNumber}`}
-            title={`Week ${weekNumber}`}
+            aria-label={weekNumberLabel}
+            title={weekNumberLabel}
             {...weekNumberProps}
             onClick={
               mode === 'static'

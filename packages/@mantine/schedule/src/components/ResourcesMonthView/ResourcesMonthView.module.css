@@ -45,7 +45,7 @@
   min-width: var(--resources-month-view-resource-label-width);
   border-inline-end: 1px solid var(--resources-month-view-border-color);
   position: sticky;
-  left: 0;
+  inset-inline-start: 0;
   z-index: 6;
   display: flex;
   align-items: center;
@@ -115,12 +115,12 @@
   border-inline-end: 1px solid var(--resources-month-view-border-color);
   min-height: var(--resources-month-view-row-height);
   position: sticky;
-  left: 0;
+  inset-inline-start: 0;
   z-index: 4;
   background-color: var(--mantine-color-body);
 
   &:where([data-has-groups]) {
-    left: var(--resources-month-view-group-label-width);
+    inset-inline-start: var(--resources-month-view-group-label-width);
   }
 }
 
@@ -129,7 +129,7 @@
   min-width: var(--resources-month-view-group-label-width);
   min-height: var(--resources-month-view-row-height);
   position: sticky;
-  left: 0;
+  inset-inline-start: 0;
   z-index: 5;
   background-color: var(--mantine-color-body);
   display: flex;
@@ -160,7 +160,7 @@
   min-width: var(--resources-month-view-group-label-width);
   min-height: var(--resources-month-view-row-height);
   position: sticky;
-  left: 0;
+  inset-inline-start: 0;
   z-index: 5;
   background-color: var(--mantine-color-body);
   border-inline-end: 1px solid var(--resources-month-view-border-color);

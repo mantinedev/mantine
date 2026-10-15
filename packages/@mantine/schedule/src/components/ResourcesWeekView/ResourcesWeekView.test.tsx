@@ -1,6 +1,7 @@
 import dayjs from 'dayjs';
 import 'dayjs/locale/ru';
 import { act, createEvent, fireEvent } from '@testing-library/react';
+import { DirectionProvider, MantineProvider } from '@mantine/core';
 import { DatesProvider } from '@mantine/dates';
 import { render, screen, userEvent } from '@mantine-tests/core';
 import { toDateString } from '../../utils';
@@ -78,8 +79,14 @@ describe('@mantine/schedule/ResourcesWeekView', () => {
 
     expect(getRowLabel(eventA)).toHaveTextContent('Room A');
     expect(getRowLabel(eventB)).toHaveTextContent('Room B');
-    expect(parseFloat(eventA.style.left)).toBeCloseTo((2 / 7) * 100 + (1 / 4) * (100 / 7), 2);
-    expect(parseFloat(eventB.style.left)).toBeCloseTo((3 / 7) * 100 + (2 / 4) * (100 / 7), 2);
+    expect(parseFloat(eventA.style.insetInlineStart)).toBeCloseTo(
+      (2 / 7) * 100 + (1 / 4) * (100 / 7),
+      2
+    );
+    expect(parseFloat(eventB.style.insetInlineStart)).toBeCloseTo(
+      (3 / 7) * 100 + (2 / 4) * (100 / 7),
+      2
+    );
   });
 
   it('renders all-day events as full-width bars', () => {
@@ -102,7 +109,10 @@ describe('@mantine/schedule/ResourcesWeekView', () => {
       '.mantine-ResourcesWeekView-resourcesWeekViewAllDayEvent'
     ) as HTMLElement;
     expect(bar).toBeInTheDocument();
-    expect(parseFloat(bar.style.left.replace('calc(', ''))).toBeCloseTo((2 / 7) * 100, 2);
+    expect(parseFloat(bar.style.insetInlineStart.replace('calc(', ''))).toBeCloseTo(
+      (2 / 7) * 100,
+      2
+    );
     expect(parseFloat(bar.style.width.replace('calc(', ''))).toBeCloseTo(100 / 7, 2);
   });
 
@@ -519,13 +529,13 @@ describe('@mantine/schedule/ResourcesWeekView', () => {
       render(<ResourcesWeekView {...defaultProps} />);
 
       const firstSlot = screen.getAllByRole('button', {
-        name: /Resource time slot Room A 2025-01-13/,
+        name: /Resource time slot Room A January 13, 2025/,
       })[0];
       firstSlot.focus();
       await userEvent.keyboard('{ArrowRight}');
 
       const nextSlot = screen.getAllByRole('button', {
-        name: /Resource time slot Room A 2025-01-13/,
+        name: /Resource time slot Room A January 13, 2025/,
       })[1];
       expect(nextSlot).toHaveFocus();
     });
@@ -534,13 +544,13 @@ describe('@mantine/schedule/ResourcesWeekView', () => {
       render(<ResourcesWeekView {...defaultProps} />);
 
       const roomASlot = screen.getAllByRole('button', {
-        name: /Resource time slot Room A 2025-01-13/,
+        name: /Resource time slot Room A January 13, 2025/,
       })[0];
       roomASlot.focus();
       await userEvent.keyboard('{ArrowDown}');
 
       const roomBSlot = screen.getAllByRole('button', {
-        name: /Resource time slot Room B 2025-01-13/,
+        name: /Resource time slot Room B January 13, 2025/,
       })[0];
       expect(roomBSlot).toHaveFocus();
     });
@@ -1387,6 +1397,96 @@ describe('@mantine/schedule/ResourcesWeekView', () => {
       );
       spy.mockRestore();
     });
+    describe('background events that cross midnight', () => {
+      const crossingProps: ResourcesWeekViewProps = {
+        date: '2025-01-15',
+        resources,
+        intervalMinutes: 60,
+        withEventResize: true,
+        withInteractiveBackgroundEvents: true,
+        events: [
+          {
+            id: 'carry',
+            title: 'Carry over',
+            start: '2025-01-12 20:00:00',
+            end: '2025-01-13 03:00:00',
+            color: 'gray',
+            display: 'background',
+            resourceId: 'room-a',
+          },
+          {
+            id: 'overnight',
+            title: 'Overnight',
+            start: '2025-01-14 22:00:00',
+            end: '2025-01-15 02:00:00',
+            color: 'gray',
+            display: 'background',
+            resourceId: 'room-a',
+          },
+        ],
+      };
+
+      const mockRect = () =>
+        jest.spyOn(HTMLElement.prototype, 'getBoundingClientRect').mockReturnValue({
+          top: 0,
+          left: 0,
+          right: 700,
+          bottom: 100,
+          width: 700,
+          height: 100,
+          x: 0,
+          y: 0,
+          toJSON: () => {},
+        } as DOMRect);
+
+      const getSegments = (container: HTMLElement, id: string) =>
+        container.querySelectorAll(`[data-event-id="${id}"]`);
+
+      const resize = (handle: Element, clientX: number) => {
+        fireEvent.pointerDown(handle);
+        act(() => {
+          document.dispatchEvent(new MouseEvent('pointermove', { clientX }));
+          document.dispatchEvent(new MouseEvent('pointerup'));
+        });
+      };
+
+      it('renders a part of the event on every day it covers', () => {
+        const { container } = render(<ResourcesWeekView {...crossingProps} />);
+        expect(getSegments(container, 'overnight')).toHaveLength(2);
+        expect(getSegments(container, 'carry')).toHaveLength(1);
+      });
+
+      it('marks the clipped edges of each part', () => {
+        const { container } = render(<ResourcesWeekView {...crossingProps} />);
+        const [tuesday, wednesday] = Array.from(getSegments(container, 'overnight'));
+        expect(tuesday).toHaveAttribute('data-continues-after');
+        expect(tuesday).not.toHaveAttribute('data-continues-before');
+        expect(wednesday).toHaveAttribute('data-continues-before');
+        expect(wednesday).not.toHaveAttribute('data-continues-after');
+        expect(getSegments(container, 'carry')[0]).toHaveAttribute('data-continues-before');
+      });
+
+      it('does not resize the clipped edge of a part', () => {
+        const spy = mockRect();
+        const onEventResize = jest.fn();
+        const { container } = render(
+          <ResourcesWeekView {...crossingProps} onEventResize={onEventResize} />
+        );
+
+        resize(getSegments(container, 'carry')[0].querySelector('[data-edge="start"]')!, 20);
+        resize(getSegments(container, 'overnight')[0].querySelector('[data-edge="end"]')!, 290);
+        expect(onEventResize).not.toHaveBeenCalled();
+
+        resize(getSegments(container, 'overnight')[1].querySelector('[data-edge="end"]')!, 310);
+        expect(onEventResize).toHaveBeenCalledTimes(1);
+        expect(onEventResize.mock.calls[0][0]).toMatchObject({
+          eventId: 'overnight',
+          newStart: '2025-01-14 22:00:00',
+        });
+        expect(onEventResize.mock.calls[0][0].newEnd).not.toBe('2025-01-15 02:00:00');
+        spy.mockRestore();
+      });
+    });
   });
 
   describe('drop validation', () => {
@@ -1481,5 +1581,146 @@ describe('@mantine/schedule/ResourcesWeekView', () => {
       expect(canDropEvent).toHaveBeenCalledWith(expect.objectContaining({ resourceId: 'room-b' }));
       expect(onEventDrop).not.toHaveBeenCalled();
     });
+  });
+
+  it('formats slot aria-labels with a localized date and short times', () => {
+    render(<ResourcesWeekView {...defaultProps} locale="ru" />);
+    expect(
+      screen.getByRole('button', {
+        name: 'Resource time slot Room A январь 13, 2025 08:00 - 09:00',
+      })
+    ).toBeInTheDocument();
+  });
+
+  it('renders recurring instances once per occurrence', () => {
+    render(
+      <ResourcesWeekView
+        {...defaultProps}
+        events={[
+          {
+            id: 'daily',
+            title: 'Daily',
+            start: '2025-01-13 09:00:00',
+            end: '2025-01-13 10:00:00',
+            color: 'blue',
+            payload: {},
+            resourceId: 'room-a',
+            recurrence: { rrule: 'FREQ=DAILY;COUNT=3' },
+          },
+        ]}
+      />
+    );
+    expect(screen.getAllByText('Daily')).toHaveLength(3);
+  });
+});
+
+describe('@mantine/schedule/ResourcesWeekView RTL arrow keys', () => {
+  it('mirrors ArrowLeft and ArrowRight', async () => {
+    render(
+      <DirectionProvider initialDirection="rtl">
+        <ResourcesWeekView {...defaultProps} />
+      </DirectionProvider>
+    );
+
+    const slots = screen.getAllByRole('button', {
+      name: /Resource time slot Room A January 13, 2025/,
+    });
+    slots[0].focus();
+    await userEvent.keyboard('{ArrowLeft}');
+    expect(slots[1]).toHaveFocus();
+    await userEvent.keyboard('{ArrowRight}');
+    expect(slots[0]).toHaveFocus();
+  });
+});
+
+describe('@mantine/schedule/ResourcesWeekView current time indicator Styles API', () => {
+  it('moves the indicator and updates the bubble every minute', () => {
+    jest.useFakeTimers();
+    let current = '2025-01-15 10:30:00';
+    const { container } = render(
+      <ResourcesWeekView
+        {...defaultProps}
+        slotLabelFormat="HH:mm"
+        withCurrentTimeIndicator
+        getCurrentTime={() => current}
+      />
+    );
+    const getIndicator = () =>
+      container.querySelector(
+        '.mantine-ResourcesWeekView-resourcesWeekViewCurrentTimeIndicator'
+      ) as HTMLElement;
+    const initialOffset = getIndicator().style.getPropertyValue('--indicator-left-offset');
+    expect(screen.getByText('10:30')).toBeInTheDocument();
+
+    current = '2025-01-15 11:15:00';
+    act(() => {
+      jest.advanceTimersByTime(60000);
+    });
+
+    expect(screen.getByText('11:15')).toBeInTheDocument();
+    expect(getIndicator().style.getPropertyValue('--indicator-left-offset')).not.toBe(
+      initialOffset
+    );
+    jest.useRealTimers();
+  });
+
+  it('applies classNames, styles and attributes to every indicator part', () => {
+    const { container } = render(
+      <MantineProvider
+        theme={{
+          components: {
+            ResourcesWeekView: {
+              classNames: { resourcesWeekViewCurrentTimeIndicatorLine: 'theme-line' },
+            },
+          },
+        }}
+      >
+        <ResourcesWeekView
+          {...defaultProps}
+          withCurrentTimeIndicator
+          withCurrentTimeBubble={false}
+          getCurrentTime={() => '2025-01-15 10:30:00'}
+          classNames={{
+            resourcesWeekViewCurrentTimeIndicator: 'custom-root',
+            resourcesWeekViewCurrentTimeIndicatorLine: 'custom-line',
+            resourcesWeekViewCurrentTimeIndicatorThumb: 'custom-thumb',
+          }}
+          styles={{ resourcesWeekViewCurrentTimeIndicatorLine: { opacity: 0.5 } }}
+          attributes={{ resourcesWeekViewCurrentTimeIndicatorThumb: { 'data-test': 'thumb' } }}
+        />
+      </MantineProvider>
+    );
+
+    const root = container.querySelector(
+      '.mantine-ResourcesWeekView-resourcesWeekViewCurrentTimeIndicator'
+    )!;
+    expect(root).toHaveClass('custom-root');
+    const line = root.querySelector(
+      '.mantine-ResourcesWeekView-resourcesWeekViewCurrentTimeIndicatorLine'
+    )!;
+    expect(line).toHaveClass('custom-line', 'theme-line');
+    expect(line).toHaveStyle({ opacity: '0.5' });
+    const thumb = root.querySelector(
+      '.mantine-ResourcesWeekView-resourcesWeekViewCurrentTimeIndicatorThumb'
+    )!;
+    expect(thumb).toHaveClass('custom-thumb');
+    expect(thumb).toHaveAttribute('data-test', 'thumb');
+  });
+
+  it('applies classNames to the time bubble', () => {
+    const { container } = render(
+      <ResourcesWeekView
+        {...defaultProps}
+        withCurrentTimeIndicator
+        getCurrentTime={() => '2025-01-15 10:30:00'}
+        classNames={{ resourcesWeekViewCurrentTimeIndicatorTimeBubble: 'custom-bubble' }}
+      />
+    );
+
+    expect(
+      container.querySelector(
+        '.mantine-ResourcesWeekView-resourcesWeekViewCurrentTimeIndicatorTimeBubble'
+      )
+    ).toHaveClass('custom-bubble');
   });
 });

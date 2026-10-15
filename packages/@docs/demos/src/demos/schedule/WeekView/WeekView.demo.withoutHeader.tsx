@@ -1,6 +1,6 @@
 import { WeekView } from '@mantine/schedule';
 import { MantineDemo } from '@mantinex/demo';
-import { regularEvents } from './_data';
+import { dataCode, regularEvents } from './_data';
 
 const code = `
 import { WeekView } from '@mantine/schedule';
@@ -35,5 +35,8 @@ export const withoutHeader: MantineDemo = {
   defaultExpanded: false,
   type: 'code',
   component: Demo,
-  code,
+  code: [
+    { code, language: 'tsx', fileName: 'Demo.tsx' },
+    { code: dataCode, language: 'tsx', fileName: 'data.ts' },
+  ],
 };

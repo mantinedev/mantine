@@ -1,5 +1,6 @@
 import dayjs from 'dayjs';
 import { DateStringValue, ScheduleEventData } from '../../types';
+import { moveEventRange } from '../calculate-drop-time/calculate-drop-time';
 
 export interface CalculateMonthDropDateInput {
   /** The event being dragged */
@@ -21,8 +22,6 @@ export function calculateMonthDropDate({
   draggedEvent,
   targetDay,
 }: CalculateMonthDropDateInput): CalculateMonthDropDateResult {
-  const eventDuration = dayjs(draggedEvent.end).diff(dayjs(draggedEvent.start), 'millisecond');
-
   const originalStartTime = dayjs(draggedEvent.start);
   const targetDayStart = dayjs(targetDay).startOf('day');
 
@@ -32,10 +31,5 @@ export function calculateMonthDropDate({
     .second(originalStartTime.second())
     .millisecond(originalStartTime.millisecond());
 
-  const newEnd = newStart.add(eventDuration, 'millisecond');
-
-  return {
-    start: newStart.toDate(),
-    end: newEnd.toDate(),
-  };
+  return moveEventRange(draggedEvent, newStart.toDate());
 }

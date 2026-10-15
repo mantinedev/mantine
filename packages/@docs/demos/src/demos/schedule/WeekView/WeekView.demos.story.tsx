@@ -232,3 +232,8 @@ export const Demo_preventEventOverlap = {
   name: '⭐ Demo: preventEventOverlap',
   render: renderDemo(demos.preventEventOverlap),
 };
+
+export const Demo_getTimeSlotProps = {
+  name: '⭐ Demo: getTimeSlotProps',
+  render: renderDemo(demos.getTimeSlotProps),
+};

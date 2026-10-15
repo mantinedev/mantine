@@ -62,7 +62,7 @@ Set `withWeekDays={false}` to hide the weekday names row:
 
 ## Static mode
 
-Set `mode="static"` to disable all interactions:
+Set `mode="static"` to disable interactions with days and events. Header controls still work:
 
 <Demo data={MobileMonthViewDemos.staticMode} />
 
@@ -77,8 +77,8 @@ Combine it with `labels` prop to translate all UI text:
 
 ### Focus management
 
-Only the first day of the month is included in the tab order, other days are reached with arrow keys.
-The day focused with arrow keys becomes the new tab stop.
+Only one day is included in the tab order: the selected day, today or the first day of the month.
+Other days are reached with arrow keys, and the last focused day becomes the new tab stop.
 
 ### Keyboard interactions
 

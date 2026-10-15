@@ -125,7 +125,8 @@ Set `withHeader={false}` and build your own header with `ScheduleHeader` compoun
 
 ## Week label format
 
-Use `weekLabelFormat` prop to change the week range format in the header:
+Use `weekLabelFormat` prop to change the week range format in the header.
+The year is appended to the label unless the format already includes it:
 
 <Demo data={WeekViewDemos.weekLabelFormat} />
 
@@ -315,7 +316,7 @@ with events of the current week as a list:
 
 ## Static mode
 
-Set `mode="static"` to disable all interactions:
+Set `mode="static"` to disable interactions with events and time slots. Header navigation still works:
 
 <Demo data={WeekViewDemos.staticMode} />
 

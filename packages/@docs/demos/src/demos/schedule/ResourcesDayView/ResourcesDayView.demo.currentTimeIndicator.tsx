@@ -1,15 +1,22 @@
+import dayjs from 'dayjs';
+import { useState } from 'react';
 import { ResourcesDayView } from '@mantine/schedule';
 import { MantineDemo } from '@mantinex/demo';
 import { dataCode, resourceEvents, resources } from './_data';
 
 const code = `
+import dayjs from 'dayjs';
+import { useState } from 'react';
 import { ResourcesDayView } from '@mantine/schedule';
 import { events, resources } from './data';
 
 function Demo() {
+  const [date, setDate] = useState(dayjs().format('YYYY-MM-DD'));
+
   return (
     <ResourcesDayView
-      date={new Date()}
+      date={date}
+      onDateChange={setDate}
       resources={resources}
       events={events}
       withCurrentTimeIndicator
@@ -20,9 +27,12 @@ function Demo() {
 `;
 
 function Demo() {
+  const [date, setDate] = useState(dayjs().format('YYYY-MM-DD'));
+
   return (
     <ResourcesDayView
-      date={new Date()}
+      date={date}
+      onDateChange={setDate}
       resources={resources}
       events={resourceEvents}
       withCurrentTimeIndicator

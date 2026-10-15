@@ -282,3 +282,64 @@ describe('@mantine/schedule/use-horizontal-event-resize placement validation', (
     expect(canResizeEventTo).not.toHaveBeenCalled();
   });
 });
+
+describe('@mantine/schedule/use-horizontal-event-resize gesture lifecycle', () => {
+  it('commits the real end of the grid when resized to the end edge', () => {
+    const onEventResize = jest.fn();
+    const { result } = renderHook(() =>
+      useHorizontalEventResize({
+        enabled: true,
+        startTime: '00:00:00',
+        endTime: '23:59:59',
+        intervalMinutes: 30,
+        onEventResize,
+      })
+    );
+    const container = document.createElement('div');
+    container.getBoundingClientRect = () => ({ ...RECT, right: 1440, width: 1440 }) as DOMRect;
+
+    dragEnd(result, container, 1440);
+    expect(onEventResize).toHaveBeenCalledWith(
+      expect.objectContaining({ newEnd: '2024-01-15 23:59:59' })
+    );
+  });
+
+  it.each([
+    ['Escape', () => document.dispatchEvent(new KeyboardEvent('keydown', { key: 'Escape' }))],
+    ['pointercancel', () => document.dispatchEvent(new Event('pointercancel'))],
+  ])('cancels the resize on %s', (_name, cancel) => {
+    const onEventResize = jest.fn();
+    const { result } = renderHook(() =>
+      useHorizontalEventResize({
+        enabled: true,
+        startTime: '09:00:00',
+        endTime: '17:00:00',
+        intervalMinutes: 30,
+        onEventResize,
+      })
+    );
+
+    act(() => {
+      result.current.handleResizeStart({
+        event,
+        edge: 'end',
+        container: makeContainer(),
+        originalLeft: ORIGINAL_LEFT,
+        originalWidth: ORIGINAL_WIDTH,
+        eventDate: '2024-01-15',
+        pointerEvent: { preventDefault() {}, stopPropagation() {} } as any,
+      });
+    });
+    act(() => {
+      document.dispatchEvent(new MouseEvent('pointermove', { clientX: 150 }));
+    });
+    act(cancel);
+    expect(result.current.isResizing).toBe(false);
+    expect(document.body.style.cursor).toBe('');
+
+    act(() => {
+      document.dispatchEvent(new MouseEvent('pointerup'));
+    });
+    expect(onEventResize).not.toHaveBeenCalled();
+  });
+});

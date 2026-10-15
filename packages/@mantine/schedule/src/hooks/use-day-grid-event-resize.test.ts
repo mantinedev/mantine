@@ -202,3 +202,36 @@ describe('@mantine/schedule/use-day-grid-event-resize', () => {
     expect(canResizeEventTo).not.toHaveBeenCalled();
   });
 });
+
+describe('@mantine/schedule/use-day-grid-event-resize gesture lifecycle', () => {
+  it.each([
+    ['Escape', () => document.dispatchEvent(new KeyboardEvent('keydown', { key: 'Escape' }))],
+    ['pointercancel', () => document.dispatchEvent(new Event('pointercancel'))],
+  ])('cancels the resize on %s', (_name, cancel) => {
+    const onEventResize = jest.fn();
+    const { result } = renderHook(() => useDayGridEventResize({ enabled: true, onEventResize }));
+
+    act(() => {
+      result.current.handleResizeStart({
+        event,
+        edge: 'end',
+        cells: makeCells(),
+        days: DAYS,
+        pointerEvent: { preventDefault() {}, stopPropagation() {} } as any,
+      });
+    });
+    act(() => {
+      document.dispatchEvent(new MouseEvent('pointermove', { clientX: 250 }));
+    });
+    expect(result.current.previewEnd).toBe('2024-01-18 00:00:00');
+
+    act(cancel);
+    expect(result.current.isResizing).toBe(false);
+    expect(result.current.previewEnd).toBeNull();
+
+    act(() => {
+      document.dispatchEvent(new MouseEvent('pointerup'));
+    });
+    expect(onEventResize).not.toHaveBeenCalled();
+  });
+});

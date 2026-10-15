@@ -1,6 +1,6 @@
 import { Schedule } from '@mantine/schedule';
 import { MantineDemo } from '@mantinex/demo';
-import { events } from './_data';
+import { dataCode, events } from './_data';
 
 const code = `
 import { Schedule } from '@mantine/schedule';
@@ -61,5 +61,8 @@ export const viewProps: MantineDemo = {
   defaultExpanded: false,
   type: 'code',
   component: Demo,
-  code,
+  code: [
+    { code, language: 'tsx', fileName: 'Demo.tsx' },
+    { code: dataCode, language: 'tsx', fileName: 'data.ts' },
+  ],
 };

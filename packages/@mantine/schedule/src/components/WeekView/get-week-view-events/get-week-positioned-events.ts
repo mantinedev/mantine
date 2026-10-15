@@ -14,13 +14,14 @@ import {
   isAllDayEvent,
   sortEvents,
 } from '../../../utils';
+import { calculateEventDays } from '../../../utils/calculate-event-days/calculate-event-days';
+import { clipEventToDay } from '../../../utils/clip-event-to-day/clip-event-to-day';
+import { getEventEndDay } from '../../../utils/get-event-end-day/get-event-end-day';
 import { assignEventRows } from './assign-event-rows';
 import { calculateAllDayEventOffset } from './calculate-all-day-event-offset';
 import { calculateAllDayEventWidth } from './calculate-all-day-event-width';
-import { calculateEventDays } from './calculate-event-days';
 import { calculateRegularEventOverlaps } from './calculate-regular-event-overlaps';
 import { ColumnEvent, findAvailableColumn } from './find-available-column';
-import { getEventEndDate } from './get-event-end-date';
 import { getHangingStatus } from './get-hanging-status';
 
 export interface GetWeekPositionedEventsInput {
@@ -88,7 +89,7 @@ export function getWeekPositionedEvents({
   for (const event of sorted) {
     if (event.display === 'background') {
       const eventStartDate = dayjs(event.start).startOf('day');
-      const actualEndDate = getEventEndDate(event);
+      const actualEndDate = getEventEndDay(event);
       const eventWeekDays = calculateEventDays({ event, weekDays, actualEndDate });
       const hanging = getHangingStatus({ eventStartDate, actualEndDate, weekDays });
 
@@ -98,19 +99,7 @@ export function getWeekPositionedEvents({
           continue;
         }
 
-        const dayStart = dayjs(day);
-        const dayEnd = dayStart.endOf('day');
-        const eventStart = dayjs(event.start);
-        const eventEnd = dayjs(event.end);
-
-        const clippedStart = eventStart.isBefore(dayStart) ? dayStart : eventStart;
-        const clippedEnd = eventEnd.isAfter(dayEnd) ? dayEnd : eventEnd;
-
-        const clippedEvent = {
-          ...event,
-          start: clippedStart.format('YYYY-MM-DD HH:mm:ss'),
-          end: clippedEnd.format('YYYY-MM-DD HH:mm:ss'),
-        };
+        const clippedEvent = clipEventToDay(event, day);
 
         const isAllDay = isAllDayEvent({ event: clippedEvent, date: day });
         const verticalPosition = isAllDay
@@ -142,7 +131,7 @@ export function getWeekPositionedEvents({
       continue;
     }
     const eventStartDate = dayjs(event.start).startOf('day');
-    const actualEndDate = getEventEndDate(event);
+    const actualEndDate = getEventEndDay(event);
     const eventWeekDays = calculateEventDays({ event, weekDays, actualEndDate });
 
     if (eventWeekDays.length === 0) {
@@ -243,7 +232,7 @@ export function getWeekPositionedEvents({
 
     for (const event of grouped.allDayEvents) {
       const eventStartDate = dayjs(event.start).startOf('day');
-      const actualEndDate = getEventEndDate(event);
+      const actualEndDate = getEventEndDay(event);
 
       event.position.width = calculateAllDayEventWidth({
         eventStartDate,

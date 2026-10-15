@@ -209,10 +209,11 @@ export const businessEvents: ScheduleEventData[] = [
 
 export const dataCode = `
 import dayjs from 'dayjs';
+import { ScheduleEventData } from '@mantine/schedule';
 
 const today = dayjs().format('YYYY-MM-DD');
 
-const events = [
+export const events: ScheduleEventData[] = [
   {
     id: 1,
     title: 'Morning Standup',
@@ -260,10 +261,11 @@ const events = [
 
 export const overlappingEventsCode = `
 import dayjs from 'dayjs';
+import { ScheduleEventData } from '@mantine/schedule';
 
 const today = dayjs().format('YYYY-MM-DD');
 
-const events = [
+export const events: ScheduleEventData[] = [
   {
     id: 1,
     title: 'Workshop Session 1',
@@ -297,10 +299,11 @@ const events = [
 
 export const allDayEventsCode = `
 import dayjs from 'dayjs';
+import { ScheduleEventData } from '@mantine/schedule';
 
 const today = dayjs().format('YYYY-MM-DD');
 
-const events = [
+export const events: ScheduleEventData[] = [
   {
     id: 1,
     title: 'Conference Day',
@@ -341,10 +344,11 @@ const events = [
 
 export const businessEventsCode = `
 import dayjs from 'dayjs';
+import { ScheduleEventData } from '@mantine/schedule';
 
 const today = dayjs().format('YYYY-MM-DD');
 
-const events = [
+export const events: ScheduleEventData[] = [
   {
     id: 1,
     title: 'Early Morning Meeting',
@@ -372,6 +376,72 @@ const events = [
     start: \`\${today} 17:30:00\`,
     end: \`\${today} 18:00:00\`,
     color: 'orange',
+  },
+];
+`;
+
+export const denseOverlappingEventsCode = `
+import dayjs from 'dayjs';
+import { ScheduleEventData } from '@mantine/schedule';
+
+const today = dayjs().format('YYYY-MM-DD');
+
+export const events: ScheduleEventData[] = [
+  {
+    id: 1,
+    title: 'Product sync',
+    start: \`\${today} 09:00:00\`,
+    end: \`\${today} 12:00:00\`,
+    color: 'blue',
+  },
+  {
+    id: 2,
+    title: 'Design review',
+    start: \`\${today} 09:30:00\`,
+    end: \`\${today} 11:30:00\`,
+    color: 'violet',
+  },
+  {
+    id: 3,
+    title: 'Customer call',
+    start: \`\${today} 10:00:00\`,
+    end: \`\${today} 11:00:00\`,
+    color: 'cyan',
+  },
+  {
+    id: 4,
+    title: 'Sprint planning',
+    start: \`\${today} 10:00:00\`,
+    end: \`\${today} 12:30:00\`,
+    color: 'teal',
+  },
+  {
+    id: 5,
+    title: 'Interview: frontend',
+    start: \`\${today} 10:30:00\`,
+    end: \`\${today} 11:30:00\`,
+    color: 'green',
+  },
+  {
+    id: 6,
+    title: 'Budget review',
+    start: \`\${today} 10:45:00\`,
+    end: \`\${today} 12:00:00\`,
+    color: 'orange',
+  },
+  {
+    id: 7,
+    title: '1:1 with Anna',
+    start: \`\${today} 11:00:00\`,
+    end: \`\${today} 11:45:00\`,
+    color: 'red',
+  },
+  {
+    id: 8,
+    title: 'Release retro',
+    start: \`\${today} 11:15:00\`,
+    end: \`\${today} 12:45:00\`,
+    color: 'grape',
   },
 ];
 `;

@@ -15,6 +15,7 @@ import {
   ScrollAreaAutosizeProps,
   StylesApiProps,
   UnstyledButton,
+  useDirection,
   useProps,
   useResolvedStylesApi,
   useStyles,
@@ -23,6 +24,7 @@ import { useDatesContext } from '@mantine/dates';
 import { useIsomorphicEffect, useMergedRef } from '@mantine/hooks';
 import { useAutoScrollOnDrag } from '../../hooks/use-auto-scroll-on-drag';
 import { useDragDropHandlers } from '../../hooks/use-drag-drop-handlers';
+import { useDragState } from '../../hooks/use-drag-state';
 import { useEventResize } from '../../hooks/use-event-resize';
 import { useSlotDragSelect } from '../../hooks/use-slot-drag-select';
 import { getLabel, ScheduleLabelsOverride } from '../../labels';
@@ -45,6 +47,7 @@ import {
 import {
   BusinessHoursValue,
   calculateDropTime,
+  calculateMonthDropDate,
   expandRecurringEvents,
   formatDate,
   getBusinessHoursMod,
@@ -58,11 +61,15 @@ import {
   previousWeek,
   toDateString,
 } from '../../utils';
+import { getClippedEdges } from '../../utils/clip-event-to-day/clip-event-to-day';
+import { getLogicalArrowKey } from '../../utils/get-logical-arrow-key/get-logical-arrow-key';
+import { resolveNow } from '../../utils/resolve-now/resolve-now';
 import { AgendaView, AgendaViewStylesNames } from '../AgendaView/AgendaView';
 import {
   CurrentTimeIndicator,
   CurrentTimeIndicatorStylesNames,
 } from '../CurrentTimeIndicator/CurrentTimeIndicator';
+import { getCurrentTimeFormat } from '../CurrentTimeIndicator/get-current-time-format';
 import { DragContext, DragContextValue } from '../DragContext/DragContext';
 import { ScheduleBackgroundEvent } from '../ScheduleBackgroundEvent';
 import { RenderEvent, RenderEventBody, ScheduleEvent } from '../ScheduleEvent/ScheduleEvent';
@@ -187,10 +194,10 @@ export interface WeekViewProps
   /** Called when view level select button is clicked @category state */
   onViewChange?: (view: ScheduleViewLevel) => void;
 
-  /** Props passed to previous month control */
+  /** Props passed to previous week control */
   previousControlProps?: React.ComponentProps<'button'> & DataAttributes;
 
-  /** Props passed to next month control */
+  /** Props passed to next week control */
   nextControlProps?: React.ComponentProps<'button'> & DataAttributes;
 
   /** Props passed to today control */
@@ -199,7 +206,7 @@ export interface WeekViewProps
   /** Props passed to view level select */
   viewSelectProps?: Partial<ViewSelectProps> & DataAttributes;
 
-  /** Format for week label @default 'MMM DD' @category appearance */
+  /** Format for week label, the year is appended unless the format includes it @default 'MMM D' @category appearance */
   weekLabelFormat?: DateLabelFormat;
 
   /** List of events to display in the week view @category appearance */
@@ -352,7 +359,7 @@ const defaultProps = {
   withCurrentTimeBubble: true,
   withAllDaySlots: true,
   withHeader: true,
-  weekLabelFormat: 'MMM DD',
+  weekLabelFormat: 'MMM D',
   highlightBusinessHours: false,
   businessHours: ['09:00:00', '17:00:00'],
   withEventsDragAndDrop: false,
@@ -456,6 +463,8 @@ export const WeekView = factory<WeekViewFactory>((_props) => {
 
   const [agendaOpen, setAgendaOpen] = useState(false);
 
+  const { dir } = useDirection();
+
   const getStyles = useStyles<WeekViewFactory>({
     name: __staticSelector,
     classes,
@@ -496,14 +505,18 @@ export const WeekView = factory<WeekViewFactory>((_props) => {
     firstDayOfWeek: ctx.getFirstDayOfWeek(firstDayOfWeek),
   });
 
-  const expandedEvents = expandRecurringEvents({
-    events,
-    rangeStart: dayjs(weekdays[0]).startOf('day').toDate(),
-    rangeEnd: dayjs(weekdays[weekdays.length - 1])
-      .endOf('day')
-      .toDate(),
-    expansionLimit: recurrenceExpansionLimit,
-  });
+  const weekStartDay = dayjs(weekdays[0]).format('YYYY-MM-DD');
+  const weekEndDay = dayjs(weekdays[weekdays.length - 1]).format('YYYY-MM-DD');
+  const expandedEvents = useMemo(
+    () =>
+      expandRecurringEvents({
+        events,
+        rangeStart: dayjs(weekStartDay).startOf('day').toDate(),
+        rangeEnd: dayjs(weekEndDay).endOf('day').toDate(),
+        expansionLimit: recurrenceExpansionLimit,
+      }),
+    [events, weekStartDay, weekEndDay, recurrenceExpansionLimit]
+  );
   const viewportRef = useRef<HTMLDivElement>(null);
 
   useAutoScrollOnDrag({
@@ -582,6 +595,8 @@ export const WeekView = factory<WeekViewFactory>((_props) => {
     [onExternalEventDrop, getExternalAllDayDropDateTime]
   );
 
+  const sharedDragState = useDragState();
+
   const dragDrop = useDragDropHandlers<DropTargetSlot>({
     enabled: withEventsDragAndDrop,
     mode,
@@ -597,6 +612,7 @@ export const WeekView = factory<WeekViewFactory>((_props) => {
     canDropExternalEvent,
     onEventPlacementRejected,
     getExternalDropDateTime,
+    dragState: sharedDragState,
   });
 
   const updateDragPreview = (target: DropTargetSlot) => {
@@ -627,11 +643,8 @@ export const WeekView = factory<WeekViewFactory>((_props) => {
     canDragEvent,
     onEventDragStart,
     onEventDragEnd,
-    calculateDropTarget: (targetDay: string, draggedEvent: ScheduleEventData) => {
-      const eventDuration = dayjs(draggedEvent.end).diff(dayjs(draggedEvent.start), 'millisecond');
-      const newStart = dayjs(targetDay).startOf('day');
-      return { start: newStart.toDate(), end: newStart.add(eventDuration, 'millisecond').toDate() };
-    },
+    calculateDropTarget: (targetDay: string, draggedEvent: ScheduleEventData) =>
+      calculateMonthDropDate({ draggedEvent, targetDay }),
     onExternalDrop: onExternalEventDrop ? handleExternalAllDayDrop : undefined,
     events: expandedEvents,
     preventEventOverlap,
@@ -639,6 +652,7 @@ export const WeekView = factory<WeekViewFactory>((_props) => {
     canDropExternalEvent,
     onEventPlacementRejected,
     getExternalDropDateTime: getExternalAllDayDropDateTime,
+    dragState: sharedDragState,
   });
 
   const slotDragSelect = useSlotDragSelect({
@@ -828,6 +842,7 @@ export const WeekView = factory<WeekViewFactory>((_props) => {
       dayIndex,
       slotIndex,
       event,
+      dir,
     });
   };
 
@@ -835,7 +850,7 @@ export const WeekView = factory<WeekViewFactory>((_props) => {
     event: React.KeyboardEvent<HTMLButtonElement>,
     dayIndex: number
   ) => {
-    const direction = event.key;
+    const direction = getLogicalArrowKey(event.key, dir);
     if (direction === 'ArrowRight' && dayIndex < weekdays.length - 1) {
       event.preventDefault();
       allDaySlotsRef.current[dayIndex + 1]?.focus();
@@ -852,7 +867,7 @@ export const WeekView = factory<WeekViewFactory>((_props) => {
     event: React.KeyboardEvent<HTMLButtonElement>,
     dayIndex: number
   ) => {
-    const direction = event.key;
+    const direction = getLogicalArrowKey(event.key, dir);
     if (direction === 'ArrowRight' && dayIndex < weekdays.length - 1) {
       event.preventDefault();
       weekdaysRef.current[dayIndex + 1]?.focus();
@@ -862,8 +877,10 @@ export const WeekView = factory<WeekViewFactory>((_props) => {
     }
   };
 
-  const resolveNow = () => (getCurrentTime ? dayjs(getCurrentTime()) : dayjs());
-  const now = resolveNow();
+  const now = resolveNow(getCurrentTime);
+
+  const isHighlightedToday = (day: Date | string) =>
+    !!highlightToday && dayjs(day).isSame(now, 'day');
 
   const currentWeekdayIndex = withCurrentTimeIndicator
     ? forceCurrentTimeIndicator
@@ -880,7 +897,7 @@ export const WeekView = factory<WeekViewFactory>((_props) => {
       }}
       aria-label={`${getLabel('weekday', labels)} ${dayjs(day).format('YYYY-MM-DD')}`}
       mod={{
-        today: dayjs(day).isSame(now, 'day') && !!highlightToday,
+        today: isHighlightedToday(day),
         weekend: ctx.getWeekendDays(weekendDays).includes(dayjs(day).day() as DayOfWeek),
         static: mode === 'static',
       }}
@@ -913,7 +930,9 @@ export const WeekView = factory<WeekViewFactory>((_props) => {
       .filter((event) => !event.position.allDay)
       .map((event) => {
         const eventDate = dayjs(day).format('YYYY-MM-DD');
-        const isResizable = eventResize.isResizableEvent(event);
+        const clippedEdges = getClippedEdges(event, day);
+        const isResizable =
+          !(clippedEdges.start && clippedEdges.end) && eventResize.isResizableEvent(event);
         const resizePosition = eventResize.getResizePosition(event.id, eventDate);
 
         return (
@@ -932,6 +951,7 @@ export const WeekView = factory<WeekViewFactory>((_props) => {
                   }
                 : undefined
             }
+            mod={{ 'continues-before': clippedEdges.start, 'continues-after': clippedEdges.end }}
             withResize={isResizable}
             isResizing={resizePosition !== null}
             resizeHandleProps={getStyles('weekViewBackgroundEventResizeHandle')}
@@ -939,7 +959,8 @@ export const WeekView = factory<WeekViewFactory>((_props) => {
               isResizable
                 ? (edge, e) => {
                     const container = daySlotsContainersRef.current[dayIndex];
-                    if (container) {
+                    const clippedEdge = edge === 'top' ? clippedEdges.start : clippedEdges.end;
+                    if (container && !clippedEdge) {
                       eventResize.handleResizeStart({
                         event,
                         edge,
@@ -1036,6 +1057,7 @@ export const WeekView = factory<WeekViewFactory>((_props) => {
       <WeekViewDay
         key={day}
         day={day}
+        today={isHighlightedToday(day)}
         dayIndex={dayIndex}
         slots={slots}
         intervalMinutes={intervalMinutes}
@@ -1123,8 +1145,10 @@ export const WeekView = factory<WeekViewFactory>((_props) => {
       ref={(node) => {
         allDaySlotsRef.current[dayIndex] = node!;
       }}
-      tabIndex={dayIndex === 0 ? 0 : -1}
-      onKeyDown={(event) => handleAllDaySlotKeyDown(event, dayIndex)}
+      tabIndex={mode === 'static' ? -1 : dayIndex === 0 ? 0 : -1}
+      onKeyDown={
+        mode === 'static' ? undefined : (event) => handleAllDaySlotKeyDown(event, dayIndex)
+      }
       onClick={
         mode === 'static' || !onAllDaySlotClick
           ? undefined
@@ -1134,14 +1158,9 @@ export const WeekView = factory<WeekViewFactory>((_props) => {
       onDragLeave={withDragHandlers ? allDayDragDrop.handleDragLeave : undefined}
       onDrop={withDragHandlers ? (e) => allDayDragDrop.handleDrop(e, day) : undefined}
       {...getStyles('weekViewDaySlot')}
-      mod={{ 'drop-target': allDayDragDrop.isDropTarget(day) }}
+      mod={{ 'drop-target': allDayDragDrop.isDropTarget(day), static: mode === 'static' }}
     />
   ));
-
-  const allDayEventIds = useMemo(
-    () => new Set(weekEvents.allDayEvents.map((e) => e.id)),
-    [weekEvents.allDayEvents]
-  );
 
   const allDayEvents = weekEvents.allDayEvents.map((event) => (
     <ScheduleEvent
@@ -1151,6 +1170,7 @@ export const WeekView = factory<WeekViewFactory>((_props) => {
       nowrap
       hanging={event.position.hanging}
       draggable={allDayDragDrop.isDraggableEvent(event)}
+      renderEventBody={renderEventBody}
       renderEvent={renderEvent}
       mode={mode}
       onClick={onEventClick ? (e) => onEventClick(event, e) : undefined}
@@ -1208,7 +1228,7 @@ export const WeekView = factory<WeekViewFactory>((_props) => {
           navigationHandlers={{
             previous: () => previousWeek(date, ctx.getFirstDayOfWeek(firstDayOfWeek)),
             next: () => nextWeek(date, ctx.getFirstDayOfWeek(firstDayOfWeek)),
-            today: () => toDateString(resolveNow()),
+            today: () => toDateString(resolveNow(getCurrentTime)),
           }}
           control={{
             miw: 140,
@@ -1261,7 +1281,6 @@ export const WeekView = factory<WeekViewFactory>((_props) => {
             'with-weekends': withWeekendDays,
             'hide-sub-hour-grid-lines': !withSubHourGridLines,
             'event-interaction': eventResize.isResizing || dragDrop.dragContextValue.isDragging,
-            'all-day-dragging': allDayDragDrop.dragContextValue.isDragging,
           }}
         >
           <ScrollArea.Autosize
@@ -1314,7 +1333,7 @@ export const WeekView = factory<WeekViewFactory>((_props) => {
                   startOffset="calc(100% - (100% / var(--number-of-days)) * (var(--number-of-days) - var(--indicator-offset-index) + 1) + ((var(--number-of-days) - var(--indicator-offset-index) + 1) * var(--indicator-labels-offset)))"
                   endOffset="calc((100% / var(--number-of-days)) * (var(--number-of-days) - var(--indicator-offset-index)) - (var(--number-of-days) - var(--indicator-offset-index)) * var(--indicator-labels-offset))"
                   timeBubbleStartOffset="calc(var(--week-view-slots-label-width) - var(--time-bubble-width))"
-                  currentTimeFormat={slotLabelFormat}
+                  currentTimeFormat={getCurrentTimeFormat(slotLabelFormat)}
                   withTimeBubble={withCurrentTimeBubble}
                   withThumb={withCurrentTimeBubble ? currentWeekdayIndex !== 0 : true}
                   locale={locale}
@@ -1335,28 +1354,13 @@ export const WeekView = factory<WeekViewFactory>((_props) => {
 
   const mergedDragContextValue = useMemo<DragContextValue>(
     () => ({
-      isDragging:
-        dragDrop.dragContextValue.isDragging || allDayDragDrop.dragContextValue.isDragging,
-      draggedEventId:
-        dragDrop.dragContextValue.draggedEventId ?? allDayDragDrop.dragContextValue.draggedEventId,
-      draggedEvent:
-        dragDrop.dragContextValue.draggedEvent ?? allDayDragDrop.dragContextValue.draggedEvent,
-      dropTarget:
-        dragDrop.dragContextValue.dropTarget ?? allDayDragDrop.dragContextValue.dropTarget,
-      onDragStart: (event: ScheduleEventData) => {
-        if (allDayEventIds.has(event.id)) {
-          allDayDragDrop.handleDragStart(event);
-        } else {
-          dragDrop.handleDragStart(event);
-        }
-      },
+      ...dragDrop.dragContextValue,
       onDragEnd: () => {
         dragDrop.handleDragEnd();
         allDayDragDrop.handleDragEnd();
       },
-      setDropTarget: dragDrop.dragContextValue.setDropTarget,
     }),
-    [dragDrop.dragContextValue, allDayDragDrop.dragContextValue, allDayEventIds]
+    [dragDrop.dragContextValue, dragDrop.handleDragEnd, allDayDragDrop.handleDragEnd]
   );
 
   if (withEventsDragAndDrop) {

@@ -69,6 +69,11 @@ export function useSlotDragSelect({ enabled = true, onDragEnd }: UseSlotDragSele
       }
     };
 
+    const cancelDrag = () => {
+      dragRef.current = null;
+      setSelectedRange(null);
+    };
+
     const handlePointerUp = () => {
       if (dragRef.current) {
         const { startIndex, currentIndex, group } = dragRef.current;
@@ -80,17 +85,27 @@ export function useSlotDragSelect({ enabled = true, onDragEnd }: UseSlotDragSele
           );
         }
       }
-      dragRef.current = null;
-      setSelectedRange(null);
+      cancelDrag();
+    };
+
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') {
+        e.preventDefault();
+        cancelDrag();
+      }
     };
 
     document.addEventListener('pointermove', handlePointerMove);
     document.addEventListener('pointerup', handlePointerUp);
+    document.addEventListener('pointercancel', cancelDrag);
+    document.addEventListener('keydown', handleKeyDown);
 
     return () => {
       document.body.style.userSelect = savedUserSelect;
       document.removeEventListener('pointermove', handlePointerMove);
       document.removeEventListener('pointerup', handlePointerUp);
+      document.removeEventListener('pointercancel', cancelDrag);
+      document.removeEventListener('keydown', handleKeyDown);
     };
   }, [isDragging]);
 

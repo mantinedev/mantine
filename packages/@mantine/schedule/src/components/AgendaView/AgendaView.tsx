@@ -1,5 +1,5 @@
 import dayjs from 'dayjs';
-import React from 'react';
+import React, { useMemo } from 'react';
 import {
   Box,
   BoxProps,
@@ -154,18 +154,23 @@ export const AgendaView = factory<AgendaViewFactory>((_props) => {
     rootSelector: 'agendaView',
   });
 
-  const expandedEvents = expandRecurringEvents({
-    events,
-    rangeStart: dayjs(rangeStart).startOf('day').toDate(),
-    rangeEnd: dayjs(rangeEnd).endOf('day').toDate(),
-    expansionLimit: recurrenceExpansionLimit,
-  });
+  const rangeStartDay = dayjs(rangeStart).format('YYYY-MM-DD');
+  const rangeEndDay = dayjs(rangeEnd).format('YYYY-MM-DD');
 
-  const groupedEvents = getAgendaViewEvents({
-    rangeStart,
-    rangeEnd,
-    events: expandedEvents,
-  });
+  const groupedEvents = useMemo(() => {
+    const expandedEvents = expandRecurringEvents({
+      events,
+      rangeStart: dayjs(rangeStartDay).startOf('day').toDate(),
+      rangeEnd: dayjs(rangeEndDay).endOf('day').toDate(),
+      expansionLimit: recurrenceExpansionLimit,
+    });
+
+    return getAgendaViewEvents({
+      rangeStart: rangeStartDay,
+      rangeEnd: rangeEndDay,
+      events: expandedEvents,
+    });
+  }, [events, rangeStartDay, rangeEndDay, recurrenceExpansionLimit]);
 
   const sortedDates = Object.keys(groupedEvents).sort();
 
@@ -219,11 +224,11 @@ export const AgendaView = factory<AgendaViewFactory>((_props) => {
         return <React.Fragment key={event.id}>{renderEvent(event, rootProps)}</React.Fragment>;
       }
 
-      return <UnstyledButton {...rootProps} key={event.id} />;
+      return <UnstyledButton key={event.id} {...rootProps} />;
     });
 
     return (
-      <div {...getStyles('agendaViewDateGroup')} key={dateStr}>
+      <div key={dateStr} {...getStyles('agendaViewDateGroup')}>
         <Text {...getStyles('agendaViewDateHeader')}>
           {formatDate({
             locale: ctx.getLocale(locale),

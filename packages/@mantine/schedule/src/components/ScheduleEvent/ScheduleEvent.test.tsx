@@ -1,4 +1,7 @@
+import { fireEvent } from '@testing-library/react';
 import { render, screen, tests, userEvent } from '@mantine-tests/core';
+import { useDragDropHandlers } from '../../hooks/use-drag-drop-handlers';
+import { DragContext } from '../DragContext/DragContext';
 import { ScheduleEvent, ScheduleEventProps, ScheduleEventStylesNames } from './ScheduleEvent';
 
 const defaultProps: ScheduleEventProps = {
@@ -120,5 +123,67 @@ describe('@mantine/schedule/ScheduleEvent', () => {
     expect(screen.getByText('Fully custom render')).toBeInTheDocument();
     expect(screen.getByText('Event: Test event')).toBeInTheDocument();
     expect(screen.getByText('Test event')).toBeInTheDocument();
+  });
+});
+
+function DragHarness({ onEventDragEnd }: { onEventDragEnd: () => void }) {
+  const dragDrop = useDragDropHandlers<number>({
+    enabled: true,
+    mode: 'default',
+    calculateDropTarget: () => ({
+      start: new Date('2024-01-02T10:00:00'),
+      end: new Date('2024-01-02T11:00:00'),
+    }),
+    onEventDrop: () => {},
+    onEventDragEnd,
+  });
+
+  return (
+    <DragContext.Provider value={dragDrop.dragContextValue}>
+      <ScheduleEvent {...defaultProps} draggable />
+      <div data-testid="drop-zone" onDrop={(e) => dragDrop.handleDrop(e, 0)} />
+    </DragContext.Provider>
+  );
+}
+
+describe('@mantine/schedule/ScheduleEvent drag lifecycle', () => {
+  const dataTransfer = () => ({
+    setData: jest.fn(),
+    types: ['application/json'],
+    effectAllowed: 'none',
+    dropEffect: 'none',
+  });
+
+  it('calls onEventDragEnd once when the event is dropped', () => {
+    const onEventDragEnd = jest.fn();
+    render(<DragHarness onEventDragEnd={onEventDragEnd} />);
+    const event = screen.getByRole('button');
+
+    fireEvent.dragStart(event, { dataTransfer: dataTransfer() });
+    fireEvent.drop(screen.getByTestId('drop-zone'), { dataTransfer: dataTransfer() });
+    fireEvent.dragEnd(event, { dataTransfer: dataTransfer() });
+
+    expect(onEventDragEnd).toHaveBeenCalledTimes(1);
+  });
+
+  it('calls onEventDragEnd once when the drag is cancelled', () => {
+    const onEventDragEnd = jest.fn();
+    render(<DragHarness onEventDragEnd={onEventDragEnd} />);
+    const event = screen.getByRole('button');
+
+    fireEvent.dragStart(event, { dataTransfer: dataTransfer() });
+    fireEvent.dragEnd(event, { dataTransfer: dataTransfer() });
+
+    expect(onEventDragEnd).toHaveBeenCalledTimes(1);
+  });
+
+  it('calls onEventDragEnd once when the dragged event unmounts', () => {
+    const onEventDragEnd = jest.fn();
+    const { unmount } = render(<DragHarness onEventDragEnd={onEventDragEnd} />);
+
+    fireEvent.dragStart(screen.getByRole('button'), { dataTransfer: dataTransfer() });
+    unmount();
+
+    expect(onEventDragEnd).toHaveBeenCalledTimes(1);
   });
 });

@@ -1,6 +1,6 @@
-import { testUtils } from '../../../test-utils';
+import { testUtils } from '../../test-utils';
+import { getEventEndDay } from '../get-event-end-day/get-event-end-day';
 import { calculateEventDays } from './calculate-event-days';
-import { getEventEndDate } from './get-event-end-date';
 
 describe('@mantine/schedule/calculate-event-days', () => {
   const weekDays = [
@@ -19,7 +19,7 @@ describe('@mantine/schedule/calculate-event-days', () => {
       end: '2025-01-15 12:00:00',
     });
 
-    const actualEndDate = getEventEndDate(event);
+    const actualEndDate = getEventEndDay(event);
     const result = calculateEventDays({ event, weekDays, actualEndDate });
 
     expect(result).toEqual(['2025-01-15 00:00:00']);
@@ -31,7 +31,7 @@ describe('@mantine/schedule/calculate-event-days', () => {
       end: '2025-01-15 16:00:00',
     });
 
-    const actualEndDate = getEventEndDate(event);
+    const actualEndDate = getEventEndDay(event);
     const result = calculateEventDays({ event, weekDays, actualEndDate });
 
     expect(result).toEqual(['2025-01-13 00:00:00', '2025-01-14 00:00:00', '2025-01-15 00:00:00']);
@@ -43,7 +43,7 @@ describe('@mantine/schedule/calculate-event-days', () => {
       end: '2025-01-21 16:00:00',
     });
 
-    const actualEndDate = getEventEndDate(event);
+    const actualEndDate = getEventEndDay(event);
     const result = calculateEventDays({ event, weekDays, actualEndDate });
 
     expect(result).toEqual([]);
@@ -55,7 +55,7 @@ describe('@mantine/schedule/calculate-event-days', () => {
       end: '2025-01-15 00:00:00',
     });
 
-    const actualEndDate = getEventEndDate(event);
+    const actualEndDate = getEventEndDay(event);
     const result = calculateEventDays({ event, weekDays, actualEndDate });
 
     expect(result).toEqual(['2025-01-13 00:00:00', '2025-01-14 00:00:00']);
@@ -67,7 +67,7 @@ describe('@mantine/schedule/calculate-event-days', () => {
       end: '2025-01-25 16:00:00',
     });
 
-    const actualEndDate = getEventEndDate(event);
+    const actualEndDate = getEventEndDay(event);
     const result = calculateEventDays({ event, weekDays, actualEndDate });
 
     expect(result).toEqual(weekDays);
@@ -79,7 +79,7 @@ describe('@mantine/schedule/calculate-event-days', () => {
       end: '2025-01-15 16:00:00',
     });
 
-    const actualEndDate = getEventEndDate(event);
+    const actualEndDate = getEventEndDay(event);
     const result = calculateEventDays({ event, weekDays, actualEndDate });
 
     expect(result).toEqual(['2025-01-13 00:00:00', '2025-01-14 00:00:00', '2025-01-15 00:00:00']);
@@ -91,7 +91,7 @@ describe('@mantine/schedule/calculate-event-days', () => {
       end: '2025-01-25 16:00:00',
     });
 
-    const actualEndDate = getEventEndDate(event);
+    const actualEndDate = getEventEndDay(event);
     const result = calculateEventDays({ event, weekDays, actualEndDate });
 
     expect(result).toEqual(['2025-01-17 00:00:00', '2025-01-18 00:00:00', '2025-01-19 00:00:00']);

@@ -59,20 +59,22 @@ const eventData: ScheduleEventData[] = [
 ];
 
 const code = `
-import { useState } from 'react';
 import dayjs from 'dayjs';
+import { useState } from 'react';
 import { HoverCard, UnstyledButton } from '@mantine/core';
 import { DayView, ScheduleEventData } from '@mantine/schedule';
 import { EventDetails } from './EventDetails';
 import { eventsData } from './events';
 
 function Demo() {
-  const [events, setEvents] = useState<ScheduleEventData[]>(eventData);
+  const [date, setDate] = useState(dayjs().format('YYYY-MM-DD'));
+  const [events, setEvents] = useState<ScheduleEventData[]>(eventsData);
 
   return (
     <DayView
-      date={new Date()}
-      events={selectedEvents}
+      date={date}
+      onDateChange={setDate}
+      events={events}
       startTime="08:00:00"
       endTime="18:00:00"
       withEventsDragAndDrop
@@ -105,11 +107,13 @@ function Demo() {
 `;
 
 function Demo() {
+  const [date, setDate] = useState(dayjs().format('YYYY-MM-DD'));
   const [events, setEvents] = useState<ScheduleEventData[]>(eventData);
 
   return (
     <DayView
-      date={new Date()}
+      date={date}
+      onDateChange={setDate}
       events={events}
       startTime="08:00:00"
       endTime="18:00:00"

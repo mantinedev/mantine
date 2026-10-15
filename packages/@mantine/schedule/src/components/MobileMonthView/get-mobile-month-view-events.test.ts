@@ -116,6 +116,9 @@ describe('@mantine/schedule/get-mobile-month-view-events', () => {
 
     const result = getMobileMonthViewEvents({ date: '2025-11-01', events });
     expect(result).toStrictEqual({
+      '2025-10-29': [events[0]],
+      '2025-10-30': [events[0]],
+      '2025-10-31': [events[0]],
       '2025-11-05': [events[1]],
       '2025-11-06': [events[1]],
     });
@@ -154,10 +157,10 @@ describe('@mantine/schedule/get-mobile-month-view-events', () => {
     });
   });
 
-  it('does not throw for duplicate IDs across different months', () => {
+  it('does not throw for duplicate IDs outside of the displayed weeks', () => {
     const events: ScheduleEventData[] = [
       testUtils.createEvent({ id: 1, start: '2025-11-05 10:00:00', end: '2025-11-05 11:00:00' }),
-      testUtils.createEvent({ id: 1, start: '2025-12-05 10:00:00', end: '2025-12-05 11:00:00' }),
+      testUtils.createEvent({ id: 1, start: '2025-12-15 10:00:00', end: '2025-12-15 11:00:00' }),
     ];
 
     expect(() => {
@@ -189,5 +192,50 @@ describe('@mantine/schedule/get-mobile-month-view-events', () => {
 
     const result = getMobileMonthViewEvents({ date: '2025-11-01', events });
     expect(result).toStrictEqual({ '2025-11-15': [events[0]] });
+  });
+
+  it('groups events of outside days of the displayed weeks', () => {
+    const events: ScheduleEventData[] = [
+      testUtils.createEvent({ id: 1, start: '2026-11-01 10:00:00', end: '2026-11-01 11:00:00' }),
+      testUtils.createEvent({ id: 2, start: '2026-09-28 10:00:00', end: '2026-09-28 11:00:00' }),
+      testUtils.createEvent({ id: 3, start: '2026-11-08 10:00:00', end: '2026-11-08 11:00:00' }),
+    ];
+
+    expect(getMobileMonthViewEvents({ date: '2026-10-01', events })).toStrictEqual({
+      '2026-09-28': [events[1]],
+      '2026-11-01': [events[0]],
+      '2026-11-08': [events[2]],
+    });
+
+    expect(
+      getMobileMonthViewEvents({ date: '2026-10-01', events, consistentWeeks: false })
+    ).toStrictEqual({
+      '2026-09-28': [events[1]],
+      '2026-11-01': [events[0]],
+    });
+  });
+
+  it('uses firstDayOfWeek to calculate the displayed weeks', () => {
+    const events: ScheduleEventData[] = [
+      testUtils.createEvent({ id: 1, start: '2026-09-27 10:00:00', end: '2026-09-27 11:00:00' }),
+    ];
+
+    expect(getMobileMonthViewEvents({ date: '2026-10-01', events })).toStrictEqual({});
+    expect(
+      getMobileMonthViewEvents({ date: '2026-10-01', events, firstDayOfWeek: 0 })
+    ).toStrictEqual({ '2026-09-27': [events[0]] });
+  });
+
+  it('skips background events', () => {
+    const events: ScheduleEventData[] = [
+      testUtils.createEvent({
+        id: 1,
+        start: '2026-10-05 10:00:00',
+        end: '2026-10-05 11:00:00',
+        display: 'background',
+      }),
+    ];
+
+    expect(getMobileMonthViewEvents({ date: '2026-10-01', events })).toStrictEqual({});
   });
 });

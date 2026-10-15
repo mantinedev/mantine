@@ -19,9 +19,7 @@ function Demo() {
           <Text fw={600} size="sm">
             {resource.label}
           </Text>
-          <Text size="xs" c="dimmed">
-            Office
-          </Text>
+          <Text size="xs">Office</Text>
         </Stack>
       )}
       startScrollDate={dayjs().format('YYYY-MM-DD')}
@@ -50,7 +48,7 @@ function Demo() {
           <Text fw={600} size="sm">
             {resource.label}
           </Text>
-          <Text size="xs" c="dimmed">
+          <Text size="xs">
             Office
           </Text>
         </Stack>

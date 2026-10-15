@@ -81,6 +81,7 @@ const initialEvents: ScheduleEventData[] = [
 ];
 
 function Demo() {
+  const [date, setDate] = useState(dayjs().format('YYYY-MM-DD'));
   const [events, setEvents] = useState(initialEvents);
 
   const handleEventDrop = ({
@@ -112,7 +113,8 @@ function Demo() {
 
   return (
     <ResourcesDayView
-      date={new Date()}
+      date={date}
+      onDateChange={setDate}
       resources={resources}
       events={events}
       startTime="08:00:00"
@@ -129,6 +131,7 @@ function Demo() {
 `;
 
 function Demo() {
+  const [date, setDate] = useState(dayjs().format('YYYY-MM-DD'));
   const [events, setEvents] = useState(initialEvents);
 
   const handleEventDrop = ({
@@ -169,7 +172,8 @@ function Demo() {
 
   return (
     <ResourcesDayView
-      date={new Date()}
+      date={date}
+      onDateChange={setDate}
       resources={resources}
       events={events}
       startTime="08:00:00"

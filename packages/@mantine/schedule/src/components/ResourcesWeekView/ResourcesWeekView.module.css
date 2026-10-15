@@ -57,7 +57,7 @@
   min-width: var(--resources-week-view-resource-label-width);
   border-inline-end: 1px solid var(--resources-week-view-border-color);
   position: sticky;
-  left: 0;
+  inset-inline-start: 0;
   z-index: 6;
   background-color: var(--mantine-color-body);
   display: flex;
@@ -155,7 +155,7 @@
   border-inline-end: 1px solid var(--resources-week-view-border-color);
   min-height: var(--resources-week-view-row-height);
   position: sticky;
-  left: 0;
+  inset-inline-start: 0;
   z-index: 4;
   background-color: var(--mantine-color-body);
   transition: box-shadow 100ms ease;
@@ -165,7 +165,7 @@
   }
 
   &:where([data-has-groups]) {
-    left: var(--resources-week-view-group-label-width);
+    inset-inline-start: var(--resources-week-view-group-label-width);
   }
 }
 
@@ -174,7 +174,7 @@
   min-width: var(--resources-week-view-group-label-width);
   min-height: var(--resources-week-view-row-height);
   position: sticky;
-  left: 0;
+  inset-inline-start: 0;
   z-index: 12;
   background-color: var(--mantine-color-body);
   display: flex;
@@ -205,7 +205,7 @@
   min-width: var(--resources-week-view-group-label-width);
   min-height: var(--resources-week-view-row-height);
   position: sticky;
-  left: 0;
+  inset-inline-start: 0;
   z-index: 12;
   background-color: var(--mantine-color-body);
   border-inline-end: 1px solid var(--resources-week-view-border-color);
@@ -364,11 +364,11 @@
   }
 
   &:where([data-edge='start']) {
-    left: -2px;
+    inset-inline-start: -2px;
   }
 
   &:where([data-edge='end']) {
-    right: -2px;
+    inset-inline-end: -2px;
   }
 }
 
@@ -411,15 +411,20 @@
 }
 
 .resourcesWeekViewBackgroundEvent {
+  &:where([data-continues-before]) > :where([data-edge='start']),
+  &:where([data-continues-after]) > :where([data-edge='end']) {
+    display: none;
+  }
+
   & .resourcesWeekViewResizeHandle {
     background-color: var(--bg-event-color);
 
     &:where([data-edge='start']) {
-      left: 0;
+      inset-inline-start: 0;
     }
 
     &:where([data-edge='end']) {
-      right: 0;
+      inset-inline-end: 0;
     }
   }
 
@@ -464,7 +469,7 @@
   pointer-events: none;
   top: 62px;
   bottom: 0;
-  left: var(--indicator-left-offset);
+  inset-inline-start: var(--indicator-left-offset);
   width: 2px;
   z-index: 3;
 
@@ -493,14 +498,14 @@
   border-radius: 50%;
   border: 1px solid var(--mantine-color-body);
   background-color: var(--_indicator-color);
-  left: calc(-1 * (var(--_thumb-size) / 2 - 1px));
+  inset-inline-start: calc(-1 * (var(--_thumb-size) / 2 - 1px));
 }
 
 .resourcesWeekViewCurrentTimeIndicatorTimeBubble {
   position: absolute;
   top: 0;
   height: var(--_time-bubble-height);
-  width: var(--_time-bubble-width);
+  width: var(--time-bubble-width);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -513,7 +518,7 @@
   white-space: nowrap;
   font-variant-numeric: tabular-nums;
   text-transform: uppercase;
-  left: calc(-1 * (var(--_time-bubble-width) / 2 - 1px));
+  inset-inline-start: calc(-1 * (var(--time-bubble-width) / 2 - 1px));
   z-index: 3;
 }
 

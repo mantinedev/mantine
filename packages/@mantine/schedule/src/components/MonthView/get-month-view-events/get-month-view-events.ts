@@ -1,6 +1,7 @@
 import dayjs from 'dayjs';
 import { AnyDateValue, DayOfWeek, ScheduleEventData } from '../../../types';
 import { getMonthRange, validateEvent } from '../../../utils';
+import { getEventEndDay } from '../../../utils/get-event-end-day/get-event-end-day';
 import { getMonthPositionedEvents, GroupedMonthEvents } from './get-month-positioned-events';
 
 interface UseMonthViewEventsInput {
@@ -38,8 +39,8 @@ export function getMonthViewEvents({
 
   for (const event of events) {
     if (
-      dayjs(event.end).isAfter(range.start, 'day') ||
-      dayjs(event.start).isBefore(range.end, 'day')
+      !getEventEndDay(event).isBefore(range.start, 'day') &&
+      !dayjs(event.start).isAfter(range.end, 'day')
     ) {
       filteredEvents.push(validateEvent(event));
 
@@ -56,5 +57,6 @@ export function getMonthViewEvents({
     events: filteredEvents,
     firstDayOfWeek,
     range,
+    clipToRange: !withOutsideDays,
   });
 }

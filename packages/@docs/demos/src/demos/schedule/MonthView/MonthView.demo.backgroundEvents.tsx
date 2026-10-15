@@ -74,6 +74,7 @@ function overlapsBackground(
 }
 
 function Demo() {
+  const [date, setDate] = useState(dayjs().format('YYYY-MM-DD'));
   const [events, setEvents] = useState(initialEvents);
 
   const handleEventDrop = ({
@@ -100,7 +101,8 @@ function Demo() {
 
   return (
     <MonthView
-      date={new Date()}
+      date={date}
+      onDateChange={setDate}
       events={events}
       withEventsDragAndDrop
       onEventDrop={handleEventDrop}
@@ -114,6 +116,7 @@ function overlapsBackground(newStart: string, newEnd: string, events: ScheduleEv
 }
 
 function Demo() {
+  const [date, setDate] = useState(dayjs().format('YYYY-MM-DD'));
   const [events, setEvents] = useState(initialEvents);
 
   const handleEventDrop = ({
@@ -138,7 +141,8 @@ function Demo() {
 
   return (
     <MonthView
-      date={new Date()}
+      date={date}
+      onDateChange={setDate}
       events={events}
       withEventsDragAndDrop
       onEventDrop={handleEventDrop}

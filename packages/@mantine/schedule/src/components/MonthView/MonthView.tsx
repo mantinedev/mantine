@@ -1,5 +1,5 @@
 import dayjs from 'dayjs';
-import { useCallback, useRef, useState } from 'react';
+import { useCallback, useMemo, useRef, useState } from 'react';
 import {
   Box,
   BoxProps,
@@ -14,6 +14,7 @@ import {
   ScrollAreaProps,
   StylesApiProps,
   UnstyledButton,
+  useDirection,
   useProps,
   useResolvedStylesApi,
   useStyles,
@@ -21,7 +22,7 @@ import {
 import { useDatesContext } from '@mantine/dates';
 import { useDragDropHandlers } from '../../hooks/use-drag-drop-handlers';
 import { useSlotDragSelect } from '../../hooks/use-slot-drag-select';
-import { ScheduleLabelsOverride } from '../../labels';
+import { getLabel, ScheduleLabelsOverride } from '../../labels';
 import {
   DateLabelFormat,
   DateStringValue,
@@ -55,7 +56,7 @@ import { CombinedScheduleHeaderStylesNames } from '../ScheduleHeader/ScheduleHea
 import { ScheduleHeaderBase } from '../ScheduleHeader/ScheduleHeaderBase';
 import { ViewSelectProps } from '../ScheduleHeader/ViewSelect/ViewSelect';
 import { getMonthViewEvents } from './get-month-view-events/get-month-view-events';
-import { getRenderableMonthEventSegments } from './get-renderable-month-event-segments';
+import { getMonthEventSegmentsLayout } from './get-renderable-month-event-segments';
 import { clipSpanToVisibleColumns, getVisibleColumnMap } from './get-visible-columns';
 import { handleMonthViewKeyDown, MonthViewControlsRef } from './handle-month-view-key-down';
 import classes from './MonthView.module.css';
@@ -332,6 +333,8 @@ export const MonthView = factory<MonthViewFactory>((_props) => {
   const [agendaOpen, setAgendaOpen] = useState(false);
   const maxEventsPerDay = Math.min(10, Math.max(1, _maxEventsPerDay ?? 2));
 
+  const { dir } = useDirection();
+
   const getStyles = useStyles<MonthViewFactory>({
     name: __staticSelector,
     classes,
@@ -381,12 +384,16 @@ export const MonthView = factory<MonthViewFactory>((_props) => {
     firstDayOfWeek: ctx.getFirstDayOfWeek(firstDayOfWeek),
   });
 
-  const expandedEvents = expandRecurringEvents({
-    events,
-    rangeStart: dayjs(range.start).startOf('day').toDate(),
-    rangeEnd: dayjs(range.end).endOf('day').toDate(),
-    expansionLimit: recurrenceExpansionLimit,
-  });
+  const expandedEvents = useMemo(
+    () =>
+      expandRecurringEvents({
+        events,
+        rangeStart: dayjs(range.start).startOf('day').toDate(),
+        rangeEnd: dayjs(range.end).endOf('day').toDate(),
+        expansionLimit: recurrenceExpansionLimit,
+      }),
+    [events, range.start, range.end, recurrenceExpansionLimit]
+  );
 
   const monthEvents = getMonthViewEvents({
     date,
@@ -490,7 +497,7 @@ export const MonthView = factory<MonthViewFactory>((_props) => {
         .map((day, index) => ({ day, index }))
         .filter(({ index }) => !hiddenColumnSet.has(index))
         .map(({ day, index }) => (
-          <div {...getStyles('monthViewWeekday')} key={index}>
+          <div key={index} {...getStyles('monthViewWeekday')}>
             {day}
           </div>
         ))
@@ -532,10 +539,10 @@ export const MonthView = factory<MonthViewFactory>((_props) => {
 
         return (
           <UnstyledButton
+            key={day}
             aria-label={ariaLabel}
             {...dayProps}
             {...getStyles('monthViewDay', { className: dayProps.className, style: dayProps.style })}
-            key={day}
             ref={(node) => {
               if (node) {
                 if (!daysRef.current[weekIndex]) {
@@ -570,6 +577,7 @@ export const MonthView = factory<MonthViewFactory>((_props) => {
                 weekIndex,
                 dayIndex,
                 event,
+                dir,
               });
               dayProps.onKeyDown?.(event);
             }}
@@ -637,7 +645,7 @@ export const MonthView = factory<MonthViewFactory>((_props) => {
 
     const rowHeightPercent = 100 / maxEventsPerDay;
 
-    const eventSegments = getRenderableMonthEventSegments({
+    const eventsLayout = getMonthEventSegmentsLayout({
       events: monthEvents.groupedByWeek[weekIndex] || [],
       groupedByDay: monthEvents.groupedByDay,
       maxEventsPerDay,
@@ -646,7 +654,7 @@ export const MonthView = factory<MonthViewFactory>((_props) => {
       columnsCount,
     });
 
-    const events = eventSegments.map((segment) => {
+    const events = eventsLayout.segments.map((segment) => {
       const isDraggable = dragDrop.isDraggableEvent(segment.event);
 
       return (
@@ -680,7 +688,7 @@ export const MonthView = factory<MonthViewFactory>((_props) => {
       }
 
       const dayEvents = monthEvents.groupedByDay[day] || [];
-      const hiddenEventsCount = Math.max(0, dayEvents.length - maxEventsPerDay);
+      const hiddenEventsCount = eventsLayout.hiddenEventsCountByDay[day] ?? 0;
 
       if (hiddenEventsCount <= 0) {
         return null;
@@ -713,11 +721,11 @@ export const MonthView = factory<MonthViewFactory>((_props) => {
     });
 
     return (
-      <div {...getStyles('monthViewWeek')} key={weekIndex}>
+      <div key={weekIndex} {...getStyles('monthViewWeek')}>
         {withWeekNumbers && (
           <UnstyledButton
             key={weekNumber}
-            aria-label={`Week ${weekNumber}`}
+            aria-label={getLabel('weekNumber', labels)(weekNumber)}
             {...weekNumberProps}
             onClick={
               mode === 'static'
@@ -740,7 +748,7 @@ export const MonthView = factory<MonthViewFactory>((_props) => {
           </UnstyledButton>
         )}
 
-        <div {...getStyles('monthViewEvents')} key="week-events">
+        <div key="week-events" {...getStyles('monthViewEvents')}>
           {backgroundEventNodes}
           {events}
           {moreEventsNodes}

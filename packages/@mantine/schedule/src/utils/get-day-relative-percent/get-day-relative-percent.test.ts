@@ -80,4 +80,37 @@ describe('@mantine/schedule/getDayRelativePercent', () => {
       })
     ).toBe(50);
   });
+
+  it('measures from the right edge in RTL, days run right to left', () => {
+    expect(
+      getDayRelativePercent({
+        clientX: 650,
+        containerLeft: 0,
+        containerWidth: 700,
+        dayIndex: 0,
+        dayCount: 7,
+        dir: 'rtl',
+      })
+    ).toBe(50);
+    expect(
+      getDayRelativePercent({
+        clientX: 480,
+        containerLeft: 0,
+        containerWidth: 700,
+        dayIndex: 2,
+        dayCount: 7,
+        dir: 'rtl',
+      })
+    ).toBe(20);
+    expect(
+      getDayRelativePercent({
+        clientX: 50,
+        containerLeft: 0,
+        containerWidth: 700,
+        dayIndex: 0,
+        dayCount: 1,
+        dir: 'rtl',
+      })
+    ).toBeCloseTo(92.857, 2);
+  });
 });

@@ -2,7 +2,7 @@ import dayjs from 'dayjs';
 import { useState } from 'react';
 import { MobileMonthView } from '@mantine/schedule';
 import { MantineDemo } from '@mantinex/demo';
-import { regularEvents } from './_data';
+import { dataCode, regularEvents } from './_data';
 
 const code = `
 import dayjs from 'dayjs';
@@ -20,7 +20,7 @@ function Demo() {
       onDateChange={setDate}
       selectedDate={selectedDate}
       onSelectedDateChange={setSelectedDate}
-      events={regularEvents}
+      events={events}
       withOutsideDays
     />
   );
@@ -47,7 +47,10 @@ export const withOutsideDays: MantineDemo = {
   defaultExpanded: false,
   type: 'code',
   component: Demo,
-  code,
+  code: [
+    { code, language: 'tsx', fileName: 'Demo.tsx' },
+    { code: dataCode, language: 'tsx', fileName: 'data.ts' },
+  ],
   centered: true,
   maxWidth: 375,
 };

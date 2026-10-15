@@ -26,7 +26,7 @@ function Demo() {
       renderResourceLabel={(resource) => (
         <Stack gap={2} align="flex-start">
           <Text size="sm" fw={600}>{resource.label}</Text>
-          <Text size="xs" c="dimmed">Floor 2</Text>
+          <Text size="xs">Floor 2</Text>
         </Stack>
       )}
     />
@@ -50,9 +50,7 @@ function Demo() {
           <Text size="sm" fw={600}>
             {resource.label}
           </Text>
-          <Text size="xs" c="dimmed">
-            Floor 2
-          </Text>
+          <Text size="xs">Floor 2</Text>
         </Stack>
       )}
     />

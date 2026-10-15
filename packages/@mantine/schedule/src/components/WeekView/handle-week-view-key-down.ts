@@ -1,4 +1,5 @@
 import { RefObject } from 'react';
+import { getLogicalArrowKey } from '../../utils/get-logical-arrow-key/get-logical-arrow-key';
 
 /** Reference to a 2D array of slot buttons: [dayIndex][slotIndex] */
 export type WeekViewControlsRef = RefObject<HTMLButtonElement[][]>;
@@ -150,6 +151,9 @@ export interface HandleWeekViewKeyDownInput {
   dayIndex: number;
   slotIndex: number;
   event: React.KeyboardEvent<HTMLButtonElement>;
+
+  /** Text direction, `ArrowLeft` and `ArrowRight` are swapped in `rtl` @default 'ltr' */
+  dir?: 'ltr' | 'rtl';
 }
 
 export function handleWeekViewKeyDown({
@@ -157,8 +161,9 @@ export function handleWeekViewKeyDown({
   dayIndex,
   slotIndex,
   event,
+  dir,
 }: HandleWeekViewKeyDownInput): void {
-  const direction = getDirection(event.key);
+  const direction = getDirection(getLogicalArrowKey(event.key, dir));
 
   if (direction) {
     event.preventDefault();

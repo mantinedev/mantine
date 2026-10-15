@@ -103,14 +103,23 @@ function getEventKey(event: MonthPositionedEventData): string | number {
   return event.id;
 }
 
-export function getRenderableMonthEventSegments({
+export interface MonthEventSegmentsLayout {
+  /** Event segments to render */
+  segments: RenderableMonthEventSegment[];
+
+  /** Number of events that are not rendered on each visible day, keys are the `week` values */
+  hiddenEventsCountByDay: Record<DateStringValue, number>;
+}
+
+export function getMonthEventSegmentsLayout({
   events,
   groupedByDay,
   maxEventsPerDay,
   week,
   hiddenColumns = [],
   columnsCount = DAYS_IN_WEEK,
-}: GetRenderableMonthEventSegmentsInput): RenderableMonthEventSegment[] {
+}: GetRenderableMonthEventSegmentsInput): MonthEventSegmentsLayout {
+  const hiddenEventsCountByDay: Record<DateStringValue, number> = {};
   const hiddenColumnSet = new Set(hiddenColumns);
   const visibleColumnMap = getVisibleColumnMap(hiddenColumns);
   const eventIndexes = new Map<MonthPositionedEventData, number>();
@@ -181,12 +190,14 @@ export function getRenderableMonthEventSegments({
       setRenderRow(event, dayIndex, row);
       lastRow.set(event, row);
     });
+
+    hiddenEventsCountByDay[week[dayIndex]] = Math.max(0, dayEvents.length - usedRows.size);
   }
 
-  return events.flatMap((event) => {
+  const segments = events.flatMap((event) => {
     const eventRange = eventRanges.get(event)!;
     const eventRenderRows = renderRows.get(event);
-    const segments: RenderableMonthEventSegment[] = [];
+    const eventSegments: RenderableMonthEventSegment[] = [];
     let currentSegment: SegmentRange | null = null;
 
     const addSegment = (segment: SegmentRange) => {
@@ -198,7 +209,7 @@ export function getRenderableMonthEventSegments({
         columnsCount
       );
 
-      segments.push({
+      eventSegments.push({
         event,
         position,
         clipStart: segment.startDayIndex > eventRange.startDayIndex,
@@ -242,6 +253,8 @@ export function getRenderableMonthEventSegments({
       addSegment(currentSegment);
     }
 
-    return segments;
+    return eventSegments;
   });
+
+  return { segments, hiddenEventsCountByDay };
 }

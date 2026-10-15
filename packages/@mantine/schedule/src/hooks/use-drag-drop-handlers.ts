@@ -11,7 +11,7 @@ import {
   ScheduleMode,
 } from '../types';
 import { isEventPlacementAllowed } from '../utils/is-event-placement-allowed/is-event-placement-allowed';
-import { useDragState } from './use-drag-state';
+import { useDragState, UseDragStateReturn } from './use-drag-state';
 
 const DATE_TIME_FORMAT = 'YYYY-MM-DD HH:mm:ss';
 
@@ -74,6 +74,9 @@ export interface UseDragDropHandlersOptions<T = any> {
 
   /** Resolves the datetime an external item would be dropped at, `null` when the target has no datetime */
   getExternalDropDateTime?: (target: T) => DateTimeStringValue | null;
+
+  /** Drag state shared with other drag-drop handlers of the same view, so an event dragged from one area is an internal drop in another */
+  dragState?: UseDragStateReturn;
 }
 
 export interface DragDropHandlers<T = any> {
@@ -141,13 +144,15 @@ export function useDragDropHandlers<T = any>(
     getExternalDropDateTime,
   } = options;
 
+  const ownDragState = useDragState();
+  const dragState = options.dragState ?? ownDragState;
+
   const stableOnEventDrop = useEffectEvent(onEventDrop || (() => {}));
   const stableOnEventPlacementRejected = useEffectEvent(onEventPlacementRejected || (() => {}));
   const stableOnEventDragStart = useEffectEvent(onEventDragStart || (() => {}));
   const stableOnEventDragEnd = useEffectEvent(onEventDragEnd || (() => {}));
   const stableOnExternalDrop = useEffectEvent(onExternalDrop || (() => {}));
 
-  const dragState = useDragState();
   const [dropTarget, setDropTarget] = useState<T | null>(null);
   const [dragPreview, setDragPreview] = useState<DragPreview<T> | null>(null);
   const [dropValid, setDropValid] = useState(true);
@@ -204,12 +209,14 @@ export function useDragDropHandlers<T = any>(
   );
 
   const handleDragEnd = useCallback(() => {
-    dragState.endDrag();
+    const wasDragging = dragState.endDrag();
     setDropTarget(null);
     setDragPreview(null);
     setDropValid(true);
-    stableOnEventDragEnd();
-  }, [dragState]);
+    if (wasDragging) {
+      stableOnEventDragEnd();
+    }
+  }, [dragState.endDrag]);
 
   const handleDragStart = useCallback(
     (event: ScheduleEventData) => {

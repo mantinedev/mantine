@@ -20,7 +20,7 @@ function Demo() {
       onDateChange={setDate}
       selectedDate={selectedDate}
       onSelectedDateChange={setSelectedDate}
-      events={regularEvents}
+      events={events}
     />
   );
 }

@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react';
+import { useRef } from 'react';
 import {
   Box,
   BoxProps,
@@ -12,6 +12,7 @@ import {
   useResolvedStylesApi,
   useStyles,
 } from '@mantine/core';
+import { useIsomorphicEffect } from '@mantine/hooks';
 import { getLabel, ScheduleLabels, ScheduleLabelsOverride } from '../../../labels';
 import { ScheduleViewLevel } from '../../../types';
 import { HeaderControl } from '../HeaderControl/HeaderControl';
@@ -19,6 +20,8 @@ import { useScheduleHeaderLabels } from '../ScheduleHeaderContext';
 import classes from './ViewSelect.module.css';
 
 export type ViewSelectStylesNames = 'viewSelect';
+
+let keyboardActivatedView: ScheduleViewLevel | null = null;
 
 export interface ViewSelectProps
   extends BoxProps, StylesApiProps<ViewSelectFactory>, ElementProps<'div', 'value' | 'onChange'> {
@@ -94,19 +97,22 @@ export const ViewSelect = factory<ViewSelectFactory>((_props) => {
 
   const { dir } = useDirection();
   const controlsRef = useRef<(HTMLButtonElement | null)[]>([]);
-  const activatedWithKeyboardRef = useRef(false);
 
-  // Restore focus to the selected tab when the component mounts
-  // This handles the case where focus is lost due to view switch (header unmount/remount)
-  // Only restore focus if the view was activated via keyboard (Enter/Space)
-  useEffect(() => {
-    if (activatedWithKeyboardRef.current && document.activeElement === document.body) {
-      const selectedIndex = views!.findIndex((view) => view === value);
-      if (selectedIndex !== -1) {
-        controlsRef.current[selectedIndex]?.focus();
-      }
+  useIsomorphicEffect(() => {
+    if (keyboardActivatedView === null || keyboardActivatedView !== value) {
+      return;
     }
-    activatedWithKeyboardRef.current = false;
+
+    const activeElement = document.activeElement;
+    if (activeElement && activeElement !== document.body) {
+      return;
+    }
+
+    const selectedIndex = views!.findIndex((view) => view === value);
+    if (selectedIndex !== -1) {
+      keyboardActivatedView = null;
+      controlsRef.current[selectedIndex]?.focus();
+    }
   }, []);
 
   const handleKeyDown = (event: React.KeyboardEvent<HTMLButtonElement>, index: number) => {
@@ -128,9 +134,18 @@ export const ViewSelect = factory<ViewSelectFactory>((_props) => {
     } else if (event.key === 'End') {
       event.preventDefault();
       controlsRef.current[views!.length - 1]?.focus();
-    } else if (event.key === 'Enter' || event.key === ' ') {
-      activatedWithKeyboardRef.current = true;
     }
+  };
+
+  const handleClick = (event: React.MouseEvent<HTMLButtonElement>, view: ScheduleViewLevel) => {
+    if (event.detail === 0 && view !== value) {
+      keyboardActivatedView = view;
+      window.setTimeout(() => {
+        keyboardActivatedView = null;
+      }, 0);
+    }
+
+    onChange?.(view);
   };
 
   const switchToLabelKeys: Record<ScheduleViewLevel, keyof ScheduleLabels> = {
@@ -150,7 +165,7 @@ export const ViewSelect = factory<ViewSelectFactory>((_props) => {
         }}
         data-type={view}
         active={isSelected}
-        onClick={() => onChange?.(view)}
+        onClick={(event) => handleClick(event, view)}
         onKeyDown={(event) => handleKeyDown(event, index)}
         classNames={resolvedClassNames}
         styles={resolvedStyles}

@@ -677,3 +677,36 @@ export function UnalignedEndTime() {
     </div>
   );
 }
+
+export function ResizeBackgroundEventsAcrossMidnight() {
+  const [resized, setResized] = useState<string | null>(null);
+  const tuesday = _weekStart.add(1, 'day').format('YYYY-MM-DD');
+  const wednesday = _weekStart.add(2, 'day').format('YYYY-MM-DD');
+
+  return (
+    <div style={{ padding: 40 }}>
+      <Stack gap="xs">
+        <Text size="sm">Resized: {resized ?? 'none'}</Text>
+        <WeekView
+          date={weekStart}
+          startScrollTime="00:00:00"
+          withEventResize
+          withInteractiveBackgroundEvents
+          onEventResize={({ eventId, newStart, newEnd }) =>
+            setResized(`${eventId} ${newStart} → ${newEnd}`)
+          }
+          events={[
+            {
+              id: 'maintenance',
+              title: 'Overnight maintenance',
+              start: `${tuesday} 20:00:00`,
+              end: `${wednesday} 04:00:00`,
+              color: 'gray',
+              display: 'background',
+            },
+          ]}
+        />
+      </Stack>
+    </div>
+  );
+}

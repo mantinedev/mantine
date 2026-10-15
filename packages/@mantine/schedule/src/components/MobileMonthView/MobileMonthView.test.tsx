@@ -1,6 +1,8 @@
 import dayjs from 'dayjs';
 import 'dayjs/locale/ru';
 import React from 'react';
+import { act } from '@testing-library/react';
+import { DirectionProvider } from '@mantine/core';
 import { DatesProvider } from '@mantine/dates';
 import { render, screen, tests, userEvent } from '@mantine-tests/core';
 import { ScheduleEventData } from '../../types';
@@ -590,8 +592,8 @@ describe('@mantine/schedule/MobileMonthView', () => {
   });
 
   describe('keyboard navigation', () => {
-    it('only first day should be in tab order', () => {
-      render(<MobileMonthView {...defaultProps} />);
+    it('only first day should be in tab order when no day is selected', () => {
+      render(<MobileMonthView {...defaultProps} selectedDate={null} />);
 
       expect(screen.getByRole('button', { name: 'November 1, 2025' })).toHaveAttribute(
         'tabIndex',
@@ -644,5 +646,299 @@ describe('@mantine/schedule/MobileMonthView', () => {
         '-1'
       );
     });
+  });
+
+  describe('roving tab stop', () => {
+    const getTabStops = (container: HTMLElement) =>
+      Array.from(
+        container.querySelectorAll<HTMLButtonElement>(
+          '.mantine-MobileMonthView-mobileMonthViewDay[tabindex="0"]'
+        )
+      ).map((node) => node.getAttribute('aria-label'));
+
+    it('uses the selected day as the tab stop', () => {
+      const { container } = render(<MobileMonthView {...defaultProps} />);
+      expect(getTabStops(container)).toEqual(['November 5, 2025']);
+    });
+
+    it('uses the first day of the month when the selected day is in another month', () => {
+      const { container } = render(<MobileMonthView {...defaultProps} selectedDate="2025-10-20" />);
+      expect(getTabStops(container)).toEqual(['November 1, 2025']);
+    });
+
+    it('uses the first day of the month when nothing is selected', () => {
+      const { container } = render(<MobileMonthView {...defaultProps} selectedDate={null} />);
+      expect(getTabStops(container)).toEqual(['November 1, 2025']);
+    });
+
+    it('keeps exactly one visible tab stop after a controlled date change', () => {
+      const { container, rerender } = render(
+        <MobileMonthView {...defaultProps} date="2025-12-01" selectedDate={null} />
+      );
+      expect(getTabStops(container)).toEqual(['December 1, 2025']);
+
+      rerender(<MobileMonthView {...defaultProps} date="2025-11-01" selectedDate={null} />);
+      expect(getTabStops(container)).toEqual(['November 1, 2025']);
+    });
+
+    it('makes the day focused with arrow keys the new tab stop', async () => {
+      const { container } = render(<MobileMonthView {...defaultProps} />);
+      screen.getByRole('button', { name: 'November 5, 2025' }).focus();
+      await userEvent.keyboard('{ArrowRight}{ArrowDown}');
+      expect(screen.getByRole('button', { name: 'November 13, 2025' })).toHaveFocus();
+      expect(getTabStops(container)).toEqual(['November 13, 2025']);
+    });
+
+    it('resets the arrow-focused tab stop when the month changes', async () => {
+      const { container, rerender } = render(
+        <MobileMonthView {...defaultProps} selectedDate={null} />
+      );
+      screen.getByRole('button', { name: 'November 1, 2025' }).focus();
+      await userEvent.keyboard('{ArrowRight}');
+      expect(getTabStops(container)).toEqual(['November 2, 2025']);
+
+      rerender(<MobileMonthView {...defaultProps} date="2025-12-01" selectedDate={null} />);
+      expect(getTabStops(container)).toEqual(['December 1, 2025']);
+
+      rerender(<MobileMonthView {...defaultProps} date="2025-11-01" selectedDate={null} />);
+      expect(getTabStops(container)).toEqual(['November 1, 2025']);
+    });
+
+    it('allows an outside day to be the tab stop when outside days are shown', () => {
+      const { container } = render(
+        <MobileMonthView {...defaultProps} withOutsideDays selectedDate="2025-10-27" />
+      );
+      expect(getTabStops(container)).toEqual(['October 27, 2025']);
+    });
+  });
+
+  it('calls onDateChange with the clicked day', async () => {
+    const spy = jest.fn();
+    render(<MobileMonthView {...defaultProps} withOutsideDays onDateChange={spy} />);
+    await userEvent.click(screen.getByRole('button', { name: 'November 12, 2025' }));
+    expect(spy).toHaveBeenLastCalledWith('2025-11-12');
+
+    await userEvent.click(screen.getByRole('button', { name: 'December 3, 2025' }));
+    expect(spy).toHaveBeenLastCalledWith('2025-12-03');
+  });
+
+  it('hides the week number of a week that has no visible days', () => {
+    render(<MobileMonthView {...defaultProps} date="2026-02-01" />);
+    const weekButtons = screen.getAllByRole('button', { name: /^Week \d+$/ });
+    expect(weekButtons).toHaveLength(5);
+  });
+
+  it('supports weekNumber label override', () => {
+    render(
+      <MobileMonthView
+        {...defaultProps}
+        labels={{ weekNumber: (weekNumber) => `Semaine ${weekNumber}` }}
+      />
+    );
+    expect(screen.getByRole('button', { name: 'Semaine 44' })).toBeInTheDocument();
+  });
+
+  describe('outside days events', () => {
+    it('lists events of a selected outside day', async () => {
+      render(
+        <MobileMonthView
+          date="2026-10-01"
+          withOutsideDays
+          events={[
+            {
+              id: 'n',
+              title: 'Outside event',
+              start: '2026-11-01 10:00:00',
+              end: '2026-11-01 11:00:00',
+              color: 'blue',
+            },
+          ]}
+        />
+      );
+
+      await userEvent.click(screen.getByRole('button', { name: 'November 1, 2026' }));
+      expect(screen.getByText('Outside event')).toBeInTheDocument();
+    });
+
+    it('uses firstDayOfWeek to find the displayed outside days', async () => {
+      render(
+        <MobileMonthView
+          date="2026-10-01"
+          firstDayOfWeek={0}
+          withOutsideDays
+          events={[
+            {
+              id: 's',
+              title: 'Sunday event',
+              start: '2026-09-27 10:00:00',
+              end: '2026-09-27 11:00:00',
+              color: 'blue',
+            },
+          ]}
+        />
+      );
+
+      await userEvent.click(screen.getByRole('button', { name: 'September 27, 2026' }));
+      expect(screen.getByText('Sunday event')).toBeInTheDocument();
+    });
+
+    it('expands recurring events on outside days', async () => {
+      render(
+        <MobileMonthView
+          date="2026-10-01"
+          withOutsideDays
+          events={[
+            {
+              id: 'r',
+              title: 'Recurring event',
+              start: '2026-10-30 10:00:00',
+              end: '2026-10-30 11:00:00',
+              color: 'blue',
+              recurrence: { rrule: 'FREQ=DAILY;COUNT=5' },
+            },
+          ]}
+        />
+      );
+
+      await userEvent.click(screen.getByRole('button', { name: 'November 2, 2026' }));
+      expect(screen.getByText('Recurring event')).toBeInTheDocument();
+    });
+  });
+});
+
+describe('@mantine/schedule/MobileMonthView disabled days and month changes', () => {
+  const getTabStops = (container: HTMLElement) =>
+    Array.from(
+      container.querySelectorAll<HTMLButtonElement>(
+        '.mantine-MobileMonthView-mobileMonthViewDay[tabindex="0"]'
+      )
+    ).map((node) => node.getAttribute('aria-label'));
+
+  const disableWeekends = (date: string) => ({ disabled: [0, 6].includes(dayjs(date).day()) });
+
+  afterEach(() => {
+    jest.useRealTimers();
+  });
+
+  it('does not use a disabled today as the tab stop', () => {
+    jest.useFakeTimers().setSystemTime(new Date('2025-11-01T12:00:00'));
+    const { container } = render(
+      <MobileMonthView date="2025-11-01" getDayProps={disableWeekends} />
+    );
+    expect(getTabStops(container)).toEqual(['November 3, 2025']);
+  });
+
+  it('does not use a disabled selected day as the tab stop', () => {
+    const { container } = render(
+      <MobileMonthView date="2025-11-01" selectedDate="2025-11-08" getDayProps={disableWeekends} />
+    );
+    expect(getTabStops(container)).toEqual(['November 3, 2025']);
+  });
+
+  it('renders no tab stop when every visible day is disabled', () => {
+    const { container } = render(
+      <MobileMonthView date="2025-11-01" getDayProps={() => ({ disabled: true })} />
+    );
+    expect(getTabStops(container)).toEqual([]);
+  });
+
+  function ControlledMonth({ withOutsideDays = true }: { withOutsideDays?: boolean }) {
+    const [date, setDate] = React.useState('2025-10-01');
+    return (
+      <MobileMonthView
+        date={date}
+        onDateChange={(value) => setDate(dayjs(value).startOf('month').format('YYYY-MM-DD'))}
+        withOutsideDays={withOutsideDays}
+        selectedDate={null}
+      />
+    );
+  }
+
+  it('keeps focus on an outside day selected with a click after the month changes', async () => {
+    render(<ControlledMonth />);
+    await userEvent.click(screen.getByRole('button', { name: 'November 1, 2025' }));
+    expect(screen.getByText('November 2025')).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: 'November 1, 2025' })).toHaveFocus();
+  });
+
+  it('keeps focus on an outside day selected with Enter after the month changes', async () => {
+    render(<ControlledMonth />);
+    screen.getByRole('button', { name: 'October 31, 2025' }).focus();
+    await userEvent.keyboard('{ArrowRight}{Enter}');
+    expect(screen.getByText('November 2025')).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: 'November 1, 2025' })).toHaveFocus();
+  });
+
+  it('does not move focus back to a day selected in the current month on a later render', async () => {
+    let rerender = () => {};
+    function Wrapper() {
+      const [tick, setTick] = React.useState(0);
+      rerender = () => setTick(tick + 1);
+      return <ControlledMonth key="month" />;
+    }
+
+    render(<Wrapper />);
+    const day = screen.getByRole('button', { name: 'October 15, 2025' });
+    await userEvent.click(day);
+    await userEvent.click(day);
+    day.blur();
+    expect(document.body).toHaveFocus();
+    act(() => rerender());
+    expect(document.body).toHaveFocus();
+  });
+
+  it('lists events of a selected day that is outside the displayed weeks', () => {
+    render(
+      <MobileMonthView
+        date="2025-11-01"
+        selectedDate="2025-10-15"
+        events={[
+          {
+            id: 'o',
+            title: 'October event',
+            start: '2025-10-15 10:00:00',
+            end: '2025-10-15 11:00:00',
+            color: 'blue',
+          },
+        ]}
+      />
+    );
+    expect(screen.getByText('October event')).toBeInTheDocument();
+  });
+
+  it('lists recurring events of a selected day that is outside the displayed weeks', () => {
+    render(
+      <MobileMonthView
+        date="2025-11-01"
+        selectedDate="2025-10-15"
+        events={[
+          {
+            id: 'r',
+            title: 'Weekly event',
+            start: '2025-09-03 10:00:00',
+            end: '2025-09-03 11:00:00',
+            color: 'blue',
+            recurrence: { rrule: 'FREQ=WEEKLY;COUNT=20' },
+          },
+        ]}
+      />
+    );
+    expect(screen.getByText('Weekly event')).toBeInTheDocument();
+  });
+});
+
+describe('@mantine/schedule/MobileMonthView RTL arrow keys', () => {
+  it('mirrors ArrowLeft and ArrowRight', async () => {
+    render(
+      <DirectionProvider initialDirection="rtl">
+        <MobileMonthView {...defaultProps} />
+      </DirectionProvider>
+    );
+
+    screen.getByRole('button', { name: 'November 12, 2025' }).focus();
+    await userEvent.keyboard('{ArrowLeft}');
+    expect(screen.getByRole('button', { name: 'November 13, 2025' })).toHaveFocus();
+    await userEvent.keyboard('{ArrowRight}{ArrowRight}');
+    expect(screen.getByRole('button', { name: 'November 11, 2025' })).toHaveFocus();
   });
 });

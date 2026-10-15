@@ -45,7 +45,7 @@ const initialSidebarItems: SidebarItem[] = [
 ];
 
 function Demo() {
-  const [date, setDate] = useState(dayjs().format('YYYY-MM-DD'));
+  const [date, setDate] = useState(today);
   const [sidebarItems, setSidebarItems] = useState(initialSidebarItems);
   const [events, setEvents] = useState<ScheduleEventData[]>([]);
   const [sidebarHighlight, setSidebarHighlight] = useState(false);
@@ -167,7 +167,7 @@ function Demo() {
             </Box>
           ))}
           {sidebarItems.length === 0 && (
-            <Text size="xs" c="dimmed">Drag events here to unschedule</Text>
+            <Text size="xs">Drag events here to unschedule</Text>
           )}
         </Box>
       </Grid.Col>
@@ -315,11 +315,7 @@ function Demo() {
               <Text size="xs">{item.duration} min</Text>
             </Box>
           ))}
-          {sidebarItems.length === 0 && (
-            <Text size="xs" c="dimmed">
-              Drag events here to unschedule
-            </Text>
-          )}
+          {sidebarItems.length === 0 && <Text size="xs">Drag events here to unschedule</Text>}
         </Box>
       </Grid.Col>
       <Grid.Col span={{ base: 12, sm: 9 }}>

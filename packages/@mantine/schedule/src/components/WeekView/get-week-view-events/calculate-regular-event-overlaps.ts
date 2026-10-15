@@ -1,19 +1,14 @@
 import { WeekPositionedEventData } from '../../../types';
-import { isEventsOverlap } from '../../../utils';
+import { getOverlapClusters } from '../../../utils/get-overlap-clusters/get-overlap-clusters';
 
 export function calculateRegularEventOverlaps(events: WeekPositionedEventData[]): void {
-  for (const event of events) {
-    let maxOverlappingColumn = event.position.column;
+  for (const cluster of getOverlapClusters(events)) {
+    const overlaps = Math.max(...cluster.map((event) => event.position.column)) + 1;
 
-    for (const otherEvent of events) {
-      if (isEventsOverlap(event, otherEvent)) {
-        maxOverlappingColumn = Math.max(maxOverlappingColumn, otherEvent.position.column);
-      }
+    for (const event of cluster) {
+      event.position.overlaps = overlaps;
+      event.position.width = 100 / overlaps;
+      event.position.offset = (event.position.column * 100) / overlaps;
     }
-
-    const overlaps = maxOverlappingColumn + 1;
-    event.position.overlaps = overlaps;
-    event.position.width = 100 / overlaps;
-    event.position.offset = (event.position.column * 100) / overlaps;
   }
 }

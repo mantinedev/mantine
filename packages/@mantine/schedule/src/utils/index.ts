@@ -3,8 +3,6 @@ export { getStartOfWeek } from './get-start-of-week/get-start-of-week';
 export { getEndOfWeek } from './get-end-of-week/get-end-of-week';
 export { getWeekNumber } from './get-week-number/get-week-number';
 export { getMonthDays } from './get-month-days/get-month-days';
-export { isAfterMinDate } from './is-after-min-date/is-after-min-date';
-export { isBeforeMaxDate } from './is-before-max-date/is-before-max-date';
 export { isSameMonth } from './is-same-month/is-same-month';
 export { getMonthsByQuarter } from './get-months-by-quarter/get-months-by-quarter';
 export { getDayTimeIntervals } from './get-day-time-intervals/get-day-time-intervals';

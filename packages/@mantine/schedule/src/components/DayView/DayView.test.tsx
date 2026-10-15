@@ -646,6 +646,14 @@ describe('@mantine/schedule/DayView', () => {
       expect(spy).not.toHaveBeenCalled();
     });
 
+    it('removes the all-day slot from the tab order in static mode', () => {
+      render(<DayView {...defaultProps} mode="static" />);
+      expect(screen.getByRole('button', { name: 'Time slot All day' })).toHaveAttribute(
+        'tabindex',
+        '-1'
+      );
+    });
+
     it('does not call onEventClick in static mode', async () => {
       const spy = jest.fn();
       render(<DayView {...defaultProps} mode="static" events={eventsData} onEventClick={spy} />);
@@ -1366,5 +1374,262 @@ describe('@mantine/schedule/DayView', () => {
       expect(canDropEvent).toHaveBeenCalledTimes(1);
       expect(onEventDrop).not.toHaveBeenCalled();
     });
+  });
+
+  describe('events from previous and next days', () => {
+    const carryOver = {
+      id: 'carry',
+      title: 'Night shift',
+      start: '2025-11-02 22:00:00',
+      end: '2025-11-03 02:00:00',
+      color: 'blue',
+      payload: {},
+    };
+
+    const continuing = {
+      id: 'continuing',
+      title: 'Late release',
+      start: '2025-11-03 22:00:00',
+      end: '2025-11-04 02:00:00',
+      color: 'blue',
+      payload: {},
+    };
+
+    const mockRect = () =>
+      jest.spyOn(HTMLElement.prototype, 'getBoundingClientRect').mockReturnValue({
+        top: 0,
+        left: 0,
+        right: 100,
+        bottom: 1440,
+        width: 100,
+        height: 1440,
+        x: 0,
+        y: 0,
+        toJSON: () => {},
+      } as DOMRect);
+
+    const resize = (handle: Element, clientY: number) => {
+      fireEvent.pointerDown(handle);
+      act(() => {
+        document.dispatchEvent(new MouseEvent('pointermove', { clientY }));
+        document.dispatchEvent(new MouseEvent('pointerup'));
+      });
+    };
+
+    it('marks the clipped edges of events that continue past the displayed day', () => {
+      const { container } = render(
+        <DayView date="2025-11-03" withEventResize events={[carryOver, continuing]} />
+      );
+
+      const carryNode = container.querySelector('[data-event-id="carry"]')!;
+      expect(carryNode).toHaveAttribute('data-continues-before');
+      expect(carryNode).not.toHaveAttribute('data-continues-after');
+
+      const continuingNode = container.querySelector('[data-event-id="continuing"]')!;
+      expect(continuingNode).toHaveAttribute('data-continues-after');
+      expect(continuingNode).not.toHaveAttribute('data-continues-before');
+    });
+
+    it('keeps the original start when the end of an event from the previous day is resized', () => {
+      const spy = mockRect();
+      const onEventResize = jest.fn();
+      const { container } = render(
+        <DayView
+          date="2025-11-03"
+          withEventResize
+          onEventResize={onEventResize}
+          events={[carryOver]}
+        />
+      );
+
+      const node = container.querySelector('[data-event-id="carry"]')!;
+      resize(node.querySelector('[data-edge="bottom"]')!, 180);
+
+      expect(onEventResize).toHaveBeenCalledTimes(1);
+      expect(onEventResize.mock.calls[0][0]).toMatchObject({
+        eventId: 'carry',
+        newStart: '2025-11-02 22:00:00',
+        newEnd: '2025-11-03 03:00:00',
+        event: expect.objectContaining({ start: '2025-11-02 22:00:00' }),
+      });
+      spy.mockRestore();
+    });
+
+    it('does not resize the clipped edge of an event', () => {
+      const spy = mockRect();
+      const onEventResize = jest.fn();
+      const { container } = render(
+        <DayView
+          date="2025-11-03"
+          withEventResize
+          onEventResize={onEventResize}
+          events={[carryOver, continuing]}
+        />
+      );
+
+      resize(
+        container.querySelector('[data-event-id="carry"]')!.querySelector('[data-edge="top"]')!,
+        60
+      );
+      resize(
+        container
+          .querySelector('[data-event-id="continuing"]')!
+          .querySelector('[data-edge="bottom"]')!,
+        1000
+      );
+
+      expect(onEventResize).not.toHaveBeenCalled();
+
+      resize(
+        container
+          .querySelector('[data-event-id="continuing"]')!
+          .querySelector('[data-edge="top"]')!,
+        21 * 60
+      );
+
+      expect(onEventResize).toHaveBeenCalledTimes(1);
+      expect(onEventResize.mock.calls[0][0]).toMatchObject({
+        newStart: '2025-11-03 21:00:00',
+        newEnd: '2025-11-04 02:00:00',
+      });
+      spy.mockRestore();
+    });
+    it('resizes the bottom edge of an event that ends at the next day midnight', () => {
+      const spy = mockRect();
+      const onEventResize = jest.fn();
+      const midnight = {
+        id: 'midnight',
+        title: 'Evening shift',
+        start: '2025-11-03 20:00:00',
+        end: '2025-11-04 00:00:00',
+        color: 'blue',
+        payload: {},
+      };
+      const { container } = render(
+        <DayView
+          date="2025-11-03"
+          withEventResize
+          onEventResize={onEventResize}
+          events={[midnight]}
+        />
+      );
+
+      const node = container.querySelector('[data-event-id="midnight"]')!;
+      expect(node).not.toHaveAttribute('data-continues-after');
+      expect(node).not.toHaveAttribute('data-continues-before');
+
+      resize(node.querySelector('[data-edge="bottom"]')!, 22 * 60);
+
+      expect(onEventResize).toHaveBeenCalledTimes(1);
+      expect(onEventResize.mock.calls[0][0]).toMatchObject({
+        newStart: '2025-11-03 20:00:00',
+        newEnd: '2025-11-03 22:00:00',
+      });
+      spy.mockRestore();
+    });
+  });
+
+  describe('getTimeSlotProps handlers', () => {
+    it('calls onKeyDown, onPointerDown and onDragOver from getTimeSlotProps in addition to internal handlers', () => {
+      const onKeyDown = jest.fn();
+      const onPointerDown = jest.fn();
+      const onDragOver = jest.fn();
+      const { container } = render(
+        <DayView
+          {...defaultProps}
+          withDragSlotSelect
+          withEventsDragAndDrop
+          getTimeSlotProps={() => ({ onKeyDown, onPointerDown, onDragOver })}
+        />
+      );
+
+      const slots = container.querySelectorAll(
+        '.mantine-DayView-dayViewTimeSlots > .mantine-DayView-dayViewSlot'
+      );
+      (slots[0] as HTMLElement).focus();
+      fireEvent.keyDown(slots[0], { key: 'ArrowDown' });
+      expect(onKeyDown).toHaveBeenCalledTimes(1);
+      expect(document.activeElement).toBe(slots[1]);
+
+      fireEvent.pointerDown(slots[1]);
+      expect(onPointerDown).toHaveBeenCalledTimes(1);
+
+      const dragOver = createEvent.dragOver(slots[1]);
+      fireEvent(slots[1], dragOver);
+      expect(onDragOver).toHaveBeenCalledTimes(1);
+      expect(dragOver.defaultPrevented).toBe(true);
+    });
+  });
+
+  describe('current time bubble format', () => {
+    it('adds minutes to an hour-only slotLabelFormat', () => {
+      const { container } = render(
+        <DayView
+          {...defaultProps}
+          slotLabelFormat="h A"
+          getCurrentTime={() => '2025-11-03 14:44:00'}
+        />
+      );
+
+      expect(
+        container.querySelector('.mantine-DayView-currentTimeIndicatorTimeBubble')
+      ).toHaveTextContent('2:44 PM');
+    });
+  });
+});
+
+describe('@mantine/schedule/DayView background events clipped edges', () => {
+  it('marks and does not resize the clipped edge of a background event from the previous day', () => {
+    const spy = jest.spyOn(HTMLElement.prototype, 'getBoundingClientRect').mockReturnValue({
+      top: 0,
+      left: 0,
+      right: 1440,
+      bottom: 1440,
+      width: 1440,
+      height: 1440,
+      x: 0,
+      y: 0,
+      toJSON: () => {},
+    } as DOMRect);
+    const onEventResize = jest.fn();
+    const { container } = render(
+      <DayView
+        date="2025-11-03"
+        withEventResize
+        withInteractiveBackgroundEvents
+        onEventResize={onEventResize}
+        events={[
+          {
+            id: 'bg-carry',
+            title: 'Maintenance',
+            start: '2025-11-02 22:00:00',
+            end: '2025-11-03 02:00:00',
+            color: 'gray',
+            display: 'background',
+          },
+        ]}
+      />
+    );
+
+    const node = container.querySelector('.mantine-DayView-dayViewBackgroundEvent')!;
+    expect(node).toHaveAttribute('data-continues-before');
+    expect(node).not.toHaveAttribute('data-continues-after');
+
+    fireEvent.pointerDown(node.querySelector('[data-edge="top"]')!);
+    act(() => {
+      document.dispatchEvent(new MouseEvent('pointermove', { clientY: 60 }));
+      document.dispatchEvent(new MouseEvent('pointerup'));
+    });
+    expect(onEventResize).not.toHaveBeenCalled();
+
+    fireEvent.pointerDown(node.querySelector('[data-edge="bottom"]')!);
+    act(() => {
+      document.dispatchEvent(new MouseEvent('pointermove', { clientY: 180 }));
+      document.dispatchEvent(new MouseEvent('pointerup'));
+    });
+    expect(onEventResize).toHaveBeenCalledWith(
+      expect.objectContaining({ newStart: '2025-11-02 22:00:00', newEnd: '2025-11-03 03:00:00' })
+    );
+    spy.mockRestore();
   });
 });

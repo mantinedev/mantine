@@ -21,9 +21,10 @@ import {
   useStyles,
 } from '@mantine/core';
 import { useDatesContext } from '@mantine/dates';
-import { useInterval, useIsomorphicEffect, useMergedRef, useMounted } from '@mantine/hooks';
+import { useIsomorphicEffect, useMergedRef } from '@mantine/hooks';
 import { useDragDropHandlers } from '../../hooks/use-drag-drop-handlers';
 import { useHorizontalEventResize } from '../../hooks/use-horizontal-event-resize';
+import { useNow } from '../../hooks/use-now';
 import { useSlotDragSelect } from '../../hooks/use-slot-drag-select';
 import { getLabel, ScheduleLabelsOverride } from '../../labels';
 import {
@@ -55,13 +56,21 @@ import {
   getIndexFromDragPoint,
   getOrderedResources,
   getOverlapClusters,
-  getTimeAxisEventStyle,
   handleResourcesGridKeyDown,
   isAllDayEvent,
-  isInTimeRange,
   ResourcesGridControlsRef,
   toDateString,
 } from '../../utils';
+import { getClippedEdges } from '../../utils/clip-event-to-day/clip-event-to-day';
+import { resolveNow } from '../../utils/resolve-now/resolve-now';
+import {
+  getInlineTimeAxisEventStyle,
+  scrollCellIntoInlineView,
+  scrollCellToInlineStart,
+} from '../../utils/resources-view-utils/resources-view-utils';
+import { CurrentTimeIndicator } from '../CurrentTimeIndicator/CurrentTimeIndicator';
+import { getCurrentTimeFormat } from '../CurrentTimeIndicator/get-current-time-format';
+import { getIndicatorStylesApiProps } from '../CurrentTimeIndicator/get-indicator-styles-api-props';
 import { DragContext, DragContextValue } from '../DragContext/DragContext';
 import { MoreEvents, MoreEventsProps, MoreEventsStylesNames } from '../MoreEvents/MoreEvents';
 import { ScheduleBackgroundEvent } from '../ScheduleBackgroundEvent';
@@ -654,22 +663,10 @@ export const ResourcesDayView = factory<ResourcesDayViewFactory>((_props) => {
   };
 
   const dateStr = dayjs(date).format('YYYY-MM-DD');
-  const resolveNow = () => (getCurrentTime ? dayjs(getCurrentTime()) : dayjs());
-  const now = resolveNow();
+  const now = useNow(getCurrentTime);
   const isToday = dayjs(date).isSame(now, 'day');
   const withCurrentTimeIndicator = _withCurrentTimeIndicator ?? isToday;
-
-  const mounted = useMounted();
-  const [, setTimeIndicatorTick] = useState(0);
-  useInterval(() => setTimeIndicatorTick((tick) => tick + 1), 60000, { autoInvoke: true });
   const timeIndicatorOffset = getCurrentTimePosition({ startTime, endTime, intervalMinutes, now });
-  const showTimeIndicator =
-    mounted &&
-    withCurrentTimeIndicator &&
-    isInTimeRange({ date: now.toDate(), startTime, endTime });
-  const formattedCurrentTime = withCurrentTimeBubble
-    ? formatDate({ locale: ctx.getLocale(locale), date: now, format: slotLabelFormat })
-    : '';
 
   const resourceEvents = useMemo(
     () =>
@@ -694,8 +691,8 @@ export const ResourcesDayView = factory<ResourcesDayViewFactory>((_props) => {
 
     return (
       <Box
-        {...getStyles('resourcesDayViewTimeLabel')}
         key={interval.startTime}
+        {...getStyles('resourcesDayViewTimeLabel')}
         mod={{
           'hour-start': interval.isHourStart,
           ...getBusinessHoursMod({
@@ -717,6 +714,11 @@ export const ResourcesDayView = factory<ResourcesDayViewFactory>((_props) => {
 
   const firstSlotIndex = { resourceIndex: 0, slotIndex: 0 };
 
+  const getStickyInlineSize = () =>
+    viewportRef.current
+      ?.querySelector(`.${classes.resourcesDayViewCorner}`)
+      ?.getBoundingClientRect().width ?? 0;
+
   useIsomorphicEffect(() => {
     if (!startScrollTime || !viewportRef.current) {
       return;
@@ -737,13 +739,10 @@ export const ResourcesDayView = factory<ResourcesDayViewFactory>((_props) => {
       return;
     }
 
-    const slotRect = targetSlot.getBoundingClientRect();
-    const viewportRect = viewportRef.current.getBoundingClientRect();
-    const cornerEl = viewportRef.current.querySelector(`.${classes.resourcesDayViewCorner}`);
-    const labelWidth = cornerEl ? cornerEl.getBoundingClientRect().width : 0;
-    viewportRef.current.scrollTo({
-      left: slotRect.left - viewportRect.left + viewportRef.current.scrollLeft - labelWidth,
-      top: 0,
+    scrollCellToInlineStart({
+      viewport: viewportRef.current,
+      cell: targetSlot,
+      stickyInlineSize: getStickyInlineSize(),
     });
   }, []);
 
@@ -771,11 +770,17 @@ export const ResourcesDayView = factory<ResourcesDayViewFactory>((_props) => {
     resourceIndex: number,
     slotIndex: number
   ) => {
-    handleResourcesGridKeyDown({
+    const focusedSlot = handleResourcesGridKeyDown({
       controlsRef: slotsRef,
       resourceIndex,
       slotIndex,
       event,
+      dir,
+    });
+    scrollCellIntoInlineView({
+      viewport: viewportRef.current,
+      cell: focusedSlot,
+      stickyInlineSize: getStickyInlineSize(),
     });
   };
 
@@ -783,7 +788,9 @@ export const ResourcesDayView = factory<ResourcesDayViewFactory>((_props) => {
 
   const rows = orderedResources.map((resource, resourceIndex) => {
     const renderBackgroundEvent = (event: DayPositionedEventData, allDay: boolean) => {
-      const isResizable = !allDay && eventResize.isResizableEvent(event);
+      const clippedEdges = getClippedEdges(event, dateStr);
+      const isResizable =
+        !allDay && !(clippedEdges.start && clippedEdges.end) && eventResize.isResizableEvent(event);
       const resizePosition = eventResize.getResizePosition(event.id);
 
       return (
@@ -802,6 +809,7 @@ export const ResourcesDayView = factory<ResourcesDayViewFactory>((_props) => {
                 }
               : undefined
           }
+          mod={{ 'continues-before': clippedEdges.start, 'continues-after': clippedEdges.end }}
           withResize={isResizable}
           isResizing={resizePosition !== null}
           activeResizeEdge={eventResize.resizingEdge}
@@ -811,7 +819,7 @@ export const ResourcesDayView = factory<ResourcesDayViewFactory>((_props) => {
             isResizable
               ? (edge, e) => {
                   const container = rowSlotsContainersRef.current[resourceIndex];
-                  if (container) {
+                  if (container && !clippedEdges[edge]) {
                     eventResize.handleResizeStart({
                       event,
                       edge,
@@ -827,7 +835,7 @@ export const ResourcesDayView = factory<ResourcesDayViewFactory>((_props) => {
           }
           {...getStyles('resourcesDayViewBackgroundEvent', {
             style: {
-              left: `${resizePosition ? resizePosition.left : event.position.top}%`,
+              insetInlineStart: `${resizePosition ? resizePosition.left : event.position.top}%`,
               width: `${resizePosition ? resizePosition.width : event.position.height}%`,
               top: 0,
               height: '100%',
@@ -858,6 +866,7 @@ export const ResourcesDayView = factory<ResourcesDayViewFactory>((_props) => {
     const regularEvents = visibleRegularEvents.map((event) => {
       const isDraggable = dragDrop.isDraggableEvent(event);
       const isResizable = eventResize.isResizableEvent(event);
+      const clippedEdges = getClippedEdges(event, dateStr);
       const resizePosition = eventResize.getResizePosition(event.id);
       const eventLeft = resizePosition ? resizePosition.left : event.position.top;
       const eventWidth = resizePosition ? resizePosition.width : event.position.height;
@@ -885,7 +894,7 @@ export const ResourcesDayView = factory<ResourcesDayViewFactory>((_props) => {
           __vars={eventColors ? { '--event-color': eventColors.color } : undefined}
           data-resizing={isThisEventResizing || undefined}
           style={{
-            ...getTimeAxisEventStyle({
+            ...getInlineTimeAxisEventStyle({
               start: eventLeft,
               span: eventWidth,
               minSize: minEventSize,
@@ -922,44 +931,48 @@ export const ResourcesDayView = factory<ResourcesDayViewFactory>((_props) => {
           />
           {isResizable && mode !== 'static' && (
             <>
-              <div
-                {...getStyles('resourcesDayViewResizeHandle')}
-                data-edge="start"
-                data-active={activeEdge === 'start' || undefined}
-                onPointerDown={(e) => {
-                  const container = rowSlotsContainersRef.current[resourceIndex];
-                  if (container) {
-                    eventResize.handleResizeStart({
-                      event,
-                      edge: 'start',
-                      container,
-                      originalLeft: event.position.top,
-                      originalWidth: event.position.height,
-                      eventDate: dateStr,
-                      pointerEvent: e,
-                    });
-                  }
-                }}
-              />
-              <div
-                {...getStyles('resourcesDayViewResizeHandle')}
-                data-edge="end"
-                data-active={activeEdge === 'end' || undefined}
-                onPointerDown={(e) => {
-                  const container = rowSlotsContainersRef.current[resourceIndex];
-                  if (container) {
-                    eventResize.handleResizeStart({
-                      event,
-                      edge: 'end',
-                      container,
-                      originalLeft: event.position.top,
-                      originalWidth: event.position.height,
-                      eventDate: dateStr,
-                      pointerEvent: e,
-                    });
-                  }
-                }}
-              />
+              {!clippedEdges.start && (
+                <div
+                  {...getStyles('resourcesDayViewResizeHandle')}
+                  data-edge="start"
+                  data-active={activeEdge === 'start' || undefined}
+                  onPointerDown={(e) => {
+                    const container = rowSlotsContainersRef.current[resourceIndex];
+                    if (container) {
+                      eventResize.handleResizeStart({
+                        event,
+                        edge: 'start',
+                        container,
+                        originalLeft: event.position.top,
+                        originalWidth: event.position.height,
+                        eventDate: dateStr,
+                        pointerEvent: e,
+                      });
+                    }
+                  }}
+                />
+              )}
+              {!clippedEdges.end && (
+                <div
+                  {...getStyles('resourcesDayViewResizeHandle')}
+                  data-edge="end"
+                  data-active={activeEdge === 'end' || undefined}
+                  onPointerDown={(e) => {
+                    const container = rowSlotsContainersRef.current[resourceIndex];
+                    if (container) {
+                      eventResize.handleResizeStart({
+                        event,
+                        edge: 'end',
+                        container,
+                        originalLeft: event.position.top,
+                        originalWidth: event.position.height,
+                        eventDate: dateStr,
+                        pointerEvent: e,
+                      });
+                    }
+                  }}
+                />
+              )}
             </>
           )}
         </Box>
@@ -1016,7 +1029,7 @@ export const ResourcesDayView = factory<ResourcesDayViewFactory>((_props) => {
                   onEventClick={onEventClick}
                   style={{
                     position: 'absolute',
-                    left: `calc(${leftPercent}% + 1px)`,
+                    insetInlineStart: `calc(${leftPercent}% + 1px)`,
                     width: `calc(${rightPercent - leftPercent}% - 2px)`,
                     bottom: 0,
                     height: '22px',
@@ -1033,6 +1046,7 @@ export const ResourcesDayView = factory<ResourcesDayViewFactory>((_props) => {
     return (
       <ResourcesDayViewRow
         key={resource.id}
+        locale={ctx.getLocale(locale)}
         resource={resource}
         resourceIndex={resourceIndex}
         date={dateStr}
@@ -1102,7 +1116,7 @@ export const ResourcesDayView = factory<ResourcesDayViewFactory>((_props) => {
                     position: 'absolute',
                     insetBlockStart: 0,
                     insetBlockEnd: 0,
-                    ...getTimeAxisEventStyle({ start: top, span: height, axis: 'horizontal' }),
+                    ...getInlineTimeAxisEventStyle({ start: top, span: height }),
                   };
                 })(),
               })}
@@ -1135,7 +1149,7 @@ export const ResourcesDayView = factory<ResourcesDayViewFactory>((_props) => {
           navigationHandlers={{
             previous: () => toDateString(dayjs(date).subtract(1, 'day')),
             next: () => toDateString(dayjs(date).add(1, 'day')),
-            today: () => toDateString(resolveNow()),
+            today: () => toDateString(resolveNow(getCurrentTime)),
           }}
           control={{
             miw: 140,
@@ -1170,8 +1184,8 @@ export const ResourcesDayView = factory<ResourcesDayViewFactory>((_props) => {
           <div {...getStyles('resourcesDayViewInner')}>
             <Box {...getStyles('resourcesDayViewTimeLabelsRow')} mod={{ scrolled }}>
               <div
-                {...getStyles('resourcesDayViewCorner')}
                 key="corner"
+                {...getStyles('resourcesDayViewCorner')}
                 style={
                   hasGroups
                     ? {
@@ -1190,31 +1204,29 @@ export const ResourcesDayView = factory<ResourcesDayViewFactory>((_props) => {
 
             {rows}
 
-            {showTimeIndicator && (
-              <Box
-                {...getStyles('resourcesDayViewCurrentTimeIndicator')}
-                __vars={{
-                  '--indicator-left-offset': hasGroups
-                    ? `calc(var(--resources-day-view-resource-label-width) + var(--resources-day-view-group-label-width) + (100% - var(--resources-day-view-resource-label-width) - var(--resources-day-view-group-label-width)) * ${timeIndicatorOffset} / 100)`
-                    : `calc(var(--resources-day-view-resource-label-width) + (100% - var(--resources-day-view-resource-label-width)) * ${timeIndicatorOffset} / 100)`,
-                  '--_time-bubble-width': formattedCurrentTime
-                    ?.toString()
-                    .toLowerCase()
-                    .includes('m')
-                    ? '64px'
-                    : '46px',
-                }}
-              >
-                {withCurrentTimeBubble && (
-                  <div {...getStyles('resourcesDayViewCurrentTimeIndicatorTimeBubble')}>
-                    {formattedCurrentTime}
-                  </div>
-                )}
-                {!withCurrentTimeBubble && (
-                  <div {...getStyles('resourcesDayViewCurrentTimeIndicatorThumb')} />
-                )}
-                <div {...getStyles('resourcesDayViewCurrentTimeIndicatorLine')} />
-              </Box>
+            {withCurrentTimeIndicator && (
+              <CurrentTimeIndicator
+                __staticSelector={__staticSelector}
+                {...getIndicatorStylesApiProps({
+                  currentTimeIndicator: getStyles('resourcesDayViewCurrentTimeIndicator', {
+                    style: {
+                      '--indicator-left-offset': `calc(var(--resources-day-view-resource-label-width)${hasGroups ? ' + var(--resources-day-view-group-label-width)' : ''} + var(--resources-day-view-slot-width) * ${(slots.length * timeIndicatorOffset) / 100})`,
+                    } as React.CSSProperties,
+                  }),
+                  currentTimeIndicatorLine: getStyles('resourcesDayViewCurrentTimeIndicatorLine'),
+                  currentTimeIndicatorThumb: getStyles('resourcesDayViewCurrentTimeIndicatorThumb'),
+                  currentTimeIndicatorTimeBubble: getStyles(
+                    'resourcesDayViewCurrentTimeIndicatorTimeBubble'
+                  ),
+                })}
+                currentTimeFormat={getCurrentTimeFormat(slotLabelFormat)}
+                withTimeBubble={withCurrentTimeBubble}
+                withThumb={!withCurrentTimeBubble}
+                locale={locale}
+                startTime={startTime}
+                endTime={endTime}
+                getCurrentTime={() => now.toDate()}
+              />
             )}
           </div>
         </ScrollArea>

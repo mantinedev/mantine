@@ -2,7 +2,7 @@ import dayjs from 'dayjs';
 import { useState } from 'react';
 import { ResourcesMonthView, ScheduleResourceGroup } from '@mantine/schedule';
 import { MantineDemo } from '@mantinex/demo';
-import { resourceEvents } from './_data';
+import { dataCode, resourceEvents } from './_data';
 
 const resources = [
   { id: 'tokyo', label: 'Meeting room: Tokyo' },
@@ -69,5 +69,8 @@ export const resourceGroups: MantineDemo = {
   defaultExpanded: false,
   type: 'code',
   component: Demo,
-  code: [{ code, language: 'tsx', fileName: 'Demo.tsx' }],
+  code: [
+    { code, language: 'tsx', fileName: 'Demo.tsx' },
+    { code: dataCode, language: 'tsx', fileName: 'data.ts' },
+  ],
 };

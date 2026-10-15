@@ -634,6 +634,47 @@ describe('@mantine/schedule/get-day-positioned-events', () => {
       expect(result[4].position.column).toBe(0);
     });
 
+    it('uses one column count for a chain of overlaps longer than two events', () => {
+      const events = [
+        testUtils.createEvent({ id: 1, start: '2025-01-15 09:00:00', end: '2025-01-15 10:00:00' }),
+        testUtils.createEvent({ id: 2, start: '2025-01-15 09:00:00', end: '2025-01-15 10:00:00' }),
+        testUtils.createEvent({ id: 3, start: '2025-01-15 09:00:00', end: '2025-01-15 10:00:00' }),
+        testUtils.createEvent({ id: 4, start: '2025-01-15 09:30:00', end: '2025-01-15 10:30:00' }),
+        testUtils.createEvent({ id: 5, start: '2025-01-15 10:15:00', end: '2025-01-15 11:00:00' }),
+        testUtils.createEvent({ id: 6, start: '2025-01-15 10:45:00', end: '2025-01-15 11:30:00' }),
+        testUtils.createEvent({ id: 7, start: '2025-01-15 11:15:00', end: '2025-01-15 12:00:00' }),
+      ];
+
+      const result = getDayPositionedEvents({ date: testDate, events });
+
+      expect(result.map((e) => e.position.overlaps)).toStrictEqual([4, 4, 4, 4, 4, 4, 4]);
+
+      for (const a of result) {
+        for (const b of result) {
+          if (a === b || a.end <= b.start || b.end <= a.start) {
+            continue;
+          }
+          const aEnd = a.position.offset + a.position.width;
+          const bEnd = b.position.offset + b.position.width;
+          expect(aEnd <= b.position.offset + 0.001 || bEnd <= a.position.offset + 0.001).toBe(true);
+        }
+      }
+    });
+
+    it('keeps separate column counts for clusters that do not overlap', () => {
+      const events = [
+        testUtils.createEvent({ id: 1, start: '2025-01-15 09:00:00', end: '2025-01-15 10:00:00' }),
+        testUtils.createEvent({ id: 2, start: '2025-01-15 09:00:00', end: '2025-01-15 10:00:00' }),
+        testUtils.createEvent({ id: 3, start: '2025-01-15 09:00:00', end: '2025-01-15 10:00:00' }),
+        testUtils.createEvent({ id: 4, start: '2025-01-15 10:00:00', end: '2025-01-15 11:00:00' }),
+      ];
+
+      const result = getDayPositionedEvents({ date: testDate, events });
+
+      expect(result.map((e) => e.position.overlaps)).toStrictEqual([3, 3, 3, 1]);
+      expect(result[3].position.width).toBe(100);
+    });
+
     it('preserves event data in positioned events', () => {
       const events = [
         testUtils.createEvent({

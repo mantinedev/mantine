@@ -1,4 +1,5 @@
 import { RefObject } from 'react';
+import { getLogicalArrowKey } from '../get-logical-arrow-key/get-logical-arrow-key';
 
 /** Reference to a 2D array of slot buttons: [resourceIndex][slotIndex] */
 export type ResourcesGridControlsRef = RefObject<HTMLButtonElement[][]>;
@@ -106,31 +107,32 @@ function focusOnNextFocusableControl({
   resourceIndex,
   slotIndex,
   size,
-}: FocusOnNextControlInput): void {
+}: FocusOnNextControlInput): HTMLButtonElement | null {
   const nextPosition = getNextPosition({ direction, resourceIndex, slotIndex, size });
 
   if (!nextPosition) {
-    return;
+    return null;
   }
 
   const controlToFocus =
     controlsRef.current?.[nextPosition.resourceIndex]?.[nextPosition.slotIndex];
 
   if (!controlToFocus) {
-    return;
+    return null;
   }
 
   if (controlToFocus.disabled || controlToFocus.getAttribute('data-hidden')) {
-    focusOnNextFocusableControl({
+    return focusOnNextFocusableControl({
       controlsRef,
       direction,
       resourceIndex: nextPosition.resourceIndex,
       slotIndex: nextPosition.slotIndex,
       size,
     });
-  } else {
-    controlToFocus.focus();
   }
+
+  controlToFocus.focus();
+  return controlToFocus;
 }
 
 export interface HandleResourcesGridKeyDownInput {
@@ -138,6 +140,9 @@ export interface HandleResourcesGridKeyDownInput {
   resourceIndex: number;
   slotIndex: number;
   event: React.KeyboardEvent<HTMLButtonElement>;
+
+  /** Text direction, `ArrowLeft` and `ArrowRight` are swapped in `rtl` @default 'ltr' */
+  dir?: 'ltr' | 'rtl';
 }
 
 export function handleResourcesGridKeyDown({
@@ -145,18 +150,21 @@ export function handleResourcesGridKeyDown({
   resourceIndex,
   slotIndex,
   event,
-}: HandleResourcesGridKeyDownInput): void {
-  const direction = getDirection(event.key);
+  dir,
+}: HandleResourcesGridKeyDownInput): HTMLButtonElement | null {
+  const direction = getDirection(getLogicalArrowKey(event.key, dir));
 
-  if (direction) {
-    event.preventDefault();
-
-    const size = getControlsSize(controlsRef);
-
-    if (!size) {
-      return;
-    }
-
-    focusOnNextFocusableControl({ controlsRef, direction, resourceIndex, slotIndex, size });
+  if (!direction) {
+    return null;
   }
+
+  event.preventDefault();
+
+  const size = getControlsSize(controlsRef);
+
+  if (!size) {
+    return null;
+  }
+
+  return focusOnNextFocusableControl({ controlsRef, direction, resourceIndex, slotIndex, size });
 }

@@ -61,6 +61,7 @@ const initialEvents: ScheduleEventData[] = [
 ];
 
 function Demo() {
+  const [date, setDate] = useState(dayjs().format('YYYY-MM-DD'));
   const [events, setEvents] = useState(initialEvents);
 
   const handleEventResize = ({ eventId, newStart, newEnd }: { eventId: string | number; newStart: string; newEnd: string }) => {
@@ -73,7 +74,8 @@ function Demo() {
 
   return (
     <DayView
-      date={new Date()}
+      date={date}
+      onDateChange={setDate}
       events={events}
       startTime="08:00:00"
       endTime="18:00:00"
@@ -85,6 +87,7 @@ function Demo() {
 `;
 
 function Demo() {
+  const [date, setDate] = useState(dayjs().format('YYYY-MM-DD'));
   const [events, setEvents] = useState(initialEvents);
 
   const handleEventResize = ({
@@ -105,7 +108,8 @@ function Demo() {
 
   return (
     <DayView
-      date={new Date()}
+      date={date}
+      onDateChange={setDate}
       events={events}
       startTime="08:00:00"
       endTime="18:00:00"

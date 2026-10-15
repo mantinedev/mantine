@@ -157,4 +157,32 @@ describe('@mantine/schedule/handle-resources-grid-key-down', () => {
       })
     ).not.toThrow();
   });
+
+  it('returns the focused control so the caller can scroll it into view', () => {
+    const { controlsRef, buttons } = createGrid([3, 3]);
+    expect(
+      handleResourcesGridKeyDown({
+        controlsRef,
+        resourceIndex: 0,
+        slotIndex: 1,
+        event: keyEvent('ArrowDown'),
+      })
+    ).toBe(buttons[1][1]);
+    expect(
+      handleResourcesGridKeyDown({
+        controlsRef,
+        resourceIndex: 0,
+        slotIndex: 0,
+        event: keyEvent('ArrowLeft'),
+      })
+    ).toBeNull();
+    expect(
+      handleResourcesGridKeyDown({
+        controlsRef,
+        resourceIndex: 0,
+        slotIndex: 0,
+        event: keyEvent('Enter'),
+      })
+    ).toBeNull();
+  });
 });

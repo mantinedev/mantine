@@ -1,5 +1,7 @@
 import dayjs from 'dayjs';
 import { ScheduleEventData } from '../../types';
+import { getEventEndDay } from '../get-event-end-day/get-event-end-day';
+import { isAllDayEvent } from '../is-all-day-event/is-all-day-event';
 import { isMultidayEvent } from '../is-multiday-event/is-multiday-event';
 
 interface IsEventInTimeRangeInput {
@@ -8,18 +10,8 @@ interface IsEventInTimeRangeInput {
   endTime?: string;
 }
 
-function spansFullDay(event: ScheduleEventData) {
-  const start = dayjs(event.start);
-  const end = dayjs(event.end);
-  if (!start.isSame(start.startOf('day'))) {
-    return false;
-  }
-  const nextDayStart = start.startOf('day').add(1, 'day');
-  return end.isSame(nextDayStart) || end.isSame(nextDayStart.subtract(1, 'second'));
-}
-
 export function isEventInTimeRange({ event, startTime, endTime }: IsEventInTimeRangeInput) {
-  if (isMultidayEvent(event) || spansFullDay(event)) {
+  if (isMultidayEvent(event) || isAllDayEvent({ event, date: event.start })) {
     return true;
   }
 
@@ -34,7 +26,7 @@ export function isEventInTimeRange({ event, startTime, endTime }: IsEventInTimeR
 
   const eventStart = dayjs(event.start);
   const eventEnd = dayjs(event.end);
-  const endsAtNextDayStart = eventEnd.isSame(eventStart.startOf('day').add(1, 'day'), 'second');
+  const endsAtNextDayStart = eventEnd.isSame(getEventEndDay(event).add(1, 'day'));
   const eventStartMinutes = eventStart.hour() * 60 + eventStart.minute();
   const eventEndMinutes = endsAtNextDayStart ? 24 * 60 : eventEnd.hour() * 60 + eventEnd.minute();
 

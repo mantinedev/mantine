@@ -1,15 +1,22 @@
+import dayjs from 'dayjs';
+import { useState } from 'react';
 import { DayView } from '@mantine/schedule';
 import { MantineDemo } from '@mantinex/demo';
 import { businessEvents, businessEventsCode } from './_data';
 
 const code = `
+import dayjs from 'dayjs';
+import { useState } from 'react';
 import { DayView } from '@mantine/schedule';
 import { events } from './data';
 
 function Demo() {
+  const [date, setDate] = useState(dayjs().format('YYYY-MM-DD'));
+
   return (
     <DayView
-      date={new Date()}
+      date={date}
+      onDateChange={setDate}
       events={events}
       highlightBusinessHours
       businessHours={['09:00:00', '17:00:00']}
@@ -19,9 +26,12 @@ function Demo() {
 `;
 
 function Demo() {
+  const [date, setDate] = useState(dayjs().format('YYYY-MM-DD'));
+
   return (
     <DayView
-      date={new Date()}
+      date={date}
+      onDateChange={setDate}
       events={businessEvents}
       highlightBusinessHours
       businessHours={['09:00:00', '17:00:00']}

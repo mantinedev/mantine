@@ -16,6 +16,7 @@ import {
   StylesApiProps,
   UnstyledButton,
   useMantineTheme,
+  useDirection,
   useProps,
   useResolvedStylesApi,
   useStyles,
@@ -49,8 +50,15 @@ import {
   getGroupToResourceIdMap,
   getIndexFromDragPoint,
   getOrderedResources,
+  isMultidayEvent,
   toDateString,
 } from '../../utils';
+import { getEventEndDay, isEventOnDay } from '../../utils/get-event-end-day/get-event-end-day';
+import { getLogicalArrowKey } from '../../utils/get-logical-arrow-key/get-logical-arrow-key';
+import {
+  scrollCellIntoInlineView,
+  scrollCellToInlineStart,
+} from '../../utils/resources-view-utils/resources-view-utils';
 import { DragContext } from '../DragContext/DragContext';
 import { MoreEvents, MoreEventsProps, MoreEventsStylesNames } from '../MoreEvents/MoreEvents';
 import { RenderEvent, RenderEventBody, ScheduleEvent } from '../ScheduleEvent/ScheduleEvent';
@@ -105,7 +113,7 @@ export interface ResourcesMonthViewProps
   /** Locale passed down to dayjs @category appearance */
   locale?: string;
 
-  /** `dayjs` format for weekdays in day column headers @default 'dd' @category appearance */
+  /** `dayjs` format for weekdays in day column headers @default 'ddd' @category appearance */
   weekdayFormat?: DateLabelFormat;
 
   /** Indices of weekend days @category appearance */
@@ -154,10 +162,10 @@ export interface ResourcesMonthViewProps
   /** Events to display @category appearance */
   events?: ScheduleEventData[];
 
-  /** Width of each day column @default 40px @category appearance */
+  /** Width of each day column @default 80px @category appearance */
   dayWidth?: React.CSSProperties['width'];
 
-  /** Height of each resource row @default 48px @category appearance */
+  /** Height of each resource row @default 64px @category appearance */
   rowHeight?: React.CSSProperties['height'];
 
   /** Function to customize event body @category appearance */
@@ -300,8 +308,8 @@ const defaultProps = {
 function compareCellEvents(a: ScheduleEventData, b: ScheduleEventData): number {
   const aStart = dayjs(a.start);
   const bStart = dayjs(b.start);
-  const aSpan = dayjs(a.end).startOf('day').diff(aStart.startOf('day'), 'day');
-  const bSpan = dayjs(b.end).startOf('day').diff(bStart.startOf('day'), 'day');
+  const aSpan = getEventEndDay(a).diff(aStart.startOf('day'), 'day');
+  const bSpan = getEventEndDay(b).diff(bStart.startOf('day'), 'day');
 
   if (aSpan !== bSpan) {
     return bSpan - aSpan;
@@ -341,10 +349,6 @@ interface ResourcesMonthViewSegment {
 interface ResourcesMonthViewResourceLayout {
   byDay: Record<string, ResourcesMonthViewCellLayout>;
   segments: ResourcesMonthViewSegment[];
-}
-
-function isMultiDayEvent(event: ScheduleEventData): boolean {
-  return dayjs(event.end).startOf('day').isAfter(dayjs(event.start).startOf('day'));
 }
 
 export const ResourcesMonthView = factory<ResourcesMonthViewFactory>((_props) => {
@@ -414,6 +418,8 @@ export const ResourcesMonthView = factory<ResourcesMonthViewFactory>((_props) =>
 
   const maxEventsPerTimeSlot = Math.min(10, Math.max(1, _maxEventsPerTimeSlot ?? 2));
 
+  const { dir } = useDirection();
+
   const getStyles = useStyles<ResourcesMonthViewFactory>({
     name: __staticSelector,
     classes,
@@ -472,6 +478,7 @@ export const ResourcesMonthView = factory<ResourcesMonthViewFactory>((_props) =>
   const dayLabelRefs = useRef<(HTMLDivElement | null)[]>([]);
 
   const resourceLabelRef = useRef<HTMLDivElement>(null);
+  const getStickyInlineSize = () => resourceLabelRef.current?.getBoundingClientRect().width ?? 0;
 
   const scrollToDay = useCallback(
     (targetDate: string) => {
@@ -486,12 +493,10 @@ export const ResourcesMonthView = factory<ResourcesMonthViewFactory>((_props) =>
       if (!targetLabel) {
         return;
       }
-      const labelRect = targetLabel.getBoundingClientRect();
-      const viewportRect = viewportRef.current.getBoundingClientRect();
-      const labelWidth = resourceLabelRef.current?.getBoundingClientRect().width ?? 0;
-      viewportRef.current.scrollTo({
-        left: labelRect.left - viewportRect.left + viewportRef.current.scrollLeft - labelWidth,
-        top: 0,
+      scrollCellToInlineStart({
+        viewport: viewportRef.current,
+        cell: targetLabel,
+        stickyInlineSize: resourceLabelRef.current?.getBoundingClientRect().width ?? 0,
       });
     },
     [monthDays]
@@ -502,6 +507,15 @@ export const ResourcesMonthView = factory<ResourcesMonthViewFactory>((_props) =>
       scrollToDay(startScrollDate);
     }
   }, []);
+
+  const pendingScrollDateRef = useRef<string | null>(null);
+
+  useIsomorphicEffect(() => {
+    if (pendingScrollDateRef.current) {
+      scrollToDay(pendingScrollDateRef.current);
+      pendingScrollDateRef.current = null;
+    }
+  }, [scrollToDay]);
 
   const expandedEvents = useMemo(
     () =>
@@ -554,14 +568,8 @@ export const ResourcesMonthView = factory<ResourcesMonthViewFactory>((_props) =>
           continue;
         }
 
-        const eventStart = dayjs(event.start);
-        const eventEnd = dayjs(event.end);
-
         for (const day of monthDays) {
-          const dayStart = dayjs(day).startOf('day');
-          const dayEnd = dayjs(day).endOf('day');
-
-          if (eventStart.isBefore(dayEnd) && eventEnd.isAfter(dayStart)) {
+          if (isEventOnDay(event, day)) {
             eventsByResourceAndDay[event.resourceId][day].push(event);
           }
         }
@@ -627,7 +635,7 @@ export const ResourcesMonthView = factory<ResourcesMonthViewFactory>((_props) =>
       const segments: ResourcesMonthViewSegment[] = [];
 
       for (const { event, days } of overlapByEvent.values()) {
-        if (!isMultiDayEvent(event)) {
+        if (!isMultidayEvent(event)) {
           continue;
         }
 
@@ -766,8 +774,8 @@ export const ResourcesMonthView = factory<ResourcesMonthViewFactory>((_props) =>
 
     return (
       <Box
-        {...getStyles('resourcesMonthViewDayLabel')}
         key={day}
+        {...getStyles('resourcesMonthViewDayLabel')}
         mod={{ weekend, today }}
         ref={(node) => {
           dayLabelRefs.current[dayIndex] = node;
@@ -792,7 +800,7 @@ export const ResourcesMonthView = factory<ResourcesMonthViewFactory>((_props) =>
     resourceIndex: number,
     dayIndex: number
   ) => {
-    const key = event.key;
+    const key = getLogicalArrowKey(event.key, dir);
     let nextResourceIndex = resourceIndex;
     let nextDayIndex = dayIndex;
 
@@ -809,7 +817,13 @@ export const ResourcesMonthView = factory<ResourcesMonthViewFactory>((_props) =>
     }
 
     event.preventDefault();
-    cellsRef.current[nextResourceIndex]?.[nextDayIndex]?.focus();
+    const nextCell = cellsRef.current[nextResourceIndex]?.[nextDayIndex];
+    nextCell?.focus();
+    scrollCellIntoInlineView({
+      viewport: viewportRef.current,
+      cell: nextCell,
+      stickyInlineSize: getStickyInlineSize(),
+    });
   };
 
   const rowHeightPercent = 100 / maxEventsPerTimeSlot;
@@ -836,10 +850,7 @@ export const ResourcesMonthView = factory<ResourcesMonthViewFactory>((_props) =>
     const isResizable = eventResize.isResizableEvent(event);
     const isThisEventResizing = eventResize.resizingEventId === event.id;
 
-    const eventEnd = dayjs(event.end);
-    const endsAtMidnight =
-      eventEnd.hour() === 0 && eventEnd.minute() === 0 && eventEnd.second() === 0;
-    const lastDay = (endsAtMidnight ? eventEnd.subtract(1, 'day') : eventEnd).format('YYYY-MM-DD');
+    const lastDay = getEventEndDay(event).format('YYYY-MM-DD');
 
     const showStartHandle =
       withStartHandle && monthDaySet.has(dayjs(event.start).format('YYYY-MM-DD'));
@@ -939,10 +950,10 @@ export const ResourcesMonthView = factory<ResourcesMonthViewFactory>((_props) =>
       const dayLeftPercent = (dayIndex / totalDays) * 100;
       const dayWidthPercent = 100 / totalDays;
 
-      const hasHiddenEvents = hiddenEventsCount > 0 && mode !== 'static';
+      const hasHiddenEvents = hiddenEventsCount > 0;
 
       visibleEvents.forEach(({ event, row }) => {
-        if (isMultiDayEvent(event)) {
+        if (isMultidayEvent(event)) {
           return;
         }
 
@@ -962,7 +973,7 @@ export const ResourcesMonthView = factory<ResourcesMonthViewFactory>((_props) =>
             withEndHandle: true,
             style: {
               top: topValue,
-              left: `calc(${dayLeftPercent}% + 1px)`,
+              insetInlineStart: `calc(${dayLeftPercent}% + 1px)`,
               width: `calc(${dayWidthPercent}% - 2px)`,
               height: heightValue,
             },
@@ -970,7 +981,7 @@ export const ResourcesMonthView = factory<ResourcesMonthViewFactory>((_props) =>
         );
       });
 
-      if (hiddenEventsCount > 0 && mode !== 'static') {
+      if (hasHiddenEvents) {
         moreNodes.push(
           <MoreEvents
             key={`more-${resource.id}-${day}`}
@@ -984,7 +995,7 @@ export const ResourcesMonthView = factory<ResourcesMonthViewFactory>((_props) =>
             style={{
               position: 'absolute',
               bottom: 1,
-              left: `calc(${dayLeftPercent}% + 1px)`,
+              insetInlineStart: `calc(${dayLeftPercent}% + 1px)`,
               width: `calc(${dayWidthPercent}% - 2px)`,
               height: 18,
               zIndex: 4,
@@ -1007,7 +1018,7 @@ export const ResourcesMonthView = factory<ResourcesMonthViewFactory>((_props) =>
             }
           }}
           {...getStyles('resourcesMonthViewCell')}
-          aria-label={`${resource.label} ${d.format('MMMM D, YYYY')}`}
+          aria-label={`${resource.label} ${formatDate({ date: d, locale: ctx.getLocale(locale), format: 'MMMM D, YYYY' })}`}
           data-drag-slot-index={withDragSlotSelect && mode !== 'static' ? dayIndex : undefined}
           data-drag-slot-group={withDragSlotSelect && mode !== 'static' ? slotGroup : undefined}
           mod={{
@@ -1046,7 +1057,7 @@ export const ResourcesMonthView = factory<ResourcesMonthViewFactory>((_props) =>
       const segmentLeftPercent = (segment.startDayIndex / totalDays) * 100;
       const segmentWidthPercent =
         ((segment.endDayIndex - segment.startDayIndex + 1) / totalDays) * 100;
-      const compressed = segment.hiddenInSpan && mode !== 'static';
+      const compressed = segment.hiddenInSpan;
       const topValue = compressed
         ? `calc((100% - 18px) * ${segment.row} / ${maxEventsPerTimeSlot} + 1px)`
         : `calc(${segment.row * rowHeightPercent}% + 1px)`;
@@ -1067,7 +1078,7 @@ export const ResourcesMonthView = factory<ResourcesMonthViewFactory>((_props) =>
             !segment.clipEnd && segment.hanging !== 'end' && segment.hanging !== 'both',
           style: {
             top: topValue,
-            left: `calc(${segmentLeftPercent}% + 1px)`,
+            insetInlineStart: `calc(${segmentLeftPercent}% + 1px)`,
             width: `calc(${segmentWidthPercent}% - 2px)`,
             height: heightValue,
           },
@@ -1105,7 +1116,7 @@ export const ResourcesMonthView = factory<ResourcesMonthViewFactory>((_props) =>
       ) : null;
 
     return (
-      <div {...getStyles('resourcesMonthViewRow')} key={resource.id}>
+      <div key={resource.id} {...getStyles('resourcesMonthViewRow')}>
         {groupCell}
         <div
           {...getStyles('resourcesMonthViewResourceLabel')}
@@ -1172,9 +1183,12 @@ export const ResourcesMonthView = factory<ResourcesMonthViewFactory>((_props) =>
             previous: () => toDateString(dayjs(date).subtract(1, 'month').startOf('month')),
             next: () => toDateString(dayjs(date).add(1, 'month').startOf('month')),
             today: () => {
-              requestAnimationFrame(() => {
-                scrollToDay(dayjs().format('YYYY-MM-DD'));
-              });
+              const todayDate = dayjs().format('YYYY-MM-DD');
+              if (monthDays.includes(todayDate)) {
+                scrollToDay(todayDate);
+              } else {
+                pendingScrollDateRef.current = todayDate;
+              }
               return toDateString(dayjs());
             },
           }}
@@ -1215,8 +1229,8 @@ export const ResourcesMonthView = factory<ResourcesMonthViewFactory>((_props) =>
           <div {...getStyles('resourcesMonthViewInner')}>
             <div {...getStyles('resourcesMonthViewDayLabelsRow')}>
               <div
-                {...getStyles('resourcesMonthViewCorner')}
                 key="corner"
+                {...getStyles('resourcesMonthViewCorner')}
                 ref={resourceLabelRef}
                 style={
                   hasGroups

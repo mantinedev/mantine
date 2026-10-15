@@ -87,7 +87,7 @@ function Demo() {
       >
         {selected && (
           <Stack gap="xs">
-            <Text size="sm" c="dimmed">
+            <Text size="sm">
               {dayjs(selected.start).format('MMM D, YYYY HH:mm')} –{' '}
               {dayjs(selected.end).format('HH:mm')}
             </Text>
@@ -95,7 +95,7 @@ function Demo() {
               <Text size="sm">{selected.payload.description}</Text>
             )}
             {selected.payload?.location && (
-              <Text size="sm" c="dimmed">
+              <Text size="sm">
                 Location: {selected.payload.location}
               </Text>
             )}
@@ -122,15 +122,13 @@ function Demo() {
       <Modal opened={selected !== null} onClose={() => setSelected(null)} title={selected?.title}>
         {selected && (
           <Stack gap="xs">
-            <Text size="sm" c="dimmed">
+            <Text size="sm">
               {dayjs(selected.start).format('MMM D, YYYY HH:mm')} –{' '}
               {dayjs(selected.end).format('HH:mm')}
             </Text>
             {selected.payload?.description && <Text size="sm">{selected.payload.description}</Text>}
             {selected.payload?.location && (
-              <Text size="sm" c="dimmed">
-                Location: {selected.payload.location}
-              </Text>
+              <Text size="sm">Location: {selected.payload.location}</Text>
             )}
           </Stack>
         )}

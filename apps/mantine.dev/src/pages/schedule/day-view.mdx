@@ -51,7 +51,8 @@ Overlapping events are positioned side by side:
 
 ## Current time indicator
 
-Set `withCurrentTimeIndicator` to display a line at the current time, it is shown only for today.
+A line at the current time is displayed for today by default.
+Set `withCurrentTimeIndicator` to display it on any date.
 Set `withCurrentTimeBubble={false}` to hide the time bubble:
 
 <Demo data={DayViewDemos.currentTimeIndicator} />
@@ -245,7 +246,7 @@ regular events stay resizable, return `false` from `canResizeEvent`:
 ## Custom background event styles with drag and drop blocking
 
 Use Styles API to change background events appearance. The example below displays
-blocked time with diagonal lines and rejects drops that overlap background events:
+blocked time with diagonal lines and uses `canDropEvent` to reject drops that overlap background events:
 
 <Demo data={DayViewDemos.backgroundEventsCustomStyle} />
 
@@ -258,7 +259,7 @@ with events of the current day as a list:
 
 ## Static mode
 
-Set `mode="static"` to disable all interactions:
+Set `mode="static"` to disable interactions with events and time slots. Header navigation still works:
 
 <Demo data={DayViewDemos.staticMode} />
 
@@ -304,7 +305,8 @@ Labels are hidden and paddings are reduced when the container is narrow.
 
 ### Focus management
 
-Only the first time slot is included in the tab order, other time slots are reached with arrow keys.
+The all-day slot and the first time slot are included in the tab order.
+Other time slots are reached with arrow keys.
 
 ### Keyboard interactions
 

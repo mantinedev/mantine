@@ -1,4 +1,5 @@
 import dayjs from 'dayjs';
+import { useState } from 'react';
 import { ScheduleEventData, WeekView } from '@mantine/schedule';
 import { MantineDemo } from '@mantinex/demo';
 
@@ -37,7 +38,7 @@ const startOfWeek = dayjs().subtract(dayjs().day(), 'day').format('YYYY-MM-DD');
 const dayAfterStartOfWeek = dayjs(startOfWeek).add(1, 'day').format('YYYY-MM-DD');
 const twoDaysAfterStartOfWeek = dayjs(startOfWeek).add(2, 'day').format('YYYY-MM-DD');
 
-const events = [
+export const events = [
   {
     id: 1,
     title: 'Morning Standup',
@@ -63,13 +64,18 @@ const events = [
 `;
 
 const code = `
+import dayjs from 'dayjs';
+import { useState } from 'react';
 import { WeekView } from '@mantine/schedule';
 import { events } from './data';
 
 function Demo() {
+  const [date, setDate] = useState(dayjs().format('YYYY-MM-DD'));
+
   return (
     <WeekView
-      date={new Date()}
+      date={date}
+      onDateChange={setDate}
       events={events}
       startTime="08:00:00"
       endTime="18:00:00"
@@ -80,9 +86,12 @@ function Demo() {
 `;
 
 function Demo() {
+  const [date, setDate] = useState(dayjs().format('YYYY-MM-DD'));
+
   return (
     <WeekView
-      date={new Date()}
+      date={date}
+      onDateChange={setDate}
       events={events}
       startTime="08:00:00"
       endTime="18:00:00"

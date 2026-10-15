@@ -8,7 +8,7 @@ import {
   ScheduleViewLevel,
 } from '@mantine/schedule';
 import { MantineDemo } from '@mantinex/demo';
-import { events } from './_data';
+import { dataCode, events } from './_data';
 
 const code = `
 import dayjs from 'dayjs';
@@ -227,5 +227,8 @@ export const customHeader: MantineDemo = {
   defaultExpanded: false,
   type: 'code',
   component: Demo,
-  code,
+  code: [
+    { code, language: 'tsx', fileName: 'Demo.tsx' },
+    { code: dataCode, language: 'tsx', fileName: 'data.ts' },
+  ],
 };

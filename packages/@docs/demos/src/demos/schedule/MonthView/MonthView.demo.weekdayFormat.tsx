@@ -1,18 +1,26 @@
+import dayjs from 'dayjs';
+import { useState } from 'react';
 import { MonthView } from '@mantine/schedule';
 import { MantineDemo } from '@mantinex/demo';
 import { dataCode, regularEvents } from './_data';
 
 const code = `
+import dayjs from 'dayjs';
+import { useState } from 'react';
 import { MonthView } from '@mantine/schedule';
 import { events } from './data';
 
 function Demo() {
-  return <MonthView date={new Date()} events={events} weekdayFormat="ddd" />;
+  const [date, setDate] = useState(dayjs().format('YYYY-MM-DD'));
+
+  return <MonthView date={date} onDateChange={setDate} events={events} weekdayFormat="dd" />;
 }
 `;
 
 function Demo() {
-  return <MonthView date={new Date()} events={regularEvents} weekdayFormat="ddd" />;
+  const [date, setDate] = useState(dayjs().format('YYYY-MM-DD'));
+
+  return <MonthView date={date} onDateChange={setDate} events={regularEvents} weekdayFormat="dd" />;
 }
 
 export const weekdayFormat: MantineDemo = {

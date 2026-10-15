@@ -823,3 +823,209 @@ export function UnalignedEndTime() {
     </div>
   );
 }
+
+export function EventsFromPreviousDays() {
+  const [clicked, setClicked] = useState<string | null>(null);
+  const previousDay = dayjs(today).subtract(1, 'day').format('YYYY-MM-DD');
+  const nextDay = dayjs(today).add(1, 'day').format('YYYY-MM-DD');
+  const dayAfterNext = dayjs(today).add(2, 'day').format('YYYY-MM-DD');
+
+  const events: ScheduleEventData[] = [
+    {
+      id: 'multi-day-all-day',
+      title: 'Multi-day all-day',
+      start: `${previousDay} 00:00:00`,
+      end: `${dayAfterNext} 00:00:00`,
+      color: 'violet',
+      payload: {},
+    },
+    {
+      id: 'multi-day-timed',
+      title: 'Multi-day timed',
+      start: `${previousDay} 09:00:00`,
+      end: `${nextDay} 17:00:00`,
+      color: 'teal',
+      payload: {},
+    },
+    {
+      id: 'carry-over',
+      title: 'Overnight carry-over',
+      start: `${previousDay} 22:00:00`,
+      end: `${today} 02:00:00`,
+      color: 'orange',
+      payload: {},
+    },
+    {
+      id: 'ends-at-midnight',
+      title: 'Ends at midnight (not shown)',
+      start: `${previousDay} 20:00:00`,
+      end: `${today} 00:00:00`,
+      color: 'red',
+      payload: {},
+    },
+  ];
+
+  return (
+    <div style={{ padding: 40 }}>
+      <Stack gap="xs">
+        <Text size="sm">
+          Events that started on the previous day are shown on this day: all-day row for whole days,
+          clipped for timed carry-over. Clicked: {clicked ?? 'none'}
+        </Text>
+        <DayView
+          date={today}
+          events={events}
+          startScrollTime="00:00:00"
+          onEventClick={(event) => setClicked(`${event.id} ${event.start} → ${event.end}`)}
+        />
+      </Stack>
+    </div>
+  );
+}
+
+export function ResizeEventsFromOtherDays() {
+  const previousDay = dayjs(today).subtract(1, 'day').format('YYYY-MM-DD');
+  const nextDay = dayjs(today).add(1, 'day').format('YYYY-MM-DD');
+  const [resized, setResized] = useState<string | null>(null);
+  const [events, setEvents] = useState<ScheduleEventData[]>([
+    {
+      id: 'carry-over',
+      title: 'Overnight carry-over',
+      start: `${previousDay} 22:00:00`,
+      end: `${today} 02:00:00`,
+      color: 'orange',
+      payload: {},
+    },
+    {
+      id: 'continues',
+      title: 'Continues to the next day',
+      start: `${today} 21:00:00`,
+      end: `${nextDay} 03:00:00`,
+      color: 'teal',
+      payload: {},
+    },
+  ]);
+
+  return (
+    <div style={{ padding: 40 }}>
+      <Stack gap="xs">
+        <Text size="sm">
+          The clipped edge of an event from another day has no resize handle. Resizing the other
+          edge keeps the original start or end. Resized: {resized ?? 'none'}
+        </Text>
+        <DayView
+          date={today}
+          events={events}
+          startScrollTime="00:00:00"
+          withEventResize
+          onEventResize={({ eventId, newStart, newEnd }) => {
+            setResized(`${eventId} ${newStart} → ${newEnd}`);
+            setEvents((current) =>
+              current.map((event) =>
+                event.id === eventId ? { ...event, start: newStart, end: newEnd } : event
+              )
+            );
+          }}
+        />
+      </Stack>
+    </div>
+  );
+}
+
+export function ResizeEventEndingAtMidnight() {
+  const nextDay = dayjs(today).add(1, 'day').format('YYYY-MM-DD');
+  const [resized, setResized] = useState<string | null>(null);
+  const [events, setEvents] = useState<ScheduleEventData[]>([
+    {
+      id: 'evening',
+      title: 'Ends at midnight',
+      start: `${today} 20:00:00`,
+      end: `${nextDay} 00:00:00`,
+      color: 'blue',
+      payload: {},
+    },
+  ]);
+
+  return (
+    <div style={{ padding: 40 }}>
+      <Stack gap="xs">
+        <Text size="sm">Resized: {resized ?? 'none'}</Text>
+        <DayView
+          date={today}
+          events={events}
+          startScrollTime="16:00:00"
+          withEventResize
+          onEventResize={({ eventId, newStart, newEnd }) => {
+            setResized(`${eventId} ${newStart} → ${newEnd}`);
+            setEvents((current) =>
+              current.map((event) =>
+                event.id === eventId ? { ...event, start: newStart, end: newEnd } : event
+              )
+            );
+          }}
+        />
+      </Stack>
+    </div>
+  );
+}
+
+export function ColumnsLongOverlapChain() {
+  const event = (id: number, start: string, end: string, color: string): ScheduleEventData => ({
+    id,
+    title: `Event ${id}`,
+    start: `${today} ${start}:00`,
+    end: `${today} ${end}:00`,
+    color,
+    payload: {},
+  });
+
+  return (
+    <div style={{ padding: 40 }}>
+      <DayView
+        date={today}
+        startScrollTime="08:30:00"
+        events={[
+          event(1, '09:00', '10:00', 'blue'),
+          event(2, '09:00', '10:00', 'teal'),
+          event(3, '09:00', '10:00', 'grape'),
+          event(4, '09:30', '10:30', 'orange'),
+          event(5, '10:15', '11:00', 'red'),
+          event(6, '10:45', '11:30', 'cyan'),
+          event(7, '11:15', '12:00', 'lime'),
+        ]}
+      />
+    </div>
+  );
+}
+
+export function ResizeBackgroundEventsFromOtherDays() {
+  const previousDay = dayjs(today).subtract(1, 'day').format('YYYY-MM-DD');
+  const [resized, setResized] = useState<string | null>(null);
+
+  return (
+    <div style={{ padding: 40 }}>
+      <Stack gap="xs">
+        <Text size="sm">Resized: {resized ?? 'none'}</Text>
+        <DayView
+          date={today}
+          startScrollTime="00:00:00"
+          withEventResize
+          withInteractiveBackgroundEvents
+          onEventResize={({ eventId, newStart, newEnd }) =>
+            setResized(`${eventId} ${newStart} → ${newEnd}`)
+          }
+          events={[
+            {
+              id: 'maintenance',
+              title: 'Maintenance from the previous day',
+              start: `${previousDay} 22:00:00`,
+              end: `${today} 03:00:00`,
+              color: 'gray',
+              display: 'background',
+            },
+          ]}
+        />
+      </Stack>
+    </div>
+  );
+}

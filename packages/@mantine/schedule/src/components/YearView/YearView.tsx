@@ -1,5 +1,5 @@
 import dayjs from 'dayjs';
-import { useRef } from 'react';
+import { useMemo, useRef } from 'react';
 import {
   Box,
   BoxProps,
@@ -11,6 +11,7 @@ import {
   getRadius,
   MantineRadius,
   StylesApiProps,
+  useDirection,
   useProps,
   useResolvedStylesApi,
   useStyles,
@@ -29,7 +30,7 @@ import { CombinedScheduleHeaderStylesNames } from '../ScheduleHeader/ScheduleHea
 import { ScheduleHeaderBase } from '../ScheduleHeader/ScheduleHeaderBase';
 import { ViewSelectProps } from '../ScheduleHeader/ViewSelect/ViewSelect';
 import { getHiddenWeekendColumns, getVisibleWeekDays } from './get-visible-week-days';
-import { getYearViewEvents } from './get-year-view-events/get-year-view-events';
+import { getYearViewEvents, getYearViewRange } from './get-year-view-events/get-year-view-events';
 import { handleYearViewKeyDown, YearViewControlsRef } from './handle-year-view-key-down';
 import { YearViewMonth, YearViewMonthSettings } from './YearViewMonth';
 import classes from './YearView.module.css';
@@ -81,10 +82,10 @@ export interface YearViewProps
   /** Called when view level select button is clicked @category state */
   onViewChange?: (view: ScheduleViewLevel) => void;
 
-  /** Props passed to previous month control */
+  /** Props passed to previous year control */
   previousControlProps?: React.ComponentProps<'button'> & DataAttributes;
 
-  /** Props passed to next month control */
+  /** Props passed to next year control */
   nextControlProps?: React.ComponentProps<'button'> & DataAttributes;
 
   /** Props passed to today control */
@@ -175,6 +176,8 @@ export const YearView = factory<YearViewFactory>((_props) => {
 
   const ctx = useDatesContext();
 
+  const { dir } = useDirection();
+
   const getStyles = useStyles<YearViewFactory>({
     name: __staticSelector,
     classes,
@@ -204,15 +207,6 @@ export const YearView = factory<YearViewFactory>((_props) => {
     radius,
   };
 
-  const expandedEvents = expandRecurringEvents({
-    events,
-    rangeStart: dayjs(date).startOf('year').toDate(),
-    rangeEnd: dayjs(date).endOf('year').toDate(),
-    expansionLimit: recurrenceExpansionLimit,
-  });
-
-  const groupedEvents = getYearViewEvents({ date, events: expandedEvents });
-
   // [monthIndex][weekIndex][dayIndex]
   const daysRef = useRef<HTMLButtonElement[][][]>([]) as YearViewControlsRef;
 
@@ -224,6 +218,37 @@ export const YearView = factory<YearViewFactory>((_props) => {
     withWeekendDays,
   });
   const columnsCount = 7 - hiddenColumns.length;
+
+  const yearStart = toDateString(dayjs(date).startOf('year'));
+  const yearRange = getYearViewRange({
+    date: yearStart,
+    firstDayOfWeek: resolvedFirstDayOfWeek,
+    withOutsideDays,
+  });
+
+  const groupedEvents = useMemo(() => {
+    const expandedEvents = expandRecurringEvents({
+      events,
+      rangeStart: dayjs(yearRange.start).startOf('day').toDate(),
+      rangeEnd: dayjs(yearRange.end).endOf('day').toDate(),
+      expansionLimit: recurrenceExpansionLimit,
+    });
+
+    return getYearViewEvents({
+      date: yearStart,
+      events: expandedEvents,
+      firstDayOfWeek: resolvedFirstDayOfWeek,
+      withOutsideDays,
+    });
+  }, [
+    events,
+    yearStart,
+    yearRange.start,
+    yearRange.end,
+    resolvedFirstDayOfWeek,
+    withOutsideDays,
+    recurrenceExpansionLimit,
+  ]);
 
   const getFirstDayIndex = (month: string): { weekIndex: number; dayIndex: number } | undefined => {
     const weeks = getMonthDays({
@@ -279,6 +304,7 @@ export const YearView = factory<YearViewFactory>((_props) => {
           onDayClick={onDayClick}
           onWeekNumberClick={onWeekNumberClick}
           highlightToday={highlightToday}
+          labels={labels}
           groupedEvents={groupedEvents}
           mode={mode}
           withOutsideDays={withOutsideDays}
@@ -310,6 +336,7 @@ export const YearView = factory<YearViewFactory>((_props) => {
               weekIndex: payload.weekIndex,
               dayIndex: payload.dayIndex,
               event,
+              dir,
             });
           }}
         />

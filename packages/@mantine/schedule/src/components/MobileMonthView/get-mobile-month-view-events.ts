@@ -1,82 +1,41 @@
-import dayjs from 'dayjs';
-import { AnyDateValue, DateStringValue, ScheduleEventData } from '../../types';
-import { isMultidayEvent, validateEvent } from '../../utils';
+import { AnyDateValue, DayOfWeek, ScheduleEventData } from '../../types';
+import { getMonthRange } from '../../utils';
+import { EventsByDay, groupEventsByDay } from '../../utils/group-events-by-day/group-events-by-day';
 
-export type GroupedEvents = Record<DateStringValue, ScheduleEventData[]>;
-
-function getEventEndDay(event: ScheduleEventData) {
-  const startDay = dayjs(event.start).startOf('day');
-  const end = dayjs(event.end);
-  const endAtMidnight = end.hour() === 0 && end.minute() === 0 && end.second() === 0;
-  const endDay = endAtMidnight ? end.startOf('day').subtract(1, 'day') : end.startOf('day');
-  return endDay.isBefore(startDay) ? startDay : endDay;
-}
-
-function groupEventByDate(event: ScheduleEventData, groupedEvents: GroupedEvents) {
-  if (isMultidayEvent(event)) {
-    const startDate = dayjs(event.start).startOf('day');
-    const endDate = getEventEndDay(event);
-
-    for (
-      let date = startDate;
-      date.isBefore(endDate) || date.isSame(endDate);
-      date = date.add(1, 'day')
-    ) {
-      const dateKey = date.format('YYYY-MM-DD');
-      if (!groupedEvents[dateKey]) {
-        groupedEvents[dateKey] = [];
-      }
-      groupedEvents[dateKey].push(event);
-    }
-
-    return;
-  }
-
-  const eventDate = dayjs(event.start).format('YYYY-MM-DD');
-  if (!groupedEvents[eventDate]) {
-    groupedEvents[eventDate] = [];
-  }
-  groupedEvents[eventDate].push(event);
-}
+export type GroupedEvents = EventsByDay;
 
 interface GetMobileMonthViewEventsInput {
+  /** Displayed month */
   date: AnyDateValue;
+
+  /** Events to group, background events are skipped */
   events: ScheduleEventData[] | undefined;
+
+  /** First day of the week, used to calculate the displayed weeks @default 1 */
+  firstDayOfWeek?: DayOfWeek;
+
+  /** If true, the displayed range always has 6 weeks @default true */
+  consistentWeeks?: boolean;
 }
 
-export function getMobileMonthViewEvents({ date, events }: GetMobileMonthViewEventsInput) {
-  const groupedEvents: GroupedEvents = {};
+/** Groups events by every day of the displayed weeks, including outside days */
+export function getMobileMonthViewEvents({
+  date,
+  events,
+  firstDayOfWeek = 1,
+  consistentWeeks = true,
+}: GetMobileMonthViewEventsInput) {
+  const range = getMonthRange({
+    month: date,
+    withOutsideDays: true,
+    consistentWeeks,
+    firstDayOfWeek,
+  });
 
-  if (events === undefined) {
-    return groupedEvents;
-  }
-
-  const monthStart = dayjs(date).startOf('month');
-  const monthEnd = dayjs(date).endOf('month');
-
-  const ids = new Set<string | number>();
-
-  for (const event of events) {
-    if (event.display === 'background') {
-      continue;
-    }
-
-    const overlapsMonth =
-      !getEventEndDay(event).isBefore(monthStart, 'day') &&
-      !dayjs(event.start).isAfter(monthEnd, 'day');
-
-    if (overlapsMonth) {
-      groupEventByDate(validateEvent(event), groupedEvents);
-
-      if (!ids.has(event.id)) {
-        ids.add(event.id);
-      } else {
-        throw new Error(
-          `[@mantine/schedule] MobileMonthView: Duplicated event ids found: ${event.id}`
-        );
-      }
-    }
-  }
-
-  return groupedEvents;
+  return groupEventsByDay({
+    events,
+    rangeStart: range.start,
+    rangeEnd: range.end,
+    componentName: 'MobileMonthView',
+  });
 }

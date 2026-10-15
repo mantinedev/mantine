@@ -1,61 +1,63 @@
 import dayjs from 'dayjs';
-import { AnyDateValue, DateStringValue, ScheduleEventData } from '../../../types';
-import { isMultidayEvent, validateEvent } from '../../../utils';
+import { AnyDateValue, DayOfWeek, ScheduleEventData } from '../../../types';
+import { getMonthRange } from '../../../utils/get-month-range/get-month-range';
+import {
+  EventsByDay,
+  groupEventsByDay,
+} from '../../../utils/group-events-by-day/group-events-by-day';
 
-export type GroupedEvents = Record<DateStringValue, ScheduleEventData[]>;
+export type GroupedEvents = EventsByDay;
 
-function groupEventByDate(event: ScheduleEventData, groupedEvents: GroupedEvents) {
-  if (isMultidayEvent(event)) {
-    const startDate = dayjs(event.start).startOf('day');
-    const endDate = dayjs(event.end).startOf('day');
+interface GetYearViewRangeInput {
+  /** Any date of the displayed year */
+  date: AnyDateValue;
 
-    for (
-      let date = startDate;
-      date.isBefore(endDate) || date.isSame(endDate);
-      date = date.add(1, 'day')
-    ) {
-      const dateKey = date.format('YYYY-MM-DD');
-      if (!groupedEvents[dateKey]) {
-        groupedEvents[dateKey] = [];
-      }
-      groupedEvents[dateKey].push(event);
-    }
+  /** First day of the week, used to calculate the displayed weeks @default 1 */
+  firstDayOfWeek?: DayOfWeek;
 
-    return;
-  }
-
-  const eventDate = dayjs(event.start).format('YYYY-MM-DD');
-  if (!groupedEvents[eventDate]) {
-    groupedEvents[eventDate] = [];
-  }
-  groupedEvents[eventDate].push(event);
+  /** If set, the range includes outside days of the January and December grids @default false */
+  withOutsideDays?: boolean;
 }
 
-interface GetYearViewEventsInput {
-  date: AnyDateValue;
+/** Returns the first and the last day displayed in the year view */
+export function getYearViewRange({
+  date,
+  firstDayOfWeek = 1,
+  withOutsideDays = false,
+}: GetYearViewRangeInput) {
+  const january = getMonthRange({
+    month: dayjs(date).startOf('year'),
+    withOutsideDays,
+    consistentWeeks: true,
+    firstDayOfWeek,
+  });
+
+  const december = getMonthRange({
+    month: dayjs(date).endOf('year').startOf('month'),
+    withOutsideDays,
+    consistentWeeks: true,
+    firstDayOfWeek,
+  });
+
+  return { start: january.start, end: december.end };
+}
+
+interface GetYearViewEventsInput extends GetYearViewRangeInput {
   events: ScheduleEventData[] | undefined;
 }
 
-export function getYearViewEvents({ date, events }: GetYearViewEventsInput) {
-  const groupedEvents: GroupedEvents = {};
+export function getYearViewEvents({
+  date,
+  events,
+  firstDayOfWeek,
+  withOutsideDays,
+}: GetYearViewEventsInput) {
+  const range = getYearViewRange({ date, firstDayOfWeek, withOutsideDays });
 
-  if (events === undefined) {
-    return groupedEvents;
-  }
-
-  const ids = new Set<string | number>();
-
-  for (const event of events) {
-    if (dayjs(event.start).isSame(dayjs(date), 'year')) {
-      groupEventByDate(validateEvent(event), groupedEvents);
-
-      if (!ids.has(event.id)) {
-        ids.add(event.id);
-      } else {
-        throw new Error(`[@mantine/schedule] YearView: Duplicated event ids found: ${event.id}`);
-      }
-    }
-  }
-
-  return groupedEvents;
+  return groupEventsByDay({
+    events,
+    rangeStart: range.start,
+    rangeEnd: range.end,
+    componentName: 'YearView',
+  });
 }

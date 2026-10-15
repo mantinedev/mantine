@@ -1,6 +1,11 @@
 import { testUtils } from '../../test-utils';
 import { DateStringValue, MonthPositionedEventData } from '../../types';
-import { getRenderableMonthEventSegments } from './get-renderable-month-event-segments';
+import { getMonthPositionedEvents } from './get-month-view-events/get-month-positioned-events';
+import { getMonthEventSegmentsLayout } from './get-renderable-month-event-segments';
+
+function getRenderableMonthEventSegments(input: Parameters<typeof getMonthEventSegmentsLayout>[0]) {
+  return getMonthEventSegmentsLayout(input).segments;
+}
 
 const week: DateStringValue[] = [
   '2025-01-13 00:00:00',
@@ -262,6 +267,98 @@ describe('@mantine/schedule/get-renderable-month-event-segments', () => {
       clipStart: false,
       clipEnd: false,
       position: { startOffset: (2 / 7) * 100, width: (1 / 7) * 100, row: 1 },
+    });
+  });
+
+  describe('hidden events count', () => {
+    const octoberWeek: DateStringValue[] = [
+      '2026-10-05 00:00:00',
+      '2026-10-06 00:00:00',
+      '2026-10-07 00:00:00',
+      '2026-10-08 00:00:00',
+      '2026-10-09 00:00:00',
+      '2026-10-10 00:00:00',
+      '2026-10-11 00:00:00',
+    ];
+
+    function getLayout(events: ReturnType<typeof testUtils.createEvent>[], maxEventsPerDay = 2) {
+      const positioned = getMonthPositionedEvents({ date: '2026-10-01', events });
+      return getMonthEventSegmentsLayout({
+        events: positioned.groupedByWeek['1'],
+        groupedByDay: positioned.groupedByDay,
+        maxEventsPerDay,
+        week: octoberWeek,
+      });
+    }
+
+    it('counts every event that is not rendered on a day with row gaps', () => {
+      const layout = getLayout([
+        testUtils.createEvent({
+          id: 'A',
+          start: '2026-10-05 09:00:00',
+          end: '2026-10-06 10:00:00',
+        }),
+        testUtils.createEvent({
+          id: 'B',
+          start: '2026-10-06 09:00:00',
+          end: '2026-10-07 10:00:00',
+        }),
+        testUtils.createEvent({
+          id: 'C',
+          start: '2026-10-07 09:00:00',
+          end: '2026-10-07 10:00:00',
+        }),
+        testUtils.createEvent({
+          id: 'D',
+          start: '2026-10-07 11:00:00',
+          end: '2026-10-07 12:00:00',
+        }),
+      ]);
+
+      const renderedOnOct7 = layout.segments.filter(
+        (segment) =>
+          segment.position.startOffset <= (2 / 7) * 100 + 0.01 &&
+          segment.position.startOffset + segment.position.width >= (3 / 7) * 100 - 0.01
+      );
+
+      expect(renderedOnOct7.map((segment) => segment.event.id)).toStrictEqual(['B']);
+      expect(layout.hiddenEventsCountByDay['2026-10-07 00:00:00']).toBe(2);
+      expect(layout.hiddenEventsCountByDay['2026-10-05 00:00:00']).toBe(0);
+      expect(layout.hiddenEventsCountByDay['2026-10-06 00:00:00']).toBe(0);
+    });
+
+    it('returns 0 for days that fit', () => {
+      const layout = getLayout([
+        testUtils.createEvent({
+          id: 'A',
+          start: '2026-10-07 09:00:00',
+          end: '2026-10-07 10:00:00',
+        }),
+      ]);
+
+      expect(Object.values(layout.hiddenEventsCountByDay).every((count) => count === 0)).toBe(true);
+    });
+
+    it('counts events past the limit', () => {
+      const layout = getLayout([
+        testUtils.createEvent({
+          id: 'A',
+          start: '2026-10-07 09:00:00',
+          end: '2026-10-07 10:00:00',
+        }),
+        testUtils.createEvent({
+          id: 'B',
+          start: '2026-10-07 10:00:00',
+          end: '2026-10-07 11:00:00',
+        }),
+        testUtils.createEvent({
+          id: 'C',
+          start: '2026-10-07 11:00:00',
+          end: '2026-10-07 12:00:00',
+        }),
+      ]);
+
+      expect(layout.hiddenEventsCountByDay['2026-10-07 00:00:00']).toBe(1);
     });
   });
 });

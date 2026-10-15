@@ -66,6 +66,7 @@ function Demo() {
   // getCurrentTime is called on every tick, so the indicator keeps updating
   const getCurrentTime = () => dayjs().tz(tz).format('YYYY-MM-DD HH:mm:ss');
   const currentDate = getCurrentTime().split(' ')[0];
+  const [date, setDate] = useState(currentDate);
 
   return (
     <Stack>
@@ -73,12 +74,16 @@ function Demo() {
         label="Display timezone"
         data={timezones}
         value={tz}
-        onChange={(value) => setTz(value!)}
+        onChange={(value) => {
+          setTz(value!);
+          setDate(dayjs().tz(value!).format('YYYY-MM-DD'));
+        }}
         allowDeselect={false}
       />
 
       <ResourcesWeekView
-        date={currentDate}
+        date={date}
+        onDateChange={setDate}
         resources={resources}
         events={getEvents(currentDate)}
         startScrollDateTime={dayjs(getCurrentTime()).subtract(2, 'hour').format('YYYY-MM-DD HH:mm:ss')}
@@ -112,6 +117,7 @@ function Demo() {
 
   const getCurrentTime = () => dayjs().tz(timezone).format('YYYY-MM-DD HH:mm:ss');
   const currentDate = getCurrentTime().split(' ')[0];
+  const [date, setDate] = useState(currentDate);
 
   return (
     <Stack>
@@ -119,12 +125,16 @@ function Demo() {
         label="Display timezone"
         data={timezones}
         value={timezone}
-        onChange={(value) => setTimezone(value!)}
+        onChange={(value) => {
+          setTimezone(value!);
+          setDate(dayjs().tz(value!).format('YYYY-MM-DD'));
+        }}
         allowDeselect={false}
       />
 
       <ResourcesWeekView
-        date={currentDate}
+        date={date}
+        onDateChange={setDate}
         resources={resources}
         events={getEvents(currentDate)}
         startScrollDateTime={dayjs(getCurrentTime())

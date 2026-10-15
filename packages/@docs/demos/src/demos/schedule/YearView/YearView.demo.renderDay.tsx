@@ -1,4 +1,5 @@
 import dayjs from 'dayjs';
+import { useState } from 'react';
 import { ScheduleEventData, YearView } from '@mantine/schedule';
 import { MantineDemo } from '@mantinex/demo';
 
@@ -26,13 +27,17 @@ const eventData: ScheduleEventData[] = eventDays.flatMap(([date, count, color]) 
 
 const code = `
 import dayjs from 'dayjs';
+import { useState } from 'react';
 import { YearView } from '@mantine/schedule';
 import { events } from './data';
 
 function Demo() {
+  const [date, setDate] = useState(dayjs().format('YYYY-MM-DD'));
+
   return (
     <YearView
-      date={new Date()}
+      date={date}
+      onDateChange={setDate}
       events={events}
       renderDay={(date, dayEvents) => (
         <>
@@ -66,9 +71,12 @@ function Demo() {
 `;
 
 function Demo() {
+  const [date, setDate] = useState(dayjs().format('YYYY-MM-DD'));
+
   return (
     <YearView
-      date={new Date()}
+      date={date}
+      onDateChange={setDate}
       events={eventData}
       renderDay={(date, dayEvents) => (
         <>

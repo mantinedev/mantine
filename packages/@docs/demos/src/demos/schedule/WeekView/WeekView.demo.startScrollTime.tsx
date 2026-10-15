@@ -1,14 +1,17 @@
+import dayjs from 'dayjs';
 import { useState } from 'react';
 import { ScheduleEventData, WeekView } from '@mantine/schedule';
 import { MantineDemo } from '@mantinex/demo';
 import { dataCode, regularEvents } from './_data';
 
 const code = `
+import dayjs from 'dayjs';
 import { useState } from 'react';
-import { WeekView, ScheduleEventData } from '@mantine/schedule';
+import { WeekView } from '@mantine/schedule';
 import { events as initialEvents } from './data';
 
 function Demo() {
+  const [date, setDate] = useState(dayjs().format('YYYY-MM-DD'));
   const [events, setEvents] = useState(initialEvents);
 
   const handleEventDrop = ({ eventId, newStart, newEnd }: { eventId: string | number; newStart: string; newEnd: string }) => {
@@ -21,7 +24,8 @@ function Demo() {
 
   return (
     <WeekView
-      date={new Date()}
+      date={date}
+      onDateChange={setDate}
       events={events}
       startScrollTime="09:00:00"
       scrollAreaProps={{ mah: 500 }}
@@ -33,6 +37,7 @@ function Demo() {
 `;
 
 function Demo() {
+  const [date, setDate] = useState(dayjs().format('YYYY-MM-DD'));
   const [events, setEvents] = useState<ScheduleEventData[]>(regularEvents);
 
   const handleEventDrop = ({
@@ -53,7 +58,8 @@ function Demo() {
 
   return (
     <WeekView
-      date={new Date()}
+      date={date}
+      onDateChange={setDate}
       events={events}
       startScrollTime="09:00:00"
       scrollAreaProps={{ mah: 500 }}

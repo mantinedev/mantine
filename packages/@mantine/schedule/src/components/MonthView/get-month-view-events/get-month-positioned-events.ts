@@ -6,6 +6,8 @@ import {
   MonthPositionedEventData,
   ScheduleEventData,
 } from '../../../types';
+import { sortEvents } from '../../../utils';
+import { getEventEndDay } from '../../../utils/get-event-end-day/get-event-end-day';
 import { addEventToDayGroups } from './add-event-to-day-groups';
 import { calculateEventPositionInWeek } from './calculate-event-position-in-week';
 import { getWeeksInRange } from './get-weeks-in-range';
@@ -26,6 +28,9 @@ interface GetMonthPositionedEventsInput {
     start: DateStringValue;
     end: DateStringValue;
   };
+
+  /** If set, events are clipped to the range, days of the weeks outside of it get no events */
+  clipToRange?: boolean;
 }
 
 /** Events grouped by week index and by day */
@@ -51,6 +56,7 @@ export function getMonthPositionedEvents({
   events,
   firstDayOfWeek = 1,
   range,
+  clipToRange = false,
 }: GetMonthPositionedEventsInput): GroupedMonthEvents {
   const groupedByWeek: GroupedMonthEvents['groupedByWeek'] = {};
   const backgroundByWeek: GroupedMonthEvents['backgroundByWeek'] = {};
@@ -76,14 +82,20 @@ export function getMonthPositionedEvents({
     backgroundByWeek[i.toString()] = [];
   }
 
-  for (const event of events) {
-    const eventStart = dayjs(event.start).startOf('day');
-    const rawEnd = dayjs(event.end);
-    const endAtMidnight = rawEnd.hour() === 0 && rawEnd.minute() === 0 && rawEnd.second() === 0;
-    const eventEnd = endAtMidnight
-      ? rawEnd.startOf('day').subtract(1, 'day')
-      : rawEnd.startOf('day');
-    const isMultiday = eventEnd.isAfter(eventStart);
+  const firstVisibleDay = rangeStart.startOf('day');
+  const lastVisibleDay = rangeEnd.startOf('day');
+
+  for (const event of sortEvents(events)) {
+    const fullStart = dayjs(event.start).startOf('day');
+    const fullEnd = getEventEndDay(event);
+    const isMultiday = fullEnd.isAfter(fullStart);
+    const eventStart =
+      clipToRange && fullStart.isBefore(firstVisibleDay) ? firstVisibleDay : fullStart;
+    const eventEnd = clipToRange && fullEnd.isAfter(lastVisibleDay) ? lastVisibleDay : fullEnd;
+
+    if (eventEnd.isBefore(eventStart)) {
+      continue;
+    }
 
     for (let weekIdx = 0; weekIdx < weeks.length; weekIdx++) {
       const { weekStart, weekEnd, nextRowByDay } = weekStates[weekIdx];
@@ -99,6 +111,8 @@ export function getMonthPositionedEvents({
             weekStart,
             weekEnd,
             isMultiday,
+            hangingStart: fullStart.isBefore(eventStart),
+            hangingEnd: fullEnd.isAfter(eventEnd),
           });
 
         if (event.display === 'background') {

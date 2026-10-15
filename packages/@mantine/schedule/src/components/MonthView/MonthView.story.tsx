@@ -153,13 +153,6 @@ export function Usage() {
 }
 
 export function MultidayRowContinuity() {
-  // The violet "Conference" spans Mon–Fri. Wednesday is full (Sync A + Sync B push it over
-  // maxEventsPerDay), so the Conference collapses into Wednesday's "+1 more". Before the fix the
-  // surrounding days re-packed the bar onto different rows (e.g. Monday on row 1, the rest on row 0),
-  // splitting it into misaligned fragments. Now every visible segment stays on the same row.
-  // Order matters: the single-day events are declared before the Conference so the Conference is
-  // assigned a high row (it overlaps Kickoff on Monday and both Syncs on Wednesday). That high row is
-  // what made the bar jump between rows on adjacent days before the fix.
   const continuityEvents: ScheduleEventData[] = [
     {
       id: 2,
@@ -197,10 +190,10 @@ export function MultidayRowContinuity() {
 
   return (
     <div style={{ padding: 40 }}>
-      <Text size="sm" c="dimmed" mb="xs">
-        The violet "Conference" spans Mon–Fri and stays on one row across the whole span. Wednesday
-        is full (Sync A, Sync B + "+1 more"), so the bar has a gap there — but the segments before
-        and after the gap remain aligned on the same row instead of jumping rows.
+      <Text size="sm" mb="xs">
+        The violet "Conference" spans Mon–Fri and is placed first, so it stays one continuous bar on
+        the top row. Kickoff and Sync A share the second row, and Wednesday shows "+1 more" for the
+        hidden Sync B.
       </Text>
       <MonthView date={month} events={continuityEvents} maxEventsPerDay={2} />
     </div>
@@ -497,6 +490,47 @@ export function StaticMode() {
 
         <MonthView date={month} events={events} mode="static" />
       </Stack>
+    </div>
+  );
+}
+
+export function HiddenEventsWithRowGaps() {
+  return (
+    <div style={{ padding: 40 }}>
+      <MonthView
+        date="2026-10-01"
+        maxEventsPerDay={2}
+        events={[
+          {
+            id: 'a',
+            title: 'Two-day A',
+            start: '2026-10-05 09:00:00',
+            end: '2026-10-06 10:00:00',
+            color: 'blue',
+          },
+          {
+            id: 'b',
+            title: 'Two-day B',
+            start: '2026-10-06 09:00:00',
+            end: '2026-10-07 10:00:00',
+            color: 'green',
+          },
+          {
+            id: 'c',
+            title: 'Single C',
+            start: '2026-10-07 09:00:00',
+            end: '2026-10-07 10:00:00',
+            color: 'red',
+          },
+          {
+            id: 'd',
+            title: 'Single D',
+            start: '2026-10-07 11:00:00',
+            end: '2026-10-07 12:00:00',
+            color: 'orange',
+          },
+        ]}
+      />
     </div>
   );
 }

@@ -68,13 +68,15 @@ const events = [
 
 function Demo() {
   const [date, setDate] = useState('2024-01-15');
-  return <Schedule view="week" date={date} onDateChange={setDate} events={events} />;
+  return <Schedule defaultView="week" date={date} onDateChange={setDate} events={events} />;
 }
 `;
 
 function Demo() {
   const [date, setDate] = useState('2024-01-15');
-  return <Schedule view="week" date={date} onDateChange={setDate} events={recurringEventsData} />;
+  return (
+    <Schedule defaultView="week" date={date} onDateChange={setDate} events={recurringEventsData} />
+  );
 }
 
 export const recurringEvents: MantineDemo = {

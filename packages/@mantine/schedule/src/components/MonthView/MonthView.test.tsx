@@ -1,6 +1,7 @@
 import dayjs from 'dayjs';
 import 'dayjs/locale/ru';
 import { createEvent, fireEvent } from '@testing-library/react';
+import { DirectionProvider } from '@mantine/core';
 import { DatesProvider } from '@mantine/dates';
 import { render, screen, tests, userEvent } from '@mantine-tests/core';
 import { getWeekNumber, toDateString } from '../../utils';
@@ -599,7 +600,7 @@ describe('@mantine/schedule/MonthView', () => {
       {
         id: 'blocker-1',
         title: 'Blocker 1',
-        start: '2025-11-11 10:00:00',
+        start: '2025-11-10 08:00:00',
         end: '2025-11-11 11:00:00',
         color: 'blue',
         payload: {},
@@ -607,7 +608,7 @@ describe('@mantine/schedule/MonthView', () => {
       {
         id: 'blocker-2',
         title: 'Blocker 2',
-        start: '2025-11-11 12:00:00',
+        start: '2025-11-10 09:00:00',
         end: '2025-11-11 13:00:00',
         color: 'blue',
         payload: {},
@@ -622,19 +623,17 @@ describe('@mantine/schedule/MonthView', () => {
       },
     ];
 
-    it('renders multi-day event fragments around a truncated day', () => {
+    it('renders a clipped multi-day event fragment after truncated days', () => {
       render(<MonthView {...defaultProps} events={clippedMultiDayEvents} maxEventsPerDay={2} />);
 
       const tripFragments = screen
         .getAllByText('Trip')
         .map((node) => node.closest('.mantine-ScheduleEvent-event'));
 
-      expect(tripFragments).toHaveLength(2);
-      expect(tripFragments[0]).toHaveAttribute('data-clip-end');
-      expect(tripFragments[0]).not.toHaveAttribute('data-clip-start');
-      expect(tripFragments[1]).toHaveAttribute('data-clip-start');
-      expect(tripFragments[1]).not.toHaveAttribute('data-clip-end');
-      expect(screen.getByRole('button', { name: '+1 more' })).toBeInTheDocument();
+      expect(tripFragments).toHaveLength(1);
+      expect(tripFragments[0]).toHaveAttribute('data-clip-start');
+      expect(tripFragments[0]).not.toHaveAttribute('data-clip-end');
+      expect(screen.getAllByRole('button', { name: '+1 more' })).toHaveLength(2);
     });
 
     it('calls onEventClick with the original event when a clipped fragment is clicked', async () => {
@@ -1034,5 +1033,116 @@ describe('@mantine/schedule/MonthView', () => {
       expect(canDropEvent).toHaveBeenCalledTimes(1);
       expect(onEventDrop).not.toHaveBeenCalled();
     });
+  });
+
+  it('counts every hidden event of a day in the "+N more" label when rows have gaps', () => {
+    render(
+      <MonthView
+        date="2026-10-01"
+        maxEventsPerDay={2}
+        events={[
+          {
+            id: 'A',
+            title: 'A',
+            start: '2026-10-05 09:00:00',
+            end: '2026-10-06 10:00:00',
+            color: 'blue',
+          },
+          {
+            id: 'B',
+            title: 'B',
+            start: '2026-10-06 09:00:00',
+            end: '2026-10-07 10:00:00',
+            color: 'blue',
+          },
+          {
+            id: 'C',
+            title: 'C',
+            start: '2026-10-07 09:00:00',
+            end: '2026-10-07 10:00:00',
+            color: 'blue',
+          },
+          {
+            id: 'D',
+            title: 'D',
+            start: '2026-10-07 11:00:00',
+            end: '2026-10-07 12:00:00',
+            color: 'blue',
+          },
+        ]}
+      />
+    );
+
+    expect(screen.getByRole('button', { name: '+2 more' })).toBeInTheDocument();
+    expect(screen.queryByRole('button', { name: '+1 more' })).not.toBeInTheDocument();
+  });
+
+  it('does not render "+N more" on blank outside days when withOutsideDays is false', () => {
+    render(
+      <MonthView
+        date="2026-10-01"
+        firstDayOfWeek={1}
+        withOutsideDays={false}
+        maxEventsPerDay={1}
+        events={[
+          {
+            id: 'A',
+            title: 'A',
+            start: '2026-10-30 09:00:00',
+            end: '2026-11-02 10:00:00',
+            color: 'blue',
+          },
+          {
+            id: 'B',
+            title: 'B',
+            start: '2026-10-31 09:00:00',
+            end: '2026-11-02 10:00:00',
+            color: 'blue',
+          },
+        ]}
+      />
+    );
+
+    expect(screen.getAllByRole('button', { name: '+1 more' })).toHaveLength(1);
+  });
+
+  it('uses labels.weekNumber for week number buttons', () => {
+    render(
+      <MonthView
+        {...defaultProps}
+        withWeekNumbers
+        labels={{ weekNumber: (weekNumber) => `Semaine ${weekNumber}` }}
+      />
+    );
+
+    const weekNumber = getWeekNumber([
+      '2025-11-03',
+      '2025-11-04',
+      '2025-11-05',
+      '2025-11-06',
+      '2025-11-07',
+      '2025-11-08',
+      '2025-11-09',
+    ]);
+    expect(screen.getByRole('button', { name: `Semaine ${weekNumber}` })).toBeInTheDocument();
+    expect(screen.queryByRole('button', { name: /^Week / })).not.toBeInTheDocument();
+  });
+});
+
+describe('@mantine/schedule/MonthView RTL arrow keys', () => {
+  it('mirrors ArrowLeft and ArrowRight', async () => {
+    render(
+      <DirectionProvider initialDirection="rtl">
+        <MonthView {...defaultProps} />
+      </DirectionProvider>
+    );
+
+    screen.getByRole('button', { name: 'November 12, 2025' }).focus();
+    await userEvent.keyboard('{ArrowLeft}');
+    expect(screen.getByRole('button', { name: 'November 13, 2025' })).toHaveFocus();
+    await userEvent.keyboard('{ArrowRight}{ArrowRight}');
+    expect(screen.getByRole('button', { name: 'November 11, 2025' })).toHaveFocus();
+    await userEvent.keyboard('{ArrowDown}');
+    expect(screen.getByRole('button', { name: 'November 18, 2025' })).toHaveFocus();
   });
 });

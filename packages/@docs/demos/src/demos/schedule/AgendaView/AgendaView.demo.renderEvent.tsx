@@ -82,6 +82,12 @@ const events: ScheduleEventData[] = [
   },
 ];
 
+function isAllDayEvent(event: ScheduleEventData) {
+  const start = dayjs(event.start);
+  const end = dayjs(event.end);
+  return start.isSame(start.startOf('day')) && end.isSame(end.startOf('day'));
+}
+
 function Demo() {
   return (
     <AgendaView
@@ -110,15 +116,17 @@ function Demo() {
                 <Text size="sm" fw={500}>
                   {event.title}
                 </Text>
-                <Badge size="xs" variant="light" color={event.color}>
+                <Badge size="xs" variant="default">
                   {event.payload?.category}
                 </Badge>
               </Group>
-              <Text size="xs" c="dimmed">
-                {dayjs(event.start).format('HH:mm')} – {dayjs(event.end).format('HH:mm')}
+              <Text size="xs">
+                {isAllDayEvent(event)
+                  ? 'All day'
+                  : \`\${dayjs(event.start).format('HH:mm')} – \${dayjs(event.end).format('HH:mm')}\`}
               </Text>
               {event.payload?.location && (
-                <Text size="xs" c="dimmed" mt={2}>
+                <Text size="xs" mt={2}>
                   📍 {event.payload.location}
                 </Text>
               )}
@@ -130,6 +138,12 @@ function Demo() {
   );
 }
 `;
+
+function isAllDayEvent(event: ScheduleEventData) {
+  const start = dayjs(event.start);
+  const end = dayjs(event.end);
+  return start.isSame(start.startOf('day')) && end.isSame(end.startOf('day'));
+}
 
 function Demo() {
   return (
@@ -159,15 +173,17 @@ function Demo() {
                 <Text size="sm" fw={500}>
                   {event.title}
                 </Text>
-                <Badge size="xs" variant="light" color={event.color}>
+                <Badge size="xs" variant="default">
                   {event.payload?.category}
                 </Badge>
               </Group>
-              <Text size="xs" c="dimmed">
-                {dayjs(event.start).format('HH:mm')} – {dayjs(event.end).format('HH:mm')}
+              <Text size="xs">
+                {isAllDayEvent(event)
+                  ? 'All day'
+                  : `${dayjs(event.start).format('HH:mm')} – ${dayjs(event.end).format('HH:mm')}`}
               </Text>
               {event.payload?.location && (
-                <Text size="xs" c="dimmed" mt={2}>
+                <Text size="xs" mt={2}>
                   {'\u{1F4CD}'} {event.payload.location}
                 </Text>
               )}

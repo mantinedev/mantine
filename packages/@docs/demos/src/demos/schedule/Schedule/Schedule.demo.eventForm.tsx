@@ -27,7 +27,7 @@ function Demo() {
     setSelectedEventData({
       title: '',
       start: dayjs(slotDate).startOf('day').toDate(),
-      end: dayjs(slotDate).endOf('day').toDate(),
+      end: dayjs(slotDate).startOf('day').add(1, 'day').toDate(),
       color: 'blue',
     });
     setFormOpened(true);
@@ -37,7 +37,7 @@ function Demo() {
     setSelectedEventData({
       title: '',
       start: dayjs(date).startOf('day').toDate(),
-      end: dayjs(date).endOf('day').toDate(),
+      end: dayjs(date).startOf('day').add(1, 'day').toDate(),
       color: 'blue',
     });
     setFormOpened(true);
@@ -104,7 +104,7 @@ function Demo() {
     setSelectedEventData({
       title: '',
       start: dayjs(selectedDate).startOf('day').toDate(),
-      end: dayjs(selectedDate).endOf('day').toDate(),
+      end: dayjs(selectedDate).startOf('day').add(1, 'day').toDate(),
       color: 'blue',
     });
     setFormOpened(true);
@@ -158,7 +158,8 @@ function Demo() {
   );
 }
 
-const code = `import dayjs from 'dayjs';
+const code = `
+import dayjs from 'dayjs';
 import { useRef, useState } from 'react';
 import { PlusIcon } from '@phosphor-icons/react';
 import { ActionIcon, Box, Group } from '@mantine/core';
@@ -186,7 +187,7 @@ function Demo() {
     setSelectedEventData({
       title: '',
       start: dayjs(slotDate).startOf('day').toDate(),
-      end: dayjs(slotDate).endOf('day').toDate(),
+      end: dayjs(slotDate).startOf('day').add(1, 'day').toDate(),
       color: 'blue',
     });
     setFormOpened(true);
@@ -196,7 +197,7 @@ function Demo() {
     setSelectedEventData({
       title: '',
       start: dayjs(date).startOf('day').toDate(),
-      end: dayjs(date).endOf('day').toDate(),
+      end: dayjs(date).startOf('day').add(1, 'day').toDate(),
       color: 'blue',
     });
     setFormOpened(true);
@@ -242,6 +243,12 @@ function Demo() {
     }
   };
 
+  const handleDeleteEvent = () => {
+    if (selectedEventData?.id) {
+      setAllEvents((prev) => prev.filter((e) => e.id !== selectedEventData.id));
+    }
+  };
+
   const handleSlotDragEnd = (rangeStart: string, rangeEnd: string) => {
     setSelectedEventData({
       title: '',
@@ -252,18 +259,12 @@ function Demo() {
     setFormOpened(true);
   };
 
-  const handleDeleteEvent = () => {
-    if (selectedEventData?.id) {
-      setAllEvents((prev) => prev.filter((e) => e.id !== selectedEventData.id));
-    }
-  };
-
   const handleCreateEvent = () => {
     const selectedDate = mobileSelectedDate.current;
     setSelectedEventData({
       title: '',
       start: dayjs(selectedDate).startOf('day').toDate(),
-      end: dayjs(selectedDate).endOf('day').toDate(),
+      end: dayjs(selectedDate).startOf('day').add(1, 'day').toDate(),
       color: 'blue',
     });
     setFormOpened(true);
@@ -315,7 +316,8 @@ function Demo() {
       />
     </Box>
   );
-}`;
+}
+`;
 
 export const eventForm: MantineDemo = {
   defaultExpanded: false,

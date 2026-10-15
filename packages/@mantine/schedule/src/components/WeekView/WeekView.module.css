@@ -162,7 +162,16 @@
   padding: 3px 4px;
   color: var(--bg-event-color);
 
+  &:where([data-continues-before]) > :where([data-edge='top']),
+  &:where([data-continues-after]) > :where([data-edge='bottom']) {
+    display: none;
+  }
+
   &:where([data-interactive]) {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    text-align: start;
     pointer-events: auto;
     cursor: pointer;
     user-select: none;
@@ -222,8 +231,7 @@
 /* The resizing background event is the one that set `data-event-interaction`, so it must
    keep capturing pointer events. */
 .weekView:where([data-slot-dragging]) .weekViewBackgroundEvent:not([data-resizing]),
-.weekViewRoot:where([data-event-interaction]) .weekViewBackgroundEvent:not([data-resizing]),
-.weekViewRoot:where([data-all-day-dragging]) .weekViewBackgroundEvent:not([data-resizing]) {
+.weekViewRoot:where([data-event-interaction]) .weekViewBackgroundEvent:not([data-resizing]) {
   pointer-events: none;
 
   & .weekViewBackgroundEventResizeHandle {

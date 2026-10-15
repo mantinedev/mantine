@@ -81,6 +81,7 @@ const events: ScheduleEventData[] = [
 ];
 
 function Demo() {
+  const [date, setDate] = useState(dayjs().format('YYYY-MM-DD'));
   const [clicked, setClicked] = useState<ScheduleEventData | null>(null);
 
   return (
@@ -93,7 +94,8 @@ function Demo() {
       </Text>
 
       <MonthView
-        date={new Date()}
+        date={date}
+        onDateChange={setDate}
         events={events}
         withInteractiveBackgroundEvents
         onEventClick={setClicked}
@@ -104,6 +106,7 @@ function Demo() {
 `;
 
 function Demo() {
+  const [date, setDate] = useState(dayjs().format('YYYY-MM-DD'));
   const [clicked, setClicked] = useState<ScheduleEventData | null>(null);
 
   return (
@@ -116,7 +119,8 @@ function Demo() {
       </Text>
 
       <MonthView
-        date={new Date()}
+        date={date}
+        onDateChange={setDate}
         events={eventsData}
         withInteractiveBackgroundEvents
         onEventClick={setClicked}

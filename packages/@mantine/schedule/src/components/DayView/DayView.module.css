@@ -45,6 +45,11 @@
 .dayViewTimeSlots {
   position: relative;
 
+  & :where([data-continues-before]) > :where([data-edge='top']),
+  & :where([data-continues-after]) > :where([data-edge='bottom']) {
+    display: none;
+  }
+
   /* Cascade events stack with an unbounded z-index, keep them out of the sticky header's layer */
   &:where(:has([data-cascade])) {
     isolation: isolate;
@@ -211,6 +216,10 @@
   color: var(--bg-event-color);
 
   &:where([data-interactive]) {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    text-align: start;
     pointer-events: auto;
     cursor: pointer;
     user-select: none;

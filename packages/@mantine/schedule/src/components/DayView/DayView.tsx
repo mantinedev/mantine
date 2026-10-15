@@ -1,8 +1,9 @@
 import dayjs from 'dayjs';
-import { useCallback, useRef, useState } from 'react';
+import { useCallback, useMemo, useRef, useState } from 'react';
 import {
   Box,
   BoxProps,
+  createEventHandler,
   createVarsResolver,
   DataAttributes,
   ElementProps,
@@ -54,11 +55,14 @@ import {
   isAllDayEvent,
   toDateString,
 } from '../../utils';
+import { getClippedEdges } from '../../utils/clip-event-to-day/clip-event-to-day';
+import { resolveNow } from '../../utils/resolve-now/resolve-now';
 import { AgendaView, AgendaViewStylesNames } from '../AgendaView/AgendaView';
 import {
   CurrentTimeIndicator,
   CurrentTimeIndicatorStylesNames,
 } from '../CurrentTimeIndicator/CurrentTimeIndicator';
+import { getCurrentTimeFormat } from '../CurrentTimeIndicator/get-current-time-format';
 import { DragContext } from '../DragContext/DragContext';
 import { MoreEvents, MoreEventsProps, MoreEventsStylesNames } from '../MoreEvents/MoreEvents';
 import { ScheduleBackgroundEvent } from '../ScheduleBackgroundEvent';
@@ -160,10 +164,10 @@ export interface DayViewProps
   /** Called when view level select button is clicked @category state */
   onViewChange?: (view: ScheduleViewLevel) => void;
 
-  /** Props passed to previous month control */
+  /** Props passed to previous day control */
   previousControlProps?: React.ComponentProps<'button'> & DataAttributes;
 
-  /** Props passed to next month control */
+  /** Props passed to next day control */
   nextControlProps?: React.ComponentProps<'button'> & DataAttributes;
 
   /** Props passed to today control */
@@ -442,9 +446,8 @@ export const DayView = factory<DayViewFactory>((_props) => {
   };
 
   const ctx = useDatesContext();
-  const resolveNow = () => (getCurrentTime ? dayjs(getCurrentTime()) : dayjs());
   const showCurrentTimeIndicator =
-    withCurrentTimeIndicator ?? dayjs(date).isSame(resolveNow(), 'day');
+    withCurrentTimeIndicator ?? dayjs(date).isSame(resolveNow(getCurrentTime), 'day');
   const slots = getDayTimeIntervals({ startTime, endTime, intervalMinutes });
   const slotsRef = useRef<HTMLButtonElement[]>([]);
   const viewportRef = useRef<HTMLDivElement>(null);
@@ -545,12 +548,17 @@ export const DayView = factory<DayViewFactory>((_props) => {
     },
   });
 
-  const expandedEvents = expandRecurringEvents({
-    events,
-    rangeStart: dayjs(date).startOf('day').toDate(),
-    rangeEnd: dayjs(date).endOf('day').toDate(),
-    expansionLimit: recurrenceExpansionLimit,
-  });
+  const dayKey = dayjs(date).format('YYYY-MM-DD');
+  const expandedEvents = useMemo(
+    () =>
+      expandRecurringEvents({
+        events,
+        rangeStart: dayjs(dayKey).startOf('day').toDate(),
+        rangeEnd: dayjs(dayKey).endOf('day').toDate(),
+        expansionLimit: recurrenceExpansionLimit,
+      }),
+    [events, dayKey, recurrenceExpansionLimit]
+  );
 
   const eventsData = getDayViewEvents({
     events: expandedEvents,
@@ -671,6 +679,7 @@ export const DayView = factory<DayViewFactory>((_props) => {
     const resizePosition = eventResize.getResizePosition(event.id);
     const eventTop = resizePosition ? resizePosition.top : event.position.top;
     const eventHeight = resizePosition ? resizePosition.height : event.position.height;
+    const clippedEdges = getClippedEdges(event, date);
 
     return (
       <ScheduleEvent
@@ -685,7 +694,9 @@ export const DayView = factory<DayViewFactory>((_props) => {
         onResizeStart={
           isResizable
             ? (edge, e) => {
-                if (timeSlotsContainerRef.current) {
+                const clippedEdge =
+                  (edge === 'top' && clippedEdges.start) || (edge === 'bottom' && clippedEdges.end);
+                if (timeSlotsContainerRef.current && !clippedEdge) {
                   eventResize.handleResizeStart({
                     event,
                     edge,
@@ -713,6 +724,8 @@ export const DayView = factory<DayViewFactory>((_props) => {
         mod={{
           cascade: eventOverlapMode === 'cascade',
           invalid: resizePosition !== null && !eventResize.resizeValid,
+          'continues-before': clippedEdges.start,
+          'continues-after': clippedEdges.end,
         }}
         style={{
           ...stylesApiProps.styles?.event,
@@ -759,8 +772,13 @@ export const DayView = factory<DayViewFactory>((_props) => {
     const isDragSelected = slotDragSelect.isSlotSelected(index, dayGroup);
     const slotStart = `${dayGroup} ${slot.startTime}` as DateTimeStringValue;
     const slotEnd = `${dayGroup} ${slot.endTime}` as DateTimeStringValue;
-    const { onClick: externalOnClick, ...externalSlotProps } =
-      getTimeSlotProps?.({ start: slotStart, end: slotEnd }) || {};
+    const {
+      onClick: externalOnClick,
+      onKeyDown: externalOnKeyDown,
+      onPointerDown: externalOnPointerDown,
+      onDragOver: externalOnDragOver,
+      ...externalSlotProps
+    } = getTimeSlotProps?.({ start: slotStart, end: slotEnd }) || {};
 
     const handleClick =
       mode === 'static'
@@ -798,15 +816,22 @@ export const DayView = factory<DayViewFactory>((_props) => {
         tabIndex={mode === 'static' ? -1 : index === 0 ? 0 : -1}
         data-drag-slot-index={withDragSlotSelect && mode !== 'static' ? index : undefined}
         data-drag-slot-group={withDragSlotSelect && mode !== 'static' ? dayGroup : undefined}
-        onKeyDown={mode === 'static' ? undefined : (e) => handleSlotKeyDown(e, index)}
-        onPointerDown={
-          withDragSlotSelect && mode !== 'static'
-            ? (e) => slotDragSelect.handleSlotPointerDown(e, index, dayGroup)
-            : undefined
-        }
-        onClick={handleClick}
-        onDragOver={withDragHandlers ? (event) => event.preventDefault() : undefined}
         {...externalSlotProps}
+        onKeyDown={createEventHandler<React.KeyboardEvent<HTMLButtonElement>>(
+          mode === 'static' ? undefined : (e) => handleSlotKeyDown(e!, index),
+          externalOnKeyDown
+        )}
+        onPointerDown={createEventHandler<React.PointerEvent<HTMLButtonElement>>(
+          withDragSlotSelect && mode !== 'static'
+            ? (e) => slotDragSelect.handleSlotPointerDown(e!, index, dayGroup)
+            : undefined,
+          externalOnPointerDown
+        )}
+        onClick={handleClick}
+        onDragOver={createEventHandler<React.DragEvent<HTMLButtonElement>>(
+          withDragHandlers ? (event) => event!.preventDefault() : undefined,
+          externalOnDragOver
+        )}
       />
     );
   });
@@ -854,7 +879,9 @@ export const DayView = factory<DayViewFactory>((_props) => {
   ));
 
   const backgroundTimedEventNodes = eventsData.backgroundTimedEvents.map((event) => {
-    const isResizable = eventResize.isResizableEvent(event);
+    const clippedEdges = getClippedEdges(event, date);
+    const isResizable =
+      !(clippedEdges.start && clippedEdges.end) && eventResize.isResizableEvent(event);
     const resizePosition = eventResize.getResizePosition(event.id);
 
     return (
@@ -873,13 +900,15 @@ export const DayView = factory<DayViewFactory>((_props) => {
               }
             : undefined
         }
+        mod={{ 'continues-before': clippedEdges.start, 'continues-after': clippedEdges.end }}
         withResize={isResizable}
         isResizing={resizePosition !== null}
         resizeHandleProps={getStyles('dayViewBackgroundEventResizeHandle')}
         onResizeStart={
           isResizable
             ? (edge, e) => {
-                if (timeSlotsContainerRef.current) {
+                const clippedEdge = edge === 'top' ? clippedEdges.start : clippedEdges.end;
+                if (timeSlotsContainerRef.current && !clippedEdge) {
                   eventResize.handleResizeStart({
                     event,
                     edge,
@@ -925,7 +954,7 @@ export const DayView = factory<DayViewFactory>((_props) => {
           navigationHandlers={{
             previous: () => toDateString(dayjs(date).subtract(1, 'day')),
             next: () => toDateString(dayjs(date).add(1, 'day')),
-            today: () => toDateString(resolveNow()),
+            today: () => toDateString(resolveNow(getCurrentTime)),
           }}
           control={{
             title: formatDate({ locale: ctx.getLocale(locale), date, format: headerFormat }),
@@ -1002,6 +1031,7 @@ export const DayView = factory<DayViewFactory>((_props) => {
                     {...getStyles('dayViewSlot')}
                     mod={{ 'all-day': true, static: mode === 'static' }}
                     aria-label={`${getLabel('timeSlot', labels)} ${getLabel('allDay', labels)}`}
+                    tabIndex={mode === 'static' ? -1 : undefined}
                     onClick={
                       mode === 'static' || !onAllDaySlotClick
                         ? undefined
@@ -1076,7 +1106,7 @@ export const DayView = factory<DayViewFactory>((_props) => {
                     endOffset="0rem"
                     topOffset="0rem"
                     timeBubbleStartOffset="calc(var(--day-view-slot-labels-width) * -1 + 30px)"
-                    currentTimeFormat={slotLabelFormat}
+                    currentTimeFormat={getCurrentTimeFormat(slotLabelFormat)}
                     withTimeBubble={withCurrentTimeBubble}
                     withThumb={!withCurrentTimeBubble}
                     locale={locale}

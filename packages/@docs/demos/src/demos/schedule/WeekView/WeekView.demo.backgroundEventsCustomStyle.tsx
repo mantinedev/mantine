@@ -95,6 +95,7 @@ function overlapsBackground(
 }
 
 function Demo() {
+  const [date, setDate] = useState(dayjs().format('YYYY-MM-DD'));
   const [events, setEvents] = useState(initialEvents);
 
   const handleEventDrop = ({
@@ -106,9 +107,6 @@ function Demo() {
     newStart: string;
     newEnd: string;
   }) => {
-    if (overlapsBackground(newStart, newEnd, events)) {
-      return;
-    }
 
     setEvents((prev) =>
       prev.map((event) =>
@@ -121,11 +119,13 @@ function Demo() {
 
   return (
     <WeekView
-      date={new Date()}
+      date={date}
+      onDateChange={setDate}
       events={events}
       startTime="08:00:00"
       endTime="18:00:00"
       withEventsDragAndDrop
+      canDropEvent={({ start, end }) => !overlapsBackground(start, end, events)}
       onEventDrop={handleEventDrop}
       classNames={{ weekViewBackgroundEvent: classes.backgroundEvent }}
     />
@@ -138,6 +138,7 @@ function overlapsBackground(newStart: string, newEnd: string, events: ScheduleEv
 }
 
 function Demo() {
+  const [date, setDate] = useState(dayjs().format('YYYY-MM-DD'));
   const [events, setEvents] = useState(initialEvents);
 
   const handleEventDrop = ({
@@ -149,10 +150,6 @@ function Demo() {
     newStart: string;
     newEnd: string;
   }) => {
-    if (overlapsBackground(newStart, newEnd, events)) {
-      return;
-    }
-
     setEvents((prev) =>
       prev.map((event) =>
         event.id === eventId ? { ...event, start: newStart, end: newEnd } : event
@@ -162,11 +159,13 @@ function Demo() {
 
   return (
     <WeekView
-      date={new Date()}
+      date={date}
+      onDateChange={setDate}
       events={events}
       startTime="08:00:00"
       endTime="18:00:00"
       withEventsDragAndDrop
+      canDropEvent={({ start, end }) => !overlapsBackground(start, end, events)}
       onEventDrop={handleEventDrop}
       styles={{
         weekViewBackgroundEvent: {

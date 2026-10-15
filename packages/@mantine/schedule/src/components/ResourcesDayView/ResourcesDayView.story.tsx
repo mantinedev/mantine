@@ -567,3 +567,36 @@ export function Timezone() {
     </Stack>
   );
 }
+
+export function ResizeBackgroundEventsFromOtherDays() {
+  const previousDay = dayjs(today).subtract(1, 'day').format('YYYY-MM-DD');
+  const [resized, setResized] = useState<string | null>(null);
+
+  return (
+    <Stack gap="xs" p={40}>
+      <Text size="sm">Resized: {resized ?? 'none'}</Text>
+      <ResourcesDayView
+        date={today}
+        resources={resources}
+        startTime="00:00:00"
+        endTime="12:00:00"
+        withEventResize
+        withInteractiveBackgroundEvents
+        onEventResize={({ eventId, newStart, newEnd }) =>
+          setResized(`${eventId} ${newStart} → ${newEnd}`)
+        }
+        events={[
+          {
+            id: 'maintenance',
+            title: 'Maintenance from the previous day',
+            start: `${previousDay} 22:00:00`,
+            end: `${today} 03:00:00`,
+            color: 'gray',
+            display: 'background',
+            resourceId: resources[0].id,
+          },
+        ]}
+      />
+    </Stack>
+  );
+}

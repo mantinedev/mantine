@@ -1,3 +1,4 @@
+import dayjs from 'dayjs';
 import { ScheduleEventData } from '../../types';
 import { calculateDropTime } from './calculate-drop-time';
 
@@ -142,4 +143,37 @@ describe('@mantine/schedule/calculateDropTime', () => {
     expect(result.start.getHours()).toBe(16);
     expect(result.start.getMinutes()).toBe(0);
   });
+
+  it('keeps the wall clock duration when the event is dropped across a DST transition', () => {
+    const transitionDays = getTransitionDays(2026);
+    const targetDays = transitionDays.length > 0 ? transitionDays : ['2026-03-29', '2026-10-25'];
+
+    for (const transitionDay of targetDays) {
+      const targetDate = dayjs(transitionDay).subtract(1, 'day').format('YYYY-MM-DD');
+      const result = calculateDropTime({
+        draggedEvent: { ...event, start: '2026-02-10 22:00:00', end: '2026-02-11 06:00:00' },
+        targetDate,
+        targetSlotTime: '22:00:00',
+        dragIntervalMinutes: 30,
+      });
+
+      expect(fmt(result.start)).toBe(`${targetDate} 22:00`);
+      expect(fmt(result.end)).toBe(`${transitionDay} 06:00`);
+    }
+  });
 });
+
+function getTransitionDays(year: number) {
+  const days: string[] = [];
+  let day = dayjs(`${year}-01-01`);
+
+  while (day.year() === year) {
+    const next = day.add(1, 'day');
+    if (next.toDate().getTimezoneOffset() !== day.toDate().getTimezoneOffset()) {
+      days.push(day.format('YYYY-MM-DD'));
+    }
+    day = next;
+  }
+
+  return days;
+}

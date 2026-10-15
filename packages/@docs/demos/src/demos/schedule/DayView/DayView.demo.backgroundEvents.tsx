@@ -41,11 +41,11 @@ const backgroundEventsData = [
 const code = `
 import dayjs from 'dayjs';
 import { useState } from 'react';
-import { DayView } from '@mantine/schedule';
+import { DayView, ScheduleEventData } from '@mantine/schedule';
 
 const today = dayjs().format('YYYY-MM-DD');
 
-const events = [
+const events: ScheduleEventData[] = [
   {
     id: 'lunch-block',
     title: 'Lunch break',

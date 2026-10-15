@@ -1,5 +1,3 @@
-import dayjs from 'dayjs';
-import { useState } from 'react';
 import {
   Box,
   BoxProps,
@@ -14,7 +12,8 @@ import {
   useStyles,
 } from '@mantine/core';
 import { useDatesContext } from '@mantine/dates';
-import { useInterval, useMounted } from '@mantine/hooks';
+import { useMounted } from '@mantine/hooks';
+import { useNow } from '../../hooks/use-now';
 import { AnyDateValue, DateLabelFormat } from '../../types';
 import { formatDate, getCurrentTimePosition, isInTimeRange } from '../../utils';
 import classes from './CurrentTimeIndicator.module.css';
@@ -138,12 +137,7 @@ export const CurrentTimeIndicator = factory<CurrentTimeIndicatorFactory>((_props
 
   const ctx = useDatesContext();
   const mounted = useMounted();
-  const [, setTick] = useState(0);
-  useInterval(() => setTick((tick) => tick + 1), 1000 * 60, {
-    autoInvoke: true,
-  });
-
-  const now = getCurrentTime ? dayjs(getCurrentTime()) : dayjs();
+  const now = useNow(getCurrentTime);
   const offsetPercent = getCurrentTimePosition({ startTime, endTime, intervalMinutes, now });
   const formattedTime = withTimeBubble
     ? formatDate({ locale: ctx.getLocale(locale), date: now, format: currentTimeFormat })

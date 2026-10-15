@@ -3,11 +3,11 @@ import { useState } from 'react';
 import { ScheduleEventData, WeekView } from '@mantine/schedule';
 import { MantineDemo } from '@mantinex/demo';
 import { _eventFormCode, EventData, EventForm } from '../_EventForm';
-import { dataCode, regularEvents } from './_data';
+import { dataCode, regularEvents as events } from './_data';
 
 function Demo() {
   const [date, setDate] = useState(dayjs().format('YYYY-MM-DD'));
-  const [events, setEvents] = useState<ScheduleEventData[]>(regularEvents);
+  const [allEvents, setAllEvents] = useState<ScheduleEventData[]>(events);
   const [formOpened, setFormOpened] = useState(false);
   const [selectedEventData, setSelectedEventData] = useState<EventData | null>(null);
 
@@ -25,7 +25,7 @@ function Demo() {
     setSelectedEventData({
       title: '',
       start: dayjs(slotDate).startOf('day').toDate(),
-      end: dayjs(slotDate).endOf('day').toDate(),
+      end: dayjs(slotDate).startOf('day').add(1, 'day').toDate(),
       color: 'blue',
     });
     setFormOpened(true);
@@ -44,7 +44,7 @@ function Demo() {
 
   const handleSubmit = (values: EventData) => {
     if (values.id) {
-      setEvents((prev) =>
+      setAllEvents((prev) =>
         prev.map((event) =>
           event.id === values.id
             ? {
@@ -58,7 +58,7 @@ function Demo() {
         )
       );
     } else {
-      setEvents((prev) => [
+      setAllEvents((prev) => [
         ...prev,
         {
           id: Math.random().toString(36).substring(2, 11),
@@ -73,7 +73,7 @@ function Demo() {
 
   const handleDeleteEvent = () => {
     if (selectedEventData?.id) {
-      setEvents((prev) => prev.filter((e) => e.id !== selectedEventData.id));
+      setAllEvents((prev) => prev.filter((e) => e.id !== selectedEventData.id));
     }
   };
 
@@ -92,7 +92,7 @@ function Demo() {
       <WeekView
         date={date}
         onDateChange={setDate}
-        events={events}
+        events={allEvents}
         withDragSlotSelect
         onTimeSlotClick={handleTimeSlotClick}
         onAllDaySlotClick={handleAllDaySlotClick}
@@ -114,7 +114,8 @@ function Demo() {
   );
 }
 
-const code = `import dayjs from 'dayjs';
+const code = `
+import dayjs from 'dayjs';
 import { useState } from 'react';
 import { ScheduleEventData, WeekView } from '@mantine/schedule';
 import { EventData, EventForm } from './EventForm';
@@ -122,7 +123,7 @@ import { events } from './events';
 
 function Demo() {
   const [date, setDate] = useState(dayjs().format('YYYY-MM-DD'));
-  const [events, setEvents] = useState<ScheduleEventData[]>(events);
+  const [allEvents, setAllEvents] = useState<ScheduleEventData[]>(events);
   const [formOpened, setFormOpened] = useState(false);
   const [selectedEventData, setSelectedEventData] = useState<EventData | null>(null);
 
@@ -140,7 +141,7 @@ function Demo() {
     setSelectedEventData({
       title: '',
       start: dayjs(slotDate).startOf('day').toDate(),
-      end: dayjs(slotDate).endOf('day').toDate(),
+      end: dayjs(slotDate).startOf('day').add(1, 'day').toDate(),
       color: 'blue',
     });
     setFormOpened(true);
@@ -159,7 +160,7 @@ function Demo() {
 
   const handleSubmit = (values: EventData) => {
     if (values.id) {
-      setEvents((prev) =>
+      setAllEvents((prev) =>
         prev.map((event) =>
           event.id === values.id
             ? {
@@ -173,7 +174,7 @@ function Demo() {
         )
       );
     } else {
-      setEvents((prev) => [
+      setAllEvents((prev) => [
         ...prev,
         {
           id: Math.random().toString(36).substring(2, 11),
@@ -183,6 +184,12 @@ function Demo() {
           color: values.color || 'blue',
         },
       ]);
+    }
+  };
+
+  const handleDeleteEvent = () => {
+    if (selectedEventData?.id) {
+      setAllEvents((prev) => prev.filter((e) => e.id !== selectedEventData.id));
     }
   };
 
@@ -196,18 +203,12 @@ function Demo() {
     setFormOpened(true);
   };
 
-  const handleDeleteEvent = () => {
-    if (selectedEventData?.id) {
-      setEvents((prev) => prev.filter((e) => e.id !== selectedEventData.id));
-    }
-  };
-
   return (
     <>
       <WeekView
         date={date}
         onDateChange={setDate}
-        events={events}
+        events={allEvents}
         withDragSlotSelect
         onTimeSlotClick={handleTimeSlotClick}
         onAllDaySlotClick={handleAllDaySlotClick}
@@ -227,7 +228,8 @@ function Demo() {
       />
     </>
   );
-}`;
+}
+`;
 
 export const eventForm: MantineDemo = {
   defaultExpanded: false,

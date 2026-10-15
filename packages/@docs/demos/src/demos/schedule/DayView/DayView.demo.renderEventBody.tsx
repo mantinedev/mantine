@@ -1,4 +1,5 @@
 import dayjs from 'dayjs';
+import { useState } from 'react';
 import { ClockIcon, MapPinIcon } from '@phosphor-icons/react';
 import { Group, Text } from '@mantine/core';
 import { DayView, ScheduleEventData } from '@mantine/schedule';
@@ -35,9 +36,12 @@ const events: ScheduleEventData[] = [
 
 const code = `
 import dayjs from 'dayjs';
+import { useState } from 'react';
 import { ClockIcon, MapPinIcon } from '@phosphor-icons/react';
 import { Group, Text } from '@mantine/core';
 import { DayView, ScheduleEventData } from '@mantine/schedule';
+
+const today = dayjs().format('YYYY-MM-DD');
 
 const events: ScheduleEventData[] = [
   {
@@ -52,9 +56,12 @@ const events: ScheduleEventData[] = [
 ];
 
 function Demo() {
+  const [date, setDate] = useState(dayjs().format('YYYY-MM-DD'));
+
   return (
     <DayView
-      date={new Date()}
+      date={date}
+      onDateChange={setDate}
       events={events}
       startTime="08:00:00"
       endTime="18:00:00"
@@ -84,9 +91,12 @@ function Demo() {
 `;
 
 function Demo() {
+  const [date, setDate] = useState(dayjs().format('YYYY-MM-DD'));
+
   return (
     <DayView
-      date={new Date()}
+      date={date}
+      onDateChange={setDate}
       events={events}
       startTime="08:00:00"
       endTime="18:00:00"

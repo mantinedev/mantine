@@ -1,3 +1,4 @@
+import dayjs from 'dayjs';
 import { useState } from 'react';
 import { Text } from '@mantine/core';
 import { DayView, ScheduleViewLevel } from '@mantine/schedule';
@@ -5,12 +6,14 @@ import { MantineDemo } from '@mantinex/demo';
 import { dataCode, regularEvents } from './_data';
 
 const code = `
+import dayjs from 'dayjs';
 import { useState } from 'react';
 import { DayView, ScheduleViewLevel } from '@mantine/schedule';
 import { Text } from '@mantine/core';
 import { events } from './data';
 
 function Demo() {
+  const [date, setDate] = useState(dayjs().format('YYYY-MM-DD'));
   const [view, setView] = useState<ScheduleViewLevel>('day');
 
   return (
@@ -18,7 +21,8 @@ function Demo() {
       <Text mb="md">Selected view: {view}</Text>
 
       <DayView
-        date={new Date()}
+        date={date}
+        onDateChange={setDate}
         events={events}
         startTime="08:00:00"
         endTime="18:00:00"
@@ -30,6 +34,7 @@ function Demo() {
 `;
 
 function Demo() {
+  const [date, setDate] = useState(dayjs().format('YYYY-MM-DD'));
   const [view, setView] = useState<ScheduleViewLevel>('day');
 
   return (
@@ -37,7 +42,8 @@ function Demo() {
       <Text mb="md">Selected view: {view}</Text>
 
       <DayView
-        date={new Date()}
+        date={date}
+        onDateChange={setDate}
         events={regularEvents}
         startTime="08:00:00"
         endTime="18:00:00"

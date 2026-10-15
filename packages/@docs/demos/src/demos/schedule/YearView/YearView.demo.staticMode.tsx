@@ -1,23 +1,34 @@
+import dayjs from 'dayjs';
+import { useState } from 'react';
 import { YearView } from '@mantine/schedule';
 import { MantineDemo } from '@mantinex/demo';
-import { regularEvents } from './_data';
+import { dataCode, regularEvents } from './_data';
 
 const code = `
+import dayjs from 'dayjs';
+import { useState } from 'react';
 import { YearView } from '@mantine/schedule';
 import { events } from './data';
 
 function Demo() {
-  return <YearView date={new Date()} events={events} mode="static" />;
+  const [date, setDate] = useState(dayjs().format('YYYY-MM-DD'));
+
+  return <YearView date={date} onDateChange={setDate} events={events} mode="static" />;
 }
 `;
 
 function Demo() {
-  return <YearView date={new Date()} events={regularEvents} mode="static" />;
+  const [date, setDate] = useState(dayjs().format('YYYY-MM-DD'));
+
+  return <YearView date={date} onDateChange={setDate} events={regularEvents} mode="static" />;
 }
 
 export const staticMode: MantineDemo = {
   defaultExpanded: false,
   type: 'code',
   component: Demo,
-  code,
+  code: [
+    { code, language: 'tsx', fileName: 'Demo.tsx' },
+    { code: dataCode, language: 'tsx', fileName: 'data.ts' },
+  ],
 };

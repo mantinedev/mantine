@@ -1,7 +1,7 @@
 import dayjs from 'dayjs';
 import { MobileMonthView } from '@mantine/schedule';
 import { MantineDemo } from '@mantinex/demo';
-import { regularEvents } from './_data';
+import { dataCode, regularEvents } from './_data';
 
 const code = `
 import dayjs from 'dayjs';
@@ -13,7 +13,7 @@ function Demo() {
     <MobileMonthView
       date={dayjs().format('YYYY-MM-DD')}
       selectedDate={dayjs().format('YYYY-MM-DD')}
-      events={regularEvents}
+      events={events}
       mode="static"
     />
   );
@@ -35,7 +35,10 @@ export const staticMode: MantineDemo = {
   defaultExpanded: false,
   type: 'code',
   component: Demo,
-  code,
+  code: [
+    { code, language: 'tsx', fileName: 'Demo.tsx' },
+    { code: dataCode, language: 'tsx', fileName: 'data.ts' },
+  ],
   centered: true,
   maxWidth: 375,
 };
