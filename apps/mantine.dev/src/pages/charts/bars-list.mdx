@@ -12,7 +12,7 @@ export default Layout(MDX_DATA.BarsList);
 
 ## Data format
 
-`BarsList` expects data in the following format. Values must be non-negative. Negative and non-finite values are displayed as empty bars:
+`BarsList` expects data in the following format. Values must be non-negative. Negative and non-finite values are treated as 0:
 
 ```tsx
 export const data = [

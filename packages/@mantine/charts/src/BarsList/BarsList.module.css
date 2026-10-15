@@ -12,7 +12,16 @@
     grid-column: 1 / -1;
   }
 
-  & > .bar,
+  & :has(.bar) {
+    display: grid;
+    grid-template-columns: subgrid;
+
+    & > * {
+      grid-column: 1 / -1;
+    }
+  }
+
+  & .bar,
   & > .labelsRow {
     grid-template-columns: subgrid;
   }

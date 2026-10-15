@@ -91,7 +91,7 @@ describe('@mantine/charts/BarsList', () => {
     );
   });
 
-  it('displays negative and non-finite values as empty bars without affecting other bars', () => {
+  it('treats negative and non-finite values as 0 without affecting other bars', () => {
     const { container } = render(
       <BarsList
         data={[

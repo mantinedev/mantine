@@ -32,7 +32,7 @@ export interface BarsListBarData {
   /** Name of the bar */
   name: string;
 
-  /** Numeric value of the bar, negative and non-finite values are displayed as an empty bar */
+  /** Numeric value of the bar, negative and non-finite values are treated as 0 */
   value: number;
 
   /** Bar background color */
@@ -47,7 +47,7 @@ export interface BarsListBarData {
 
 export interface BarsListProps
   extends BoxProps, StylesApiProps<BarsListFactory>, ElementProps<'div'> {
-  /** Data for bars. Values are expected to be non-negative: negative and non-finite values are displayed as an empty bar. @category appearance */
+  /** Data for bars. Values are expected to be non-negative: negative and non-finite values are treated as 0. @category appearance */
   data: BarsListBarData[];
 
   /** Function to format value display @category appearance */
