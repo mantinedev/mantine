@@ -86,8 +86,29 @@ function getTreeItemElements(root: Element) {
   return Array.from(root.querySelectorAll<HTMLElement>('[role=treeitem]'));
 }
 
-function getVisibleTreeItemElements(root: Element) {
+export function getVisibleTreeItemElements(root: Element) {
   return getTreeItemElements(root).filter((item) => isVisibleTreeItem(item, root));
+}
+
+function isRtlTreeItem(element: HTMLElement) {
+  const direction =
+    getComputedStyle(element).direction || element.closest('[dir]')?.getAttribute('dir');
+  return direction === 'rtl';
+}
+
+export function getTreeItemKey(event: React.KeyboardEvent<HTMLElement>) {
+  if (event.key === ' ') {
+    return 'Space';
+  }
+
+  if (
+    (event.key === 'ArrowLeft' || event.key === 'ArrowRight') &&
+    isRtlTreeItem(event.currentTarget)
+  ) {
+    return event.key === 'ArrowLeft' ? 'ArrowRight' : 'ArrowLeft';
+  }
+
+  return event.key;
 }
 
 export function getRenderedTreeItems(root: Element): TreeNavigationItem[] {
@@ -232,7 +253,7 @@ export function handleTreeItemKeyDown(
     return;
   }
 
-  const key = event.key === ' ' ? 'Space' : event.key;
+  const key = getTreeItemKey(event);
   const { value, hasChildren, expanded, store } = options;
 
   if (key === 'Enter') {

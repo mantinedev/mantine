@@ -530,6 +530,15 @@ and expands its collapsed ancestors first. `getNodePath` returns the values of t
 
 <Demo data={TreeDemos.scrollTo} />
 
+## Tree keyboard drag and drop
+
+[Tree](/core/tree/#keyboard) nodes can now be moved with the keyboard when `onDragDrop` is set.
+`Ctrl` + arrow key (`Cmd` + arrow key on macOS) picks up the focused node, arrow keys move it,
+`Enter` drops it and `Escape` cancels the move. Screen readers announce every step,
+use the new `labels` prop to translate the announcements:
+
+<Demo data={TreeDemos.dragDrop} />
+
 ## Other changes
 
 - [Affix](/core/affix) now supports `withSafeArea` prop to keep the content clear of the device notch.

@@ -46,3 +46,4 @@ export type {
 } from './flatten-tree-data/flatten-tree-data';
 export type { FlatTreeNodeProps } from './FlatTreeNode';
 export type { TreeAllowDrop, TreeDragHandleProps } from './use-tree-node-drag-drop';
+export type { TreeLabels, TreeDragDropAnnouncementPayload } from './tree-labels';

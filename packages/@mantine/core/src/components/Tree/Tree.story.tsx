@@ -307,6 +307,22 @@ export function DragDrop() {
   );
 }
 
+export function DragDropRtl() {
+  const [treeData, setTreeData] = useState(data);
+  const store = useTree({ initialExpandedState: getTreeExpandedState(data, '*') });
+
+  return (
+    <div dir="rtl" style={{ padding: 40, maxWidth: 400 }}>
+      <Tree
+        data={treeData}
+        store={store}
+        withLines
+        onDragDrop={(payload) => setTreeData((current) => moveTreeNode(current, payload))}
+      />
+    </div>
+  );
+}
+
 export function DragDropWithRenderNode() {
   const [treeData, setTreeData] = useState(data);
   const store = useTree({ initialExpandedState: getTreeExpandedState(data, '*') });

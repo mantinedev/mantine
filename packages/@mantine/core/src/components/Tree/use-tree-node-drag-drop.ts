@@ -24,7 +24,7 @@ interface UseTreeNodeDragDropInput {
 export interface TreeDragHandleProps {
   onMouseDown: (event: React.MouseEvent) => void;
 
-  /** Removes the handle from the tab order, drag-and-drop is not keyboard accessible */
+  /** Removes the handle from the tab order, keyboard users move the focused node with `Ctrl`/`Cmd` + arrow keys instead */
   tabIndex: -1;
 
   /** Hides the handle from assistive technologies, so it does not become part of the node name */

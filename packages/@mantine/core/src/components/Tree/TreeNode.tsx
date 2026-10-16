@@ -16,6 +16,7 @@ import {
 } from './tree-item';
 import { nodeHasChildren } from './tree-walk/tree-walk';
 import type { TreeStore } from './use-tree';
+import type { useTreeKeyboardDragDrop } from './use-tree-keyboard-drag-drop';
 import { TreeAllowDrop, TreeDragState, useTreeNodeDragDrop } from './use-tree-node-drag-drop';
 
 interface TreeNodeProps {
@@ -35,6 +36,8 @@ interface TreeNodeProps {
   allowDrop: TreeAllowDrop | undefined;
   withDragHandle: boolean | undefined;
   dragStateRef: React.RefObject<TreeDragState>;
+  keyboardDragDrop: ReturnType<typeof useTreeKeyboardDragDrop> | undefined;
+  dragDropInstructionsId: string | undefined;
   data: TreeNodeData[];
 }
 
@@ -55,6 +58,8 @@ export function TreeNode({
   allowDrop,
   withDragHandle,
   dragStateRef,
+  keyboardDragDrop,
+  dragDropInstructionsId,
   data,
 }: TreeNodeProps) {
   const ref = useRef<HTMLLIElement>(null);
@@ -82,6 +87,8 @@ export function TreeNode({
       allowDrop={allowDrop}
       withDragHandle={withDragHandle}
       dragStateRef={dragStateRef}
+      keyboardDragDrop={keyboardDragDrop}
+      dragDropInstructionsId={dragDropInstructionsId}
       data={data}
     />
   ));
@@ -106,13 +113,23 @@ export function TreeNode({
     selectOnClick,
   };
 
-  const handleKeyDown = (event: React.KeyboardEvent<HTMLLIElement>) =>
+  const handleKeyDown = (event: React.KeyboardEvent<HTMLLIElement>) => {
+    if (keyboardDragDrop?.handleKeyDown(event, node.value)) {
+      return;
+    }
+
     handleTreeItemKeyDown(event, {
       ...behaviorOptions,
       expandOnSpace,
       checkOnSpace,
       allowRangeSelection,
     });
+  };
+
+  const handleBlur = (event: React.FocusEvent<HTMLLIElement>) => {
+    keyboardDragDrop?.handleBlur(event, node.value);
+    handleTreeItemBlur(event);
+  };
 
   const handleNodeClick = (event: React.MouseEvent) => {
     event.stopPropagation();
@@ -148,13 +165,14 @@ export function TreeNode({
       aria-expanded={hasChildren ? isExpanded : undefined}
       aria-busy={isLoading || undefined}
       aria-checked={checkOnSpace ? getTreeItemCheckedState(store, node.value) : undefined}
+      aria-describedby={dragDropInstructionsId}
       data-value={node.value}
       data-selected={selected || undefined}
       data-level={level}
       tabIndex={rootIndex === 0 ? 0 : -1}
       onKeyDown={handleKeyDown}
       onFocus={(event) => handleTreeItemFocus(event, node.value)}
-      onBlur={handleTreeItemBlur}
+      onBlur={handleBlur}
       ref={ref}
     >
       {typeof renderNode === 'function' ? (

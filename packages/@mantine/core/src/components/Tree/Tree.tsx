@@ -1,5 +1,5 @@
 import { useEffect, useRef } from 'react';
-import { useClickOutside, useMergedRef } from '@mantine/hooks';
+import { useClickOutside, useId, useMergedRef } from '@mantine/hooks';
 import {
   Box,
   BoxProps,
@@ -14,10 +14,13 @@ import {
   useProps,
   useStyles,
 } from '../../core';
+import { VisuallyHidden } from '../VisuallyHidden';
 import type { TreeDragDropPayload } from './move-tree-node/move-tree-node';
 import { syncTreeTabStop } from './tree-item';
+import { DEFAULT_TREE_LABELS, TreeLabels } from './tree-labels';
 import { TreeNode } from './TreeNode';
 import { TreeStore, useTree } from './use-tree';
+import { useTreeKeyboardDragDrop } from './use-tree-keyboard-drag-drop';
 import type { TreeAllowDrop, TreeDragHandleProps, TreeDragState } from './use-tree-node-drag-drop';
 import classes from './Tree.module.css';
 
@@ -119,7 +122,9 @@ export interface TreeProps extends BoxProps, StylesApiProps<TreeFactory>, Elemen
   /** If set, subtree content is kept mounted when collapsed. React 19 `Activity` is used to preserve state. @default false */
   keepMounted?: boolean;
 
-  /** Called when a node is dropped on another node, enables drag-and-drop when provided @category behavior */
+  /** Called when a node is dropped on another node, enables drag-and-drop when provided.
+   * Nodes can also be moved with the keyboard: `Ctrl`/`Cmd` + arrow keys pick up the focused node,
+   * arrow keys move it, `Enter` drops it and `Escape` cancels the move. @category behavior */
   onDragDrop?: (payload: TreeDragDropPayload) => void;
 
   /** Called for each potential drop target to determine whether a drop is allowed.
@@ -132,6 +137,9 @@ export interface TreeProps extends BoxProps, StylesApiProps<TreeFactory>, Elemen
 
   /** If set, connecting lines are rendered showing parent-child relationships @default false @category appearance */
   withLines?: boolean;
+
+  /** Labels used in the component, used for accessibility and localization @category accessibility */
+  labels?: Partial<TreeLabels>;
 }
 
 export type TreeFactory = Factory<{
@@ -177,6 +185,7 @@ export const Tree = factory<TreeFactory>((_props) => {
     allowDrop,
     withDragHandle,
     withLines,
+    labels,
     attributes,
     ref,
     ...others
@@ -185,6 +194,14 @@ export const Tree = factory<TreeFactory>((_props) => {
   const store = useController(useTree, storeProp, {});
 
   const dragStateRef = useRef<TreeDragState>({ draggedValue: null, currentDropTarget: null });
+  const resolvedLabels = { ...DEFAULT_TREE_LABELS, ...labels };
+  const instructionsId = useId();
+  const keyboardDragDrop = useTreeKeyboardDragDrop({
+    onDragDrop,
+    allowDrop,
+    labels: resolvedLabels,
+    store,
+  });
 
   const getStyles = useStyles<TreeFactory>({
     name: 'Tree',
@@ -216,6 +233,10 @@ export const Tree = factory<TreeFactory>((_props) => {
   });
 
   useEffect(() => {
+    keyboardDragDrop.applyPendingFocus();
+  });
+
+  useEffect(() => {
     store.initialize(data);
   }, [data, store.initialize]);
 
@@ -237,11 +258,13 @@ export const Tree = factory<TreeFactory>((_props) => {
       allowDrop={allowDrop}
       withDragHandle={withDragHandle}
       dragStateRef={dragStateRef}
+      keyboardDragDrop={onDragDrop ? keyboardDragDrop : undefined}
+      dragDropInstructionsId={onDragDrop ? instructionsId : undefined}
       data={data}
     />
   ));
 
-  return (
+  const tree = (
     <Box
       component="ul"
       ref={mergedRef}
@@ -254,6 +277,22 @@ export const Tree = factory<TreeFactory>((_props) => {
     >
       {nodes}
     </Box>
+  );
+
+  if (!onDragDrop) {
+    return tree;
+  }
+
+  return (
+    <>
+      {tree}
+      <div id={instructionsId} hidden>
+        {resolvedLabels.dragDropInstructions}
+      </div>
+      <VisuallyHidden aria-live="assertive" aria-atomic="true">
+        {keyboardDragDrop.announcement}
+      </VisuallyHidden>
+    </>
   );
 });
 

@@ -165,6 +165,31 @@ describe('@mantine/core/Tree', () => {
       expect(parent).toHaveAttribute('aria-expanded', 'false');
       expect(screen.queryByText('Node 1.1')).not.toBeInTheDocument();
     });
+
+    it('mirrors ArrowLeft and ArrowRight in RTL', async () => {
+      render(
+        <div dir="rtl">
+          <Tree data={complexTreeData} />
+        </div>
+      );
+      const parent = screen.getAllByRole('treeitem')[0];
+
+      parent.focus();
+      await userEvent.keyboard('{ArrowRight}');
+      expect(parent).toHaveAttribute('aria-expanded', 'false');
+
+      await userEvent.keyboard('{ArrowLeft}');
+      expect(parent).toHaveAttribute('aria-expanded', 'true');
+
+      await userEvent.keyboard('{ArrowLeft}');
+      expect(document.activeElement).toHaveAttribute('data-value', 'node-1-1');
+
+      await userEvent.keyboard('{ArrowRight}');
+      expect(document.activeElement).toBe(parent);
+
+      await userEvent.keyboard('{ArrowRight}');
+      expect(parent).toHaveAttribute('aria-expanded', 'false');
+    });
   });
 
   describe('Home and End', () => {
@@ -761,6 +786,27 @@ describe('@mantine/core/Tree', () => {
 
       await userEvent.keyboard('{End}');
       expect(input).toHaveFocus();
+    });
+
+    it('mirrors ArrowLeft and ArrowRight in RTL', async () => {
+      render(
+        <div dir="rtl">
+          <FlatTree />
+        </div>
+      );
+
+      screen.getAllByRole('treeitem')[0].focus();
+      await userEvent.keyboard('{ArrowRight}');
+      expect(screen.getAllByRole('treeitem')[0]).toHaveAttribute('aria-expanded', 'false');
+
+      await userEvent.keyboard('{ArrowLeft}');
+      expect(screen.getAllByRole('treeitem')[0]).toHaveAttribute('aria-expanded', 'true');
+
+      await userEvent.keyboard('{ArrowLeft}');
+      expect(document.activeElement).toHaveAttribute('data-value', 'node-1-1');
+
+      await userEvent.keyboard('{ArrowRight}');
+      expect(document.activeElement).toHaveAttribute('data-value', 'node-1');
     });
 
     it('expands parent and selects node on Enter', async () => {
