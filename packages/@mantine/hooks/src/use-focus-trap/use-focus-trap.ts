@@ -2,6 +2,30 @@ import { useCallback, useEffect, useRef } from 'react';
 import { scopeTab } from './scope-tab';
 import { FOCUS_SELECTOR, focusable, tabbable } from './tabbable';
 
+const activeTraps = new Set<React.RefObject<HTMLElement | null>>();
+
+function hasNestedActiveTrap(ref: React.RefObject<HTMLElement | null>, node: HTMLElement) {
+  const activeElement = (node.getRootNode() as unknown as DocumentOrShadowRoot).activeElement;
+  if (!activeElement) {
+    return false;
+  }
+
+  for (const trap of activeTraps) {
+    const nested = trap.current;
+    if (
+      trap !== ref &&
+      nested &&
+      nested !== node &&
+      node.contains(nested) &&
+      nested.contains(activeElement)
+    ) {
+      return true;
+    }
+  }
+
+  return false;
+}
+
 export function useFocusTrap(active = true): React.RefCallback<HTMLElement | null> {
   const ref = useRef<HTMLElement>(null);
 
@@ -71,13 +95,24 @@ export function useFocusTrap(active = true): React.RefCallback<HTMLElement | nul
     }
 
     const handleKeyDown = (event: KeyboardEvent) => {
-      if (event.key === 'Tab' && ref.current) {
-        scopeTab(ref.current, event);
+      if (
+        event.key !== 'Tab' ||
+        event.defaultPrevented ||
+        !ref.current ||
+        hasNestedActiveTrap(ref, ref.current)
+      ) {
+        return;
       }
+
+      scopeTab(ref.current, event);
     };
 
+    activeTraps.add(ref);
     document.addEventListener('keydown', handleKeyDown);
-    return () => document.removeEventListener('keydown', handleKeyDown);
+    return () => {
+      activeTraps.delete(ref);
+      document.removeEventListener('keydown', handleKeyDown);
+    };
   }, [active]);
 
   return setRef;
