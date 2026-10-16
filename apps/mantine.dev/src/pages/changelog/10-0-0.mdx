@@ -22,6 +22,7 @@ import {
   SwitchDemos,
   TabsDemos,
   ThemingDemos,
+  TreeDemos,
 } from '@docs/demos';
 import { Code } from '@mantine/core';
 import { Layout } from '@/layout';
@@ -521,6 +522,13 @@ function Editor() {
 While it is set, the dropzone is disabled and `Dropzone.Uploading` is displayed instead of `Dropzone.Idle`:
 
 <Demo data={DropzoneDemos.progress} />
+
+## Tree scrollTo
+
+New `scrollTo` method of the [useTree](/core/tree/#scroll-to-node) store scrolls a node into view
+and expands its collapsed ancestors first. `getNodePath` returns the values of the node and its ancestors:
+
+<Demo data={TreeDemos.scrollTo} />
 
 ## Other changes
 

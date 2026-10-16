@@ -9,6 +9,7 @@ import {
   normalizeCheckedState,
 } from './checked-state/checked-state';
 import type { TreeNodeData } from './Tree';
+import { isVisibleTreeItem } from './tree-item';
 import {
   findTreeNode,
   getAllLeafValues,
@@ -96,6 +97,41 @@ export function getTreeExpandedState(
   });
 
   return state;
+}
+
+function findNodePath(value: string, data: TreeNodeData[], path: string[]): string[] | null {
+  for (const node of data) {
+    path.push(node.value);
+
+    if (node.value === value) {
+      return path;
+    }
+
+    if (Array.isArray(node.children) && findNodePath(value, node.children, path)) {
+      return path;
+    }
+
+    path.pop();
+  }
+
+  return null;
+}
+
+export interface TreeScrollToOptions {
+  /** If set, collapsed ancestors of the node are expanded before scrolling @default true */
+  autoExpand?: boolean;
+
+  /** Vertical alignment of the node, passed to `scrollIntoView` @default 'nearest' */
+  block?: ScrollLogicalPosition;
+
+  /** Scroll behavior, passed to `scrollIntoView` @default 'auto' */
+  behavior?: ScrollBehavior;
+}
+
+interface PendingTreeScroll {
+  value: string;
+  options: TreeScrollToOptions;
+  waitForData: boolean;
 }
 
 export interface UseTreeInput {
@@ -252,6 +288,25 @@ export interface UseTreeReturnType {
 
   /** Clears the loaded cache and load error of a node, so the next expand loads its children again */
   invalidateNode: (value: string) => void;
+
+  /** Returns values of the nodes from the root down to and including the node with provided value,
+   * `null` if the node is not in the tree data */
+  getNodePath: (value: string) => string[] | null;
+
+  /** Expands all ancestors of the node with provided value, the node itself keeps its expanded state */
+  expandParents: (value: string) => void;
+
+  /** Scrolls the node with provided value into view. With `autoExpand` (default), collapsed ancestors
+   * are expanded first and the scroll happens after they are rendered. If the node is not in the
+   * tree data yet, the scroll waits for the next data update (for example, children loaded with `loadNode`).
+   * Works only for nodes rendered by the `Tree` component. */
+  scrollTo: (value: string, options?: TreeScrollToOptions) => void;
+
+  /** Registers the root element of the associated `Tree`, used internally by `Tree` as a ref callback */
+  registerRoot: (node: HTMLElement | null) => () => void;
+
+  /** Scrolls to the node requested with `scrollTo` once it is rendered, called by `Tree` after every render */
+  applyPendingScroll: () => void;
 }
 
 export function useTree({
@@ -294,6 +349,8 @@ export function useTree({
 
   const [anchorNode, setAnchorNodeInternal] = useState<string | null>(null);
 
+  const rootRef = useRef<HTMLElement | null>(null);
+  const pendingScrollRef = useRef<PendingTreeScroll | null>(null);
   const loadingNodesRef = useRef(new Set<string>());
   const loadedNodesRef = useRef(new Set<string>());
   const invalidatedNodesRef = useRef(new Set<string>());
@@ -392,6 +449,14 @@ export function useTree({
       const nextCheckedState = normalizeCheckedState(currentCheckedState, _data);
       if (!isSameArray(nextCheckedState, currentCheckedState)) {
         writeCheckedState(nextCheckedState);
+      }
+    }
+
+    const pending = pendingScrollRef.current;
+    if (pending?.waitForData) {
+      pendingScrollRef.current = null;
+      if (findNodePath(pending.value, _data, [])) {
+        revealNode(pending.value, pending.options);
       }
     }
   }, []);
@@ -621,6 +686,136 @@ export function useTree({
     setLoadError(value, null);
   }, []);
 
+  const getNodePath = useCallback(
+    (value: string) => findNodePath(value, latest.current.data, []),
+    []
+  );
+
+  const expandParents = useCallback(
+    (value: string) => {
+      const path = getNodePath(value);
+
+      if (!path) {
+        return;
+      }
+
+      const current = latest.current.expandedState;
+      const collapsedParents = path.slice(0, -1).filter((parent) => current[parent] !== true);
+
+      if (collapsedParents.length === 0) {
+        return;
+      }
+
+      const nextState = { ...current };
+      collapsedParents.forEach((parent) => {
+        nextState[parent] = true;
+        handleNodeExpand(parent);
+        tryLoadAsync(parent);
+      });
+
+      setExpandedState(nextState);
+    },
+    [tryLoadAsync]
+  );
+
+  const registerRoot = useCallback((node: HTMLElement | null) => {
+    rootRef.current = node;
+
+    return () => {
+      if (rootRef.current === node) {
+        rootRef.current = null;
+      }
+    };
+  }, []);
+
+  const scrollNodeIntoView = useCallback((value: string, options: TreeScrollToOptions) => {
+    const root = rootRef.current;
+
+    if (!root) {
+      return false;
+    }
+
+    const item = Array.from(root.querySelectorAll<HTMLElement>('[role="treeitem"]')).find(
+      (element) => element.dataset.value === value
+    );
+
+    if (!item || !isVisibleTreeItem(item, root)) {
+      return false;
+    }
+
+    const label = Array.from(item.children).find(
+      (child): child is HTMLElement => child instanceof HTMLElement && child.dataset.value === value
+    );
+
+    (label || item).scrollIntoView({
+      block: options.block ?? 'nearest',
+      behavior: options.behavior ?? 'auto',
+    });
+
+    return true;
+  }, []);
+
+  const revealNode = useCallback(
+    (value: string, options: TreeScrollToOptions) => {
+      const path = getNodePath(value);
+
+      if (!path) {
+        return;
+      }
+
+      const expandedState = latest.current.expandedState;
+      const parentsExpanded = path.slice(0, -1).every((parent) => expandedState[parent] === true);
+
+      if (parentsExpanded) {
+        if (!scrollNodeIntoView(value, options)) {
+          pendingScrollRef.current = { value, options, waitForData: false };
+        }
+        return;
+      }
+
+      if (options.autoExpand !== false) {
+        pendingScrollRef.current = { value, options, waitForData: false };
+        expandParents(value);
+      }
+    },
+    [expandParents]
+  );
+
+  const scrollTo = useCallback(
+    (value: string, options: TreeScrollToOptions = {}) => {
+      pendingScrollRef.current = null;
+
+      if (getNodePath(value)) {
+        revealNode(value, options);
+      } else if (options.autoExpand !== false) {
+        pendingScrollRef.current = { value, options, waitForData: true };
+      }
+    },
+    [revealNode]
+  );
+
+  const applyPendingScroll = useCallback(() => {
+    const pending = pendingScrollRef.current;
+
+    if (!pending || pending.waitForData) {
+      return;
+    }
+
+    if (scrollNodeIntoView(pending.value, pending.options)) {
+      pendingScrollRef.current = null;
+      return;
+    }
+
+    const path = getNodePath(pending.value);
+    const expandedState = latest.current.expandedState;
+    const waitingForExpansion =
+      !!path && path.slice(0, -1).some((parent) => expandedState[parent] !== true);
+
+    if (!waitingForExpansion) {
+      pendingScrollRef.current = null;
+    }
+  }, []);
+
   const getExpandedState = useCallback(() => latest.current.expandedState, []);
   const getSelectedState = useCallback(() => latest.current.selectedState, []);
   const getCheckedState = useCallback(() => latest.current.checkedState, []);
@@ -667,6 +862,12 @@ export function useTree({
       getNodeLoadError,
       loadNode,
       invalidateNode,
+
+      getNodePath,
+      expandParents,
+      scrollTo,
+      registerRoot,
+      applyPendingScroll,
     }),
     [
       checkStrictly,

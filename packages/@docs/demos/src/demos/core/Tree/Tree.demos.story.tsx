@@ -92,3 +92,8 @@ export const Demo_checkStrictly = {
   name: '⭐ Demo: checkStrictly',
   render: renderDemo(demos.checkStrictly),
 };
+
+export const Demo_scrollTo = {
+  name: '⭐ Demo: scrollTo',
+  render: renderDemo(demos.scrollTo),
+};

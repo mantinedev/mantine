@@ -7,7 +7,13 @@ import type {
   TreeProps,
   TreeStylesNames,
 } from './Tree';
-import type { TreeExpandedState, TreeStore, UseTreeInput, UseTreeReturnType } from './use-tree';
+import type {
+  TreeExpandedState,
+  TreeScrollToOptions,
+  TreeStore,
+  UseTreeInput,
+  UseTreeReturnType,
+} from './use-tree';
 
 export { Tree } from './Tree';
 export { useTree, getTreeExpandedState } from './use-tree';
@@ -28,6 +34,7 @@ export type {
   UseTreeReturnType,
   TreeStore,
   TreeExpandedState,
+  TreeScrollToOptions,
   CheckedNodeStatus,
 };
 

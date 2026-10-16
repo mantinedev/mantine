@@ -175,6 +175,8 @@ store.checkNode('src');
 store.uncheckAllNodes();
 store.loadNode('src'); // -> loads children with onLoadChildren
 store.invalidateNode('src'); // -> children are loaded again on next expand
+store.expandParents('src/components'); // -> expands parents of the node
+store.scrollTo('src/components/Button.tsx'); // -> expands parents and scrolls to the node
 
 // Queries
 store.getExpandedState(); // -> { src: true, ... }
@@ -184,6 +186,7 @@ store.getCheckedNodes(); // -> checked nodes with their status
 store.isNodeChecked('src'); // -> boolean
 store.isNodeIndeterminate('src'); // -> boolean
 store.isNodeLoading('src'); // -> boolean
+store.getNodePath('src/components'); // -> ['src', 'src/components']
 ```
 
 ## Checked state
@@ -260,6 +263,22 @@ to display a loading indicator or an error message. Use `store.invalidateNode(va
 the cache for a node and allow re-fetching on next expand.
 
 <Demo data={TreeDemos.asyncLoading} />
+
+## Scroll to node
+
+Use `store.scrollTo(value)` to scroll a node into view. Its collapsed ancestors are expanded first.
+Pass `autoExpand: false` to scroll only when the node is already visible.
+`store.getNodePath(value)` returns the values of the node and its ancestors:
+
+<Demo data={TreeDemos.scrollTo} />
+
+With async loading, load the ancestors with `loadNode` before calling `scrollTo`:
+
+```tsx
+await store.loadNode('documents');
+await store.loadNode('documents/reports');
+store.scrollTo('documents/reports/2026.pdf');
+```
 
 ## Search and filter
 
@@ -394,6 +413,9 @@ for virtualizer positioning. For keyboard navigation:
 - Scroll the virtualizer in `onScrollToIndex`. The row is focused once it is rendered.
 
 You do not need to set `tabIndex`: one node in the tree is always kept tabbable.
+
+`store.scrollTo` does not work with virtualization, because the node may not be rendered.
+Call `store.expandParents(value)` instead and scroll with your virtualizer, for example, `scrollToIndex`.
 
 <Demo data={TreeDemos.virtualized} />
 

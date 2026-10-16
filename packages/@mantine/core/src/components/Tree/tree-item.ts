@@ -71,7 +71,7 @@ export function getTreeRoot(element: HTMLElement | null) {
   return element ? findElementAncestor(element, '[data-tree-root]') : null;
 }
 
-function isVisibleTreeItem(item: HTMLElement, root: Element) {
+export function isVisibleTreeItem(item: HTMLElement, root: Element) {
   for (let current: HTMLElement | null = item; current && current !== root;) {
     if (current.style.display === 'none') {
       return false;

@@ -65,6 +65,9 @@ describe('getTreeExpandedState', () => {
       'getSelectedState',
       'getCheckedState',
       'getAnchorNode',
+      'getNodePath',
+      'expandParents',
+      'scrollTo',
     ],
     setup: (controller) => controller.initialize(data),
     changeState: (controller) => controller.select('src'),
@@ -839,6 +842,96 @@ describe('@mantine/core/Tree/use-tree', () => {
 
       expect(result.current.isNodeLoading('documents')).toBe(false);
       expect(result.current.isNodeLoading('nonexistent')).toBe(false);
+    });
+  });
+
+  describe('node path', () => {
+    it('getNodePath returns the path from the root to the node', () => {
+      const { result } = renderHook(() => useTree());
+      act(() => result.current.initialize(data));
+
+      expect(result.current.getNodePath('src')).toStrictEqual(['src']);
+      expect(result.current.getNodePath('src/components')).toStrictEqual(['src', 'src/components']);
+      expect(result.current.getNodePath('src/components/Input.tsx')).toStrictEqual([
+        'src',
+        'src/components',
+        'src/components/Input.tsx',
+      ]);
+      expect(result.current.getNodePath('package.json')).toStrictEqual(['package.json']);
+    });
+
+    it('getNodePath returns null for unknown values and before initialization', () => {
+      const { result } = renderHook(() => useTree());
+      expect(result.current.getNodePath('src')).toBe(null);
+
+      act(() => result.current.initialize(data));
+      expect(result.current.getNodePath('unknown')).toBe(null);
+    });
+
+    it('getNodePath finds async children merged into the data', () => {
+      const { result } = renderHook(() => useTree());
+      act(() =>
+        result.current.initialize([{ label: 'Folder', value: 'folder', hasChildren: true }])
+      );
+      expect(result.current.getNodePath('folder/file')).toBe(null);
+
+      act(() =>
+        result.current.initialize([
+          {
+            label: 'Folder',
+            value: 'folder',
+            hasChildren: true,
+            children: [{ label: 'File', value: 'folder/file' }],
+          },
+        ])
+      );
+      expect(result.current.getNodePath('folder/file')).toStrictEqual(['folder', 'folder/file']);
+    });
+
+    it('expandParents expands every ancestor and keeps the node itself unchanged', () => {
+      const onNodeExpand = jest.fn();
+      const onExpandedStateChange = jest.fn();
+      const { result } = renderHook(() => useTree({ onNodeExpand, onExpandedStateChange }));
+      act(() => result.current.initialize(data));
+      onExpandedStateChange.mockClear();
+
+      act(() => result.current.expandParents('src/components/Button.tsx'));
+
+      expect(result.current.getExpandedState()).toStrictEqual({
+        src: true,
+        'src/components': true,
+        'src/components/Button.tsx': false,
+        'src/components/Input.tsx': false,
+        'src/hooks': false,
+        'src/hooks/use-state.ts': false,
+        'package.json': false,
+      });
+      expect(onNodeExpand.mock.calls).toStrictEqual([['src'], ['src/components']]);
+      expect(onExpandedStateChange).toHaveBeenCalledTimes(1);
+    });
+
+    it('expandParents does not call onNodeExpand for ancestors that are already expanded', () => {
+      const onNodeExpand = jest.fn();
+      const { result } = renderHook(() =>
+        useTree({ onNodeExpand, initialExpandedState: { src: true } })
+      );
+      act(() => result.current.initialize(data));
+
+      act(() => result.current.expandParents('src/components/Button.tsx'));
+
+      expect(onNodeExpand.mock.calls).toStrictEqual([['src/components']]);
+    });
+
+    it('expandParents does nothing for root nodes and unknown values', () => {
+      const onExpandedStateChange = jest.fn();
+      const { result } = renderHook(() => useTree({ onExpandedStateChange }));
+      act(() => result.current.initialize(data));
+      onExpandedStateChange.mockClear();
+
+      act(() => result.current.expandParents('src'));
+      act(() => result.current.expandParents('unknown'));
+
+      expect(onExpandedStateChange).not.toHaveBeenCalled();
     });
   });
 

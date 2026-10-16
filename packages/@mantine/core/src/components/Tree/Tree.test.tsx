@@ -4,6 +4,7 @@ import userEvent from '@testing-library/user-event';
 import { render, screen, tests } from '@mantine-tests/core';
 import { flattenTreeData } from './flatten-tree-data/flatten-tree-data';
 import { FlatTreeNode } from './FlatTreeNode';
+import { mergeAsyncChildren } from './merge-async-children/merge-async-children';
 import { Tree, TreeNodeData, TreeProps, TreeStylesNames } from './Tree';
 import { TreeStore, useTree, UseTreeInput } from './use-tree';
 
@@ -419,6 +420,288 @@ describe('@mantine/core/Tree', () => {
 
       await userEvent.click(screen.getByText('Folder'));
       expect(onLoadChildren).toHaveBeenCalledTimes(2);
+    });
+  });
+
+  describe('scrollTo', () => {
+    const scrollIntoView = jest.fn();
+    let originalScrollIntoView: typeof HTMLElement.prototype.scrollIntoView;
+
+    beforeEach(() => {
+      originalScrollIntoView = HTMLElement.prototype.scrollIntoView;
+      HTMLElement.prototype.scrollIntoView = scrollIntoView;
+      scrollIntoView.mockClear();
+    });
+
+    afterEach(() => {
+      HTMLElement.prototype.scrollIntoView = originalScrollIntoView;
+      jest.useRealTimers();
+    });
+
+    const deepData: TreeNodeData[] = [
+      {
+        label: 'Level 1',
+        value: 'l1',
+        children: [
+          {
+            label: 'Level 2',
+            value: 'l2',
+            children: [
+              {
+                label: 'Level 3',
+                value: 'l3',
+                children: [{ label: 'Level 4', value: 'l4' }],
+              },
+            ],
+          },
+        ],
+      },
+      { label: 'Other', value: 'other' },
+    ];
+
+    function ScrollTree({
+      storeRef,
+      data = deepData,
+      input,
+      keepMounted,
+    }: {
+      storeRef: { current: TreeStore | null };
+      data?: TreeNodeData[];
+      input?: UseTreeInput;
+      keepMounted?: boolean;
+    }) {
+      const store = useTree(input);
+      storeRef.current = store;
+      return <Tree data={data} store={store} keepMounted={keepMounted} />;
+    }
+
+    function getLabel(value: string) {
+      return document.querySelector(`[role="treeitem"][data-value="${value}"] > [data-value]`);
+    }
+
+    it('expands collapsed ancestors and scrolls the node label into view', () => {
+      const storeRef: { current: TreeStore | null } = { current: null };
+      render(<ScrollTree storeRef={storeRef} />);
+      expect(screen.queryByText('Level 4')).not.toBeInTheDocument();
+
+      act(() => storeRef.current!.scrollTo('l4', { block: 'center', behavior: 'smooth' }));
+
+      expect(storeRef.current!.getExpandedState()).toMatchObject({
+        l1: true,
+        l2: true,
+        l3: true,
+        l4: false,
+      });
+      expect(screen.getByText('Level 4')).toBeInTheDocument();
+      expect(scrollIntoView).toHaveBeenCalledTimes(1);
+      expect(scrollIntoView.mock.contexts[0]).toBe(getLabel('l4'));
+      expect(scrollIntoView).toHaveBeenCalledWith({ block: 'center', behavior: 'smooth' });
+    });
+
+    it('scrolls immediately when the node is already visible', () => {
+      const storeRef: { current: TreeStore | null } = { current: null };
+      render(<ScrollTree storeRef={storeRef} />);
+
+      act(() => storeRef.current!.scrollTo('other'));
+
+      expect(scrollIntoView).toHaveBeenCalledTimes(1);
+      expect(scrollIntoView.mock.contexts[0]).toBe(getLabel('other'));
+      expect(scrollIntoView).toHaveBeenCalledWith({ block: 'nearest', behavior: 'auto' });
+    });
+
+    it('does nothing with autoExpand: false when the node is not rendered', () => {
+      const storeRef: { current: TreeStore | null } = { current: null };
+      render(<ScrollTree storeRef={storeRef} />);
+
+      act(() => storeRef.current!.scrollTo('l4', { autoExpand: false }));
+
+      expect(storeRef.current!.getExpandedState().l1).toBe(false);
+      expect(scrollIntoView).not.toHaveBeenCalled();
+
+      act(() => storeRef.current!.expandParents('l4'));
+      expect(scrollIntoView).not.toHaveBeenCalled();
+    });
+
+    it('scrolls with autoExpand: false when the node is already rendered', () => {
+      const storeRef: { current: TreeStore | null } = { current: null };
+      render(<ScrollTree storeRef={storeRef} input={{ initialExpandedState: { l1: true } }} />);
+
+      act(() => storeRef.current!.scrollTo('l2', { autoExpand: false }));
+
+      expect(scrollIntoView).toHaveBeenCalledTimes(1);
+      expect(scrollIntoView.mock.contexts[0]).toBe(getLabel('l2'));
+    });
+
+    it('does not scroll to a node hidden by keepMounted', () => {
+      const storeRef: { current: TreeStore | null } = { current: null };
+      render(<ScrollTree storeRef={storeRef} keepMounted />);
+
+      act(() => storeRef.current!.scrollTo('l2', { autoExpand: false }));
+      expect(scrollIntoView).not.toHaveBeenCalled();
+
+      act(() => storeRef.current!.scrollTo('l2'));
+      expect(scrollIntoView).toHaveBeenCalledTimes(1);
+      expect(scrollIntoView.mock.contexts[0]).toBe(getLabel('l2'));
+    });
+
+    it('reveals a node collapsed earlier in the same batch', () => {
+      const storeRef: { current: TreeStore | null } = { current: null };
+      render(<ScrollTree storeRef={storeRef} input={{ initialExpandedState: { l1: true } }} />);
+
+      act(() => {
+        storeRef.current!.collapseAllNodes();
+        storeRef.current!.scrollTo('l2');
+      });
+
+      expect(storeRef.current!.getExpandedState().l1).toBe(true);
+      expect(screen.getByText('Level 2')).toBeInTheDocument();
+      expect(scrollIntoView).toHaveBeenCalledTimes(1);
+      expect(scrollIntoView.mock.contexts[0]).toBe(getLabel('l2'));
+    });
+
+    it('waits for the render when ancestors were expanded earlier in the same batch', () => {
+      const storeRef: { current: TreeStore | null } = { current: null };
+      render(<ScrollTree storeRef={storeRef} />);
+
+      act(() => {
+        storeRef.current!.expand('l1');
+        storeRef.current!.scrollTo('l2', { autoExpand: false });
+      });
+
+      expect(scrollIntoView).toHaveBeenCalledTimes(1);
+      expect(scrollIntoView.mock.contexts[0]).toBe(getLabel('l2'));
+    });
+
+    it('keeps the request until deferred controlled expansion is applied', () => {
+      jest.useFakeTimers();
+      const storeRef: { current: TreeStore | null } = { current: null };
+
+      function DeferredTree() {
+        const [expandedState, setExpandedState] = useState<Record<string, boolean>>({});
+        return (
+          <ScrollTree
+            storeRef={storeRef}
+            input={{
+              expandedState,
+              onExpandedStateChange: (next) => setTimeout(() => setExpandedState(next), 100),
+            }}
+          />
+        );
+      }
+
+      render(<DeferredTree />);
+
+      act(() => {
+        storeRef.current!.select('other');
+        storeRef.current!.scrollTo('l4');
+      });
+      expect(scrollIntoView).not.toHaveBeenCalled();
+
+      act(() => {
+        jest.advanceTimersByTime(100);
+      });
+
+      expect(screen.getByText('Level 4')).toBeInTheDocument();
+      expect(scrollIntoView).toHaveBeenCalledTimes(1);
+      expect(scrollIntoView.mock.contexts[0]).toBe(getLabel('l4'));
+    });
+
+    it('does nothing for unknown values', () => {
+      const storeRef: { current: TreeStore | null } = { current: null };
+      render(<ScrollTree storeRef={storeRef} />);
+
+      act(() => storeRef.current!.scrollTo('unknown'));
+
+      expect(scrollIntoView).not.toHaveBeenCalled();
+    });
+
+    it('scrolls with controlled expanded state', () => {
+      const storeRef: { current: TreeStore | null } = { current: null };
+
+      function ControlledTree() {
+        const [expandedState, setExpandedState] = useState<Record<string, boolean>>({});
+        return (
+          <ScrollTree
+            storeRef={storeRef}
+            input={{ expandedState, onExpandedStateChange: setExpandedState }}
+          />
+        );
+      }
+
+      render(<ControlledTree />);
+      act(() => storeRef.current!.scrollTo('l4'));
+
+      expect(screen.getByText('Level 4')).toBeInTheDocument();
+      expect(scrollIntoView).toHaveBeenCalledTimes(1);
+      expect(scrollIntoView.mock.contexts[0]).toBe(getLabel('l4'));
+    });
+
+    it('waits for async children loaded right before the call', async () => {
+      const storeRef: { current: TreeStore | null } = { current: null };
+
+      function AsyncScrollTree() {
+        const [data, setData] = useState<TreeNodeData[]>([
+          { label: 'Folder', value: 'folder', hasChildren: true },
+        ]);
+        const store = useTree({
+          onLoadChildren: async (value) => {
+            setData((current) =>
+              mergeAsyncChildren(current, value, [{ label: 'File', value: 'folder/file' }])
+            );
+          },
+        });
+        storeRef.current = store;
+        return <Tree data={data} store={store} />;
+      }
+
+      render(<AsyncScrollTree />);
+
+      await act(async () => {
+        await storeRef.current!.loadNode('folder');
+        storeRef.current!.scrollTo('folder/file');
+      });
+
+      expect(storeRef.current!.getExpandedState().folder).toBe(true);
+      expect(screen.getByText('File')).toBeInTheDocument();
+      expect(scrollIntoView).toHaveBeenCalledTimes(1);
+      expect(scrollIntoView.mock.contexts[0]).toBe(getLabel('folder/file'));
+    });
+
+    it('drops a request for a node that is still missing after the next data update', () => {
+      const storeRef: { current: TreeStore | null } = { current: null };
+      const { rerender } = render(<ScrollTree storeRef={storeRef} data={deepData} />);
+
+      act(() => storeRef.current!.scrollTo('late'));
+      rerender(<ScrollTree storeRef={storeRef} data={[...deepData]} />);
+      rerender(
+        <ScrollTree storeRef={storeRef} data={[...deepData, { label: 'Late', value: 'late' }]} />
+      );
+
+      expect(scrollIntoView).not.toHaveBeenCalled();
+    });
+
+    it('scrolls the treeitem when renderNode does not spread elementProps', () => {
+      const storeRef: { current: TreeStore | null } = { current: null };
+
+      function CustomTree() {
+        const store = useTree();
+        storeRef.current = store;
+        return (
+          <Tree
+            data={deepData}
+            store={store}
+            renderNode={({ node }) => <span>{node.label}</span>}
+          />
+        );
+      }
+
+      render(<CustomTree />);
+      act(() => storeRef.current!.scrollTo('l3'));
+
+      expect(scrollIntoView).toHaveBeenCalledTimes(1);
+      expect(scrollIntoView.mock.contexts[0]).toBe(
+        document.querySelector('[role="treeitem"][data-value="l3"]')
+      );
     });
   });
 

@@ -205,10 +205,14 @@ export const Tree = factory<TreeFactory>((_props) => {
   );
 
   const rootRef = useRef<HTMLUListElement>(null);
-  const mergedRef = useMergedRef(ref, clickOutsideRef, rootRef);
+  const mergedRef = useMergedRef(ref, clickOutsideRef, rootRef, store.registerRoot);
 
   useEffect(() => {
     syncTreeTabStop(rootRef.current);
+  });
+
+  useEffect(() => {
+    store.applyPendingScroll();
   });
 
   useEffect(() => {

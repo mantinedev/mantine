@@ -933,3 +933,135 @@ export function Virtualized() {
     </div>
   );
 }
+
+function createDeepTreeData(): TreeNodeData[] {
+  return Array.from({ length: 20 }, (_, folderIndex) => {
+    const folder = `folder-${folderIndex + 1}`;
+    return {
+      label: folder,
+      value: folder,
+      children: [
+        {
+          label: 'level-2',
+          value: `${folder}/level-2`,
+          children: [
+            {
+              label: 'level-3',
+              value: `${folder}/level-2/level-3`,
+              children: Array.from({ length: 5 }, (__, fileIndex) => ({
+                label: `file-${fileIndex + 1}.ts`,
+                value: `${folder}/level-2/level-3/file-${fileIndex + 1}.ts`,
+              })),
+            },
+          ],
+        },
+      ],
+    };
+  });
+}
+
+export function ScrollTo() {
+  const treeData = useMemo(createDeepTreeData, []);
+  const store = useTree();
+  const [keepMounted, setKeepMounted] = useState(false);
+  const target = 'folder-17/level-2/level-3/file-4.ts';
+
+  const reveal = (value: string, autoExpand = true) => {
+    store.select(value);
+    store.scrollTo(value, { autoExpand, block: 'center', behavior: 'smooth' });
+  };
+
+  return (
+    <div style={{ padding: 40, maxWidth: 500 }}>
+      <Group mb="md">
+        <Button onClick={() => reveal(target)}>Scroll to folder-17 file-4.ts</Button>
+        <Button onClick={() => reveal('folder-2/level-2')}>Scroll to folder-2/level-2</Button>
+        <Button variant="default" onClick={() => reveal(target, false)}>
+          autoExpand: false
+        </Button>
+        <Button variant="default" onClick={() => store.collapseAllNodes()}>
+          Collapse all
+        </Button>
+        <Checkbox
+          label="keepMounted"
+          checked={keepMounted}
+          onChange={(event) => setKeepMounted(event.currentTarget.checked)}
+        />
+      </Group>
+      <Text size="sm" mb="md">
+        Path: {store.getNodePath(target)?.join(' / ')}
+      </Text>
+      <div
+        style={{
+          height: 300,
+          overflow: 'auto',
+          border: '1px solid var(--mantine-color-default-border)',
+        }}
+      >
+        <Tree data={treeData} store={store} selectOnClick keepMounted={keepMounted} />
+      </div>
+    </div>
+  );
+}
+
+export function ScrollToAsync() {
+  const [treeData, setTreeData] = useState<TreeNodeData[]>(() =>
+    Array.from({ length: 20 }, (_, index) => ({
+      label: `folder-${index + 1}`,
+      value: `folder-${index + 1}`,
+      hasChildren: true,
+    }))
+  );
+
+  const store = useTree({
+    onLoadChildren: async (value) => {
+      await new Promise((resolve) => {
+        setTimeout(resolve, 500);
+      });
+      const depth = value.split('/').length;
+      const children: TreeNodeData[] =
+        depth < 3
+          ? [
+              {
+                label: `level-${depth + 1}`,
+                value: `${value}/level-${depth + 1}`,
+                hasChildren: true,
+              },
+            ]
+          : Array.from({ length: 5 }, (__, index) => ({
+              label: `file-${index + 1}.ts`,
+              value: `${value}/file-${index + 1}.ts`,
+            }));
+      setTreeData((prev) => mergeAsyncChildren(prev, value, children));
+    },
+  });
+
+  const [loading, setLoading] = useState(false);
+
+  const revealDeepFile = async () => {
+    setLoading(true);
+    await store.loadNode('folder-18');
+    await store.loadNode('folder-18/level-2');
+    await store.loadNode('folder-18/level-2/level-3');
+    store.select('folder-18/level-2/level-3/file-5.ts');
+    store.scrollTo('folder-18/level-2/level-3/file-5.ts', { block: 'center', behavior: 'smooth' });
+    setLoading(false);
+  };
+
+  return (
+    <div style={{ padding: 40, maxWidth: 500 }}>
+      <Button mb="md" loading={loading} onClick={revealDeepFile}>
+        Load and scroll to folder-18 file-5.ts
+      </Button>
+      <div
+        style={{
+          height: 300,
+          overflow: 'auto',
+          border: '1px solid var(--mantine-color-default-border)',
+        }}
+      >
+        <Tree data={treeData} store={store} selectOnClick />
+      </div>
+    </div>
+  );
+}
