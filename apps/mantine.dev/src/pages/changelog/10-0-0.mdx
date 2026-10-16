@@ -558,6 +558,18 @@ use the new `labels` prop to translate the announcements:
 
 <Demo data={TreeDemos.dragDrop} />
 
+## Menu async data
+
+New `Menu.Empty` component displays a message when the menu has no items, for example
+while items are loading or when search returns nothing:
+
+<Demo data={MenuDemos.asyncLoading} />
+
+New `Menu.LoadMore` component loads the next page of items when it is scrolled into view,
+focused or clicked:
+
+<Demo data={MenuDemos.loadMore} />
+
 ## Other changes
 
 - [Affix](/core/affix) now supports `withSafeArea` prop to keep the content clear of the device notch.

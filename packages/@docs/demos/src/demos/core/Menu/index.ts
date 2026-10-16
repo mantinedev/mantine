@@ -19,3 +19,7 @@ export { checkIcon } from './Menu.demo.checkIcon';
 export { contextMenu } from './Menu.demo.contextMenu';
 export { filled } from './Menu.demo.filled';
 export { description } from './Menu.demo.description';
+export { asyncLoading } from './Menu.demo.asyncLoading';
+export { emptyState } from './Menu.demo.emptyState';
+export { loadMore } from './Menu.demo.loadMore';
+export { asyncSub } from './Menu.demo.asyncSub';

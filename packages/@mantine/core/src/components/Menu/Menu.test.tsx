@@ -5,8 +5,10 @@ import { DirectionProvider } from '../../core';
 import { Menu, MenuProps } from './Menu';
 import { MenuDivider } from './MenuDivider/MenuDivider';
 import { MenuDropdown } from './MenuDropdown/MenuDropdown';
+import { MenuEmpty } from './MenuEmpty/MenuEmpty';
 import { MenuItem } from './MenuItem/MenuItem';
 import { MenuLabel } from './MenuLabel/MenuLabel';
+import { MenuLoadMore } from './MenuLoadMore/MenuLoadMore';
 import { MenuTarget } from './MenuTarget/MenuTarget';
 
 function TestContainer(props: MenuProps) {
@@ -203,6 +205,8 @@ describe('@mantine/core/Menu', () => {
     expect(Menu.Target).toBe(MenuTarget);
     expect(Menu.Label).toBe(MenuLabel);
     expect(Menu.Divider).toBe(MenuDivider);
+    expect(Menu.Empty).toBe(MenuEmpty);
+    expect(Menu.LoadMore).toBe(MenuLoadMore);
   });
 
   it('has correct displayName', () => {
@@ -1980,5 +1984,269 @@ describe('@mantine/core/Menu', () => {
       <TestContainer onChange={onChange} onOpen={onOpen} onClose={onClose} opened={false} />
     );
     expectClosed();
+  });
+});
+
+describe('@mantine/core/Menu async states', () => {
+  function AsyncMenu({
+    items,
+    loading,
+    loadingMore,
+    onLoadMore,
+    withInitialFocusPlaceholder,
+    loop,
+  }: {
+    withInitialFocusPlaceholder?: boolean;
+    loop?: boolean;
+    items: string[];
+    loading?: boolean;
+    loadingMore?: boolean;
+    onLoadMore?: () => void;
+  }) {
+    return (
+      <Menu
+        transitionProps={{ duration: 0 }}
+        withinPortal={false}
+        defaultOpened
+        withInitialFocusPlaceholder={withInitialFocusPlaceholder}
+        loop={loop}
+      >
+        <Menu.Target>
+          <button type="button">test-target</button>
+        </Menu.Target>
+        <Menu.Dropdown>
+          {loading && <Menu.Empty>Loading</Menu.Empty>}
+          {!loading && items.length === 0 && <Menu.Empty>Nothing found</Menu.Empty>}
+          {items.map((item) => (
+            <Menu.Item key={item}>{item}</Menu.Item>
+          ))}
+          {onLoadMore && (
+            <Menu.LoadMore onLoadMore={onLoadMore} loading={loadingMore}>
+              Load more
+            </Menu.LoadMore>
+          )}
+        </Menu.Dropdown>
+      </Menu>
+    );
+  }
+
+  const getButton = (name: string) => screen.getByText(name).closest('button')!;
+
+  tests.axe([
+    <AsyncMenu items={[]} withInitialFocusPlaceholder={false} key="empty" />,
+    <AsyncMenu items={[]} loading withInitialFocusPlaceholder={false} key="loading" />,
+    <AsyncMenu
+      items={['Apple']}
+      onLoadMore={() => {}}
+      loadingMore
+      withInitialFocusPlaceholder={false}
+      key="load-more"
+    />,
+  ]);
+
+  it('exposes empty and loading states as disabled menu items', () => {
+    const { rerender } = render(<AsyncMenu items={[]} loading />);
+    expect(screen.getByRole('menuitem', { name: 'Loading' })).toHaveAttribute(
+      'aria-disabled',
+      'true'
+    );
+    rerender(<AsyncMenu items={[]} />);
+    expect(screen.getByRole('menuitem', { name: 'Nothing found' })).toHaveAttribute(
+      'aria-disabled',
+      'true'
+    );
+  });
+
+  it('never focuses Menu.Empty with arrow keys, Home/End or type-ahead', () => {
+    render(<AsyncMenu items={[]} />);
+    const menu = screen.getByRole('menu');
+    menu.focus();
+    ['ArrowDown', 'ArrowUp', 'Home', 'End', 'n'].forEach((key) => {
+      fireEvent.keyDown(menu, { key });
+      expect(screen.getByRole('menuitem', { name: 'Nothing found' })).not.toHaveFocus();
+    });
+  });
+
+  it('keeps focus inside the dropdown while loading and navigates to items once they arrive', () => {
+    const { rerender } = render(<AsyncMenu items={[]} loading />);
+    const menu = screen.getByRole('menu');
+    menu.focus();
+    fireEvent.keyDown(menu, { key: 'ArrowDown' });
+    expect(menu.contains(document.activeElement)).toBe(true);
+
+    rerender(<AsyncMenu items={['Apple', 'Banana']} />);
+    fireEvent.keyDown(menu, { key: 'ArrowDown' });
+    expect(getButton('Apple')).toHaveFocus();
+  });
+
+  it('skips Menu.LoadMore in arrow navigation while it is loading', () => {
+    render(<AsyncMenu items={['Apple', 'Banana']} onLoadMore={() => {}} loadingMore />);
+    getButton('Banana').focus();
+    fireEvent.keyDown(getButton('Banana'), { key: 'ArrowDown' });
+    expect(getButton('Apple')).toHaveFocus();
+    fireEvent.keyDown(getButton('Apple'), { key: 'End' });
+    expect(getButton('Banana')).toHaveFocus();
+  });
+
+  it('does not focus a loading Menu.LoadMore from the dropdown', () => {
+    render(<AsyncMenu items={[]} onLoadMore={() => {}} loadingMore />);
+    const menu = screen.getByRole('menu');
+    menu.focus();
+    fireEvent.keyDown(menu, { key: 'ArrowDown' });
+    expect(getButton('Load more')).not.toHaveFocus();
+  });
+
+  it('reaches Menu.LoadMore with arrow keys and calls onLoadMore', () => {
+    const onLoadMore = jest.fn();
+    render(<AsyncMenu items={['Apple']} onLoadMore={onLoadMore} />);
+    getButton('Apple').focus();
+    fireEvent.keyDown(getButton('Apple'), { key: 'ArrowDown' });
+    expect(getButton('Load more')).toHaveFocus();
+    expect(onLoadMore).toHaveBeenCalledTimes(1);
+  });
+
+  it('does not throw on arrow keys when the focused Menu.LoadMore starts loading', () => {
+    const { rerender } = render(<AsyncMenu items={[]} onLoadMore={() => {}} />);
+    act(() => getButton('Load more').focus());
+    rerender(<AsyncMenu items={[]} onLoadMore={() => {}} loadingMore />);
+    expect(() => fireEvent.keyDown(getButton('Load more'), { key: 'ArrowDown' })).not.toThrow();
+    expect(() => fireEvent.keyDown(getButton('Load more'), { key: 'ArrowUp' })).not.toThrow();
+  });
+
+  [true, false].forEach((loop) => {
+    it(`moves focus from a focused Menu.LoadMore that starts loading, loop=${loop}`, () => {
+      const items = ['Apple', 'Banana'];
+      const { rerender } = render(<AsyncMenu items={items} onLoadMore={() => {}} loop={loop} />);
+      act(() => getButton('Load more').focus());
+      rerender(<AsyncMenu items={items} onLoadMore={() => {}} loadingMore loop={loop} />);
+
+      fireEvent.keyDown(getButton('Load more'), { key: 'ArrowUp' });
+      expect(getButton('Banana')).toHaveFocus();
+
+      act(() => getButton('Load more').focus());
+      fireEvent.keyDown(getButton('Load more'), { key: 'ArrowDown' });
+      expect(loop ? getButton('Apple') : getButton('Load more')).toHaveFocus();
+    });
+  });
+
+  it('skips Menu.LoadMore in type-ahead', () => {
+    render(<AsyncMenu items={['Apple', 'Lime']} onLoadMore={() => {}} />);
+    const menu = screen.getByRole('menu');
+    menu.focus();
+    fireEvent.keyDown(menu, { key: 'l' });
+    expect(getButton('Lime')).toHaveFocus();
+    fireEvent.keyDown(getButton('Lime'), { key: 'l' });
+    expect(getButton('Lime')).toHaveFocus();
+  });
+
+  describe('Menu.Sub with items loading', () => {
+    function LoadingSubMenu({ items }: { items: string[] | null }) {
+      return (
+        <Menu transitionProps={{ duration: 0 }} withinPortal={false} defaultOpened>
+          <Menu.Target>
+            <button type="button">test-target</button>
+          </Menu.Target>
+          <Menu.Dropdown>
+            <Menu.Item>Rename</Menu.Item>
+            <Menu.Sub transitionProps={{ duration: 0 }}>
+              <Menu.Sub.Target>
+                <Menu.Sub.Item>Move to</Menu.Sub.Item>
+              </Menu.Sub.Target>
+              <Menu.Sub.Dropdown data-testid="sub-dropdown">
+                {items === null && <Menu.Empty>Loading projects</Menu.Empty>}
+                {items?.map((item) => (
+                  <Menu.Item key={item}>{item}</Menu.Item>
+                ))}
+              </Menu.Sub.Dropdown>
+            </Menu.Sub>
+            <Menu.Item>Delete</Menu.Item>
+          </Menu.Dropdown>
+        </Menu>
+      );
+    }
+
+    const flushFocus = () =>
+      act(async () => {
+        await new Promise((resolve) => setTimeout(resolve, 30));
+      });
+
+    const openSub = async () => {
+      const subTarget = getButton('Move to');
+      subTarget.focus();
+      fireEvent.keyDown(subTarget, { key: 'ArrowRight' });
+      await flushFocus();
+    };
+
+    it('focuses the submenu dropdown when it has no focusable items yet', async () => {
+      render(<LoadingSubMenu items={null} />);
+      await openSub();
+      expect(screen.getByTestId('sub-dropdown')).toHaveFocus();
+    });
+
+    it('moves focus to submenu items once they arrive', async () => {
+      const { rerender } = render(<LoadingSubMenu items={null} />);
+      await openSub();
+      rerender(<LoadingSubMenu items={['Marketing site', 'Mobile app']} />);
+
+      const subDropdown = screen.getByTestId('sub-dropdown');
+      fireEvent.keyDown(subDropdown, { key: 'ArrowDown' });
+      expect(getButton('Marketing site')).toHaveFocus();
+
+      subDropdown.focus();
+      fireEvent.keyDown(subDropdown, { key: 'End' });
+      expect(getButton('Mobile app')).toHaveFocus();
+    });
+
+    it('does not move focus to parent menu items with arrows from an empty submenu', async () => {
+      render(<LoadingSubMenu items={null} />);
+      await openSub();
+      fireEvent.keyDown(screen.getByTestId('sub-dropdown'), { key: 'ArrowDown' });
+      expect(screen.getByTestId('sub-dropdown')).toHaveFocus();
+    });
+
+    it('returns focus to the sub item with the back arrow key from the dropdown', async () => {
+      render(<LoadingSubMenu items={null} />);
+      await openSub();
+      fireEvent.keyDown(screen.getByTestId('sub-dropdown'), { key: 'ArrowLeft' });
+      await flushFocus();
+      expect(getButton('Move to')).toHaveFocus();
+      expect(screen.queryByTestId('sub-dropdown')).not.toBeInTheDocument();
+    });
+  });
+
+  it('supports empty state and load more inside Menu.Sub dropdown', async () => {
+    const onLoadMore = jest.fn();
+    render(
+      <Menu transitionProps={{ duration: 0 }} withinPortal={false} defaultOpened>
+        <Menu.Target>
+          <button type="button">test-target</button>
+        </Menu.Target>
+        <Menu.Dropdown>
+          <Menu.Sub transitionProps={{ duration: 0 }}>
+            <Menu.Sub.Target>
+              <Menu.Sub.Item>More</Menu.Sub.Item>
+            </Menu.Sub.Target>
+            <Menu.Sub.Dropdown>
+              <Menu.Empty>No recent files</Menu.Empty>
+              <Menu.LoadMore onLoadMore={onLoadMore}>Load more</Menu.LoadMore>
+            </Menu.Sub.Dropdown>
+          </Menu.Sub>
+        </Menu.Dropdown>
+      </Menu>
+    );
+
+    const subTarget = getButton('More');
+    subTarget.focus();
+    fireEvent.keyDown(subTarget, { key: 'ArrowRight' });
+    await act(async () => {
+      await new Promise((resolve) => setTimeout(resolve, 30));
+    });
+
+    expect(screen.getByRole('menuitem', { name: 'No recent files' })).toHaveAttribute(
+      'aria-disabled',
+      'true'
+    );
+    expect(getButton('Load more')).toHaveFocus();
+    expect(onLoadMore).toHaveBeenCalled();
   });
 });

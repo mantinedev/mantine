@@ -5,8 +5,10 @@ import type { MenuCheckboxItemProps } from './MenuCheckboxItem/MenuCheckboxItem'
 import type { MenuContextMenuProps } from './MenuContextMenu/MenuContextMenu';
 import type { MenuDividerProps } from './MenuDivider/MenuDivider';
 import type { MenuDropdownProps } from './MenuDropdown/MenuDropdown';
+import type { MenuEmptyProps } from './MenuEmpty/MenuEmpty';
 import type { MenuItemProps } from './MenuItem/MenuItem';
 import type { MenuLabelProps } from './MenuLabel/MenuLabel';
+import type { MenuLoadMoreProps } from './MenuLoadMore/MenuLoadMore';
 import type { MenuRadioGroupProps } from './MenuRadioGroup/MenuRadioGroup';
 import type { MenuRadioItemProps } from './MenuRadioItem/MenuRadioItem';
 import type { MenuSearchProps } from './MenuSearch/MenuSearch';
@@ -23,6 +25,8 @@ export { MenuLabel } from './MenuLabel/MenuLabel';
 export { MenuDropdown } from './MenuDropdown/MenuDropdown';
 export { MenuTarget } from './MenuTarget/MenuTarget';
 export { MenuSearch } from './MenuSearch/MenuSearch';
+export { MenuEmpty } from './MenuEmpty/MenuEmpty';
+export { MenuLoadMore } from './MenuLoadMore/MenuLoadMore';
 export { MenuCheckboxItem } from './MenuCheckboxItem/MenuCheckboxItem';
 export { MenuCheckboxGroup } from './MenuCheckboxGroup/MenuCheckboxGroup';
 export { MenuRadioItem } from './MenuRadioItem/MenuRadioItem';
@@ -45,6 +49,8 @@ export type {
   MenuDropdownProps,
   MenuTargetProps,
   MenuSearchProps,
+  MenuEmptyProps,
+  MenuLoadMoreProps,
   MenuCheckboxItemProps,
   MenuCheckboxGroupProps,
   MenuRadioItemProps,

@@ -75,7 +75,9 @@ export function useMenuTypeAhead({ enabled, opened, getDropdown }: UseMenuTypeAh
     }
 
     const items = Array.from(
-      dropdown.querySelectorAll<HTMLElement>('[data-menu-item]:not([data-disabled])')
+      dropdown.querySelectorAll<HTMLElement>(
+        '[data-menu-item]:not([data-disabled]):not([data-menu-load-more])'
+      )
     ).filter((item) => item.closest('[data-menu-dropdown]') === dropdown);
 
     if (items.length === 0) {

@@ -141,10 +141,11 @@ export function MenuSub(_props: MenuSubProps) {
 
   const focusFirstItem = () =>
     window.setTimeout(() => {
-      document
-        .getElementById(`${id}-dropdown`)
-        ?.querySelectorAll<HTMLButtonElement>('[data-menu-item]:not([data-disabled])')[0]
-        ?.focus();
+      const dropdown = document.getElementById(`${id}-dropdown`);
+      const item = dropdown?.querySelectorAll<HTMLButtonElement>(
+        '[data-menu-item]:not([data-disabled])'
+      )[0];
+      (item ?? dropdown)?.focus();
     }, 16);
 
   const focusParentItem = () =>

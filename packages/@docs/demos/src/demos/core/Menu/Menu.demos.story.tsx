@@ -112,3 +112,23 @@ export const Demo_description = {
   name: '⭐ Demo: description',
   render: renderDemo(demos.description),
 };
+
+export const Demo_asyncLoading = {
+  name: '⭐ Demo: asyncLoading',
+  render: renderDemo(demos.asyncLoading),
+};
+
+export const Demo_emptyState = {
+  name: '⭐ Demo: emptyState',
+  render: renderDemo(demos.emptyState),
+};
+
+export const Demo_loadMore = {
+  name: '⭐ Demo: loadMore',
+  render: renderDemo(demos.loadMore),
+};
+
+export const Demo_asyncSub = {
+  name: '⭐ Demo: asyncSub',
+  render: renderDemo(demos.asyncSub),
+};

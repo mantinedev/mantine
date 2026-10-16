@@ -36,6 +36,24 @@ function getNextIndex(current: number, elements: HTMLButtonElement[], loop: bool
   return current;
 }
 
+function getIndicesAroundExcludedTarget(
+  target: HTMLElement,
+  elements: HTMLButtonElement[],
+  loop: boolean
+) {
+  const following = elements.findIndex(
+    (el) => target.compareDocumentPosition(el) & Node.DOCUMENT_POSITION_FOLLOWING
+  );
+  const after = following === -1 ? elements.length : following;
+  const next = getNextIndex(after - 1, elements, loop);
+  const previous = getPreviousIndex(after, elements, loop);
+
+  return {
+    next: !loop && next === after - 1 ? -1 : next,
+    previous: !loop && previous === after ? -1 : previous,
+  };
+}
+
 /** Validates that target element is on the same level as sibling, used to filter out children that have the same sibling selector */
 function onSameLevel(
   target: HTMLButtonElement,
@@ -89,8 +107,10 @@ export function createScopedKeydownHandler({
     ).filter((node) => onSameLevel(event.currentTarget, node, parentSelector));
 
     const current = elements.findIndex((el) => event.currentTarget === el);
-    const _nextIndex = getNextIndex(current, elements, loop);
-    const _previousIndex = getPreviousIndex(current, elements, loop);
+    const excluded =
+      current === -1 ? getIndicesAroundExcludedTarget(event.currentTarget, elements, loop) : null;
+    const _nextIndex = excluded ? excluded.next : getNextIndex(current, elements, loop);
+    const _previousIndex = excluded ? excluded.previous : getPreviousIndex(current, elements, loop);
     const nextIndex = dir === 'rtl' ? _previousIndex : _nextIndex;
     const previousIndex = dir === 'rtl' ? _nextIndex : _previousIndex;
 
@@ -99,8 +119,8 @@ export function createScopedKeydownHandler({
         if (orientation === 'horizontal') {
           event.stopPropagation();
           event.preventDefault();
-          elements[nextIndex].focus();
-          activateOnFocus && elements[nextIndex].click();
+          elements[nextIndex]?.focus();
+          activateOnFocus && elements[nextIndex]?.click();
         }
 
         break;
@@ -110,8 +130,8 @@ export function createScopedKeydownHandler({
         if (orientation === 'horizontal') {
           event.stopPropagation();
           event.preventDefault();
-          elements[previousIndex].focus();
-          activateOnFocus && elements[previousIndex].click();
+          elements[previousIndex]?.focus();
+          activateOnFocus && elements[previousIndex]?.click();
         }
 
         break;
@@ -121,8 +141,8 @@ export function createScopedKeydownHandler({
         if (orientation === 'vertical') {
           event.stopPropagation();
           event.preventDefault();
-          elements[_previousIndex].focus();
-          activateOnFocus && elements[_previousIndex].click();
+          elements[_previousIndex]?.focus();
+          activateOnFocus && elements[_previousIndex]?.click();
         }
 
         break;
@@ -132,8 +152,8 @@ export function createScopedKeydownHandler({
         if (orientation === 'vertical') {
           event.stopPropagation();
           event.preventDefault();
-          elements[_nextIndex].focus();
-          activateOnFocus && elements[_nextIndex].click();
+          elements[_nextIndex]?.focus();
+          activateOnFocus && elements[_nextIndex]?.click();
         }
 
         break;

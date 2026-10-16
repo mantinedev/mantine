@@ -7,9 +7,11 @@ import {
   ElementProps,
   factory,
   Factory,
+  useDirection,
   useProps,
 } from '../../../core';
 import { Popover } from '../../Popover';
+import { getMenuArrowKeys } from '../get-menu-arrow-keys';
 import { useMenuContext } from '../Menu.context';
 import { SubMenuContext } from '../MenuSub/MenuSub.context';
 import { useMenuTypeAhead } from '../use-menu-type-ahead';
@@ -47,6 +49,7 @@ export const MenuSubDropdown = factory<MenuSubDropdownFactory>((props) => {
   const wrapperRef = useRef<HTMLDivElement>(null);
   const ctx = useMenuContext();
   const subCtx = use(SubMenuContext);
+  const { dir } = useDirection();
 
   const typeAhead = useMenuTypeAhead({
     enabled: !ctx.hasSearch,
@@ -54,7 +57,36 @@ export const MenuSubDropdown = factory<MenuSubDropdownFactory>((props) => {
     getDropdown: () => wrapperRef.current,
   });
 
+  const handleDropdownNavigation = (event: React.KeyboardEvent<HTMLDivElement>) => {
+    if (event.target !== event.currentTarget || event.defaultPrevented) {
+      return;
+    }
+
+    if (event.key === getMenuArrowKeys(dir).back) {
+      event.preventDefault();
+      event.stopPropagation();
+      subCtx?.close();
+      subCtx?.focusParentItem();
+      return;
+    }
+
+    if (!['ArrowDown', 'ArrowUp', 'Home', 'End'].includes(event.key)) {
+      return;
+    }
+
+    event.preventDefault();
+    event.stopPropagation();
+    const dropdown = event.currentTarget;
+    const items = Array.from(
+      dropdown.querySelectorAll<HTMLButtonElement>('[data-menu-item]:not([data-disabled])')
+    ).filter((item) => item.closest('[data-menu-dropdown]') === dropdown);
+    const target =
+      event.key === 'ArrowUp' || event.key === 'End' ? items[items.length - 1] : items[0];
+    target?.focus();
+  };
+
   const handleKeyDown = createEventHandler<any>(onKeyDown, (event) => {
+    handleDropdownNavigation(event);
     typeAhead(event);
     if (
       !event.ctrlKey &&

@@ -17,8 +17,10 @@ import { MenuCheckboxItem, MenuCheckboxItemProps } from './MenuCheckboxItem/Menu
 import { MenuContextMenu, MenuContextMenuProps } from './MenuContextMenu/MenuContextMenu';
 import { MenuDivider, MenuDividerProps } from './MenuDivider/MenuDivider';
 import { MenuDropdown, MenuDropdownProps } from './MenuDropdown/MenuDropdown';
+import { MenuEmpty, MenuEmptyProps } from './MenuEmpty/MenuEmpty';
 import { MenuItem, MenuItemProps } from './MenuItem/MenuItem';
 import { MenuLabel, MenuLabelProps } from './MenuLabel/MenuLabel';
+import { MenuLoadMore, MenuLoadMoreProps } from './MenuLoadMore/MenuLoadMore';
 import { MenuRadioGroup, MenuRadioGroupProps } from './MenuRadioGroup/MenuRadioGroup';
 import { MenuRadioItem, MenuRadioItemProps } from './MenuRadioItem/MenuRadioItem';
 import { MenuSearch, MenuSearchProps } from './MenuSearch/MenuSearch';
@@ -42,6 +44,7 @@ export type MenuStylesNames =
   | 'divider'
   | 'chevron'
   | 'search'
+  | 'empty'
   | PopoverStylesNames;
 
 export type MenuFactory = Factory<{
@@ -54,6 +57,8 @@ export type MenuFactory = Factory<{
     Target: typeof MenuTarget;
     Divider: typeof MenuDivider;
     Search: typeof MenuSearch;
+    Empty: typeof MenuEmpty;
+    LoadMore: typeof MenuLoadMore;
     Sub: typeof MenuSub;
     CheckboxItem: typeof MenuCheckboxItem;
     CheckboxGroup: typeof MenuCheckboxGroup;
@@ -339,6 +344,8 @@ Menu.Dropdown = MenuDropdown;
 Menu.Target = MenuTarget;
 Menu.Divider = MenuDivider;
 Menu.Search = MenuSearch;
+Menu.Empty = MenuEmpty;
+Menu.LoadMore = MenuLoadMore;
 Menu.Sub = MenuSub;
 Menu.CheckboxItem = MenuCheckboxItem;
 Menu.CheckboxGroup = MenuCheckboxGroup;
@@ -374,6 +381,14 @@ export namespace Menu {
 
   export namespace Search {
     export type Props = MenuSearchProps;
+  }
+
+  export namespace Empty {
+    export type Props = MenuEmptyProps;
+  }
+
+  export namespace LoadMore {
+    export type Props = MenuLoadMoreProps;
   }
 
   export namespace Sub {

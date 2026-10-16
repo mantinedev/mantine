@@ -104,6 +104,7 @@ const FILES_PATHS = getPaths([
   'packages/@mantine/core/src/components/Menu/MenuItem/MenuItem.tsx',
   'packages/@mantine/core/src/components/Menu/MenuTarget/MenuTarget.tsx',
   'packages/@mantine/core/src/components/Menu/MenuSearch/MenuSearch.tsx',
+  'packages/@mantine/core/src/components/Menu/MenuLoadMore/MenuLoadMore.tsx',
   'packages/@mantine/core/src/components/Menu/MenuCheckboxItem/MenuCheckboxItem.tsx',
   'packages/@mantine/core/src/components/Menu/MenuRadioItem/MenuRadioItem.tsx',
   'packages/@mantine/core/src/components/Menu/MenuRadioGroup/MenuRadioGroup.tsx',

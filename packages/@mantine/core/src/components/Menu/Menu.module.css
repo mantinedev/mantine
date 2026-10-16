@@ -88,6 +88,13 @@
   background-color: var(--mantine-color-surface-page);
 }
 
+.empty {
+  font-size: var(--mantine-font-size-sm);
+  color: var(--mantine-color-dimmed);
+  text-align: center;
+  padding: calc(var(--mantine-spacing-xs) / 1.5) var(--mantine-spacing-sm);
+}
+
 .itemLabel {
   flex: 1;
 }

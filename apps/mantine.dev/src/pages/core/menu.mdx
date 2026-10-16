@@ -47,6 +47,28 @@ include the parent in the filtered tree if any of its descendants match the quer
 
 <Demo data={MenuDemos.searchNested} demoProps={{ defaultExpanded: false }} />
 
+## Async data
+
+`Menu.Empty` displays a message when the menu has no items. Keyboard navigation skips it.
+Use it for empty search results or a menu with nothing to show yet:
+
+<Demo data={MenuDemos.emptyState} />
+
+To load items when the menu opens, render `Menu.Empty` with a loader until the data arrives:
+
+<Demo data={MenuDemos.asyncLoading} demoProps={{ defaultExpanded: false }} />
+
+The same works in submenus. Use `onChange` of `Menu.Sub` to load items when the submenu opens:
+
+<Demo data={MenuDemos.asyncSub} demoProps={{ defaultExpanded: false }} />
+
+`Menu.LoadMore` is an item placed after the last item. It calls `onLoadMore` when it is
+scrolled into view, focused with the keyboard or clicked. Set `loading` while the next page
+is fetched: the item shows a loader and keyboard navigation skips it. Stop rendering it when
+there are no more items to load.
+
+<Demo data={MenuDemos.loadMore} demoProps={{ defaultExpanded: false }} />
+
 ## Checkbox items
 
 `Menu.CheckboxItem` renders a menu item with a check indicator. It works like a regular

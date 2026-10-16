@@ -58,7 +58,9 @@ export const MenuDropdown = factory<MenuDropdownFactory>((props) => {
     if (event.key === 'ArrowUp' || event.key === 'ArrowDown') {
       event.preventDefault();
       wrapperRef.current
-        ?.querySelectorAll<HTMLButtonElement>('[data-menu-item]:not(:disabled)')[0]
+        ?.querySelectorAll<HTMLButtonElement>(
+          '[data-menu-item]:not(:disabled):not([data-disabled])'
+        )[0]
         ?.focus();
     }
   });

@@ -16,6 +16,7 @@ export const MenuStylesApi: StylesApiData<MenuFactory> = {
     itemIndicator: 'Indicator slot of `Menu.CheckboxItem` and `Menu.RadioItem`',
     chevron: 'Sub menu chevron',
     search: '`Menu.Search` input element',
+    empty: '`Menu.Empty` root element',
   },
 
   vars: {},
