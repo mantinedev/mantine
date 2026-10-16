@@ -1,6 +1,5 @@
-import { ReactNode } from 'react';
 import { Button, Group, Radio, Stack } from '@mantine/core';
-import { FormErrors, isNotEmpty, matches, useForm } from '@mantine/form';
+import { FormErrors, isNotEmpty, matches, useForm, when } from '@mantine/form';
 import { notifications } from '@mantine/notifications';
 import { CompanyFields } from './CompanyFields';
 import { PersonalFields } from './PersonalFields';
@@ -9,9 +8,7 @@ import { AccountType, AccountValues } from './types';
 const personalFields = ['firstName', 'lastName', 'birthDate'] as const;
 const companyFields = ['name', 'vatNumber', 'contactPerson'] as const;
 
-function whenType<T>(type: AccountType, rule: (value: T) => ReactNode) {
-  return (value: T, values: AccountValues) => (values.accountType === type ? rule(value) : null);
-}
+const isType = (type: AccountType) => (values: AccountValues) => values.accountType === type;
 
 export function ConditionalSections() {
   const form = useForm<AccountValues>({
@@ -30,17 +27,17 @@ export function ConditionalSections() {
     },
     validate: {
       personal: {
-        firstName: whenType('personal', isNotEmpty('First name is required')),
-        lastName: whenType('personal', isNotEmpty('Last name is required')),
-        birthDate: whenType('personal', isNotEmpty('Birth date is required')),
+        firstName: when(isType('personal'), isNotEmpty('First name is required')),
+        lastName: when(isType('personal'), isNotEmpty('Last name is required')),
+        birthDate: when(isType('personal'), isNotEmpty('Birth date is required')),
       },
       company: {
-        name: whenType('company', isNotEmpty('Company name is required')),
-        vatNumber: whenType(
-          'company',
+        name: when(isType('company'), isNotEmpty('Company name is required')),
+        vatNumber: when(
+          isType('company'),
           matches(/^[A-Z]{2}\d{8,12}$/, 'VAT number must be 2 uppercase letters and 8–12 digits')
         ),
-        contactPerson: whenType('company', isNotEmpty('Contact person is required')),
+        contactPerson: when(isType('company'), isNotEmpty('Contact person is required')),
       },
     },
   });

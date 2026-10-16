@@ -1,5 +1,5 @@
 import { Button, Checkbox, Group, Stack } from '@mantine/core';
-import { FormErrors, isNotEmpty, matches, useForm } from '@mantine/form';
+import { FormErrors, isNotEmpty, matches, useForm, when } from '@mantine/form';
 import { notifications } from '@mantine/notifications';
 import { AddressFields } from './AddressFields';
 import { Address, AddressValues } from './types';
@@ -32,9 +32,9 @@ export function SameAsBilling() {
     validate: {
       billing: addressRules,
       shipping: {
-        street: (value, values) => (values.sameAsBilling ? null : addressRules.street(value)),
-        city: (value, values) => (values.sameAsBilling ? null : addressRules.city(value)),
-        zip: (value, values) => (values.sameAsBilling ? null : addressRules.zip(value)),
+        street: when((values) => !values.sameAsBilling, addressRules.street),
+        city: when((values) => !values.sameAsBilling, addressRules.city),
+        zip: when((values) => !values.sameAsBilling, addressRules.zip),
       },
     },
     enhanceGetInputProps: ({ field, form }) =>

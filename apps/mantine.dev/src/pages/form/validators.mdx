@@ -262,3 +262,10 @@ const form = useForm({
   },
 });
 ```
+
+## when
+
+`when` runs a rule only when the condition returns `true`. Otherwise the field is valid.
+The condition receives all form values. The rule can be any validator from this page or a custom function:
+
+<Demo data={FormDemos.validatorsWhen} />

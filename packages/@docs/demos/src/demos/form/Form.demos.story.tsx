@@ -207,3 +207,8 @@ export const Demo_radioGetInputProps = {
   name: '⭐ Demo: radioGetInputProps',
   render: renderDemo(demos.radioGetInputProps),
 };
+
+export const Demo_validatorsWhen = {
+  name: '⭐ Demo: validatorsWhen',
+  render: renderDemo(demos.validatorsWhen),
+};

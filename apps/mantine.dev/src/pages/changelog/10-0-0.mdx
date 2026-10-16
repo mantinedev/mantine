@@ -149,6 +149,25 @@ function Demo() {
 
 <ExamplesButton link="/form/examples/ReusableFieldsAcrossForms" label="Open reusable fields example" variant="default" />
 
+## Conditional validation
+
+New `when` validator runs a rule only when the condition returns `true`.
+Use it for fields that are required depending on another field, see [validators](/form/validators/#when):
+
+```tsx
+import { isNotEmpty, useForm, when } from '@mantine/form';
+
+const form = useForm({
+  initialValues: { isCompany: false, companyName: '' },
+  validate: {
+    companyName: when(
+      (values) => values.isCompany,
+      isNotEmpty('Company name is required')
+    ),
+  },
+});
+```
+
 ## Modal and Drawer updates
 
 ### Footer

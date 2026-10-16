@@ -1,5 +1,5 @@
 import { Button, Checkbox, Collapse, Group, SimpleGrid, Stack, TextInput } from '@mantine/core';
-import { FormErrors, isEmail, isNotEmpty, useForm } from '@mantine/form';
+import { FormErrors, isEmail, isNotEmpty, useForm, when } from '@mantine/form';
 import { notifications } from '@mantine/notifications';
 
 interface OrderValues {
@@ -24,12 +24,9 @@ export function ConditionalValidation() {
     validate: {
       name: isNotEmpty('Name is required'),
       email: isEmail('Invalid email'),
-      street: (value, values) =>
-        values.shipToDifferentAddress ? isNotEmpty('Street is required')(value) : null,
-      city: (value, values) =>
-        values.shipToDifferentAddress ? isNotEmpty('City is required')(value) : null,
-      zip: (value, values) =>
-        values.shipToDifferentAddress ? isNotEmpty('Zip code is required')(value) : null,
+      street: when((values) => values.shipToDifferentAddress, isNotEmpty('Street is required')),
+      city: when((values) => values.shipToDifferentAddress, isNotEmpty('City is required')),
+      zip: when((values) => values.shipToDifferentAddress, isNotEmpty('Zip code is required')),
     },
   });
 
