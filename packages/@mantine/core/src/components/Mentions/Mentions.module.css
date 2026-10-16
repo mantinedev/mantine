@@ -100,7 +100,6 @@
 .nothingFound {
   color: var(--mantine-color-dimmed);
   text-align: center;
-  padding: var(--mantine-spacing-xs) var(--mantine-spacing-sm);
 }
 
 .inlineSuggestion {
