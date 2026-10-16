@@ -4,7 +4,8 @@ import { GetStylesApi } from '../../core';
 import { AccordionChevron } from '../Accordion';
 import { CheckIcon } from '../Checkbox/CheckIcon';
 import { useComboboxContext } from '../Combobox/Combobox.context';
-import { ScrollArea, ScrollAreaProps } from '../ScrollArea';
+import { PopoverScrollArea } from '../Popover/PopoverScrollArea/PopoverScrollArea';
+import { ScrollAreaProps } from '../ScrollArea';
 import { UnstyledButton } from '../UnstyledButton';
 import type {
   CascaderOption,
@@ -245,9 +246,8 @@ export function CascaderColumns({
               style: columnWidth ? { width: columnWidth, minWidth: columnWidth } : undefined,
             })}
           >
-            <ScrollArea.Autosize
+            <PopoverScrollArea
               mah={maxDropdownHeight}
-              type="scroll"
               scrollbarSize="var(--combobox-padding)"
               role="listbox"
               id={getCascaderColumnId(listId, level)}
@@ -256,6 +256,7 @@ export function CascaderColumns({
                 parentOption ? getCascaderOptionText(parentOption) : labelId ? undefined : ariaLabel
               }
               {...scrollAreaProps}
+              offsetScrollbars={scrollAreaProps?.offsetScrollbars !== false}
               {...getStyles('columnScroll')}
             >
               {options.length === 0 ? (
@@ -354,7 +355,7 @@ export function CascaderColumns({
                   );
                 })
               )}
-            </ScrollArea.Autosize>
+            </PopoverScrollArea>
           </div>
         );
       })}

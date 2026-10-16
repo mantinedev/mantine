@@ -1,14 +1,5 @@
 import { type KeyboardEvent, useState } from 'react';
-import {
-  Box,
-  Checkbox,
-  Combobox,
-  Input,
-  Pill,
-  PillsInput,
-  ScrollArea,
-  useCombobox,
-} from '@mantine/core';
+import { Box, Checkbox, Combobox, Input, Pill, PillsInput, useCombobox } from '@mantine/core';
 import classes from './TreeMultiSelectCombobox.module.css';
 
 interface TreeNode {
@@ -321,7 +312,7 @@ export function TreeMultiSelectCombobox() {
       </Combobox.DropdownTarget>
 
       <Combobox.Dropdown>
-        <ScrollArea.Autosize mah={250} type="scroll" viewportProps={{ tabIndex: -1 }}>
+        <Combobox.ScrollArea mah={250} viewportProps={{ tabIndex: -1 }}>
           <Combobox.Options aria-multiselectable>
             {flatNodes.map((flatNode) => (
               <TreeOption
@@ -332,7 +323,7 @@ export function TreeMultiSelectCombobox() {
               />
             ))}
           </Combobox.Options>
-        </ScrollArea.Autosize>
+        </Combobox.ScrollArea>
       </Combobox.Dropdown>
     </Combobox>
   );

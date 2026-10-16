@@ -1,5 +1,5 @@
 import { Combobox } from '../Combobox';
-import { ScrollArea } from '../ScrollArea';
+import { PopoverScrollArea } from '../Popover/PopoverScrollArea/PopoverScrollArea';
 import { MentionsOptions, type MentionsOptionsProps } from './MentionsOptions';
 
 export interface MentionsDropdownProps extends Omit<MentionsOptionsProps, 'query'> {
@@ -19,14 +19,9 @@ export function MentionsDropdown({
   return (
     <Combobox.Dropdown>
       <Combobox.Options aria-label={label}>
-        <ScrollArea.Autosize
-          mah={maxHeight ?? 220}
-          type="scroll"
-          scrollbars="y"
-          unstyled={unstyled}
-        >
+        <PopoverScrollArea mah={maxHeight ?? 220} scrollbars="y" unstyled={unstyled}>
           {query != null ? <MentionsOptions query={query} {...others} /> : null}
-        </ScrollArea.Autosize>
+        </PopoverScrollArea>
       </Combobox.Options>
     </Combobox.Dropdown>
   );

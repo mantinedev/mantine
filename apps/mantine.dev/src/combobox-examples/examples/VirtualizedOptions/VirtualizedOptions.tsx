@@ -1,6 +1,6 @@
 import { useRef, useState } from 'react';
 import { Virtuoso, VirtuosoHandle } from 'react-virtuoso';
-import { Combobox, Input, InputBase, ScrollArea, useVirtualizedCombobox } from '@mantine/core';
+import { Combobox, Input, InputBase, useVirtualizedCombobox } from '@mantine/core';
 
 const largeData = Array(10000)
   .fill(0)
@@ -69,11 +69,9 @@ export function VirtualizedOptions() {
         </InputBase>
       </Combobox.Target>
       <Combobox.Dropdown>
-        <ScrollArea.Autosize
+        <Combobox.ScrollArea
           mah={220}
-          type="scroll"
           viewportProps={{ tabIndex: -1 }}
-          scrollbarSize={4}
           viewportRef={setScrollParent}
           onMouseDown={(event) => event.preventDefault()}
         >
@@ -97,7 +95,7 @@ export function VirtualizedOptions() {
               )}
             />
           </Combobox.Options>
-        </ScrollArea.Autosize>
+        </Combobox.ScrollArea>
       </Combobox.Dropdown>
     </Combobox>
   );

@@ -1,5 +1,5 @@
 import { type KeyboardEvent, useState } from 'react';
-import { Box, CheckIcon, Combobox, Input, InputBase, ScrollArea, useCombobox } from '@mantine/core';
+import { Box, CheckIcon, Combobox, Input, InputBase, useCombobox } from '@mantine/core';
 import classes from './TreeSelectCombobox.module.css';
 
 interface TreeNode {
@@ -238,7 +238,7 @@ export function TreeSelectCombobox() {
       </Combobox.Target>
 
       <Combobox.Dropdown>
-        <ScrollArea.Autosize mah={250} type="scroll" viewportProps={{ tabIndex: -1 }}>
+        <Combobox.ScrollArea mah={250} viewportProps={{ tabIndex: -1 }}>
           <Combobox.Options>
             {flatNodes.map((flatNode) => (
               <TreeOption
@@ -249,7 +249,7 @@ export function TreeSelectCombobox() {
               />
             ))}
           </Combobox.Options>
-        </ScrollArea.Autosize>
+        </Combobox.ScrollArea>
       </Combobox.Dropdown>
     </Combobox>
   );

@@ -9,6 +9,7 @@
 .column {
   display: flex;
   flex-direction: column;
+  padding: var(--combobox-padding);
   width: var(--cascader-column-width);
   min-width: var(--cascader-column-width);
   border-inline-end: rem(1px) solid var(--popover-border-color, var(--mantine-color-default-border));
@@ -21,7 +22,6 @@
 
 .columnScroll {
   flex: 1;
-  padding: var(--combobox-padding);
 }
 
 .columnsOverflow {

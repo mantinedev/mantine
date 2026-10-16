@@ -27,3 +27,18 @@
   position: fixed;
   inset: 0;
 }
+
+.scrollArea {
+  margin-inline-end: calc(var(--popover-scroll-area-gutter, 0px) * -1);
+}
+
+.scrollAreaViewport {
+  padding-inline-end: var(--popover-scroll-area-gutter, 0px);
+
+  .scrollArea:where([data-offset-content]) & {
+    padding-inline-end: max(
+      var(--popover-scroll-area-gutter, 0px),
+      var(--scrollarea-scrollbar-size)
+    );
+  }
+}

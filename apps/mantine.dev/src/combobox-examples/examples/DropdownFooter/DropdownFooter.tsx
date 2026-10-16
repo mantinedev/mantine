@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Anchor, Combobox, ScrollArea, Text, TextInput, useCombobox } from '@mantine/core';
+import { Anchor, Combobox, Text, TextInput, useCombobox } from '@mantine/core';
 
 const groceries = [
   '🍎 Apples',
@@ -82,11 +82,11 @@ export function DropdownFooter() {
         </Combobox.Target>
 
         <Combobox.Dropdown>
-          <ScrollArea.Autosize mah={200} type="scroll" viewportProps={{ tabIndex: -1 }}>
+          <Combobox.ScrollArea mah={200} viewportProps={{ tabIndex: -1 }}>
             <Combobox.Options>
               {options.length === 0 ? <Combobox.Empty>Nothing found</Combobox.Empty> : options}
             </Combobox.Options>
-          </ScrollArea.Autosize>
+          </Combobox.ScrollArea>
           <Combobox.Footer>
             <Text fz="xs">
               Search powered by{' '}

@@ -65,7 +65,7 @@ The same works in submenus. Use `onChange` of `Menu.Sub` to load items when the 
 `Menu.LoadMore` is an item placed after the last item. It calls `onLoadMore` when it is
 scrolled into view, focused with the keyboard or clicked. Set `loading` while the next page
 is fetched: the item shows a loader and keyboard navigation skips it. Stop rendering it when
-there are no more items to load.
+there are no more items to load. Wrap long lists in `Menu.ScrollArea` to limit the dropdown height.
 
 <Demo data={MenuDemos.loadMore} demoProps={{ defaultExpanded: false }} />
 

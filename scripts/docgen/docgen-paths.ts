@@ -22,6 +22,7 @@ const FILES_PATHS = getPaths([
   'packages/@mantine/core/src/components/Popover/PopoverTarget/PopoverTarget.tsx',
   'packages/@mantine/core/src/components/Popover/PopoverDropdown/PopoverDropdown.tsx',
   'packages/@mantine/core/src/components/Popover/PopoverContextMenu/PopoverContextMenu.tsx',
+  'packages/@mantine/core/src/components/Popover/PopoverScrollArea/PopoverScrollArea.tsx',
 
   // Slider
   'packages/@mantine/core/src/components/Slider/Slider/Slider.tsx',

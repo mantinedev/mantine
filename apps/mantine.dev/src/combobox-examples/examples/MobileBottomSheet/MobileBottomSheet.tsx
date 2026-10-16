@@ -1,13 +1,5 @@
 import { useState } from 'react';
-import {
-  Combobox,
-  Drawer,
-  Input,
-  InputBase,
-  ScrollArea,
-  TextInput,
-  useCombobox,
-} from '@mantine/core';
+import { Combobox, Drawer, Input, InputBase, TextInput, useCombobox } from '@mantine/core';
 import { useDidUpdate, useMediaQuery } from '@mantine/hooks';
 
 const countries = [
@@ -58,11 +50,11 @@ export function MobileBottomSheet() {
   ));
 
   const optionsList = (
-    <ScrollArea.Autosize mah={280} type="scroll" viewportProps={{ tabIndex: -1 }}>
+    <Combobox.ScrollArea mah={280} viewportProps={{ tabIndex: -1 }}>
       <Combobox.Options>
         {options.length > 0 ? options : <Combobox.Empty>Nothing found</Combobox.Empty>}
       </Combobox.Options>
-    </ScrollArea.Autosize>
+    </Combobox.ScrollArea>
   );
 
   const handleSubmit = (val: string) => {

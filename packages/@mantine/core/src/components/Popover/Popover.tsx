@@ -34,6 +34,7 @@ import {
   PopoverContextMenuProps,
 } from './PopoverContextMenu/PopoverContextMenu';
 import { PopoverDropdown, PopoverDropdownProps } from './PopoverDropdown/PopoverDropdown';
+import { PopoverScrollArea, PopoverScrollAreaProps } from './PopoverScrollArea/PopoverScrollArea';
 import { PopoverTarget, PopoverTargetProps } from './PopoverTarget/PopoverTarget';
 import { usePopover } from './use-popover';
 import classes from './Popover.module.css';
@@ -430,6 +431,7 @@ export function Popover(_props: PopoverProps) {
 Popover.Target = PopoverTarget;
 Popover.Dropdown = PopoverDropdown;
 Popover.ContextMenu = PopoverContextMenu;
+Popover.ScrollArea = PopoverScrollArea;
 Popover.varsResolver = varsResolver;
 Popover.displayName = '@mantine/core/Popover';
 Popover.extend = (input: ExtendComponent<PopoverFactory>) => input;
@@ -460,5 +462,9 @@ export namespace Popover {
 
   export namespace ContextMenu {
     export type Props = PopoverContextMenuProps;
+  }
+
+  export namespace ScrollArea {
+    export type Props = PopoverScrollAreaProps;
   }
 }

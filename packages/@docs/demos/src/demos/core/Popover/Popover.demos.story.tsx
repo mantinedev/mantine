@@ -72,3 +72,8 @@ export const Demo_contextMenu = {
   name: '⭐ Demo: contextMenu',
   render: renderDemo(demos.contextMenu),
 };
+
+export const Demo_scrollArea = {
+  name: '⭐ Demo: scrollArea',
+  render: renderDemo(demos.scrollArea),
+};

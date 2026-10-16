@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from 'react';
 import { useVirtualizer } from '@tanstack/react-virtual';
-import { Combobox, ScrollArea, TextInput, useVirtualizedCombobox } from '@mantine/core';
+import { Combobox, TextInput, useVirtualizedCombobox } from '@mantine/core';
 
 const ITEM_HEIGHT = 36;
 
@@ -88,11 +88,9 @@ export function VirtualizedSearchableTanstack() {
         />
       </Combobox.Target>
       <Combobox.Dropdown hidden={filteredData.length === 0}>
-        <ScrollArea.Autosize
+        <Combobox.ScrollArea
           mah={220}
-          type="scroll"
           viewportProps={{ tabIndex: -1 }}
-          scrollbarSize={4}
           viewportRef={setScrollParent}
           onMouseDown={(event) => event.preventDefault()}
         >
@@ -123,7 +121,7 @@ export function VirtualizedSearchableTanstack() {
               })}
             </div>
           </Combobox.Options>
-        </ScrollArea.Autosize>
+        </Combobox.ScrollArea>
       </Combobox.Dropdown>
     </Combobox>
   );

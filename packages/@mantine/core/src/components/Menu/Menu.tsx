@@ -10,7 +10,7 @@ import {
   useStyles,
 } from '../../core';
 import { useDelayedHover } from '../../utils/Floating';
-import { __PopoverProps, Popover, PopoverStylesNames } from '../Popover';
+import { __PopoverProps, Popover, PopoverScrollArea, PopoverStylesNames } from '../Popover';
 import { MenuContextProvider, MenuContextValue } from './Menu.context';
 import { MenuCheckboxGroup, MenuCheckboxGroupProps } from './MenuCheckboxGroup/MenuCheckboxGroup';
 import { MenuCheckboxItem, MenuCheckboxItemProps } from './MenuCheckboxItem/MenuCheckboxItem';
@@ -59,6 +59,7 @@ export type MenuFactory = Factory<{
     Search: typeof MenuSearch;
     Empty: typeof MenuEmpty;
     LoadMore: typeof MenuLoadMore;
+    ScrollArea: typeof PopoverScrollArea;
     Sub: typeof MenuSub;
     CheckboxItem: typeof MenuCheckboxItem;
     CheckboxGroup: typeof MenuCheckboxGroup;
@@ -346,6 +347,7 @@ Menu.Divider = MenuDivider;
 Menu.Search = MenuSearch;
 Menu.Empty = MenuEmpty;
 Menu.LoadMore = MenuLoadMore;
+Menu.ScrollArea = PopoverScrollArea;
 Menu.Sub = MenuSub;
 Menu.CheckboxItem = MenuCheckboxItem;
 Menu.CheckboxGroup = MenuCheckboxGroup;
@@ -389,6 +391,10 @@ export namespace Menu {
 
   export namespace LoadMore {
     export type Props = MenuLoadMoreProps;
+  }
+
+  export namespace ScrollArea {
+    export type Props = Popover.ScrollArea.Props;
   }
 
   export namespace Sub {

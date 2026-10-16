@@ -13,7 +13,7 @@ import {
 import { Combobox, ComboboxProps, useCombobox } from '../Combobox';
 import { __BaseInputProps, __InputStylesNames, InputVariant } from '../Input';
 import { InputBase } from '../InputBase';
-import { ScrollArea } from '../ScrollArea';
+import { PopoverScrollArea } from '../Popover/PopoverScrollArea/PopoverScrollArea';
 import { UnstyledButton } from '../UnstyledButton';
 import { buildRawValue } from './build-raw-value/build-raw-value';
 import { computeCursorPosition } from './compute-cursor-position/compute-cursor-position';
@@ -481,7 +481,7 @@ export const PhoneInput = factory<PhoneInputFactory>((_props) => {
         )}
 
         <Combobox.Options>
-          <ScrollArea.Autosize mah={maxDropdownHeight} type="scroll">
+          <PopoverScrollArea mah={maxDropdownHeight}>
             {searchedPreferred.length > 0 && (
               <>
                 {searchedPreferred.map((country) => (
@@ -512,7 +512,7 @@ export const PhoneInput = factory<PhoneInputFactory>((_props) => {
             {searchedCountries.length === 0 &&
               searchedPreferred.length === 0 &&
               nothingFoundMessage && <Combobox.Empty>{nothingFoundMessage}</Combobox.Empty>}
-          </ScrollArea.Autosize>
+          </PopoverScrollArea>
         </Combobox.Options>
       </Combobox.Dropdown>
     </Combobox>

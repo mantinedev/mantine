@@ -13,7 +13,7 @@ import {
   useProps,
   useStyles,
 } from '../../core';
-import { __PopoverProps, Popover } from '../Popover';
+import { __PopoverProps, Popover, PopoverScrollArea } from '../Popover';
 import { PopoverMiddlewares } from '../Popover/Popover.types';
 import { ComboboxProvider } from './Combobox.context';
 import { ComboboxChevron, ComboboxChevronProps } from './ComboboxChevron/ComboboxChevron';
@@ -109,6 +109,7 @@ export type ComboboxFactory = Factory<{
     Group: typeof ComboboxGroup;
     ClearButton: typeof ComboboxClearButton;
     HiddenInput: typeof ComboboxHiddenInput;
+    ScrollArea: typeof PopoverScrollArea;
   };
 }>;
 
@@ -255,6 +256,7 @@ Combobox.DropdownTarget = ComboboxDropdownTarget;
 Combobox.Group = ComboboxGroup;
 Combobox.ClearButton = ComboboxClearButton;
 Combobox.HiddenInput = ComboboxHiddenInput;
+Combobox.ScrollArea = PopoverScrollArea;
 
 export namespace Combobox {
   export type Props = ComboboxProps;

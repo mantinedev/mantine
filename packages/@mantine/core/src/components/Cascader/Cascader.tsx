@@ -26,7 +26,8 @@ import {
   InputVariant,
 } from '../Input';
 import { InputBase } from '../InputBase';
-import { ScrollArea, ScrollAreaProps } from '../ScrollArea';
+import { PopoverScrollArea } from '../Popover/PopoverScrollArea/PopoverScrollArea';
+import { ScrollAreaProps } from '../ScrollArea';
 import { CascaderColumns, getCascaderOptionId } from './CascaderColumns';
 import { flattenCascaderPaths } from './flatten-cascader-paths';
 import {
@@ -556,12 +557,11 @@ export const Cascader = factory<CascaderFactory>((_props) => {
     >
       {showFlatList ? (
         <Combobox.Options aria-label={typeof label === 'string' ? label : undefined}>
-          <ScrollArea.Autosize
+          <PopoverScrollArea
             mah={maxDropdownHeight}
-            type="scroll"
             scrollbarSize="var(--combobox-padding)"
-            offsetScrollbars="y"
             {...scrollAreaProps}
+            offsetScrollbars={scrollAreaProps?.offsetScrollbars !== false}
           >
             {flatListItems.map((flatPath, index) => {
               const pathKey = JSON.stringify(flatPath.path);
@@ -589,7 +589,7 @@ export const Cascader = factory<CascaderFactory>((_props) => {
                 </Combobox.Option>
               );
             })}
-          </ScrollArea.Autosize>
+          </PopoverScrollArea>
           {flatListItems.length === 0 && nothingFoundMessage && (
             <Combobox.Empty>{nothingFoundMessage}</Combobox.Empty>
           )}

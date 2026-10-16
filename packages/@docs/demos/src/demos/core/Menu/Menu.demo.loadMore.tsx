@@ -1,10 +1,10 @@
 import { useState } from 'react';
-import { Button, Menu, ScrollArea } from '@mantine/core';
+import { Button, Menu } from '@mantine/core';
 import { MantineDemo } from '@mantinex/demo';
 
 const code = `
 import { useState } from 'react';
-import { Button, Menu, ScrollArea } from '@mantine/core';
+import { Button, Menu } from '@mantine/core';
 
 const PAGE_SIZE = 8;
 const TOTAL = 40;
@@ -38,7 +38,7 @@ function Demo() {
       </Menu.Target>
 
       <Menu.Dropdown>
-        <ScrollArea.Autosize mah={260} type="scroll">
+        <Menu.ScrollArea mah={260}>
           {users.map((user) => (
             <Menu.Item key={user}>{user}</Menu.Item>
           ))}
@@ -48,7 +48,7 @@ function Demo() {
               {loading ? 'Loading users' : 'Load more users'}
             </Menu.LoadMore>
           )}
-        </ScrollArea.Autosize>
+        </Menu.ScrollArea>
       </Menu.Dropdown>
     </Menu>
   );
@@ -87,7 +87,7 @@ function Demo() {
       </Menu.Target>
 
       <Menu.Dropdown>
-        <ScrollArea.Autosize mah={260} type="scroll">
+        <Menu.ScrollArea mah={260}>
           {users.map((user) => (
             <Menu.Item key={user}>{user}</Menu.Item>
           ))}
@@ -97,7 +97,7 @@ function Demo() {
               {loading ? 'Loading users' : 'Load more users'}
             </Menu.LoadMore>
           )}
-        </ScrollArea.Autosize>
+        </Menu.ScrollArea>
       </Menu.Dropdown>
     </Menu>
   );

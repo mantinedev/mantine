@@ -1,6 +1,6 @@
 import { type KeyboardEvent, useMemo, useState } from 'react';
 import { useVirtualizer } from '@tanstack/react-virtual';
-import { Combobox, Input, InputBase, ScrollArea, useVirtualizedCombobox } from '@mantine/core';
+import { Combobox, Input, InputBase, useVirtualizedCombobox } from '@mantine/core';
 import classes from './TreeSelectVirtualized.module.css';
 
 interface TreeNode {
@@ -223,9 +223,8 @@ export function TreeSelectVirtualized() {
       </Combobox.Target>
 
       <Combobox.Dropdown>
-        <ScrollArea.Autosize
+        <Combobox.ScrollArea
           mah={250}
-          type="scroll"
           viewportProps={{ tabIndex: -1 }}
           viewportRef={setScrollParent}
           onMouseDown={(event) => event.preventDefault()}
@@ -272,7 +271,7 @@ export function TreeSelectVirtualized() {
               })}
             </div>
           </Combobox.Options>
-        </ScrollArea.Autosize>
+        </Combobox.ScrollArea>
       </Combobox.Dropdown>
     </Combobox>
   );

@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Combobox, ScrollArea, TextInput, useCombobox } from '@mantine/core';
+import { Combobox, TextInput, useCombobox } from '@mantine/core';
 
 const countries = [
   'Afghanistan',
@@ -122,15 +122,14 @@ export function DropdownFloatingHeight() {
       </Combobox.Target>
 
       <Combobox.Dropdown>
-        <ScrollArea.Autosize
+        <Combobox.ScrollArea
           mah="var(--combobox-floating-options-max-height)"
-          type="scroll"
           viewportProps={{ tabIndex: -1 }}
         >
           <Combobox.Options>
             {options.length === 0 ? <Combobox.Empty>Nothing found</Combobox.Empty> : options}
           </Combobox.Options>
-        </ScrollArea.Autosize>
+        </Combobox.ScrollArea>
       </Combobox.Dropdown>
     </Combobox>
   );

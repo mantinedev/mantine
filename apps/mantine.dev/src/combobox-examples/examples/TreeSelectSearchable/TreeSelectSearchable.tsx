@@ -1,5 +1,5 @@
 import { type KeyboardEvent, useMemo, useState } from 'react';
-import { Box, CheckIcon, Combobox, ScrollArea, TextInput, useCombobox } from '@mantine/core';
+import { Box, CheckIcon, Combobox, TextInput, useCombobox } from '@mantine/core';
 import classes from './TreeSelectSearchable.module.css';
 
 interface TreeNode {
@@ -289,7 +289,7 @@ export function TreeSelectSearchable() {
       </Combobox.Target>
 
       <Combobox.Dropdown>
-        <ScrollArea.Autosize mah={250} type="scroll" viewportProps={{ tabIndex: -1 }}>
+        <Combobox.ScrollArea mah={250} viewportProps={{ tabIndex: -1 }}>
           <Combobox.Options>
             {flatNodes.length === 0 ? (
               <Combobox.Empty>No results found</Combobox.Empty>
@@ -305,7 +305,7 @@ export function TreeSelectSearchable() {
               ))
             )}
           </Combobox.Options>
-        </ScrollArea.Autosize>
+        </Combobox.ScrollArea>
       </Combobox.Dropdown>
     </Combobox>
   );
