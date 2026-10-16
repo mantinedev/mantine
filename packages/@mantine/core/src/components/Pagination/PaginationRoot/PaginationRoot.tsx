@@ -1,4 +1,5 @@
-import { usePagination, UsePaginationReturnValue } from '@mantine/hooks';
+import { useRef } from 'react';
+import { useMergedRef, usePagination, UsePaginationReturnValue } from '@mantine/hooks';
 import {
   Box,
   BoxProps,
@@ -152,8 +153,12 @@ export const PaginationRoot = factory<PaginationRootFactory>((_props) => {
     layout,
     mod,
     attributes,
+    ref,
     ...others
   } = props;
+
+  const rootRef = useRef<HTMLElement>(null);
+  const mergedRef = useMergedRef(ref, rootRef);
 
   const getStyles = useStyles<PaginationRootFactory>({
     name: 'Pagination',
@@ -195,9 +200,16 @@ export const PaginationRoot = factory<PaginationRootFactory>((_props) => {
         onFirst: createEventHandler(onFirstPage, pagination.first),
         onLast: createEventHandler(onLastPage, pagination.last),
         getStyles,
+        rootRef,
       }}
     >
-      <Box component="nav" {...getStyles('root')} mod={[{ layout }, mod]} {...others} />
+      <Box
+        component="nav"
+        ref={mergedRef}
+        {...getStyles('root')}
+        mod={[{ layout }, mod]}
+        {...others}
+      />
     </PaginationProvider>
   );
 });

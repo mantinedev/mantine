@@ -126,4 +126,94 @@ describe('@mantine/core/Pagination', () => {
     rerender(<Pagination total={10} value={4} onChange={spy} />);
     expect(screen.getByRole('button', { name: '4' })).toHaveAttribute('data-active', 'true');
   });
+
+  it('moves focus to the active page when the focused next control becomes disabled', async () => {
+    render(<Pagination {...edgeProps} total={3} />);
+    const next = screen.getByRole('button', { name: 'next' });
+    next.focus();
+    await userEvent.keyboard('{Enter}{Enter}');
+    expect(next).toBeDisabled();
+    expect(screen.getByRole('button', { name: '3' })).toHaveFocus();
+  });
+
+  it('moves focus to the active page when the focused previous control becomes disabled', async () => {
+    render(<Pagination {...edgeProps} total={3} defaultValue={3} />);
+    const previous = screen.getByRole('button', { name: 'previous' });
+    previous.focus();
+    await userEvent.keyboard('{Enter}{Enter}');
+    expect(previous).toBeDisabled();
+    expect(screen.getByRole('button', { name: '1' })).toHaveFocus();
+  });
+
+  it('moves focus to the active page when the focused first and last controls become disabled', async () => {
+    render(<Pagination {...edgeProps} total={5} defaultValue={3} />);
+    const last = screen.getByRole('button', { name: 'last' });
+    last.focus();
+    await userEvent.keyboard('{Enter}');
+    expect(screen.getByRole('button', { name: '5' })).toHaveFocus();
+
+    const first = screen.getByRole('button', { name: 'first' });
+    first.focus();
+    await userEvent.keyboard('{Enter}');
+    expect(screen.getByRole('button', { name: '1' })).toHaveFocus();
+  });
+
+  it('moves focus to the active page when the browser blurs the next control before the update', async () => {
+    render(
+      <Pagination
+        {...edgeProps}
+        total={2}
+        onNextPage={() => (document.activeElement as HTMLElement).blur()}
+      />
+    );
+    screen.getByRole('button', { name: 'next' }).focus();
+    await userEvent.keyboard('{Enter}');
+    expect(screen.getByRole('button', { name: '2' })).toHaveFocus();
+  });
+
+  it('does not move focus when another element was focused before the update', async () => {
+    render(
+      <>
+        <input aria-label="search" />
+        <Pagination
+          {...edgeProps}
+          total={2}
+          onNextPage={() => screen.getByRole('textbox', { name: 'search' }).focus()}
+        />
+      </>
+    );
+    screen.getByRole('button', { name: 'next' }).focus();
+    await userEvent.keyboard('{Enter}');
+    expect(screen.getByRole('textbox', { name: 'search' })).toHaveFocus();
+  });
+
+  it('moves focus to the active page in the composed API', async () => {
+    render(
+      <Pagination.Root total={2}>
+        <Pagination.Items />
+        <Pagination.Next aria-label="next" />
+      </Pagination.Root>
+    );
+    const next = screen.getByRole('button', { name: 'next' });
+    next.focus();
+    await userEvent.keyboard('{Enter}');
+    expect(screen.getByRole('button', { name: '2' })).toHaveFocus();
+  });
+
+  it('does not move focus when the focused next control stays enabled', async () => {
+    const { rerender } = render(<Pagination {...edgeProps} value={2} />);
+    const next = screen.getByRole('button', { name: 'next' });
+    next.focus();
+    rerender(<Pagination {...edgeProps} value={5} />);
+    expect(next).toHaveFocus();
+  });
+
+  it('does not move focus when the next control becomes disabled while not focused', async () => {
+    const { rerender } = render(<Pagination {...edgeProps} value={2} />);
+    const page = screen.getByRole('button', { name: '1' });
+    page.focus();
+    rerender(<Pagination {...edgeProps} value={10} />);
+    expect(screen.getByRole('button', { name: 'next' })).toBeDisabled();
+    expect(page).toHaveFocus();
+  });
 });

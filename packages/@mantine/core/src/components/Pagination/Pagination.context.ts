@@ -15,6 +15,7 @@ export interface PaginationContextValue {
   onFirst: () => void;
   onLast: () => void;
   getStyles: GetStylesApi<PaginationRootFactory>;
+  rootRef: React.RefObject<HTMLElement | null>;
 }
 
 export const [PaginationProvider, usePaginationContext] = createSafeContext<PaginationContextValue>(
