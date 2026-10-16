@@ -121,9 +121,9 @@ component rerenders anyway to pass the new value. The option has no effect in co
 
 ## Initialize form
 
-When called, the `form.initialize` handler sets `initialValues` and `values` to the same value
-and marks the form as initialized. It can be used only once. Subsequent `form.initialize` calls
-are ignored. `form.initialized` is `true` after the form was initialized.
+`form.initialize` sets `initialValues` and `values` to the same value and marks the form
+as initialized. Only the first call changes values: later calls keep values and initial
+values as they are and only clear errors. `form.initialized` is `true` after the first call.
 
 `form.initialize` is useful when you want to sync form values with backend API response:
 

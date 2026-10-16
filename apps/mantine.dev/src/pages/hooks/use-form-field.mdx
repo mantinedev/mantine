@@ -153,8 +153,8 @@ import type { UseFormFieldOptions, UseFormFieldReturnValue, FormField } from '@m
 
 ## Usage with @mantine/form
 
-[use-form](/form/use-form/) attaches a field to every `onChange` handler returned by `getInputProps`,
-except handlers for `type: 'radio'`. A custom input that calls `use-form-field` rerenders alone when its field changes.
+[use-form](/form/use-form/) attaches a field to every `onChange` handler returned by `getInputProps`.
+A custom input that calls `use-form-field` rerenders alone when its field changes.
 Writes made with form methods, for example `form.setFieldValue` or `form.reset`, reach `onExternalWrite`.
 With `subscribe: false`, the form rerenders the component that called `useForm` instead,
 so the input receives a new `value` prop:

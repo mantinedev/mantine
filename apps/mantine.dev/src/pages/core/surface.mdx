@@ -73,6 +73,31 @@ Use it to style surfaces depending on the depth, for example, to add a border on
 }
 ```
 
+## useSurfaceDepth
+
+`useSurfaceDepth` hook returns the level of the closest parent `Surface`, `0` when there is none.
+Use it in custom components that need to know the level of the surface they are rendered in:
+
+```tsx
+import { Surface, Text, useSurfaceDepth } from '@mantine/core';
+
+function LevelLabel() {
+  const level = useSurfaceDepth();
+  return <Text>Surface level: {level}</Text>;
+}
+
+function Demo() {
+  return (
+    <Surface p="md">
+      <LevelLabel />
+      <Surface p="md">
+        <LevelLabel />
+      </Surface>
+    </Surface>
+  );
+}
+```
+
 ## Customize surface colors
 
 Use the `surfaces` key of the theme to change surface colors for each color scheme.
