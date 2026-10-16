@@ -75,6 +75,52 @@
   pointer-events: all;
   z-index: 1001;
 
+  &::before {
+    content: '';
+    position: absolute;
+    inset: -1.5rem;
+  }
+
+  &:where([data-position='bottom'])::before {
+    top: -2.25rem;
+    bottom: -0.25rem;
+  }
+
+  &:where([data-position='top'])::before {
+    top: -0.25rem;
+    bottom: -2.25rem;
+  }
+
+  &:where([data-position='left'])::before {
+    left: -0.25rem;
+    right: -2.25rem;
+  }
+
+  &:where([data-position='right'])::before {
+    left: -2.25rem;
+    right: -0.25rem;
+  }
+
+  &:where([data-position='bottom'][data-snap-points])::before {
+    top: -0.5rem;
+    bottom: -2rem;
+  }
+
+  &:where([data-position='top'][data-snap-points])::before {
+    top: -2rem;
+    bottom: -0.5rem;
+  }
+
+  &:where([data-position='left'][data-snap-points])::before {
+    left: -2rem;
+    right: -0.5rem;
+  }
+
+  &:where([data-position='right'][data-snap-points])::before {
+    left: -0.5rem;
+    right: -2rem;
+  }
+
   &:where([data-position='bottom']) {
     bottom: calc(100% + 4px);
     left: 50%;
