@@ -38,6 +38,26 @@ function CustomInput({
 }
 ```
 
+## Setter identity
+
+The setter returned by the hook keeps the same identity for the lifetime of the component, in both controlled and uncontrolled mode. It always calls the latest `onChange`, so it can be used in effect and callback dependencies or passed to memoized children without wrapping it:
+
+```tsx
+import { useEffect } from 'react';
+import { useUncontrolled } from '@mantine/hooks';
+
+function AutoReset({ value, onChange }: { value?: number; onChange?: (value: number) => void }) {
+  const [_value, setValue] = useUncontrolled({ value, defaultValue: 0, onChange });
+
+  useEffect(() => {
+    const timeout = window.setTimeout(() => setValue(0), 5000);
+    return () => window.clearTimeout(timeout);
+  }, [_value, setValue]);
+
+  return <button onClick={() => setValue(_value + 1)}>{_value}</button>;
+}
+```
+
 ## Set value type
 
 By default, the hook will set the type automatically, but you can provide your own type:
@@ -76,7 +96,7 @@ type UseUncontrolledReturnValue<T> = [
   /** Current value */
   T,
 
-  /** Handler to update the state, passes `value` and `payload` to `onChange` */
+  /** Handler to update the state, passes `value` and `payload` to `onChange`, has the same identity for the lifetime of the component */
   (value: T, ...payload: any[]) => void,
 
   /** True if the state is controlled; false if uncontrolled */

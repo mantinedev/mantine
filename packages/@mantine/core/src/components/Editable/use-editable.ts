@@ -103,22 +103,20 @@ export function useEditable(options: EditableControllerOptions = {}): EditableCo
     readOnly = false,
   } = options;
 
-  const [value, setUncontrolledValue] = useUncontrolled({
+  const [value, setValueState] = useUncontrolled({
     value: valueProp,
     defaultValue,
     finalValue: '',
     onChange,
   });
 
-  const [editing, setUncontrolledEditing] = useUncontrolled({
+  const [editing, setEditingState] = useUncontrolled({
     value: editingProp,
     defaultValue: defaultEditing,
     finalValue: false,
     onChange: onEditingChange,
   });
 
-  const setValueState = useCallbackRef(setUncontrolledValue);
-  const setEditingState = useCallbackRef(setUncontrolledEditing);
   const handleValueCommit = useCallbackRef(onValueCommit);
   const handleValueRevert = useCallbackRef(onValueRevert);
 

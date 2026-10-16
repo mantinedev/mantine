@@ -835,6 +835,7 @@ export function useSplitter<T extends HTMLElement = any>(
   const frameRef = useRef(0);
   const currentSizesRef = useLatestRef(currentSizes);
   const renderedSizesRef = useLatestRef(currentSizes);
+  const isControlledRef = useLatestRef(isControlled);
   const collapseRestoreRef = useRef<Map<number, CollapseRestore>>(new Map());
   const handleNodesRef = useRef<Map<number, HTMLElement>>(new Map());
 
@@ -883,14 +884,14 @@ export function useSplitter<T extends HTMLElement = any>(
   const updateSizes = useCallback(
     (newSizes: SplitterPaneSize[]) => {
       currentSizesRef.current = newSizes;
-      if (isControlled) {
+      if (isControlledRef.current) {
         queueMicrotask(() => {
           currentSizesRef.current = renderedSizesRef.current;
         });
       }
       setCurrentSizes(newSizes);
     },
-    [setCurrentSizes, isControlled]
+    [setCurrentSizes]
   );
 
   const commitSizes = useCallback(
@@ -901,11 +902,6 @@ export function useSplitter<T extends HTMLElement = any>(
     },
     [updateSizes]
   );
-
-  const commitSizesRef = useRef(commitSizes);
-  useIsomorphicEffect(() => {
-    commitSizesRef.current = commitSizes;
-  });
 
   useIsomorphicEffect(() => {
     collapseRestoreRef.current.clear();
@@ -1107,7 +1103,7 @@ export function useSplitter<T extends HTMLElement = any>(
       );
       const next = fitToConstraints(resolution.working, resolution.panels, resolution.collapsed);
       if (next.some((value, index) => Math.abs(value - resolution.working[index]) > 0.01)) {
-        commitSizesRef.current(encodeWorkingSizes(next, resolution));
+        commitSizes(encodeWorkingSizes(next, resolution));
       }
     };
 
@@ -1123,7 +1119,7 @@ export function useSplitter<T extends HTMLElement = any>(
       cancelAnimationFrame(frame);
       observer.disconnect();
     };
-  }, [pixelMode, orientation]);
+  }, [pixelMode, orientation, commitSizes]);
 
   const handleRefCallbacks = useRef<Map<number, (node: HTMLElement | null) => void>>(new Map());
   const handleElementControllers = useRef<Map<number, AbortController>>(new Map());
@@ -1232,7 +1228,7 @@ export function useSplitter<T extends HTMLElement = any>(
             s.lastSizes ?? currentSizesRef.current
           );
           s.lastSizes = nextRaw;
-          commitSizesRef.current(nextRaw);
+          commitSizes(nextRaw);
         };
 
         const isDragPointer = (event: PointerEvent) => {
@@ -1296,7 +1292,7 @@ export function useSplitter<T extends HTMLElement = any>(
       handleRefCallbacks.current.set(handleIndex, callback);
       return callback;
     },
-    [createCurrentResolution, getDirection, emitCollapseTransitions]
+    [createCurrentResolution, getDirection, emitCollapseTransitions, commitSizes]
   );
 
   const renderResolution = createResolution(

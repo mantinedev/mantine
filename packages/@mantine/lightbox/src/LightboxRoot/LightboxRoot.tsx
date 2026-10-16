@@ -23,7 +23,6 @@ import {
 import {
   useFocusReturn,
   useId,
-  useLatestRef,
   useMergedRef,
   useReducedMotion,
   useUncontrolled,
@@ -266,7 +265,6 @@ export const LightboxRoot = factory<LightboxRootFactory>((_props) => {
   });
 
   const currentIndexRef = useRef(_currentIndex);
-  const setCurrentIndexRef = useLatestRef(setCurrentIndex);
   const suppressSelectRef = useRef<number | null>(null);
   const pointerDownRef = useRef<{ target: EventTarget; x: number; y: number } | null>(null);
   const contentRef = useRef<HTMLDivElement>(null);
@@ -357,12 +355,12 @@ export const LightboxRoot = factory<LightboxRootFactory>((_props) => {
         return;
       }
 
-      setCurrentIndexRef.current(index);
+      setCurrentIndex(index);
       suppressSelectRef.current = index;
       embla?.scrollTo(index, !animateSlides);
       suppressSelectRef.current = null;
     },
-    [embla, animateSlides]
+    [embla, animateSlides, setCurrentIndex]
   );
 
   const handleFirst = useCallback(() => {
@@ -402,7 +400,7 @@ export const LightboxRoot = factory<LightboxRootFactory>((_props) => {
       const selected = embla.selectedScrollSnap();
 
       if (selected !== suppressSelectRef.current) {
-        setCurrentIndexRef.current(selected);
+        setCurrentIndex(selected);
       }
     };
 
@@ -420,7 +418,7 @@ export const LightboxRoot = factory<LightboxRootFactory>((_props) => {
       embla.off('select', onSelect);
       embla.off('reInit', onReInit);
     };
-  }, [embla]);
+  }, [embla, setCurrentIndex]);
 
   useEffect(() => {
     if (embla && opened && embla.selectedScrollSnap() !== _currentIndex) {
@@ -432,9 +430,9 @@ export const LightboxRoot = factory<LightboxRootFactory>((_props) => {
 
   useEffect(() => {
     if (slides.length > 0 && _currentIndex > slides.length - 1) {
-      setCurrentIndexRef.current(slides.length - 1);
+      setCurrentIndex(slides.length - 1);
     }
-  }, [slides.length, _currentIndex]);
+  }, [slides.length, _currentIndex, setCurrentIndex]);
 
   useFocusReturn({ opened, shouldReturnFocus: returnFocus });
 

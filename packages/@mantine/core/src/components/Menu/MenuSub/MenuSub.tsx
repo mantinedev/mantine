@@ -6,7 +6,7 @@ import {
   useInteractions,
   SafePolygonOptions,
 } from '@floating-ui/react';
-import { useCallbackRef, useId, useUncontrolled } from '@mantine/hooks';
+import { useId, useUncontrolled } from '@mantine/hooks';
 import { ExtendComponent, Factory, useDirection, useProps } from '../../../core';
 import {
   FloatingAxesOffsets,
@@ -107,8 +107,8 @@ export function MenuSub(_props: MenuSubProps) {
     };
   }, []);
 
-  const handleOpen = useCallbackRef(() => setOpened(true));
-  const handleClose = useCallbackRef(() => setOpened(false));
+  const handleOpen = useCallback(() => setOpened(true), [setOpened]);
+  const handleClose = useCallback(() => setOpened(false), [setOpened]);
 
   useEffect(() => {
     if (!opened) {
