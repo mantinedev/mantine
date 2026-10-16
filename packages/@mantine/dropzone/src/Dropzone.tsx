@@ -19,6 +19,8 @@ import {
   LoadingOverlay,
   MantineColor,
   MantineRadius,
+  Progress,
+  ProgressProps,
   StylesApiProps,
   useProps,
   useStyles,
@@ -31,7 +33,7 @@ import type {
   DropzoneFullScreenStylesNames,
   DropzoneFullScreenType,
 } from './DropzoneFullScreen';
-import { DropzoneAccept, DropzoneIdle, DropzoneReject } from './DropzoneStatus';
+import { DropzoneAccept, DropzoneIdle, DropzoneReject, DropzoneUploading } from './DropzoneStatus';
 import classes from './Dropzone.module.css';
 
 /**
@@ -73,7 +75,7 @@ function withNormalizedPaths(
   };
 }
 
-export type DropzoneStylesNames = 'root' | 'inner';
+export type DropzoneStylesNames = 'root' | 'inner' | 'progressWrapper' | 'progress';
 export type DropzoneVariant = 'filled' | 'light';
 export type DropzoneCssVariables = {
   root:
@@ -109,6 +111,9 @@ export interface DropzoneProps
 
   /** Determines whether a loading overlay should be displayed over the dropzone @default false @category behavior */
   loading?: boolean;
+
+  /** Upload progress in 0–100 range. When set, the dropzone is disabled, displays `Dropzone.Uploading` instead of `Dropzone.Idle` and renders a progress bar along its bottom edge @category behavior */
+  progress?: number;
 
   /** Mime types of the files that dropzone can accept. By default, dropzone accepts all file types. @category behavior */
   accept?: Accept | string[];
@@ -178,6 +183,9 @@ export interface DropzoneProps
   /** Props passed down to the Loader component */
   loaderProps?: LoaderProps;
 
+  /** Props passed down to the Progress component displayed when `progress` is set */
+  progressProps?: Omit<ProgressProps, 'value'>;
+
   /** Props passed down to the internal Input component */
   inputProps?: React.InputHTMLAttributes<HTMLInputElement>;
 }
@@ -191,6 +199,7 @@ export type DropzoneFactory = Factory<{
     Accept: typeof DropzoneAccept;
     Idle: typeof DropzoneIdle;
     Reject: typeof DropzoneReject;
+    Uploading: typeof DropzoneUploading;
     FullScreen: DropzoneFullScreenType;
   };
 }>;
@@ -245,6 +254,8 @@ export const Dropzone = factory<DropzoneFactory>((_props) => {
     radius,
     disabled,
     loading,
+    progress,
+    progressProps,
     multiple,
     maxSize,
     accept,
@@ -295,12 +306,14 @@ export const Dropzone = factory<DropzoneFactory>((_props) => {
     varsResolver,
   });
 
+  const isUploading = typeof progress === 'number';
+
   const { getRootProps, getInputProps, isDragAccept, isDragReject, isDragActive, open, rootRef } =
     useDropzone({
       onDrop: onDropAny as DropzoneOptions['onDrop'],
       onDropAccepted: onDrop as DropzoneOptions['onDropAccepted'],
       onDropRejected: onReject,
-      disabled: disabled || loading,
+      disabled: disabled || loading || isUploading,
       accept: Array.isArray(accept) ? accept.reduce((r, key) => ({ ...r, [key]: [] }), {}) : accept,
       multiple,
       maxSize,
@@ -327,10 +340,12 @@ export const Dropzone = factory<DropzoneFactory>((_props) => {
 
   const isAccepted = isDragActive && isDragAccept;
   const isRejected = isDragActive && isDragReject;
-  const isIdle = !isAccepted && !isRejected;
+  const isIdle = !isAccepted && !isRejected && !isUploading;
 
   return (
-    <DropzoneProvider value={{ accept: isAccepted, reject: isRejected, idle: isIdle }}>
+    <DropzoneProvider
+      value={{ accept: isAccepted, reject: isRejected, idle: isIdle, uploading: isUploading }}
+    >
       <Box
         {...getRootProps({
           ...others,
@@ -338,7 +353,7 @@ export const Dropzone = factory<DropzoneFactory>((_props) => {
           ref: mergedRef,
         })}
         {...getStyles('root', { focusable: true })}
-        aria-busy={loading || undefined}
+        aria-busy={loading || isUploading || undefined}
         mod={[
           {
             accept: isAccepted,
@@ -346,6 +361,7 @@ export const Dropzone = factory<DropzoneFactory>((_props) => {
             idle: isIdle,
             disabled,
             loading,
+            uploading: isUploading,
             'activate-on-click': activateOnClick,
           },
           mod,
@@ -367,6 +383,21 @@ export const Dropzone = factory<DropzoneFactory>((_props) => {
         <div {...getStyles('inner')} data-enable-pointer-events={enablePointerEvents || undefined}>
           {children}
         </div>
+        {isUploading && (
+          <div {...getStyles('progressWrapper')}>
+            <Progress
+              size={4}
+              radius={0}
+              unstyled={unstyled}
+              {...progressProps}
+              {...getStyles('progress', {
+                className: progressProps?.className,
+                style: progressProps?.style,
+              })}
+              value={progress}
+            />
+          </div>
+        )}
       </Box>
     </DropzoneProvider>
   );
@@ -378,6 +409,7 @@ Dropzone.displayName = '@mantine/dropzone/Dropzone';
 Dropzone.Accept = DropzoneAccept;
 Dropzone.Idle = DropzoneIdle;
 Dropzone.Reject = DropzoneReject;
+Dropzone.Uploading = DropzoneUploading;
 
 export namespace Dropzone {
   export type Props = DropzoneProps;

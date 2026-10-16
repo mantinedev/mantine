@@ -7,6 +7,7 @@ import {
   DatePickerInputDemos,
   DateTimePickerDemos,
   DrawerDemos,
+  DropzoneDemos,
   MenuDemos,
   NavLinkDemos,
   TableOfContentsDemos,
@@ -513,6 +514,13 @@ function Editor() {
   );
 }
 ```
+
+## Dropzone upload progress
+
+[Dropzone](/x/dropzone#upload-progress) now supports the `progress` prop to display upload progress inside the dropzone.
+While it is set, the dropzone is disabled and `Dropzone.Uploading` is displayed instead of `Dropzone.Idle`:
+
+<Demo data={DropzoneDemos.progress} />
 
 ## Other changes
 

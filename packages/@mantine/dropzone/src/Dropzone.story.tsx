@@ -1,4 +1,4 @@
-import { useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { Button, Group } from '@mantine/core';
 import { Dropzone } from './index';
 
@@ -20,6 +20,33 @@ export function Loading() {
     <div style={{ padding: 40 }}>
       <Dropzone onDrop={console.log} accept={['image/jpeg', 'image/png']} loading>
         <div>Drag and drop files</div>
+      </Dropzone>
+    </div>
+  );
+}
+
+export function Progress() {
+  const [progress, setProgress] = useState(0);
+
+  useEffect(() => {
+    const interval = window.setInterval(() => setProgress((current) => (current + 5) % 105), 200);
+    return () => window.clearInterval(interval);
+  }, []);
+
+  return (
+    <div style={{ padding: 40 }}>
+      <Dropzone
+        onDrop={console.log}
+        progress={progress}
+        radius="lg"
+        progressProps={{ 'aria-label': 'Upload progress' }}
+      >
+        <Dropzone.Idle>
+          <div>Drag and drop files</div>
+        </Dropzone.Idle>
+        <Dropzone.Uploading>
+          <div>Uploading {progress}%</div>
+        </Dropzone.Uploading>
       </Dropzone>
     </div>
   );

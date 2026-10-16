@@ -31,7 +31,9 @@ function createDropzoneStatus(status: keyof DropzoneContextValue) {
 export const DropzoneAccept = createDropzoneStatus('accept');
 export const DropzoneReject = createDropzoneStatus('reject');
 export const DropzoneIdle = createDropzoneStatus('idle');
+export const DropzoneUploading = createDropzoneStatus('uploading');
 
 export type DropzoneAcceptProps = DropzoneStatusProps;
 export type DropzoneRejectProps = DropzoneStatusProps;
 export type DropzoneIdleProps = DropzoneStatusProps;
+export type DropzoneUploadingProps = DropzoneStatusProps;

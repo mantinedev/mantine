@@ -4,6 +4,7 @@ export interface DropzoneContextValue {
   idle: boolean;
   accept: boolean;
   reject: boolean;
+  uploading: boolean;
 }
 
 export const [DropzoneProvider, useDropzoneContext] = createSafeContext<DropzoneContextValue>(

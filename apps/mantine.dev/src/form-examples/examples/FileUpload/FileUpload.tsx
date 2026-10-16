@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
-import { ImageIcon, UploadSimpleIcon, XIcon } from '@phosphor-icons/react';
-import { Button, Group, Input, Progress, Stack, Text, TextInput } from '@mantine/core';
+import { CloudArrowUpIcon, ImageIcon, UploadSimpleIcon, XIcon } from '@phosphor-icons/react';
+import { Button, Group, Input, Stack, Text, TextInput } from '@mantine/core';
 import { Dropzone, FileRejection, IMAGE_MIME_TYPE } from '@mantine/dropzone';
 import { FormErrors, isNotEmpty, useForm } from '@mantine/form';
 import { notifications } from '@mantine/notifications';
@@ -109,7 +109,8 @@ export function FileUpload() {
             mt={5}
             accept={IMAGE_MIME_TYPE}
             maxSize={MAX_FILE_SIZE}
-            disabled={form.submitting}
+            progress={form.submitting ? progress : undefined}
+            progressProps={{ 'aria-label': 'Upload progress' }}
             onDrop={(dropped) =>
               form.setFieldValue('files', [...form.getValues().files, ...dropped])
             }
@@ -128,8 +129,16 @@ export function FileUpload() {
                 <ImageIcon size={40} />
               </Dropzone.Idle>
 
+              <Dropzone.Uploading>
+                <CloudArrowUpIcon size={40} color="var(--mantine-color-blue-6)" />
+              </Dropzone.Uploading>
+
               <div>
-                <Text size="sm">Drag images here or click to select files</Text>
+                <Text size="sm">
+                  {form.submitting
+                    ? `Uploading… ${Math.round(progress)}%`
+                    : 'Drag images here or click to select files'}
+                </Text>
 
                 <Text size="sm">
                   {files.length === 0
@@ -146,8 +155,6 @@ export function FileUpload() {
           disabled={form.submitting}
           onRemove={(index) => form.removeListItem('files', index)}
         />
-
-        {form.submitting && <Progress value={progress} animated />}
 
         <Group justify="flex-end">
           <Button size="md" type="submit" loading={form.submitting}>

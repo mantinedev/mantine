@@ -42,6 +42,7 @@ The component is based on [react-dropzone](https://react-dropzone.js.org/) and s
 - `Dropzone.Accept` is visible only when the user drags a file that can be accepted over the dropzone
 - `Dropzone.Reject` is visible only when the user drags a file that cannot be accepted over the dropzone
 - `Dropzone.Idle` is visible when the user does not drag anything over the dropzone
+- `Dropzone.Uploading` is visible when the `progress` prop is set
 
 ## Loading state
 
@@ -49,6 +50,15 @@ Set the `loading` prop to indicate a loading state with the [LoadingOverlay](/co
 When the `loading` prop is true, users cannot drop or select new files (`Dropzone` becomes disabled):
 
 <Demo data={DropzoneDemos.loading} />
+
+## Upload progress
+
+Set the `progress` prop (0–100) to display a progress bar along the bottom edge of the dropzone.
+While `progress` is set, the dropzone is disabled and `Dropzone.Uploading` replaces `Dropzone.Idle`.
+Set it to `undefined` when the upload is complete.
+Pass `aria-label` in `progressProps` so screen readers can announce the progress bar:
+
+<Demo data={DropzoneDemos.progress} />
 
 ## Disabled state
 
@@ -177,6 +187,7 @@ function Demo() {
 `Dropzone` root element has the following data attributes to change styles based on current status:
 
 - `data-loading` – when `loading` prop is `true`
+- `data-uploading` – when `progress` prop is set
 - `data-accept` – when user drags files that can be accepted over the dropzone
 - `data-reject` – when user drags files that cannot be accepted over the dropzone
 - `data-idle` – default state – the user does not drag any files over the dropzone

@@ -5,6 +5,8 @@ export const DropzoneStylesApi: StylesApiData<DropzoneFactory> = {
   selectors: {
     root: 'Dropzone root element',
     inner: 'Dropzone inner element (wraps children)',
+    progressWrapper: 'Clips progress bar to the dropzone border radius',
+    progress: 'Progress bar displayed when `progress` prop is set',
   },
 
   vars: {
@@ -30,6 +32,7 @@ export const DropzoneStylesApi: StylesApiData<DropzoneFactory> = {
     },
     { modifier: 'data-idle', selector: 'root', condition: 'Dropzone is idle' },
     { modifier: 'data-loading', selector: 'root', condition: '`loading` prop is set' },
+    { modifier: 'data-uploading', selector: 'root', condition: '`progress` prop is set' },
     { modifier: 'data-disabled', selector: 'root', condition: '`disabled` prop is set' },
     {
       modifier: 'data-activate-on-click',

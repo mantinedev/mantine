@@ -2,7 +2,7 @@ import { createRef } from 'react';
 import { fireEvent, waitFor } from '@testing-library/react';
 import { render, screen, tests, userEvent } from '@mantine-tests/core';
 import { DropzoneFullScreen } from './DropzoneFullScreen';
-import { DropzoneAccept, DropzoneIdle, DropzoneReject } from './DropzoneStatus';
+import { DropzoneAccept, DropzoneIdle, DropzoneReject, DropzoneUploading } from './DropzoneStatus';
 import { Dropzone, DropzoneProps, DropzoneStylesNames } from './index';
 
 const defaultProps: DropzoneProps = {
@@ -21,6 +21,13 @@ describe('@mantine/dropzone/Dropzone', () => {
     children: true,
     displayName: '@mantine/dropzone/Dropzone',
     stylesApiSelectors: ['root', 'inner'],
+  });
+
+  tests.itSupportsStylesApi<DropzoneProps, DropzoneStylesNames>({
+    component: Dropzone,
+    props: { ...defaultProps, progress: 40 },
+    selectors: ['progressWrapper', 'progress'],
+    providerName: 'Dropzone',
   });
 
   it('displays LoadingOverlay based on loading prop', () => {
@@ -53,6 +60,7 @@ describe('@mantine/dropzone/Dropzone', () => {
     expect(Dropzone.Accept).toBe(DropzoneAccept);
     expect(Dropzone.Reject).toBe(DropzoneReject);
     expect(Dropzone.Idle).toBe(DropzoneIdle);
+    expect(Dropzone.Uploading).toBe(DropzoneUploading);
     expect(Dropzone.FullScreen).toBe(DropzoneFullScreen);
   });
 
@@ -205,16 +213,89 @@ describe('@mantine/dropzone/Dropzone', () => {
     expect(click).toHaveBeenCalledTimes(1);
   });
 
+  it('renders progress bar only when progress prop is set', () => {
+    const { rerender } = render(<Dropzone {...defaultProps} />);
+    expect(screen.queryByRole('progressbar')).not.toBeInTheDocument();
+
+    rerender(<Dropzone {...defaultProps} progress={40} />);
+    expect(screen.getByRole('progressbar')).toHaveAttribute('aria-valuenow', '40');
+
+    rerender(<Dropzone {...defaultProps} progress={0} />);
+    expect(screen.getByRole('progressbar')).toHaveAttribute('aria-valuenow', '0');
+  });
+
+  it('passes progressProps to the progress bar', () => {
+    render(
+      <Dropzone
+        {...defaultProps}
+        progress={60}
+        progressProps={{ 'aria-label': 'Upload progress', color: 'teal' }}
+      />
+    );
+
+    expect(screen.getByRole('progressbar', { name: 'Upload progress' })).toHaveAttribute(
+      'aria-valuenow',
+      '60'
+    );
+  });
+
+  it('sets data-uploading and aria-busy when progress is set', () => {
+    const { container, rerender } = render(<Dropzone {...defaultProps} />);
+    const root = container.querySelector('.mantine-Dropzone-root')!;
+    expect(root).not.toHaveAttribute('data-uploading');
+    expect(root).not.toHaveAttribute('aria-busy');
+
+    rerender(<Dropzone {...defaultProps} progress={10} />);
+    expect(root).toHaveAttribute('data-uploading');
+    expect(root).toHaveAttribute('aria-busy', 'true');
+    expect(root).toHaveAttribute('aria-disabled', 'true');
+  });
+
+  it('does not open file picker on click while uploading', async () => {
+    const { container, rerender } = render(<Dropzone {...defaultProps} progress={50} />);
+    const click = jest.spyOn(container.querySelector('input')!, 'click');
+
+    await userEvent.click(container.querySelector('.mantine-Dropzone-root')!);
+    expect(click).not.toHaveBeenCalled();
+
+    rerender(<Dropzone {...defaultProps} />);
+    await userEvent.click(container.querySelector('.mantine-Dropzone-root')!);
+    expect(click).toHaveBeenCalledTimes(1);
+  });
+
+  it('renders Dropzone.Uploading instead of Dropzone.Idle while uploading', () => {
+    const content = (
+      <>
+        <Dropzone.Idle>idle</Dropzone.Idle>
+        <Dropzone.Uploading>uploading</Dropzone.Uploading>
+      </>
+    );
+
+    const { rerender } = render(<Dropzone {...defaultProps}>{content}</Dropzone>);
+    expect(screen.getByText('idle')).toBeInTheDocument();
+    expect(screen.queryByText('uploading')).not.toBeInTheDocument();
+
+    rerender(
+      <Dropzone {...defaultProps} progress={30}>
+        {content}
+      </Dropzone>
+    );
+    expect(screen.queryByText('idle')).not.toBeInTheDocument();
+    expect(screen.getByText('uploading')).toBeInTheDocument();
+  });
+
   it('renders only Dropzone.Idle by default', () => {
     render(
       <Dropzone {...defaultProps}>
         <Dropzone.Idle>idle</Dropzone.Idle>
         <Dropzone.Accept>accept</Dropzone.Accept>
         <Dropzone.Reject>reject</Dropzone.Reject>
+        <Dropzone.Uploading>uploading</Dropzone.Uploading>
       </Dropzone>
     );
 
     expect(screen.getByText('idle')).toBeInTheDocument();
+    expect(screen.queryByText('uploading')).not.toBeInTheDocument();
     expect(screen.queryByText('accept')).not.toBeInTheDocument();
     expect(screen.queryByText('reject')).not.toBeInTheDocument();
   });

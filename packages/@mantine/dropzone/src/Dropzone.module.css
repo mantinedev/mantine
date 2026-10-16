@@ -10,7 +10,7 @@
     background-color 100ms ease,
     border-color 100ms ease;
 
-  &:where([data-loading]),
+  &:where([data-loading], [data-uploading]),
   &:where(:not([data-activate-on-click])) {
     cursor: default;
   }
@@ -19,7 +19,7 @@
   border-color: var(--mantine-color-default-border);
 
   @mixin hover {
-    &:where([data-activate-on-click]:not([data-loading])) {
+    &:where([data-activate-on-click]:not([data-loading], [data-uploading])) {
       background-color: var(--mantine-color-default-hover);
     }
   }
@@ -35,6 +35,24 @@
     border-color: var(--dropzone-reject-bg);
     color: var(--dropzone-reject-color);
   }
+
+  &:where([data-uploading]) {
+    border-color: var(--mantine-primary-color-filled);
+  }
+}
+
+.progressWrapper {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+  border-radius: calc(var(--dropzone-radius) - 1px);
+}
+
+.progress {
+  position: absolute;
+  inset-inline: 0;
+  bottom: 0;
 }
 
 .inner {

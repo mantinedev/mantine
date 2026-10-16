@@ -13,13 +13,23 @@ import type {
   DropzoneFullScreenStylesNames,
 } from './DropzoneFullScreen';
 import { DropzoneFullScreen } from './DropzoneFullScreen.js';
-import type { DropzoneAcceptProps, DropzoneIdleProps, DropzoneRejectProps } from './DropzoneStatus';
+import type {
+  DropzoneAcceptProps,
+  DropzoneIdleProps,
+  DropzoneRejectProps,
+  DropzoneUploadingProps,
+} from './DropzoneStatus';
 
 _Dropzone.FullScreen = DropzoneFullScreen;
 export const Dropzone = _Dropzone;
 
 export { DropzoneFullScreen };
-export { DropzoneAccept, DropzoneIdle, DropzoneReject } from './DropzoneStatus.js';
+export {
+  DropzoneAccept,
+  DropzoneIdle,
+  DropzoneReject,
+  DropzoneUploading,
+} from './DropzoneStatus.js';
 export * from './mime-types.js';
 
 export type {
@@ -34,6 +44,7 @@ export type {
   DropzoneAcceptProps,
   DropzoneRejectProps,
   DropzoneIdleProps,
+  DropzoneUploadingProps,
   FileWithPath,
   FileRejection,
 };
