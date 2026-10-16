@@ -64,9 +64,8 @@ instead. Everything else, including `type`, `mask`, `manageFocus` and `disabled`
 component: those props decide how a keystroke is interpreted and how the inputs look, not what the
 next value is.
 
-`value` is a string and `fieldValues` is an array of characters, because the two are not the same
-thing: `PinInput` allows a gap in the middle, so a pin with the third input cleared is
-`fieldValues: ['1', '2', '', '4']` and `value: '124'`. Use `fieldValues` when the position matters.
+`value` is a string where an empty input is a space, so a pin with the third input cleared is
+`'12 4'`. Use `isComplete()` instead of `value.length` to check that all inputs are filled.
 
 `focusNext` and `focusPrevious` step from the last focused input, so they work from a button outside
 of `PinInput` that takes focus away from the inputs. Before any input has been focused, `focusNext`

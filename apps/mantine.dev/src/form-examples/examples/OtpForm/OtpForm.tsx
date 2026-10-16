@@ -1,9 +1,10 @@
 import { Anchor, Input, PinInput, Stack, usePinInput } from '@mantine/core';
-import { hasLength, useForm } from '@mantine/form';
+import { matches, useForm } from '@mantine/form';
 import { useDidUpdate } from '@mantine/hooks';
 import { notifications } from '@mantine/notifications';
 
 const CODE_LENGTH = 6;
+const CODE_REGEX = new RegExp(`^\\d{${CODE_LENGTH}}$`);
 const VALID_CODE = '123456';
 
 interface OtpValues {
@@ -22,7 +23,7 @@ export function OtpForm() {
       code: '',
     },
     validate: {
-      code: hasLength(CODE_LENGTH, `Enter all ${CODE_LENGTH} digits`),
+      code: matches(CODE_REGEX, `Enter all ${CODE_LENGTH} digits`),
     },
   });
 
@@ -51,7 +52,7 @@ export function OtpForm() {
   };
 
   form.watch('code', ({ value }) => {
-    if (value.length === CODE_LENGTH) {
+    if (CODE_REGEX.test(value)) {
       form.onSubmit(handleSubmit)();
     }
   });

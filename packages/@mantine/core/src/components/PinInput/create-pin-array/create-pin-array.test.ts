@@ -1,4 +1,4 @@
-import { createPinArray } from './create-pin-array';
+import { createPinArray, getPinValue } from './create-pin-array';
 
 describe('@mantine/core/PinInput/create-pin-array', () => {
   it('creates an array of empty strings if value is not provided', () => {
@@ -13,10 +13,17 @@ describe('@mantine/core/PinInput/create-pin-array', () => {
     expect(createPinArray(4, 'abcd')).toStrictEqual(['a', 'b', 'c', 'd']);
     expect(createPinArray(5, 'ab de')).toStrictEqual(['a', 'b', '', 'd', 'e']);
     expect(createPinArray(5, 'abc')).toStrictEqual(['a', 'b', 'c', '', '']);
+    expect(createPinArray(4, ' bc')).toStrictEqual(['', 'b', 'c', '']);
   });
 
   it('returns empty array if length is less than 1', () => {
     expect(createPinArray(0, 'ab')).toStrictEqual([]);
     expect(createPinArray(-10, 'ab')).toStrictEqual([]);
+  });
+
+  it('converts values to a string with spaces for empty fields', () => {
+    expect(getPinValue(['', 'b', '', 'd'])).toBe(' b d');
+    expect(getPinValue(['a', 'b', '', ''])).toBe('ab');
+    expect(getPinValue(['', '', '', ''])).toBe('');
   });
 });

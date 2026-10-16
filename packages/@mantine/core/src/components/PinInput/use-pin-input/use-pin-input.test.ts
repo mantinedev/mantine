@@ -252,4 +252,50 @@ describe('@mantine/core/PinInput/use-pin-input', () => {
 
     expect(hook.result.current.fieldValues).toEqual(['1', '2', '', '']);
   });
+  it('keeps empty fields as spaces in the value', () => {
+    const onChange = jest.fn();
+    const hook = renderHook(() => usePinInput({ length: 6, defaultValue: '123456', onChange }));
+
+    act(() => hook.result.current.setFieldValue(0, ''));
+    expect(onChange).toHaveBeenLastCalledWith(' 23456');
+    expect(hook.result.current.value).toBe(' 23456');
+    expect(hook.result.current.getValue()).toBe(' 23456');
+    expect(hook.result.current.fieldValues).toEqual(['', '2', '3', '4', '5', '6']);
+
+    act(() => hook.result.current.setFieldValue(2, ''));
+    expect(onChange).toHaveBeenLastCalledWith(' 2 456');
+  });
+
+  it('drops trailing empty fields from the value', () => {
+    const onChange = jest.fn();
+    const hook = renderHook(() => usePinInput({ length: 4, defaultValue: '1234', onChange }));
+
+    act(() => hook.result.current.setFieldValue(3, ''));
+    expect(onChange).toHaveBeenLastCalledWith('123');
+
+    act(() => hook.result.current.clear());
+    expect(onChange).toHaveBeenLastCalledWith('');
+  });
+
+  it('restores empty fields from spaces in controlled value and defaultValue', () => {
+    const controlled = renderHook(() => usePinInput({ length: 4, value: ' 2 4' }));
+    expect(controlled.result.current.fieldValues).toEqual(['', '2', '', '4']);
+
+    const uncontrolled = renderHook(() => usePinInput({ length: 4, defaultValue: ' 2 4' }));
+    expect(uncontrolled.result.current.fieldValues).toEqual(['', '2', '', '4']);
+  });
+
+  it('does not call onComplete and isComplete returns false while a field is empty', () => {
+    const onComplete = jest.fn();
+    const hook = renderHook(() => usePinInput({ length: 4, onComplete }));
+
+    act(() => hook.result.current.setValue(' 234'));
+    expect(onComplete).not.toHaveBeenCalled();
+    expect(hook.result.current.isComplete()).toBe(false);
+
+    act(() => hook.result.current.setFieldValue(0, '1'));
+    expect(onComplete).toHaveBeenCalledTimes(1);
+    expect(onComplete).toHaveBeenLastCalledWith('1234');
+    expect(hook.result.current.isComplete()).toBe(true);
+  });
 });

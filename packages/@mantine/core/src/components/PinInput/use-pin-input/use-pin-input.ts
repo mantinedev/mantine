@@ -1,6 +1,6 @@
 import { useCallback, useMemo, useRef, useState } from 'react';
 import { useCallbackRef, useFormField, useLatestRef, useUncontrolled } from '@mantine/hooks';
-import { createPinArray } from '../create-pin-array/create-pin-array';
+import { createPinArray, getPinValue } from '../create-pin-array/create-pin-array';
 
 export interface PinInputControllerOptions {
   /** Number of inputs @default 4 */
@@ -12,7 +12,7 @@ export interface PinInputControllerOptions {
   /** Uncontrolled component default value */
   defaultValue?: string;
 
-  /** Called when value changes */
+  /** Called when value changes, an empty input is represented by a space, trailing empty inputs are omitted */
   onChange?: (value: string) => void;
 
   /** Called when all inputs have value, called once per completion */
@@ -23,7 +23,7 @@ export interface PinInputController {
   /** Resolved `length` option, used internally by `PinInput` to render the inputs and to clamp every action that takes an index */
   length: number;
 
-  /** Current value */
+  /** Current value, an empty input is represented by a space, trailing empty inputs are omitted */
   value: string;
 
   /** Value of each input, always `length` items, empty string for an input without a value */
@@ -72,6 +72,10 @@ export interface PinInputController {
   registerInput: (index: number, node: HTMLInputElement | null) => void;
 }
 
+function isPinComplete(values: string[], length: number) {
+  return values.length === length && values.every((char) => char !== '');
+}
+
 export function usePinInput(options: PinInputControllerOptions = {}): PinInputController {
   const { length = 4, value: valueOption, defaultValue, onChange, onComplete } = options;
   const completedRef = useRef(false);
@@ -92,16 +96,18 @@ export function usePinInput(options: PinInputControllerOptions = {}): PinInputCo
 
   const [_fieldValues, setFieldValuesState] = useUncontrolled<string[]>({
     value: controlledValue,
-    defaultValue: defaultValue?.split('').slice(0, length),
+    defaultValue: defaultValue !== undefined ? createPinArray(length, defaultValue) : undefined,
     finalValue: createPinArray(length, ''),
     onChange: (val) => {
-      const stringValue = val.join('').trim();
+      const stringValue = getPinValue(val);
       onChange?.(stringValue);
 
-      if (stringValue.length === length && !completedRef.current) {
-        completedRef.current = true;
-        onComplete?.(stringValue);
-      } else if (stringValue.length < length) {
+      if (isPinComplete(val, length)) {
+        if (!completedRef.current) {
+          completedRef.current = true;
+          onComplete?.(stringValue);
+        }
+      } else {
         completedRef.current = false;
       }
     },
@@ -109,11 +115,13 @@ export function usePinInput(options: PinInputControllerOptions = {}): PinInputCo
 
   const fieldValues = useMemo(
     () =>
-      _fieldValues.length !== length ? createPinArray(length, _fieldValues.join('')) : _fieldValues,
+      _fieldValues.length !== length
+        ? createPinArray(length, getPinValue(_fieldValues))
+        : _fieldValues,
     [_fieldValues, length]
   );
 
-  const value = useMemo(() => fieldValues.join('').trim(), [fieldValues]);
+  const value = useMemo(() => getPinValue(fieldValues), [fieldValues]);
 
   const [focusedIndex, setFocusedIndexState] = useState(-1);
 
@@ -162,14 +170,14 @@ export function usePinInput(options: PinInputControllerOptions = {}): PinInputCo
     focus(current === -1 ? latest.current.length - 1 : current - 1);
   });
 
-  const getValue = useCallback(() => latest.current.fieldValues.join('').trim(), []);
+  const getValue = useCallback(() => getPinValue(latest.current.fieldValues), []);
 
   const getFieldValues = useCallback(() => latest.current.fieldValues, []);
 
   const getFocusedIndex = useCallback(() => latest.current.focusedIndex, []);
 
   const isComplete = useCallback(
-    () => latest.current.fieldValues.join('').trim().length === latest.current.length,
+    () => isPinComplete(latest.current.fieldValues, latest.current.length),
     []
   );
 

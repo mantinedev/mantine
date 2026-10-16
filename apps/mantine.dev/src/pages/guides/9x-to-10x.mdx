@@ -453,6 +453,16 @@ Use `onChangeRaw` if you need the masked value.
 
 Masked strings are no longer parsed: `value`, `defaultValue` and use-form values (`initialValues`, `form.setFieldValue`, `form.reset`) must be raw. Store `1234567890`, not `(123) 456-7890`. Use `unformatMask` to convert stored masked values. `useMask` `setValue` accepts a raw value as well.
 
+## PinInput value with empty inputs
+
+If you check `value.length` to find out whether all `PinInput` inputs are filled, switch to `isComplete()` from `usePinInput` or a regex. An empty input is now a space in the value, so clearing one input no longer shifts the others:
+
+```tsx
+// Before, first input cleared: '23456'
+// After: ' 23456'
+const isFilled = /^\d{6}$/.test(value);
+```
+
 ## beforeMaskedStateChange removed
 
 Remove the `beforeMaskedStateChange` option from `useMask` and the prop from `MaskInput`. It was never called. The `MaskState` type is no longer exported.

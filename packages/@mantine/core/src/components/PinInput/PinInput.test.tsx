@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { act, fireEvent } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { FormMode, useForm, UseFormReturnType } from '@mantine/form';
@@ -236,6 +237,65 @@ describe('@mantine/core/PinInput', () => {
     await userEvent.keyboard('{Delete}');
 
     expect(getInputValues(container)).toEqual(['1', '', '3', '4']);
+  });
+
+  it('Backspace on the first of filled inputs clears only that input', async () => {
+    const spy = jest.fn();
+    const { container } = render(<PinInput length={6} defaultValue="123456" onChange={spy} />);
+    const inputs = getInputs(container);
+
+    await userEvent.click(inputs[0]);
+    await userEvent.keyboard('{Backspace}');
+
+    expect(getInputValues(container)).toEqual(['', '2', '3', '4', '5', '6']);
+    expect(spy).toHaveBeenLastCalledWith(' 23456');
+    expect(inputs[0]).toHaveFocus();
+
+    await userEvent.keyboard('9');
+    expect(getInputValues(container)).toEqual(['9', '2', '3', '4', '5', '6']);
+    expect(inputs[1]).toHaveFocus();
+  });
+
+  it('Backspace in a filled controlled input clears only that input', async () => {
+    function Controlled() {
+      const [value, setValue] = useState('123456');
+      return <PinInput length={6} value={value} onChange={setValue} />;
+    }
+
+    const { container } = render(<Controlled />);
+    const inputs = getInputs(container);
+
+    await userEvent.click(inputs[2]);
+    await userEvent.keyboard('{Backspace}');
+    expect(getInputValues(container)).toEqual(['1', '2', '', '4', '5', '6']);
+
+    await userEvent.click(inputs[0]);
+    await userEvent.keyboard('{Delete}');
+    expect(getInputValues(container)).toEqual(['', '2', '', '4', '5', '6']);
+  });
+
+  it('Backspace in a filled input clears only that input with use-form', async () => {
+    const onComplete = jest.fn();
+    let form: UseFormReturnType<{ code: string }>;
+
+    function Form() {
+      form = useForm({ initialValues: { code: '123456' } });
+      return <PinInput length={6} onComplete={onComplete} {...form.getInputProps('code')} />;
+    }
+
+    const { container } = render(<Form />);
+    const inputs = getInputs(container);
+
+    await userEvent.click(inputs[0]);
+    await userEvent.keyboard('{Backspace}');
+
+    expect(getInputValues(container)).toEqual(['', '2', '3', '4', '5', '6']);
+    expect(form!.getValues().code).toBe(' 23456');
+    expect(onComplete).not.toHaveBeenCalled();
+
+    await userEvent.keyboard('7');
+    expect(form!.getValues().code).toBe('723456');
+    expect(onComplete).toHaveBeenLastCalledWith('723456');
   });
 
   it('Space key moves focus to next input', async () => {

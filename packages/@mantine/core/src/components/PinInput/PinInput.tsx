@@ -65,7 +65,7 @@ export interface PinInputProps
   /** Uncontrolled component default value @category state */
   defaultValue?: string;
 
-  /** Called when value changes @category state */
+  /** Called when value changes, an empty input is represented by a space, trailing empty inputs are omitted @category state */
   onChange?: (value: string) => void;
 
   /** Called when all inputs have value @category state */
