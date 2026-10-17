@@ -29,6 +29,15 @@ at the start of business hours instead of midnight. The value must be in `HH:mm:
 
 <Demo data={DayViewDemos.intervalMinutes} />
 
+## Slot label interval
+
+By default, the time column shows one label per hour. Set `slotLabelInterval` prop to display
+labels more often, for example every 15 or 30 minutes. The value must be a multiple of
+`intervalMinutes`, other values are rounded up to the next valid one. Increase `slotHeight` so
+that the labels have enough space:
+
+<Demo data={DayViewDemos.slotLabelInterval} />
+
 ## Sub-hour grid lines
 
 When `intervalMinutes` is smaller than `60`, set `withSubHourGridLines={false}` to display only one

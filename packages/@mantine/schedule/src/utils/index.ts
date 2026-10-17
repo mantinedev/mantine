@@ -16,6 +16,8 @@ export { toDateString } from './to-date-string/to-date-string';
 export { nextWeek } from './next-week/next-week';
 export { previousWeek } from './previous-week/previous-week';
 export { clampIntervalMinutes } from './clamp-interval-minutes/clamp-interval-minutes';
+export { clampSlotLabelInterval } from './clamp-slot-label-interval/clamp-slot-label-interval';
+export { getSlotLabelGroups } from './get-slot-label-groups/get-slot-label-groups';
 export { getCurrentTimePosition } from './get-current-time-position/get-current-time-position';
 export { isInTimeRange } from './is-in-time-range/is-in-time-range';
 export { isAllDayEvent } from './is-all-day-event/is-all-day-event';
@@ -39,6 +41,7 @@ export {
 } from './get-business-hours-mod/get-business-hours-mod';
 export { expandRecurringEvents } from './expand-recurring-events/expand-recurring-events';
 export type { DayTimeInterval } from './get-day-time-intervals/get-day-time-intervals';
+export type { SlotLabelGroup } from './get-slot-label-groups/get-slot-label-groups';
 export type { ParsedTime } from './parse-time-string/parse-time-string';
 export type {
   CalculateDropTimeInput,

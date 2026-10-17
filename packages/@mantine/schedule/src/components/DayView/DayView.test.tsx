@@ -1510,3 +1510,102 @@ describe('@mantine/schedule/DayView', () => {
     });
   });
 });
+
+describe('@mantine/schedule/DayView slotLabelInterval', () => {
+  const props: DayViewProps = {
+    ...defaultProps,
+    startTime: '08:00:00',
+    endTime: '12:00:00',
+    intervalMinutes: 15,
+    withAllDaySlot: false,
+  };
+
+  const getLabels = (container: HTMLElement) =>
+    Array.from(container.querySelectorAll<HTMLElement>('.mantine-DayView-dayViewSlotLabel'));
+
+  it('renders one label per hour by default', () => {
+    const { container } = render(<DayView {...props} />);
+    const labels = getLabels(container);
+    expect(labels).toHaveLength(4);
+    expect(labels.map((label) => label.textContent)).toEqual(['08:00', '09:00', '10:00', '11:00']);
+    expect(labels[0]).not.toHaveAttribute('data-sub-hour');
+    expect(labels[0].style.getPropertyValue('--slot-label-size')).toBe('1');
+  });
+
+  it('renders a label for every slot with slotLabelInterval equal to intervalMinutes', () => {
+    const { container } = render(<DayView {...props} slotLabelInterval={15} />);
+    const labels = getLabels(container);
+    expect(labels).toHaveLength(16);
+    expect(labels[1].textContent).toBe('08:15');
+    expect(labels[0]).not.toHaveAttribute('data-sub-hour');
+    expect(labels[1]).toHaveAttribute('data-sub-hour');
+    expect(labels[1].style.getPropertyValue('--slot-label-size')).toBe('0.25');
+  });
+
+  it('renders a label every 30 minutes with slotLabelInterval={30}', () => {
+    const { container } = render(<DayView {...props} slotLabelInterval={30} />);
+    const labels = getLabels(container);
+    expect(labels).toHaveLength(8);
+    expect(labels.map((label) => label.textContent).slice(0, 3)).toEqual([
+      '08:00',
+      '08:30',
+      '09:00',
+    ]);
+    expect(labels[0].style.getPropertyValue('--slot-label-size')).toBe('0.5');
+  });
+
+  it('falls back to hour labels for invalid slotLabelInterval values', () => {
+    const { container } = render(<DayView {...props} slotLabelInterval={7} />);
+    expect(getLabels(container)).toHaveLength(4);
+  });
+
+  it('rounds slotLabelInterval up to a multiple of intervalMinutes', () => {
+    const { container } = render(<DayView {...props} slotLabelInterval={20} />);
+    expect(getLabels(container)).toHaveLength(8);
+  });
+
+  it('never renders labels more often than slots', () => {
+    const { container } = render(<DayView {...props} slotLabelInterval={5} />);
+    expect(getLabels(container)).toHaveLength(16);
+  });
+
+  it('renders an empty leading label when startTime is before the first label', () => {
+    const { container } = render(<DayView {...props} startTime="08:30:00" />);
+    const labels = getLabels(container);
+    expect(labels).toHaveLength(4);
+    expect(labels[0].textContent).toBe('');
+    expect(labels[0].style.getPropertyValue('--slot-label-size')).toBe('0.5');
+    expect(labels[1].textContent).toBe('09:00');
+    expect(labels[1].style.getPropertyValue('--slot-label-size')).toBe('1');
+  });
+
+  it('sizes labels to the slots when intervalMinutes is longer than an hour', () => {
+    const { container } = render(
+      <DayView {...props} startTime="09:00:00" endTime="15:00:00" intervalMinutes={120} />
+    );
+    const labels = getLabels(container);
+    expect(labels.map((label) => label.textContent)).toEqual(['09:00', '11:00', '13:00']);
+    expect(labels[0].style.getPropertyValue('--slot-label-size')).toBe('2');
+  });
+
+  it('truncates the last label at endTime', () => {
+    const { container } = render(<DayView {...props} endTime="11:30:00" />);
+    const labels = getLabels(container);
+    expect(labels).toHaveLength(4);
+    expect(labels[3].style.getPropertyValue('--slot-label-size')).toBe('0.5');
+  });
+
+  it('applies business hours modifiers to sub-hour labels', () => {
+    const { container } = render(
+      <DayView
+        {...props}
+        slotLabelInterval={30}
+        highlightBusinessHours
+        businessHours={['09:30:00', '11:00:00']}
+      />
+    );
+    const labels = getLabels(container);
+    expect(labels[2]).toHaveAttribute('data-non-business-hours');
+    expect(labels[3]).toHaveAttribute('data-business-hours');
+  });
+});

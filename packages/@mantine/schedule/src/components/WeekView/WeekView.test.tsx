@@ -1797,3 +1797,74 @@ describe('@mantine/schedule/WeekView', () => {
     });
   });
 });
+
+describe('@mantine/schedule/WeekView slotLabelInterval', () => {
+  const props: WeekViewProps = {
+    ...defaultProps,
+    startTime: '08:00:00',
+    endTime: '12:00:00',
+    intervalMinutes: 15,
+    withAllDaySlots: false,
+  };
+
+  const getLabels = (container: HTMLElement) =>
+    Array.from(container.querySelectorAll<HTMLElement>('.mantine-WeekView-weekViewSlotLabel'));
+
+  it('renders one label per hour by default', () => {
+    const { container } = render(<WeekView {...props} />);
+    const labels = getLabels(container);
+    expect(labels).toHaveLength(4);
+    expect(labels[0]).not.toHaveAttribute('data-sub-hour');
+    expect(labels[0].style.getPropertyValue('--slot-label-size')).toBe('1');
+  });
+
+  it('renders a label for every slot with slotLabelInterval equal to intervalMinutes', () => {
+    const { container } = render(<WeekView {...props} slotLabelInterval={15} />);
+    const labels = getLabels(container);
+    expect(labels).toHaveLength(16);
+    expect(labels[1].textContent).toBe('08:15');
+    expect(labels[0]).toHaveAttribute('data-hour-start');
+    expect(labels[1]).toHaveAttribute('data-sub-hour');
+    expect(labels[1].style.getPropertyValue('--slot-label-size')).toBe('0.25');
+  });
+
+  it('renders a label every 30 minutes with slotLabelInterval={30}', () => {
+    const { container } = render(<WeekView {...props} slotLabelInterval={30} />);
+    const labels = getLabels(container);
+    expect(labels).toHaveLength(8);
+    expect(labels[0].style.getPropertyValue('--slot-label-size')).toBe('0.5');
+  });
+
+  it('falls back to hour labels for invalid slotLabelInterval values', () => {
+    const { container } = render(<WeekView {...props} slotLabelInterval={7} />);
+    expect(getLabels(container)).toHaveLength(4);
+  });
+
+  it('rounds slotLabelInterval up to a multiple of intervalMinutes', () => {
+    const { container } = render(<WeekView {...props} slotLabelInterval={20} />);
+    expect(getLabels(container)).toHaveLength(8);
+  });
+
+  it('never renders labels more often than slots', () => {
+    const { container } = render(<WeekView {...props} slotLabelInterval={5} />);
+    expect(getLabels(container)).toHaveLength(16);
+  });
+
+  it('renders an empty leading label when startTime is before the first label', () => {
+    const { container } = render(<WeekView {...props} startTime="08:30:00" />);
+    const labels = getLabels(container);
+    expect(labels).toHaveLength(4);
+    expect(labels[0].textContent).toBe('');
+    expect(labels[0].style.getPropertyValue('--slot-label-size')).toBe('0.5');
+    expect(labels[1].textContent).toBe('09:00');
+  });
+
+  it('sizes labels to the slots when intervalMinutes is longer than an hour', () => {
+    const { container } = render(
+      <WeekView {...props} startTime="09:00:00" endTime="15:00:00" intervalMinutes={120} />
+    );
+    const labels = getLabels(container);
+    expect(labels.map((label) => label.textContent)).toEqual(['09:00', '11:00', '13:00']);
+    expect(labels[0].style.getPropertyValue('--slot-label-size')).toBe('2');
+  });
+});

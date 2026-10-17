@@ -165,6 +165,32 @@ export function IntervalMinutes() {
   );
 }
 
+export function SlotLabelInterval() {
+  return (
+    <WeekView
+      date={new Date()}
+      startTime="08:00:00"
+      endTime="12:00:00"
+      intervalMinutes={15}
+      slotLabelInterval={15}
+      slotHeight={800}
+    />
+  );
+}
+
+export function SlotLabelIntervalDefaultHeight() {
+  return (
+    <WeekView
+      date={new Date()}
+      intervalMinutes={15}
+      slotLabelInterval={30}
+      slotHeight={64}
+      highlightBusinessHours
+      businessHours={['09:30:00', '17:00:00']}
+    />
+  );
+}
+
 export function Locale() {
   return <WeekView date={new Date()} locale="ru" />;
 }

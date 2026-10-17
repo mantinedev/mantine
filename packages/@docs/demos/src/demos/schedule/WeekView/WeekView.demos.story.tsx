@@ -18,6 +18,11 @@ export const Demo_intervalMinutes = {
   render: renderDemo(demos.intervalMinutes),
 };
 
+export const Demo_slotLabelInterval = {
+  name: '⭐ Demo: slotLabelInterval',
+  render: renderDemo(demos.slotLabelInterval),
+};
+
 export const Demo_firstDayOfWeek = {
   name: '⭐ Demo: firstDayOfWeek',
   render: renderDemo(demos.firstDayOfWeek),

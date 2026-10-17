@@ -50,6 +50,7 @@ import {
   getBusinessHoursState,
   getDayPosition,
   getDayTimeIntervals,
+  getSlotLabelGroups,
   getTimeAxisEventStyle,
   getVisibleEvents,
   isAllDayEvent,
@@ -147,6 +148,9 @@ export interface DayViewProps
 
   /** Dayjs format for slot labels or a callback function that returns formatted value @default HH:mm  */
   slotLabelFormat?: DateLabelFormat;
+
+  /** Interval between time labels in minutes. Must be a multiple of `intervalMinutes` that divides evenly into an hour (e.g. `15`, `30`) or is a whole number of hours. Values that do not satisfy these rules are rounded up to the nearest valid value, `60` is used for invalid values. @default 60 */
+  slotLabelInterval?: number;
 
   /** Date format in the header @default MMMM D, YYYY */
   headerFormat?: DateLabelFormat;
@@ -319,6 +323,7 @@ const defaultProps = {
   withSubHourGridLines: true,
   withAllDaySlot: true,
   slotLabelFormat: 'HH:mm',
+  slotLabelInterval: 60,
   headerFormat: 'MMMM D, YYYY',
   withCurrentTimeBubble: true,
   withHeader: true,
@@ -366,6 +371,7 @@ export const DayView = factory<DayViewFactory>((_props) => {
     date,
     locale,
     slotLabelFormat,
+    slotLabelInterval,
     headerFormat,
     getCurrentTime,
     withCurrentTimeIndicator,
@@ -453,7 +459,12 @@ export const DayView = factory<DayViewFactory>((_props) => {
   const resolveNow = () => (getCurrentTime ? dayjs(getCurrentTime()) : dayjs());
   const showCurrentTimeIndicator =
     withCurrentTimeIndicator ?? dayjs(date).isSame(resolveNow(), 'day');
-  const slots = getDayTimeIntervals({ startTime, endTime, intervalMinutes });
+  const slots = getDayTimeIntervals({
+    startTime,
+    endTime,
+    intervalMinutes,
+    labelIntervalMinutes: slotLabelInterval,
+  });
   const slotsRef = useRef<HTMLButtonElement[]>([]);
   const viewportRef = useRef<HTMLDivElement>(null);
   const timeSlotsContainerRef = useRef<HTMLDivElement>(null);
@@ -825,35 +836,36 @@ export const DayView = factory<DayViewFactory>((_props) => {
     );
   });
 
-  const slotsLabels = slots.reduce<React.ReactNode[]>((acc, slot) => {
-    if (slot.isHourStart) {
-      const slotTime = dayjs(`${dayjs(date).format('YYYY-MM-DD')} ${slot.startTime}`);
-      const label = formatDate({
-        locale: ctx.getLocale(locale),
-        date: slotTime,
-        format: slotLabelFormat,
-      });
+  const slotsLabels = getSlotLabelGroups(slots).map((group) => {
+    const label = group.isLabelStart
+      ? formatDate({
+          locale: ctx.getLocale(locale),
+          date: dayjs(`${dayjs(date).format('YYYY-MM-DD')} ${group.startTime}`),
+          format: slotLabelFormat,
+        })
+      : null;
 
-      const labelBusinessHours = getBusinessHoursState({
-        time: slot.startTime,
-        endTime: addMinutesToTime(slot.startTime, 60),
-        businessHours,
-        highlightBusinessHours,
-      });
+    const labelBusinessHours = getBusinessHoursState({
+      time: group.startTime,
+      endTime: group.endTime,
+      businessHours,
+      highlightBusinessHours,
+    });
 
-      acc.push(
-        <Box
-          {...getStyles('dayViewSlotLabel')}
-          key={slot.startTime}
-          mod={labelBusinessHours.mod}
-          __vars={labelBusinessHours.vars}
-        >
-          {label}
-        </Box>
-      );
-    }
-    return acc;
-  }, []);
+    return (
+      <Box
+        {...getStyles('dayViewSlotLabel')}
+        key={group.startTime}
+        mod={{ 'sub-hour': !group.isHourStart, ...labelBusinessHours.mod }}
+        __vars={{
+          ...labelBusinessHours.vars,
+          '--slot-label-size': `${(group.slotsCount * clampIntervalMinutes(intervalMinutes)) / 60}`,
+        }}
+      >
+        {label}
+      </Box>
+    );
+  });
 
   const interactiveBackgroundEvents = withInteractiveBackgroundEvents && mode !== 'static';
 

@@ -74,7 +74,7 @@
 .weekViewSlotLabel {
   border-top: 1px solid var(--week-view-border-color);
   text-align: right;
-  height: var(--week-view-slot-height);
+  height: calc(var(--week-view-slot-height) * var(--slot-label-size, 1));
   padding: 4px;
   padding-inline-end: 8px;
   font-size: var(--mantine-font-size-sm);
@@ -82,6 +82,10 @@
   cursor: default;
   font-variant-numeric: tabular-nums;
   text-transform: uppercase;
+
+  &:where([data-sub-hour]) {
+    border-top-style: dotted;
+  }
 
   &:where([data-business-hours]) {
     background-color: var(--week-view-business-hours-bg);
@@ -384,7 +388,8 @@
 
 .weekViewRoot:where([data-hide-sub-hour-grid-lines])
   .weekViewDaySlots
-  .weekViewDaySlot:not([data-hour-start]) {
+  .weekViewDaySlot:not([data-hour-start]),
+.weekViewRoot:where([data-hide-sub-hour-grid-lines]) .weekViewSlotLabel:where([data-sub-hour]) {
   border-top-color: transparent;
 }
 
