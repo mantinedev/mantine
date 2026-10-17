@@ -144,4 +144,64 @@ describe('@mantine/core/Radio', () => {
       'var(--mantine-color-red-filled)'
     );
   });
+
+  it('does not check controlled radio on click when readOnly is set', async () => {
+    const spy = jest.fn();
+    render(<Radio checked={false} readOnly onChange={spy} value="a" aria-label="readonly" />);
+    const input = screen.getByLabelText('readonly') as HTMLInputElement;
+    expect(input).toHaveAttribute('readonly');
+
+    await userEvent.click(input);
+    expect(input.checked).toBe(false);
+    expect(spy).not.toHaveBeenCalled();
+  });
+
+  it('does not check uncontrolled radio on click when readOnly is set', async () => {
+    const spy = jest.fn();
+    render(<Radio readOnly onChange={spy} value="a" aria-label="readonly" />);
+    const input = screen.getByLabelText('readonly') as HTMLInputElement;
+
+    await userEvent.click(input);
+    expect(input.checked).toBe(false);
+    expect(spy).not.toHaveBeenCalled();
+  });
+
+  it('keeps controlled readOnly radio in sync with external value changes after a click', async () => {
+    function Controlled() {
+      const [checked, setChecked] = useState(false);
+      return (
+        <>
+          <Radio checked={checked} readOnly value="a" aria-label="readonly" />
+          <button type="button" onClick={() => setChecked((c) => !c)}>
+            toggle
+          </button>
+        </>
+      );
+    }
+
+    render(<Controlled />);
+    const input = screen.getByLabelText('readonly') as HTMLInputElement;
+
+    await userEvent.click(input);
+    expect(input.checked).toBe(false);
+
+    await userEvent.click(screen.getByText('toggle'));
+    expect(input.checked).toBe(true);
+
+    await userEvent.click(screen.getByText('toggle'));
+    expect(input.checked).toBe(false);
+  });
+
+  it('does not change Radio.Group value when a readOnly radio is clicked', async () => {
+    const spy = jest.fn();
+    render(
+      <RadioGroup value={null} onChange={spy}>
+        <Radio value="test-value" readOnly aria-label="readonly" />
+      </RadioGroup>
+    );
+
+    await userEvent.click(screen.getByLabelText('readonly'));
+    expect(spy).not.toHaveBeenCalled();
+    expect(screen.getByLabelText('readonly')).not.toBeChecked();
+  });
 });
