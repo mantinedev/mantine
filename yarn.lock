@@ -8166,6 +8166,38 @@ __metadata:
   languageName: node
   linkType: hard
 
+"ai.mantine.dev@workspace:apps/ai.mantine.dev":
+  version: 0.0.0-use.local
+  resolution: "ai.mantine.dev@workspace:apps/ai.mantine.dev"
+  dependencies:
+    "@mantine/code-highlight": "workspace:*"
+    "@mantine/core": "workspace:*"
+    "@mantine/dates": "workspace:*"
+    "@mantine/dropzone": "workspace:*"
+    "@mantine/form": "workspace:*"
+    "@mantine/hooks": "workspace:*"
+    "@mantinex/demo": "workspace:*"
+    "@mantinex/dev-icons": "workspace:*"
+    "@mantinex/mantine-header": "workspace:*"
+    "@mantinex/mantine-logo": "workspace:*"
+    "@mantinex/mantine-meta": "workspace:*"
+    "@mdx-js/loader": "npm:^3.1.1"
+    "@mdx-js/react": "npm:^3.1.1"
+    "@next/mdx": "npm:16.3.6"
+    "@phosphor-icons/react": "npm:^2.1.10"
+    "@types/mdx": "npm:2.0.14"
+    "@types/node": "npm:^26.6.3"
+    "@types/react": "npm:19.3.0"
+    "@types/react-dom": "npm:19.3.0"
+    next: "npm:16.3.6"
+    react: "npm:19.3.0"
+    react-dom: "npm:19.3.0"
+    rehype-slug: "npm:^6.0.0"
+    shiki: "npm:^4.4.3"
+    typescript: "npm:6.0.3"
+  languageName: unknown
+  linkType: soft
+
 "ajv-formats@npm:^2.1.1":
   version: 2.1.1
   resolution: "ajv-formats@npm:2.1.1"

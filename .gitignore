@@ -79,3 +79,6 @@ claude/
 /.claude/settings.local.json
 /.claude/skills/
 /.playwright-mcp
+
+apps/ai.mantine.dev/out
+apps/ai.mantine.dev/next-env.d.ts

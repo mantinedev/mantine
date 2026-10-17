@@ -1,0 +1,17 @@
+.root {
+  margin-bottom: calc(var(--mantine-spacing-xl) * 2);
+}
+
+.label {
+  font-weight: var(--mantine-font-weight-medium);
+  margin-top: var(--mantine-spacing-lg);
+  margin-bottom: var(--mantine-spacing-xs);
+}
+
+.prompt {
+  border-radius: var(--mantine-radius-md);
+}
+
+.promptText {
+  white-space: pre-wrap;
+}
