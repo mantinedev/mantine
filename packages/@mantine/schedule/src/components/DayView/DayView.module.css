@@ -91,6 +91,16 @@
   &:where([data-non-business-hours]) {
     background-color: var(--day-view-non-business-hours-bg);
   }
+
+  &:where([data-partial-business-hours]) {
+    background-image: linear-gradient(
+      to bottom,
+      var(--day-view-non-business-hours-bg) var(--business-hours-from),
+      var(--day-view-business-hours-bg) var(--business-hours-from),
+      var(--day-view-business-hours-bg) var(--business-hours-to),
+      var(--day-view-non-business-hours-bg) var(--business-hours-to)
+    );
+  }
 }
 
 .dayViewSlots {
@@ -113,6 +123,8 @@
   }
 
   @mixin hover {
+    background-image: none;
+
     @mixin where-light {
       background-color: var(--mantine-color-gray-1);
     }
@@ -135,7 +147,19 @@
     background-color: var(--day-view-non-business-hours-bg);
   }
 
+  &:where([data-partial-business-hours]) {
+    background-image: linear-gradient(
+      to bottom,
+      var(--day-view-non-business-hours-bg) var(--business-hours-from),
+      var(--day-view-business-hours-bg) var(--business-hours-from),
+      var(--day-view-business-hours-bg) var(--business-hours-to),
+      var(--day-view-non-business-hours-bg) var(--business-hours-to)
+    );
+  }
+
   &:where([data-drop-target]) {
+    background-image: none;
+
     @mixin where-light {
       background-color: var(--mantine-color-blue-1);
     }
@@ -166,6 +190,7 @@
   &:where([data-drag-selected]) {
     &,
     &:hover {
+      background-image: none;
       background-color: var(--mantine-primary-color-light);
     }
 

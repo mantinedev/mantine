@@ -1,4 +1,4 @@
-import { getBusinessHoursMod } from './get-business-hours-mod';
+import { getBusinessHoursMod, getBusinessHoursState } from './get-business-hours-mod';
 
 describe('@mantine/schedule/get-business-hours-mod', () => {
   describe('disabled state', () => {
@@ -12,6 +12,7 @@ describe('@mantine/schedule/get-business-hours-mod', () => {
       expect(result).toEqual({
         'business-hours': false,
         'non-business-hours': false,
+        'partial-business-hours': false,
       });
     });
 
@@ -24,6 +25,7 @@ describe('@mantine/schedule/get-business-hours-mod', () => {
       expect(result).toEqual({
         'business-hours': false,
         'non-business-hours': false,
+        'partial-business-hours': false,
       });
     });
 
@@ -36,6 +38,7 @@ describe('@mantine/schedule/get-business-hours-mod', () => {
       expect(result).toEqual({
         'business-hours': false,
         'non-business-hours': false,
+        'partial-business-hours': false,
       });
     });
   });
@@ -51,6 +54,7 @@ describe('@mantine/schedule/get-business-hours-mod', () => {
       expect(result).toEqual({
         'business-hours': true,
         'non-business-hours': false,
+        'partial-business-hours': false,
       });
     });
 
@@ -64,6 +68,7 @@ describe('@mantine/schedule/get-business-hours-mod', () => {
       expect(result).toEqual({
         'business-hours': true,
         'non-business-hours': false,
+        'partial-business-hours': false,
       });
     });
 
@@ -77,6 +82,7 @@ describe('@mantine/schedule/get-business-hours-mod', () => {
       expect(result).toEqual({
         'business-hours': true,
         'non-business-hours': false,
+        'partial-business-hours': false,
       });
     });
 
@@ -90,6 +96,7 @@ describe('@mantine/schedule/get-business-hours-mod', () => {
       expect(result1).toEqual({
         'business-hours': true,
         'non-business-hours': false,
+        'partial-business-hours': false,
       });
 
       const result2 = getBusinessHoursMod({
@@ -101,6 +108,7 @@ describe('@mantine/schedule/get-business-hours-mod', () => {
       expect(result2).toEqual({
         'business-hours': true,
         'non-business-hours': false,
+        'partial-business-hours': false,
       });
     });
   });
@@ -116,6 +124,7 @@ describe('@mantine/schedule/get-business-hours-mod', () => {
       expect(result).toEqual({
         'business-hours': false,
         'non-business-hours': true,
+        'partial-business-hours': false,
       });
     });
 
@@ -129,6 +138,7 @@ describe('@mantine/schedule/get-business-hours-mod', () => {
       expect(result).toEqual({
         'business-hours': false,
         'non-business-hours': true,
+        'partial-business-hours': false,
       });
     });
 
@@ -142,6 +152,7 @@ describe('@mantine/schedule/get-business-hours-mod', () => {
       expect(result).toEqual({
         'business-hours': false,
         'non-business-hours': true,
+        'partial-business-hours': false,
       });
     });
 
@@ -155,6 +166,7 @@ describe('@mantine/schedule/get-business-hours-mod', () => {
       expect(result).toEqual({
         'business-hours': false,
         'non-business-hours': true,
+        'partial-business-hours': false,
       });
     });
 
@@ -168,6 +180,7 @@ describe('@mantine/schedule/get-business-hours-mod', () => {
       expect(result).toEqual({
         'business-hours': false,
         'non-business-hours': true,
+        'partial-business-hours': false,
       });
     });
   });
@@ -183,6 +196,7 @@ describe('@mantine/schedule/get-business-hours-mod', () => {
       expect(result).toEqual({
         'business-hours': true,
         'non-business-hours': false,
+        'partial-business-hours': false,
       });
     });
 
@@ -196,6 +210,7 @@ describe('@mantine/schedule/get-business-hours-mod', () => {
       expect(result).toEqual({
         'business-hours': false,
         'non-business-hours': true,
+        'partial-business-hours': false,
       });
     });
 
@@ -209,6 +224,7 @@ describe('@mantine/schedule/get-business-hours-mod', () => {
       expect(result).toEqual({
         'business-hours': true,
         'non-business-hours': false,
+        'partial-business-hours': false,
       });
     });
 
@@ -222,6 +238,7 @@ describe('@mantine/schedule/get-business-hours-mod', () => {
       expect(result).toEqual({
         'business-hours': false,
         'non-business-hours': true,
+        'partial-business-hours': false,
       });
     });
   });
@@ -237,6 +254,7 @@ describe('@mantine/schedule/get-business-hours-mod', () => {
       expect(morning).toEqual({
         'business-hours': true,
         'non-business-hours': false,
+        'partial-business-hours': false,
       });
 
       const noon = getBusinessHoursMod({
@@ -248,6 +266,7 @@ describe('@mantine/schedule/get-business-hours-mod', () => {
       expect(noon).toEqual({
         'business-hours': true,
         'non-business-hours': false,
+        'partial-business-hours': false,
       });
 
       const almostEnd = getBusinessHoursMod({
@@ -259,6 +278,7 @@ describe('@mantine/schedule/get-business-hours-mod', () => {
       expect(almostEnd).toEqual({
         'business-hours': true,
         'non-business-hours': false,
+        'partial-business-hours': false,
       });
 
       const end = getBusinessHoursMod({
@@ -270,6 +290,7 @@ describe('@mantine/schedule/get-business-hours-mod', () => {
       expect(end).toEqual({
         'business-hours': false,
         'non-business-hours': true,
+        'partial-business-hours': false,
       });
     });
 
@@ -283,6 +304,7 @@ describe('@mantine/schedule/get-business-hours-mod', () => {
       expect(before).toEqual({
         'business-hours': false,
         'non-business-hours': true,
+        'partial-business-hours': false,
       });
 
       const during = getBusinessHoursMod({
@@ -294,6 +316,7 @@ describe('@mantine/schedule/get-business-hours-mod', () => {
       expect(during).toEqual({
         'business-hours': true,
         'non-business-hours': false,
+        'partial-business-hours': false,
       });
 
       const after = getBusinessHoursMod({
@@ -305,6 +328,7 @@ describe('@mantine/schedule/get-business-hours-mod', () => {
       expect(after).toEqual({
         'business-hours': false,
         'non-business-hours': true,
+        'partial-business-hours': false,
       });
     });
 
@@ -318,6 +342,7 @@ describe('@mantine/schedule/get-business-hours-mod', () => {
       expect(result).toEqual({
         'business-hours': true,
         'non-business-hours': false,
+        'partial-business-hours': false,
       });
     });
 
@@ -331,6 +356,7 @@ describe('@mantine/schedule/get-business-hours-mod', () => {
       expect(result).toEqual({
         'business-hours': true,
         'non-business-hours': false,
+        'partial-business-hours': false,
       });
     });
   });
@@ -346,6 +372,7 @@ describe('@mantine/schedule/get-business-hours-mod', () => {
       expect(result).toEqual({
         'business-hours': false,
         'non-business-hours': false,
+        'partial-business-hours': false,
       });
     });
 
@@ -363,6 +390,7 @@ describe('@mantine/schedule/get-business-hours-mod', () => {
       expect(monday).toEqual({
         'business-hours': true,
         'non-business-hours': false,
+        'partial-business-hours': false,
       });
 
       const tuesday = getBusinessHoursMod({
@@ -378,6 +406,7 @@ describe('@mantine/schedule/get-business-hours-mod', () => {
       expect(tuesday).toEqual({
         'business-hours': false,
         'non-business-hours': true,
+        'partial-business-hours': false,
       });
     });
 
@@ -392,6 +421,7 @@ describe('@mantine/schedule/get-business-hours-mod', () => {
       expect(resultMorning).toEqual({
         'business-hours': false,
         'non-business-hours': true,
+        'partial-business-hours': false,
       });
 
       const resultEvening = getBusinessHoursMod({
@@ -404,6 +434,7 @@ describe('@mantine/schedule/get-business-hours-mod', () => {
       expect(resultEvening).toEqual({
         'business-hours': false,
         'non-business-hours': true,
+        'partial-business-hours': false,
       });
     });
 
@@ -421,6 +452,7 @@ describe('@mantine/schedule/get-business-hours-mod', () => {
       expect(result).toEqual({
         'business-hours': false,
         'non-business-hours': true,
+        'partial-business-hours': false,
       });
     });
 
@@ -441,6 +473,7 @@ describe('@mantine/schedule/get-business-hours-mod', () => {
       expect(result).toEqual({
         'business-hours': true,
         'non-business-hours': false,
+        'partial-business-hours': false,
       });
     });
 
@@ -455,6 +488,7 @@ describe('@mantine/schedule/get-business-hours-mod', () => {
       expect(result).toEqual({
         'business-hours': false,
         'non-business-hours': false,
+        'partial-business-hours': false,
       });
     });
   });
@@ -471,6 +505,7 @@ describe('@mantine/schedule/get-business-hours-mod', () => {
       expect(result1).toEqual({
         'business-hours': false,
         'non-business-hours': true,
+        'partial-business-hours': false,
       });
 
       const result2 = getBusinessHoursMod({
@@ -482,6 +517,7 @@ describe('@mantine/schedule/get-business-hours-mod', () => {
       expect(result2).toEqual({
         'business-hours': true,
         'non-business-hours': false,
+        'partial-business-hours': false,
       });
 
       const result3 = getBusinessHoursMod({
@@ -493,7 +529,181 @@ describe('@mantine/schedule/get-business-hours-mod', () => {
       expect(result3).toEqual({
         'business-hours': false,
         'non-business-hours': true,
+        'partial-business-hours': false,
       });
+    });
+  });
+});
+
+describe('@mantine/schedule/get-business-hours-state', () => {
+  const businessHours: [string, string] = ['07:42:00', '19:01:00'];
+
+  it('returns fully inside state for a slot inside the range', () => {
+    expect(
+      getBusinessHoursState({
+        time: '12:00:00',
+        endTime: '12:15:00',
+        businessHours,
+        highlightBusinessHours: true,
+      })
+    ).toEqual({
+      mod: { 'business-hours': true, 'non-business-hours': false, 'partial-business-hours': false },
+      vars: undefined,
+    });
+  });
+
+  it('returns fully outside state for a slot outside the range', () => {
+    expect(
+      getBusinessHoursState({
+        time: '20:00:00',
+        endTime: '20:15:00',
+        businessHours,
+        highlightBusinessHours: true,
+      })
+    ).toEqual({
+      mod: { 'business-hours': false, 'non-business-hours': true, 'partial-business-hours': false },
+      vars: undefined,
+    });
+  });
+
+  it('returns partial state when the range starts inside the slot', () => {
+    expect(
+      getBusinessHoursState({
+        time: '07:30:00',
+        endTime: '07:45:00',
+        businessHours,
+        highlightBusinessHours: true,
+      })
+    ).toEqual({
+      mod: { 'business-hours': false, 'non-business-hours': false, 'partial-business-hours': true },
+      vars: { '--business-hours-from': '80%', '--business-hours-to': '100%' },
+    });
+  });
+
+  it('returns partial state when the range ends inside the slot', () => {
+    expect(
+      getBusinessHoursState({
+        time: '19:00:00',
+        endTime: '19:15:00',
+        businessHours,
+        highlightBusinessHours: true,
+      })
+    ).toEqual({
+      mod: { 'business-hours': false, 'non-business-hours': false, 'partial-business-hours': true },
+      vars: { '--business-hours-from': '0%', '--business-hours-to': '6.67%' },
+    });
+  });
+
+  it('returns partial state with both boundaries inside the slot', () => {
+    expect(
+      getBusinessHoursState({
+        time: '07:00:00',
+        endTime: '08:00:00',
+        businessHours: ['07:15:00', '07:45:00'],
+        highlightBusinessHours: true,
+      })
+    ).toEqual({
+      mod: { 'business-hours': false, 'non-business-hours': false, 'partial-business-hours': true },
+      vars: { '--business-hours-from': '25%', '--business-hours-to': '75%' },
+    });
+  });
+
+  it('does not return partial state when boundaries fall on slot edges', () => {
+    const start = getBusinessHoursState({
+      time: '08:45:00',
+      endTime: '09:00:00',
+      businessHours: ['09:00:00', '17:00:00'],
+      highlightBusinessHours: true,
+    });
+    const end = getBusinessHoursState({
+      time: '16:45:00',
+      endTime: '17:00:00',
+      businessHours: ['09:00:00', '17:00:00'],
+      highlightBusinessHours: true,
+    });
+
+    expect(start.mod).toEqual({
+      'business-hours': false,
+      'non-business-hours': true,
+      'partial-business-hours': false,
+    });
+    expect(end.mod).toEqual({
+      'business-hours': true,
+      'non-business-hours': false,
+      'partial-business-hours': false,
+    });
+    expect(start.vars).toBeUndefined();
+    expect(end.vars).toBeUndefined();
+  });
+
+  it('accepts HH:mm business hours', () => {
+    expect(
+      getBusinessHoursState({
+        time: '07:30:00',
+        endTime: '07:45:00',
+        businessHours: ['07:42', '19:01'],
+        highlightBusinessHours: true,
+      }).vars
+    ).toEqual({ '--business-hours-from': '80%', '--business-hours-to': '100%' });
+
+    expect(
+      getBusinessHoursMod({
+        time: '09:00:00',
+        businessHours: ['09:00', '17:00'],
+        highlightBusinessHours: true,
+      })['business-hours']
+    ).toBe(true);
+  });
+
+  it('resolves per-day ranges for partial slots', () => {
+    const monday = getBusinessHoursState({
+      time: '09:00:00',
+      endTime: '10:00:00',
+      businessHours: { 1: ['09:30:00', '17:00:00'], 2: null },
+      highlightBusinessHours: true,
+      dayOfWeek: 1,
+    });
+    const tuesday = getBusinessHoursState({
+      time: '09:00:00',
+      endTime: '10:00:00',
+      businessHours: { 1: ['09:30:00', '17:00:00'], 2: null },
+      highlightBusinessHours: true,
+      dayOfWeek: 2,
+    });
+
+    expect(monday.mod['partial-business-hours']).toBe(true);
+    expect(monday.vars).toEqual({ '--business-hours-from': '50%', '--business-hours-to': '100%' });
+    expect(tuesday.mod).toEqual({
+      'business-hours': false,
+      'non-business-hours': true,
+      'partial-business-hours': false,
+    });
+  });
+
+  it('falls back to start time check when endTime is not provided', () => {
+    expect(
+      getBusinessHoursState({ time: '07:30:00', businessHours, highlightBusinessHours: true })
+    ).toEqual({
+      mod: { 'business-hours': false, 'non-business-hours': true, 'partial-business-hours': false },
+      vars: undefined,
+    });
+  });
+
+  it('returns no modifiers when highlighting is disabled', () => {
+    expect(
+      getBusinessHoursState({
+        time: '07:30:00',
+        endTime: '07:45:00',
+        businessHours,
+        highlightBusinessHours: false,
+      })
+    ).toEqual({
+      mod: {
+        'business-hours': false,
+        'non-business-hours': false,
+        'partial-business-hours': false,
+      },
+      vars: undefined,
     });
   });
 });

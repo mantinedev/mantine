@@ -33,7 +33,10 @@ export { getDayPosition } from './get-day-position/get-day-position';
 export { getTimeAxisEventStyle } from './get-time-axis-event-style/get-time-axis-event-style';
 export { calculateDropTime } from './calculate-drop-time/calculate-drop-time';
 export { calculateMonthDropDate } from './calculate-month-drop-date/calculate-month-drop-date';
-export { getBusinessHoursMod } from './get-business-hours-mod/get-business-hours-mod';
+export {
+  getBusinessHoursMod,
+  getBusinessHoursState,
+} from './get-business-hours-mod/get-business-hours-mod';
 export { expandRecurringEvents } from './expand-recurring-events/expand-recurring-events';
 export type { DayTimeInterval } from './get-day-time-intervals/get-day-time-intervals';
 export type { ParsedTime } from './parse-time-string/parse-time-string';
@@ -49,10 +52,13 @@ export type {
   BusinessHoursMod,
   BusinessHoursPerDay,
   BusinessHoursRange,
+  BusinessHoursState,
   BusinessHoursValue,
+  BusinessHoursVars,
   GetBusinessHoursModInput,
 } from './get-business-hours-mod/get-business-hours-mod';
 export { getOrderedResources } from './get-ordered-resources/get-ordered-resources';
+export { addMinutesToTime } from './add-minutes-to-time/add-minutes-to-time';
 export type {
   GroupRange,
   OrderedResourcesResult,

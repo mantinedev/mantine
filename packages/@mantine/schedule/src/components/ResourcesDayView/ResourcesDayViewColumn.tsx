@@ -3,7 +3,9 @@ import { getLabel, ScheduleLabelsOverride } from '../../labels';
 import { ScheduleMode, ScheduleResourceData, ScheduleResourceGroup } from '../../types';
 import {
   DayTimeInterval,
-  getBusinessHoursMod,
+  addMinutesToTime,
+  clampIntervalMinutes,
+  getBusinessHoursState,
   ResourceGroupInfo,
   ResourcesGridControlsRef,
 } from '../../utils';
@@ -14,6 +16,7 @@ export interface ResourcesDayViewRowProps {
   resourceIndex: number;
   date: string;
   slots: DayTimeInterval[];
+  intervalMinutes: number;
   getStyles: GetStylesApi<ResourcesDayViewFactory>;
   children?: React.ReactNode;
   labels?: ScheduleLabelsOverride;
@@ -65,6 +68,7 @@ export function ResourcesDayViewRow({
   resourceIndex,
   date,
   slots,
+  intervalMinutes,
   getStyles,
   children,
   labels,
@@ -98,6 +102,13 @@ export function ResourcesDayViewRow({
       firstSlotIndex?.resourceIndex === resourceIndex && firstSlotIndex?.slotIndex === slotIndex;
     const isDragSelected = isSlotDragSelected?.(slotIndex, slotGroup) || false;
 
+    const businessHoursState = getBusinessHoursState({
+      time: slot.startTime,
+      endTime: addMinutesToTime(slot.startTime, clampIntervalMinutes(intervalMinutes)),
+      businessHours,
+      highlightBusinessHours,
+    });
+
     return (
       <UnstyledButton
         key={slot.startTime}
@@ -121,15 +132,12 @@ export function ResourcesDayViewRow({
         {...getStyles('resourcesDayViewRowSlot')}
         mod={{
           'hour-start': slot.isHourStart,
-          ...getBusinessHoursMod({
-            time: slot.startTime,
-            businessHours,
-            highlightBusinessHours,
-          }),
+          ...businessHoursState.mod,
           'drop-target': isDropTarget,
           'drag-selected': isDragSelected,
           static: mode === 'static',
         }}
+        __vars={businessHoursState.vars}
         aria-label={`${getLabel('resourceSlot', labels)} ${resource.label} ${date} ${slot.startTime} - ${slot.endTime}`}
         tabIndex={mode === 'static' ? -1 : isFirstSlot ? 0 : -1}
         data-drag-slot-index={withDragSlotSelect && mode !== 'static' ? slotIndex : undefined}

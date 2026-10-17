@@ -282,6 +282,25 @@ export function BusinessHours() {
   );
 }
 
+export function BusinessHoursMinute() {
+  return (
+    <div style={{ padding: 40 }}>
+      <DayView
+        date={new Date()}
+        events={regularEvents}
+        highlightBusinessHours
+        businessHours={['07:42', '19:01']}
+        vars={() => ({
+          dayView: {
+            '--day-view-business-hours-bg': 'var(--mantine-color-yellow-light)',
+            '--day-view-non-business-hours-bg': 'var(--mantine-color-blue-light)',
+          },
+        })}
+      />
+    </div>
+  );
+}
+
 export function DragAndDrop() {
   const [events, setEvents] = useState<ScheduleEventData[]>([
     {

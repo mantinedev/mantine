@@ -197,3 +197,13 @@ export const Demo_subHourGridLines = {
   name: '⭐ Demo: subHourGridLines',
   render: renderDemo(demos.subHourGridLines),
 };
+
+export const Demo_businessHoursMinute = {
+  name: '⭐ Demo: businessHoursMinute',
+  render: renderDemo(demos.businessHoursMinute),
+};
+
+export const Demo_businessHoursColors = {
+  name: '⭐ Demo: businessHoursColors',
+  render: renderDemo(demos.businessHoursColors),
+};

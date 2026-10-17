@@ -45,6 +45,10 @@ export const ResourcesDayViewStylesApi: StylesApiData<ResourcesDayViewFactory> =
       '--resources-day-view-slot-width': 'Controls `width` of each time slot column',
       '--resources-day-view-row-height': 'Controls `height` of each resource row',
       '--resources-day-view-group-label-width': 'Controls `width` of the group label column',
+      '--resources-day-view-business-hours-bg':
+        'Controls `background-color` of time slots and labels inside business hours',
+      '--resources-day-view-non-business-hours-bg':
+        'Controls `background-color` of time slots and labels outside business hours',
     },
   },
 
@@ -63,6 +67,12 @@ export const ResourcesDayViewStylesApi: StylesApiData<ResourcesDayViewFactory> =
       modifier: 'data-non-business-hours',
       selector: 'resourcesDayViewRowSlot',
       condition: '`highlightBusinessHours` is true and slot is outside business hours',
+    },
+    {
+      modifier: 'data-partial-business-hours',
+      selector: 'resourcesDayViewRowSlot',
+      condition:
+        '`highlightBusinessHours` is true and a business hours boundary falls inside the slot',
     },
     {
       modifier: 'data-drop-target',

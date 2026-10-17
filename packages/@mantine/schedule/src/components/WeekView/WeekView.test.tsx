@@ -882,6 +882,54 @@ describe('@mantine/schedule/WeekView', () => {
     });
   });
 
+  describe('business hours', () => {
+    it('marks slots and labels that contain a business hours boundary as partial', () => {
+      const { container } = render(
+        <WeekView
+          {...defaultProps}
+          highlightBusinessHours
+          businessHours={['07:42', '19:01:00']}
+          intervalMinutes={15}
+        />
+      );
+
+      const partialSlot = screen.getByLabelText('Time slot 2025-11-03 07:30:00 - 07:45:00');
+      expect(partialSlot).toHaveAttribute('data-partial-business-hours');
+      expect(partialSlot).not.toHaveAttribute('data-business-hours');
+      expect(partialSlot).not.toHaveAttribute('data-non-business-hours');
+      expect(partialSlot.style.getPropertyValue('--business-hours-from')).toBe('80%');
+      expect(partialSlot.style.getPropertyValue('--business-hours-to')).toBe('100%');
+
+      expect(screen.getByLabelText('Time slot 2025-11-03 07:45:00 - 08:00:00')).toHaveAttribute(
+        'data-business-hours'
+      );
+
+      const partialLabels = container.querySelectorAll<HTMLElement>(
+        '.mantine-WeekView-weekViewSlotLabel[data-partial-business-hours]'
+      );
+      expect(partialLabels).toHaveLength(2);
+      expect(partialLabels[0].style.getPropertyValue('--business-hours-from')).toBe('70%');
+      expect(partialLabels[1].style.getPropertyValue('--business-hours-to')).toBe('1.67%');
+    });
+
+    it('resolves per-day business hours for partial slots', () => {
+      render(
+        <WeekView
+          {...defaultProps}
+          highlightBusinessHours
+          businessHours={{ 1: ['09:30:00', '17:00:00'] }}
+        />
+      );
+
+      const monday = screen.getByLabelText('Time slot 2025-11-03 09:00:00 - 10:00:00');
+      expect(monday).toHaveAttribute('data-partial-business-hours');
+      expect(monday.style.getPropertyValue('--business-hours-from')).toBe('50%');
+      expect(screen.getByLabelText('Time slot 2025-11-04 09:00:00 - 10:00:00')).toHaveAttribute(
+        'data-non-business-hours'
+      );
+    });
+  });
+
   describe('startScrollTime', () => {
     it('calls scrollTo on mount when startScrollTime is set', () => {
       const scrollToSpy = jest.fn();

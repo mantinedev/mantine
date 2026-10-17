@@ -46,7 +46,8 @@ import {
   clampIntervalMinutes,
   expandRecurringEvents,
   formatDate,
-  getBusinessHoursMod,
+  addMinutesToTime,
+  getBusinessHoursState,
   getDayPosition,
   getDayTimeIntervals,
   getTimeAxisEventStyle,
@@ -96,7 +97,12 @@ export type DayViewStylesNames =
   | AgendaViewStylesNames;
 
 export type DayViewCssVariables = {
-  dayView: '--day-view-radius' | '--day-view-slot-height' | '--day-view-all-day-slot-height';
+  dayView:
+    | '--day-view-radius'
+    | '--day-view-slot-height'
+    | '--day-view-all-day-slot-height'
+    | '--day-view-business-hours-bg'
+    | '--day-view-non-business-hours-bg';
 };
 
 export interface DayViewProps
@@ -333,6 +339,8 @@ const varsResolver = createVarsResolver<DayViewFactory>(
       '--day-view-radius': radius !== undefined ? getRadius(radius) : undefined,
       '--day-view-slot-height': rem(slotHeight),
       '--day-view-all-day-slot-height': rem(allDaySlotHeight),
+      '--day-view-business-hours-bg': undefined,
+      '--day-view-non-business-hours-bg': undefined,
     },
   })
 );
@@ -774,6 +782,13 @@ export const DayView = factory<DayViewFactory>((_props) => {
             externalOnClick?.(event);
           };
 
+    const businessHoursState = getBusinessHoursState({
+      time: slot.startTime,
+      endTime: addMinutesToTime(slot.startTime, clampIntervalMinutes(intervalMinutes)),
+      businessHours,
+      highlightBusinessHours,
+    });
+
     return (
       <UnstyledButton
         {...getStyles('dayViewSlot')}
@@ -784,16 +799,15 @@ export const DayView = factory<DayViewFactory>((_props) => {
         mod={{
           first: index === 0,
           'hour-start': slot.isHourStart,
-          ...getBusinessHoursMod({
-            time: slot.startTime,
-            businessHours,
-            highlightBusinessHours,
-          }),
+          ...businessHoursState.mod,
           'drop-target': isDropTarget,
           'drag-selected': isDragSelected,
           static: mode === 'static',
         }}
-        __vars={{ '--slot-size': `${clampIntervalMinutes(intervalMinutes) / 60}` }}
+        __vars={{
+          '--slot-size': `${clampIntervalMinutes(intervalMinutes) / 60}`,
+          ...businessHoursState.vars,
+        }}
         aria-label={`${getLabel('timeSlot', labels)} ${slot.startTime} - ${slot.endTime}`}
         tabIndex={mode === 'static' ? -1 : index === 0 ? 0 : -1}
         data-drag-slot-index={withDragSlotSelect && mode !== 'static' ? index : undefined}
@@ -820,15 +834,19 @@ export const DayView = factory<DayViewFactory>((_props) => {
         format: slotLabelFormat,
       });
 
+      const labelBusinessHours = getBusinessHoursState({
+        time: slot.startTime,
+        endTime: addMinutesToTime(slot.startTime, 60),
+        businessHours,
+        highlightBusinessHours,
+      });
+
       acc.push(
         <Box
           {...getStyles('dayViewSlotLabel')}
           key={slot.startTime}
-          mod={getBusinessHoursMod({
-            time: slot.startTime,
-            businessHours,
-            highlightBusinessHours,
-          })}
+          mod={labelBusinessHours.mod}
+          __vars={labelBusinessHours.vars}
         >
           {label}
         </Box>

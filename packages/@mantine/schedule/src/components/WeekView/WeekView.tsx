@@ -47,7 +47,8 @@ import {
   calculateDropTime,
   expandRecurringEvents,
   formatDate,
-  getBusinessHoursMod,
+  addMinutesToTime,
+  getBusinessHoursState,
   getDayPosition,
   getDayTimeIntervals,
   getTimeAxisEventStyle,
@@ -105,7 +106,12 @@ export type WeekViewStylesNames =
   | AgendaViewStylesNames;
 
 export type WeekViewCssVariables = {
-  weekView: '--week-view-radius' | '--week-view-slot-height' | '--week-view-all-day-slots-height';
+  weekView:
+    | '--week-view-radius'
+    | '--week-view-slot-height'
+    | '--week-view-all-day-slots-height'
+    | '--week-view-business-hours-bg'
+    | '--week-view-non-business-hours-bg';
 };
 
 export interface WeekViewProps
@@ -370,6 +376,8 @@ const varsResolver = createVarsResolver<WeekViewFactory>(
       '--week-view-radius': radius !== undefined ? getRadius(radius) : undefined,
       '--week-view-all-day-slots-height': rem(allDaySlotHeight),
       '--week-view-slot-height': rem(slotHeight),
+      '--week-view-business-hours-bg': undefined,
+      '--week-view-non-business-hours-bg': undefined,
     },
   })
 );
@@ -720,18 +728,19 @@ export const WeekView = factory<WeekViewFactory>((_props) => {
       format: slotLabelFormat,
     });
 
+    const labelBusinessHours = getBusinessHoursState({
+      time: interval.startTime,
+      endTime: addMinutesToTime(interval.startTime, 60),
+      businessHours,
+      highlightBusinessHours,
+    });
+
     acc.push(
       <Box
         {...getStyles('weekViewSlotLabel')}
         key={interval.startTime}
-        mod={{
-          'hour-start': interval.isHourStart,
-          ...getBusinessHoursMod({
-            time: interval.startTime,
-            businessHours,
-            highlightBusinessHours,
-          }),
-        }}
+        mod={{ 'hour-start': interval.isHourStart, ...labelBusinessHours.mod }}
+        __vars={labelBusinessHours.vars}
       >
         {label}
       </Box>

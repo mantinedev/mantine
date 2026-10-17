@@ -245,6 +245,24 @@ export function BusinessHours() {
   );
 }
 
+export function BusinessHoursMinute() {
+  return (
+    <WeekView
+      date={new Date()}
+      events={regularEvents}
+      highlightBusinessHours
+      businessHours={{ 1: ['07:42', '19:01'], 2: ['08:10', '16:20'], 3: ['09:00', '17:00'] }}
+      intervalMinutes={30}
+      vars={() => ({
+        weekView: {
+          '--week-view-business-hours-bg': 'var(--mantine-color-yellow-light)',
+          '--week-view-non-business-hours-bg': 'var(--mantine-color-blue-light)',
+        },
+      })}
+    />
+  );
+}
+
 export function DragAndDrop() {
   const [date, setDate] = useState(toDateString(new Date()));
   const [eventsData, setEventsData] = useState<ScheduleEventData[]>([

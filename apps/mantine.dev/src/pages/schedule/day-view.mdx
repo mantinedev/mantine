@@ -73,9 +73,21 @@ timezone with the [dayjs timezone plugin](https://day.js.org/docs/en/plugin/time
 
 Use `highlightBusinessHours` and `businessHours` props to visually distinguish business hours
 from non-business hours. The `businessHours` prop accepts a tuple with start and end times
-in `HH:mm:ss` format.
+in `HH:mm:ss` or `HH:mm` format.
 
 <Demo data={DayViewDemos.businessHours} />
+
+Business hours do not need to align with the slot grid. When a boundary falls inside a slot,
+the slot and the time label next to it are painted up to the exact minute:
+
+<Demo data={DayViewDemos.businessHoursMinute} />
+
+## Business hours colors
+
+Set `--day-view-business-hours-bg` and `--day-view-non-business-hours-bg` CSS variables
+with `vars` prop or in CSS to change the colors. Both variables apply to time slots and time labels:
+
+<Demo data={DayViewDemos.businessHoursColors} />
 
 ## Custom time slot props
 

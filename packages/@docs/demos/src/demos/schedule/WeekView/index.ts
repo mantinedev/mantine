@@ -17,6 +17,8 @@ export { slotLabelFormat } from './WeekView.demo.slotLabelFormat';
 export { slotHeight } from './WeekView.demo.slotHeight';
 export { businessHours } from './WeekView.demo.businessHours';
 export { businessHoursPerDay } from './WeekView.demo.businessHoursPerDay';
+export { businessHoursMinute } from './WeekView.demo.businessHoursMinute';
+export { businessHoursColors } from './WeekView.demo.businessHoursColors';
 export { overlappingEvents } from './WeekView.demo.overlappingEvents';
 export { eventOverlapMode } from './WeekView.demo.eventOverlapMode';
 export { dragDrop } from './WeekView.demo.dragDrop';

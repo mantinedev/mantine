@@ -769,6 +769,99 @@ describe('@mantine/schedule/DayView', () => {
     });
   });
 
+  describe('business hours', () => {
+    it('marks slots and labels that contain a business hours boundary as partial', () => {
+      const { container } = render(
+        <DayView
+          {...defaultProps}
+          highlightBusinessHours
+          businessHours={['07:42', '19:01:00']}
+          intervalMinutes={15}
+        />
+      );
+
+      const partialSlot = screen.getByLabelText('Time slot 07:30:00 - 07:45:00');
+      expect(partialSlot).toHaveAttribute('data-partial-business-hours');
+      expect(partialSlot).not.toHaveAttribute('data-business-hours');
+      expect(partialSlot).not.toHaveAttribute('data-non-business-hours');
+      expect(partialSlot.style.getPropertyValue('--business-hours-from')).toBe('80%');
+      expect(partialSlot.style.getPropertyValue('--business-hours-to')).toBe('100%');
+
+      const endSlot = screen.getByLabelText('Time slot 19:00:00 - 19:15:00');
+      expect(endSlot).toHaveAttribute('data-partial-business-hours');
+      expect(endSlot.style.getPropertyValue('--business-hours-from')).toBe('0%');
+      expect(endSlot.style.getPropertyValue('--business-hours-to')).toBe('6.67%');
+
+      expect(screen.getByLabelText('Time slot 07:45:00 - 08:00:00')).toHaveAttribute(
+        'data-business-hours'
+      );
+      expect(screen.getByLabelText('Time slot 07:15:00 - 07:30:00')).toHaveAttribute(
+        'data-non-business-hours'
+      );
+
+      const partialLabels = container.querySelectorAll<HTMLElement>(
+        '.mantine-DayView-dayViewSlotLabel[data-partial-business-hours]'
+      );
+      expect(partialLabels).toHaveLength(2);
+      expect(partialLabels[0].style.getPropertyValue('--business-hours-from')).toBe('70%');
+      expect(partialLabels[0].style.getPropertyValue('--business-hours-to')).toBe('100%');
+      expect(partialLabels[1].style.getPropertyValue('--business-hours-from')).toBe('0%');
+      expect(partialLabels[1].style.getPropertyValue('--business-hours-to')).toBe('1.67%');
+    });
+
+    it('paints a truncated last slot against its rendered duration', () => {
+      render(
+        <DayView
+          {...defaultProps}
+          highlightBusinessHours
+          businessHours={['09:00:00', '10:15:00']}
+          intervalMinutes={60}
+          startTime="08:00:00"
+          endTime="10:30:00"
+        />
+      );
+
+      const lastSlot = screen.getByLabelText('Time slot 10:00:00 - 10:30:00');
+      expect(lastSlot).toHaveAttribute('data-partial-business-hours');
+      expect(lastSlot.style.getPropertyValue('--business-hours-to')).toBe('25%');
+    });
+
+    it('paints a last slot that crosses midnight against its rendered duration', () => {
+      render(
+        <DayView
+          {...defaultProps}
+          highlightBusinessHours
+          businessHours={['09:00:00', '23:30:00']}
+          intervalMinutes={120}
+          startTime="07:00:00"
+        />
+      );
+
+      const lastSlot = screen.getByLabelText('Time slot 23:00:00 - 23:59:59');
+      expect(lastSlot).toHaveAttribute('data-partial-business-hours');
+      expect(lastSlot.style.getPropertyValue('--business-hours-to')).toBe('25%');
+    });
+
+    it('does not mark slots as partial when boundaries align with the slot grid', () => {
+      const { container } = render(
+        <DayView
+          {...defaultProps}
+          highlightBusinessHours
+          businessHours={['09:00:00', '17:00:00']}
+          intervalMinutes={15}
+        />
+      );
+
+      expect(container.querySelector('[data-partial-business-hours]')).toBeNull();
+      expect(screen.getByLabelText('Time slot 09:00:00 - 09:15:00')).toHaveAttribute(
+        'data-business-hours'
+      );
+      expect(screen.getByLabelText('Time slot 08:45:00 - 09:00:00')).toHaveAttribute(
+        'data-non-business-hours'
+      );
+    });
+  });
+
   describe('startScrollTime', () => {
     it('calls scrollTo on mount when startScrollTime is set', () => {
       const scrollToSpy = jest.fn();

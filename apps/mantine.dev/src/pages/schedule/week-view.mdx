@@ -157,8 +157,14 @@ Use `radius` prop to change the border radius of the view and events.
 ## Business hours
 
 Use `highlightBusinessHours` and `businessHours` props to visually distinguish business hours.
+The `businessHours` prop accepts a tuple with start and end times in `HH:mm:ss` or `HH:mm` format.
 
 <Demo data={WeekViewDemos.businessHours} />
+
+Business hours do not need to align with the slot grid. When a boundary falls inside a slot,
+the slot and the time label next to it are painted up to the exact minute:
+
+<Demo data={WeekViewDemos.businessHoursMinute} />
 
 ## Business hours per day
 
@@ -167,6 +173,13 @@ Keys are day numbers (`0` – Sunday, `6` – Saturday). Days missing from the o
 are marked as fully outside business hours:
 
 <Demo data={WeekViewDemos.businessHoursPerDay} />
+
+## Business hours colors
+
+Set `--week-view-business-hours-bg` and `--week-view-non-business-hours-bg` CSS variables
+with `vars` prop or in CSS to change the colors. Both variables apply to time slots and time labels:
+
+<Demo data={WeekViewDemos.businessHoursColors} />
 
 ## Custom time slot props
 

@@ -8,6 +8,8 @@ export { eventOverlapMode } from './DayView.demo.eventOverlapMode';
 export { currentTimeIndicator } from './DayView.demo.currentTimeIndicator';
 export { timezone } from './DayView.demo.timezone';
 export { businessHours } from './DayView.demo.businessHours';
+export { businessHoursMinute } from './DayView.demo.businessHoursMinute';
+export { businessHoursColors } from './DayView.demo.businessHoursColors';
 export { slotHeight } from './DayView.demo.slotHeight';
 export { withoutHeader } from './DayView.demo.withoutHeader';
 export { headerFormat } from './DayView.demo.headerFormat';

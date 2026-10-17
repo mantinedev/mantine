@@ -48,7 +48,9 @@ import {
   calculateDropTime,
   expandRecurringEvents,
   formatDate,
-  getBusinessHoursMod,
+  addMinutesToTime,
+  clampIntervalMinutes,
+  getBusinessHoursState,
   getDayPosition,
   getCurrentTimePosition,
   getDayTimeIntervals,
@@ -113,7 +115,9 @@ export type ResourcesWeekViewCssVariables = {
     | '--resources-week-view-radius'
     | '--resources-week-view-slot-width'
     | '--resources-week-view-row-height'
-    | '--resources-week-view-group-label-width';
+    | '--resources-week-view-group-label-width'
+    | '--resources-week-view-business-hours-bg'
+    | '--resources-week-view-non-business-hours-bg';
 };
 
 export interface ResourcesWeekViewProps
@@ -289,6 +293,8 @@ const varsResolver = createVarsResolver<ResourcesWeekViewFactory>(
       '--resources-week-view-slot-width': rem(slotWidth),
       '--resources-week-view-row-height': rem(rowHeight),
       '--resources-week-view-group-label-width': rem(groupLabelWidth),
+      '--resources-week-view-business-hours-bg': undefined,
+      '--resources-week-view-non-business-hours-bg': undefined,
     },
   })
 );
@@ -702,18 +708,19 @@ export const ResourcesWeekView = factory<ResourcesWeekViewFactory>((_props) => {
         format: slotLabelFormat,
       });
 
+      const labelBusinessHours = getBusinessHoursState({
+        time: interval.startTime,
+        endTime: addMinutesToTime(interval.startTime, clampIntervalMinutes(intervalMinutes)),
+        businessHours,
+        highlightBusinessHours,
+      });
+
       return (
         <Box
           {...getStyles('resourcesWeekViewTimeLabel')}
           key={`${day}-${interval.startTime}`}
-          mod={{
-            'hour-start': interval.isHourStart,
-            ...getBusinessHoursMod({
-              time: interval.startTime,
-              businessHours,
-              highlightBusinessHours,
-            }),
-          }}
+          mod={{ 'hour-start': interval.isHourStart, ...labelBusinessHours.mod }}
+          __vars={labelBusinessHours.vars}
         >
           {label}
         </Box>
@@ -1109,6 +1116,7 @@ export const ResourcesWeekView = factory<ResourcesWeekViewFactory>((_props) => {
       <ResourcesWeekViewRow
         key={resource.id}
         resource={resource}
+        intervalMinutes={intervalMinutes}
         resourceIndex={resourceIndex}
         weekdays={weekdays}
         slots={slots}

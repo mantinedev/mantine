@@ -232,3 +232,13 @@ export const Demo_preventEventOverlap = {
   name: '⭐ Demo: preventEventOverlap',
   render: renderDemo(demos.preventEventOverlap),
 };
+
+export const Demo_businessHoursMinute = {
+  name: '⭐ Demo: businessHoursMinute',
+  render: renderDemo(demos.businessHoursMinute),
+};
+
+export const Demo_businessHoursColors = {
+  name: '⭐ Demo: businessHoursColors',
+  render: renderDemo(demos.businessHoursColors),
+};
