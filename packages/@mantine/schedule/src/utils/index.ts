@@ -74,3 +74,7 @@ export type {
   IsEventPlacementAllowedInput,
   IsEventPlacementAllowedResult,
 } from './is-event-placement-allowed/is-event-placement-allowed';
+export {
+  getHiddenWeekendColumns,
+  getVisibleWeekDays,
+} from './get-visible-week-days/get-visible-week-days';

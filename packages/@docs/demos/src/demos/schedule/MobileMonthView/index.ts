@@ -9,3 +9,4 @@ export { renderHeader } from './MobileMonthView.demo.renderHeader';
 export { consistentWeeks } from './MobileMonthView.demo.consistentWeeks';
 export { weekdayFormat } from './MobileMonthView.demo.weekdayFormat';
 export { withoutWeekDays } from './MobileMonthView.demo.withoutWeekDays';
+export { withoutWeekendDays } from './MobileMonthView.demo.withoutWeekendDays';
