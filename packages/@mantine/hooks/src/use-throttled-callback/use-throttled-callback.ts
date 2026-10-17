@@ -22,10 +22,15 @@ export function useThrottledCallbackWithClearTimeout<T extends (...args: any[]) 
 
   const callThrottledCallback = useCallback(
     (...args: Parameters<T>) => {
-      handleCallback(...args);
       latestInArgsRef.current = args;
       latestOutArgsRef.current = args;
       active.current = false;
+      try {
+        handleCallback(...args);
+      } catch (error) {
+        active.current = true;
+        throw error;
+      }
     },
     [handleCallback]
   );

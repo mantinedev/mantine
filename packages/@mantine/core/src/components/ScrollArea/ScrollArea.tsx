@@ -30,7 +30,7 @@ export type ScrollAreaStylesNames =
   | 'content';
 
 export type ScrollAreaCssVariables = {
-  root: '--scrollarea-scrollbar-size';
+  root: '--scrollarea-scrollbar-size' | '--scrollarea-offset-size';
 };
 
 export interface ScrollAreaProps
@@ -152,6 +152,7 @@ const varsResolver = createVarsResolver<ScrollAreaFactory>(
       root: {
         '--scrollarea-scrollbar-size': rem(scrollbarSize),
         '--scrollarea-over-scroll-behavior': overrideOverscrollBehavior,
+        '--scrollarea-offset-size': undefined,
       },
     };
   }
