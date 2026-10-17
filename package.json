@@ -27,6 +27,7 @@
     "generate-changelog": "tsx scripts/docs/generate-changelog",
     "changelog": "tsx scripts/docs/changelog",
     "storybook": "storybook dev -p 2356",
+    "storybook:worktree": "tsx scripts/storybook-worktree.ts",
     "dev": "npm run docs",
     "docs": "cd apps/mantine.dev && npm run dev",
     "docs:docgen": "tsx scripts/docgen && npm run docs:count",
