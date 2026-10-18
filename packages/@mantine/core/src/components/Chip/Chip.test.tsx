@@ -1,5 +1,5 @@
 import { createRef } from 'react';
-import { render, tests } from '@mantine-tests/core';
+import { render, screen, tests, userEvent } from '@mantine-tests/core';
 import { Chip, ChipProps, ChipStylesNames } from './Chip';
 
 const defaultProps: ChipProps = {
@@ -38,5 +38,49 @@ describe('@mantine/core/Chip', () => {
     const ref = createRef<HTMLDivElement>();
     render(<Chip {...defaultProps} rootRef={ref} />);
     expect(ref.current).toBeInstanceOf(HTMLDivElement);
+  });
+
+  it('does not toggle controlled chip on click when readOnly is set', async () => {
+    const spy = jest.fn();
+    render(
+      <Chip checked={false} readOnly onChange={spy}>
+        readonly
+      </Chip>
+    );
+    const input = screen.getByRole('checkbox') as HTMLInputElement;
+    expect(input).toHaveAttribute('readonly');
+
+    await userEvent.click(input);
+    expect(input.checked).toBe(false);
+    expect(spy).not.toHaveBeenCalled();
+  });
+
+  it('does not toggle uncontrolled chip on click when readOnly is set', async () => {
+    const spy = jest.fn();
+    render(
+      <Chip defaultChecked readOnly onChange={spy}>
+        readonly
+      </Chip>
+    );
+    const input = screen.getByRole('checkbox') as HTMLInputElement;
+
+    await userEvent.click(input);
+    expect(input.checked).toBe(true);
+    expect(spy).not.toHaveBeenCalled();
+  });
+
+  it('does not change Chip.Group value when a readOnly chip is clicked', async () => {
+    const spy = jest.fn();
+    render(
+      <Chip.Group multiple value={[]} onChange={spy}>
+        <Chip value="test-value" readOnly>
+          readonly
+        </Chip>
+      </Chip.Group>
+    );
+
+    await userEvent.click(screen.getByRole('checkbox'));
+    expect(spy).not.toHaveBeenCalled();
+    expect(screen.getByRole('checkbox')).not.toBeChecked();
   });
 });

@@ -434,6 +434,30 @@ describe('@mantine/schedule/ResourcesWeekView', () => {
     expect(nonBusinessSlots.length).toBeGreaterThan(0);
   });
 
+  it('marks slots and time labels that contain a business hours boundary as partial', () => {
+    const { container } = render(
+      <ResourcesWeekView
+        {...defaultProps}
+        highlightBusinessHours
+        businessHours={['09:30:00', '11:15']}
+      />
+    );
+
+    const slots = container.querySelectorAll<HTMLElement>(
+      '.mantine-ResourcesWeekView-resourcesWeekViewRowSlot[data-partial-business-hours]'
+    );
+    expect(slots).toHaveLength(resources.length * 7 * 2);
+    expect(slots[0]).toHaveAttribute('aria-label', expect.stringContaining('09:00:00 - 10:00:00'));
+    expect(slots[0].style.getPropertyValue('--business-hours-from')).toBe('50%');
+    expect(slots[1].style.getPropertyValue('--business-hours-to')).toBe('25%');
+
+    const labels = container.querySelectorAll<HTMLElement>(
+      '.mantine-ResourcesWeekView-resourcesWeekViewTimeLabel[data-partial-business-hours]'
+    );
+    expect(labels).toHaveLength(7 * 2);
+    expect(labels[0].style.getPropertyValue('--business-hours-from')).toBe('50%');
+  });
+
   it('supports renderResourceLabel to replace resource labels', () => {
     render(
       <ResourcesWeekView

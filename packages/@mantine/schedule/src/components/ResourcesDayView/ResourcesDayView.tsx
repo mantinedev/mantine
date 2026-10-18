@@ -47,7 +47,9 @@ import {
   calculateDropTime,
   expandRecurringEvents,
   formatDate,
-  getBusinessHoursMod,
+  addMinutesToTime,
+  clampIntervalMinutes,
+  getBusinessHoursState,
   getDayPosition,
   getCurrentTimePosition,
   getDayTimeIntervals,
@@ -104,7 +106,9 @@ export type ResourcesDayViewCssVariables = {
     | '--resources-day-view-radius'
     | '--resources-day-view-slot-width'
     | '--resources-day-view-row-height'
-    | '--resources-day-view-group-label-width';
+    | '--resources-day-view-group-label-width'
+    | '--resources-day-view-business-hours-bg'
+    | '--resources-day-view-non-business-hours-bg';
 };
 
 export interface ResourcesDayViewProps
@@ -346,6 +350,8 @@ const varsResolver = createVarsResolver<ResourcesDayViewFactory>(
       '--resources-day-view-slot-width': rem(slotWidth),
       '--resources-day-view-row-height': rem(rowHeight),
       '--resources-day-view-group-label-width': rem(groupLabelWidth),
+      '--resources-day-view-business-hours-bg': undefined,
+      '--resources-day-view-non-business-hours-bg': undefined,
     },
   })
 );
@@ -692,18 +698,19 @@ export const ResourcesDayView = factory<ResourcesDayViewFactory>((_props) => {
       format: slotLabelFormat,
     });
 
+    const labelBusinessHours = getBusinessHoursState({
+      time: interval.startTime,
+      endTime: addMinutesToTime(interval.startTime, clampIntervalMinutes(intervalMinutes)),
+      businessHours,
+      highlightBusinessHours,
+    });
+
     return (
       <Box
         {...getStyles('resourcesDayViewTimeLabel')}
         key={interval.startTime}
-        mod={{
-          'hour-start': interval.isHourStart,
-          ...getBusinessHoursMod({
-            time: interval.startTime,
-            businessHours,
-            highlightBusinessHours,
-          }),
-        }}
+        mod={{ 'hour-start': interval.isHourStart, ...labelBusinessHours.mod }}
+        __vars={labelBusinessHours.vars}
       >
         {label}
       </Box>
@@ -1034,6 +1041,7 @@ export const ResourcesDayView = factory<ResourcesDayViewFactory>((_props) => {
       <ResourcesDayViewRow
         key={resource.id}
         resource={resource}
+        intervalMinutes={intervalMinutes}
         resourceIndex={resourceIndex}
         date={dateStr}
         slots={slots}

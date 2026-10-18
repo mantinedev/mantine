@@ -53,6 +53,29 @@ function Demo() {
 }
 ```
 
+## Read only
+
+Set `readOnly` prop to prevent the radio from being changed by the user. The radio
+still reflects `checked` prop updates, but clicking it or pressing <kbd>Space</kbd> does not
+change its state and does not call `onChange`:
+
+```tsx
+import { useState } from 'react';
+import { Radio } from '@mantine/core';
+
+function Demo() {
+  const [checked, setChecked] = useState(true);
+  return (
+    <>
+      <Radio checked={checked} readOnly value="react" label="Read only radio" />
+      <button type="button" onClick={() => setChecked((c) => !c)}>
+        Toggle from outside
+      </button>
+    </>
+  );
+}
+```
+
 ## States
 
 <Demo data={RadioDemos.states} />

@@ -10,3 +10,4 @@ export { scrollbars } from './ScrollArea.demo.scrollbars';
 export { boundaries } from './ScrollArea.demo.boundaries';
 export { startScrollPosition } from './ScrollArea.demo.startScrollPosition';
 export { verticalScrollbarPosition } from './ScrollArea.demo.verticalScrollbarPosition';
+export { offsetSize } from './ScrollArea.demo.offsetSize';

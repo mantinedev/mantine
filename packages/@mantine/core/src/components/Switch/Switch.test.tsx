@@ -1,5 +1,5 @@
-import { act, createRef } from 'react';
-import { render, screen, tests } from '@mantine-tests/core';
+import { act, createRef, useState } from 'react';
+import { render, screen, tests, userEvent } from '@mantine-tests/core';
 import { Switch, SwitchProps, SwitchStylesNames } from './Switch';
 import { SwitchGroup } from './SwitchGroup/SwitchGroup';
 
@@ -128,5 +128,67 @@ describe('@mantine/core/Switch', () => {
 
     act(() => input.click());
     expect(input).toBeChecked();
+  });
+
+  it('does not toggle controlled switch on click when readOnly is set', async () => {
+    const spy = jest.fn();
+    render(<Switch checked={false} readOnly onChange={spy} aria-label="readonly" />);
+    const input = screen.getByRole('switch') as HTMLInputElement;
+
+    await userEvent.click(input);
+    expect(input.checked).toBe(false);
+    expect(spy).not.toHaveBeenCalled();
+  });
+
+  it('does not toggle uncontrolled switch on click when readOnly is set', async () => {
+    const spy = jest.fn();
+    render(<Switch defaultChecked readOnly onChange={spy} aria-label="readonly" />);
+    const input = screen.getByRole('switch') as HTMLInputElement;
+
+    await userEvent.click(input);
+    expect(input.checked).toBe(true);
+    expect(spy).not.toHaveBeenCalled();
+  });
+
+  it('keeps controlled readOnly switch in sync with external value changes after a click', async () => {
+    function Controlled() {
+      const [checked, setChecked] = useState(false);
+      return (
+        <>
+          <Switch checked={checked} readOnly aria-label="readonly" />
+          <button type="button" onClick={() => setChecked((c) => !c)}>
+            toggle
+          </button>
+        </>
+      );
+    }
+
+    render(<Controlled />);
+    const input = screen.getByRole('switch') as HTMLInputElement;
+
+    await userEvent.click(input);
+    expect(input.checked).toBe(false);
+
+    await userEvent.click(screen.getByText('toggle'));
+    expect(input.checked).toBe(true);
+
+    await userEvent.click(input);
+    expect(input.checked).toBe(true);
+
+    await userEvent.click(screen.getByText('toggle'));
+    expect(input.checked).toBe(false);
+  });
+
+  it('does not change Switch.Group value when a readOnly switch is clicked', async () => {
+    const spy = jest.fn();
+    render(
+      <Switch.Group value={[]} onChange={spy}>
+        <Switch value="test-value" readOnly aria-label="readonly" />
+      </Switch.Group>
+    );
+
+    await userEvent.click(screen.getByRole('switch'));
+    expect(spy).not.toHaveBeenCalled();
+    expect(screen.getByRole('switch')).not.toBeChecked();
   });
 });

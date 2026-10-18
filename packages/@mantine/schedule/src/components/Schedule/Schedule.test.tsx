@@ -333,6 +333,57 @@ describe('@mantine/schedule/Schedule', () => {
     expect(screen.getByText('January 15, 2024')).toBeInTheDocument();
   });
 
+  describe('responsive layout', () => {
+    const getMobileRoot = (container: HTMLElement) =>
+      container.querySelector('.mantine-MobileMonthView-mobileMonthView') as HTMLElement;
+
+    it('renders MobileMonthView next to the desktop view', () => {
+      const { container } = render(<Schedule {...defaultProps} layout="responsive" view="month" />);
+      expect(container.querySelector('.mantine-MonthView-monthView')).toBeInTheDocument();
+      expect(getMobileRoot(container)).toBeInTheDocument();
+      expect(getMobileRoot(container)).not.toHaveAttribute('data-without-weekend-days');
+    });
+
+    it('passes withWeekendDays and weekendDays from monthViewProps to MobileMonthView', () => {
+      const { container } = render(
+        <Schedule
+          {...defaultProps}
+          layout="responsive"
+          view="month"
+          monthViewProps={{ withWeekendDays: false, weekendDays: [1, 2] }}
+        />
+      );
+
+      expect(container.querySelector('.mantine-MonthView-monthView')).toHaveAttribute(
+        'data-without-weekend-days'
+      );
+      expect(getMobileRoot(container)).toHaveAttribute('data-without-weekend-days');
+      expect(
+        getMobileRoot(container).querySelectorAll('.mantine-MobileMonthView-mobileMonthViewWeekday')
+      ).toHaveLength(5);
+      expect(
+        getMobileRoot(container).querySelector('button[aria-label="January 17, 2024"]')
+      ).toBeInTheDocument();
+      expect(
+        getMobileRoot(container).querySelector('button[aria-label="January 15, 2024"]')
+      ).not.toBeInTheDocument();
+    });
+
+    it('lets mobileMonthViewProps override withWeekendDays from monthViewProps', () => {
+      const { container } = render(
+        <Schedule
+          {...defaultProps}
+          layout="responsive"
+          view="month"
+          monthViewProps={{ withWeekendDays: false }}
+          mobileMonthViewProps={{ withWeekendDays: true }}
+        />
+      );
+
+      expect(getMobileRoot(container)).not.toHaveAttribute('data-without-weekend-days');
+    });
+  });
+
   describe('withAgenda prop', () => {
     it('does not render agenda button by default', () => {
       render(<Schedule {...defaultProps} />);

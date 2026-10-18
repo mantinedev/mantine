@@ -29,6 +29,60 @@ describe('useThrottledCallback', () => {
     expect(callback).toHaveBeenLastCalledWith(3);
   });
 
+  it('throttles calls made from the callback itself', () => {
+    const callback = jest.fn((value: number) => {
+      if (value < 3) {
+        result.current(value + 1);
+      }
+    });
+    const { result } = renderHook(() => useThrottledCallback(callback, 100));
+
+    act(() => result.current(1));
+    expect(callback).toHaveBeenCalledTimes(1);
+    expect(callback).toHaveBeenLastCalledWith(1);
+
+    act(() => jest.advanceTimersByTime(100));
+    expect(callback).toHaveBeenCalledTimes(2);
+    expect(callback).toHaveBeenLastCalledWith(2);
+
+    act(() => jest.advanceTimersByTime(100));
+    expect(callback).toHaveBeenCalledTimes(3);
+    expect(callback).toHaveBeenLastCalledWith(3);
+  });
+
+  it('allows another call after the callback throws', () => {
+    const error = new Error('callback failed');
+    const callback = jest.fn().mockImplementationOnce(() => {
+      throw error;
+    });
+    const { result } = renderHook(() => useThrottledCallback(callback, 100));
+
+    expect(() => result.current(1)).toThrow(error);
+    act(() => result.current(2));
+    expect(callback).toHaveBeenCalledTimes(2);
+    expect(callback).toHaveBeenLastCalledWith(2);
+  });
+
+  it('allows another call after a trailing callback throws', () => {
+    const error = new Error('trailing callback failed');
+    const callback = jest
+      .fn()
+      .mockImplementationOnce(() => {})
+      .mockImplementationOnce(() => {
+        throw error;
+      });
+    const { result } = renderHook(() => useThrottledCallback(callback, 100));
+
+    act(() => {
+      result.current(1);
+      result.current(2);
+    });
+    expect(() => jest.advanceTimersByTime(100)).toThrow(error);
+    act(() => result.current(3));
+    expect(callback).toHaveBeenCalledTimes(3);
+    expect(callback).toHaveBeenLastCalledWith(3);
+  });
+
   it('should allow callback after throttle period', () => {
     const callback = jest.fn();
     const { result } = renderHook(() => useThrottledCallback(callback, 100));
