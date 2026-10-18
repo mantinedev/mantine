@@ -35,6 +35,15 @@ at the start of business hours instead of midnight:
 
 <Demo data={WeekViewDemos.intervalMinutes} />
 
+## Slot label interval
+
+By default, the time column shows one label per hour. Set `slotLabelInterval` prop to display
+labels more often, for example every 15 or 30 minutes. The value must be a multiple of
+`intervalMinutes`, other values are rounded up to the next valid one. Increase `slotHeight` so
+that the labels have enough space:
+
+<Demo data={WeekViewDemos.slotLabelInterval} />
+
 ## Sub-hour grid lines
 
 Set `withSubHourGridLines={false}` to display one grid line per hour when `intervalMinutes` is smaller than `60`.
@@ -150,9 +159,14 @@ Use `radius` prop to change the border radius of the view and events:
 
 ## Business hours
 
-Set `highlightBusinessHours` to highlight business hours, set `businessHours` to change the range:
+Set `highlightBusinessHours` to highlight business hours, set `businessHours` to a tuple of start and end times in `HH:mm:ss` or `HH:mm` format to change the range:
 
 <Demo data={WeekViewDemos.businessHours} />
+
+Business hours do not need to align with the slot grid. When a boundary falls inside a slot,
+the slot and the time label next to it are painted up to the exact minute:
+
+<Demo data={WeekViewDemos.businessHoursMinute} />
 
 ## Business hours per day
 
@@ -160,6 +174,13 @@ Pass an object to `businessHours` to set a range per weekday, keys are day numbe
 Days missing from the object or set to `null` have no business hours:
 
 <Demo data={WeekViewDemos.businessHoursPerDay} />
+
+## Business hours colors
+
+Set `--week-view-business-hours-bg` and `--week-view-non-business-hours-bg` CSS variables
+with `vars` prop or in CSS to change the colors. Both variables apply to time slots and time labels:
+
+<Demo data={WeekViewDemos.businessHoursColors} />
 
 ## Custom time slot props
 

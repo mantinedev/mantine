@@ -165,6 +165,32 @@ export function IntervalMinutes() {
   );
 }
 
+export function SlotLabelInterval() {
+  return (
+    <WeekView
+      date={new Date()}
+      startTime="08:00:00"
+      endTime="12:00:00"
+      intervalMinutes={15}
+      slotLabelInterval={15}
+      slotHeight={800}
+    />
+  );
+}
+
+export function SlotLabelIntervalDefaultHeight() {
+  return (
+    <WeekView
+      date={new Date()}
+      intervalMinutes={15}
+      slotLabelInterval={30}
+      slotHeight={64}
+      highlightBusinessHours
+      businessHours={['09:30:00', '17:00:00']}
+    />
+  );
+}
+
 export function Locale() {
   return <WeekView date={new Date()} locale="ru" />;
 }
@@ -241,6 +267,24 @@ export function BusinessHours() {
       businessHours={['10:00:00', '18:00:00']}
       startTime="08:00:00"
       endTime="20:00:00"
+    />
+  );
+}
+
+export function BusinessHoursMinute() {
+  return (
+    <WeekView
+      date={new Date()}
+      events={regularEvents}
+      highlightBusinessHours
+      businessHours={{ 1: ['07:42', '19:01'], 2: ['08:10', '16:20'], 3: ['09:00', '17:00'] }}
+      intervalMinutes={30}
+      vars={() => ({
+        weekView: {
+          '--week-view-business-hours-bg': 'var(--mantine-color-yellow-light)',
+          '--week-view-non-business-hours-bg': 'var(--mantine-color-blue-light)',
+        },
+      })}
     />
   );
 }

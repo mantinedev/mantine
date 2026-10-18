@@ -72,7 +72,7 @@
 }
 
 .dayViewSlotLabel {
-  height: var(--slot-height);
+  height: calc(var(--slot-height) * var(--slot-label-size, 1));
   border-top: 1px solid var(--day-view-border-color);
   font-size: var(--mantine-font-size-sm);
   text-align: right;
@@ -88,12 +88,26 @@
     border-top: 0;
   }
 
+  &:where([data-sub-hour]) {
+    border-top-style: dotted;
+  }
+
   &:where([data-business-hours]) {
     background-color: var(--day-view-business-hours-bg);
   }
 
   &:where([data-non-business-hours]) {
     background-color: var(--day-view-non-business-hours-bg);
+  }
+
+  &:where([data-partial-business-hours]) {
+    background-image: linear-gradient(
+      to bottom,
+      var(--day-view-non-business-hours-bg) var(--business-hours-from),
+      var(--day-view-business-hours-bg) var(--business-hours-from),
+      var(--day-view-business-hours-bg) var(--business-hours-to),
+      var(--day-view-non-business-hours-bg) var(--business-hours-to)
+    );
   }
 }
 
@@ -117,6 +131,7 @@
   }
 
   @mixin hover {
+    background-image: none;
     background-color: var(--mantine-color-hover-strong);
   }
 
@@ -133,7 +148,19 @@
     background-color: var(--day-view-non-business-hours-bg);
   }
 
+  &:where([data-partial-business-hours]) {
+    background-image: linear-gradient(
+      to bottom,
+      var(--day-view-non-business-hours-bg) var(--business-hours-from),
+      var(--day-view-business-hours-bg) var(--business-hours-from),
+      var(--day-view-business-hours-bg) var(--business-hours-to),
+      var(--day-view-non-business-hours-bg) var(--business-hours-to)
+    );
+  }
+
   &:where([data-drop-target]) {
+    background-image: none;
+
     @mixin where-light {
       background-color: var(--mantine-color-blue-1);
     }
@@ -164,6 +191,7 @@
   &:where([data-drag-selected]) {
     &,
     &:hover {
+      background-image: none;
       background-color: var(--mantine-primary-color-light);
     }
 
@@ -195,7 +223,8 @@
   }
 }
 
-.dayView:where([data-hide-sub-hour-grid-lines]) .dayViewSlot:not([data-hour-start]) {
+.dayView:where([data-hide-sub-hour-grid-lines]) .dayViewSlot:not([data-hour-start]),
+.dayView:where([data-hide-sub-hour-grid-lines]) .dayViewSlotLabel:where([data-sub-hour]) {
   border-top-color: transparent;
 }
 

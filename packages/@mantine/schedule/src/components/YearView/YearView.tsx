@@ -25,11 +25,14 @@ import {
   isSameMonth,
   toDateString,
 } from '../../utils';
+import {
+  getHiddenWeekendColumns,
+  getVisibleWeekDays,
+} from '../../utils/get-visible-week-days/get-visible-week-days';
 import { MonthYearSelectProps } from '../ScheduleHeader/MonthYearSelect/MonthYearSelect';
 import { CombinedScheduleHeaderStylesNames } from '../ScheduleHeader/ScheduleHeader';
 import { ScheduleHeaderBase } from '../ScheduleHeader/ScheduleHeaderBase';
 import { ViewSelectProps } from '../ScheduleHeader/ViewSelect/ViewSelect';
-import { getHiddenWeekendColumns, getVisibleWeekDays } from './get-visible-week-days';
 import { getYearViewEvents, getYearViewRange } from './get-year-view-events/get-year-view-events';
 import { handleYearViewKeyDown, YearViewControlsRef } from './handle-year-view-key-down';
 import { YearViewMonth, YearViewMonthSettings } from './YearViewMonth';

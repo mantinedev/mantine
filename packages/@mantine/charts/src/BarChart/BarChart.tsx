@@ -506,7 +506,7 @@ export const BarChart = factory<BarChartFactory>((_props) => {
                 {rightYAxisLabel}
               </Label>
             )}
-            {yAxisProps?.children}
+            {rightYAxisProps?.children}
           </YAxis>
 
           <CartesianGrid

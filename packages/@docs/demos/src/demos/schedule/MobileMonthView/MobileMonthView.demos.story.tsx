@@ -57,3 +57,8 @@ export const Demo_withoutWeekDays = {
   name: '⭐ Demo: withoutWeekDays',
   render: renderDemo(demos.withoutWeekDays),
 };
+
+export const Demo_withoutWeekendDays = {
+  name: '⭐ Demo: withoutWeekendDays',
+  render: renderDemo(demos.withoutWeekendDays),
+};

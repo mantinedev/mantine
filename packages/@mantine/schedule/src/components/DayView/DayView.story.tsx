@@ -259,6 +259,38 @@ export function CustomInterval() {
   );
 }
 
+export function SlotLabelInterval() {
+  return (
+    <div style={{ padding: 40 }}>
+      <DayView date={new Date()} intervalMinutes={15} slotLabelInterval={15} slotHeight={800} />
+    </div>
+  );
+}
+
+export function SlotLabelIntervalDefaultHeight() {
+  return (
+    <div style={{ padding: 40 }}>
+      <DayView date={new Date()} intervalMinutes={15} slotLabelInterval={30} slotHeight={64} />
+    </div>
+  );
+}
+
+export function SlotLabelIntervalWithoutSubHourGridLines() {
+  return (
+    <div style={{ padding: 40 }}>
+      <DayView
+        date={new Date()}
+        intervalMinutes={15}
+        slotLabelInterval={30}
+        slotHeight={120}
+        withSubHourGridLines={false}
+        highlightBusinessHours
+        businessHours={['09:30:00', '17:00:00']}
+      />
+    </div>
+  );
+}
+
 export function Radius() {
   return (
     <div style={{ padding: 40 }}>
@@ -277,6 +309,25 @@ export function BusinessHours() {
         businessHours={['10:00:00', '18:00:00']}
         // startTime="08:00:00"
         // endTime="20:00:00"
+      />
+    </div>
+  );
+}
+
+export function BusinessHoursMinute() {
+  return (
+    <div style={{ padding: 40 }}>
+      <DayView
+        date={new Date()}
+        events={regularEvents}
+        highlightBusinessHours
+        businessHours={['07:42', '19:01']}
+        vars={() => ({
+          dayView: {
+            '--day-view-business-hours-bg': 'var(--mantine-color-yellow-light)',
+            '--day-view-non-business-hours-bg': 'var(--mantine-color-blue-light)',
+          },
+        })}
       />
     </div>
   );

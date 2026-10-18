@@ -1,5 +1,6 @@
 .mobileMonthView {
   --mobile-month-view-radius: var(--schedule-radius, var(--mantine-radius-default));
+  --mobile-month-view-columns: 7;
   --week-numbers-offset: 0rem;
   --day-base-color: var(--mantine-color-text);
   --day-dimmed-color: alpha(var(--day-base-color), 0.5);
@@ -62,7 +63,11 @@
 }
 
 .mobileMonthViewWeekday {
-  flex: 0 0 calc(100% / 7 - var(--week-numbers-offset) / 7);
+  flex: 0 0
+    calc(
+      100% / var(--mobile-month-view-columns) - var(--week-numbers-offset) /
+        var(--mobile-month-view-columns)
+    );
   font-size: var(--mobile-month-view-font-size);
   font-weight: var(--mantine-font-weight-medium);
   text-align: center;
@@ -110,7 +115,11 @@
 }
 
 .mobileMonthViewDay {
-  flex: 0 0 calc(100% / 7 - var(--week-numbers-offset) / 7);
+  flex: 0 0
+    calc(
+      100% / var(--mobile-month-view-columns) - var(--week-numbers-offset) /
+        var(--mobile-month-view-columns)
+    );
   height: 48px;
   padding: 4px;
   font-weight: var(--mantine-font-weight-medium);

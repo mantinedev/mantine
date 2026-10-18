@@ -49,6 +49,10 @@ export const ResourcesWeekViewStylesApi: StylesApiData<ResourcesWeekViewFactory>
       '--resources-week-view-slot-width': 'Controls `width` of each time slot column',
       '--resources-week-view-row-height': 'Controls `height` of each resource row',
       '--resources-week-view-group-label-width': 'Controls `width` of the group label column',
+      '--resources-week-view-business-hours-bg':
+        'Controls `background-color` of time slots and labels inside business hours',
+      '--resources-week-view-non-business-hours-bg':
+        'Controls `background-color` of time slots and labels outside business hours',
     },
   },
 
@@ -67,6 +71,12 @@ export const ResourcesWeekViewStylesApi: StylesApiData<ResourcesWeekViewFactory>
       modifier: 'data-non-business-hours',
       selector: 'resourcesWeekViewRowSlot',
       condition: '`highlightBusinessHours` is true and slot is outside business hours',
+    },
+    {
+      modifier: 'data-partial-business-hours',
+      selector: 'resourcesWeekViewRowSlot',
+      condition:
+        '`highlightBusinessHours` is true and a business hours boundary falls inside the slot',
     },
     {
       modifier: 'data-drop-target',

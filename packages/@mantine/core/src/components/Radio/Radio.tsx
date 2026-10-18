@@ -195,6 +195,8 @@ export const Radio = factory<RadioFactory>((_props) => {
     attributes,
     withErrorStyles,
     checked,
+    readOnly,
+    onClick,
     ...others
   } = props;
 
@@ -235,6 +237,10 @@ export const Radio = factory<RadioFactory>((_props) => {
     checked: contextChecked ?? checked,
     name: rest.name ?? ctx?.name,
     onChange: (event: React.ChangeEvent<HTMLInputElement>) => {
+      if (readOnly) {
+        return;
+      }
+
       ctx?.onChange(event);
       onChange?.(event);
     },
@@ -273,7 +279,15 @@ export const Radio = factory<RadioFactory>((_props) => {
           mod={{ error: !!error, 'with-error-styles': withErrorStyles }}
           id={uuid}
           type="radio"
+          readOnly={readOnly}
           aria-describedby={describedBy}
+          onClick={(event) => {
+            if (readOnly && withContextProps.checked === undefined) {
+              event.preventDefault();
+            }
+
+            onClick?.(event);
+          }}
         />
         <Icon {...getStyles('icon')} aria-hidden />
       </Box>

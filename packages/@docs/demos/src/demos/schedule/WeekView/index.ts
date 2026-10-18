@@ -1,6 +1,7 @@
 export { usage } from './WeekView.demo.usage';
 export { timeRange } from './WeekView.demo.timeRange';
 export { intervalMinutes } from './WeekView.demo.intervalMinutes';
+export { slotLabelInterval } from './WeekView.demo.slotLabelInterval';
 export { subHourGridLines } from './WeekView.demo.subHourGridLines';
 export { firstDayOfWeek } from './WeekView.demo.firstDayOfWeek';
 export { weekdayFormat } from './WeekView.demo.weekdayFormat';
@@ -17,6 +18,8 @@ export { slotLabelFormat } from './WeekView.demo.slotLabelFormat';
 export { slotHeight } from './WeekView.demo.slotHeight';
 export { businessHours } from './WeekView.demo.businessHours';
 export { businessHoursPerDay } from './WeekView.demo.businessHoursPerDay';
+export { businessHoursMinute } from './WeekView.demo.businessHoursMinute';
+export { businessHoursColors } from './WeekView.demo.businessHoursColors';
 export { overlappingEvents } from './WeekView.demo.overlappingEvents';
 export { eventOverlapMode } from './WeekView.demo.eventOverlapMode';
 export { dragDrop } from './WeekView.demo.dragDrop';

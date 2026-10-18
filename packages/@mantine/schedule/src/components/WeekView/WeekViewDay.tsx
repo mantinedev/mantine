@@ -7,7 +7,8 @@ import {
   BusinessHoursValue,
   clampIntervalMinutes,
   DayTimeInterval,
-  getBusinessHoursMod,
+  addMinutesToTime,
+  getBusinessHoursState,
 } from '../../utils';
 import { WeekViewControlsRef } from './handle-week-view-key-down';
 import type { WeekViewFactory } from './WeekView';
@@ -164,6 +165,14 @@ export function WeekViewDay({
             externalOnClick?.(e);
           };
 
+    const businessHoursState = getBusinessHoursState({
+      time: slot.startTime,
+      endTime: addMinutesToTime(slot.startTime, clampIntervalMinutes(intervalMinutes)),
+      businessHours,
+      highlightBusinessHours,
+      dayOfWeek,
+    });
+
     return (
       <UnstyledButton
         key={slot.startTime}
@@ -178,17 +187,15 @@ export function WeekViewDay({
         {...getStyles('weekViewDaySlot')}
         mod={{
           'hour-start': slot.isHourStart,
-          ...getBusinessHoursMod({
-            time: slot.startTime,
-            businessHours,
-            highlightBusinessHours,
-            dayOfWeek,
-          }),
+          ...businessHoursState.mod,
           'drop-target': isDropTarget,
           'drag-selected': isDragSelected,
           static: mode === 'static',
         }}
-        __vars={{ '--slot-size': `${clampIntervalMinutes(intervalMinutes) / 60}` }}
+        __vars={{
+          '--slot-size': `${clampIntervalMinutes(intervalMinutes) / 60}`,
+          ...businessHoursState.vars,
+        }}
         aria-label={`${getLabel('timeSlot', labels)} ${dayGroup} ${slot.startTime} - ${slot.endTime}`}
         tabIndex={mode === 'static' ? -1 : isFirstSlot ? 0 : -1}
         data-drag-slot-index={withDragSlotSelect && mode !== 'static' ? slotIndex : undefined}

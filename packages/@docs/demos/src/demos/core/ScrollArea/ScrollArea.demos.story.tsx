@@ -72,3 +72,8 @@ export const Demo_verticalScrollbarPosition = {
   name: '⭐ Demo: verticalScrollbarPosition',
   render: renderDemo(demos.verticalScrollbarPosition),
 };
+
+export const Demo_offsetSize = {
+  name: '⭐ Demo: offsetSize',
+  render: renderDemo(demos.offsetSize),
+};

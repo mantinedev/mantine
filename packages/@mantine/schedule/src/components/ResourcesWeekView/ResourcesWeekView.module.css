@@ -1,4 +1,5 @@
 .resourcesWeekView {
+  --_business-hours-direction: to right;
   --resources-week-view-radius: var(--schedule-radius, var(--mantine-radius-default));
   --resources-week-view-resource-label-width: 120px;
   --resources-week-view-slot-width: 60px;
@@ -15,6 +16,10 @@
 
   @mixin where-dark {
     --resources-week-view-non-business-hours-bg: var(--mantine-color-dark-6);
+  }
+
+  @mixin rtl {
+    --_business-hours-direction: to left;
   }
 }
 
@@ -135,6 +140,16 @@
   &:where([data-non-business-hours]) {
     background-color: var(--resources-week-view-non-business-hours-bg);
   }
+
+  &:where([data-partial-business-hours]) {
+    background-image: linear-gradient(
+      var(--_business-hours-direction),
+      var(--resources-week-view-non-business-hours-bg) var(--business-hours-from),
+      var(--resources-week-view-business-hours-bg) var(--business-hours-from),
+      var(--resources-week-view-business-hours-bg) var(--business-hours-to),
+      var(--resources-week-view-non-business-hours-bg) var(--business-hours-to)
+    );
+  }
 }
 
 .resourcesWeekViewRow {
@@ -231,6 +246,7 @@
   }
 
   @mixin hover {
+    background-image: none;
     background-color: var(--mantine-color-hover-strong);
   }
 
@@ -246,7 +262,19 @@
     background-color: var(--resources-week-view-non-business-hours-bg);
   }
 
+  &:where([data-partial-business-hours]) {
+    background-image: linear-gradient(
+      var(--_business-hours-direction),
+      var(--resources-week-view-non-business-hours-bg) var(--business-hours-from),
+      var(--resources-week-view-business-hours-bg) var(--business-hours-from),
+      var(--resources-week-view-business-hours-bg) var(--business-hours-to),
+      var(--resources-week-view-non-business-hours-bg) var(--business-hours-to)
+    );
+  }
+
   &:where([data-drop-target]) {
+    background-image: none;
+
     @mixin where-light {
       background-color: var(--mantine-color-blue-1);
     }
@@ -277,6 +305,7 @@
   &:where([data-drag-selected]) {
     &,
     &:hover {
+      background-image: none;
       background-color: var(--mantine-primary-color-light);
     }
 

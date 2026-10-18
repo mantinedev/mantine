@@ -591,6 +591,172 @@ describe('@mantine/schedule/MobileMonthView', () => {
     ).toBeInTheDocument();
   });
 
+  describe('withWeekendDays', () => {
+    const getDays = (container: HTMLElement) =>
+      container.querySelectorAll('.mantine-MobileMonthView-mobileMonthViewDay');
+    const getWeekdays = (container: HTMLElement) =>
+      container.querySelectorAll('.mantine-MobileMonthView-mobileMonthViewWeekday');
+    const getRoot = (container: HTMLElement) =>
+      container.querySelector('.mantine-MobileMonthView-mobileMonthView') as HTMLElement;
+
+    it('renders all 7 columns by default', () => {
+      const { container } = render(<MobileMonthView {...defaultProps} />);
+      expect(getWeekdays(container)).toHaveLength(7);
+      expect(getDays(container)).toHaveLength(42);
+      expect(getRoot(container)).not.toHaveAttribute('data-without-weekend-days');
+      expect(getRoot(container).style.getPropertyValue('--mobile-month-view-columns')).toBe('');
+    });
+
+    it('hides weekend days when withWeekendDays is false', () => {
+      const { container } = render(
+        <MobileMonthView {...defaultProps} withWeekendDays={false} weekdayFormat="dddd" />
+      );
+      const weekdays = getWeekdays(container);
+
+      expect(weekdays).toHaveLength(5);
+      expect(weekdays[0].textContent).toBe('Monday');
+      expect(weekdays[4].textContent).toBe('Friday');
+      getDays(container).forEach((day) => expect(day).not.toHaveAttribute('data-weekend'));
+      expect(screen.queryByRole('button', { name: 'November 1, 2025' })).not.toBeInTheDocument();
+      expect(screen.queryByRole('button', { name: 'November 2, 2025' })).not.toBeInTheDocument();
+      expect(screen.getByRole('button', { name: 'November 3, 2025' })).toBeInTheDocument();
+    });
+
+    it('sets data attribute and columns variable on the root when weekend days are hidden', () => {
+      const { container } = render(<MobileMonthView {...defaultProps} withWeekendDays={false} />);
+      expect(getRoot(container)).toHaveAttribute('data-without-weekend-days');
+      expect(getRoot(container).style.getPropertyValue('--mobile-month-view-columns')).toBe('5');
+    });
+
+    it('drops weeks without visible days and keeps 6 weeks with consistentWeeks', () => {
+      // Nov 1 and 2, 2025 are Saturday and Sunday – the first week has no visible days
+      const { container } = render(<MobileMonthView {...defaultProps} withWeekendDays={false} />);
+      const weeks = container.querySelectorAll('.mantine-MobileMonthView-mobileMonthViewWeek');
+
+      expect(weeks).toHaveLength(6);
+      expect(weeks[0].querySelector('button[aria-label="November 3, 2025"]')).toBeInTheDocument();
+      expect(getDays(container)).toHaveLength(30);
+    });
+
+    it('drops weeks without visible days without padding when consistentWeeks is false', () => {
+      const { container } = render(
+        <MobileMonthView {...defaultProps} withWeekendDays={false} consistentWeeks={false} />
+      );
+      const weeks = container.querySelectorAll('.mantine-MobileMonthView-mobileMonthViewWeek');
+
+      expect(weeks).toHaveLength(4);
+      expect(getDays(container)).toHaveLength(20);
+      expect(
+        container.querySelectorAll('.mantine-MobileMonthView-mobileMonthViewDay[data-hidden]')
+      ).toHaveLength(0);
+    });
+
+    it('respects custom weekendDays and firstDayOfWeek', () => {
+      const { container } = render(
+        <MobileMonthView
+          {...defaultProps}
+          withWeekendDays={false}
+          weekendDays={[1, 2]}
+          firstDayOfWeek={0}
+          weekdayFormat="dddd"
+        />
+      );
+      const weekdays = getWeekdays(container);
+
+      expect(weekdays).toHaveLength(5);
+      expect(weekdays[0].textContent).toBe('Sunday');
+      expect(weekdays[1].textContent).toBe('Wednesday');
+      expect(weekdays[4].textContent).toBe('Saturday');
+      expect(screen.queryByRole('button', { name: 'November 3, 2025' })).not.toBeInTheDocument();
+      expect(screen.getByRole('button', { name: 'November 2, 2025' })).toBeInTheDocument();
+    });
+
+    it('hides weekend days when withWeekendDays is false and withOutsideDays is set', () => {
+      const { container } = render(
+        <MobileMonthView {...defaultProps} withWeekendDays={false} withOutsideDays />
+      );
+
+      expect(getDays(container)).toHaveLength(30);
+      expect(
+        container.querySelectorAll('.mantine-MobileMonthView-mobileMonthViewDay[data-outside]')
+      ).toHaveLength(10);
+      expect(screen.getByRole('button', { name: 'October 31, 2025' })).toBeInTheDocument();
+    });
+
+    it('shows event indicators only on visible days', () => {
+      const events: ScheduleEventData[] = [
+        {
+          id: 'weekday',
+          title: 'Weekday event',
+          start: '2025-11-05 10:00:00',
+          end: '2025-11-05 11:00:00',
+          color: 'red',
+          payload: {},
+        },
+        {
+          id: 'weekend',
+          title: 'Weekend event',
+          start: '2025-11-08 10:00:00',
+          end: '2025-11-08 11:00:00',
+          color: 'blue',
+          payload: {},
+        },
+      ];
+
+      render(<MobileMonthView {...defaultProps} withWeekendDays={false} events={events} />);
+
+      const nov5 = screen.getByRole('button', { name: 'November 5, 2025' });
+      expect(
+        nov5.querySelectorAll('.mantine-MobileMonthView-mobileMonthViewDayIndicator')
+      ).toHaveLength(1);
+      expect(screen.queryByRole('button', { name: 'November 8, 2025' })).not.toBeInTheDocument();
+    });
+
+    it('falls back to the first visible day of the month when the selected day is hidden', () => {
+      // Nov 1, 2025 is a Saturday, so the first focusable day is Nov 3 (Monday)
+      render(
+        <MobileMonthView {...defaultProps} withWeekendDays={false} selectedDate="2025-11-01" />
+      );
+
+      expect(screen.getByRole('button', { name: 'November 3, 2025' })).toHaveAttribute(
+        'tabIndex',
+        '0'
+      );
+      expect(screen.getByRole('button', { name: 'November 4, 2025' })).toHaveAttribute(
+        'tabIndex',
+        '-1'
+      );
+    });
+
+    it('skips hidden weekend days with keyboard navigation', async () => {
+      render(<MobileMonthView {...defaultProps} withWeekendDays={false} />);
+
+      // Nov 7 is Friday, the last visible column in a Monday-start week
+      act(() => screen.getByRole('button', { name: 'November 7, 2025' }).focus());
+      await userEvent.keyboard('{ArrowRight}');
+      expect(screen.getByRole('button', { name: 'November 10, 2025' })).toHaveFocus();
+
+      await userEvent.keyboard('{ArrowLeft}');
+      expect(screen.getByRole('button', { name: 'November 7, 2025' })).toHaveFocus();
+
+      await userEvent.keyboard('{ArrowDown}');
+      expect(screen.getByRole('button', { name: 'November 14, 2025' })).toHaveFocus();
+    });
+
+    it('keeps keyboard navigation working after toggling withWeekendDays at runtime', async () => {
+      const { rerender } = render(<MobileMonthView {...defaultProps} />);
+      rerender(
+        <>
+          <MobileMonthView {...defaultProps} withWeekendDays={false} />
+        </>
+      );
+
+      act(() => screen.getByRole('button', { name: 'November 7, 2025' }).focus());
+      await userEvent.keyboard('{ArrowRight}');
+      expect(screen.getByRole('button', { name: 'November 10, 2025' })).toHaveFocus();
+    });
+  });
+
   describe('keyboard navigation', () => {
     it('only first day should be in tab order when no day is selected', () => {
       render(<MobileMonthView {...defaultProps} selectedDate={null} />);
@@ -608,7 +774,7 @@ describe('@mantine/schedule/MobileMonthView', () => {
     it('supports arrow keys to navigate between days', async () => {
       render(<MobileMonthView {...defaultProps} />);
 
-      screen.getByRole('button', { name: 'November 1, 2025' }).focus();
+      act(() => screen.getByRole('button', { name: 'November 1, 2025' }).focus());
       await userEvent.keyboard('{ArrowRight}');
       expect(screen.getByRole('button', { name: 'November 2, 2025' })).toHaveFocus();
 
@@ -626,7 +792,7 @@ describe('@mantine/schedule/MobileMonthView', () => {
       render(<MobileMonthView {...defaultProps} />);
 
       const firstDay = screen.getByRole('button', { name: 'November 1, 2025' });
-      firstDay.focus();
+      act(() => firstDay.focus());
       await userEvent.keyboard('{ArrowUp}');
       expect(firstDay).toHaveFocus();
 
@@ -683,7 +849,7 @@ describe('@mantine/schedule/MobileMonthView', () => {
 
     it('makes the day focused with arrow keys the new tab stop', async () => {
       const { container } = render(<MobileMonthView {...defaultProps} />);
-      screen.getByRole('button', { name: 'November 5, 2025' }).focus();
+      act(() => screen.getByRole('button', { name: 'November 5, 2025' }).focus());
       await userEvent.keyboard('{ArrowRight}{ArrowDown}');
       expect(screen.getByRole('button', { name: 'November 13, 2025' })).toHaveFocus();
       expect(getTabStops(container)).toEqual(['November 13, 2025']);
@@ -693,7 +859,7 @@ describe('@mantine/schedule/MobileMonthView', () => {
       const { container, rerender } = render(
         <MobileMonthView {...defaultProps} selectedDate={null} />
       );
-      screen.getByRole('button', { name: 'November 1, 2025' }).focus();
+      act(() => screen.getByRole('button', { name: 'November 1, 2025' }).focus());
       await userEvent.keyboard('{ArrowRight}');
       expect(getTabStops(container)).toEqual(['November 2, 2025']);
 
@@ -863,7 +1029,7 @@ describe('@mantine/schedule/MobileMonthView disabled days and month changes', ()
 
   it('keeps focus on an outside day selected with Enter after the month changes', async () => {
     render(<ControlledMonth />);
-    screen.getByRole('button', { name: 'October 31, 2025' }).focus();
+    act(() => screen.getByRole('button', { name: 'October 31, 2025' }).focus());
     await userEvent.keyboard('{ArrowRight}{Enter}');
     expect(screen.getByText('November 2025')).toBeInTheDocument();
     expect(screen.getByRole('button', { name: 'November 1, 2025' })).toHaveFocus();
@@ -935,7 +1101,7 @@ describe('@mantine/schedule/MobileMonthView RTL arrow keys', () => {
       </DirectionProvider>
     );
 
-    screen.getByRole('button', { name: 'November 12, 2025' }).focus();
+    act(() => screen.getByRole('button', { name: 'November 12, 2025' }).focus());
     await userEvent.keyboard('{ArrowLeft}');
     expect(screen.getByRole('button', { name: 'November 13, 2025' })).toHaveFocus();
     await userEvent.keyboard('{ArrowRight}{ArrowRight}');

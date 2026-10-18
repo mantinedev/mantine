@@ -519,7 +519,7 @@ export const AreaChart = factory<AreaChartFactory>((_props) => {
                 {rightYAxisLabel}
               </Label>
             )}
-            {yAxisProps?.children}
+            {rightYAxisProps?.children}
           </YAxis>
 
           {withTooltip && (

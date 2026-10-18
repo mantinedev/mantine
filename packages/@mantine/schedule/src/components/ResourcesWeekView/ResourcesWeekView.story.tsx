@@ -173,6 +173,28 @@ export function BusinessHours() {
   );
 }
 
+export function BusinessHoursMinute() {
+  const [date, setDate] = useState(toDateString(new Date()));
+  return (
+    <ResourcesWeekView
+      date={date}
+      onDateChange={setDate}
+      resources={resources}
+      events={regularEvents}
+      startTime="07:00:00"
+      endTime="20:00:00"
+      highlightBusinessHours
+      businessHours={['07:42', '19:01']}
+      vars={() => ({
+        resourcesWeekView: {
+          '--resources-week-view-business-hours-bg': 'var(--mantine-color-yellow-light)',
+          '--resources-week-view-non-business-hours-bg': 'var(--mantine-color-blue-light)',
+        },
+      })}
+    />
+  );
+}
+
 export function NoHeader() {
   const [date, setDate] = useState(toDateString(new Date()));
   return (
