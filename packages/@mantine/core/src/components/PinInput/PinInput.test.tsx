@@ -1,4 +1,4 @@
-import { fireEvent } from '@testing-library/react';
+import { act, fireEvent } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { render, tests } from '@mantine-tests/core';
 import { PinInput, PinInputProps, PinInputStylesNames } from './PinInput';
@@ -437,7 +437,7 @@ describe('@mantine/core/PinInput', () => {
   it('readOnly keeps arrow key focus navigation', () => {
     const { container } = render(<PinInput defaultValue="1234" readOnly />);
     const inputs = getInputs(container);
-    inputs[0].focus();
+    act(() => inputs[0].focus());
     fireEvent.keyDown(inputs[0], { key: 'ArrowRight' });
     expect(inputs[1]).toHaveFocus();
   });

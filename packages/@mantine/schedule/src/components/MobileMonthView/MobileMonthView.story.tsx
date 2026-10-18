@@ -223,3 +223,35 @@ export function WithoutWeekDays() {
     </Box>
   );
 }
+
+export function WithoutWeekendDays() {
+  const [date, setDate] = useState('2025-11-01');
+  const [selectedDate, setSelectedDate] = useState<string | null>('2025-11-10');
+  return (
+    <Box style={{ width: 375, height: 600, border: '1px solid #ccc' }}>
+      <MobileMonthView
+        date={date}
+        onDateChange={setDate}
+        selectedDate={selectedDate}
+        onSelectedDateChange={setSelectedDate}
+        events={november2025Events}
+        withWeekendDays={false}
+      />
+    </Box>
+  );
+}
+
+export function WithoutWeekendDaysWeekNumbers() {
+  return (
+    <Box style={{ width: 375, height: 600, border: '1px solid #ccc' }}>
+      <MobileMonthView
+        date="2025-11-01"
+        events={november2025Events}
+        selectedDate="2025-11-10"
+        withWeekendDays={false}
+        withWeekNumbers
+        withOutsideDays
+      />
+    </Box>
+  );
+}

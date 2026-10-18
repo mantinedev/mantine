@@ -8,6 +8,7 @@ import {
   tests,
   userEvent,
 } from '@mantine-tests/core';
+import { DirectionProvider } from '../../core';
 import { Cascader, CascaderOption, CascaderProps, CascaderStylesNames } from './Cascader';
 
 const data: CascaderOption[] = [
@@ -307,6 +308,37 @@ describe('@mantine/core/Cascader', () => {
     await userEvent.keyboard('{ArrowLeft}');
     expect(screen.queryByRole('option', { name: 'Japan' })).toBe(null);
     expect(screen.getByRole('option', { name: 'Asia' })).toHaveAttribute('data-active', 'true');
+  });
+
+  it('mirrors ArrowLeft and ArrowRight in rtl direction', async () => {
+    render(
+      <DirectionProvider initialDirection="rtl" detectDirection={false}>
+        <Cascader {...defaultProps} dropdownOpened />
+      </DirectionProvider>
+    );
+    screen.getByRole('textbox').focus();
+
+    await userEvent.keyboard('{ArrowDown}{ArrowLeft}');
+    expect(screen.getByRole('option', { name: 'Japan' })).toHaveAttribute('data-active', 'true');
+
+    await userEvent.keyboard('{ArrowRight}');
+    expect(screen.queryByRole('option', { name: 'Japan' })).toBe(null);
+    expect(screen.getByRole('option', { name: 'Asia' })).toHaveAttribute('data-active', 'true');
+  });
+
+  it('opens the dropdown with ArrowLeft in rtl direction', async () => {
+    render(
+      <DirectionProvider initialDirection="rtl" detectDirection={false}>
+        <Cascader {...defaultProps} />
+      </DirectionProvider>
+    );
+    screen.getByRole('textbox').focus();
+
+    await userEvent.keyboard('{ArrowRight}');
+    expect(screen.queryByRole('option', { name: 'Asia' })).toBe(null);
+
+    await userEvent.keyboard('{ArrowLeft}');
+    expect(screen.getByRole('option', { name: 'Asia' })).toBeVisible();
   });
 
   it('keeps the dropdown open on select when closeOnSelect is false', async () => {

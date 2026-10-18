@@ -823,7 +823,7 @@ describe('@mantine/core/Tour', () => {
       expect(spotlight).toHaveAttribute('y', '90');
 
       rect.mockReturnValue(createRect({ top: 40, left: 200, width: 50, height: 30 }));
-      act(() => {
+      await act(async () => {
         window.dispatchEvent(new Event('scroll'));
         expect(spotlight).toHaveAttribute('y', '30');
       });

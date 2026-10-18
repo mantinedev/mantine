@@ -62,6 +62,7 @@ export function useScroller<T extends HTMLElement = HTMLDivElement>(
   const hasDraggedRef = useRef(false);
   const startX = useRef(0);
   const scrollLeftStart = useRef(0);
+  const removeClickSuppressorRef = useRef<(() => void) | null>(null);
 
   const onScrollStateChangeRef = useRef(onScrollStateChange);
   onScrollStateChangeRef.current = onScrollStateChange;
@@ -131,6 +132,7 @@ export function useScroller<T extends HTMLElement = HTMLDivElement>(
 
   const handleMouseDown = useCallback(
     (event: React.MouseEvent) => {
+      removeClickSuppressorRef.current?.();
       if (!draggable) {
         return;
       }
@@ -175,12 +177,18 @@ export function useScroller<T extends HTMLElement = HTMLDivElement>(
       container.style.userSelect = '';
 
       if (wasDragged) {
+        removeClickSuppressorRef.current?.();
+        const removeSuppressor = () => {
+          container.removeEventListener('click', suppressClick, true);
+          removeClickSuppressorRef.current = null;
+        };
         const suppressClick = (event: MouseEvent) => {
           event.stopPropagation();
           event.preventDefault();
-          container.removeEventListener('click', suppressClick, true);
+          removeSuppressor();
         };
         container.addEventListener('click', suppressClick, true);
+        removeClickSuppressorRef.current = removeSuppressor;
       }
     }
   }, []);

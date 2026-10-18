@@ -45,11 +45,13 @@ import {
 import {
   BusinessHoursValue,
   calculateDropTime,
+  clampIntervalMinutes,
   expandRecurringEvents,
   formatDate,
-  getBusinessHoursMod,
+  getBusinessHoursState,
   getDayPosition,
   getDayTimeIntervals,
+  getSlotLabelGroups,
   getTimeAxisEventStyle,
   getWeekDays,
   getWeekNumber,
@@ -105,7 +107,12 @@ export type WeekViewStylesNames =
   | AgendaViewStylesNames;
 
 export type WeekViewCssVariables = {
-  weekView: '--week-view-radius' | '--week-view-slot-height' | '--week-view-all-day-slots-height';
+  weekView:
+    | '--week-view-radius'
+    | '--week-view-slot-height'
+    | '--week-view-all-day-slots-height'
+    | '--week-view-business-hours-bg'
+    | '--week-view-non-business-hours-bg';
 };
 
 export interface WeekViewProps
@@ -132,6 +139,9 @@ export interface WeekViewProps
 
   /** Dayjs format for slot labels or a callback function that returns formatted value @default HH:mm  */
   slotLabelFormat?: DateLabelFormat;
+
+  /** Interval between time labels in minutes. Must be a multiple of `intervalMinutes` that divides evenly into an hour (e.g. `15`, `30`) or is a whole number of hours. Values that do not satisfy these rules are rounded up to the nearest valid value, `60` is used for invalid values. @default 60 */
+  slotLabelInterval?: number;
 
   /** Number 0-6, where 0 – Sunday and 6 – Saturday. @default 1 – Monday */
   firstDayOfWeek?: DayOfWeek;
@@ -345,6 +355,7 @@ const defaultProps = {
   startTime: '00:00:00',
   endTime: '23:59:59',
   slotLabelFormat: 'HH:mm',
+  slotLabelInterval: 60,
   intervalMinutes: 60,
   withSubHourGridLines: true,
   weekdayFormat: 'ddd',
@@ -370,6 +381,8 @@ const varsResolver = createVarsResolver<WeekViewFactory>(
       '--week-view-radius': radius !== undefined ? getRadius(radius) : undefined,
       '--week-view-all-day-slots-height': rem(allDaySlotHeight),
       '--week-view-slot-height': rem(slotHeight),
+      '--week-view-business-hours-bg': undefined,
+      '--week-view-non-business-hours-bg': undefined,
     },
   })
 );
@@ -391,6 +404,7 @@ export const WeekView = factory<WeekViewFactory>((_props) => {
     intervalMinutes,
     withSubHourGridLines,
     slotLabelFormat,
+    slotLabelInterval,
     withWeekendDays,
     eventOverlapMode,
     eventOverlapRaiseDelay,
@@ -487,7 +501,12 @@ export const WeekView = factory<WeekViewFactory>((_props) => {
 
   const [scrolled, setScrolled] = useState(false);
   const ctx = useDatesContext();
-  const slots = getDayTimeIntervals({ startTime, endTime, intervalMinutes });
+  const slots = getDayTimeIntervals({
+    startTime,
+    endTime,
+    intervalMinutes,
+    labelIntervalMinutes: slotLabelInterval,
+  });
 
   const weekdays = getWeekDays({
     week: date,
@@ -708,37 +727,40 @@ export const WeekView = factory<WeekViewFactory>((_props) => {
     eventOverlapMode,
   });
 
-  const timeValues = slots.reduce<React.ReactNode[]>((acc, interval) => {
-    if (!interval.isHourStart) {
-      return acc;
-    }
+  const timeValues = getSlotLabelGroups(slots).map((group) => {
+    const label = group.isLabelStart
+      ? formatDate({
+          date: dayjs(`${dayjs(date).format('YYYY-MM-DD')} ${group.startTime}`),
+          locale: ctx.getLocale(locale),
+          format: slotLabelFormat,
+        })
+      : null;
 
-    const intervalTime = dayjs(`${dayjs(date).format('YYYY-MM-DD')} ${interval.startTime}`);
-    const label = formatDate({
-      date: intervalTime,
-      locale: ctx.getLocale(locale),
-      format: slotLabelFormat,
+    const labelBusinessHours = getBusinessHoursState({
+      time: group.startTime,
+      endTime: group.endTime,
+      businessHours,
+      highlightBusinessHours,
     });
 
-    acc.push(
+    return (
       <Box
         {...getStyles('weekViewSlotLabel')}
-        key={interval.startTime}
+        key={group.startTime}
         mod={{
-          'hour-start': interval.isHourStart,
-          ...getBusinessHoursMod({
-            time: interval.startTime,
-            businessHours,
-            highlightBusinessHours,
-          }),
+          'hour-start': group.isHourStart,
+          'sub-hour': !group.isHourStart,
+          ...labelBusinessHours.mod,
+        }}
+        __vars={{
+          ...labelBusinessHours.vars,
+          '--slot-label-size': `${(group.slotsCount * clampIntervalMinutes(intervalMinutes)) / 60}`,
         }}
       >
         {label}
       </Box>
     );
-
-    return acc;
-  }, []);
+  });
 
   const slotsRef: WeekViewControlsRef = useRef<HTMLButtonElement[][]>([]);
   const allDaySlotsRef = useRef<HTMLButtonElement[]>([]);
