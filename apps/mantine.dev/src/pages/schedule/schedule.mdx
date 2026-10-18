@@ -197,6 +197,9 @@ block behind regular events. Background events work in Day, Week, and Month view
 
 Schedule supports `layout="responsive"` prop that automatically switches between views
 based on the container width. Resize the container below to see the view change.
+On small screens, the month view is replaced with [MobileMonthView](/schedule/mobile-month-view).
+It takes `weekendDays` and `withWeekendDays` from `monthViewProps`, use `mobileMonthViewProps`
+to override them or to set other mobile-specific options.
 
 <Demo data={ScheduleDemos.responsiveLayout} />
 

@@ -1,4 +1,9 @@
+import { createRequire } from 'node:module';
+import path from 'node:path';
 import createMdx from '@next/mdx';
+
+const require = createRequire(import.meta.url);
+const workspaceRoot = path.resolve(path.dirname(require.resolve('next/package.json')), '..', '..');
 
 const withMDX = createMdx({
   extension: /\.mdx?$/,
@@ -42,7 +47,9 @@ const nextConfig = {
     maxInactiveAge: 60 * 60 * 1000,
     pagesBufferLength: 10,
   },
-  turbopack: {},
+  turbopack: {
+    root: workspaceRoot,
+  },
   webpack: (config, { isServer }) => {
     if (!isServer) {
       config.resolve = {

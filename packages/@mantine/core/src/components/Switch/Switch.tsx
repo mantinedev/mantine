@@ -226,6 +226,10 @@ export const Switch = factory<SwitchFactory>((_props) => {
         checked={_checked}
         data-checked={withContextProps.checked}
         onChange={(event) => {
+          if (rest.readOnly) {
+            return;
+          }
+
           withContextProps.onChange?.(event);
           handleChange(event.currentTarget.checked);
         }}

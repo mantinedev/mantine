@@ -15,6 +15,8 @@ export const ScrollAreaStylesApi: StylesApiData<ScrollAreaFactory> = {
     root: {
       '--scrollarea-scrollbar-size': 'Scrollbar size',
       '--scrollarea-fade-size': 'Length of the edge fade gradient controlled by `scrollFade`',
+      '--scrollarea-offset-size':
+        'Size of the gap reserved by `offsetScrollbars`, defaults to the scrollbar size',
     },
   },
 

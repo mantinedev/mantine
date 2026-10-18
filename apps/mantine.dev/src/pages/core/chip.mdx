@@ -25,6 +25,29 @@ function Demo() {
 }
 ```
 
+## Read only
+
+Set `readOnly` prop to prevent the chip from being changed by the user. The chip
+still reflects `checked` prop updates, but clicking it or pressing <kbd>Space</kbd> does not
+change its state and does not call `onChange`:
+
+```tsx
+import { useState } from 'react';
+import { Chip } from '@mantine/core';
+
+function Demo() {
+  const [checked, setChecked] = useState(true);
+  return (
+    <>
+      <Chip checked={checked} readOnly>Read only chip</Chip>
+      <button type="button" onClick={() => setChecked((c) => !c)}>
+        Toggle from outside
+      </button>
+    </>
+  );
+}
+```
+
 ## Change checked icon
 
 <Demo data={ChipDemos.icon} />
