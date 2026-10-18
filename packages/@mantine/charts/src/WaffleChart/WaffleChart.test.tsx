@@ -1,4 +1,4 @@
-import { fireEvent, screen } from '@testing-library/react';
+import { act, fireEvent, screen } from '@testing-library/react';
 import { render, tests } from '@mantine-tests/core';
 import { WaffleChart, WaffleChartProps, WaffleChartStylesNames } from './WaffleChart';
 
@@ -265,45 +265,55 @@ describe('@mantine/charts/WaffleChart', () => {
     );
   });
 
-  it('shows the hovered segment name and formatted value in the default tooltip', () => {
+  it('shows the hovered segment name and formatted value in the default tooltip', async () => {
     const { container } = render(
       <WaffleChart {...defaultProps} withTooltip valueFormatter={(value) => `${value}%`} />
     );
 
-    fireEvent.mouseEnter(getCells(container)[0]);
+    await act(async () => {
+      fireEvent.mouseEnter(getCells(container)[0]);
+    });
     expect(screen.getByText('A: 40%')).toBeInTheDocument();
   });
 
-  it('derives the tooltip from the current data while the pointer rests on a cell', () => {
+  it('derives the tooltip from the current data while the pointer rests on a cell', async () => {
     const getTooltipLabel = (segment: { name: string; value: number; count: number }) =>
       `${segment.name}=${segment.value}/${segment.count}`;
     const { container, rerender } = render(
       <WaffleChart {...defaultProps} withTooltip getTooltipLabel={getTooltipLabel} />
     );
 
-    fireEvent.mouseEnter(getCells(container)[50]);
+    await act(async () => {
+      fireEvent.mouseEnter(getCells(container)[50]);
+    });
     expect(screen.getByText('B=60/60')).toBeInTheDocument();
 
-    rerender(
-      <WaffleChart
-        data={[
-          { name: 'A', value: 90, color: 'blue.6' },
-          { name: 'B', value: 10, color: 'red.6' },
-        ]}
-        withTooltip
-        getTooltipLabel={getTooltipLabel}
-      />
-    );
+    await act(async () => {
+      rerender(
+        <WaffleChart
+          data={[
+            { name: 'A', value: 90, color: 'blue.6' },
+            { name: 'B', value: 10, color: 'red.6' },
+          ]}
+          withTooltip
+          getTooltipLabel={getTooltipLabel}
+        />
+      );
+    });
     expect(screen.getByText('A=90/90')).toBeInTheDocument();
   });
 
-  it('clears the tooltip when the pointer moves from a cell into a gap', () => {
+  it('clears the tooltip when the pointer moves from a cell into a gap', async () => {
     const { container } = render(<WaffleChart {...defaultProps} withTooltip />);
 
-    fireEvent.mouseEnter(getCells(container)[0]);
+    await act(async () => {
+      fireEvent.mouseEnter(getCells(container)[0]);
+    });
     expect(screen.getByText('A: 40')).toBeInTheDocument();
 
-    fireEvent.mouseEnter(container.querySelector('svg g > rect:not(.mantine-WaffleChart-cell)')!);
+    await act(async () => {
+      fireEvent.mouseEnter(container.querySelector('svg g > rect:not(.mantine-WaffleChart-cell)')!);
+    });
     expect(screen.queryByText('A: 40')).not.toBeInTheDocument();
   });
 

@@ -421,7 +421,9 @@ describe('@mantine/dates/DateTimePicker/controller', () => {
       controller.focusTime('minutes');
     });
 
-    await new Promise((resolve) => setTimeout(resolve, 0));
+    await act(async () => {
+      await new Promise((resolve) => setTimeout(resolve, 0));
+    });
     await waitFor(() => expect(screen.getByLabelText('test-minutes')).toHaveFocus());
   });
 

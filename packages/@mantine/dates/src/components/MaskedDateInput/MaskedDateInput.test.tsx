@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { act } from '@testing-library/react';
 import { render, screen, tests, userEvent } from '@mantine-tests/core';
 import {
   MaskedDateInput,
@@ -293,7 +294,9 @@ describe('@mantine/dates/MaskedDateInput', () => {
     }
 
     render(<Controlled />);
-    screen.getByLabelText('test-year').focus();
+    act(() => {
+      screen.getByLabelText('test-year').focus();
+    });
     await userEvent.keyboard('{ArrowUp}');
 
     expect(spy).toHaveBeenLastCalledWith(null);

@@ -1,5 +1,5 @@
 import { createRef } from 'react';
-import { fireEvent, waitFor } from '@testing-library/react';
+import { act, fireEvent, waitFor } from '@testing-library/react';
 import { render, screen, tests, userEvent } from '@mantine-tests/core';
 import { DropzoneFullScreen } from './DropzoneFullScreen';
 import { DropzoneAccept, DropzoneIdle, DropzoneReject, DropzoneUploading } from './DropzoneStatus';
@@ -51,7 +51,9 @@ describe('@mantine/dropzone/Dropzone', () => {
     const { container } = render(<Dropzone {...defaultProps} openRef={ref} />);
     const click = jest.spyOn(container.querySelector('input')!, 'click');
 
-    ref.current();
+    act(() => {
+      ref.current();
+    });
 
     expect(click).toHaveBeenCalledTimes(1);
   });
@@ -208,7 +210,9 @@ describe('@mantine/dropzone/Dropzone', () => {
     const click = jest.spyOn(container.querySelector('input')!, 'click');
     expect(ref.current).toBe(container.querySelector('.mantine-Dropzone-root'));
 
-    ref.current!.focus();
+    act(() => {
+      ref.current!.focus();
+    });
     await userEvent.keyboard('{Enter}');
     expect(click).toHaveBeenCalledTimes(1);
   });

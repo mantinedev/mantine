@@ -3,7 +3,7 @@ import { act, createEvent, fireEvent, waitFor } from '@testing-library/react';
 import {
   inputDefaultProps,
   inputStylesApiSelectors,
-  render,
+  renderWithAct,
   screen,
   tests,
 } from '@mantine-tests/core';
@@ -55,6 +55,10 @@ function typeInto(textarea: HTMLTextAreaElement, value: string, caret = value.le
 }
 
 describe('@mantine/core/Mentions', () => {
+  afterEach(async () => {
+    await act(async () => {});
+  });
+
   tests.axe([
     <Mentions aria-label="test-label" key="1">
       <Mention trigger="@" data={users} />
@@ -80,15 +84,15 @@ describe('@mantine/core/Mentions', () => {
     selector: 'textarea',
   });
 
-  it('renders the label and the plain text of the markup value', () => {
-    const { container } = render(<Mentions {...defaultProps} />);
+  it('renders the label and the plain text of the markup value', async () => {
+    const { container } = await renderWithAct(<Mentions {...defaultProps} />);
     expect(screen.getByText('test-label')).toBeInTheDocument();
     expect(getTextarea(container).value).toBe('Hi @Walter White');
     expect(screen.getByText('@Walter White')).toBeInTheDocument();
   });
 
-  it('hides the trigger in the displayed text by default', () => {
-    const { container } = render(
+  it('hides the trigger in the displayed text by default', async () => {
+    const { container } = await renderWithAct(
       <Mentions defaultValue="Hi @[Walter White](walter)">
         <Mention trigger="@" data={users} />
       </Mentions>
@@ -97,8 +101,8 @@ describe('@mantine/core/Mentions', () => {
     expect(screen.getByText('Walter White')).toBeInTheDocument();
   });
 
-  it('renders custom mention content with renderMention', () => {
-    const { container } = render(
+  it('renders custom mention content with renderMention', async () => {
+    const { container } = await renderWithAct(
       <Mentions
         defaultValue="Hi @[Walter White](walter)"
         renderMention={({ id, display }) => (
@@ -116,19 +120,19 @@ describe('@mantine/core/Mentions', () => {
     expect(container.querySelector('[data-interactive]')).toBeInTheDocument();
   });
 
-  it('renders a disabled control', () => {
-    const { container } = render(<Mentions {...defaultProps} disabled />);
+  it('renders a disabled control', async () => {
+    const { container } = await renderWithAct(<Mentions {...defaultProps} disabled />);
     expect(getTextarea(container)).toBeDisabled();
   });
 
-  it('renders a read-only control in static mode', () => {
-    const { container } = render(<Mentions {...defaultProps} mode="static" />);
+  it('renders a read-only control in static mode', async () => {
+    const { container } = await renderWithAct(<Mentions {...defaultProps} mode="static" />);
     expect(getTextarea(container)).toHaveAttribute('readonly');
   });
 
-  it('keeps highlighter keys unique and mirrors the textarea value', () => {
+  it('keeps highlighter keys unique and mirrors the textarea value', async () => {
     const spy = jest.spyOn(console, 'error').mockImplementation(() => {});
-    const { container } = render(
+    const { container } = await renderWithAct(
       <Mentions defaultValue="a @[X](x) b @[Y](y) c">
         <Mention trigger="@" data={users} />
       </Mentions>
@@ -142,9 +146,9 @@ describe('@mantine/core/Mentions', () => {
   });
 
   describe('line breaks', () => {
-    it('normalizes CRLF line breaks so mentions survive the first edit', () => {
+    it('normalizes CRLF line breaks so mentions survive the first edit', async () => {
       const onChange = jest.fn();
-      const { container } = render(
+      const { container } = await renderWithAct(
         <Mentions defaultValue={'a\r\n@[Walter White](walter)'} onChange={onChange}>
           <Mention trigger="@" data={users} />
         </Mentions>
@@ -158,8 +162,8 @@ describe('@mantine/core/Mentions', () => {
       expect(payload.mentions).toHaveLength(1);
     });
 
-    it('normalizes CRLF in a controlled value', () => {
-      const { container } = render(
+    it('normalizes CRLF in a controlled value', async () => {
+      const { container } = await renderWithAct(
         <Mentions value={'a\r\n@[Walter White](walter)'} onChange={() => {}}>
           <Mention trigger="@" data={users} />
         </Mentions>
@@ -168,8 +172,8 @@ describe('@mantine/core/Mentions', () => {
       expect(getHighlighter(container).textContent).toBe('a\nWalter White');
     });
 
-    it('replaces newlines of the default value with spaces in single-line mode', () => {
-      const { container } = render(
+    it('replaces newlines of the default value with spaces in single-line mode', async () => {
+      const { container } = await renderWithAct(
         <Mentions singleLine defaultValue={'a\r\nb\n@[Walter White](walter)'} name="f">
           <Mention trigger="@" data={users} />
         </Mentions>
@@ -181,8 +185,8 @@ describe('@mantine/core/Mentions', () => {
   });
 
   describe('props routing and Styles API', () => {
-    it('forwards native form props to the underlying control', () => {
-      const { container } = render(
+    it('forwards native form props to the underlying control', async () => {
+      const { container } = await renderWithAct(
         <Mentions {...defaultProps} maxLength={200} autoComplete="off" />
       );
       const textarea = getTextarea(container);
@@ -190,8 +194,8 @@ describe('@mantine/core/Mentions', () => {
       expect(textarea).toHaveAttribute('autocomplete', 'off');
     });
 
-    it('routes non-wrapper props to the control', () => {
-      const { container } = render(
+    it('routes non-wrapper props to the control', async () => {
+      const { container } = await renderWithAct(
         <Mentions
           {...defaultProps}
           data-testid="mentions-control"
@@ -205,9 +209,9 @@ describe('@mantine/core/Mentions', () => {
       expect(textarea).toHaveAttribute('tabindex', '0');
     });
 
-    it('renders the loader for loading and does not forward it to the control', () => {
+    it('renders the loader for loading and does not forward it to the control', async () => {
       const spy = jest.spyOn(console, 'error').mockImplementation(() => {});
-      const { container } = render(<Mentions {...defaultProps} loading />);
+      const { container } = await renderWithAct(<Mentions {...defaultProps} loading />);
       const errors = spy.mock.calls.length;
       spy.mockRestore();
       expect(container.querySelector('.mantine-Loader-root')).toBeInTheDocument();
@@ -216,8 +220,8 @@ describe('@mantine/core/Mentions', () => {
       expect(errors).toBe(0);
     });
 
-    it('applies the field selector to the control and the input selector to the wrapper', () => {
-      const { container } = render(
+    it('applies the field selector to the control and the input selector to the wrapper', async () => {
+      const { container } = await renderWithAct(
         <Mentions {...defaultProps} classNames={{ input: 'w', field: 'f' }} />
       );
       const textarea = getTextarea(container);
@@ -229,8 +233,8 @@ describe('@mantine/core/Mentions', () => {
       expect(wrapper).not.toHaveClass('f');
     });
 
-    it('applies vars to the highlight selector', () => {
-      const { container } = render(
+    it('applies vars to the highlight selector', async () => {
+      const { container } = await renderWithAct(
         <Mentions
           {...defaultProps}
           vars={() => ({ highlight: { '--mentions-highlight-color': 'red' } }) as any}
@@ -240,16 +244,18 @@ describe('@mantine/core/Mentions', () => {
       expect(highlight.style.getPropertyValue('--mentions-highlight-color')).toBe('red');
     });
 
-    it('sets the multiline input padding on the wrapper', () => {
-      const { container } = render(<Mentions {...defaultProps} />);
+    it('sets the multiline input padding on the wrapper', async () => {
+      const { container } = await renderWithAct(<Mentions {...defaultProps} />);
       const wrapper = container.querySelector('.mantine-Mentions-wrapper') as HTMLElement;
       expect(wrapper.style.getPropertyValue('--input-padding-y')).not.toBe('');
     });
   });
 
   describe('name and hidden input', () => {
-    it('submits the markup value through a hidden input when name is set', () => {
-      const { container } = render(<Mentions {...defaultProps} name="comment" form="f1" />);
+    it('submits the markup value through a hidden input when name is set', async () => {
+      const { container } = await renderWithAct(
+        <Mentions {...defaultProps} name="comment" form="f1" />
+      );
       const hidden = container.querySelector('input[type="hidden"]') as HTMLInputElement;
       expect(hidden).toHaveAttribute('name', 'comment');
       expect(hidden).toHaveAttribute('form', 'f1');
@@ -257,8 +263,10 @@ describe('@mantine/core/Mentions', () => {
       expect(getTextarea(container)).not.toHaveAttribute('name');
     });
 
-    it('disables the hidden name input when the field is disabled', () => {
-      const { container } = render(<Mentions {...defaultProps} name="comment" disabled />);
+    it('disables the hidden name input when the field is disabled', async () => {
+      const { container } = await renderWithAct(
+        <Mentions {...defaultProps} name="comment" disabled />
+      );
       expect(container.querySelector('input[type="hidden"]')).toBeDisabled();
     });
   });
@@ -266,7 +274,7 @@ describe('@mantine/core/Mentions', () => {
   describe('suggestions', () => {
     it('opens the dropdown with filtered suggestions and inserts a mention', async () => {
       const onChange = jest.fn();
-      const { container } = render(
+      const { container } = await renderWithAct(
         <Mentions defaultValue="" onChange={onChange}>
           <Mention trigger="@" data={users} />
         </Mentions>
@@ -289,7 +297,7 @@ describe('@mantine/core/Mentions', () => {
     });
 
     it('allows whitespace in the query with allowSpaceInQuery', async () => {
-      const { container } = render(
+      const { container } = await renderWithAct(
         <Mentions defaultValue="">
           <Mention
             trigger="@"
@@ -303,7 +311,7 @@ describe('@mantine/core/Mentions', () => {
     });
 
     it('matches accents-insensitively with ignoreAccents', async () => {
-      const { container } = render(
+      const { container } = await renderWithAct(
         <Mentions defaultValue="">
           <Mention trigger="@" data={[{ id: 'jose', display: 'José' }]} ignoreAccents />
         </Mentions>
@@ -313,7 +321,7 @@ describe('@mantine/core/Mentions', () => {
     });
 
     it('does not open the dropdown in static mode', async () => {
-      const { container } = render(
+      const { container } = await renderWithAct(
         <Mentions defaultValue="" mode="static">
           <Mention trigger="@" data={users} />
         </Mentions>
@@ -339,7 +347,7 @@ describe('@mantine/core/Mentions', () => {
         );
       }
 
-      const { container } = render(<Wrapper />);
+      const { container } = await renderWithAct(<Wrapper />);
       const textarea = getTextarea(container);
       typeInto(textarea, '@');
       await screen.findByText('Jesse Pinkman');
@@ -368,7 +376,7 @@ describe('@mantine/core/Mentions', () => {
         );
       }
 
-      const { container } = render(<Wrapper />);
+      const { container } = await renderWithAct(<Wrapper />);
       const textarea = getTextarea(container);
       typeInto(textarea, '@');
       await waitFor(() =>
@@ -386,7 +394,7 @@ describe('@mantine/core/Mentions', () => {
 
     it('closes the dropdown after an option is picked across an earlier trigger', async () => {
       const onChange = jest.fn();
-      const { container } = render(
+      const { container } = await renderWithAct(
         <Mentions defaultValue="" onChange={onChange} nothingFoundMessage="Nothing found">
           <Mention trigger="@" data={users} allowSpaceInQuery />
         </Mentions>
@@ -417,7 +425,7 @@ describe('@mantine/core/Mentions', () => {
         { id: '1', display: 'Gamma' },
         { id: '2', display: 'Delta' },
       ];
-      const { container } = render(
+      const { container } = await renderWithAct(
         <Mentions defaultValue="">
           <Mention trigger="@" data={people} />
           <Mention trigger="#" data={tags} />
@@ -447,7 +455,7 @@ describe('@mantine/core/Mentions', () => {
 
     it('does not accept an option with Shift+Tab', async () => {
       const onChange = jest.fn();
-      const { container } = render(
+      const { container } = await renderWithAct(
         <Mentions defaultValue="" onChange={onChange}>
           <Mention trigger="@" data={users} />
         </Mentions>
@@ -461,7 +469,7 @@ describe('@mantine/core/Mentions', () => {
 
     it('does not append a second space when one follows the insertion point', async () => {
       const onChange = jest.fn();
-      const { container } = render(
+      const { container } = await renderWithAct(
         <Mentions defaultValue=" there" onChange={onChange}>
           <Mention trigger="@" data={users} appendSpaceOnAdd />
         </Mentions>
@@ -482,7 +490,7 @@ describe('@mantine/core/Mentions', () => {
             reject = r;
           })
       );
-      const { container } = render(
+      const { container } = await renderWithAct(
         <Mentions defaultValue="" loadingMessage="Searching" errorMessage="Oops">
           <Mention trigger="@" data={data} />
         </Mentions>
@@ -496,9 +504,9 @@ describe('@mantine/core/Mentions', () => {
   });
 
   describe('change payload and reasons', () => {
-    it('fires onChange with the rich payload on plain-text input', () => {
+    it('fires onChange with the rich payload on plain-text input', async () => {
       const onChange = jest.fn();
-      const { container } = render(
+      const { container } = await renderWithAct(
         <Mentions defaultValue="@[Walter White](walter)" onChange={onChange}>
           <Mention trigger="@" data={users} withTrigger />
         </Mentions>
@@ -514,9 +522,9 @@ describe('@mantine/core/Mentions', () => {
       expect(payload.mentions[0].id).toBe('walter');
     });
 
-    it('removes the whole mention when part of it is deleted', () => {
+    it('removes the whole mention when part of it is deleted', async () => {
       const onChange = jest.fn();
-      const { container } = render(
+      const { container } = await renderWithAct(
         <Mentions defaultValue="Hi @[Walter White](walter)" onChange={onChange}>
           <Mention trigger="@" data={users} withTrigger />
         </Mentions>
@@ -529,9 +537,9 @@ describe('@mantine/core/Mentions', () => {
       expect(payload.reason.type).toBe('mention-remove');
     });
 
-    it('emits undo and redo change reasons', () => {
+    it('emits undo and redo change reasons', async () => {
       const onChange = jest.fn();
-      const { container } = render(
+      const { container } = await renderWithAct(
         <Mentions defaultValue="Hi" onChange={onChange}>
           <Mention trigger="@" data={users} />
         </Mentions>
@@ -545,9 +553,9 @@ describe('@mantine/core/Mentions', () => {
       expect(onChange.mock.calls.at(-1)?.[0].reason.type).toBe('redo');
     });
 
-    it('classifies the change reason from the native input type', () => {
+    it('classifies the change reason from the native input type', async () => {
       const onChange = jest.fn();
-      const { container } = render(
+      const { container } = await renderWithAct(
         <Mentions defaultValue="Hi" onChange={onChange}>
           <Mention trigger="@" data={users} />
         </Mentions>
@@ -573,9 +581,9 @@ describe('@mantine/core/Mentions', () => {
       expect(onChange.mock.calls.at(-1)?.[0].reason.type).toBe('insert-text');
     });
 
-    it('classifies native history input types as undo and redo', () => {
+    it('classifies native history input types as undo and redo', async () => {
       const onChange = jest.fn();
-      const { container } = render(
+      const { container } = await renderWithAct(
         <Mentions defaultValue="Hi" onChange={onChange}>
           <Mention trigger="@" data={users} />
         </Mentions>
@@ -596,9 +604,9 @@ describe('@mantine/core/Mentions', () => {
   });
 
   describe('undo history', () => {
-    it('restores the value with Ctrl+Z / Ctrl+Shift+Z after a mention is removed', () => {
+    it('restores the value with Ctrl+Z / Ctrl+Shift+Z after a mention is removed', async () => {
       const onChange = jest.fn();
-      const { container } = render(
+      const { container } = await renderWithAct(
         <Mentions defaultValue="Hi @[Walter White](walter)" onChange={onChange}>
           <Mention trigger="@" data={users} withTrigger />
         </Mentions>
@@ -615,7 +623,7 @@ describe('@mantine/core/Mentions', () => {
       expect(onChange.mock.calls.at(-1)?.[0].value).toBe('Hi ');
     });
 
-    it('records external controlled value changes in the undo history', () => {
+    it('records external controlled value changes in the undo history', async () => {
       const onChange = jest.fn();
       const nowSpy = jest.spyOn(Date, 'now').mockReturnValue(1000);
 
@@ -639,7 +647,7 @@ describe('@mantine/core/Mentions', () => {
         );
       }
 
-      const { container } = render(<Wrapper />);
+      const { container } = await renderWithAct(<Wrapper />);
       const textarea = getTextarea(container);
       typeInto(textarea, 'hello', 5);
       fireEvent.click(screen.getByText('set'));
@@ -652,8 +660,8 @@ describe('@mantine/core/Mentions', () => {
       nowSpy.mockRestore();
     });
 
-    it('restores the caret to the position of the undone edit', () => {
-      const { container } = render(
+    it('restores the caret to the position of the undone edit', async () => {
+      const { container } = await renderWithAct(
         <Mentions defaultValue="Hi @[Walter White](walter)">
           <Mention trigger="@" data={users} />
         </Mentions>
@@ -668,7 +676,7 @@ describe('@mantine/core/Mentions', () => {
 
     it('keeps the re-detected query open across repeated undo key presses', async () => {
       const onChange = jest.fn();
-      const { container } = render(
+      const { container } = await renderWithAct(
         <Mentions defaultValue="Hi?" onChange={onChange}>
           <Mention trigger="@" data={users} />
         </Mentions>
@@ -702,7 +710,7 @@ describe('@mantine/core/Mentions', () => {
   describe('selection', () => {
     it('calls onSelectionChange with the caret after a mention is inserted', async () => {
       const onSelectionChange = jest.fn();
-      const { container } = render(
+      const { container } = await renderWithAct(
         <Mentions defaultValue="" onSelectionChange={onSelectionChange}>
           <Mention trigger="@" data={users} />
         </Mentions>
@@ -712,9 +720,9 @@ describe('@mantine/core/Mentions', () => {
       expect(onSelectionChange.mock.calls.at(-1)?.[0]).toEqual({ start: 13, end: 13 });
     });
 
-    it('reads a programmatic selection before handling a key press', () => {
+    it('reads a programmatic selection before handling a key press', async () => {
       const onChange = jest.fn();
-      const { container } = render(
+      const { container } = await renderWithAct(
         <Mentions defaultValue="Hi @[Walter White](walter) aa" onChange={onChange}>
           <Mention trigger="@" data={users} />
         </Mentions>
@@ -730,18 +738,18 @@ describe('@mantine/core/Mentions', () => {
   });
 
   describe('accessibility', () => {
-    it('sets aria-invalid on the control when error is set', () => {
-      const { container } = render(<Mentions {...defaultProps} error="Required" />);
+    it('sets aria-invalid on the control when error is set', async () => {
+      const { container } = await renderWithAct(<Mentions {...defaultProps} error="Required" />);
       expect(getTextarea(container)).toHaveAttribute('aria-invalid', 'true');
     });
 
-    it('hides the highlighter from assistive technologies', () => {
-      const { container } = render(<Mentions {...defaultProps} />);
+    it('hides the highlighter from assistive technologies', async () => {
+      const { container } = await renderWithAct(<Mentions {...defaultProps} />);
       expect(getHighlighter(container)).toHaveAttribute('aria-hidden', 'true');
     });
 
     it('labels the suggestions listbox by default', async () => {
-      const { container } = render(
+      const { container } = await renderWithAct(
         <Mentions defaultValue="">
           <Mention trigger="@" data={users} />
         </Mentions>
@@ -751,7 +759,7 @@ describe('@mantine/core/Mentions', () => {
     });
 
     it('removes aria-activedescendant when there are no options', async () => {
-      const { container } = render(
+      const { container } = await renderWithAct(
         <Mentions defaultValue="" nothingFoundMessage="No users found">
           <Mention trigger="@" data={users} />
         </Mentions>
@@ -765,7 +773,7 @@ describe('@mantine/core/Mentions', () => {
     });
 
     it('does not set aria-activedescendant when an async source resolves to no items', async () => {
-      const { container } = render(
+      const { container } = await renderWithAct(
         <Mentions defaultValue="" nothingFoundMessage="No users found">
           <Mention trigger="@" data={async () => []} />
         </Mentions>
@@ -776,20 +784,22 @@ describe('@mantine/core/Mentions', () => {
       expect(textarea).not.toHaveAttribute('aria-activedescendant');
     });
 
-    it('exposes autocomplete accessibility attributes', () => {
-      const { container } = render(<Mentions {...defaultProps} />);
+    it('exposes autocomplete accessibility attributes', async () => {
+      const { container } = await renderWithAct(<Mentions {...defaultProps} />);
       const textarea = getTextarea(container);
       expect(textarea).toHaveAttribute('aria-autocomplete', 'list');
       expect(textarea).toHaveAttribute('aria-haspopup', 'listbox');
     });
 
-    it('uses the combobox role for single-line inputs', () => {
-      const { container } = render(<Mentions {...defaultProps} singleLine />);
+    it('uses the combobox role for single-line inputs', async () => {
+      const { container } = await renderWithAct(<Mentions {...defaultProps} singleLine />);
       expect(container.querySelector('input')).toHaveAttribute('role', 'combobox');
     });
 
-    it('does not advertise a popup when no suggestions can open', () => {
-      const { container, rerender } = render(<Mentions {...defaultProps} mode="static" />);
+    it('does not advertise a popup when no suggestions can open', async () => {
+      const { container, rerender } = await renderWithAct(
+        <Mentions {...defaultProps} mode="static" />
+      );
       expect(getTextarea(container)).not.toHaveAttribute('aria-haspopup');
       expect(getTextarea(container)).not.toHaveAttribute('aria-autocomplete');
       rerender(<Mentions {...defaultProps} disabled />);
@@ -800,7 +810,7 @@ describe('@mantine/core/Mentions', () => {
 
   describe('IME composition', () => {
     it('does not move the selection with ArrowDown while composing', async () => {
-      const { container } = render(
+      const { container } = await renderWithAct(
         <Mentions defaultValue="">
           <Mention trigger="@" data={users} />
         </Mentions>
@@ -818,7 +828,7 @@ describe('@mantine/core/Mentions', () => {
 
     it('does not insert an option on Enter with keyCode 229', async () => {
       const onChange = jest.fn();
-      const { container } = render(
+      const { container } = await renderWithAct(
         <Mentions defaultValue="" onChange={onChange}>
           <Mention trigger="@" data={users} />
         </Mentions>
@@ -835,9 +845,9 @@ describe('@mantine/core/Mentions', () => {
       expect(onChange.mock.calls.some((call) => call[0].reason.type === 'mention-add')).toBe(false);
     });
 
-    it('does not accept the inline suggestion on Enter while composing', () => {
+    it('does not accept the inline suggestion on Enter while composing', async () => {
       const onChange = jest.fn();
-      const { container } = render(
+      const { container } = await renderWithAct(
         <Mentions defaultValue="" onChange={onChange} suggestionsDisplay="inline">
           <Mention trigger="@" data={users} />
         </Mentions>
@@ -857,14 +867,14 @@ describe('@mantine/core/Mentions', () => {
 
   describe('inline suggestions', () => {
     const renderInline = (props: Partial<MentionsProps> = {}, data: any = users) =>
-      render(
+      renderWithAct(
         <Mentions defaultValue="" suggestionsDisplay="inline" {...props}>
           <Mention trigger="@" data={data} />
         </Mentions>
       );
 
-    it('renders the ghost only when the top suggestion starts with the query', () => {
-      const { container } = renderInline();
+    it('renders the ghost only when the top suggestion starts with the query', async () => {
+      const { container } = await renderInline();
       const textarea = getTextarea(container);
       typeInto(textarea, '@wa');
       expect(getGhost(container)).toHaveTextContent('lter White');
@@ -880,7 +890,7 @@ describe('@mantine/core/Mentions', () => {
             resolve = r;
           })
       );
-      const { container } = renderInline({}, data);
+      const { container } = await renderInline({}, data);
       const textarea = getTextarea(container);
       typeInto(textarea, '@w');
       await waitFor(() => expect(data).toHaveBeenCalledTimes(1));
@@ -893,8 +903,8 @@ describe('@mantine/core/Mentions', () => {
       expect(getGhost(container)).toBeInTheDocument();
     });
 
-    it('dismisses the ghost with Escape until the query changes', () => {
-      const { container } = renderInline();
+    it('dismisses the ghost with Escape until the query changes', async () => {
+      const { container } = await renderInline();
       const textarea = getTextarea(container);
       typeInto(textarea, '@wa');
       expect(getGhost(container)).toBeInTheDocument();
@@ -905,8 +915,8 @@ describe('@mantine/core/Mentions', () => {
       expect(getGhost(container)).toBeInTheDocument();
     });
 
-    it('clears the query on blur', () => {
-      const { container } = renderInline();
+    it('clears the query on blur', async () => {
+      const { container } = await renderInline();
       const textarea = getTextarea(container);
       typeInto(textarea, '@wa');
       expect(getGhost(container)).toBeInTheDocument();
@@ -914,9 +924,9 @@ describe('@mantine/core/Mentions', () => {
       expect(getGhost(container)).not.toBeInTheDocument();
     });
 
-    it('renders the ghost only when the caret is at the end of its line', () => {
+    it('renders the ghost only when the caret is at the end of its line', async () => {
       const onChange = jest.fn();
-      const { container } = renderInline({ onChange, defaultValue: ' more' });
+      const { container } = await renderInline({ onChange, defaultValue: ' more' });
       const textarea = getTextarea(container);
       setCaret(textarea, 0);
       typeInto(textarea, '@wa more', 3);
@@ -926,26 +936,26 @@ describe('@mantine/core/Mentions', () => {
       expect(onChange.mock.calls.some((call) => call[0].reason.type === 'mention-add')).toBe(false);
     });
 
-    it('renders the ghost when the text after the caret starts on the next line', () => {
-      const { container } = renderInline({ defaultValue: '\nmore' });
+    it('renders the ghost when the text after the caret starts on the next line', async () => {
+      const { container } = await renderInline({ defaultValue: '\nmore' });
       const textarea = getTextarea(container);
       setCaret(textarea, 0);
       typeInto(textarea, '@wa\nmore', 3);
       expect(getGhost(container)).toBeInTheDocument();
     });
 
-    it('accepts the ghost with Enter', () => {
+    it('accepts the ghost with Enter', async () => {
       const onChange = jest.fn();
-      const { container } = renderInline({ onChange });
+      const { container } = await renderInline({ onChange });
       const textarea = getTextarea(container);
       typeInto(textarea, '@wa');
       expect(fireEvent.keyDown(textarea, { key: 'Enter', code: 'Enter' })).toBe(false);
       expect(onChange.mock.calls.at(-1)?.[0].value).toBe('@[Walter White](walter)');
     });
 
-    it('accepts the ghost with ArrowRight only at the end of the text', () => {
+    it('accepts the ghost with ArrowRight only at the end of the text', async () => {
       const onChange = jest.fn();
-      const { container } = renderInline({ onChange, defaultValue: '\nmore' });
+      const { container } = await renderInline({ onChange, defaultValue: '\nmore' });
       const textarea = getTextarea(container);
       setCaret(textarea, 0);
       typeInto(textarea, '@wa\nmore', 3);
@@ -959,8 +969,8 @@ describe('@mantine/core/Mentions', () => {
   describe('clipboard', () => {
     const value = 'Hi @[Walter White](walter) there';
 
-    it('copies plain text and the markup slice', () => {
-      const { container } = render(
+    it('copies plain text and the markup slice', async () => {
+      const { container } = await renderWithAct(
         <Mentions defaultValue={value}>
           <Mention trigger="@" data={users} />
         </Mentions>
@@ -977,9 +987,9 @@ describe('@mantine/core/Mentions', () => {
       );
     });
 
-    it('cuts the selection and emits the cut reason', () => {
+    it('cuts the selection and emits the cut reason', async () => {
       const onChange = jest.fn();
-      const { container } = render(
+      const { container } = await renderWithAct(
         <Mentions defaultValue={value} onChange={onChange}>
           <Mention trigger="@" data={users} />
         </Mentions>
@@ -997,9 +1007,9 @@ describe('@mantine/core/Mentions', () => {
       expect(textarea.selectionStart).toBe(2);
     });
 
-    it('pastes markup from the custom clipboard type', () => {
+    it('pastes markup from the custom clipboard type', async () => {
       const onChange = jest.fn();
-      const { container } = render(
+      const { container } = await renderWithAct(
         <Mentions defaultValue="Hey " onChange={onChange}>
           <Mention trigger="@" data={users} />
         </Mentions>
@@ -1020,8 +1030,8 @@ describe('@mantine/core/Mentions', () => {
       expect(textarea.selectionStart).toBe(17);
     });
 
-    it('falls back to the default paste without the custom type', () => {
-      const { container } = render(
+    it('falls back to the default paste without the custom type', async () => {
+      const { container } = await renderWithAct(
         <Mentions defaultValue="Hey ">
           <Mention trigger="@" data={users} />
         </Mentions>
@@ -1035,9 +1045,9 @@ describe('@mantine/core/Mentions', () => {
       expect(event.defaultPrevented).toBe(false);
     });
 
-    it('respects user handlers that prevent default', () => {
+    it('respects user handlers that prevent default', async () => {
       const onCopy = jest.fn((event: React.ClipboardEvent) => event.preventDefault());
-      const { container } = render(
+      const { container } = await renderWithAct(
         <Mentions defaultValue={value} onCopy={onCopy}>
           <Mention trigger="@" data={users} />
         </Mentions>
@@ -1050,8 +1060,8 @@ describe('@mantine/core/Mentions', () => {
       expect(clipboardData.store['application/x-mantine-mentions']).toBeUndefined();
     });
 
-    it('writes only plain text when the selection starts or ends inside a mention', () => {
-      const { container } = render(
+    it('writes only plain text when the selection starts or ends inside a mention', async () => {
+      const { container } = await renderWithAct(
         <Mentions defaultValue={value}>
           <Mention trigger="@" data={users} />
         </Mentions>
@@ -1064,9 +1074,9 @@ describe('@mantine/core/Mentions', () => {
       expect(clipboardData.store['application/x-mantine-mentions']).toBeUndefined();
     });
 
-    it('writes only plain text when the selection contains no mentions', () => {
+    it('writes only plain text when the selection contains no mentions', async () => {
       const onChange = jest.fn();
-      const { container } = render(
+      const { container } = await renderWithAct(
         <Mentions defaultValue="Hey @[Walter White](walter)" onChange={onChange}>
           <Mention trigger="@" data={users} />
         </Mentions>
@@ -1084,9 +1094,9 @@ describe('@mantine/core/Mentions', () => {
       expect(onChange.mock.calls.at(-1)?.[0].value).toBe(' @[Walter White](walter)');
     });
 
-    it('cuts whole mentions and carries them to the clipboard', () => {
+    it('cuts whole mentions and carries them to the clipboard', async () => {
       const onChange = jest.fn();
-      const { container } = render(
+      const { container } = await renderWithAct(
         <Mentions defaultValue={value} onChange={onChange}>
           <Mention trigger="@" data={users} />
         </Mentions>
@@ -1104,9 +1114,9 @@ describe('@mantine/core/Mentions', () => {
       expect(onChange.mock.calls.at(-1)?.[0].value).toBe(value);
     });
 
-    it('uses the default paste when the target sources cannot parse the markup', () => {
+    it('uses the default paste when the target sources cannot parse the markup', async () => {
       const onChange = jest.fn();
-      const { container } = render(
+      const { container } = await renderWithAct(
         <Mentions defaultValue="" onChange={onChange}>
           <Mention trigger="@" data={users} />
         </Mentions>
@@ -1124,9 +1134,9 @@ describe('@mantine/core/Mentions', () => {
       expect(onChange).not.toHaveBeenCalled();
     });
 
-    it('uses the default paste when the pasted markup would exceed maxLength', () => {
+    it('uses the default paste when the pasted markup would exceed maxLength', async () => {
       const onChange = jest.fn();
-      const { container } = render(
+      const { container } = await renderWithAct(
         <Mentions defaultValue="Hey " onChange={onChange} maxLength={10}>
           <Mention trigger="@" data={users} />
         </Mentions>
@@ -1144,9 +1154,9 @@ describe('@mantine/core/Mentions', () => {
       expect(onChange).not.toHaveBeenCalled();
     });
 
-    it('replaces pasted newlines with spaces in single-line mode', () => {
+    it('replaces pasted newlines with spaces in single-line mode', async () => {
       const onChange = jest.fn();
-      const { container } = render(
+      const { container } = await renderWithAct(
         <Mentions singleLine defaultValue="" onChange={onChange}>
           <Mention trigger="@" data={users} />
         </Mentions>
@@ -1178,8 +1188,8 @@ describe('@mantine/core/Mentions', () => {
   });
 
   describe('mention chip clicks', () => {
-    it('keeps focus in the control and moves the caret to a mention boundary', () => {
-      const { container } = render(
+    it('keeps focus in the control and moves the caret to a mention boundary', async () => {
+      const { container } = await renderWithAct(
         <Mentions
           defaultValue="Hi @[Walter White](walter) there"
           renderMention={({ display }) => <span>{display}</span>}
@@ -1198,9 +1208,9 @@ describe('@mantine/core/Mentions', () => {
       ['static', { mode: 'static' as const }],
       ['readOnly', { readOnly: true }],
       ['disabled', { disabled: true }],
-    ])('ignores chip presses in a %s field', (_name, props) => {
+    ])('ignores chip presses in a %s field', async (_name, props) => {
       const onSelectionChange = jest.fn();
-      const { container } = render(
+      const { container } = await renderWithAct(
         <Mentions
           defaultValue="Hi @[Walter White](walter) there"
           renderMention={({ display }) => <span>{display}</span>}
@@ -1217,8 +1227,8 @@ describe('@mantine/core/Mentions', () => {
       expect(onSelectionChange).not.toHaveBeenCalled();
     });
 
-    it('lets interactive content inside renderMention receive the mousedown', () => {
-      const { container } = render(
+    it('lets interactive content inside renderMention receive the mousedown', async () => {
+      const { container } = await renderWithAct(
         <Mentions
           defaultValue="Hi @[Walter White](walter) there"
           renderMention={({ display }) => <button type="button">{display}</button>}
@@ -1230,9 +1240,9 @@ describe('@mantine/core/Mentions', () => {
       expect(fireEvent.mouseDown(button)).toBe(true);
     });
 
-    it('calls onSelectionChange when a mention chip click moves the caret', () => {
+    it('calls onSelectionChange when a mention chip click moves the caret', async () => {
       const onSelectionChange = jest.fn();
-      const { container } = render(
+      const { container } = await renderWithAct(
         <Mentions
           defaultValue="Hi @[Walter White](walter) there"
           renderMention={({ display }) => <span>{display}</span>}
@@ -1253,7 +1263,7 @@ describe('@mantine/core/Mentions', () => {
   describe('Escape inside a modal', () => {
     it('closes the dropdown first and the modal on the next Escape', async () => {
       const onClose = jest.fn();
-      render(
+      await renderWithAct(
         <Modal opened onClose={onClose} title="Modal">
           <Mentions defaultValue="">
             <Mention trigger="@" data={users} />
@@ -1273,9 +1283,9 @@ describe('@mantine/core/Mentions', () => {
       expect(onClose).toHaveBeenCalled();
     });
 
-    it('dismisses the inline ghost without closing the modal', () => {
+    it('dismisses the inline ghost without closing the modal', async () => {
       const onClose = jest.fn();
-      render(
+      await renderWithAct(
         <Modal opened onClose={onClose} title="Modal">
           <Mentions defaultValue="" suggestionsDisplay="inline">
             <Mention trigger="@" data={users} />
