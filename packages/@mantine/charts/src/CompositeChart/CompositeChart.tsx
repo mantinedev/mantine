@@ -35,6 +35,7 @@ import {
 } from '@mantine/core';
 import { ChartBrush } from '../ChartBrush';
 import { ChartLegend, ChartLegendStylesNames } from '../ChartLegend';
+import { getLegendPosition } from '../utils';
 import { ChartTooltip, ChartTooltipStylesNames } from '../ChartTooltip';
 import { PointLabel } from '../PointLabel/PointLabel';
 import type {
@@ -479,7 +480,7 @@ export const CompositeChart = factory<CompositeChartFactory>((_props) => {
                 <ChartLegend
                   payload={payload.payload}
                   onHighlight={setHighlightedArea}
-                  legendPosition={legendProps?.verticalAlign || 'top'}
+                  legendPosition={getLegendPosition(legendProps, 'top')}
                   classNames={resolvedClassNames}
                   styles={resolvedStyles}
                   series={series}

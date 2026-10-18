@@ -35,6 +35,7 @@ import {
 } from '@mantine/core';
 import { ChartBrush } from '../ChartBrush';
 import { ChartLegend, ChartLegendStylesNames } from '../ChartLegend';
+import { getLegendPosition } from '../utils';
 import { ChartTooltip, ChartTooltipStylesNames } from '../ChartTooltip';
 import type { BaseChartStylesNames, ChartSeries, GridChartBaseProps } from '../types';
 import classes from '../grid-chart.module.css';
@@ -432,7 +433,7 @@ export const BarChart = factory<BarChartFactory>((_props) => {
                 <ChartLegend
                   payload={payload.payload}
                   onHighlight={setHighlightedArea}
-                  legendPosition={legendProps?.verticalAlign || 'top'}
+                  legendPosition={getLegendPosition(legendProps, 'top')}
                   classNames={resolvedClassNames}
                   styles={resolvedStyles}
                   series={series}

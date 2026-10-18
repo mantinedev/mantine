@@ -31,6 +31,7 @@ import {
   useStyles,
 } from '@mantine/core';
 import { ChartLegend, ChartLegendStylesNames } from '../ChartLegend';
+import { getLegendPosition } from '../utils';
 import { ChartTooltip, ChartTooltipStylesNames } from '../ChartTooltip';
 import { BaseChartStylesNames, GridChartBaseProps } from '../types';
 import classes from '../grid-chart.module.css';
@@ -440,7 +441,7 @@ export const ScatterChart = factory<ScatterChartFactory>((_props) => {
                     dataKey: data[index].name,
                   }))}
                   onHighlight={setHighlightedArea}
-                  legendPosition={legendProps?.verticalAlign || 'top'}
+                  legendPosition={getLegendPosition(legendProps, 'top')}
                   classNames={resolvedClassNames}
                   styles={resolvedStyles}
                   series={data}
