@@ -35,9 +35,9 @@ import {
 } from '@mantine/core';
 import { ChartBrush } from '../ChartBrush';
 import { ChartLegend, ChartLegendStylesNames } from '../ChartLegend';
-import { getLegendPosition } from '../utils';
 import { ChartTooltip, ChartTooltipStylesNames } from '../ChartTooltip';
 import type { BaseChartStylesNames, ChartSeries, GridChartBaseProps } from '../types';
+import { getLegendPosition } from '../utils';
 import classes from '../grid-chart.module.css';
 
 function valueToPercent(value: number) {

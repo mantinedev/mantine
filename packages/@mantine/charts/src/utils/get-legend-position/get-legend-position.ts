@@ -8,5 +8,9 @@ export function getLegendPosition(
     return legendProps.position;
   }
 
+  if (legendProps?.position != null) {
+    return 'middle';
+  }
+
   return legendProps?.verticalAlign || defaultPosition;
 }

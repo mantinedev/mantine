@@ -34,13 +34,13 @@ import { ChartBrush } from '../ChartBrush';
 import { ChartLegend, ChartLegendStylesNames } from '../ChartLegend';
 import { ChartTooltip, ChartTooltipStylesNames } from '../ChartTooltip';
 import { PointLabel } from '../PointLabel/PointLabel';
-import { getLegendPosition } from '../utils';
 import type {
   BaseChartStylesNames,
   ChartSeries,
   GridChartBaseProps,
   MantineChartDotProps,
 } from '../types';
+import { getLegendPosition } from '../utils';
 import classes from '../grid-chart.module.css';
 
 export type LineChartType = 'default' | 'gradient';

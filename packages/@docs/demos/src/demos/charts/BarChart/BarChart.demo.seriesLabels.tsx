@@ -14,7 +14,7 @@ function Demo() {
       dataKey="month"
       type="stacked"
       withLegend
-      legendProps={{ verticalAlign: 'bottom' }}
+      legendProps={{ position: 'bottom' }}
       series={[
         { name: 'Smartphones', label: 'Smartphones sales', color: 'violet.6' },
         { name: 'Laptops', label: 'Laptops sales', color: 'blue.6' },
@@ -33,7 +33,7 @@ function Demo() {
       dataKey="month"
       type="stacked"
       withLegend
-      legendProps={{ verticalAlign: 'bottom' }}
+      legendProps={{ position: 'bottom' }}
       series={[
         { name: 'Smartphones', label: 'Phone sales', color: 'violet.6' },
         { name: 'Laptops', label: 'Laptop sales', color: 'blue.6' },

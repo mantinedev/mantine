@@ -31,9 +31,9 @@ import {
   useStyles,
 } from '@mantine/core';
 import { ChartLegend, ChartLegendStylesNames } from '../ChartLegend';
-import { getLegendPosition } from '../utils';
 import { ChartTooltip, ChartTooltipStylesNames } from '../ChartTooltip';
 import { BaseChartStylesNames, GridChartBaseProps } from '../types';
+import { getLegendPosition } from '../utils';
 import classes from '../grid-chart.module.css';
 
 export interface ScatterChartSeries {

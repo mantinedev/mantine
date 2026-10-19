@@ -27,8 +27,8 @@ import {
   useStyles,
 } from '@mantine/core';
 import { ChartLegend, ChartLegendStylesNames } from '../ChartLegend';
-import { getLegendPosition } from '../utils';
 import { ChartTooltip, ChartTooltipStylesNames } from '../ChartTooltip/ChartTooltip';
+import { getLegendPosition } from '../utils';
 import classes from './FunnelChart.module.css';
 
 export interface FunnelChartCell {

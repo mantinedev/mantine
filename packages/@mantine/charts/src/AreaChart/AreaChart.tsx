@@ -31,7 +31,6 @@ import {
 } from '@mantine/core';
 import { ChartBrush } from '../ChartBrush';
 import { ChartLegend, ChartLegendStylesNames } from '../ChartLegend';
-import { getLegendPosition } from '../utils';
 import { ChartTooltip, ChartTooltipStylesNames } from '../ChartTooltip';
 import { PointLabel } from '../PointLabel/PointLabel';
 import type {
@@ -40,6 +39,7 @@ import type {
   GridChartBaseProps,
   MantineChartDotProps,
 } from '../types';
+import { getLegendPosition } from '../utils';
 import { AreaGradient } from './AreaGradient';
 import { AreaSplit } from './AreaSplit';
 import { getDefaultSplitOffset } from './get-split-offset';

@@ -31,9 +31,9 @@ import {
   useStyles,
 } from '@mantine/core';
 import { ChartLegend, ChartLegendStylesNames } from '../ChartLegend';
-import { getLegendPosition } from '../utils';
 import { ChartTooltip, ChartTooltipStylesNames } from '../ChartTooltip';
 import { MantineChartDotProps } from '../types';
+import { getLegendPosition } from '../utils';
 import classes from './RadarChart.module.css';
 
 export interface RadarChartSeries {
