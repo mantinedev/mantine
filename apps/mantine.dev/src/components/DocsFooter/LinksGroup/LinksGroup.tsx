@@ -18,6 +18,7 @@ export function LinksGroup({ data, title }: LinksGroupProps) {
       component={link.type === 'next' ? (Link as unknown as 'a') : 'a'}
       href={link.link}
       key={index}
+      {...(link.type === 'next' ? { prefetch: false } : {})}
     >
       {link.label}
     </Text>

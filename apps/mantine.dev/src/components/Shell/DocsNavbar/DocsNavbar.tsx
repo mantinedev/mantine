@@ -26,6 +26,7 @@ export function CategoriesList({ categories, hideEmptyCategories }: CategoriesLi
       <Link
         key={page.slug}
         href={page.slug}
+        prefetch={false}
         data-active={page.slug === router.pathname || undefined}
         className={classes.link}
         onClick={ctx.closeNavbar}

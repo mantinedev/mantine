@@ -1,3 +1,4 @@
+import Head from 'next/head';
 import Link from 'next/link';
 import { ArrowUpRightIcon } from '@phosphor-icons/react';
 import { Box, Button } from '@mantine/core';
@@ -10,9 +11,14 @@ import darkImg from './images/dark-collage.webp';
 import lightImg from './images/light-collage.webp';
 import classes from './HomePageJumbotron.module.css';
 
+const preloadScript = `(function(){try{var s=localStorage.getItem('mantine-color-scheme-value');if(s==='auto'){s=window.matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light'}var l=document.createElement('link');l.rel='preload';l.as='image';l.fetchPriority='high';l.media='(min-width: 62em)';l.href=s==='dark'?'${darkImg.src}':'${lightImg.src}';document.head.appendChild(l)}catch(e){}})()`;
+
 export function HomePageJumbotron() {
   return (
     <section className={classes.root}>
+      <Head>
+        <script dangerouslySetInnerHTML={{ __html: preloadScript }} />
+      </Head>
       <div className={classes.overlay} />
       <HomePageContainer className={classes.container}>
         <Box

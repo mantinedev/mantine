@@ -26,7 +26,12 @@ export function HomePageDarkColorScheme() {
         <HomePageTitle order={2}>Dark color scheme</HomePageTitle>
 
         <SimpleGrid cols={{ md: 2 }} spacing={50} verticalSpacing="xl" className={classes.demo}>
-          <Image src={demo.src} className={classes.image} radius="md" />
+          <Image
+            src={demo.src}
+            className={classes.image}
+            radius="md"
+            alt="Mantine components in dark color scheme"
+          />
 
           <div>
             <HomePageDescription className={classes.description}>

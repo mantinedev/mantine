@@ -50,7 +50,7 @@ export function DocsHeader({ headerControlsProps, withNav, fluid }: DocsHeaderPr
   const ctx = useShellContext();
 
   const mainLinks = mainLinksData.map((link) => (
-    <Link key={link.label} href={link.link} className={classes.mainLink}>
+    <Link key={link.label} href={link.link} prefetch={false} className={classes.mainLink}>
       {link.label}
     </Link>
   ));
@@ -59,6 +59,7 @@ export function DocsHeader({ headerControlsProps, withNav, fluid }: DocsHeaderPr
     <Link
       key={link.label}
       href={link.link}
+      prefetch={false}
       className={classes.navigationLink}
       data-active={activeCategory === link.category || undefined}
     >
@@ -93,10 +94,16 @@ export function DocsHeader({ headerControlsProps, withNav, fluid }: DocsHeaderPr
               lineSize={2}
               className={classes.burger}
               onClick={ctx.toggleNavbar}
+              aria-label={ctx.navbarOpened ? 'Close navigation' : 'Open navigation'}
             />
 
             <div className={classes.headerMainSection}>
-              <Link href="/" className={classes.logoLink} aria-label="Mantine home page">
+              <Link
+                href="/"
+                prefetch={false}
+                className={classes.logoLink}
+                aria-label="Mantine home page"
+              >
                 <MantineLogo size={32} />
               </Link>
               <div className={classes.mainLinks}>{mainLinks}</div>

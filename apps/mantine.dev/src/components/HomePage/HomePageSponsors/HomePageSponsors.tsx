@@ -27,7 +27,6 @@ export function HomePageSponsors() {
           href="https://opencollective.com/mantinedev"
           target="_blank"
           rel="noreferrer"
-          aria-label="You? Sponsor Mantine"
           className={classes.sponsor}
         >
           <span className={classes.name}>You? ❤️</span>

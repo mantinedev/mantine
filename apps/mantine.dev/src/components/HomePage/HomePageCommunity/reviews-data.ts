@@ -15,7 +15,7 @@ export const reviews: ReviewData[] = [
     link: 'https://github.com/orgs/mantinedev/discussions/5783',
     author: {
       nickname: 'smsuraj100',
-      avatar: 'https://avatars.githubusercontent.com/u/16137686?v=4',
+      avatar: 'https://avatars.githubusercontent.com/u/16137686?s=60&v=4',
     },
   },
   {
@@ -24,7 +24,7 @@ export const reviews: ReviewData[] = [
     link: 'https://github.com/orgs/mantinedev/discussions/6150',
     author: {
       nickname: 'sideral',
-      avatar: 'https://avatars.githubusercontent.com/u/192025?v=4',
+      avatar: 'https://avatars.githubusercontent.com/u/192025?s=60&v=4',
     },
   },
   {
@@ -33,7 +33,7 @@ export const reviews: ReviewData[] = [
     link: 'https://github.com/orgs/mantinedev/discussions/5504',
     author: {
       nickname: 'leighton-carr',
-      avatar: 'https://avatars.githubusercontent.com/u/18201458?v=4',
+      avatar: 'https://avatars.githubusercontent.com/u/18201458?s=60&v=4',
     },
   },
   {
@@ -42,7 +42,7 @@ export const reviews: ReviewData[] = [
     link: 'https://github.com/orgs/mantinedev/discussions/3741',
     author: {
       nickname: 'Gitgud6969',
-      avatar: 'https://avatars.githubusercontent.com/u/57042505?v=4',
+      avatar: 'https://avatars.githubusercontent.com/u/57042505?s=60&v=4',
     },
   },
   {
@@ -51,7 +51,7 @@ export const reviews: ReviewData[] = [
     link: 'https://github.com/orgs/mantinedev/discussions/5456',
     author: {
       nickname: 'SeeSharpCode',
-      avatar: 'https://avatars.githubusercontent.com/u/10228483?v=4',
+      avatar: 'https://avatars.githubusercontent.com/u/10228483?s=60&v=4',
     },
   },
   {
@@ -60,7 +60,7 @@ export const reviews: ReviewData[] = [
     link: 'https://github.com/orgs/mantinedev/discussions/259',
     author: {
       nickname: 'OmkoBass',
-      avatar: 'https://avatars.githubusercontent.com/u/40026131?v=4',
+      avatar: 'https://avatars.githubusercontent.com/u/40026131?s=60&v=4',
     },
   },
 ];

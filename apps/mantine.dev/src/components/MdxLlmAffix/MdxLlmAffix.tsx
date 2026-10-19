@@ -52,6 +52,7 @@ export function MdxLlmAffix({ meta }: MdxLlmAffixProps) {
               component="a"
               href={llmUrl}
               target="_blank"
+              aria-label="Open LLM optimized docs"
               variant="default"
               size={44}
               className={classes.control}
@@ -69,6 +70,7 @@ export function MdxLlmAffix({ meta }: MdxLlmAffixProps) {
               size={44}
               className={classes.control}
               onClick={handleCopy}
+              aria-label="Copy LLM optimized docs"
             >
               {copied ? (
                 <CheckIcon size={22} className={classes.icon} data-color="teal" />
@@ -87,6 +89,7 @@ export function MdxLlmAffix({ meta }: MdxLlmAffixProps) {
               href="https://github.com/orgs/mantinedev/discussions/new?category=ai-and-llm-usage-feedback"
               target="_blank"
               rel="noopener noreferrer"
+              aria-label="Submit LLM documentation feedback"
               variant="default"
               size={44}
               className={classes.control}
