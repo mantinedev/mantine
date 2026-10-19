@@ -395,7 +395,10 @@ export const PhoneInput = factory<PhoneInputFactory>((_props) => {
 
   const formattedValue =
     _value === '+' ? '+' : selectedCountry ? formatPhoneNumber(_value, selectedCountry) : _value;
-  const displayValue = toDisplayValue(formattedValue, selectedCountry);
+  const displayValue =
+    _value === '' && international && selectedCountry
+      ? formatPhoneNumber(`+${selectedCountry.dialCode}`, selectedCountry)
+      : toDisplayValue(formattedValue, selectedCountry);
 
   const preferredIso2Set = useMemo(
     () => new Set(preferredList.map((c) => c.iso2)),

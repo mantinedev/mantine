@@ -1,11 +1,10 @@
-import type { Ref } from 'react';
 import { Group, NumberInput, Stack, TextInput } from '@mantine/core';
 import { PositionsList } from './PositionsList';
 import type { JobApplicationFormType } from './types';
 
 interface ExperienceStepProps {
   form: JobApplicationFormType;
-  addPositionRef: Ref<HTMLButtonElement>;
+  addPositionRef: React.Ref<HTMLButtonElement>;
 }
 
 export function ExperienceStep({ form, addPositionRef }: ExperienceStepProps) {

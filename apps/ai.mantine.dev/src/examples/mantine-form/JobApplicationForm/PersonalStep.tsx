@@ -19,14 +19,20 @@ export function PersonalStep({ form }: { form: JobApplicationFormType }) {
         />
       </Group>
       <TextInput
+        type="email"
         label="Email"
         placeholder="you@example.com"
-        type="email"
         withAsterisk
         {...form.getInputProps('email')}
       />
-      <PhoneInput label="Phone" placeholder="Phone" {...form.getInputProps('phone')} />
+      <PhoneInput
+        label="Phone"
+        placeholder="Phone"
+        defaultCountry="us"
+        {...form.getInputProps('phone')}
+      />
       <TextInput
+        type="url"
         label="LinkedIn URL"
         placeholder="https://www.linkedin.com/in/your-name"
         {...form.getInputProps('linkedinUrl')}

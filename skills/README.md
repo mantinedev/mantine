@@ -54,12 +54,26 @@ Example prompts:
 - "Create a StatCard component with variants, sizes and Styles API that can be configured from the theme"
 - "Convert src/AvatarStack.tsx to a Mantine-style component: CSS module, CSS variables, no inline styles"
 
+### `mantine-ui`
+
+Visual and component decisions for interfaces built with Mantine: which component fits a piece of data, button and action variants, text hierarchy, surfaces and nesting, lists of repeated rows, icons and spacing. Use it together with the task skills (`mantine-form`, `mantine-combobox`): they cover the logic, `mantine-ui` covers how it looks.
+
+```sh
+npx skills add https://github.com/mantinedev/skills --skill mantine-ui
+```
+
+Example prompts:
+
+- "Review this settings page and make it consistent with the Mantine look"
+- "Build a pricing table with three plans, one of them highlighted"
+
 ## Install All Skills
 
 ```sh
 npx skills add https://github.com/mantinedev/skills --skill mantine-combobox
 npx skills add https://github.com/mantinedev/skills --skill mantine-form
 npx skills add https://github.com/mantinedev/skills --skill mantine-custom-components
+npx skills add https://github.com/mantinedev/skills --skill mantine-ui
 ```
 
 ## Maintainers

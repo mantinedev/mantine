@@ -1,6 +1,13 @@
 import type { SkillExample } from '../types';
 import jobApplicationFormCode from './JobApplicationForm/code.json';
 import { JobApplicationForm } from './JobApplicationForm/JobApplicationForm';
+import type { JobApplicationValues } from './JobApplicationForm/types';
+
+function dateInDays(days: number) {
+  const date = new Date();
+  date.setDate(date.getDate() + days);
+  return date.toISOString().slice(0, 10);
+}
 
 export const FORM_EXAMPLES: SkillExample[] = [
   {
@@ -40,32 +47,27 @@ Write tests for the component.`,
     component: JobApplicationForm,
     code: jobApplicationFormCode as SkillExample['code'],
     fill: async (filler) => {
-      if (filler.has('First name')) {
-        await filler.type('First name', 'Ada');
-        await filler.type('Last name', 'Lovelace');
-        await filler.type('Email', 'ada@example.com');
-        await filler.type('Phone', '2025550123');
-        await filler.type('LinkedIn URL', 'https://linkedin.com/in/ada');
-        return;
-      }
-
-      if (filler.has('Current title')) {
-        await filler.type('Current title', 'Staff engineer');
-        await filler.type('Years of experience', '12');
-        await filler.type('Company', 'Analytical Engines');
-        await filler.type('Title', 'Programmer');
-        await filler.pickYearRange('Years', 2021, 2024);
-        return;
-      }
-
-      if (filler.has('Earliest start date')) {
-        const nextWeek = new Date();
-        nextWeek.setDate(nextWeek.getDate() + 7);
-        await filler.pickDate('Earliest start date', nextWeek);
-        await filler.type('Expected salary', '120000');
-        await filler.click('Hybrid');
-        await filler.type('Notes', 'Available for a call any weekday after 2pm.');
-      }
+      filler.setValues<JobApplicationValues>('job-application', {
+        firstName: 'Ada',
+        lastName: 'Lovelace',
+        email: 'ada@example.com',
+        phone: '+12025550123',
+        linkedinUrl: 'https://linkedin.com/in/ada',
+        currentTitle: 'Staff engineer',
+        yearsOfExperience: 12,
+        positions: [
+          {
+            id: 'analytical-engines',
+            company: 'Analytical Engines',
+            title: 'Programmer',
+            years: ['2021-01-01', '2024-01-01'],
+          },
+        ],
+        startDate: dateInDays(7),
+        expectedSalary: 120000,
+        workArrangement: 'hybrid',
+        notes: 'Available for a call any weekday after 2pm.',
+      });
     },
   },
 ];

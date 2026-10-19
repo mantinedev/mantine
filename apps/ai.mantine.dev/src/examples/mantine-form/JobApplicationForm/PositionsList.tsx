@@ -1,18 +1,15 @@
-import dayjs from 'dayjs';
-import type { Ref } from 'react';
-import { Button, CloseButton, Group, Input, Stack, Surface, Text, TextInput } from '@mantine/core';
+import { Button, CloseButton, Fieldset, Group, Input, Stack, Text, TextInput } from '@mantine/core';
 import { YearPickerInput } from '@mantine/dates';
 import type { JobApplicationFormType } from './types';
 import { createPosition } from './values';
 
 interface PositionsListProps {
   form: JobApplicationFormType;
-  addPositionRef: Ref<HTMLButtonElement>;
+  addPositionRef: React.Ref<HTMLButtonElement>;
 }
 
 export function PositionsList({ form, addPositionRef }: PositionsListProps) {
   const positions = form.useWatchValue('positions');
-  const currentYear = dayjs().format('YYYY-MM-DD');
 
   return (
     <Stack gap="xs">
@@ -21,40 +18,44 @@ export function PositionsList({ form, addPositionRef }: PositionsListProps) {
       {positions.length === 0 && <Text size="sm">No positions added</Text>}
 
       {positions.map((position, index) => (
-        <Surface key={position.id} level={0} withBorder p="md" radius="md">
-          <Group justify="space-between" mb="xs">
-            <Text size="sm" fw={500}>
-              Position {index + 1}
-            </Text>
+        <Fieldset
+          key={position.id}
+          legend={`Position ${index + 1}`}
+          aria-label={`Position ${index + 1}`}
+        >
+          <Group align="flex-start" wrap="nowrap">
+            <Stack gap="sm" style={{ flex: 1 }}>
+              <Group grow align="flex-start">
+                <TextInput
+                  label="Company"
+                  placeholder="Company"
+                  withAsterisk
+                  {...form.getInputProps(`positions.${index}.company`)}
+                />
+                <TextInput
+                  label="Title"
+                  placeholder="Title"
+                  withAsterisk
+                  {...form.getInputProps(`positions.${index}.title`)}
+                />
+              </Group>
+              <YearPickerInput
+                type="range"
+                label="Start and end year"
+                placeholder="Start and end year"
+                withAsterisk
+                allowSingleDateInRange
+                maxDate={new Date()}
+                {...form.getInputProps(`positions.${index}.years`)}
+              />
+            </Stack>
             <CloseButton
+              mt={24}
               aria-label={`Remove position ${index + 1}`}
               onClick={() => form.removeListItem('positions', index)}
             />
           </Group>
-          <Group grow align="flex-start">
-            <TextInput
-              label="Company"
-              placeholder="Company"
-              withAsterisk
-              {...form.getInputProps(`positions.${index}.company`)}
-            />
-            <TextInput
-              label="Title"
-              placeholder="Title"
-              withAsterisk
-              {...form.getInputProps(`positions.${index}.title`)}
-            />
-            <YearPickerInput
-              type="range"
-              label="Years"
-              placeholder="Start year – end year"
-              withAsterisk
-              allowSingleDateInRange
-              maxDate={currentYear}
-              {...form.getInputProps(`positions.${index}.years`)}
-            />
-          </Group>
-        </Surface>
+        </Fieldset>
       ))}
 
       {form.errors.positions && <Input.Error>{form.errors.positions}</Input.Error>}

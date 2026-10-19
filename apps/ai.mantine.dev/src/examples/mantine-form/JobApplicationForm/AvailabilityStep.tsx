@@ -1,8 +1,7 @@
-import dayjs from 'dayjs';
 import { Group, NumberInput, Radio, Stack, Text, Textarea } from '@mantine/core';
 import { DatePickerInput } from '@mantine/dates';
-import type { JobApplicationFormType, WorkMode } from './types';
-import { NOTES_MAX_LENGTH, WORK_MODE_LABELS } from './values';
+import type { JobApplicationFormType } from './types';
+import { NOTES_MAX_LENGTH, WORK_ARRANGEMENT_LABELS } from './values';
 
 export function AvailabilityStep({ form }: { form: JobApplicationFormType }) {
   const notes = form.useWatchValue('notes');
@@ -14,7 +13,7 @@ export function AvailabilityStep({ form }: { form: JobApplicationFormType }) {
           label="Earliest start date"
           placeholder="Pick a date"
           withAsterisk
-          minDate={dayjs().format('YYYY-MM-DD')}
+          minDate={new Date()}
           {...form.getInputProps('startDate')}
         />
         <NumberInput
@@ -29,15 +28,13 @@ export function AvailabilityStep({ form }: { form: JobApplicationFormType }) {
           {...form.getInputProps('expectedSalary')}
         />
       </Group>
-
-      <Radio.Group label="Work arrangement" withAsterisk {...form.getInputProps('workMode')}>
+      <Radio.Group label="Work arrangement" withAsterisk {...form.getInputProps('workArrangement')}>
         <Group mt="xs">
-          {(Object.keys(WORK_MODE_LABELS) as WorkMode[]).map((mode) => (
-            <Radio key={mode} value={mode} label={WORK_MODE_LABELS[mode]} />
+          {Object.entries(WORK_ARRANGEMENT_LABELS).map(([value, label]) => (
+            <Radio key={value} value={value} label={label} />
           ))}
         </Group>
       </Radio.Group>
-
       <Textarea
         label="Notes"
         placeholder="Anything else we should know"
@@ -46,8 +43,8 @@ export function AvailabilityStep({ form }: { form: JobApplicationFormType }) {
         maxRows={8}
         maxLength={NOTES_MAX_LENGTH}
         bottomSection={
-          <Text size="xs" ml="auto" px="sm">
-            {notes.length} / {NOTES_MAX_LENGTH}
+          <Text size="xs">
+            {notes.length}/{NOTES_MAX_LENGTH} characters
           </Text>
         }
         {...form.getInputProps('notes')}

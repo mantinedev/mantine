@@ -1,24 +1,13 @@
 import dayjs from 'dayjs';
-import {
-  formRootRule,
-  hasLength,
-  isEmail,
-  isInRange,
-  isNotEmpty,
-  isUrl,
-  when,
-  type FormRulesRecord,
-} from '@mantine/form';
+import { formRootRule, hasLength, isEmail, isInRange, isNotEmpty } from '@mantine/form';
 import { randomId } from '@mantine/hooks';
-import type { JobApplicationValues, Position, WorkMode } from './types';
+import type { JobApplicationValues, Position, WorkArrangement } from './types';
 
+export const STEP_LABELS = ['Personal', 'Experience', 'Availability', 'Review'] as const;
+export const REVIEW_STEP = STEP_LABELS.length - 1;
 export const NOTES_MAX_LENGTH = 500;
 
-export const STEPS = ['Personal', 'Experience', 'Availability', 'Review'] as const;
-
-export const REVIEW_STEP = STEPS.length - 1;
-
-export const WORK_MODE_LABELS: Record<WorkMode, string> = {
+export const WORK_ARRANGEMENT_LABELS: Record<WorkArrangement, string> = {
   remote: 'Remote',
   hybrid: 'Hybrid',
   'on-site': 'On-site',
@@ -40,83 +29,81 @@ export function getInitialValues(): JobApplicationValues {
     positions: [createPosition()],
     startDate: null,
     expectedSalary: '',
-    workMode: '',
+    workArrangement: '',
     notes: '',
   };
 }
 
-export const validationRules: FormRulesRecord<JobApplicationValues> = {
+function isValidUrl(value: string) {
+  try {
+    const url = new URL(value);
+    return (url.protocol === 'http:' || url.protocol === 'https:') && url.hostname.includes('.');
+  } catch {
+    return false;
+  }
+}
+
+// Keys are in visual order: the first key of the errors object is the first invalid field
+export const validationRules = {
   firstName: isNotEmpty('First name is required'),
   lastName: isNotEmpty('Last name is required'),
   email: isEmail('Enter a valid email'),
-  linkedinUrl: when(
-    (values) => values.linkedinUrl.trim() !== '',
-    isUrl('Enter a valid URL, for example https://www.linkedin.com/in/your-name')
-  ),
+  linkedinUrl: (value: string) =>
+    value.trim() === '' || isValidUrl(value.trim()) ? null : 'Enter a valid URL',
   currentTitle: isNotEmpty('Current title is required'),
   yearsOfExperience: isInRange({ min: 0, max: 50 }, 'Years of experience must be between 0 and 50'),
   positions: {
-    [formRootRule]: isNotEmpty('Add at least one position'),
+    [formRootRule]: (positions: Position[]) =>
+      positions.length === 0 ? 'Add at least one position' : null,
     company: isNotEmpty('Company is required'),
     title: isNotEmpty('Title is required'),
-    years: ([start, end]) => {
+    years: ([start, end]: Position['years']) => {
       if (!start || !end) {
-        return 'Select start and end year';
+        return 'Select start and end years';
       }
-      return dayjs(end).isBefore(start, 'year') ? 'End year cannot be before start year' : null;
+      return dayjs(end).year() < dayjs(start).year()
+        ? 'End year cannot be before start year'
+        : null;
     },
   },
-  startDate: (value) => {
+  startDate: (value: string | null) => {
     if (!value) {
-      return 'Select your earliest start date';
+      return 'Earliest start date is required';
     }
     return dayjs(value).isBefore(dayjs(), 'day') ? 'Start date cannot be in the past' : null;
   },
-  workMode: isNotEmpty('Select a work arrangement'),
+  workArrangement: isNotEmpty('Select a work arrangement'),
   notes: hasLength(
     { max: NOTES_MAX_LENGTH },
     `Notes must be ${NOTES_MAX_LENGTH} characters or less`
   ),
 };
 
-// Paths in visual order, so the first invalid one is the field to focus
+const STEP_ROOT_FIELDS: string[][] = [
+  ['firstName', 'lastName', 'email', 'linkedinUrl'],
+  ['currentTitle', 'yearsOfExperience', 'positions'],
+  ['startDate', 'workArrangement', 'notes'],
+];
+
 export function getStepFields(step: number, values: JobApplicationValues): string[] {
-  switch (step) {
-    case 0:
-      return ['firstName', 'lastName', 'email', 'phone', 'linkedinUrl'];
-    case 1:
-      return [
-        'currentTitle',
-        'yearsOfExperience',
-        ...values.positions.flatMap((_, index) => [
-          `positions.${index}.company`,
-          `positions.${index}.title`,
-          `positions.${index}.years`,
-        ]),
-        'positions',
-      ];
-    case 2:
-      return ['startDate', 'expectedSalary', 'workMode', 'notes'];
-    default:
-      return [];
+  const fields = STEP_ROOT_FIELDS[step] ?? [];
+  if (!fields.includes('positions')) {
+    return fields;
   }
+  return [
+    ...fields,
+    ...values.positions.flatMap((_, index) => [
+      `positions.${index}.company`,
+      `positions.${index}.title`,
+      `positions.${index}.years`,
+    ]),
+  ];
 }
 
-const FIELD_STEPS: Record<keyof JobApplicationValues, number> = {
-  firstName: 0,
-  lastName: 0,
-  email: 0,
-  phone: 0,
-  linkedinUrl: 0,
-  currentTitle: 1,
-  yearsOfExperience: 1,
-  positions: 1,
-  startDate: 2,
-  expectedSalary: 2,
-  workMode: 2,
-  notes: 2,
-};
-
 export function getStepOfField(path: string) {
-  return FIELD_STEPS[path.split('.')[0] as keyof JobApplicationValues] ?? 0;
+  const root = path.split('.')[0];
+  return Math.max(
+    STEP_ROOT_FIELDS.findIndex((fields) => fields.includes(root)),
+    0
+  );
 }

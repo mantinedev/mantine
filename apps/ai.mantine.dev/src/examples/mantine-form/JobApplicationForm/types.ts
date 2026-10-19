@@ -1,6 +1,6 @@
 import type { UseFormReturnType } from '@mantine/form';
 
-export type WorkMode = 'remote' | 'hybrid' | 'on-site';
+export type WorkArrangement = 'remote' | 'hybrid' | 'on-site';
 
 export interface Position {
   id: string;
@@ -20,7 +20,7 @@ export interface JobApplicationValues {
   positions: Position[];
   startDate: string | null;
   expectedSalary: number | string;
-  workMode: WorkMode | '';
+  workArrangement: WorkArrangement | '';
   notes: string;
 }
 

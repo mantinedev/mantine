@@ -1,3 +1,5 @@
+import { createFormActions } from '@mantine/form';
+
 function sleep(ms: number) {
   return new Promise((resolve) => setTimeout(resolve, ms));
 }
@@ -100,6 +102,11 @@ export function createFiller(root: HTMLElement) {
       );
       save?.click();
       await sleep(0);
+    },
+
+    /** Writes values straight into the form store through `createFormActions`, the form must have a `name` */
+    setValues<Values extends Record<string, any>>(formName: string, values: Partial<Values>) {
+      createFormActions<Values>(formName).setValues(values);
     },
   };
 }

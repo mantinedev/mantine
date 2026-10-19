@@ -1,113 +1,105 @@
 import dayjs from 'dayjs';
-import type { ReactNode } from 'react';
 import { Anchor, Group, SimpleGrid, Stack, Surface, Text, Title } from '@mantine/core';
-import type { JobApplicationFormType } from './types';
-import { STEPS, WORK_MODE_LABELS } from './values';
+import type { JobApplicationFormType, Position } from './types';
+import { WORK_ARRANGEMENT_LABELS } from './values';
 
-interface ReviewStepProps {
-  form: JobApplicationFormType;
-  onEdit: (step: number) => void;
+interface SummarySectionProps {
+  title: string;
+  onEdit: () => void;
+  items: { label: string; value: React.ReactNode }[];
 }
 
-function display(value: ReactNode) {
-  return value === '' || value === null || value === undefined ? '—' : value;
-}
-
-function ReviewItem({ label, value }: { label: string; value: ReactNode }) {
+function SummarySection({ title, onEdit, items }: SummarySectionProps) {
   return (
-    <div>
-      <Text size="xs">{label}</Text>
-      <Text size="sm" style={{ overflowWrap: 'anywhere', whiteSpace: 'pre-wrap' }}>
-        {display(value)}
-      </Text>
-    </div>
-  );
-}
-
-function ReviewSection({
-  step,
-  onEdit,
-  children,
-}: {
-  step: number;
-  onEdit: (step: number) => void;
-  children: ReactNode;
-}) {
-  return (
-    <Surface component="section" withBorder p="md" radius="md" aria-label={STEPS[step]}>
+    <Surface withBorder p="md" component="section" aria-label={title}>
       <Group justify="space-between" mb="sm">
-        <Title order={4}>{STEPS[step]}</Title>
+        <Title order={4}>{title}</Title>
         <Anchor
           component="button"
           type="button"
           size="sm"
-          aria-label={`Edit ${STEPS[step].toLowerCase()}`}
-          onClick={() => onEdit(step)}
+          onClick={onEdit}
+          aria-label={`Edit ${title.toLowerCase()}`}
         >
           Edit
         </Anchor>
       </Group>
-      {children}
+      <SimpleGrid cols={{ base: 1, sm: 2 }} spacing="sm">
+        {items.map((item) => (
+          <div key={item.label}>
+            <Text size="xs">{item.label}</Text>
+            <Text style={{ whiteSpace: 'pre-wrap', wordBreak: 'break-word' }}>{item.value}</Text>
+          </div>
+        ))}
+      </SimpleGrid>
     </Surface>
   );
 }
 
-export function ReviewStep({ form, onEdit }: ReviewStepProps) {
+const NOT_PROVIDED = 'Not provided';
+
+function formatYears([start, end]: Position['years']) {
+  const startYear = start ? dayjs(start).year() : '?';
+  const endYear = end ? dayjs(end).year() : '?';
+  return startYear === endYear ? `${startYear}` : `${startYear}–${endYear}`;
+}
+
+interface ReviewStepProps {
+  form: JobApplicationFormType;
+  onEditStep: (step: number) => void;
+}
+
+export function ReviewStep({ form, onEditStep }: ReviewStepProps) {
   const values = form.getValues();
 
   return (
     <Stack>
-      <ReviewSection step={0} onEdit={onEdit}>
-        <SimpleGrid cols={{ base: 1, sm: 2 }}>
-          <ReviewItem label="First name" value={values.firstName} />
-          <ReviewItem label="Last name" value={values.lastName} />
-          <ReviewItem label="Email" value={values.email} />
-          <ReviewItem label="Phone" value={values.phone} />
-          <ReviewItem label="LinkedIn URL" value={values.linkedinUrl} />
-        </SimpleGrid>
-      </ReviewSection>
-
-      <ReviewSection step={1} onEdit={onEdit}>
-        <Stack gap="sm">
-          <SimpleGrid cols={{ base: 1, sm: 2 }}>
-            <ReviewItem label="Current title" value={values.currentTitle} />
-            <ReviewItem label="Years of experience" value={values.yearsOfExperience} />
-          </SimpleGrid>
-          <ReviewItem
-            label="Previous positions"
-            value={values.positions
-              .map(
-                (position) =>
-                  `${position.title} at ${position.company}, ${dayjs(position.years[0]).year()}–${dayjs(position.years[1]).year()}`
-              )
-              .join('\n')}
-          />
-        </Stack>
-      </ReviewSection>
-
-      <ReviewSection step={2} onEdit={onEdit}>
-        <Stack gap="sm">
-          <SimpleGrid cols={{ base: 1, sm: 2 }}>
-            <ReviewItem
-              label="Earliest start date"
-              value={values.startDate && dayjs(values.startDate).format('MMMM D, YYYY')}
-            />
-            <ReviewItem
-              label="Expected salary"
-              value={
-                typeof values.expectedSalary === 'number'
-                  ? `$${values.expectedSalary.toLocaleString('en-US')}`
-                  : ''
-              }
-            />
-            <ReviewItem
-              label="Work arrangement"
-              value={values.workMode && WORK_MODE_LABELS[values.workMode]}
-            />
-          </SimpleGrid>
-          <ReviewItem label="Notes" value={values.notes} />
-        </Stack>
-      </ReviewSection>
+      <SummarySection
+        title="Personal details"
+        onEdit={() => onEditStep(0)}
+        items={[
+          { label: 'Name', value: `${values.firstName} ${values.lastName}` },
+          { label: 'Email', value: values.email },
+          { label: 'Phone', value: values.phone || NOT_PROVIDED },
+          { label: 'LinkedIn URL', value: values.linkedinUrl || NOT_PROVIDED },
+        ]}
+      />
+      <SummarySection
+        title="Experience"
+        onEdit={() => onEditStep(1)}
+        items={[
+          { label: 'Current title', value: values.currentTitle },
+          { label: 'Years of experience', value: values.yearsOfExperience },
+          ...values.positions.map((position, index) => ({
+            label: `Position ${index + 1}`,
+            value: `${position.title} at ${position.company}, ${formatYears(position.years)}`,
+          })),
+        ]}
+      />
+      <SummarySection
+        title="Availability"
+        onEdit={() => onEditStep(2)}
+        items={[
+          {
+            label: 'Earliest start date',
+            value: values.startDate ? dayjs(values.startDate).format('MMMM D, YYYY') : NOT_PROVIDED,
+          },
+          {
+            label: 'Expected salary',
+            value:
+              values.expectedSalary === ''
+                ? NOT_PROVIDED
+                : `$${Number(values.expectedSalary).toLocaleString('en-US')}`,
+          },
+          {
+            label: 'Work arrangement',
+            value: values.workArrangement
+              ? WORK_ARRANGEMENT_LABELS[values.workArrangement]
+              : NOT_PROVIDED,
+          },
+          { label: 'Notes', value: values.notes || NOT_PROVIDED },
+        ]}
+      />
     </Stack>
   );
 }

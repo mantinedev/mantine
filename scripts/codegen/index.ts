@@ -7,3 +7,4 @@ generateExamplesCode(getPath('apps/mantine.dev/src/form-examples/examples'));
 generateExamplesCode(getPath('apps/ai.mantine.dev/src/examples/mantine-form'));
 generateExamplesCode(getPath('apps/ai.mantine.dev/src/examples/mantine-combobox'));
 generateExamplesCode(getPath('apps/ai.mantine.dev/src/examples/mantine-custom-components'));
+generateExamplesCode(getPath('apps/ai.mantine.dev/src/examples/mantine-ui'));

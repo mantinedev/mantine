@@ -42,6 +42,10 @@ The form is uncontrolled by default: values live outside React state, typing rer
 the input, not the component that calls `useForm`. Do not write `mode: 'uncontrolled'`. Set
 `mode: 'controlled'` only for a small form that renders `form.values` directly.
 
+Give every form a `name` in kebab-case (`useForm({ name: 'job-application', ... })`): it
+prefixes the `data-path` attributes and lets `createFormActions(name)` control the form from
+outside.
+
 Give every field rendered with an input an initial value (`''`, `null`, `false`, `[]`), otherwise
 React warns about an input switching from uncontrolled to controlled. `NumberInput` uses
 `number | string` with `''` for empty, `Select` and dates inputs use `string | null`.
@@ -112,7 +116,7 @@ async validation and until the promise returned by the handler settles (resolved
 Catch request errors inside the handler and turn them into form errors, see the server errors
 pattern.
 
-### 4. Split the form into files
+### 4. Files and code style
 
 One folder per form. `<Name>Form.tsx` holds `useForm`, navigation between steps and submission;
 each step, tab, section or repeated group of fields is a component in its own file that takes
@@ -121,26 +125,16 @@ after the values, not after the component: `type ProfileFormType = UseFormReturn
 when the component is `ProfileForm`. A file over about 200 lines is a sign to split further.
 See [splitting a form into components](references/patterns.md#splitting-a-form-into-components).
 
-### 5. Inputs and code style
+Comments only where the code cannot explain itself: a workaround, a browser or library behavior
+the next reader would not expect (`// preventDefault keeps focus in the input so its blur error
+does not shift the button`). No comments that restate what the code does, no JSDoc on internal
+helpers.
 
-- Every input has a `placeholder`. Use the label text unless a format example helps more
-  (`you@example.com`, `YYYY`).
-- Pick the input made for the data: `PhoneInput` for phone numbers, `NumberInput` for numbers,
-  `DateInput` / `DatePickerInput` for dates, `YearPickerInput` / `MonthPickerInput` for years and
-  months, `type="range"` on picker inputs for a period (a position's years, a stay, a booking)
-  instead of two inputs, `TimeInput` for times, `PinInput` for codes, `MaskInput` for formatted
-  strings, `Textarea` for long text. A plain `TextInput` is for free text only.
-- `NumberInput` shows increment/decrement controls only when stepping by one makes sense
-  (quantity, number of guests, tickets). When the user has a specific value in mind (salary,
-  price, amount, year, percentage) set `hideControls`.
-- Secondary text (hints, counters, summary labels) uses a smaller `size`, never `c="dimmed"`.
-- Buttons: the primary action is the default `filled` button, every other action (`Back`,
-  `Add item`, `Remove`, `Reset`, `Cancel`) is `variant="default"`. Never `subtle` or `light`.
-  Icon-only actions use `ActionIcon variant="default"` or `CloseButton`.
-- Comments only where the code cannot explain itself: a workaround, a browser or library
-  behavior the next reader would not expect (`// preventDefault keeps focus in the input so its
-  blur error does not shift the button`). No comments that restate what the code does, no JSDoc
-  on internal helpers.
+### 5. UI details
+
+This skill covers form logic only. Which input to use for a piece of data, placeholders,
+button variants, icon actions, cards and spacing are decided by the `mantine-ui` skill: read
+it before writing the markup of a form.
 
 ### 6. Tests
 

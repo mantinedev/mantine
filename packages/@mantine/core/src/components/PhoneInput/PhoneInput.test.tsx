@@ -631,4 +631,29 @@ describe('@mantine/core/PhoneInput', () => {
       expect(onCountryChange).toHaveBeenCalledTimes(1);
     });
   });
+
+  it('displays dial code of defaultCountry when controlled value is empty', () => {
+    render(<PhoneInput {...testProps} value="" onChange={() => {}} defaultCountry="us" />);
+    expect(screen.getByRole('textbox')).toHaveValue('+1 ');
+  });
+
+  it('builds the value from the displayed dial code when typing into an empty controlled input', async () => {
+    const spy = jest.fn();
+    render(<PhoneInput {...testProps} value="" onChange={spy} defaultCountry="us" />);
+    await userEvent.type(screen.getByRole('textbox'), '2');
+    expect(spy).toHaveBeenCalledWith('+12', expect.objectContaining({ formattedValue: '+1 (2' }));
+  });
+
+  it('does not display dial code for empty controlled value when international is false', () => {
+    render(
+      <PhoneInput
+        {...testProps}
+        value=""
+        onChange={() => {}}
+        defaultCountry="us"
+        international={false}
+      />
+    );
+    expect(screen.getByRole('textbox')).toHaveValue('');
+  });
 });
