@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { act, cleanup, createEvent, fireEvent } from '@testing-library/react';
+import { act, cleanup, createEvent, fireEvent, waitFor } from '@testing-library/react';
 import { render, screen, tests, userEvent } from '@mantine-tests/core';
 import { Menu, MenuProps } from './Menu';
 import { MenuDivider } from './MenuDivider/MenuDivider';
@@ -952,6 +952,20 @@ describe('@mantine/core/Menu', () => {
       fireEvent.keyDown(childItem, { key: 'ArrowLeft' });
 
       expect(onChange).toHaveBeenLastCalledWith(false);
+    });
+
+    it('returns focus to the submenu target when the submenu is closed via keyboard', async () => {
+      render(SubMenuContainer());
+
+      const subTarget = screen.getByText('More').closest('button')!;
+      subTarget.focus();
+      fireEvent.keyDown(subTarget, { key: 'ArrowRight' });
+
+      const childItem = (await screen.findByText('Cherry')).closest('button')!;
+      childItem.focus();
+      fireEvent.keyDown(childItem, { key: 'ArrowLeft' });
+
+      await waitFor(() => expect(subTarget).toHaveFocus());
     });
 
     it('calls onChange with false when the open submenu is dismissed with Escape', async () => {
