@@ -8188,6 +8188,9 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "ai.mantine.dev@workspace:apps/ai.mantine.dev"
   dependencies:
+    "@dnd-kit/core": "npm:^6.3.1"
+    "@dnd-kit/sortable": "npm:^10.0.0"
+    "@dnd-kit/utilities": "npm:^3.2.2"
     "@mantine/code-highlight": "workspace:*"
     "@mantine/core": "workspace:*"
     "@mantine/dates": "workspace:*"

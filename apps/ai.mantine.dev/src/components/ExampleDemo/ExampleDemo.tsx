@@ -67,6 +67,7 @@ export function ExampleDemo({ skill, example }: ExampleDemoProps) {
           getFolderIcon={getCodeFolderIcon}
           defaultActiveFile={PROMPT_FILE}
           treeWidth={270}
+          className={classes.fileTree}
         />
       </div>
     </div>

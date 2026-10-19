@@ -46,3 +46,7 @@
   z-index: 1;
   background-color: var(--mantine-color-surface-page);
 }
+
+.fileTree {
+  max-height: calc(100vh - var(--app-shell-header-height));
+}

@@ -1,15 +1,18 @@
 // Generated examples come from the Mantine Vite template, where tests import the test API from
 // `vite-plus/test` (vitest). The site runs them with jest: this module maps that API to jest.
-export {
-  afterAll,
-  afterEach,
-  beforeAll,
-  beforeEach,
-  describe,
-  expect,
-  it,
-  test,
-} from '@jest/globals';
+const jestGlobals = globalThis as unknown as {
+  describe: jest.Describe;
+  it: jest.It;
+  test: jest.It;
+  expect: jest.Expect;
+  beforeAll: jest.Lifecycle;
+  afterAll: jest.Lifecycle;
+  beforeEach: jest.Lifecycle;
+  afterEach: jest.Lifecycle;
+};
+
+export const { describe, it, test, expect, beforeAll, afterAll, beforeEach, afterEach } =
+  jestGlobals;
 
 type FakeTimersOptions = {
   toFake?: string[];

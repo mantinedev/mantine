@@ -133,8 +133,9 @@ helpers.
 ### 5. UI details
 
 This skill covers form logic only. Which input to use for a piece of data, placeholders,
-button variants, icon actions, cards and spacing are decided by the `mantine-ui` skill: read
-it before writing the markup of a form.
+button variants, icon actions, cards, modals and spacing are decided by the `mantine-ui` skill:
+read it before writing the markup of a form. Forms in modals open the modal with `useModal`
+(see [form in a modal](references/patterns.md#form-in-a-modal)), not with `useDisclosure`.
 
 ### 6. Tests
 

@@ -1,0 +1,13 @@
+.texts {
+  flex: 1;
+  min-width: 0;
+}
+
+.key {
+  font-family: var(--mantine-font-family-monospace);
+}
+
+.required {
+  color: var(--mantine-color-error);
+  margin-inline-start: 4px;
+}

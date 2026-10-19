@@ -1,0 +1,8 @@
+.input {
+  flex: 1;
+  min-width: 0;
+}
+
+.monospace {
+  font-family: var(--mantine-font-family-monospace);
+}
