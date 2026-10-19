@@ -6,7 +6,7 @@ interface TableErrorProps {
 
 export function TableError({ errorOf }: TableErrorProps) {
   return (
-    <Text>
+    <Text data-table-error>
       <Text span c="red">
         Error loading component {errorOf} data.{' '}
       </Text>

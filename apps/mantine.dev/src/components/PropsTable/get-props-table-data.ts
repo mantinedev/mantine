@@ -1,5 +1,4 @@
 import Fuse from 'fuse.js';
-import docgenData from '@/.docgen/docgen.json';
 import {
   OTHER_CATEGORY_LABEL,
   PROP_CATEGORIES,
@@ -44,7 +43,20 @@ export interface PropsTableData {
   matchedCount: number;
 }
 
-const PROPS_DATA: Record<string, Docgen> = docgenData as any;
+const docgenCache = new Map<string, Promise<Docgen | null>>();
+
+export function loadDocgen(component: string): Promise<Docgen | null> {
+  if (!docgenCache.has(component)) {
+    docgenCache.set(
+      component,
+      import(`../../.docgen/components/${component}.json`)
+        .then((module) => module.default as Docgen)
+        .catch(() => null)
+    );
+  }
+
+  return docgenCache.get(component)!;
+}
 
 function getOriginKey(prop: DocgenProp) {
   if (prop.parent === '__BaseInputProps') {
@@ -110,12 +122,12 @@ export function filterProps(props: DocgenProp[], query: string): DocgenProp[] {
   return props.filter((prop) => matched.has(prop.name));
 }
 
-export function getPropsTableData(component: string, query: string): PropsTableData | null {
-  if (!PROPS_DATA[component]) {
-    return null;
-  }
-
-  const props = Object.values(PROPS_DATA[component].props);
+export function getPropsTableData(
+  component: string,
+  docgen: Docgen,
+  query: string
+): PropsTableData {
+  const props = Object.values(docgen.props);
   const matched = new Set(filterProps(props, query).map((prop) => prop.name));
   const allGroups = groupProps(component, props);
 

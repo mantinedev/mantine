@@ -5,6 +5,7 @@ import { DOCGEN_PATHS } from './docgen-paths';
 generateDeclarations({
   tsConfigPath: getPath('tsconfig.json'),
   outputPath: getPath('apps/mantine.dev/src/.docgen'),
+  splitOutput: true,
   componentsPaths: DOCGEN_PATHS,
   excludeProps: ['mie', 'mis', 'pie', 'pis'],
   typesReplacement: {

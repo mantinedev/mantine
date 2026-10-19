@@ -1,21 +1,14 @@
-import { useState } from 'react';
+import { use, useState } from 'react';
 import { Tabs, Title } from '@mantine/core';
-import * as stylesData from '@docs/styles-api';
-import type { Modifier } from '@docs/styles-api';
 import { getComponentName } from '@/components/PropsTable';
 import { TableError } from '@/components/TableError';
+import { loadStylesApiData } from './load-styles-api-data';
 import { ModifiersTable } from './ModifiersTable';
 import { SelectorsTable } from './SelectorsTable';
 import { VariablesTable } from './VariablesTable';
 import classes from './StylesApiTable.module.css';
 
-export interface StylesApiData {
-  selectors: Record<string, string>;
-  vars: Record<string, Record<string, string>>;
-  modifiers: Modifier<string>[];
-}
-
-const STYLES_API_DATA: Record<string, StylesApiData> = stylesData as any;
+export type { StylesApiData } from './load-styles-api-data';
 
 export interface StylesApiTableProps {
   component: string;
@@ -24,7 +17,8 @@ export interface StylesApiTableProps {
 
 export function StylesApiTable({ component, componentPrefix }: StylesApiTableProps) {
   const [value, setValue] = useState<string | null>('selectors');
-  const data = STYLES_API_DATA[`${component}StylesApi`];
+  const data = use(loadStylesApiData(component));
+
   if (!data) {
     return <TableError errorOf="Styles API" />;
   }

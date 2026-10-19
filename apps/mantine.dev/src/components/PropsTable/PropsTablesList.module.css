@@ -1,5 +1,5 @@
 .root {
-  &:not(:has([data-visible])) {
+  &:not(:has([data-visible], [data-table-error])) {
     .nothingFound {
       display: block;
     }
@@ -33,7 +33,7 @@
     margin-top: var(--mantine-spacing-xl);
   }
 
-  &:not(:has([data-props-table-row])) {
+  &:not(:has([data-props-table-row], [data-table-error])) {
     display: none;
   }
 }

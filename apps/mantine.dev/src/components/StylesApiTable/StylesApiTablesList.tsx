@@ -1,4 +1,5 @@
-import { Code, Title } from '@mantine/core';
+import { Suspense } from 'react';
+import { Code, Skeleton, Title } from '@mantine/core';
 import { MdxLink, MdxParagraph } from '@/components/MdxProvider';
 import { StylesApiTable } from './StylesApiTable';
 import classes from './StylesApiTable.module.css';
@@ -30,7 +31,7 @@ export function StylesApiTablesList({ components, componentPrefix }: StylesApiTa
           modules, CSS variables and inline styles to get full control over component styles.
         </MdxParagraph>
       </div>
-      {tables}
+      <Suspense fallback={<Skeleton height={400} radius="md" />}>{tables}</Suspense>
     </>
   );
 }

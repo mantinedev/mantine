@@ -1,5 +1,5 @@
-import { useState } from 'react';
-import { Text, TextInput, Title } from '@mantine/core';
+import { Suspense, useState } from 'react';
+import { Skeleton, Text, TextInput, Title } from '@mantine/core';
 import { useMediaQuery } from '@mantine/hooks';
 import { PhosphorIcons } from '../icons';
 import { getComponentName } from './get-component-name';
@@ -39,7 +39,7 @@ export function PropsTablesList({ components, componentPrefix }: PropsTablesList
         autoFocus={isNonTouchDevice}
         pt={7}
       />
-      {tables}
+      <Suspense fallback={<Skeleton height={400} radius="md" data-visible />}>{tables}</Suspense>
       <Text className={classes.nothingFound}>Nothing found...</Text>
     </div>
   );

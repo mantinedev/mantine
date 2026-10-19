@@ -1,8 +1,9 @@
+import { use } from 'react';
 import { Highlight, Table, Text } from '@mantine/core';
 import { HtmlText } from '@/components/HtmlText';
 import { TableError } from '@/components/TableError';
 import { TableInlineCode } from '@/components/TableInlineCode';
-import { getPropsTableData } from './get-props-table-data';
+import { getPropsTableData, loadDocgen } from './get-props-table-data';
 import { prepareType } from './replace-types';
 import classes from './PropsTable.module.css';
 
@@ -12,11 +13,13 @@ interface PropsTableProps {
 }
 
 export function PropsTable({ component, query }: PropsTableProps) {
-  const data = getPropsTableData(component, query);
+  const docgen = use(loadDocgen(component));
 
-  if (!data) {
+  if (!docgen) {
     return <TableError errorOf="props" />;
   }
+
+  const data = getPropsTableData(component, docgen, query);
 
   const rows = data.groups.flatMap((group) =>
     group.props.map((prop, index) => (

@@ -6594,6 +6594,24 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@tabler/icons-react@npm:^3.49.0":
+  version: 3.49.0
+  resolution: "@tabler/icons-react@npm:3.49.0"
+  dependencies:
+    "@tabler/icons": "npm:3.49.0"
+  peerDependencies:
+    react: ">= 16"
+  checksum: 10c0/4c50b4f9ff56f6755161896ba4e5271dc97caf4132394e443162bff015e0fc72c109b53bc31436d4350fa2c836a472b304e5761b2a121c18c03f157966ba8025
+  languageName: node
+  linkType: hard
+
+"@tabler/icons@npm:3.49.0":
+  version: 3.49.0
+  resolution: "@tabler/icons@npm:3.49.0"
+  checksum: 10c0/8540c7182c67efcd7209d0ab2de75dd413eff0f61c5906d0e1b20bc53ef4eaadcd13e301e2e5829dac47ee710bc0d8301d99c1dd0aada683a87addb32742d34a
+  languageName: node
+  linkType: hard
+
 "@tanstack/match-sorter-utils@npm:^9.1.2":
   version: 9.1.2
   resolution: "@tanstack/match-sorter-utils@npm:9.1.2"
@@ -8325,6 +8343,7 @@ __metadata:
     "@mdx-js/react": "npm:^3.1.1"
     "@next/mdx": "npm:16.3.6"
     "@phosphor-icons/react": "npm:^2.1.10"
+    "@tabler/icons-react": "npm:^3.49.0"
     "@testing-library/jest-dom": "npm:7.0.1"
     "@testing-library/react": "npm:16.3.3"
     "@testing-library/user-event": "npm:14.6.7"
@@ -15262,7 +15281,7 @@ __metadata:
     jest-environment-jsdom: "npm:^30.5.2"
     lodash: "npm:^4.18.1"
     lowlight: "npm:^3.3.0"
-    mantine-docgen-script: "npm:^2.0.0"
+    mantine-docgen-script: "npm:^3.0.0"
     new-github-release-url: "npm:^2.0.0"
     next: "npm:16.3.6"
     open: "npm:^11.0.4"
@@ -15313,14 +15332,14 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"mantine-docgen-script@npm:^2.0.0":
-  version: 2.0.0
-  resolution: "mantine-docgen-script@npm:2.0.0"
+"mantine-docgen-script@npm:^3.0.0":
+  version: 3.0.0
+  resolution: "mantine-docgen-script@npm:3.0.0"
   dependencies:
     chalk: "npm:^6.0.0"
     fs-extra: "npm:^11.4.0"
     react-docgen-typescript: "npm:^2.4.0"
-  checksum: 10c0/427ba47aa1a558279ef0877709199a6a78548082b406bd440272fa4d58725bb63452cdaa079b96533c465aad74b1619f759141426e953603c93569a5814afb3d
+  checksum: 10c0/30cc6c79fb858ea2a972ab8d43a537ae606c3cb460e3a1a57c73aa2ffe9d368b10db06ec14bb1fc7446cc700f41fb1e15800f549204f089b442670c12ed6a605
   languageName: node
   linkType: hard
 
