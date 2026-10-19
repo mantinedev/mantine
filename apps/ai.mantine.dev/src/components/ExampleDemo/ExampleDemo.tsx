@@ -63,6 +63,7 @@ export function ExampleDemo({ skill, example }: ExampleDemoProps) {
           key={example.id}
           code={sortTestsLast(example.code)}
           getFileIcon={getCodeFileIcon}
+          defaultActiveFile={example.code[0]?.fileName}
           treeWidth={270}
         />
       </div>

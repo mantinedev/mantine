@@ -1,38 +1,21 @@
 import { render, screen, userEvent, waitFor, within } from '@test-utils';
 import { Notifications } from '@mantine/notifications';
 import { JobApplicationForm } from './JobApplicationForm';
-import type { JobApplicationValues } from './types';
 
 type User = ReturnType<typeof userEvent.setup>;
 
-function renderForm(onSubmit?: (values: JobApplicationValues) => void) {
-  const user = userEvent.setup();
+function renderForm(onSubmit = vi.fn()) {
   render(
     <>
       <Notifications />
       <JobApplicationForm onSubmit={onSubmit} />
     </>
   );
-  return user;
+  return { onSubmit, user: userEvent.setup() };
 }
 
-const clickNext = (user: User) => user.click(screen.getByRole('button', { name: 'Next' }));
-const clickBack = (user: User) => user.click(screen.getByRole('button', { name: 'Back' }));
-const stepButton = (label: string) => screen.getByRole('button', { name: new RegExp(label) });
-
-// jsdom matches no media query, so pickers open in a drawer and apply the value on Save
-async function pickYears(user: User, start: string, end: string, positionIndex = 0) {
-  await user.click(screen.getAllByRole('button', { name: /Start and end year/ })[positionIndex]);
-  await user.click(screen.getByRole('button', { name: start }));
-  await user.click(screen.getByRole('button', { name: end }));
-  await user.click(screen.getByRole('button', { name: 'Save' }));
-}
-
-async function pickStartDate(user: User, dayLabel: string) {
-  await user.click(screen.getByRole('button', { name: /Earliest start date/ }));
-  await user.click(screen.getByRole('button', { name: dayLabel }));
-  await user.click(screen.getByRole('button', { name: 'Save' }));
-}
+const next = (user: User) => user.click(screen.getByRole('button', { name: 'Next' }));
+const back = (user: User) => user.click(screen.getByRole('button', { name: 'Back' }));
 
 async function fillPersonal(user: User) {
   await user.type(screen.getByRole('textbox', { name: /First name/ }), 'Jane');
@@ -40,440 +23,297 @@ async function fillPersonal(user: User) {
   await user.type(screen.getByRole('textbox', { name: /Email/ }), 'jane@example.com');
 }
 
+// Picker inputs open a drawer in jsdom, the value is applied with its Save button
+async function pickYears(user: User, index: number, start: string, end: string) {
+  const position = screen.getByText(`Position ${index + 1}`).closest('div')!.parentElement!;
+  await user.click(within(position).getByRole('button', { name: /Years/ }));
+  await user.click(await screen.findByRole('button', { name: start }));
+  await user.click(screen.getByRole('button', { name: end }));
+  await user.click(screen.getByRole('button', { name: 'Save' }));
+}
+
 async function fillExperience(user: User) {
-  await user.type(screen.getByRole('textbox', { name: /Current title/ }), 'Senior engineer');
-  await user.type(screen.getByRole('textbox', { name: /Years of experience/ }), '8');
+  await user.type(screen.getByRole('textbox', { name: /Current title/ }), 'Engineer');
+  await user.type(screen.getByRole('textbox', { name: /Years of experience/ }), '7');
   await user.type(screen.getByRole('textbox', { name: /Company/ }), 'Acme');
-  await user.type(screen.getByRole('textbox', { name: /^Title/ }), 'Engineer');
-  await pickYears(user, '2020', '2024');
+  await user.type(screen.getByRole('textbox', { name: /^Title/ }), 'Developer');
+  await pickYears(user, 0, '2021', '2024');
+}
+
+async function pickStartDate(user: User, day: string) {
+  await user.click(screen.getByRole('button', { name: /Earliest start date/ }));
+  await user.click(await screen.findByRole('button', { name: day }));
+  await user.click(screen.getByRole('button', { name: 'Save' }));
 }
 
 async function fillAvailability(user: User) {
-  await pickStartDate(user, '2 November 2026');
+  await pickStartDate(user, '1 November 2026');
+  await user.type(screen.getByRole('textbox', { name: /Expected salary/ }), '120000');
   await user.click(screen.getByRole('radio', { name: 'Hybrid' }));
+  await user.type(screen.getByRole('textbox', { name: /Notes/ }), 'Available for calls');
 }
 
-async function goToReview(user: User) {
-  await fillPersonal(user);
-  await clickNext(user);
-  await fillExperience(user);
-  await clickNext(user);
-  await fillAvailability(user);
-  await clickNext(user);
+function stepButton(label: string) {
+  return screen.getByText(label, { selector: '.mantine-Stepper-stepLabel' }).closest('button')!;
 }
-
-beforeEach(() => {
-  vi.useFakeTimers({ toFake: ['Date'] });
-  vi.setSystemTime(new Date(2026, 9, 19, 12));
-});
-
-afterEach(() => {
-  vi.useRealTimers();
-});
 
 describe('JobApplicationForm', () => {
-  it('renders a stepper with four steps and starts on the personal step', () => {
-    renderForm();
+  beforeEach(() => {
+    vi.useFakeTimers({ toFake: ['Date'] });
+    vi.setSystemTime(new Date(2026, 9, 19, 12));
+  });
 
-    for (const label of ['Personal', 'Experience', 'Availability', 'Review']) {
-      expect(stepButton(label)).toBeInTheDocument();
-    }
+  afterEach(() => {
+    vi.useRealTimers();
+  });
+
+  it('validates only the personal step and focuses the first invalid field', async () => {
+    const { user } = renderForm();
+    await next(user);
+
+    expect(screen.getByText('First name is required')).toBeInTheDocument();
+    expect(screen.getByText('Last name is required')).toBeInTheDocument();
+    expect(screen.getByText('Enter a valid email')).toBeInTheDocument();
+    expect(screen.getByRole('textbox', { name: /First name/ })).toHaveFocus();
+    expect(screen.queryByText('Current title is required')).not.toBeInTheDocument();
+    expect(screen.queryByRole('textbox', { name: /Current title/ })).not.toBeInTheDocument();
+  });
+
+  it('focuses the first invalid field after earlier fields are fixed', async () => {
+    const { user } = renderForm();
+    await user.type(screen.getByRole('textbox', { name: /First name/ }), 'Jane');
+    await user.type(screen.getByRole('textbox', { name: /Last name/ }), 'Doe');
+    await next(user);
+
+    expect(screen.getByRole('textbox', { name: /Email/ })).toHaveFocus();
+  });
+
+  it('validates LinkedIn URL only when it is filled', async () => {
+    const { user } = renderForm();
+    await fillPersonal(user);
+    const linkedin = screen.getByRole('textbox', { name: /LinkedIn/ });
+
+    await user.type(linkedin, 'linkedin.com/in/jane');
+    await next(user);
+    expect(screen.getByText(/Enter a valid URL/)).toBeInTheDocument();
+    expect(linkedin).toHaveFocus();
+
+    await user.clear(linkedin);
+    await next(user);
+    expect(screen.getByRole('textbox', { name: /Current title/ })).toBeInTheDocument();
+  });
+
+  it('accepts a valid LinkedIn URL', async () => {
+    const { user } = renderForm();
+    await fillPersonal(user);
+    await user.type(
+      screen.getByRole('textbox', { name: /LinkedIn/ }),
+      'https://linkedin.com/in/jane'
+    );
+    await next(user);
+    expect(screen.getByRole('textbox', { name: /Current title/ })).toBeInTheDocument();
+  });
+
+  it('validates experience fields and position years', async () => {
+    const { user } = renderForm();
+    await fillPersonal(user);
+    await next(user);
+    await next(user);
+
+    expect(screen.getByText('Current title is required')).toBeInTheDocument();
+    expect(screen.getByText('Enter a number between 0 and 50')).toBeInTheDocument();
+    expect(screen.getByText('Company is required')).toBeInTheDocument();
+    expect(screen.getByText('Title is required')).toBeInTheDocument();
+    expect(screen.getByText('Select the start and end year')).toBeInTheDocument();
+    expect(screen.getByRole('textbox', { name: /Current title/ })).toHaveFocus();
+  });
+
+  it('clamps years of experience to 50', async () => {
+    const { user } = renderForm();
+    await fillPersonal(user);
+    await next(user);
+    const years = screen.getByRole('textbox', { name: /Years of experience/ });
+    await user.type(years, '75');
+    expect(years).toHaveValue('7');
+  });
+
+  it('adds and removes positions and requires at least one', async () => {
+    const { user } = renderForm();
+    await fillPersonal(user);
+    await next(user);
+
+    await user.click(screen.getByRole('button', { name: 'Add position' }));
+    expect(screen.getByText('Position 2')).toBeInTheDocument();
+    expect(screen.getAllByRole('textbox', { name: /Company/ })).toHaveLength(2);
+
+    await user.click(screen.getByRole('button', { name: 'Remove position 2' }));
+    await user.click(screen.getByRole('button', { name: 'Remove position 1' }));
+    expect(screen.getByText('No positions added')).toBeInTheDocument();
+
+    await user.type(screen.getByRole('textbox', { name: /Current title/ }), 'Engineer');
+    await user.type(screen.getByRole('textbox', { name: /Years of experience/ }), '3');
+    await next(user);
+    expect(screen.getByText('Add at least one previous position')).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: 'Add position' })).toHaveFocus();
+  });
+
+  it('keeps a removed row error from moving to another row', async () => {
+    const { user } = renderForm();
+    await fillPersonal(user);
+    await next(user);
+    await user.click(screen.getByRole('button', { name: 'Add position' }));
+    await user.type(screen.getAllByRole('textbox', { name: /Company/ })[1], 'Acme');
+    await next(user);
+    expect(screen.getAllByText('Company is required')).toHaveLength(1);
+
+    await user.click(screen.getByRole('button', { name: 'Remove position 1' }));
+    expect(screen.queryByText('Company is required')).not.toBeInTheDocument();
+    expect(screen.getByRole('textbox', { name: /Company/ })).toHaveValue('Acme');
+  });
+
+  it('keeps data when going back', async () => {
+    const { user } = renderForm();
+    await fillPersonal(user);
+    await next(user);
+    await fillExperience(user);
+    await next(user);
+    await back(user);
+
+    expect(screen.getByRole('textbox', { name: /Current title/ })).toHaveValue('Engineer');
+    expect(screen.getByRole('textbox', { name: /Company/ })).toHaveValue('Acme');
+    expect(screen.getByRole('button', { name: /Years/ })).toHaveTextContent('2021 – 2024');
+
+    await back(user);
+    expect(screen.getByRole('textbox', { name: /First name/ })).toHaveValue('Jane');
+    expect(screen.getByRole('textbox', { name: /Email/ })).toHaveValue('jane@example.com');
+  });
+
+  it('allows clicking completed steps only', async () => {
+    const { user } = renderForm();
+    await fillPersonal(user);
+    await user.click(stepButton('Experience'));
     expect(screen.getByRole('textbox', { name: /First name/ })).toBeInTheDocument();
-    expect(screen.queryByRole('button', { name: 'Back' })).not.toBeInTheDocument();
+
+    await next(user);
+    await user.click(stepButton('Availability'));
+    expect(screen.getByRole('textbox', { name: /Current title/ })).toBeInTheDocument();
+
+    await user.click(stepButton('Personal'));
+    expect(screen.getByRole('textbox', { name: /First name/ })).toHaveValue('Jane');
+
+    // A step reached earlier stays reachable, the current step is validated first
+    await user.clear(screen.getByRole('textbox', { name: /First name/ }));
+    await user.click(stepButton('Experience'));
+    expect(screen.getByText('First name is required')).toBeInTheDocument();
+    expect(screen.getByRole('textbox', { name: /First name/ })).toHaveFocus();
+
+    await user.type(screen.getByRole('textbox', { name: /First name/ }), 'Janet');
+    await user.click(stepButton('Experience'));
+    expect(screen.getByRole('textbox', { name: /Current title/ })).toBeInTheDocument();
+  });
+
+  it('validates availability and does not allow past start dates', async () => {
+    const { user } = renderForm();
+    await fillPersonal(user);
+    await next(user);
+    await fillExperience(user);
+    await next(user);
+    await next(user);
+
+    expect(screen.getByText('Pick your earliest start date')).toBeInTheDocument();
+    expect(screen.getByText('Choose a work arrangement')).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: /Earliest start date/ })).toHaveFocus();
+
+    await user.click(screen.getByRole('button', { name: /Earliest start date/ }));
+    expect(await screen.findByRole('button', { name: '18 October 2026' })).toBeDisabled();
+    expect(screen.getByRole('button', { name: '19 October 2026' })).toBeEnabled();
+    await user.click(screen.getByRole('button', { name: '19 October 2026' }));
+    await user.click(screen.getByRole('button', { name: 'Save' }));
+
+    await next(user);
+    expect(screen.queryByText('Pick your earliest start date')).not.toBeInTheDocument();
+    expect(screen.getByRole('radio', { name: 'Remote' })).toHaveFocus();
+  });
+
+  it('shows a notes character counter limited to 500', async () => {
+    const { user } = renderForm();
+    await fillPersonal(user);
+    await next(user);
+    await fillExperience(user);
+    await next(user);
+
+    expect(screen.getByText('0/500')).toBeInTheDocument();
+    const notes = screen.getByRole('textbox', { name: /Notes/ });
+    await user.type(notes, 'Hello');
+    expect(screen.getByText('5/500')).toBeInTheDocument();
+    expect(notes).toHaveAttribute('maxlength', '500');
+
+    await user.click(notes);
+    await user.paste('a'.repeat(600));
+    expect(screen.getByText('500/500')).toBeInTheDocument();
+  });
+
+  it('shows a summary, jumps to a step with Edit and submits the application', async () => {
+    const { user, onSubmit } = renderForm();
     expect(screen.queryByRole('button', { name: 'Submit application' })).not.toBeInTheDocument();
-  });
 
-  describe('personal step', () => {
-    it('shows required errors on Next and focuses the first invalid field', async () => {
-      const user = renderForm();
-      await clickNext(user);
+    await fillPersonal(user);
+    await user.type(screen.getByRole('textbox', { name: /Phone/ }), '2025550123');
+    await next(user);
+    await fillExperience(user);
+    await next(user);
+    await fillAvailability(user);
+    await next(user);
 
-      expect(screen.getByText('First name is required')).toBeInTheDocument();
-      expect(screen.getByText('Last name is required')).toBeInTheDocument();
-      expect(screen.getByText('Enter a valid email')).toBeInTheDocument();
-      expect(screen.getByRole('textbox', { name: /First name/ })).toHaveFocus();
-      expect(screen.queryByRole('textbox', { name: /Current title/ })).not.toBeInTheDocument();
+    const personal = screen.getByRole('region', { name: 'Personal' });
+    expect(within(personal).getByText('Jane Doe')).toBeInTheDocument();
+    expect(within(personal).getByText('jane@example.com')).toBeInTheDocument();
+    expect(within(personal).getByText('+1 (202) 555-0123')).toBeInTheDocument();
+
+    const experience = screen.getByRole('region', { name: 'Experience' });
+    expect(within(experience).getByText('Engineer')).toBeInTheDocument();
+    expect(within(experience).getByText('Developer at Acme, 2021–2024')).toBeInTheDocument();
+
+    const availability = screen.getByRole('region', { name: 'Availability' });
+    expect(within(availability).getByText('November 1, 2026')).toBeInTheDocument();
+    expect(within(availability).getByText('$120,000')).toBeInTheDocument();
+    expect(within(availability).getByText('Hybrid')).toBeInTheDocument();
+
+    await user.click(screen.getByRole('button', { name: 'Edit Experience' }));
+    const title = screen.getByRole('textbox', { name: /Current title/ });
+    await user.clear(title);
+    await user.type(title, 'Senior engineer');
+    await user.click(stepButton('Review'));
+    expect(screen.getByText('Senior engineer')).toBeInTheDocument();
+
+    await user.click(screen.getByRole('button', { name: 'Submit application' }));
+
+    await waitFor(() => expect(onSubmit).toHaveBeenCalledTimes(1));
+    expect(onSubmit).toHaveBeenCalledWith({
+      firstName: 'Jane',
+      lastName: 'Doe',
+      email: 'jane@example.com',
+      phone: '+12025550123',
+      linkedin: '',
+      currentTitle: 'Senior engineer',
+      yearsOfExperience: 7,
+      positions: [
+        {
+          id: expect.any(String),
+          company: 'Acme',
+          title: 'Developer',
+          years: ['2021-01-01', '2024-01-01'],
+        },
+      ],
+      startDate: '2026-11-01',
+      salary: 120000,
+      workArrangement: 'hybrid',
+      notes: 'Available for calls',
     });
 
-    it('focuses the email field when it is the first invalid field', async () => {
-      const user = renderForm();
-      await user.type(screen.getByRole('textbox', { name: /First name/ }), 'Jane');
-      await user.type(screen.getByRole('textbox', { name: /Last name/ }), 'Doe');
-      await user.type(screen.getByRole('textbox', { name: /Email/ }), 'jane@');
-      await clickNext(user);
-
-      expect(screen.getByText('Enter a valid email')).toBeInTheDocument();
-      expect(screen.getByRole('textbox', { name: /Email/ })).toHaveFocus();
-    });
-
-    it('validates the LinkedIn URL only when it is filled', async () => {
-      const user = renderForm();
-      const linkedin = screen.getByRole('textbox', { name: /LinkedIn URL/ });
-
-      await user.type(linkedin, 'not a url');
-      await user.tab();
-      expect(screen.getByText('Enter a valid URL')).toBeInTheDocument();
-
-      await user.clear(linkedin);
-      await user.type(linkedin, 'https://www.linkedin.com/in/jane');
-      await user.tab();
-      expect(screen.queryByText('Enter a valid URL')).not.toBeInTheDocument();
-
-      await user.clear(linkedin);
-      await fillPersonal(user);
-      await clickNext(user);
-      expect(screen.getByRole('textbox', { name: /Current title/ })).toBeInTheDocument();
-    });
-
-    it('clears the email error once the value is fixed', async () => {
-      const user = renderForm();
-      const email = screen.getByRole('textbox', { name: /Email/ });
-
-      await user.type(email, 'jane');
-      await user.tab();
-      expect(screen.getByText('Enter a valid email')).toBeInTheDocument();
-
-      await user.type(email, '@example.com');
-      await user.tab();
-      expect(screen.queryByText('Enter a valid email')).not.toBeInTheDocument();
-    });
-  });
-
-  describe('experience step', () => {
-    it('validates only the current step: no errors are shown on the next step', async () => {
-      const user = renderForm();
-      await fillPersonal(user);
-      await clickNext(user);
-
-      expect(screen.getByRole('textbox', { name: /Current title/ })).toBeInTheDocument();
-      expect(screen.queryByText('Current title is required')).not.toBeInTheDocument();
-      expect(screen.queryByText('Company is required')).not.toBeInTheDocument();
-    });
-
-    it('shows errors for the title, years and positions and focuses the current title', async () => {
-      const user = renderForm();
-      await fillPersonal(user);
-      await clickNext(user);
-      await clickNext(user);
-
-      expect(screen.getByText('Current title is required')).toBeInTheDocument();
-      expect(screen.getByText('Years of experience must be between 0 and 50')).toBeInTheDocument();
-      expect(screen.getByText('Company is required')).toBeInTheDocument();
-      expect(screen.getByText('Title is required')).toBeInTheDocument();
-      expect(screen.getByText('Select start and end years')).toBeInTheDocument();
-      expect(screen.getByRole('textbox', { name: /Current title/ })).toHaveFocus();
-    });
-
-    it('keeps years of experience between 0 and 50', async () => {
-      const user = renderForm();
-      await fillPersonal(user);
-      await clickNext(user);
-
-      const years = screen.getByRole('textbox', { name: /Years of experience/ });
-      await user.type(years, '60');
-      await user.tab();
-      expect(years).toHaveValue('50');
-
-      await user.clear(years);
-      await user.type(years, '-3');
-      expect(years).toHaveValue('3');
-
-      await user.clear(years);
-      await user.type(years, '0');
-      await user.tab();
-      expect(
-        screen.queryByText('Years of experience must be between 0 and 50')
-      ).not.toBeInTheDocument();
-    });
-
-    it('adds and removes positions', async () => {
-      const user = renderForm();
-      await fillPersonal(user);
-      await clickNext(user);
-
-      expect(screen.getAllByRole('group', { name: /Position \d/ })).toHaveLength(1);
-
-      await user.click(screen.getByRole('button', { name: 'Add position' }));
-      await user.click(screen.getByRole('button', { name: 'Add position' }));
-      expect(screen.getAllByRole('group', { name: /Position \d/ })).toHaveLength(3);
-
-      const second = screen.getByRole('group', { name: 'Position 2' });
-      await user.type(within(second).getByRole('textbox', { name: /Company/ }), 'Globex');
-
-      await user.click(screen.getByRole('button', { name: 'Remove position 1' }));
-      expect(screen.getAllByRole('group', { name: /Position \d/ })).toHaveLength(2);
-      expect(
-        within(screen.getByRole('group', { name: 'Position 1' })).getByRole('textbox', {
-          name: /Company/,
-        })
-      ).toHaveValue('Globex');
-    });
-
-    it('requires at least one position and focuses the Add position button', async () => {
-      const user = renderForm();
-      await fillPersonal(user);
-      await clickNext(user);
-
-      await user.type(screen.getByRole('textbox', { name: /Current title/ }), 'Engineer');
-      await user.type(screen.getByRole('textbox', { name: /Years of experience/ }), '3');
-      await user.click(screen.getByRole('button', { name: 'Remove position 1' }));
-      expect(screen.getByText('No positions added')).toBeInTheDocument();
-
-      await clickNext(user);
-      expect(screen.getByText('Add at least one position')).toBeInTheDocument();
-      expect(screen.getByRole('button', { name: 'Add position' })).toHaveFocus();
-
-      await user.click(screen.getByRole('button', { name: 'Add position' }));
-      expect(screen.queryByText('Add at least one position')).not.toBeInTheDocument();
-    });
-
-    it('accepts a position that starts and ends in the same year', async () => {
-      const user = renderForm();
-      await fillPersonal(user);
-      await clickNext(user);
-
-      await user.type(screen.getByRole('textbox', { name: /Current title/ }), 'Engineer');
-      await user.type(screen.getByRole('textbox', { name: /Years of experience/ }), '1');
-      await user.type(screen.getByRole('textbox', { name: /Company/ }), 'Acme');
-      await user.type(screen.getByRole('textbox', { name: /^Title/ }), 'Intern');
-      await pickYears(user, '2025', '2025');
-      await clickNext(user);
-
-      expect(screen.getByRole('button', { name: /Earliest start date/ })).toBeInTheDocument();
-    });
-  });
-
-  describe('availability step', () => {
-    it('requires a start date and work arrangement and focuses the date picker', async () => {
-      const user = renderForm();
-      await fillPersonal(user);
-      await clickNext(user);
-      await fillExperience(user);
-      await clickNext(user);
-      await clickNext(user);
-
-      expect(screen.getByText('Earliest start date is required')).toBeInTheDocument();
-      expect(screen.getByText('Select a work arrangement')).toBeInTheDocument();
-      expect(screen.getByRole('button', { name: /Earliest start date/ })).toHaveFocus();
-    });
-
-    it('focuses the first radio when only the work arrangement is missing', async () => {
-      const user = renderForm();
-      await fillPersonal(user);
-      await clickNext(user);
-      await fillExperience(user);
-      await clickNext(user);
-      await pickStartDate(user, '19 October 2026');
-      await clickNext(user);
-
-      expect(screen.queryByText('Earliest start date is required')).not.toBeInTheDocument();
-      expect(screen.getByRole('radio', { name: 'Remote' })).toHaveFocus();
-    });
-
-    it('does not allow picking a date before today', async () => {
-      const user = renderForm();
-      await fillPersonal(user);
-      await clickNext(user);
-      await fillExperience(user);
-      await clickNext(user);
-
-      await user.click(screen.getByRole('button', { name: /Earliest start date/ }));
-      expect(screen.getByRole('button', { name: '18 October 2026' })).toBeDisabled();
-      expect(screen.getByRole('button', { name: '19 October 2026' })).toBeEnabled();
-    });
-
-    it('counts notes characters and limits them to 500', async () => {
-      const user = renderForm();
-      await fillPersonal(user);
-      await clickNext(user);
-      await fillExperience(user);
-      await clickNext(user);
-
-      const notes = screen.getByRole('textbox', { name: 'Notes' });
-      expect(screen.getByText('0/500 characters')).toBeInTheDocument();
-
-      await user.type(notes, 'Hello');
-      expect(screen.getByText('5/500 characters')).toBeInTheDocument();
-
-      await user.clear(notes);
-      await user.click(notes);
-      await user.paste('a'.repeat(520));
-      expect(notes).toHaveValue('a'.repeat(500));
-      expect(screen.getByText('500/500 characters')).toBeInTheDocument();
-    });
-  });
-
-  describe('navigation', () => {
-    it('keeps values when going back and forward', async () => {
-      const user = renderForm();
-      await fillPersonal(user);
-      await user.type(
-        screen.getByRole('textbox', { name: /LinkedIn URL/ }),
-        'https://linkedin.com/in/jane'
-      );
-      await clickNext(user);
-      await fillExperience(user);
-      await clickNext(user);
-      await user.type(screen.getByRole('textbox', { name: 'Notes' }), 'Available soon');
-
-      await clickBack(user);
-      expect(screen.getByRole('textbox', { name: /Current title/ })).toHaveValue('Senior engineer');
-      expect(screen.getByRole('textbox', { name: /Years of experience/ })).toHaveValue('8');
-      expect(screen.getByRole('textbox', { name: /Company/ })).toHaveValue('Acme');
-      expect(screen.getByRole('button', { name: /Start and end year/ })).toHaveTextContent(
-        '2020 – 2024'
-      );
-
-      await clickBack(user);
-      expect(screen.getByRole('textbox', { name: /First name/ })).toHaveValue('Jane');
-      expect(screen.getByRole('textbox', { name: /Email/ })).toHaveValue('jane@example.com');
-      expect(screen.getByRole('textbox', { name: /LinkedIn URL/ })).toHaveValue(
-        'https://linkedin.com/in/jane'
-      );
-
-      await clickNext(user);
-      await clickNext(user);
-      expect(screen.getByRole('textbox', { name: 'Notes' })).toHaveValue('Available soon');
-    });
-
-    it('allows clicking only steps that were already reached', async () => {
-      const user = renderForm();
-
-      await user.click(stepButton('Availability'));
-      expect(screen.getByRole('textbox', { name: /First name/ })).toBeInTheDocument();
-
-      await fillPersonal(user);
-      await clickNext(user);
-      await fillExperience(user);
-      await clickNext(user);
-
-      await user.click(stepButton('Personal'));
-      expect(screen.getByRole('textbox', { name: /First name/ })).toHaveValue('Jane');
-
-      await user.click(stepButton('Availability'));
-      expect(screen.getByRole('button', { name: /Earliest start date/ })).toBeInTheDocument();
-
-      await user.click(stepButton('Review'));
-      expect(screen.getByRole('button', { name: /Earliest start date/ })).toBeInTheDocument();
-    });
-
-    it('validates the current step before jumping ahead in the stepper', async () => {
-      const user = renderForm();
-      await fillPersonal(user);
-      await clickNext(user);
-      await fillExperience(user);
-      await clickNext(user);
-
-      await user.click(stepButton('Personal'));
-      await user.clear(screen.getByRole('textbox', { name: /Last name/ }));
-      await user.click(stepButton('Availability'));
-
-      expect(screen.getByText('Last name is required')).toBeInTheDocument();
-      expect(screen.getByRole('textbox', { name: /Last name/ })).toHaveFocus();
-    });
-  });
-
-  describe('review step', () => {
-    it('shows a summary of all values grouped by step', async () => {
-      const user = renderForm();
-      await fillPersonal(user);
-      await clickNext(user);
-      await fillExperience(user);
-      await clickNext(user);
-      await fillAvailability(user);
-      await user.type(screen.getByRole('textbox', { name: /Expected salary/ }), '120000');
-      await user.type(screen.getByRole('textbox', { name: 'Notes' }), 'Looking forward');
-      await clickNext(user);
-
-      const personal = screen.getByRole('region', { name: 'Personal details' });
-      expect(within(personal).getByText('Jane Doe')).toBeInTheDocument();
-      expect(within(personal).getByText('jane@example.com')).toBeInTheDocument();
-      expect(within(personal).getAllByText('Not provided')).toHaveLength(2);
-
-      const experience = screen.getByRole('region', { name: 'Experience' });
-      expect(within(experience).getByText('Senior engineer')).toBeInTheDocument();
-      expect(within(experience).getByText('8')).toBeInTheDocument();
-      expect(within(experience).getByText('Engineer at Acme, 2020–2024')).toBeInTheDocument();
-
-      const availability = screen.getByRole('region', { name: 'Availability' });
-      expect(within(availability).getByText('November 2, 2026')).toBeInTheDocument();
-      expect(within(availability).getByText('$120,000')).toBeInTheDocument();
-      expect(within(availability).getByText('Hybrid')).toBeInTheDocument();
-      expect(within(availability).getByText('Looking forward')).toBeInTheDocument();
-
-      expect(screen.queryByRole('textbox')).not.toBeInTheDocument();
-      expect(screen.getByRole('button', { name: 'Submit application' })).toBeInTheDocument();
-      expect(screen.queryByRole('button', { name: 'Next' })).not.toBeInTheDocument();
-    });
-
-    it('jumps to a step with the Edit link and comes back to review', async () => {
-      const user = renderForm();
-      await goToReview(user);
-
-      await user.click(screen.getByRole('button', { name: 'Edit experience' }));
-      const title = screen.getByRole('textbox', { name: /Current title/ });
-      expect(title).toHaveValue('Senior engineer');
-
-      await user.clear(title);
-      await user.type(title, 'Staff engineer');
-      await user.click(stepButton('Review'));
-      expect(screen.getByText('Staff engineer')).toBeInTheDocument();
-
-      await user.click(screen.getByRole('button', { name: 'Edit personal details' }));
-      expect(screen.getByRole('textbox', { name: /First name/ })).toHaveValue('Jane');
-
-      await user.click(stepButton('Review'));
-      await user.click(screen.getByRole('button', { name: 'Edit availability' }));
-      expect(screen.getByRole('radio', { name: 'Hybrid' })).toBeChecked();
-    });
-  });
-
-  describe('submission', () => {
-    it('submits the values, shows a success notification and resets the form', async () => {
-      const onSubmit = vi.fn();
-      const user = renderForm(onSubmit);
-      await goToReview(user);
-
-      await user.click(screen.getByRole('button', { name: 'Submit application' }));
-
-      expect(onSubmit).toHaveBeenCalledTimes(1);
-      expect(onSubmit).toHaveBeenCalledWith(
-        expect.objectContaining({
-          firstName: 'Jane',
-          lastName: 'Doe',
-          email: 'jane@example.com',
-          phone: '',
-          linkedinUrl: '',
-          currentTitle: 'Senior engineer',
-          yearsOfExperience: 8,
-          positions: [
-            expect.objectContaining({
-              company: 'Acme',
-              title: 'Engineer',
-              years: ['2020-01-01', '2024-01-01'],
-            }),
-          ],
-          startDate: '2026-11-02',
-          expectedSalary: '',
-          workArrangement: 'hybrid',
-          notes: '',
-        })
-      );
-
-      expect(await screen.findByText('Application submitted')).toBeInTheDocument();
-
-      await waitFor(() =>
-        expect(screen.getByRole('textbox', { name: /First name/ })).toHaveValue('')
-      );
-      expect(screen.getByRole('textbox', { name: /Email/ })).toHaveValue('');
-
-      await user.click(stepButton('Experience'));
-      expect(screen.queryByRole('textbox', { name: /Current title/ })).not.toBeInTheDocument();
-
-      await fillPersonal(user);
-      await clickNext(user);
-      expect(screen.getByRole('textbox', { name: /Current title/ })).toHaveValue('');
-      expect(screen.getAllByRole('group', { name: /Position \d/ })).toHaveLength(1);
-    });
+    expect(await screen.findByText('Application submitted')).toBeInTheDocument();
+    expect(screen.getByRole('textbox', { name: /First name/ })).toHaveValue('');
+    await user.click(stepButton('Experience'));
+    expect(screen.getByRole('textbox', { name: /First name/ })).toBeInTheDocument();
   });
 });

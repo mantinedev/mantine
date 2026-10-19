@@ -1,10 +1,12 @@
-import { Group, PhoneInput, Stack, TextInput } from '@mantine/core';
-import type { JobApplicationFormType } from './types';
+import { PhoneInput, SimpleGrid, Stack, TextInput } from '@mantine/core';
+import type { JobApplicationFormType } from '../types';
 
 export function PersonalStep({ form }: { form: JobApplicationFormType }) {
+  const phoneInputProps = form.getInputProps('phone');
+
   return (
-    <Stack>
-      <Group grow align="flex-start">
+    <Stack gap="md" mt="xl">
+      <SimpleGrid cols={{ base: 1, sm: 2 }}>
         <TextInput
           label="First name"
           placeholder="First name"
@@ -17,7 +19,7 @@ export function PersonalStep({ form }: { form: JobApplicationFormType }) {
           withAsterisk
           {...form.getInputProps('lastName')}
         />
-      </Group>
+      </SimpleGrid>
       <TextInput
         type="email"
         label="Email"
@@ -29,13 +31,17 @@ export function PersonalStep({ form }: { form: JobApplicationFormType }) {
         label="Phone"
         placeholder="Phone"
         defaultCountry="us"
-        {...form.getInputProps('phone')}
+        {...phoneInputProps}
+        onChange={(value, details) => {
+          phoneInputProps.onChange(value);
+          form.setFieldValue('phoneDisplay', details.formattedValue);
+        }}
       />
       <TextInput
         type="url"
-        label="LinkedIn URL"
-        placeholder="https://www.linkedin.com/in/your-name"
-        {...form.getInputProps('linkedinUrl')}
+        label="LinkedIn"
+        placeholder="https://linkedin.com/in/you"
+        {...form.getInputProps('linkedin')}
       />
     </Stack>
   );

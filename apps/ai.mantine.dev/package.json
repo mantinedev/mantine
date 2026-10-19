@@ -26,6 +26,7 @@
     "@mdx-js/react": "^3.1.1",
     "@next/mdx": "16.3.6",
     "@phosphor-icons/react": "^2.1.10",
+    "@tabler/icons-react": "^3.49.0",
     "dayjs": "^1.11.23",
     "next": "16.3.6",
     "react": "19.3.0",
