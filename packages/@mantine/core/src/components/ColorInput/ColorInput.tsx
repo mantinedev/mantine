@@ -175,6 +175,7 @@ export const ColorInput = factory<ColorInputFactory>((_props) => {
 
   const eyeDropper = (
     <ActionIcon
+      aria-label="Pick color with eye dropper"
       {...eyeDropperButtonProps}
       {...getStyles('eyeDropperButton', {
         className: eyeDropperButtonProps?.className,
