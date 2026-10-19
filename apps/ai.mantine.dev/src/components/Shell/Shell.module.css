@@ -1,5 +1,6 @@
-.root {
-  --footer-height: 120px;
+.header {
+  background-color: alpha(var(--mantine-color-body), 0.85);
+  backdrop-filter: blur(5px);
 }
 
 .inner {
@@ -7,37 +8,11 @@
   align-items: center;
   justify-content: space-between;
   height: 100%;
-}
-
-.main {
-  padding-bottom: var(--footer-height);
-}
-
-.header {
-  background-color: alpha(var(--mantine-color-body), 0.85);
-  backdrop-filter: blur(5px);
-}
-
-.content {
-  position: relative;
-  z-index: 1;
-  background-color: var(--mantine-color-body);
-  padding-bottom: 120px;
-  box-shadow: var(--mantine-shadow-md);
-  min-height: calc(100vh - var(--app-shell-header-height));
+  padding-inline: var(--mantine-spacing-md);
 }
 
 .logo {
   & > svg {
     display: block;
   }
-}
-
-.footer {
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  height: var(--footer-height);
-  background-color: light-dark(var(--mantine-color-gray-0), var(--mantine-color-dark-8));
 }

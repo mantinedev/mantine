@@ -1,0 +1,27 @@
+.navbar {
+  position: fixed;
+  top: var(--app-shell-header-height);
+  bottom: 0;
+  width: var(--examples-shell-navbar-width);
+  background-color: var(--mantine-color-surface-page);
+  border-inline-end: 1px solid var(--mantine-color-border);
+  z-index: 2;
+
+  @mixin smaller-than $md {
+    width: unset;
+    left: 0;
+    right: 0;
+    z-index: 3;
+  }
+
+  &[data-hidden] {
+    @mixin smaller-than $md {
+      display: none;
+    }
+  }
+}
+
+.scroll {
+  height: calc(100vh - var(--app-shell-header-height));
+  padding-top: var(--mantine-spacing-md);
+}

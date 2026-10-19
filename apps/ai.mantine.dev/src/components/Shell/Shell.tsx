@@ -2,15 +2,7 @@
 
 import Link from 'next/link';
 import cx from 'clsx';
-import {
-  Anchor,
-  AppShell,
-  Container,
-  Group,
-  RemoveScroll,
-  Text,
-  useMantineColorScheme,
-} from '@mantine/core';
+import { AppShell, Group, RemoveScroll, useMantineColorScheme } from '@mantine/core';
 import { useHotkeys } from '@mantine/hooks';
 import { ColorSchemeControl, HeaderControls } from '@mantinex/mantine-header';
 import { MantineLogo } from '@mantinex/mantine-logo';
@@ -26,9 +18,9 @@ export function Shell({ children }: ShellProps) {
   useHotkeys([['mod + J', toggleColorScheme]]);
 
   return (
-    <AppShell header={{ height: 60 }} className={classes.root}>
+    <AppShell header={{ height: 60 }}>
       <AppShell.Header className={cx(RemoveScroll.classNames.zeroRight, classes.header)}>
-        <Container size="md" className={classes.inner}>
+        <div className={classes.inner}>
           <Link href="/" className={cx('mantine-focus-auto', classes.logo)}>
             <MantineLogo size={30} />
           </Link>
@@ -44,28 +36,9 @@ export function Shell({ children }: ShellProps) {
           <Group hiddenFrom="sm">
             <ColorSchemeControl />
           </Group>
-        </Container>
+        </div>
       </AppShell.Header>
-      <AppShell.Main className={classes.main}>
-        <div className={classes.content}>{children}</div>
-      </AppShell.Main>
-
-      <footer className={classes.footer}>
-        <Container size="md" h="100%">
-          <Group justify="space-between" align="center" h="100%">
-            <Anchor href={meta.docsLink} target="_blank" fz="sm">
-              mantine.dev
-            </Anchor>
-
-            <Text fz="sm">
-              Built by{' '}
-              <Anchor href="https://github.com/rtivital" target="_blank" fz="sm" underline="always">
-                Vitaly Rtishchev
-              </Anchor>
-            </Text>
-          </Group>
-        </Container>
-      </footer>
+      <AppShell.Main>{children}</AppShell.Main>
     </AppShell>
   );
 }

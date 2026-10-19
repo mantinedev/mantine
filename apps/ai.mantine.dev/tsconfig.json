@@ -1,8 +1,15 @@
 {
   "compilerOptions": {
-    "types": ["./@types/css.d.ts"],
+    "types": [
+      "./@types/css.d.ts",
+      "vitest/globals"
+    ],
     "target": "ES2015",
-    "lib": ["dom", "dom.iterable", "esnext"],
+    "lib": [
+      "dom",
+      "dom.iterable",
+      "esnext"
+    ],
     "allowJs": true,
     "skipLibCheck": true,
     "strict": true,
@@ -16,7 +23,12 @@
     "jsx": "react-jsx",
     "incremental": true,
     "paths": {
-      "@/*": ["./src/*"]
+      "@/*": [
+        "./src/*"
+      ],
+      "@test-utils": [
+        "./test-utils"
+      ]
     },
     "plugins": [
       {
@@ -29,7 +41,12 @@
     "**/*.ts",
     "**/*.tsx",
     ".next/types/**/*.ts",
-    ".next/dev/types/**/*.ts"
+    ".next/dev/types/**/*.ts",
+    "test-utils/**/*.ts",
+    "test-utils/**/*.tsx",
+    "test-utils/**/*.d.ts"
   ],
-  "exclude": ["node_modules"]
+  "exclude": [
+    "node_modules"
+  ]
 }

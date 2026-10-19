@@ -1,0 +1,27 @@
+.root {
+  --examples-shell-navbar-width: 300px;
+
+  @mixin smaller-than $md {
+    --examples-shell-navbar-width: 0;
+  }
+}
+
+.main {
+  padding-inline-start: var(--examples-shell-navbar-width);
+}
+
+.mobileBar {
+  display: none;
+  align-items: center;
+  gap: var(--mantine-spacing-sm);
+  padding: var(--mantine-spacing-xs) var(--mantine-spacing-md);
+  border-bottom: 1px solid var(--mantine-color-border);
+
+  @mixin smaller-than $md {
+    display: flex;
+  }
+}
+
+.mobileTitle {
+  font-weight: var(--mantine-font-weight-medium);
+}

@@ -1,0 +1,7 @@
+.root {
+  padding: calc(var(--mantine-spacing-xl) * 2) var(--mantine-spacing-lg);
+}
+
+.title {
+  color: var(--mantine-color-bright);
+}

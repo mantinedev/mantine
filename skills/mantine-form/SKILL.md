@@ -112,6 +112,47 @@ async validation and until the promise returned by the handler settles (resolved
 Catch request errors inside the handler and turn them into form errors, see the server errors
 pattern.
 
+### 4. Split the form into files
+
+One folder per form. `<Name>Form.tsx` holds `useForm`, navigation between steps and submission;
+each step, tab, section or repeated group of fields is a component in its own file that takes
+`form` as a prop; `types.ts` holds the values interface and the form type. Name the form type
+after the values, not after the component: `type ProfileFormType = UseFormReturnType<ProfileValues>`
+when the component is `ProfileForm`. A file over about 200 lines is a sign to split further.
+See [splitting a form into components](references/patterns.md#splitting-a-form-into-components).
+
+### 5. Inputs and code style
+
+- Every input has a `placeholder`. Use the label text unless a format example helps more
+  (`you@example.com`, `YYYY`).
+- Pick the input made for the data: `PhoneInput` for phone numbers, `NumberInput` for numbers,
+  `DateInput` / `DatePickerInput` for dates, `YearPickerInput` / `MonthPickerInput` for years and
+  months, `type="range"` on picker inputs for a period (a position's years, a stay, a booking)
+  instead of two inputs, `TimeInput` for times, `PinInput` for codes, `MaskInput` for formatted
+  strings, `Textarea` for long text. A plain `TextInput` is for free text only.
+- `NumberInput` shows increment/decrement controls only when stepping by one makes sense
+  (quantity, number of guests, tickets). When the user has a specific value in mind (salary,
+  price, amount, year, percentage) set `hideControls`.
+- Secondary text (hints, counters, summary labels) uses a smaller `size`, never `c="dimmed"`.
+- Buttons: the primary action is the default `filled` button, every other action (`Back`,
+  `Add item`, `Remove`, `Reset`, `Cancel`) is `variant="default"`. Never `subtle` or `light`.
+  Icon-only actions use `ActionIcon variant="default"` or `CloseButton`.
+- Comments only where the code cannot explain itself: a workaround, a browser or library
+  behavior the next reader would not expect (`// preventDefault keeps focus in the input so its
+  blur error does not shift the button`). No comments that restate what the code does, no JSDoc
+  on internal helpers.
+
+### 6. Tests
+
+Test with React Testing Library and `user-event`, rendering inside `MantineProvider`
+(`env="test"`). Query by label and role, never by class name. Test what the user does: typing,
+errors shown and cleared, focus on the first invalid field, navigation keeps values, submit
+payload. Freeze time with fake timers (`toFake: ['Date']`) when the form validates against today.
+
+jsdom matches no media query, so picker inputs open their mobile `drawer` dropdown, where the
+value is applied only after the `Save` button is pressed (`applyOnSubmit`). Either click `Save`
+after the day, or mock `matchMedia` to report a desktop viewport so the popover opens.
+
 ## Validation
 
 ### Rules object (most common)

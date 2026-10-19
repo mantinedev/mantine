@@ -11,3 +11,7 @@ export const EXAMPLES: Record<SkillId, SkillExample[]> = {
   'mantine-combobox': COMBOBOX_EXAMPLES,
   'mantine-custom-components': CUSTOM_COMPONENTS_EXAMPLES,
 };
+
+export function getExample(skill: SkillId, example: string): SkillExample | undefined {
+  return EXAMPLES[skill].find((item) => item.id === example);
+}

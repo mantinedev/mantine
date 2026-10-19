@@ -1370,7 +1370,8 @@ const handleSaveDraft = () => {
 
 Id: `TabsWithErrorCount`, `StepperWizard`, `ConditionalSections`. Keep the `useForm` call and the
 submit logic in one component, put groups of fields in their own components that take the form
-as a prop. Declare the form type once per feature:
+as a prop, one file each. Declare the form type once per feature in `types.ts`, named so that it
+does not clash with the component (`SettingsFormType` for a `SettingsForm` component):
 
 ```tsx
 // types.ts
@@ -1378,10 +1379,10 @@ export interface SettingsValues {
   name: string;
   password: string;
 }
-export type SettingsForm = UseFormReturnType<SettingsValues>;
+export type SettingsFormType = UseFormReturnType<SettingsValues>;
 
 // ProfileTab.tsx
-export function ProfileTab({ form }: { form: SettingsForm }) {
+export function ProfileTab({ form }: { form: SettingsFormType }) {
   return <TextInput label="Name" {...form.getInputProps('name')} />;
 }
 ```

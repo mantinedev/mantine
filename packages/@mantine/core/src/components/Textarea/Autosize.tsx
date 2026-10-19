@@ -232,9 +232,13 @@ export function TextareaAutosize({
   }, []);
 
   useEffect(() => {
+    const fonts = document.fonts as FontFaceSet | undefined;
+    if (!fonts) {
+      return undefined;
+    }
     const handleFontsLoaded = () => resizeTextarea();
-    document.fonts.addEventListener('loadingdone', handleFontsLoaded);
-    return () => document.fonts.removeEventListener('loadingdone', handleFontsLoaded);
+    fonts.addEventListener('loadingdone', handleFontsLoaded);
+    return () => fonts.removeEventListener('loadingdone', handleFontsLoaded);
   }, []);
 
   useEffect(() => {

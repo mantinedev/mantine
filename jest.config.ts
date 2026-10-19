@@ -9,7 +9,11 @@ export default {
   transformIgnorePatterns: ['/node_modules/(?!@tanstack/)'],
   testMatch: ['**/__tests__/**/*.ts?(x)', '**/?(*.)+(spec|test).ts?(x)'],
   modulePathIgnorePatterns: ['<rootDir>/.claude/'],
-  testPathIgnorePatterns: ['/node_modules/', '<rootDir>/.claude/'],
+  testPathIgnorePatterns: [
+    '/node_modules/',
+    '<rootDir>/.claude/',
+    '<rootDir>/apps/ai.mantine.dev/',
+  ],
   setupFilesAfterEnv: ['./jsdom.mocks.ts', './jest.react.ts'],
   moduleNameMapper: {
     '@mantine/(.*)': '<rootDir>/packages/@mantine/$1/src',

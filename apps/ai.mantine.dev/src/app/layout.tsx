@@ -2,12 +2,14 @@ import '@mantine/core/styles.css';
 import '@mantine/code-highlight/styles.css';
 import '@mantine/dates/styles.css';
 import '@mantine/dropzone/styles.css';
+import '@mantine/notifications/styles.css';
 import '@mantinex/demo/styles.css';
 import '@mantinex/mantine-header/styles.css';
 import '@mantinex/mantine-logo/styles.css';
 
 import type { Metadata } from 'next';
 import { ColorSchemeScript, MantineProvider, mantineHtmlProps } from '@mantine/core';
+import { Notifications } from '@mantine/notifications';
 import { CodeHighlightProvider } from '@/components/CodeHighlightProvider';
 import { Shell } from '@/components/Shell';
 import { theme } from '@/theme';
@@ -51,6 +53,7 @@ export default function RootLayout({ children }: RootLayoutProps) {
       </head>
       <body>
         <MantineProvider theme={theme}>
+          <Notifications />
           <Shell>
             <CodeHighlightProvider>{children}</CodeHighlightProvider>
           </Shell>

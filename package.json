@@ -21,6 +21,7 @@
     "hc:deploy": "npm run hc:build && wrangler pages deploy apps/help.mantine.dev/out --branch master --project-name help-mantine-dev",
     "ai": "cd apps/ai.mantine.dev && npm run dev",
     "ai:build": "cd apps/ai.mantine.dev && npm run build",
+    "ai:test": "cd apps/ai.mantine.dev && npm run test",
     "ai:deploy": "npm run ai:build && wrangler pages deploy apps/ai.mantine.dev/out --branch master --project-name ai-mantine-dev",
     "chmod": "sh scripts/utils/chmod.sh",
     "list": "tsx scripts/list",

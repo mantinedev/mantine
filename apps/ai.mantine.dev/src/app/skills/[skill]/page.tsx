@@ -1,6 +1,6 @@
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
-import { SkillPage } from '@/components/SkillPage';
+import { ExamplesPage } from '@/components/ExamplesPage';
 import { getSkill, SKILLS } from '@/skills-data';
 
 interface SkillRouteProps {
@@ -35,5 +35,5 @@ export default async function SkillRoute({ params }: SkillRouteProps) {
     notFound();
   }
 
-  return <SkillPage skill={skill} />;
+  return <ExamplesPage skill={skill} />;
 }

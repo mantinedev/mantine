@@ -7,7 +7,8 @@
     "dev": "next dev --port 4819",
     "build": "next build && touch out/.nojekyll && echo 'ai.mantine.dev' > out/CNAME",
     "start": "next start",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run"
   },
   "dependencies": {
     "@mantine/code-highlight": "workspace:*",
@@ -16,6 +17,7 @@
     "@mantine/dropzone": "workspace:*",
     "@mantine/form": "workspace:*",
     "@mantine/hooks": "workspace:*",
+    "@mantine/notifications": "workspace:*",
     "@mantinex/demo": "workspace:*",
     "@mantinex/dev-icons": "workspace:*",
     "@mantinex/mantine-header": "workspace:*",
@@ -24,6 +26,7 @@
     "@mdx-js/react": "^3.1.1",
     "@next/mdx": "16.3.6",
     "@phosphor-icons/react": "^2.1.10",
+    "dayjs": "^1.11.23",
     "next": "16.3.6",
     "react": "19.3.0",
     "react-dom": "19.3.0",
@@ -32,10 +35,16 @@
   },
   "devDependencies": {
     "@mdx-js/loader": "^3.1.1",
+    "@testing-library/jest-dom": "7.0.1",
+    "@testing-library/react": "16.3.3",
+    "@testing-library/user-event": "14.6.7",
     "@types/mdx": "2.0.14",
     "@types/node": "^26.6.3",
     "@types/react": "19.3.0",
     "@types/react-dom": "19.3.0",
-    "typescript": "6.0.3"
+    "jsdom": "^26.1.0",
+    "typescript": "6.0.3",
+    "vite": "^8.0.0",
+    "vitest": "^5.0.1"
   }
 }
