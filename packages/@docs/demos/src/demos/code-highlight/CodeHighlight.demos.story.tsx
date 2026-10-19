@@ -24,6 +24,16 @@ export const Demo_tabsGetIcons = {
   render: renderDemo(demos.tabsGetIcons),
 };
 
+export const Demo_fileTree = {
+  name: '⭐ Demo: fileTree',
+  render: renderDemo(demos.fileTree),
+};
+
+export const Demo_fileTreeControlled = {
+  name: '⭐ Demo: fileTreeControlled',
+  render: renderDemo(demos.fileTreeControlled),
+};
+
 export const Demo_expand = {
   name: '⭐ Demo: expand',
   render: renderDemo(demos.expand),

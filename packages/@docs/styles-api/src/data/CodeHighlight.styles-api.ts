@@ -1,5 +1,6 @@
 import type {
   CodeHighlightFactory,
+  CodeHighlightFileTreeFactory,
   CodeHighlightTabsFactory,
   InlineCodeHighlightFactory,
   JsonViewerFactory,
@@ -41,6 +42,42 @@ export const CodeHighlightTabsStylesApi: StylesApiData<CodeHighlightTabsFactory>
   },
 
   vars: {},
+};
+
+export const CodeHighlightFileTreeStylesApi: StylesApiData<CodeHighlightFileTreeFactory> = {
+  selectors: {
+    ...CodeHighlightStylesApi.selectors,
+    root: 'Root element',
+    codeHighlight: 'Root element of inner CodeHighlight component',
+    files: 'File tree pane',
+    tree: 'Tree root element, ul',
+    node: 'Tree node, li',
+    file: 'File row',
+    folder: 'Folder row',
+    fileIcon: 'File icon',
+    folderIcon: 'Folder icon rendered with `getFolderIcon`',
+    chevron: 'Folder chevron icon, rendered when `getFolderIcon` is not set',
+    select: 'File select displayed below `hideTreeBelow` breakpoint',
+  },
+
+  vars: {
+    root: {
+      '--ch-background': 'Background color',
+      '--ch-radius': 'Border radius',
+      '--ch-tree-width': 'Width of the file tree pane',
+    },
+  },
+
+  modifiers: [
+    { modifier: 'data-with-border', selector: 'root', condition: '`withBorder` prop is set' },
+    {
+      modifier: 'data-collapsed',
+      selector: 'root',
+      condition: 'Code is collapsed and the file tree is displayed',
+    },
+    { modifier: 'data-selected', selector: 'file', condition: 'File is active' },
+    { modifier: 'data-expanded', selector: 'chevron', condition: 'Folder is expanded' },
+  ],
 };
 
 export const InlineCodeHighlightStylesApi: StylesApiData<InlineCodeHighlightFactory> = {

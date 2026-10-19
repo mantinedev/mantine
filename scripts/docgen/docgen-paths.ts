@@ -210,6 +210,7 @@ const FILES_PATHS = getPaths([
   // CodeHighlight
   'packages/@mantine/code-highlight/src/CodeHighlight/CodeHighlight.tsx',
   'packages/@mantine/code-highlight/src/CodeHighlightTabs/CodeHighlightTabs.tsx',
+  'packages/@mantine/code-highlight/src/CodeHighlightFileTree/CodeHighlightFileTree.tsx',
   'packages/@mantine/code-highlight/src/CodeHighlight/InlineCodeHighlight.tsx',
   'packages/@mantine/code-highlight/src/JsonViewer/JsonViewer.tsx',
   'packages/@mantine/code-highlight/src/Diff/Diff.tsx',

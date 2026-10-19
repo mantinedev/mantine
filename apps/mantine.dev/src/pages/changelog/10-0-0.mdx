@@ -2,6 +2,7 @@ import {
   AccordionDemos,
   AlertDemos,
   BlockquoteDemos,
+  CodeHighlightDemos,
   ColorPickerDemos,
   DataGridDemos,
   DatePickerInputDemos,
@@ -581,6 +582,15 @@ the edge of the dropdown, the same way as in `Select`. It is also available as `
 ## use-uncontrolled stable setter
 
 The setter returned by [use-uncontrolled](/hooks/use-uncontrolled) now keeps the same identity for the lifetime of the component, in both controlled and uncontrolled mode. It always calls the latest `onChange`, so it can be used in effect dependencies or passed to memoized children without wrapping it in `useCallback` or a ref.
+
+## CodeHighlightFileTree component
+
+New [CodeHighlightFileTree](/code-highlight/code-highlight/#file-tree) component displays
+multi-file code with a file tree instead of tabs. `/` in `fileName` creates folders, the active
+file can be controlled with `activeFile` and `onActiveFileChange` props, and below `hideTreeBelow`
+breakpoint the tree is replaced with a select:
+
+<Demo data={CodeHighlightDemos.fileTree} />
 
 ## Other changes
 

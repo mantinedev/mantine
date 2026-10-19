@@ -35,6 +35,23 @@ Use `getFileIcon` prop to assign tab icons based on file name:
 
 <Demo data={CodeHighlightDemos.tabsGetIcons} />
 
+## File tree
+
+Use `CodeHighlightFileTree` component to display multi-file code with a file tree instead of tabs.
+`/` in `fileName` creates folders, files keep the order of the `code` array. Use `getFileIcon` and
+`getFolderIcon` props to render icons based on file name and folder state. Below `hideTreeBelow`
+breakpoint (`sm` by default) the tree is replaced with a select:
+
+<Demo data={CodeHighlightDemos.fileTree} />
+
+## Controlled active file
+
+Use `activeFile` and `onActiveFileChange` props to control the active file. The folder of the active
+file is expanded automatically. Set `defaultExpandedFolders` prop to choose which folders are expanded
+on mount, all folders are expanded by default:
+
+<Demo data={CodeHighlightDemos.fileTreeControlled} />
+
 ## Line numbers
 
 Set `withLineNumbers` prop to display line numbers alongside the code:

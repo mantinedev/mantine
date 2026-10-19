@@ -20,6 +20,13 @@ import {
   useStyles,
 } from '@mantine/core';
 import { useId, useUncontrolled } from '@mantine/hooks';
+import type {
+  CodeHighlightFileTreeCode,
+  CodeHighlightFileTreeCssVariables,
+  CodeHighlightFileTreeFactory,
+  CodeHighlightFileTreeProps,
+  CodeHighlightFileTreeStylesNames,
+} from '../CodeHighlightFileTree/CodeHighlightFileTree';
 import {
   useHighlight,
   useIsLanguageLoaded,
@@ -361,6 +368,14 @@ export namespace CodeHighlight {
     export type Code = CodeHighlightTabsCode;
     export type Factory = CodeHighlightTabsFactory;
     export type DefaultLanguage = CodeHighlightDefaultLanguage;
+  }
+
+  export namespace FileTree {
+    export type Props = CodeHighlightFileTreeProps;
+    export type StylesNames = CodeHighlightFileTreeStylesNames;
+    export type CssVariables = CodeHighlightFileTreeCssVariables;
+    export type Code = CodeHighlightFileTreeCode;
+    export type Factory = CodeHighlightFileTreeFactory;
   }
 
   export namespace Inline {

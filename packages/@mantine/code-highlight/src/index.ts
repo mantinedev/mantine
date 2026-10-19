@@ -12,6 +12,14 @@ import type {
   InlineCodeHighlightProps,
   InlineCodeHighlightStylesNames,
 } from './CodeHighlight/InlineCodeHighlight';
+import type {
+  CodeHighlightFileTreeCode,
+  CodeHighlightFileTreeCssVariables,
+  CodeHighlightFileTreeFactory,
+  CodeHighlightFileTreeProps,
+  CodeHighlightFileTreeStylesNames,
+} from './CodeHighlightFileTree/CodeHighlightFileTree';
+import type { CodeHighlightFileTreeBreakpoint } from './CodeHighlightFileTree/use-below-breakpoint';
 import type { CodeHighlightAdapter } from './CodeHighlightProvider/CodeHighlightProvider';
 import type {
   CodeHighlightDefaultLanguage,
@@ -33,6 +41,7 @@ import type { NormalizeCodeOptions } from './normalize-code';
 export { CodeHighlight } from './CodeHighlight/CodeHighlight.js';
 export { InlineCodeHighlight } from './CodeHighlight/InlineCodeHighlight.js';
 export { CodeHighlightTabs } from './CodeHighlightTabs/CodeHighlightTabs.js';
+export { CodeHighlightFileTree } from './CodeHighlightFileTree/CodeHighlightFileTree.js';
 export { CodeHighlightControl } from './CodeHighlight/CodeHighlightControl/CodeHighlightControl.js';
 export { useCodeHighlightContext } from './CodeHighlight/CodeHighlight.context.js';
 export { JsonViewer, serializePath as serializeJsonViewerPath } from './JsonViewer/JsonViewer.js';
@@ -63,6 +72,12 @@ export type {
   CodeHighlightTabsCode,
   CodeHighlightTabsFactory,
   CodeHighlightDefaultLanguage,
+  CodeHighlightFileTreeProps,
+  CodeHighlightFileTreeStylesNames,
+  CodeHighlightFileTreeCssVariables,
+  CodeHighlightFileTreeCode,
+  CodeHighlightFileTreeFactory,
+  CodeHighlightFileTreeBreakpoint,
   InlineCodeHighlightProps,
   InlineCodeHighlightStylesNames,
   InlineCodeHighlightCssVariables,
