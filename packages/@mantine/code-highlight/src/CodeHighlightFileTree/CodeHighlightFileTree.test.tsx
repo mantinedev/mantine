@@ -263,4 +263,30 @@ describe('@mantine/code-highlight/CodeHighlightFileTree', () => {
       expect(screen.getByRole('tree')).toBeInTheDocument();
     });
   });
+
+  it('renders pinned files in a separate section above the file tree', async () => {
+    const { container } = render(
+      <CodeHighlightFileTree
+        code={[
+          { fileName: 'PROMPT.md', code: 'Build a form', language: 'markdown', pinned: true },
+          ...files,
+        ]}
+      />
+    );
+
+    const trees = screen.getAllByRole('tree');
+    expect(trees).toHaveLength(2);
+    expect(trees[0]).toHaveAccessibleName('Pinned files');
+    expect(trees[0]).toContainElement(getTreeItem('PROMPT.md'));
+    expect(trees[1]).not.toContainElement(getTreeItem('PROMPT.md'));
+    expect(trees[1]).toContainElement(getTreeItem('Form.tsx'));
+    expect(container.querySelector('.mantine-CodeHighlightFileTree-pinned')).toBeInTheDocument();
+    expect(getDisplayedCode(container)).toBe('Build a form');
+
+    await userEvent.click(screen.getByText('types.ts'));
+    expect(getDisplayedCode(container)).toBe('const types = 4');
+
+    await userEvent.click(screen.getByText('PROMPT.md'));
+    expect(getDisplayedCode(container)).toBe('Build a form');
+  });
 });

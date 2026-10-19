@@ -1,14 +1,14 @@
 'use client';
 
 import { useRef } from 'react';
-import { CodeHighlightFileTree } from '@mantine/code-highlight';
+import { CodeHighlightFileTree, type CodeHighlightFileTreeCode } from '@mantine/code-highlight';
 import { Text } from '@mantine/core';
 import { useHotkeys } from '@mantine/hooks';
-import { getCodeFileIcon } from '@mantinex/dev-icons';
+import { getCodeFileIcon, getCodeFolderIcon } from '@mantinex/dev-icons';
 import type { SkillExample, SkillExampleCode } from '@/examples';
 import { createFiller } from '@/examples/fill-utils';
 import type { SkillData } from '@/skills-data';
-import { PromptText } from './PromptText';
+import { wrapPrompt } from './wrap-prompt';
 import classes from './ExampleDemo.module.css';
 
 interface ExampleDemoProps {
@@ -16,12 +16,18 @@ interface ExampleDemoProps {
   example: SkillExample;
 }
 
+const PROMPT_FILE = 'PROMPT.md';
+
 function isTestFile(file: SkillExampleCode) {
   return /\.test\.tsx?$/.test(file.fileName);
 }
 
-function sortTestsLast(code: SkillExampleCode[]) {
-  return [...code.filter((file) => !isTestFile(file)), ...code.filter(isTestFile)];
+function getFiles(example: SkillExample): CodeHighlightFileTreeCode[] {
+  return [
+    { fileName: PROMPT_FILE, language: 'markdown', code: wrapPrompt(example.prompt), pinned: true },
+    ...example.code.filter((file) => !isTestFile(file)),
+    ...example.code.filter(isTestFile),
+  ];
 }
 
 export function ExampleDemo({ skill, example }: ExampleDemoProps) {
@@ -46,11 +52,6 @@ export function ExampleDemo({ skill, example }: ExampleDemoProps) {
           <Text className={classes.description}>Built with the {skill.name} skill</Text>
         </div>
 
-        <div className={classes.prompt}>
-          <Text className={classes.promptLabel}>Prompt</Text>
-          <PromptText text={example.prompt} />
-        </div>
-
         <div className={classes.inner}>
           <div className={classes.wrapper} key={example.id} ref={wrapperRef}>
             <example.component />
@@ -61,9 +62,10 @@ export function ExampleDemo({ skill, example }: ExampleDemoProps) {
       <div className={classes.code}>
         <CodeHighlightFileTree
           key={example.id}
-          code={sortTestsLast(example.code)}
+          code={getFiles(example)}
           getFileIcon={getCodeFileIcon}
-          defaultActiveFile={example.code[0]?.fileName}
+          getFolderIcon={getCodeFolderIcon}
+          defaultActiveFile={PROMPT_FILE}
           treeWidth={270}
         />
       </div>

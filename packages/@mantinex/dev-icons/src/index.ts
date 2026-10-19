@@ -7,4 +7,7 @@ export { YarnIcon } from './YarnIcon';
 export { TypeScriptIcon } from './TypeScriptIcon';
 export { TypeScriptCircleIcon } from './TypeScriptCircleIcon';
 export { CssIcon } from './CssIcon';
-export { getCodeFileIcon } from './get-code-file-icon';
+export { MarkdownIcon } from './MarkdownIcon';
+export { FolderIcon } from './FolderIcon';
+export { FolderOpenIcon } from './FolderOpenIcon';
+export { getCodeFileIcon, getCodeFolderIcon } from './get-code-file-icon';

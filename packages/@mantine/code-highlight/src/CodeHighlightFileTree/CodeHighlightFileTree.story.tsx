@@ -138,3 +138,26 @@ export function AlwaysSelect() {
     </div>
   );
 }
+
+export function PinnedFiles() {
+  const withPrompt = [
+    {
+      fileName: 'PROMPT.md',
+      language: 'markdown',
+      code: 'Build a job application form with four steps and a stepper at the top.',
+      pinned: true,
+    },
+    ...code,
+  ];
+
+  return (
+    <div style={{ padding: 40 }}>
+      <CodeHighlightFileTree
+        code={withPrompt}
+        getFileIcon={getCodeFileIcon}
+        radius="md"
+        withBorder
+      />
+    </div>
+  );
+}

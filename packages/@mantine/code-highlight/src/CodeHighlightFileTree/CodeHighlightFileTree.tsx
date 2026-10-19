@@ -43,6 +43,9 @@ export interface CodeHighlightFileTreeCode {
   code: string;
   fileName: string;
   icon?: React.ReactNode;
+
+  /** If set, the file is displayed in a separate section above the file tree */
+  pinned?: boolean;
 }
 
 export type CodeHighlightFileTreeStylesNames =
@@ -55,6 +58,7 @@ export type CodeHighlightFileTreeStylesNames =
   | 'fileIcon'
   | 'folderIcon'
   | 'chevron'
+  | 'pinned'
   | 'select'
   | CodeHighlightStylesNames;
 
@@ -98,6 +102,9 @@ export interface CodeHighlightFileTreeProps
   /** Accessible label of the file tree @default 'Files' @category accessibility */
   treeLabel?: string;
 
+  /** Accessible label of the pinned files section @default 'Pinned files' @category accessibility */
+  pinnedLabel?: string;
+
   /** Accessible label of the file select displayed below `hideTreeBelow` breakpoint @default 'Select file' @category accessibility */
   selectLabel?: string;
 }
@@ -113,6 +120,7 @@ const defaultProps = {
   defaultExpandedFolders: '*',
   hideTreeBelow: 'sm',
   treeLabel: 'Files',
+  pinnedLabel: 'Pinned files',
   selectLabel: 'Select file',
 } satisfies Partial<CodeHighlightFileTreeProps>;
 
@@ -167,6 +175,7 @@ export const CodeHighlightFileTree = factory<CodeHighlightFileTreeFactory>((_pro
     treeWidth,
     hideTreeBelow,
     treeLabel,
+    pinnedLabel,
     selectLabel,
     defaultExpanded,
     expanded,
@@ -221,19 +230,28 @@ export const CodeHighlightFileTree = factory<CodeHighlightFileTreeFactory>((_pro
     onChange: onExpandedChange,
   });
 
-  const treeData = useMemo(() => buildFileTree(code), [code]);
+  const pinnedData = useMemo(() => buildFileTree(code.filter((file) => file.pinned)), [code]);
+  const treeData = useMemo(() => buildFileTree(code.filter((file) => !file.pinned)), [code]);
   const fileNames = useMemo(() => code.map((file) => file.fileName), [code]);
   const belowBreakpoint = useBelowBreakpoint(hideTreeBelow);
 
+  const handleSelectedStateChange = (selected: string[]) => {
+    const next = selected[0];
+    if (next !== undefined && fileNames.includes(next)) {
+      setValue(next);
+    }
+  };
+
   const store = useTree({
     selectedState: value ? [value] : [],
-    onSelectedStateChange: (selected) => {
-      const next = selected[0];
-      if (next !== undefined && fileNames.includes(next)) {
-        setValue(next);
-      }
-    },
+    onSelectedStateChange: handleSelectedStateChange,
     initialExpandedState: getInitialExpandedState(treeData, defaultExpandedFolders, value),
+  });
+
+  const pinnedStore = useTree({
+    selectedState: value ? [value] : [],
+    onSelectedStateChange: handleSelectedStateChange,
+    initialExpandedState: getInitialExpandedState(pinnedData, defaultExpandedFolders, value),
   });
 
   useEffect(() => {
@@ -247,7 +265,12 @@ export const CodeHighlightFileTree = factory<CodeHighlightFileTreeFactory>((_pro
   }, [treeData]);
 
   useEffect(() => {
+    pinnedStore.initialize(pinnedData);
+  }, [pinnedData]);
+
+  useEffect(() => {
     store.expandParents(value);
+    pinnedStore.expandParents(value);
   }, [value]);
 
   if (code.length === 0) {
@@ -316,6 +339,22 @@ export const CodeHighlightFileTree = factory<CodeHighlightFileTreeFactory>((_pro
           {...getStyles('files')}
           data-code-color-scheme={codeColorScheme}
         >
+          {pinnedData.length > 0 && (
+            <div {...getStyles('pinned')} data-code-color-scheme={codeColorScheme}>
+              <Tree
+                data={pinnedData}
+                store={pinnedStore}
+                selectOnClick
+                levelOffset={20}
+                renderNode={renderNode}
+                aria-label={pinnedLabel}
+                classNames={{ root: treeClassName, node: nodeClassName }}
+                styles={{ root: treeStyle, node: nodeStyle }}
+                attributes={{ root: treeAttributes, node: nodeAttributes }}
+                unstyled={unstyled}
+              />
+            </div>
+          )}
           <Tree
             data={treeData}
             store={store}
@@ -337,7 +376,7 @@ export const CodeHighlightFileTree = factory<CodeHighlightFileTreeFactory>((_pro
           size="xs"
           value={currentCode.fileName}
           onChange={(next) => next !== null && setValue(next)}
-          data={getSelectData(treeData)}
+          data={[...getSelectData(pinnedData), ...getSelectData(treeData)]}
           allowDeselect={false}
           aria-label={selectLabel}
           unstyled={unstyled}

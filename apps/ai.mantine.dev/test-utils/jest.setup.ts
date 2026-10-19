@@ -1,5 +1,8 @@
-import '@testing-library/jest-dom/vitest';
-import { vi } from 'vitest';
+import React from 'react';
+import '@testing-library/jest-dom';
+import { vi } from './vite-plus-test';
+
+Object.assign(globalThis, { React, vi });
 
 const { getComputedStyle } = window;
 window.getComputedStyle = (elt) => getComputedStyle(elt);
@@ -7,15 +10,15 @@ window.HTMLElement.prototype.scrollIntoView = () => {};
 
 Object.defineProperty(window, 'matchMedia', {
   writable: true,
-  value: vi.fn().mockImplementation((query) => ({
+  value: jest.fn().mockImplementation((query: string) => ({
     matches: false,
     media: query,
     onchange: null,
-    addListener: vi.fn(),
-    removeListener: vi.fn(),
-    addEventListener: vi.fn(),
-    removeEventListener: vi.fn(),
-    dispatchEvent: vi.fn(),
+    addListener: jest.fn(),
+    removeListener: jest.fn(),
+    addEventListener: jest.fn(),
+    removeEventListener: jest.fn(),
+    dispatchEvent: jest.fn(),
   })),
 });
 

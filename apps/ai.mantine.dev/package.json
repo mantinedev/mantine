@@ -8,7 +8,7 @@
     "build": "next build && touch out/.nojekyll && echo 'ai.mantine.dev' > out/CNAME",
     "start": "next start",
     "typecheck": "tsc --noEmit",
-    "test": "vitest run"
+    "test": "jest --config jest.config.ts"
   },
   "dependencies": {
     "@mantine/code-highlight": "workspace:*",
@@ -43,9 +43,6 @@
     "@types/node": "^26.6.3",
     "@types/react": "19.3.0",
     "@types/react-dom": "19.3.0",
-    "jsdom": "^26.1.0",
-    "typescript": "6.0.3",
-    "vite": "^8.0.0",
-    "vitest": "^5.0.1"
+    "typescript": "6.0.3"
   }
 }

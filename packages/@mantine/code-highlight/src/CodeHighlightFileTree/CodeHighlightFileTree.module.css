@@ -54,7 +54,20 @@
 
 .tree {
   min-width: 0;
-  padding: var(--mantine-spacing-xs) 0;
+}
+
+.pinned {
+  padding-bottom: var(--mantine-spacing-xs);
+  margin-bottom: var(--mantine-spacing-xs);
+  border-bottom: 1px solid var(--mantine-color-border-subtle);
+
+  &:where([data-code-color-scheme='dark']) {
+    border-color: var(--mantine-color-dark-6);
+  }
+
+  &:where([data-code-color-scheme='light']) {
+    border-color: var(--mantine-color-gray-2);
+  }
 }
 
 .node {
@@ -131,7 +144,7 @@
 .folderIcon {
   display: flex;
   flex-shrink: 0;
-  width: rem(14px);
+  min-width: rem(14px);
   justify-content: center;
 
   & :where(svg) {

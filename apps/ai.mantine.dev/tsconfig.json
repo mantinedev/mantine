@@ -1,15 +1,8 @@
 {
   "compilerOptions": {
-    "types": [
-      "./@types/css.d.ts",
-      "vitest/globals"
-    ],
+    "types": ["./@types/css.d.ts", "jest", "@testing-library/jest-dom"],
     "target": "ES2015",
-    "lib": [
-      "dom",
-      "dom.iterable",
-      "esnext"
-    ],
+    "lib": ["dom", "dom.iterable", "esnext"],
     "allowJs": true,
     "skipLibCheck": true,
     "strict": true,
@@ -23,12 +16,9 @@
     "jsx": "react-jsx",
     "incremental": true,
     "paths": {
-      "@/*": [
-        "./src/*"
-      ],
-      "@test-utils": [
-        "./test-utils"
-      ]
+      "@/*": ["./src/*"],
+      "@test-utils": ["./test-utils"],
+      "vite-plus/test": ["./test-utils/vite-plus-test.ts"]
     },
     "plugins": [
       {
@@ -46,7 +36,5 @@
     "test-utils/**/*.tsx",
     "test-utils/**/*.d.ts"
   ],
-  "exclude": [
-    "node_modules"
-  ]
+  "exclude": ["node_modules"]
 }
