@@ -2,6 +2,7 @@ import { act, fireEvent } from '@testing-library/react';
 import { render, screen, tests } from '@mantine-tests/core';
 import { rem } from '../../core';
 import { AppShell, AppShellProps, AppShellStylesNames } from './AppShell';
+import { useAppShellContext } from './AppShell.context';
 import type { AppShellResizeController } from './AppShell.types';
 import { useAppShellResize } from './use-app-shell-resize/use-app-shell-resize';
 
@@ -214,6 +215,33 @@ describe('@mantine/core/AppShell', () => {
         jest.advanceTimersByTime(300);
       });
       expect(root).not.toHaveAttribute('data-resizing');
+    } finally {
+      jest.useRealTimers();
+    }
+  });
+
+  it('keeps the context value stable when the shell re-renders after mounting', () => {
+    jest.useFakeTimers();
+
+    try {
+      const values = new Set<unknown>();
+
+      function Consumer() {
+        values.add(useAppShellContext());
+        return null;
+      }
+
+      render(
+        <AppShell transitionDuration={10}>
+          <Consumer />
+        </AppShell>
+      );
+
+      act(() => {
+        jest.advanceTimersByTime(50);
+      });
+
+      expect(values.size).toBe(1);
     } finally {
       jest.useRealTimers();
     }
