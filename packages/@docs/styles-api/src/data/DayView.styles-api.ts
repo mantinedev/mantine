@@ -49,6 +49,10 @@ export const DayViewStylesApi: StylesApiData<DayViewFactory> = {
       '--day-view-radius': 'Controls `border-radius` of the day view',
       '--day-view-slot-height': 'Controls `height` of 1-hour time slots',
       '--day-view-all-day-slot-height': 'Controls `height` of the all-day slot',
+      '--day-view-business-hours-bg':
+        'Controls `background-color` of time slots and labels inside business hours',
+      '--day-view-non-business-hours-bg':
+        'Controls `background-color` of time slots and labels outside business hours',
     },
   },
 
@@ -67,6 +71,12 @@ export const DayViewStylesApi: StylesApiData<DayViewFactory> = {
       modifier: 'data-non-business-hours',
       selector: 'dayViewSlot',
       condition: '`highlightBusinessHours` is true and slot is outside business hours',
+    },
+    {
+      modifier: 'data-partial-business-hours',
+      selector: 'dayViewSlot',
+      condition:
+        '`highlightBusinessHours` is true and a business hours boundary falls inside the slot',
     },
     {
       modifier: 'data-drop-target',

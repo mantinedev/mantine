@@ -18,6 +18,11 @@ export const Demo_intervalMinutes = {
   render: renderDemo(demos.intervalMinutes),
 };
 
+export const Demo_slotLabelInterval = {
+  name: '⭐ Demo: slotLabelInterval',
+  render: renderDemo(demos.slotLabelInterval),
+};
+
 export const Demo_allDayEvents = {
   name: '⭐ Demo: allDayEvents',
   render: renderDemo(demos.allDayEvents),
@@ -201,4 +206,14 @@ export const Demo_subHourGridLines = {
 export const Demo_getTimeSlotProps = {
   name: '⭐ Demo: getTimeSlotProps',
   render: renderDemo(demos.getTimeSlotProps),
+};
+
+export const Demo_businessHoursMinute = {
+  name: '⭐ Demo: businessHoursMinute',
+  render: renderDemo(demos.businessHoursMinute),
+};
+
+export const Demo_businessHoursColors = {
+  name: '⭐ Demo: businessHoursColors',
+  render: renderDemo(demos.businessHoursColors),
 };

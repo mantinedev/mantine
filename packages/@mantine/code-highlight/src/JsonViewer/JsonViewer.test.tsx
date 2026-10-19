@@ -1,4 +1,4 @@
-import { fireEvent } from '@testing-library/react';
+import { act, fireEvent } from '@testing-library/react';
 import { render, screen, tests, userEvent } from '@mantine-tests/core';
 import { JsonViewer, JsonViewerProps, JsonViewerStylesNames, serializePath } from './JsonViewer';
 
@@ -426,7 +426,9 @@ describe('@mantine/code-highlight/JsonViewer', () => {
       render(<JsonViewer value={{ nested: { val: 'x' } }} defaultExpandDepth={2} withCopy />);
 
       const control = getRow(/nested/).querySelector<HTMLElement>('[data-jv-copy]')!;
-      control.focus();
+      await act(async () => {
+        control.focus();
+      });
       await userEvent.keyboard('{Enter}');
 
       expect(screen.getByText(/"x"/)).toBeInTheDocument();

@@ -482,7 +482,7 @@ describe('@mantine/core/PinInput', () => {
   it('readOnly keeps arrow key focus navigation', () => {
     const { container } = render(<PinInput defaultValue="1234" readOnly />);
     const inputs = getInputs(container);
-    inputs[0].focus();
+    act(() => inputs[0].focus());
     fireEvent.keyDown(inputs[0], { key: 'ArrowRight' });
     expect(inputs[1]).toHaveFocus();
   });

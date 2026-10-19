@@ -23,6 +23,15 @@ Set `withOutsideDays` to display days of adjacent months:
 
 <Demo data={MobileMonthViewDemos.withOutsideDays} />
 
+## Hide weekend days
+
+Set `withWeekendDays={false}` to hide weekend days. The grid shrinks to the remaining
+columns and weeks without visible days are not rendered. The days that are considered
+weekend are controlled by the `weekendDays` prop (or [DatesProvider](/dates/getting-started/#datesprovider),
+`[0, 6]` by default).
+
+<Demo data={MobileMonthViewDemos.withoutWeekendDays} />
+
 ## Highlight today
 
 Set `highlightToday={false}` to remove the current day highlight:

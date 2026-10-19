@@ -12,3 +12,4 @@ export { startScrollPosition } from './ScrollArea.demo.startScrollPosition';
 export { scrollFade } from './ScrollArea.demo.scrollFade';
 export { scrollFadeHorizontal } from './ScrollArea.demo.scrollFadeHorizontal';
 export { verticalScrollbarPosition } from './ScrollArea.demo.verticalScrollbarPosition';
+export { offsetSize } from './ScrollArea.demo.offsetSize';

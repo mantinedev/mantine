@@ -66,5 +66,7 @@ export function getRootElement(
   }
 
   const root = targetElement.getRootNode();
-  return root instanceof ShadowRoot || root instanceof Document ? root : document;
+  const isDocument = root.nodeType === Node.DOCUMENT_NODE;
+  const isShadowRoot = root.nodeType === Node.DOCUMENT_FRAGMENT_NODE && 'host' in root;
+  return isDocument || isShadowRoot ? (root as Document | ShadowRoot) : document;
 }

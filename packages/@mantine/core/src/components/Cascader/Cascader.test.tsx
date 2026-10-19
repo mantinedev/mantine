@@ -6,6 +6,7 @@ import {
   inputDefaultProps,
   inputStylesApiSelectors,
   render,
+  renderWithAct,
   screen,
   tests,
   userEvent,
@@ -732,7 +733,7 @@ describe('@mantine/core/Cascader', () => {
     });
 
     it('has no axe violations with open columns', async () => {
-      const { container } = render(
+      const { container } = await renderWithAct(
         <Cascader
           {...defaultProps}
           label="Location"

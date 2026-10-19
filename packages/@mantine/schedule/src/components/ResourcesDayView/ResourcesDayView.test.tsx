@@ -340,6 +340,33 @@ describe('@mantine/schedule/ResourcesDayView', () => {
     expect(businessSlots.length + nonBusinessSlots.length).toBe(slots.length);
   });
 
+  it('marks slots and time labels that contain a business hours boundary as partial', () => {
+    const { container } = render(
+      <ResourcesDayView
+        {...defaultProps}
+        highlightBusinessHours
+        businessHours={['09:30:00', '11:15']}
+      />
+    );
+
+    const slots = container.querySelectorAll<HTMLElement>(
+      '.mantine-ResourcesDayView-resourcesDayViewRowSlot[data-partial-business-hours]'
+    );
+    expect(slots).toHaveLength(resources.length * 2);
+    expect(slots[0]).toHaveAttribute('aria-label', expect.stringContaining('09:00 - 10:00'));
+    expect(slots[0].style.getPropertyValue('--business-hours-from')).toBe('50%');
+    expect(slots[0].style.getPropertyValue('--business-hours-to')).toBe('100%');
+    expect(slots[1].style.getPropertyValue('--business-hours-from')).toBe('0%');
+    expect(slots[1].style.getPropertyValue('--business-hours-to')).toBe('25%');
+
+    const labels = container.querySelectorAll<HTMLElement>(
+      '.mantine-ResourcesDayView-resourcesDayViewTimeLabel[data-partial-business-hours]'
+    );
+    expect(labels).toHaveLength(2);
+    expect(labels[0].style.getPropertyValue('--business-hours-from')).toBe('50%');
+    expect(labels[1].style.getPropertyValue('--business-hours-to')).toBe('25%');
+  });
+
   it('renderEventBody replaces default body', () => {
     const events = [
       {

@@ -73,7 +73,7 @@
 .weekViewSlotLabel {
   border-top: 1px solid var(--week-view-border-color);
   text-align: right;
-  height: var(--week-view-slot-height);
+  height: calc(var(--week-view-slot-height) * var(--slot-label-size, 1));
   padding: 4px;
   padding-inline-end: 8px;
   font-size: var(--mantine-font-size-sm);
@@ -82,12 +82,26 @@
   font-variant-numeric: tabular-nums;
   text-transform: uppercase;
 
+  &:where([data-sub-hour]) {
+    border-top-style: dotted;
+  }
+
   &:where([data-business-hours]) {
     background-color: var(--week-view-business-hours-bg);
   }
 
   &:where([data-non-business-hours]) {
     background-color: var(--week-view-non-business-hours-bg);
+  }
+
+  &:where([data-partial-business-hours]) {
+    background-image: linear-gradient(
+      to bottom,
+      var(--week-view-non-business-hours-bg) var(--business-hours-from),
+      var(--week-view-business-hours-bg) var(--business-hours-from),
+      var(--week-view-business-hours-bg) var(--business-hours-to),
+      var(--week-view-non-business-hours-bg) var(--business-hours-to)
+    );
   }
 }
 
@@ -271,6 +285,7 @@
   }
 
   @mixin hover {
+    background-image: none;
     background-color: var(--mantine-color-hover-strong);
   }
 
@@ -282,7 +297,19 @@
     background-color: var(--week-view-non-business-hours-bg);
   }
 
+  &:where([data-partial-business-hours]) {
+    background-image: linear-gradient(
+      to bottom,
+      var(--week-view-non-business-hours-bg) var(--business-hours-from),
+      var(--week-view-business-hours-bg) var(--business-hours-from),
+      var(--week-view-business-hours-bg) var(--business-hours-to),
+      var(--week-view-non-business-hours-bg) var(--business-hours-to)
+    );
+  }
+
   &:where([data-drop-target]) {
+    background-image: none;
+
     @mixin where-light {
       background-color: var(--mantine-color-blue-1);
     }
@@ -313,6 +340,7 @@
   &:where([data-drag-selected]) {
     &,
     &:hover {
+      background-image: none;
       background-color: var(--mantine-primary-color-light);
     }
 
@@ -354,7 +382,8 @@
 
 .weekViewRoot:where([data-hide-sub-hour-grid-lines])
   .weekViewDaySlots
-  .weekViewDaySlot:not([data-hour-start]) {
+  .weekViewDaySlot:not([data-hour-start]),
+.weekViewRoot:where([data-hide-sub-hour-grid-lines]) .weekViewSlotLabel:where([data-sub-hour]) {
   border-top-color: transparent;
 }
 

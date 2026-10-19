@@ -16,7 +16,10 @@ import {
   getWeekNumber,
   isSameMonth,
 } from '../../utils';
-import { getHiddenWeekendColumns, getVisibleWeekDays } from './get-visible-week-days';
+import {
+  getHiddenWeekendColumns,
+  getVisibleWeekDays,
+} from '../../utils/get-visible-week-days/get-visible-week-days';
 import { GroupedEvents } from './get-year-view-events/get-year-view-events';
 import type { YearViewFactory } from './YearView';
 

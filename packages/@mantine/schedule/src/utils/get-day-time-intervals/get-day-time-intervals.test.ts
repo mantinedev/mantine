@@ -77,3 +77,126 @@ describe('@mantine/schedule/get-day-time-intervals', () => {
     });
   });
 });
+
+describe('@mantine/schedule/get-day-time-intervals labelIntervalMinutes', () => {
+  it('marks hour starts as label starts by default', () => {
+    const intervals = getDayTimeIntervals({
+      startTime: '09:00:00',
+      endTime: '11:00:00',
+      intervalMinutes: 30,
+    });
+
+    expect(intervals.map((interval) => interval.isLabelStart)).toEqual([true, false, true, false]);
+    expect(intervals.map((interval) => interval.isHourStart)).toEqual([true, false, true, false]);
+  });
+
+  it('marks every slot as label start when labelIntervalMinutes equals intervalMinutes', () => {
+    const intervals = getDayTimeIntervals({
+      startTime: '09:00:00',
+      endTime: '10:00:00',
+      intervalMinutes: 15,
+      labelIntervalMinutes: 15,
+    });
+
+    expect(intervals.every((interval) => interval.isLabelStart)).toBe(true);
+    expect(intervals.map((interval) => interval.isHourStart)).toEqual([true, false, false, false]);
+  });
+
+  it('marks label starts every labelIntervalMinutes aligned to the clock', () => {
+    const intervals = getDayTimeIntervals({
+      startTime: '09:00:00',
+      endTime: '10:00:00',
+      intervalMinutes: 15,
+      labelIntervalMinutes: 30,
+    });
+
+    expect(intervals.map((interval) => interval.isLabelStart)).toEqual([true, false, true, false]);
+  });
+
+  it('supports label intervals longer than an hour', () => {
+    const intervals = getDayTimeIntervals({
+      startTime: '00:00:00',
+      endTime: '04:00:00',
+      intervalMinutes: 60,
+      labelIntervalMinutes: 120,
+    });
+
+    expect(intervals.map((interval) => interval.isLabelStart)).toEqual([true, false, true, false]);
+  });
+
+  it('aligns labels to the clock when the slots grid reaches clock boundaries', () => {
+    const intervals = getDayTimeIntervals({
+      startTime: '08:30:00',
+      endTime: '10:00:00',
+      intervalMinutes: 15,
+    });
+
+    expect(intervals.map((interval) => interval.isLabelStart)).toEqual([
+      false,
+      false,
+      true,
+      false,
+      false,
+      false,
+    ]);
+  });
+
+  it('counts label boundaries from startTime when the slots grid never reaches clock boundaries', () => {
+    const intervals = getDayTimeIntervals({
+      startTime: '09:00:00',
+      endTime: '15:00:00',
+      intervalMinutes: 120,
+    });
+
+    expect(intervals.map((interval) => interval.startTime)).toEqual([
+      '09:00:00',
+      '11:00:00',
+      '13:00:00',
+    ]);
+    expect(intervals.every((interval) => interval.isLabelStart)).toBe(true);
+
+    const twoHourLabels = getDayTimeIntervals({
+      startTime: '09:00:00',
+      endTime: '13:00:00',
+      intervalMinutes: 60,
+      labelIntervalMinutes: 120,
+    });
+    expect(twoHourLabels.map((interval) => interval.isLabelStart)).toEqual([
+      false,
+      true,
+      false,
+      true,
+    ]);
+  });
+
+  it('clamps invalid labelIntervalMinutes values', () => {
+    const smaller = getDayTimeIntervals({
+      startTime: '09:00:00',
+      endTime: '10:00:00',
+      intervalMinutes: 30,
+      labelIntervalMinutes: 15,
+    });
+    expect(smaller.map((interval) => interval.isLabelStart)).toEqual([true, true]);
+
+    const invalid = getDayTimeIntervals({
+      startTime: '09:00:00',
+      endTime: '11:00:00',
+      intervalMinutes: 15,
+      labelIntervalMinutes: 7,
+    });
+    expect(invalid.filter((interval) => interval.isLabelStart)).toHaveLength(2);
+
+    const notMultiple = getDayTimeIntervals({
+      startTime: '09:00:00',
+      endTime: '10:00:00',
+      intervalMinutes: 15,
+      labelIntervalMinutes: 20,
+    });
+    expect(notMultiple.map((interval) => interval.isLabelStart)).toEqual([
+      true,
+      false,
+      true,
+      false,
+    ]);
+  });
+});

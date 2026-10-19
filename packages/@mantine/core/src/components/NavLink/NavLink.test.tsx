@@ -1,4 +1,4 @@
-import { fireEvent } from '@testing-library/react';
+import { act, fireEvent } from '@testing-library/react';
 import { render, screen, tests, userEvent } from '@mantine-tests/core';
 import { NavLink, NavLinkProps, NavLinkStylesNames } from './NavLink';
 
@@ -253,7 +253,9 @@ describe('@mantine/core/NavLink', () => {
 
     const control = screen.getByRole('link', { name: 'parent' });
     const event = new MouseEvent('click', { bubbles: true, cancelable: true });
-    control.dispatchEvent(event);
+    act(() => {
+      control.dispatchEvent(event);
+    });
     expect(event.defaultPrevented).toBe(true);
     expect(onChange).toHaveBeenLastCalledWith(true);
 

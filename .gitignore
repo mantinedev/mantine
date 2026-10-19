@@ -42,6 +42,7 @@ esm/
 next-env.d.ts
 .eslintcache
 storybook-static
+/.cache
 .next
 packages/*/*/styles.css
 packages/*/*/styles.layer.css

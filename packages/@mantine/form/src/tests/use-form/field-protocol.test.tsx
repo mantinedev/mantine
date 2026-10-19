@@ -124,13 +124,17 @@ function tests(mode: FormMode) {
   it('updates inputs with form.setFieldValue without remounting them', () => {
     const { getForm, onMount } = setup(mode);
     onMount.mockClear();
-    getInput('plain').focus();
+    act(() => {
+      getInput('plain').focus();
+    });
 
     act(() => getForm().setFieldValue('plain', 'plain-value'));
     expect(getInput('plain')).toHaveValue('plain-value');
     expect(getInput('plain')).toHaveFocus();
 
-    getInput('bound').focus();
+    act(() => {
+      getInput('bound').focus();
+    });
     act(() => getForm().setFieldValue('bound', 'bound-value'));
     expect(getInput('bound')).toHaveValue('bound-value');
     expect(getInput('bound')).toHaveFocus();

@@ -3,7 +3,9 @@ import { getLabel, ScheduleLabelsOverride } from '../../labels';
 import { ScheduleMode, ScheduleResourceData, ScheduleResourceGroup } from '../../types';
 import {
   DayTimeInterval,
-  getBusinessHoursMod,
+  addMinutesToTime,
+  clampIntervalMinutes,
+  getBusinessHoursState,
   ResourceGroupInfo,
   ResourcesGridControlsRef,
 } from '../../utils';
@@ -16,6 +18,7 @@ export interface ResourcesWeekViewRowProps {
   resourceIndex: number;
   weekdays: string[];
   slots: DayTimeInterval[];
+  intervalMinutes: number;
   getStyles: GetStylesApi<ResourcesWeekViewFactory>;
   children?: React.ReactNode;
   labels?: ScheduleLabelsOverride;
@@ -69,6 +72,7 @@ export function ResourcesWeekViewRow({
   resourceIndex,
   weekdays,
   slots,
+  intervalMinutes,
   getStyles,
   children,
   labels,
@@ -104,6 +108,13 @@ export function ResourcesWeekViewRow({
         firstSlotIndex?.resourceIndex === resourceIndex && firstSlotIndex?.slotIndex === flatIndex;
       const isDragSelected = isSlotDragSelected?.(flatIndex, slotGroup) || false;
 
+      const businessHoursState = getBusinessHoursState({
+        time: slot.startTime,
+        endTime: addMinutesToTime(slot.startTime, clampIntervalMinutes(intervalMinutes)),
+        businessHours,
+        highlightBusinessHours,
+      });
+
       return (
         <UnstyledButton
           key={`${day}-${slot.startTime}`}
@@ -127,15 +138,12 @@ export function ResourcesWeekViewRow({
           {...getStyles('resourcesWeekViewRowSlot')}
           mod={{
             'hour-start': slot.isHourStart,
-            ...getBusinessHoursMod({
-              time: slot.startTime,
-              businessHours,
-              highlightBusinessHours,
-            }),
+            ...businessHoursState.mod,
             'drop-target': isDropTarget,
             'drag-selected': isDragSelected,
             static: mode === 'static',
           }}
+          __vars={businessHoursState.vars}
           aria-label={getResourceSlotLabel({
             prefix: getLabel('resourceSlot', labels),
             resourceLabel: resource.label,

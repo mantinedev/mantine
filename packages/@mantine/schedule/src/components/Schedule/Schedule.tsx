@@ -226,7 +226,7 @@ export interface ScheduleProps
   /** Props specific to YearView (includes `firstDayOfWeek`, `weekendDays`, etc.) */
   yearViewProps?: ScheduleViewProps<YearViewProps>;
 
-  /** Props specific to MobileMonthView (used in responsive layout) */
+  /** Props specific to MobileMonthView (used in responsive layout). `weekendDays` and `withWeekendDays` default to the values set in `monthViewProps`. */
   mobileMonthViewProps?: ScheduleViewProps<MobileMonthViewProps>;
 
   /** If set, displays an Agenda button in the header of DayView, WeekView and MonthView @default false @category appearance */
@@ -420,6 +420,8 @@ export const Schedule = factory<ScheduleFactory>((_props) => {
             recurrenceExpansionLimit={recurrenceExpansionLimit}
             onYearClick={() => handleViewChange('year')}
             onEventClick={onEventClick}
+            weekendDays={monthViewProps?.weekendDays}
+            withWeekendDays={monthViewProps?.withWeekendDays}
             {...mobileMonthViewProps}
           />
         );

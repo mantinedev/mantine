@@ -1,6 +1,7 @@
 export { usage } from './DayView.demo.usage';
 export { timeRange } from './DayView.demo.timeRange';
 export { intervalMinutes } from './DayView.demo.intervalMinutes';
+export { slotLabelInterval } from './DayView.demo.slotLabelInterval';
 export { subHourGridLines } from './DayView.demo.subHourGridLines';
 export { allDayEvents } from './DayView.demo.allDayEvents';
 export { overlappingEvents } from './DayView.demo.overlappingEvents';
@@ -8,6 +9,8 @@ export { eventOverlapMode } from './DayView.demo.eventOverlapMode';
 export { currentTimeIndicator } from './DayView.demo.currentTimeIndicator';
 export { timezone } from './DayView.demo.timezone';
 export { businessHours } from './DayView.demo.businessHours';
+export { businessHoursMinute } from './DayView.demo.businessHoursMinute';
+export { businessHoursColors } from './DayView.demo.businessHoursColors';
 export { slotHeight } from './DayView.demo.slotHeight';
 export { withoutHeader } from './DayView.demo.withoutHeader';
 export { headerFormat } from './DayView.demo.headerFormat';

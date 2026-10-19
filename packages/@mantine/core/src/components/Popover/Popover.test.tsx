@@ -399,59 +399,59 @@ describe('@mantine/core/Popover', () => {
       );
     }
 
-    it('opens the popover on touch long-press', () => {
+    it('opens the popover on touch long-press', async () => {
       render(<TouchContainer />);
       const area = screen.getByTestId('context-area');
 
       fireEvent.touchStart(area, { touches: [{ clientX: 30, clientY: 40 }] });
       expect(screen.queryByText('test-context-dropdown')).not.toBeInTheDocument();
 
-      act(() => {
+      await act(async () => {
         jest.advanceTimersByTime(500);
       });
 
       expect(screen.getByText('test-context-dropdown')).toBeInTheDocument();
     });
 
-    it('does not open on a short tap', () => {
+    it('does not open on a short tap', async () => {
       render(<TouchContainer />);
       const area = screen.getByTestId('context-area');
 
       fireEvent.touchStart(area, { touches: [{ clientX: 30, clientY: 40 }] });
-      act(() => {
+      await act(async () => {
         jest.advanceTimersByTime(200);
       });
       fireEvent.touchEnd(area, { changedTouches: [{ clientX: 30, clientY: 40 }] });
-      act(() => {
+      await act(async () => {
         jest.advanceTimersByTime(500);
       });
 
       expect(screen.queryByText('test-context-dropdown')).not.toBeInTheDocument();
     });
 
-    it('does not open via touch when disabled', () => {
+    it('does not open via touch when disabled', async () => {
       render(<TouchContainer disabled />);
       const area = screen.getByTestId('context-area');
 
       fireEvent.touchStart(area, { touches: [{ clientX: 30, clientY: 40 }] });
-      act(() => {
+      await act(async () => {
         jest.advanceTimersByTime(500);
       });
 
       expect(screen.queryByText('test-context-dropdown')).not.toBeInTheDocument();
     });
 
-    it('respects a custom longPressDelay', () => {
+    it('respects a custom longPressDelay', async () => {
       render(<TouchContainer longPressDelay={1000} />);
       const area = screen.getByTestId('context-area');
 
       fireEvent.touchStart(area, { touches: [{ clientX: 0, clientY: 0 }] });
-      act(() => {
+      await act(async () => {
         jest.advanceTimersByTime(500);
       });
       expect(screen.queryByText('test-context-dropdown')).not.toBeInTheDocument();
 
-      act(() => {
+      await act(async () => {
         jest.advanceTimersByTime(500);
       });
       expect(screen.getByText('test-context-dropdown')).toBeInTheDocument();

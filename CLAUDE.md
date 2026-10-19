@@ -50,6 +50,10 @@ Rules that break the page when ignored, for tools that cannot load the skill:
 
 ## Tests
 
+**Console output fails tests.** `jsdom.mocks.ts` turns every `console.error` and `console.warn` emitted during a test into a test failure, including React's "not wrapped in act(...)" warning. Fix the cause: wrap the update in `act` (use `renderWithAct` from `@mantine-tests/core` or `await act(async () => ...)` for floating-ui positioning and other microtask work), fix the invalid prop, or stabilize the effect. Never mock or filter the console to make the failure go away. A warning that fires between tests is reported on the next test, so read the "emitted while running" part of the message to find the test that caused it.
+
+**Jest hides console output when more than one test file runs.** Pass `--verbose` or run a single file to see it. Do not pipe jest output through `tail` or `grep "Tests:"` when checking a change; read the failures.
+
 **Verifying a new regression test:** temporarily revert the fix, confirm the test fails, then restore the fix. Do this for tests that cover async, timing or lifecycle behavior — that is where a test silently passes for the wrong reason. Skip it for straightforward assertions, where it is pure overhead.
 
 **`StrictMode` does not double-invoke effects** in the jest environment, so a test that relies on it to reproduce a double-mount bug will pass whether or not the bug is fixed.

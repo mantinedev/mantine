@@ -32,7 +32,8 @@ import {
 import {
   expandRecurringEvents,
   formatDate,
-  getMonthDays,
+  getHiddenWeekendColumns,
+  getVisibleWeekDays,
   getWeekdaysNames,
   getWeekNumber,
   isAllDayEvent,
@@ -47,7 +48,7 @@ import {
   MonthViewControlsRef,
 } from '../MonthView/handle-month-view-key-down';
 import { RenderEvent } from '../ScheduleEvent/ScheduleEvent';
-import { getMobileMonthViewEvents } from './get-mobile-month-view-events';
+import { getMobileMonthViewWeeks } from './get-mobile-month-view-weeks';
 import classes from './MobileMonthView.module.css';
 
 export type MobileMonthViewStylesNames =
@@ -123,6 +124,9 @@ export interface MobileMonthViewProps
   /** Indices of weekend days, 0-6, where 0 is Sunday and 6 is Saturday. The default value is defined by `DatesProvider`. @category appearance */
   weekendDays?: DayOfWeek[];
 
+  /** If set, weekend days are displayed. When `false`, weekend columns are hidden and the month grid shrinks. @default true */
+  withWeekendDays?: boolean;
+
   /** Props passed down to the week number button */
   getWeekNumberProps?: (weekStartDate: DateStringValue) => Record<string, any>;
 
@@ -185,6 +189,7 @@ export type MobileMonthViewFactory = Factory<{
 const defaultProps = {
   __staticSelector: 'MobileMonthView',
   withWeekDays: true,
+  withWeekendDays: true,
   consistentWeeks: true,
   highlightToday: true,
   mode: 'default',
@@ -219,6 +224,7 @@ export const MobileMonthView = factory<MobileMonthViewFactory>((_props) => {
     firstDayOfWeek,
     weekdayFormat,
     weekendDays,
+    withWeekendDays,
     getWeekNumberProps,
     getDayProps,
     onDayClick,
@@ -274,16 +280,32 @@ export const MobileMonthView = factory<MobileMonthViewFactory>((_props) => {
   const pendingFocusDayRef = useRef<string | null>(null);
 
   const resolvedFirstDayOfWeek = ctx.getFirstDayOfWeek(firstDayOfWeek);
+  const resolvedWeekendDays = ctx.getWeekendDays(weekendDays);
+  const hiddenColumns = new Set(
+    getHiddenWeekendColumns({
+      weekendDays: resolvedWeekendDays,
+      firstDayOfWeek: resolvedFirstDayOfWeek,
+      withWeekendDays,
+    })
+  );
+  const columnsCount = 7 - hiddenColumns.size;
 
   const displayedMonth = dayjs(date).startOf('month').format('YYYY-MM-DD');
-  const monthDays = getMonthDays({
+  const monthDays = getMobileMonthViewWeeks({
     month: displayedMonth,
     firstDayOfWeek: resolvedFirstDayOfWeek,
     consistentWeeks,
+    withOutsideDays,
+    weekendDays: resolvedWeekendDays,
+    withWeekendDays,
   });
+  const monthWeeks = monthDays.map((week) => ({
+    week,
+    visibleDays: getVisibleWeekDays({ week, weekendDays: resolvedWeekendDays, withWeekendDays }),
+  }));
 
-  const displayedRangeStart = monthDays[0][0];
-  const displayedRangeEnd = monthDays[monthDays.length - 1][6];
+  const displayedRangeStart = monthDays[0]?.[0] ?? displayedMonth;
+  const displayedRangeEnd = monthDays[monthDays.length - 1]?.[6] ?? displayedMonth;
 
   const groupedEvents = useMemo(() => {
     const expandedEvents = expandRecurringEvents({
@@ -293,32 +315,27 @@ export const MobileMonthView = factory<MobileMonthViewFactory>((_props) => {
       expansionLimit: recurrenceExpansionLimit,
     });
 
-    return getMobileMonthViewEvents({
-      date: displayedMonth,
+    return groupEventsByDay({
       events: expandedEvents,
-      firstDayOfWeek: resolvedFirstDayOfWeek,
-      consistentWeeks,
+      rangeStart: displayedRangeStart,
+      rangeEnd: displayedRangeEnd,
+      componentName: 'MobileMonthView',
     });
-  }, [
-    events,
-    displayedMonth,
-    displayedRangeStart,
-    displayedRangeEnd,
-    resolvedFirstDayOfWeek,
-    consistentWeeks,
-    recurrenceExpansionLimit,
-  ]);
+  }, [events, displayedRangeStart, displayedRangeEnd, recurrenceExpansionLimit]);
 
   const weekdays = withWeekDays
     ? getWeekdaysNames({
         locale: ctx.getLocale(locale),
         format: weekdayFormat,
         firstDayOfWeek: resolvedFirstDayOfWeek,
-      }).map((day, index) => (
-        <div key={index} {...getStyles('mobileMonthViewWeekday')}>
-          {day}
-        </div>
-      ))
+      })
+        .map((day, index) => ({ day, index }))
+        .filter(({ index }) => !hiddenColumns.has(index))
+        .map(({ day, index }) => (
+          <div key={index} {...getStyles('mobileMonthViewWeekday')}>
+            {day}
+          </div>
+        ))
     : null;
 
   const currentMonth = dayjs(date).format('YYYY-MM');
@@ -327,12 +344,12 @@ export const MobileMonthView = factory<MobileMonthViewFactory>((_props) => {
   }
 
   const isDayVisible = (dayDate: string) => withOutsideDays || isSameMonth(dayDate, date);
-  const daysProps = monthDays.map((week) =>
-    week.map((dayDate) => getDayProps?.(dayjs(dayDate).format('YYYY-MM-DD')) || {})
+  const daysProps = monthWeeks.map(({ visibleDays }) =>
+    visibleDays.map((dayDate) => getDayProps?.(dayjs(dayDate).format('YYYY-MM-DD')) || {})
   );
-  const focusableDays = monthDays
-    .flatMap((week, weekIndex) =>
-      week.filter((_dayDate, dayIndex) => !daysProps[weekIndex][dayIndex].disabled)
+  const focusableDays = monthWeeks
+    .flatMap(({ visibleDays }, weekIndex) =>
+      visibleDays.filter((_dayDate, dayIndex) => !daysProps[weekIndex][dayIndex].disabled)
     )
     .filter(isDayVisible);
   const findFocusableDay = (candidate: Date | string | null | undefined) =>
@@ -356,8 +373,8 @@ export const MobileMonthView = factory<MobileMonthViewFactory>((_props) => {
       return;
     }
 
-    monthDays.forEach((week, weekIndex) =>
-      week.forEach((dayDate, dayIndex) => {
+    monthWeeks.forEach(({ visibleDays }, weekIndex) =>
+      visibleDays.forEach((dayDate, dayIndex) => {
         if (dayDate === pendingDay && isDayVisible(dayDate)) {
           daysRef.current[weekIndex]?.[dayIndex]?.focus();
         }
@@ -365,10 +382,14 @@ export const MobileMonthView = factory<MobileMonthViewFactory>((_props) => {
     );
   });
 
-  const weeks = monthDays.map((week, weekIndex) => {
-    const days = week.map((dayDate, dayIndex) => {
+  daysRef.current.length = monthWeeks.length;
+
+  const weeks = monthWeeks.map(({ week, visibleDays }, weekIndex) => {
+    daysRef.current[weekIndex] = [];
+
+    const days = visibleDays.map((dayDate, dayIndex) => {
       const outside = !isSameMonth(dayDate, date);
-      const weekend = ctx.getWeekendDays(weekendDays).includes(dayjs(dayDate).day());
+      const weekend = resolvedWeekendDays.includes(dayjs(dayDate).day() as DayOfWeek);
       const ariaLabel = dayjs(dayDate)
         .locale(locale || ctx.locale)
         .format('MMMM D, YYYY');
@@ -438,9 +459,6 @@ export const MobileMonthView = factory<MobileMonthViewFactory>((_props) => {
           })}
           ref={(node) => {
             if (node) {
-              if (!daysRef.current[weekIndex]) {
-                daysRef.current[weekIndex] = [];
-              }
               daysRef.current[weekIndex][dayIndex] = node;
             }
           }}
@@ -468,7 +486,7 @@ export const MobileMonthView = factory<MobileMonthViewFactory>((_props) => {
 
     const weekNumberProps = getWeekNumberProps?.(dayjs(week[0]).format('YYYY-MM-DD')) || {};
     const weekNumber = getWeekNumber(week);
-    const hasVisibleDays = week.some(isDayVisible);
+    const hasVisibleDays = visibleDays.some(isDayVisible);
 
     return (
       <div key={weekIndex} {...getStyles('mobileMonthViewWeek')}>
@@ -606,7 +624,13 @@ export const MobileMonthView = factory<MobileMonthViewFactory>((_props) => {
   return (
     <Box
       {...getStyles('mobileMonthView')}
-      mod={{ 'with-week-numbers': withWeekNumbers }}
+      mod={{
+        'with-week-numbers': withWeekNumbers,
+        'without-weekend-days': hiddenColumns.size > 0,
+      }}
+      __vars={
+        hiddenColumns.size > 0 ? { '--mobile-month-view-columns': `${columnsCount}` } : undefined
+      }
       {...others}
     >
       <div {...getStyles('mobileMonthViewHeader')}>

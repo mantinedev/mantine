@@ -490,7 +490,7 @@ export const LineChart = factory<LineChartFactory>((_props) => {
                 {rightYAxisLabel}
               </Label>
             )}
-            {yAxisProps?.children}
+            {rightYAxisProps?.children}
           </YAxis>
 
           <CartesianGrid

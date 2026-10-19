@@ -1,4 +1,5 @@
 import { clampIntervalMinutes } from '../clamp-interval-minutes/clamp-interval-minutes';
+import { clampSlotLabelInterval } from '../clamp-slot-label-interval/clamp-slot-label-interval';
 import { parseTimeString } from '../parse-time-string/parse-time-string';
 import { toTimeString } from '../to-time-string/to-time-string';
 
@@ -14,6 +15,9 @@ export interface DayTimeInterval {
 
   /** Indicates if the interval starts at the beginning of an hour */
   isHourStart: boolean;
+
+  /** Indicates if the interval starts at a label boundary defined by `labelIntervalMinutes`. Boundaries are aligned to the clock when the slots grid reaches them, otherwise they are counted from `startTime`. */
+  isLabelStart: boolean;
 }
 
 export interface GetDayTimeIntervalsInput {
@@ -25,14 +29,19 @@ export interface GetDayTimeIntervalsInput {
 
   /** Interval in minutes, 60 by default */
   intervalMinutes?: number;
+
+  /** Interval between labeled slots in minutes, 60 by default */
+  labelIntervalMinutes?: number;
 }
 
 export function getDayTimeIntervals({
   startTime,
   endTime,
   intervalMinutes: _intervalMinutes = 60,
+  labelIntervalMinutes: _labelIntervalMinutes = 60,
 }: GetDayTimeIntervalsInput): DayTimeInterval[] {
   const intervalMinutes = clampIntervalMinutes(_intervalMinutes);
+  const labelIntervalSeconds = clampSlotLabelInterval(_labelIntervalMinutes, intervalMinutes) * 60;
 
   const start = parseTimeString(startTime);
   const end = endTime ? parseTimeString(endTime) : { hours: 23, minutes: 59, seconds: 59 };
@@ -40,6 +49,8 @@ export function getDayTimeIntervals({
   const startSeconds = start.hours * 3600 + start.minutes * 60 + start.seconds;
   const endSeconds = end.hours * 3600 + end.minutes * 60 + end.seconds;
   const intervalSeconds = intervalMinutes * 60;
+  const labelOriginSeconds =
+    (startSeconds % labelIntervalSeconds) % intervalSeconds === 0 ? 0 : startSeconds;
 
   const intervals: DayTimeInterval[] = [];
   let currentSeconds = startSeconds;
@@ -62,12 +73,14 @@ export function getDayTimeIntervals({
 
     const durationSeconds = intervalEndSeconds - intervalStartSeconds;
     const isHourStart = startMinutes === 0 && startSecs === 0;
+    const isLabelStart = (intervalStartSeconds - labelOriginSeconds) % labelIntervalSeconds === 0;
 
     intervals.push({
       startTime: toTimeString({ hours: startHours, minutes: startMinutes, seconds: startSecs }),
       endTime: toTimeString({ hours: endHours, minutes: endMinutes, seconds: endSecs }),
       duration: durationSeconds,
       isHourStart,
+      isLabelStart,
     });
 
     currentSeconds = intervalEndSeconds;

@@ -54,7 +54,7 @@ export interface SelectProps<Value extends Primitive = string>
   defaultValue?: Value | null;
 
   /** Called when value changes @category state */
-  onChange?: (value: Value | null, option: ComboboxItem<Value>) => void;
+  onChange?: (value: Value | null, option: ComboboxItem<Value> | null) => void;
 
   /** Called when the clear button is clicked @category behavior */
   onClear?: () => void;

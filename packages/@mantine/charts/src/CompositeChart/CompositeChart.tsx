@@ -551,7 +551,7 @@ export const CompositeChart = factory<CompositeChartFactory>((_props) => {
                 {rightYAxisLabel}
               </Label>
             )}
-            {yAxisProps?.children}
+            {rightYAxisProps?.children}
           </YAxis>
 
           <CartesianGrid
