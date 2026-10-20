@@ -7,7 +7,7 @@ if (typeof window !== 'undefined') {
   window.getComputedStyle = (elt) => getComputedStyle(elt);
   window.HTMLElement.prototype.scrollIntoView = () => {};
 
-  // jsdom does not implement media playback and logs an error without these stubs.
+  // The test DOM does not implement media playback and logs an error without these stubs.
   window.HTMLMediaElement.prototype.play = () => Promise.resolve();
   window.HTMLMediaElement.prototype.pause = () => {};
   window.HTMLMediaElement.prototype.load = () => {};
@@ -83,14 +83,11 @@ function isIgnoredConsoleCall(data: unknown[], fragment: string) {
 
 const originalConsoleError = console.error;
 console.error = (...data) => {
-  if (isIgnoredConsoleCall(data, 'Error: Could not parse CSS stylesheet')) {
-    return;
-  }
   recordConsoleCall('error', data);
   originalConsoleError(...data);
 };
 
-// recharts ResponsiveContainer measures its parent with ResizeObserver, which is stubbed in jsdom,
+// recharts ResponsiveContainer measures its parent with ResizeObserver, which is stubbed in tests,
 // so every chart test logs a zero size warning.
 const originalConsoleWarn = console.warn;
 console.warn = (...data) => {
