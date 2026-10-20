@@ -239,6 +239,21 @@ describe('@mantine/core/TagsInput', () => {
 
     expect(container.querySelectorAll('.mantine-Pill-remove')).toHaveLength(0);
   });
+
+  it('does not add tags on paste when readOnly is true', async () => {
+    const onChange = jest.fn();
+    render(<TagsInput defaultValue={['React']} readOnly onChange={onChange} />);
+    const input = screen.getByRole('combobox');
+
+    await userEvent.click(input);
+    await userEvent.paste('Angular,Vue');
+
+    expect(screen.getByText('React')).toBeInTheDocument();
+    expect(screen.queryByText('Angular')).not.toBeInTheDocument();
+    expect(screen.queryByText('Vue')).not.toBeInTheDocument();
+    expect(onChange).not.toHaveBeenCalled();
+  });
+
   it('prevents duplicate tags with case-insensitive check using default splitChars', async () => {
     const user = userEvent.setup();
     const onDuplicate = jest.fn();

@@ -394,6 +394,11 @@ export const TagsInput = factory<TagsInputFactory>((_props) => {
 
   const handlePaste = (event: React.ClipboardEvent<HTMLInputElement>) => {
     onPaste?.(event);
+
+    if (readOnly) {
+      return;
+    }
+
     event.preventDefault();
 
     if (event.clipboardData) {
