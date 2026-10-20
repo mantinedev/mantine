@@ -1,3 +1,4 @@
+import dayjs from 'dayjs';
 import {
   AnyDateValue,
   DayPositionedEventData,
@@ -9,6 +10,7 @@ import {
   getDayPosition,
   isAllDayEvent,
   isEventsOverlap,
+  isMultidayEvent,
   sortEvents,
 } from '../../../utils';
 
@@ -32,7 +34,9 @@ function columnHasConflict({
   }
 
   return columns[columnIndex].some((e) => {
-    const eAllDay = isAllDayEvent({ event: e, date });
+    const eAllDay =
+      isAllDayEvent({ event: e, date }) ||
+      (isMultidayEvent(e) && dayjs(e.start).isSame(dayjs(date).startOf('day')));
     const hasTimeConflict = isEventsOverlap(e, event);
 
     // Don't count all-day events as overlaps
@@ -78,7 +82,9 @@ export function getDayPositionedEvents({
   const sorted = sortEvents(events);
 
   for (const event of sorted) {
-    const allDay = isAllDayEvent({ event, date });
+    const allDay =
+      isAllDayEvent({ event, date }) ||
+      (isMultidayEvent(event) && dayjs(event.start).isSame(dayjs(date).startOf('day')));
 
     let column = 0;
 

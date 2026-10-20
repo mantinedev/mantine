@@ -139,4 +139,15 @@ describe('@mantine/schedule/get-day-view-events', () => {
       backgroundAllDayEvents: [],
     });
   });
+
+  it('displays multi-day events starting at midnight as all-day events on the start day', () => {
+    const events = [
+      testUtils.createEvent({ id: 1, start: '2024-01-15 00:00:00', end: '2024-01-17 23:59:59' }),
+    ];
+
+    const result = getDayViewEvents({ events, date: testDate });
+    expect(result.allDayEvents).toHaveLength(1);
+    expect(result.allDayEvents[0].id).toBe(1);
+    expect(result.regularEvents).toHaveLength(0);
+  });
 });
