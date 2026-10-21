@@ -33,6 +33,7 @@ import {
 import { ChartLegend, ChartLegendStylesNames } from '../ChartLegend';
 import { ChartTooltip, ChartTooltipStylesNames } from '../ChartTooltip';
 import { BaseChartStylesNames, GridChartBaseProps } from '../types';
+import { getLegendPosition } from '../utils';
 import classes from '../grid-chart.module.css';
 
 export interface ScatterChartSeries {
@@ -440,7 +441,7 @@ export const ScatterChart = factory<ScatterChartFactory>((_props) => {
                     dataKey: data[index].name,
                   }))}
                   onHighlight={setHighlightedArea}
-                  legendPosition={legendProps?.verticalAlign || 'top'}
+                  legendPosition={getLegendPosition(legendProps, 'top')}
                   classNames={resolvedClassNames}
                   styles={resolvedStyles}
                   series={data}
