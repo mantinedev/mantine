@@ -142,6 +142,22 @@ describe('@mantine/schedule/get-resources-day-view-events', () => {
     expect(lastDay.regularEvents['room-a'][0].position.height).toBeCloseTo(75, 1);
   });
 
+  it('displays multi-day events starting at midnight as all-day events on the start day', () => {
+    const events = [
+      testUtils.createEvent({
+        id: 1,
+        start: '2025-01-14 00:00:00',
+        end: '2025-01-16 23:59:59',
+        resourceId: 'room-a',
+      }),
+    ];
+
+    const firstDay = getResourcesDayViewEvents({ events, resources, date: '2025-01-14' });
+    expect(firstDay.regularEvents['room-a']).toHaveLength(0);
+    expect(firstDay.allDayEvents['room-a']).toHaveLength(1);
+    expect(firstDay.allDayEvents['room-a'][0].id).toBe(1);
+  });
+
   it('does not leak an event ending exactly at midnight onto the next day', () => {
     const events = [
       testUtils.createEvent({
