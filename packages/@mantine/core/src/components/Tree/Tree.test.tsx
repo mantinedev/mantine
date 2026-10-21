@@ -1,6 +1,8 @@
 import { fireEvent } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { render, screen, tests } from '@mantine-tests/core';
+import { DirectionProvider } from '../../core';
+import { FlatTreeNode } from './FlatTreeNode';
 import { Tree, TreeProps, TreeStylesNames } from './Tree';
 import { useTree } from './use-tree';
 
@@ -97,6 +99,70 @@ describe('@mantine/core/Tree', () => {
       await userEvent.keyboard(' ');
 
       expect(screen.getByText('Node 1.1')).toBeInTheDocument();
+    });
+
+    it('handles ArrowRight to expand and ArrowLeft to collapse in ltr direction', async () => {
+      render(<Tree data={complexTreeData} />);
+      const nodes = screen.getAllByRole('treeitem');
+
+      expect(screen.queryByText('Node 1.1')).not.toBeInTheDocument();
+
+      nodes[0].focus();
+      await userEvent.keyboard('{ArrowRight}');
+      expect(screen.getByText('Node 1.1')).toBeInTheDocument();
+
+      await userEvent.keyboard('{ArrowLeft}');
+      expect(screen.queryByText('Node 1.1')).not.toBeInTheDocument();
+    });
+
+    it('mirrors ArrowLeft and ArrowRight in rtl direction', async () => {
+      render(
+        <DirectionProvider initialDirection="rtl" detectDirection={false}>
+          <Tree data={complexTreeData} />
+        </DirectionProvider>
+      );
+      const nodes = screen.getAllByRole('treeitem');
+
+      expect(screen.queryByText('Node 1.1')).not.toBeInTheDocument();
+
+      nodes[0].focus();
+      await userEvent.keyboard('{ArrowLeft}');
+      expect(screen.getByText('Node 1.1')).toBeInTheDocument();
+
+      await userEvent.keyboard('{ArrowRight}');
+      expect(screen.queryByText('Node 1.1')).not.toBeInTheDocument();
+    });
+
+    it('mirrors ArrowLeft and ArrowRight in rtl direction for FlatTreeNode', async () => {
+      const TestFlat = () => {
+        const tree = useTree();
+        return (
+          <DirectionProvider initialDirection="rtl" detectDirection={false}>
+            <div data-tree-root>
+              <FlatTreeNode
+                node={complexTreeData[0]}
+                level={1}
+                parent={null}
+                hasChildren
+                expanded={tree.expandedState[complexTreeData[0].value] || false}
+                tree={tree}
+              />
+            </div>
+          </DirectionProvider>
+        );
+      };
+
+      render(<TestFlat />);
+      const node = screen.getByRole('treeitem');
+
+      expect(node).toHaveAttribute('aria-expanded', 'false');
+
+      node.focus();
+      await userEvent.keyboard('{ArrowLeft}');
+      expect(node).toHaveAttribute('aria-expanded', 'true');
+
+      await userEvent.keyboard('{ArrowRight}');
+      expect(node).toHaveAttribute('aria-expanded', 'false');
     });
   });
 
