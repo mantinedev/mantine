@@ -85,6 +85,14 @@ the input is focused:
 
 <Demo data={InputDemos.inputContainer} />
 
+## withBlockChildren
+
+`Input.Wrapper` adds spacing between the description, the error and inputs only.
+Set `withBlockChildren` to render other children, for example `SegmentedControl` or `Dropzone`,
+in a block container with the same spacing:
+
+<Demo data={InputDemos.blockChildren} />
+
 ## required and withAsterisk props
 
 All components that are based on `Input.Wrapper` support `required` and `withAsterisk` props.

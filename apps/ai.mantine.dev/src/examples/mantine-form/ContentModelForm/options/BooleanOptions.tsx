@@ -8,14 +8,12 @@ const DEFAULT_OPTIONS = [
 
 export function BooleanOptions({ form }: { form: FieldFormType }) {
   return (
-    <Input.Wrapper label="Default value">
-      <div>
-        <SegmentedControl
-          data={DEFAULT_OPTIONS}
-          aria-label="Default value"
-          {...form.getInputProps('booleanDefault', { withError: false })}
-        />
-      </div>
+    <Input.Wrapper label="Default value" withBlockChildren>
+      <SegmentedControl
+        data={DEFAULT_OPTIONS}
+        aria-label="Default value"
+        {...form.getInputProps('booleanDefault', { withError: false })}
+      />
     </Input.Wrapper>
   );
 }

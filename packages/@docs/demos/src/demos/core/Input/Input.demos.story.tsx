@@ -97,3 +97,8 @@ export const Demo_loading = {
   name: '⭐ Demo: loading',
   render: renderDemo(demos.loading),
 };
+
+export const Demo_blockChildren = {
+  name: '⭐ Demo: blockChildren',
+  render: renderDemo(demos.blockChildren),
+};

@@ -18,14 +18,12 @@ export function TextOptions({ form }: { form: FieldFormType }) {
 
   return (
     <Stack>
-      <Input.Wrapper label="Display">
-        <div>
-          <SegmentedControl
-            data={DISPLAY_OPTIONS}
-            aria-label="Display"
-            {...form.getInputProps('textDisplay', { withError: false })}
-          />
-        </div>
+      <Input.Wrapper label="Display" withBlockChildren>
+        <SegmentedControl
+          data={DISPLAY_OPTIONS}
+          aria-label="Display"
+          {...form.getInputProps('textDisplay', { withError: false })}
+        />
       </Input.Wrapper>
 
       <NumberInput

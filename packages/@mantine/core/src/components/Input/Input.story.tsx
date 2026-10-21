@@ -1,3 +1,5 @@
+import { Button } from '../Button';
+import { SegmentedControl } from '../SegmentedControl';
 import { Input } from './Input';
 
 export default { title: 'Input' };
@@ -148,6 +150,30 @@ export function UnstyledInput() {
       <Input variant="unstyled" placeholder="Unstyled input" />
       <Input variant="unstyled" placeholder="With right section" rightSection="$$" />
       <Input variant="unstyled" placeholder="With left section" leftSection="$$" />
+    </div>
+  );
+}
+
+export function WithBlockChildren() {
+  return (
+    <div style={{ padding: 40, maxWidth: 400 }}>
+      <Input.Wrapper label="Display" description="How the text is edited" withBlockChildren>
+        <SegmentedControl data={['Input', 'Textarea']} />
+      </Input.Wrapper>
+
+      <Input.Wrapper
+        label="Attachment"
+        description="One file of any type"
+        error="Attachment is required"
+        withBlockChildren
+        mt="md"
+      >
+        <Button variant="default">Choose file</Button>
+      </Input.Wrapper>
+
+      <Input.Wrapper label="Without the prop" description="Control sits next to the label" mt="md">
+        <SegmentedControl data={['Input', 'Textarea']} />
+      </Input.Wrapper>
     </div>
   );
 }

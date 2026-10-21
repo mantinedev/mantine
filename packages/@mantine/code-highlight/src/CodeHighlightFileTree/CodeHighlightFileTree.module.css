@@ -3,7 +3,7 @@
   display: flex;
   align-items: stretch;
   border-radius: var(--ch-radius, 0px);
-  overflow: hidden;
+  overflow: clip;
   background-color: var(--ch-background);
 
   &:where([data-with-border]) {

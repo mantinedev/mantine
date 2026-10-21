@@ -3,6 +3,7 @@ export { component } from './Input.demo.component';
 export { sections } from './Input.demo.sections';
 export { wrapper } from './Input.demo.wrapper';
 export { inputContainer } from './Input.demo.inputContainer';
+export { blockChildren } from './Input.demo.blockChildren';
 export { inputWrapperOrder } from './Input.demo.inputWrapperOrder';
 export { inputBase } from './Input.demo.inputBase';
 export { compound } from './Input.demo.compound';

@@ -6,6 +6,7 @@ Pick the component made for the data. A plain `TextInput` is for free text only.
 | --- | --- |
 | Free text, names, titles, URLs | `TextInput` (`type="email"`, `type="url"` where it applies) |
 | Long text | `Textarea` — see [textarea](textarea.md) |
+| Formatted text | `RichTextEditor` — see [rich-text-editor](rich-text-editor.md) |
 | Numbers, amounts, counts | `NumberInput` — see [number-input](number-input.md) |
 | Phone number | `PhoneInput` — see [phone-input](phone-input.md) |
 | Date, date range | `DateInput` (typed), `DatePickerInput` (picked), `type="range"` for a period — see [date-pickers](date-pickers.md) |
@@ -27,6 +28,10 @@ Rules:
 - Two related inputs that always appear together (first and last name, start and end) share a
   row: `SimpleGrid cols={{ base: 1, sm: 2 }}` or `Group grow`. A period is one range input, not
   two inputs.
+- **Inputs in one row have the same anatomy.** Either both have a `description` or neither; the
+  same for `withAsterisk` and `error`. A description under one label pushes that input down and
+  the two fields stop lining up. When one field needs a hint and the other does not, put the
+  hint in the placeholder, or give the fields their own rows.
 - Labels are short nouns (`Email`, `Start date`), not sentences.
 
 ## Fonts in inputs
@@ -38,14 +43,101 @@ a label in a list row (`<span className={classes.key}>`).
 
 ## Non-input controls under a label
 
-`Input.Label` is `inline-block`, so an inline control placed directly in `Input.Wrapper`
-(`SegmentedControl`, `Rating`, `Chip.Group`, a `Group` of switches) ends up on the same line as
-the label. Make the control a block: `fullWidth` on `SegmentedControl`, or wrap it in a `div`:
+`Input.Wrapper` spaces only inputs from the description and the error, and `Input.Label` is
+`inline-block`. Any other child (`SegmentedControl`, `Dropzone`, `RichTextEditor`, a button with
+pills under it, a `Group` of switches) sticks to the description and, when it is inline, lands on
+the same line as the label. Set `withBlockChildren` on every `Input.Wrapper` whose child is not
+an input:
 
 ```tsx
-<Input.Wrapper label="Display" error={form.errors.textDisplay}>
-  <div>
-    <SegmentedControl data={DISPLAY_OPTIONS} {...form.getInputProps('textDisplay', { withError: false })} />
-  </div>
+<Input.Wrapper label="Display" error={form.errors.textDisplay} withBlockChildren>
+  <SegmentedControl data={DISPLAY_OPTIONS} {...form.getInputProps('textDisplay', { withError: false })} />
 </Input.Wrapper>
+```
+
+9.x: the prop does not exist; wrap the control in a `div` with `margin-top: calc(var(--mantine-spacing-xs) / 2)`
+when a description is present (and the same `margin-bottom` before an error).
+
+## Lists of checkboxes, radios and switches
+
+- A `Checkbox`, `Radio` or `Switch` that is one of many rows (a picker, a permissions list, a
+  filter list) has a `label` only, never a `description`. Descriptions under every row double the
+  list height and the eye cannot find the options.
+- When a row needs more than one line of text, a secondary value or a badge, use `Checkbox.Card`
+  or `Radio.Card` with `Checkbox.Indicator` / `Radio.Indicator` and lay the row out with `Group`:
+  primary text (`size="sm"`, medium weight, `--mantine-color-bright`), secondary text
+  (`size="xs"`) and a `Badge variant="default" size="sm"` at the end. Give the card an
+  `aria-label` that names the row (`"ada-lovelace (Ada Lovelace)"`), its content is a layout.
+- A single standalone `Checkbox` or `Switch` (a "Featured" flag, a consent) can have a
+  `description`.
+- The value that identifies an item is the one shown first. When items have a key and a title,
+  the key is primary (it is the only value guaranteed to exist and be unique), the title is
+  secondary, and the chips or pills for selected items show the key.
+
+```tsx
+<Checkbox.Group value={selected} onChange={setSelected} aria-label="Entries">
+  <Stack gap="xs">
+    {entries.map((entry) => (
+      <Checkbox.Card key={entry.key} value={entry.key} className={classes.card} aria-label={`${entry.key} (${entry.title})`}>
+        <Group wrap="nowrap" gap="sm">
+          <Checkbox.Indicator />
+          <div className={classes.texts}>
+            <Text size="sm" className={classes.key}>{entry.key}</Text>
+            <Text size="xs">{entry.title}</Text>
+          </div>
+          <Badge variant="default" size="sm">{entry.model}</Badge>
+        </Group>
+      </Checkbox.Card>
+    ))}
+  </Stack>
+</Checkbox.Group>
+```
+
+```css
+.card {
+  padding: var(--mantine-spacing-xs) var(--mantine-spacing-sm);
+
+  &[data-checked] {
+    border-color: var(--mantine-primary-color-filled);
+  }
+}
+```
+
+## Custom inputs that open a picker
+
+A field whose value is chosen somewhere else (a modal with search, a tree, a map) is still an
+input: it has the input border, height, placeholder, focus ring and error state of the inputs
+around it, and it is focusable by the form's error handling. A `Button` with chips under it is not
+an input.
+
+- Several values: `PillsInput` with a `Pill` per value (`withRemoveButton`, the key as text) and a
+  read-only `PillsInput.Field` that carries the placeholder, `data-path`, `aria-haspopup="dialog"`
+  and the keyboard: Enter, Space and ArrowDown open the picker, Backspace removes the last value.
+  `onClick` on `PillsInput` opens the picker, `rightSection={<Combobox.Chevron />}` with
+  `rightSectionPointerEvents="none"`. This is how `MultiSelect` is built.
+- One value: no pills. `InputBase readOnly pointer` with the value as `value` and the placeholder
+  when empty, `rightSection={<Combobox.Chevron />}`, the same click and keyboard handlers
+  (Backspace clears). This is how `Select` is built; a single value shown as a pill looks like a
+  multi select that happens to hold one item.
+- The picker itself is a modal (`useModal`) with the search input first, filters second, a list of
+  `Checkbox.Card` / `Radio.Card` rows and Cancel + confirm buttons at the end.
+
+```tsx
+<PillsInput label={label} error={error} pointer onClick={open} rightSection={<Combobox.Chevron error={error} />} rightSectionPointerEvents="none">
+  <Pill.Group>
+    {selected.map((key) => (
+      <Pill key={key} withRemoveButton removeButtonProps={{ 'aria-label': `Remove ${key}` }} onRemove={() => remove(key)}>
+        {key}
+      </Pill>
+    ))}
+    <PillsInput.Field
+      readOnly
+      pointer
+      placeholder={selected.length === 0 ? 'Select entries' : undefined}
+      aria-haspopup="dialog"
+      data-path={dataPath}
+      onKeyDown={handleKeyDown}
+    />
+  </Pill.Group>
+</PillsInput>
 ```

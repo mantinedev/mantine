@@ -1,10 +1,16 @@
 import type { SkillExample } from '../types';
+import contentEntryFormCode from './ContentEntryForm/code.json';
+import { ContentEntryPage } from './ContentEntryForm/ContentEntryPage';
+import type { EntryValues } from './ContentEntryForm/types';
 import contentModelFormCode from './ContentModelForm/code.json';
 import { ContentModelForm } from './ContentModelForm/ContentModelForm';
 import type { ContentField, ContentModelValues } from './ContentModelForm/types';
 import jobApplicationFormCode from './JobApplicationForm/code.json';
 import { JobApplicationForm } from './JobApplicationForm/JobApplicationForm';
 import type { JobApplicationValues } from './JobApplicationForm/types';
+import recurringEventFormCode from './RecurringEventForm/code.json';
+import { RecurringEventForm } from './RecurringEventForm/RecurringEventForm';
+import type { RecurringEventValues } from './RecurringEventForm/types';
 
 function dateInDays(days: number) {
   const date = new Date();
@@ -180,6 +186,125 @@ Write tests for the component.`,
             description: 'Shown on the home page',
           }),
         ],
+      });
+    },
+  },
+  {
+    id: 'content-entry-form',
+    title: 'Content entry form',
+    description: 'Form built from a model schema with a validator per field type',
+    prompt: `Build a form for creating a content entry from a content model in a headless CMS. The component receives the model (name, key, ordered fields with their options, as produced by the content model editor) and builds the whole form from it: inputs, initial values and validation all come from the schema, nothing is hard-coded per model.
+
+Entry:
+
+- content key (required, typed by the user, lowercase letters, digits and dashes)
+- language (required, select from en-US, de-DE, fr-FR, es-ES; default en-US)
+- tags (tags input with 5 suggested tags to pick from and free-form input, up to 10, no duplicates)
+
+Fields, in model order, with label and description from the field and required when the field is required:
+
+- Text: single-line input or textarea depending on the field's display setting, max length from the field with a counter, default value pre-filled
+- Rich text: rich text editor (@mantine/tiptap) with bold, italic, headings, lists and links; required means non-empty content
+- Boolean: checkbox with the field's default
+- JSON: textarea validated as JSON, pretty-printed on blur, default pre-filled
+- Select: select with the field's options and default
+- Image: dropzone (@mantine/dropzone) accepting images only, one file, with a preview of the chosen image and a way to remove it
+- File: dropzone accepting any file, one file, showing the file name and size and a way to remove it
+- Reference: an input that opens a modal to pick entries from a hard-coded list of entries (key, title, model); the input looks like a multi select: selected entries as removable pills inside it, a placeholder when empty; the modal has a search input and, when the field's target model is not fixed, a filter by model; single or multiple selection according to the field; entries are identified by key: the key is the primary text of every entry in the picker and in the pills, title and model are secondary
+
+Validation:
+
+- built from the schema: each field type has its own validator (required, max length, valid JSON, image mime type, at least one reference when required, …), composed per field from its options
+- the entry key and language are validated like any other field
+
+Behavior:
+
+- two hard-coded example models (Blog post, Landing page hero) with a model switcher above the form; switching the model rebuilds the form with that model's fields and defaults
+- submit validates everything and focuses the first invalid field
+- on submit show a short notification (entry key and model name), display the entry JSON (key, language, tags, model key, values keyed by field key) under the form and keep the form as is
+
+Write tests for the component.`,
+    component: ContentEntryPage,
+    code: contentEntryFormCode as SkillExample['code'],
+    fill: async (filler) => {
+      filler.setValues<EntryValues>('content-entry', {
+        key: 'launching-mantine-10',
+        language: 'en-US',
+        tags: ['release', 'news'],
+        fields: {
+          title: 'Launching Mantine 10',
+          excerpt: 'Everything that changed in the new major release and how to migrate.',
+          body: '<h2>What is new</h2><p>A new colors system, a faster form engine and a dozen new components.</p>',
+          category: 'news',
+          author: ['ada-lovelace'],
+          related: ['pricing', 'starter-plan'],
+          featured: true,
+          seo: '{\n  "title": "Mantine 10 is out",\n  "description": "What changed and how to migrate"\n}',
+        },
+      });
+    },
+  },
+  {
+    id: 'recurring-event-form',
+    title: 'Recurring event form',
+    description: 'Calendar event with a recurrence rule builder and an occurrence preview',
+    prompt: `Build a form for creating a recurring event in a team calendar app.
+
+Event:
+
+- title (required) and description (textarea, optional)
+- start and end as date and time; end must be after start; the end defaults to one hour after the start when the start changes and the end was not edited
+- "All day" switch: when on, start and end are dates only and the time parts are hidden
+- timezone (select from a hard-coded list of 12 IANA timezones with city labels; default to the browser timezone when it is in the list, otherwise UTC)
+- location (optional)
+
+Recurrence:
+
+- repeat: does not repeat, daily, weekly, monthly, yearly
+- interval: every N days / weeks / months / years (1 to 99), shown for every repeat except "does not repeat"
+- weekly: weekdays to repeat on (at least one; defaults to the weekday of the start date)
+- monthly: on the same day of the month, or on the same weekday of the month (for example "second Tuesday"), both derived from the start date
+- ends: never, after N occurrences (1 to 500), or on a date (after the start date)
+- exceptions: dates to skip, added with a date picker and shown as a removable list; an exception must be within the series and unique
+- a read-only preview of the next 5 occurrences computed from the rule and the exceptions, updated as the fields change; shows "No occurrences" when the rule produces none
+
+Validation:
+
+- title, start, end and timezone are required
+- end after start (same-day events compare the time)
+- interval, occurrences count, ends-on date and exceptions follow the limits above
+- weekly repeat needs at least one weekday
+
+Behavior:
+
+- the recurrence fields appear and disappear with the selected repeat option; values of hidden fields are not submitted
+- submit validates everything and focuses the first invalid field
+- on submit show a short notification (event title and first occurrence) and display the event JSON (title, description, start, end as ISO strings, allDay, timezone, location, recurrence with only the fields that apply, exceptions) under the form; keep the form as is
+
+Write tests for the component.`,
+    component: RecurringEventForm,
+    code: recurringEventFormCode as SkillExample['code'],
+    fill: async (filler) => {
+      filler.setValues<RecurringEventValues>('recurring-event', {
+        title: 'Design review',
+        description: "Walk through the week's design proposals and decide what ships.",
+        allDay: false,
+        startDate: dateInDays(1),
+        startTime: '14:00',
+        endDate: dateInDays(1),
+        endTime: '15:00',
+        timezone: 'Europe/Berlin',
+        location: 'Room 4 / Meet link in the invite',
+        recurrence: {
+          repeat: 'weekly',
+          interval: 2,
+          weekdays: ['TU', 'TH'],
+          monthlyOn: 'dayOfMonth',
+          ends: 'after',
+          count: 12,
+          until: null,
+        },
+        exceptions: [],
       });
     },
   },

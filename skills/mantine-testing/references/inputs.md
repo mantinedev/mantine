@@ -9,7 +9,7 @@ element, so exact names match the label text without it.
 | `TextInput`, `Textarea`, `PasswordInput` | `await user.type(field, 'Ada')`; `await user.clear(field)` first to replace | `toHaveValue('Ada')` |
 | `NumberInput` | `await user.type(field, '12')`; blur with `await user.tab()` to apply clamping (`min`/`max`, `clampBehavior="blur"`) | `toHaveValue('12')` — a string, formatted with prefix/separators (`'$120,000'`) |
 | `Select`, `Autocomplete` | `await user.click(screen.getByRole('textbox', { name: 'Role' }))`, then `await user.click(screen.getByRole('option', { name: 'Admin' }))` | `toHaveValue('Admin')` (the label, not the value) |
-| `MultiSelect`, `TagsInput` | open the same way, click options; remove with the pill's `Remove` button | pills by text |
+| `MultiSelect`, `TagsInput`, custom `PillsInput` | open the same way, click options; remove with Backspace in the field or the pill's remove button: it is `aria-hidden` inside an input, so query it with `getByLabelText('Remove x')`, not `getByRole` | pills by text |
 | `Checkbox`, `Switch` | `await user.click(screen.getByRole('checkbox', { name: 'Required' }))` (`Switch` is also a checkbox role) | `toBeChecked()` |
 | `Radio.Group`, `SegmentedControl` | `await user.click(screen.getByRole('radio', { name: 'Hybrid' }))` | `toBeChecked()` on the radio |
 | `Checkbox.Group`, `Chip.Group` | click each checkbox by name | `toBeChecked()` |

@@ -165,4 +165,37 @@ describe('@mantine/core/InputWrapper', () => {
     expect(describedBy).toContain('test-id-success');
     expect(describedBy).toContain('test-id-description');
   });
+
+  it('renders children inside a block container with withBlockChildren prop', () => {
+    const { container } = render(
+      <InputWrapper {...defaultProps} withBlockChildren>
+        <button type="button">child</button>
+      </InputWrapper>
+    );
+    const wrapper = container.querySelector('.mantine-InputWrapper-childrenWrapper')!;
+    expect(wrapper.tagName).toBe('DIV');
+    expect(wrapper.querySelector('button')).toBeInTheDocument();
+    expect(wrapper).toHaveAttribute('data-offset-top');
+    expect(wrapper).toHaveAttribute('data-offset-bottom');
+    expect(wrapper.previousElementSibling).toHaveClass('mantine-InputWrapper-description');
+    expect(wrapper.nextElementSibling).toHaveClass('mantine-InputWrapper-error');
+  });
+
+  it('does not set offset attributes on the children container without description and error', () => {
+    const { container } = render(
+      <InputWrapper label="test-label" withBlockChildren>
+        <button type="button">child</button>
+      </InputWrapper>
+    );
+    const wrapper = container.querySelector('.mantine-InputWrapper-childrenWrapper')!;
+    expect(wrapper).not.toHaveAttribute('data-offset-top');
+    expect(wrapper).not.toHaveAttribute('data-offset-bottom');
+  });
+
+  it('does not render the children container without withBlockChildren prop', () => {
+    const { container } = render(<InputWrapper {...defaultProps} />);
+    expect(
+      container.querySelector('.mantine-InputWrapper-childrenWrapper')
+    ).not.toBeInTheDocument();
+  });
 });

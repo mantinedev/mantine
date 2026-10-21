@@ -16,6 +16,12 @@ lighter per level in dark mode and white in light mode. `Paper` is deprecated, u
   the row is the same `size` (`lg`). `radius="md"` is the default, leave it out.
 - Read-only summaries (review steps, receipts) are `Surface withBorder` sections with a title row
   (`Title order={4}` + an `Edit` anchor) and label/value pairs in small text.
+- **Forms are not wrapped in a `Surface`.** Inputs use `--mantine-color-default` as background,
+  which is the level-1 panel color in dark mode: on a `Surface` card the inputs blend into the card
+  and lose their edges. A form sits on the page background with its own spacing; a card around it
+  is only for a page that shows other content next to the form, and then the inputs must keep
+  contrast (level 0 surface or `variant="filled"` inputs). Review summaries and list rows inside a
+  form are still `Surface withBorder` blocks — they hold text, not inputs.
 - Do not set a background color on `Surface` by hand; pick the level with nesting or `level`.
 
 ```tsx

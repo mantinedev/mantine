@@ -37,3 +37,12 @@ if (!document.fonts) {
     writable: true,
   });
 }
+
+URL.createObjectURL = (blob: Blob) => `blob:mock/${(blob as File).name ?? 'file'}`;
+URL.revokeObjectURL = () => {};
+
+const emptyRect = { x: 0, y: 0, top: 0, left: 0, bottom: 0, right: 0, width: 0, height: 0 };
+document.elementFromPoint = () => null;
+Range.prototype.getClientRects = () => [] as unknown as DOMRectList;
+Range.prototype.getBoundingClientRect = () => emptyRect as DOMRect;
+Element.prototype.getClientRects = () => [] as unknown as DOMRectList;

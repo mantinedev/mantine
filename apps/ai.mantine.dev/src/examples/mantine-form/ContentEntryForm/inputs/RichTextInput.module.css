@@ -1,0 +1,11 @@
+.editor {
+  &[data-invalid] {
+    border-color: var(--mantine-color-error);
+  }
+}
+
+/* RichTextEditor has no size prop yet, inputs around it are sm */
+.content :global(.ProseMirror) {
+  min-height: 160px;
+  font-size: var(--mantine-font-size-sm);
+}

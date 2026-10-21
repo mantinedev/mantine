@@ -21,6 +21,7 @@ type FakeTimersOptions = {
 
 const ALL_TIMER_APIS = [
   'Date',
+  'Intl',
   'hrtime',
   'nextTick',
   'performance',
@@ -37,10 +38,16 @@ const ALL_TIMER_APIS = [
   'clearTimeout',
 ] as const;
 
-type TimerApi = (typeof ALL_TIMER_APIS)[number];
+// Jest fakes Intl at runtime but its types do not list it yet
+type DoNotFake = Extract<
+  NonNullable<Parameters<typeof jest.useFakeTimers>[0]>,
+  { doNotFake?: unknown }
+>['doNotFake'];
 
 export const vi = {
-  fn: jest.fn,
+  fn<T extends (...args: any[]) => any = (...args: any[]) => any>(implementation?: T) {
+    return jest.fn(implementation) as unknown as jest.Mock<ReturnType<T>, Parameters<T>>;
+  },
   spyOn: jest.spyOn,
   mock: jest.mock,
   clearAllMocks: jest.clearAllMocks,
@@ -54,7 +61,7 @@ export const vi = {
     const doNotFake = options.toFake
       ? ALL_TIMER_APIS.filter((api) => !options.toFake!.includes(api))
       : undefined;
-    jest.useFakeTimers({ doNotFake: doNotFake as TimerApi[] | undefined, now: options.now });
+    jest.useFakeTimers({ doNotFake: doNotFake as unknown as DoNotFake, now: options.now });
     return vi;
   },
 };

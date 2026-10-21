@@ -75,6 +75,12 @@ if (!document.fonts) {
   `min-width` queries) when the desktop behavior is under test.
 - `document.fonts` is needed by `Textarea autosize`; keep the stub `configurable` so a test can
   override it.
+- `RichTextEditor` (tiptap/ProseMirror) measures the selection with layout APIs jsdom lacks; add
+  `document.elementFromPoint = () => null`, `Range.prototype.getClientRects = () => []`,
+  `Range.prototype.getBoundingClientRect = () => emptyRect` and
+  `Element.prototype.getClientRects = () => []` when the component renders an editor.
+- `URL.createObjectURL` / `revokeObjectURL` are stubbed when a component previews files
+  (Node's implementation rejects jsdom `File` objects).
 - Never put these stubs inside a test file: they belong to the setup file, once.
 
 ## Runners

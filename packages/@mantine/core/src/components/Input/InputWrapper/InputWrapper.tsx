@@ -51,6 +51,7 @@ export type InputWrapperCssVariables = InputLabelCssVariables &
 
 export type InputWrapperStylesNames =
   | 'root'
+  | 'childrenWrapper'
   | InputLabelStylesNames
   | InputDescriptionStylesNames
   | InputErrorStylesNames
@@ -109,6 +110,9 @@ export interface InputWrapperProps
 
   /** Root element for the label. Use `'div'` when wrapper contains multiple input elements and you need to handle `htmlFor` manually. @default 'label' */
   labelElement?: 'label' | 'div';
+
+  /** If set, `children` are rendered inside a block `div` with the same spacing from description and error as inputs have. Use with children that are not inputs: `Dropzone`, `SegmentedControl`, `RichTextEditor`, a group of buttons. @default false */
+  withBlockChildren?: boolean;
 }
 
 export type InputWrapperFactory = Factory<{
@@ -168,6 +172,7 @@ export const InputWrapper = factory<InputWrapperFactory>((_props) => {
     errorProps,
     successProps,
     labelElement,
+    withBlockChildren,
     children,
     withAsterisk,
     id,
@@ -240,7 +245,22 @@ export const InputWrapper = factory<InputWrapperFactory>((_props) => {
     </InputDescription>
   );
 
-  const _input = <Fragment key="input">{inputContainer(children)}</Fragment>;
+  const offsets = getInputOffsets(inputWrapperOrder, {
+    hasDescription,
+    hasError: hasError || hasSuccess,
+  });
+
+  const _input = withBlockChildren ? (
+    <Box
+      key="input"
+      mod={{ 'offset-top': offsets.offsetTop, 'offset-bottom': offsets.offsetBottom }}
+      {...getStyles('childrenWrapper')}
+    >
+      {inputContainer(children)}
+    </Box>
+  ) : (
+    <Fragment key="input">{inputContainer(children)}</Fragment>
+  );
 
   const _error = hasError && (
     <InputError
@@ -288,7 +308,7 @@ export const InputWrapper = factory<InputWrapperFactory>((_props) => {
         describedBy,
         inputId,
         labelId: _label && inputWrapperOrder.includes('label') ? labelId : undefined,
-        ...getInputOffsets(inputWrapperOrder, { hasDescription, hasError: hasError || hasSuccess }),
+        ...offsets,
       }}
     >
       <Box

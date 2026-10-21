@@ -129,6 +129,11 @@ file over about 150 lines is a sign to split further. Each component that needs 
 own `<Name>.module.css` next to it; no shared stylesheet for the whole form.
 See [splitting a form into components](references/patterns.md#splitting-a-form-into-components).
 
+A form built from a schema dispatches per field type through an object keyed by the type, with one
+small named function or component per type: `const FIELD_RULES: { [T in FieldType]: (field) => Rule }
+= { text: textRule, json: jsonRule, … }` in `validation.ts`, `const FIELD_INPUTS = { text: TextField, … }`
+for rendering. No `switch` with the bodies inline: the reader scans the keys, then reads one function.
+
 Comments only where the code cannot explain itself: a workaround, a browser or library behavior
 the next reader would not expect (`// preventDefault keeps focus in the input so its blur error
 does not shift the button`). No comments that restate what the code does, no JSDoc on internal

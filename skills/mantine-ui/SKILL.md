@@ -34,7 +34,25 @@ component you are about to use, then write the UI.
   `size="xs"`), never `c="dimmed"`. Important values (headline numbers, titles) use
   `c="var(--mantine-color-bright)"`.
 - **Every input has a `placeholder`**: the label text, or a format example when it helps more
-  (`you@example.com`, `YYYY`).
+  (`you@example.com`, `YYYY`). This includes rich text editors (placeholder extension) and
+  drop zones (the hint text).
+- **`Input.Wrapper` around anything that is not an input gets `withBlockChildren`**
+  (`Dropzone`, `SegmentedControl`, `RichTextEditor`, a button with pills under it): without it the
+  child sticks to the description. 9.x: wrap the child in a `div` with the margin instead.
+- **Custom inputs look like inputs.** A value picked in a modal or a popover is displayed in an
+  `Input`-based component, never as a `Button` with chips under it: `PillsInput` with pills for
+  several values (like `MultiSelect`), `InputBase readOnly pointer` with the value as text for one
+  value (like `Select`); pills never show a single value. See [inputs](references/components/inputs.md#custom-inputs-that-open-a-picker).
+- **Notifications are one line.** Title plus a short message (`hello-world · Blog post`); data,
+  JSON and lists are shown on the page, never inside a notification. See
+  [notification](references/components/notification.md).
+- **Checkboxes, radios and switches in a list have no `description`.** A row that needs two
+  lines or a badge is a `Checkbox.Card` / `Radio.Card`, see
+  [inputs](references/components/inputs.md#lists-of-checkboxes-radios-and-switches).
+- **Identity first.** When items have a key and a title, the key is the primary text of each row
+  and of each selected chip; the title is secondary.
+- **Inputs sharing a row share their anatomy**: both with a description or neither, so the
+  fields line up, see [inputs](references/components/inputs.md).
 - **Inputs use the default font.** Monospace is for code inputs only (`JsonInput`, scripts);
   keys, slugs and URLs are regular inputs. Inline controls under a label (`SegmentedControl`,
   `Rating`, `Chip.Group`) are wrapped in a block so they do not share the line with the label,
@@ -43,7 +61,12 @@ component you are about to use, then write the UI.
   mapping. A plain `TextInput` is for free text only.
 - **Backgrounds step by one shade.** A card on a page is one `Surface` level up; nested
   containers go one more level, never two. Never place a bordered or filled element so that its
-  label or legend sits on two different backgrounds.
+  label or legend sits on two different backgrounds. **Forms are not wrapped in a `Surface`**:
+  inputs share the panel color in dark mode and blend into the card, see
+  [surface](references/components/surface.md).
+- **Drop zones are tall.** A `Dropzone` is a target people drop files on: `mih={140}` (single
+  file) or more, icon above two lines of text, never a one-line strip, see
+  [dropzone](references/components/dropzone.md).
 - **Repeated rows** (positions, line items, invitees, fields) are bordered `Surface` blocks with
   a header row or a single line (icon, texts, actions), not `Fieldset`.
 - **Category icons** (field types, statuses, kinds) are `ThemeIcon variant="default"` with the
@@ -73,11 +96,13 @@ component you are about to use, then write the UI.
 - [date-pickers](references/components/date-pickers.md) — `DateInput`, `DatePickerInput`,
   `YearPickerInput`, `MonthPickerInput`, `TimeInput`, ranges, limits
 - [textarea](references/components/textarea.md) — autosize, limits, counters
+- [rich-text-editor](references/components/rich-text-editor.md) — placeholder, toolbar, required, form wiring
 - [button](references/components/button.md) — variants, loading, groups
 - [action-icon](references/components/action-icon.md) — row actions, drag handles, destructive icons
 - [theme-icon](references/components/theme-icon.md) — category icons with colors
 - [badge](references/components/badge.md) — when a badge is right, variants
 - [surface](references/components/surface.md) — levels, borders, cards, list rows
 - [fieldset](references/components/fieldset.md) — when a legend works and when it does not
+- [dropzone](references/components/dropzone.md) — size, texts, accepted files, previews
 - [modal](references/components/modal.md) — `useModal`, forms in modals, one modal for many items
 - [text](references/components/text.md) — hierarchy, secondary text, values, required markers
