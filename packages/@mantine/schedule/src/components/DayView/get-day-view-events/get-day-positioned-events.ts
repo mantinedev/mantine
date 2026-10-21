@@ -14,6 +14,18 @@ import {
   sortEvents,
 } from '../../../utils';
 
+interface IsAllDayOnDateInput {
+  event: ScheduleEventData;
+  date: AnyDateValue;
+}
+
+function isAllDayOnDate({ event, date }: IsAllDayOnDateInput) {
+  return (
+    isAllDayEvent({ event, date }) ||
+    (isMultidayEvent(event) && dayjs(event.start).isSame(dayjs(date).startOf('day')))
+  );
+}
+
 interface ColumnHasConflictOptions {
   columns: ScheduleEventData[][];
   columnIndex: number;
@@ -34,9 +46,7 @@ function columnHasConflict({
   }
 
   return columns[columnIndex].some((e) => {
-    const eAllDay =
-      isAllDayEvent({ event: e, date }) ||
-      (isMultidayEvent(e) && dayjs(e.start).isSame(dayjs(date).startOf('day')));
+    const eAllDay = isAllDayOnDate({ event: e, date });
     const hasTimeConflict = isEventsOverlap(e, event);
 
     // Don't count all-day events as overlaps
@@ -82,9 +92,7 @@ export function getDayPositionedEvents({
   const sorted = sortEvents(events);
 
   for (const event of sorted) {
-    const allDay =
-      isAllDayEvent({ event, date }) ||
-      (isMultidayEvent(event) && dayjs(event.start).isSame(dayjs(date).startOf('day')));
+    const allDay = isAllDayOnDate({ event, date });
 
     let column = 0;
 
