@@ -1,47 +1,48 @@
-import { Input, NumberInput, SegmentedControl, Textarea, TextInput } from '@mantine/core';
+import { Input, NumberInput, SegmentedControl, Stack, Textarea, TextInput } from '@mantine/core';
 import type { FieldFormType } from '../types';
+
+const DISPLAY_OPTIONS = [
+  { value: 'input', label: 'Input' },
+  { value: 'textarea', label: 'Textarea' },
+];
 
 export function TextOptions({ form }: { form: FieldFormType }) {
   const display = form.useWatchValue('textDisplay');
+  const maxLength = form.useWatchValue('maxLength');
+  const defaultProps = {
+    label: 'Default value',
+    placeholder: 'Default value',
+    maxLength: typeof maxLength === 'number' && maxLength > 0 ? maxLength : undefined,
+    ...form.getInputProps('textDefault'),
+  };
 
   return (
-    <>
+    <Stack>
       <Input.Wrapper label="Display">
-        <SegmentedControl
-          data={[
-            { value: 'input', label: 'Input' },
-            { value: 'textarea', label: 'Textarea' },
-          ]}
-          {...form.getInputProps('textDisplay', { withError: false })}
-        />
+        <div>
+          <SegmentedControl
+            data={DISPLAY_OPTIONS}
+            aria-label="Display"
+            {...form.getInputProps('textDisplay', { withError: false })}
+          />
+        </div>
       </Input.Wrapper>
+
       <NumberInput
-        label="Max length"
+        label="Max characters"
         placeholder="No limit"
         min={1}
-        max={100_000}
+        max={100000}
         allowNegative={false}
         allowDecimal={false}
-        thousandSeparator=","
-        hideControls
         {...form.getInputProps('maxLength')}
       />
+
       {display === 'textarea' ? (
-        <Textarea
-          label="Default value"
-          placeholder="Default value"
-          autosize
-          minRows={2}
-          maxRows={6}
-          {...form.getInputProps('textDefault')}
-        />
+        <Textarea autosize minRows={3} maxRows={8} {...defaultProps} />
       ) : (
-        <TextInput
-          label="Default value"
-          placeholder="Default value"
-          {...form.getInputProps('textDefault')}
-        />
+        <TextInput {...defaultProps} />
       )}
-    </>
+    </Stack>
   );
 }

@@ -1,4 +1,7 @@
 .option {
+  display: flex;
+  align-items: center;
+  gap: var(--mantine-spacing-sm);
   padding: var(--mantine-spacing-sm);
   border: 1px solid var(--mantine-color-default-border);
   border-radius: var(--mantine-radius-md);

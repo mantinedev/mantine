@@ -18,7 +18,7 @@ import classes from './Sortable.module.css';
 
 interface SortableListProps {
   ids: string[];
-  onReorder: (move: { from: number; to: number }) => void;
+  onReorder: (from: number, to: number) => void;
   children: React.ReactNode;
 }
 
@@ -30,7 +30,7 @@ export function SortableList({ ids, onReorder, children }: SortableListProps) {
 
   const handleDragEnd = ({ active, over }: DragEndEvent) => {
     if (over && active.id !== over.id) {
-      onReorder({ from: ids.indexOf(String(active.id)), to: ids.indexOf(String(over.id)) });
+      onReorder(ids.indexOf(String(active.id)), ids.indexOf(String(over.id)));
     }
   };
 
@@ -43,19 +43,30 @@ export function SortableList({ ids, onReorder, children }: SortableListProps) {
   );
 }
 
-export function useSortableRow(id: string) {
-  const { attributes, listeners, setNodeRef, transform, transition, isDragging } = useSortable({
-    id,
-  });
+export function useSortableItem(id: string) {
+  const {
+    attributes,
+    listeners,
+    setNodeRef,
+    setActivatorNodeRef,
+    transform,
+    transition,
+    isDragging,
+  } = useSortable({ id });
 
   return {
-    rowProps: {
+    itemProps: {
       ref: setNodeRef,
-      className: classes.row,
-      'data-dragging': isDragging || undefined,
-      // dnd-kit moves rows with a transform computed on every pointer move
+      className: classes.item,
+      // dnd-kit moves the item with a transform computed on every pointer move
       style: { transform: CSS.Translate.toString(transform), transition },
+      'data-dragging': isDragging || undefined,
     },
-    handleProps: { ...attributes, ...listeners, className: classes.handle },
+    handleProps: {
+      ref: setActivatorNodeRef,
+      className: classes.handle,
+      ...attributes,
+      ...listeners,
+    },
   };
 }

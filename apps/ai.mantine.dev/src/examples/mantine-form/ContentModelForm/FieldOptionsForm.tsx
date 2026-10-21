@@ -1,43 +1,34 @@
-import {
-  Checkbox,
-  Divider,
-  Group,
-  SimpleGrid,
-  Text,
-  Textarea,
-  TextInput,
-  ThemeIcon,
-} from '@mantine/core';
+import { Checkbox, Group, SimpleGrid, Stack, Text, TextInput, ThemeIcon } from '@mantine/core';
 import { getFieldType } from './fieldTypes';
 import { BooleanOptions } from './options/BooleanOptions';
 import { JsonOptions } from './options/JsonOptions';
 import { ReferenceOptions } from './options/ReferenceOptions';
 import { SelectOptions } from './options/SelectOptions';
 import { TextOptions } from './options/TextOptions';
-import type { FieldFormType } from './types';
-import classes from './ContentModelForm.module.css';
+import type { FieldFormType, FieldType } from './types';
+import { useGeneratedKey } from './useGeneratedKey';
+
+const TYPE_OPTIONS: Partial<Record<FieldType, React.ComponentType<{ form: FieldFormType }>>> = {
+  text: TextOptions,
+  boolean: BooleanOptions,
+  json: JsonOptions,
+  select: SelectOptions,
+  reference: ReferenceOptions,
+};
 
 interface FieldOptionsFormProps {
   form: FieldFormType;
-  addOptionRef: React.Ref<HTMLButtonElement>;
+  isEditing: boolean;
 }
 
-export function FieldOptionsForm({ form, addOptionRef }: FieldOptionsFormProps) {
+export function FieldOptionsForm({ form, isEditing }: FieldOptionsFormProps) {
+  // The key of a saved field is used by existing entries, so renaming the label does not change it
+  const keyProps = useGeneratedKey(form, 'label', 'key', isEditing);
   const type = getFieldType(form.useWatchValue('type'));
-
-  const typeOptions = {
-    text: <TextOptions form={form} />,
-    boolean: <BooleanOptions form={form} />,
-    json: <JsonOptions form={form} />,
-    select: <SelectOptions form={form} addOptionRef={addOptionRef} />,
-    reference: <ReferenceOptions form={form} />,
-    richText: null,
-    image: null,
-    file: null,
-  }[type.value];
+  const TypeOptions = TYPE_OPTIONS[type.value];
 
   return (
-    <>
+    <Stack>
       <Group gap="sm" wrap="nowrap">
         <ThemeIcon variant="default" size="lg" aria-hidden>
           <type.icon size={18} color={`var(--mantine-color-${type.color}-text)`} />
@@ -58,30 +49,18 @@ export function FieldOptionsForm({ form, addOptionRef }: FieldOptionsFormProps) 
           data-autofocus
           {...form.getInputProps('label')}
         />
-        <TextInput
-          label="Key"
-          placeholder="title"
-          withAsterisk
-          classNames={{ input: classes.monospace }}
-          {...form.getInputProps('key')}
-        />
+        <TextInput label="Key" placeholder="title" withAsterisk {...keyProps} />
       </SimpleGrid>
-      <Textarea
+
+      <TextInput
         label="Description"
         placeholder="Help text shown to editors"
-        autosize
-        minRows={2}
-        maxRows={4}
         {...form.getInputProps('description')}
       />
+
       <Checkbox label="Required" {...form.getInputProps('required', { type: 'checkbox' })} />
 
-      {typeOptions && (
-        <>
-          <Divider label={`${type.label} options`} labelPosition="left" />
-          {typeOptions}
-        </>
-      )}
-    </>
+      {TypeOptions && <TypeOptions form={form} />}
+    </Stack>
   );
 }

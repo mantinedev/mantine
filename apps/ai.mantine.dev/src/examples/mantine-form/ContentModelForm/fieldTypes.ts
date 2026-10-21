@@ -1,11 +1,11 @@
 import {
+  IconAlignLeft,
   IconBraces,
   IconFile,
   IconLink,
-  IconLetterCase,
   IconList,
   IconPhoto,
-  IconTextCaption,
+  IconTextSize,
   IconToggleLeft,
   type Icon,
 } from '@tabler/icons-react';
@@ -24,14 +24,14 @@ export const FIELD_TYPES: FieldTypeDefinition[] = [
     value: 'text',
     label: 'Text',
     description: 'Titles, names and other plain text',
-    icon: IconLetterCase,
+    icon: IconTextSize,
     color: 'blue',
   },
   {
     value: 'richText',
     label: 'Rich text',
     description: 'Formatted text with headings, links and lists',
-    icon: IconTextCaption,
+    icon: IconAlignLeft,
     color: 'violet',
   },
   {
@@ -51,7 +51,7 @@ export const FIELD_TYPES: FieldTypeDefinition[] = [
   {
     value: 'select',
     label: 'Select',
-    description: 'One value from a list of options',
+    description: 'One value from a predefined list of options',
     icon: IconList,
     color: 'cyan',
   },
@@ -78,8 +78,8 @@ export const FIELD_TYPES: FieldTypeDefinition[] = [
   },
 ];
 
-export const REFERENCE_TARGETS = ['Author', 'Category', 'Page', 'Product'];
-
 export function getFieldType(type: FieldType) {
   return FIELD_TYPES.find((item) => item.value === type)!;
 }
+
+export const REFERENCE_MODELS = ['Author', 'Category', 'Page', 'Product'];

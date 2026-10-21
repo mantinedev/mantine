@@ -67,7 +67,7 @@ export function ExampleDemo({ skill, example }: ExampleDemoProps) {
           getFolderIcon={getCodeFolderIcon}
           defaultActiveFile={PROMPT_FILE}
           treeWidth={270}
-          className={classes.fileTree}
+          treeStickyTop="var(--app-shell-header-height)"
         />
       </div>
     </div>

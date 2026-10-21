@@ -39,17 +39,11 @@
 }
 
 .files {
+  position: sticky;
+  top: var(--ch-tree-sticky-top, 0px);
+  align-self: flex-start;
   flex: 0 0 var(--ch-tree-width, rem(220px));
   width: var(--ch-tree-width, rem(220px));
-  border-inline-end: 1px solid var(--mantine-color-border-subtle);
-
-  &:where([data-code-color-scheme='dark']) {
-    border-color: var(--mantine-color-dark-6);
-  }
-
-  &:where([data-code-color-scheme='light']) {
-    border-color: var(--mantine-color-gray-2);
-  }
 }
 
 .tree {
@@ -167,6 +161,15 @@
   min-width: 0;
   display: flex;
   flex-direction: column;
+  border-inline-start: 1px solid var(--mantine-color-border-subtle);
+
+  &:where([data-code-color-scheme='dark']) {
+    border-color: var(--mantine-color-dark-6);
+  }
+
+  &:where([data-code-color-scheme='light']) {
+    border-color: var(--mantine-color-gray-2);
+  }
 }
 
 .codeScrollarea {

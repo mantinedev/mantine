@@ -1,18 +1,23 @@
 import { IconPlus } from '@tabler/icons-react';
-import { Button, Group, Input, Select, Stack, Text } from '@mantine/core';
+import { Button, Group, Input, Select, Stack } from '@mantine/core';
 import { SortableList } from '../Sortable';
 import type { FieldFormType } from '../types';
-import { createOption } from '../utils';
+import { createSelectOption } from '../utils';
 import { SelectOptionRow } from './SelectOptionRow';
 
-interface SelectOptionsProps {
-  form: FieldFormType;
-  addOptionRef: React.Ref<HTMLButtonElement>;
-}
+export function SelectOptions({ form }: { form: FieldFormType }) {
+  const options = form.useWatchValue('selectOptions');
+  const listError = form.errors.selectOptions;
 
-export function SelectOptions({ form, addOptionRef }: SelectOptionsProps) {
-  const options = form.useWatchValue('options');
-  const defaultOptionData = options
+  // Uniqueness depends on all values, revalidate the list while its error is shown
+  form.watch('selectOptions', () => {
+    if (form.errors.selectOptions) {
+      form.validateField('selectOptions');
+    }
+  });
+
+  // Select does not support duplicate values, the list error reports them instead
+  const defaultData = options
     .filter(
       (option, index) =>
         option.value !== '' && options.findIndex((item) => item.value === option.value) === index
@@ -20,42 +25,44 @@ export function SelectOptions({ form, addOptionRef }: SelectOptionsProps) {
     .map((option) => ({ value: option.value, label: option.label || option.value }));
 
   return (
-    <>
+    <Stack>
       <Stack gap="xs">
         <Input.Label required>Options</Input.Label>
-        {options.length > 0 ? (
-          <SortableList
-            ids={options.map((option) => option.id)}
-            onReorder={(move) => form.reorderListItem('options', move)}
-          >
-            <Stack gap="xs">
-              {options.map((option, index) => (
-                <SelectOptionRow key={option.id} form={form} id={option.id} index={index} />
-              ))}
-            </Stack>
-          </SortableList>
-        ) : (
-          <Text size="sm">No options added</Text>
-        )}
-        {form.errors.options && <Input.Error>{form.errors.options}</Input.Error>}
+        <SortableList
+          ids={options.map((option) => option.id)}
+          onReorder={(from, to) => form.reorderListItem('selectOptions', { from, to })}
+        >
+          <Stack gap="xs" role="list" aria-label="Options">
+            {options.map((option, index) => (
+              <SelectOptionRow
+                key={option.id}
+                form={form}
+                id={option.id}
+                index={index}
+                onRemove={() => form.removeListItem('selectOptions', index)}
+              />
+            ))}
+          </Stack>
+        </SortableList>
+        {listError && <Input.Error>{listError}</Input.Error>}
         <Group>
           <Button
-            ref={addOptionRef}
             variant="default"
             leftSection={<IconPlus size={18} />}
-            onClick={() => form.insertListItem('options', createOption())}
+            onClick={() => form.insertListItem('selectOptions', createSelectOption())}
           >
             Add option
           </Button>
         </Group>
       </Stack>
+
       <Select
         label="Default option"
         placeholder="No default"
-        data={defaultOptionData}
         clearable
-        {...form.getInputProps('defaultOption')}
+        data={defaultData}
+        {...form.getInputProps('selectDefault')}
       />
-    </>
+    </Stack>
   );
 }

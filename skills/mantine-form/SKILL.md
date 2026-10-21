@@ -119,10 +119,14 @@ pattern.
 ### 4. Files and code style
 
 One folder per form. `<Name>Form.tsx` holds `useForm`, navigation between steps and submission;
-each step, tab, section or repeated group of fields is a component in its own file that takes
-`form` as a prop; `types.ts` holds the values interface and the form type. Name the form type
-after the values, not after the component: `type ProfileFormType = UseFormReturnType<ProfileValues>`
-when the component is `ProfileForm`. A file over about 200 lines is a sign to split further.
+each step, tab, section, repeated row or type-specific options block is a component in its own
+file that takes `form` as a prop — a `switch` that renders different fields per variant is one
+file per variant (`options/TextOptions.tsx`, `options/SelectOptions.tsx`), not one file with a
+`switch`. `types.ts` holds the values interface and the form type; validation rules and
+constants live in `validation.ts`. Name the form type after the values, not after the component:
+`type ProfileFormType = UseFormReturnType<ProfileValues>` when the component is `ProfileForm`. A
+file over about 150 lines is a sign to split further. Each component that needs styles has its
+own `<Name>.module.css` next to it; no shared stylesheet for the whole form.
 See [splitting a form into components](references/patterns.md#splitting-a-form-into-components).
 
 Comments only where the code cannot explain itself: a workaround, a browser or library behavior
@@ -139,14 +143,10 @@ read it before writing the markup of a form. Forms in modals open the modal with
 
 ### 6. Tests
 
-Test with React Testing Library and `user-event`, rendering inside `MantineProvider`
-(`env="test"`). Query by label and role, never by class name. Test what the user does: typing,
-errors shown and cleared, focus on the first invalid field, navigation keeps values, submit
-payload. Freeze time with fake timers (`toFake: ['Date']`) when the form validates against today.
-
-jsdom matches no media query, so picker inputs open their mobile `drawer` dropdown, where the
-value is applied only after the `Save` button is pressed (`applyOnSubmit`). Either click `Save`
-after the day, or mock `matchMedia` to report a desktop viewport so the popover opens.
+Tests are written with the `mantine-testing` skill: one observable behavior per test, queries by
+role and label, `render` inside `MantineProvider` with `env="test"`, and the jsdom recipes for
+Mantine inputs (picker inputs open a drawer in jsdom and apply the value on `Save`). The
+[forms checklist](../mantine-testing/references/forms.md) lists what every form test file covers.
 
 ## Validation
 

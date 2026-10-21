@@ -289,4 +289,11 @@ describe('@mantine/code-highlight/CodeHighlightFileTree', () => {
     await userEvent.click(screen.getByText('PROMPT.md'));
     expect(getDisplayedCode(container)).toBe('Build a form');
   });
+
+  it('sets --ch-tree-sticky-top from treeStickyTop prop', () => {
+    const { container } = render(<CodeHighlightFileTree code={files} treeStickyTop={60} />);
+    expect(container.querySelector('.mantine-CodeHighlightFileTree-root')).toHaveStyle({
+      '--ch-tree-sticky-top': 'calc(3.75rem * var(--mantine-scale))',
+    });
+  });
 });

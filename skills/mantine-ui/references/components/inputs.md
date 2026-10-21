@@ -28,3 +28,24 @@ Rules:
   row: `SimpleGrid cols={{ base: 1, sm: 2 }}` or `Group grow`. A period is one range input, not
   two inputs.
 - Labels are short nouns (`Email`, `Start date`), not sentences.
+
+## Fonts in inputs
+
+Inputs use the default font. Monospace makes the text look larger than the labels around it, so
+it is reserved for code: `JsonInput`, a `Textarea` for a script or a query. Keys, slugs, URLs,
+usernames and IDs are typed in regular inputs. Monospace is fine in read-only text: a key next to
+a label in a list row (`<span className={classes.key}>`).
+
+## Non-input controls under a label
+
+`Input.Label` is `inline-block`, so an inline control placed directly in `Input.Wrapper`
+(`SegmentedControl`, `Rating`, `Chip.Group`, a `Group` of switches) ends up on the same line as
+the label. Make the control a block: `fullWidth` on `SegmentedControl`, or wrap it in a `div`:
+
+```tsx
+<Input.Wrapper label="Display" error={form.errors.textDisplay}>
+  <div>
+    <SegmentedControl data={DISPLAY_OPTIONS} {...form.getInputProps('textDisplay', { withError: false })} />
+  </div>
+</Input.Wrapper>
+```

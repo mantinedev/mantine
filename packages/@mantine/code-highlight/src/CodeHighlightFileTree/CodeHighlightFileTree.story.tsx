@@ -161,3 +161,16 @@ export function PinnedFiles() {
     </div>
   );
 }
+
+export function StickyTree() {
+  const longCode = code.map((file) => ({ ...file, code: Array(80).fill(file.code).join('\n') }));
+
+  return (
+    <div style={{ padding: 40 }}>
+      <div style={{ height: 300, border: '1px dashed gray', marginBottom: 20 }}>
+        Scroll down: the file tree stays visible while the code scrolls with the page
+      </div>
+      <CodeHighlightFileTree code={longCode} getFileIcon={getCodeFileIcon} radius="md" withBorder />
+    </div>
+  );
+}

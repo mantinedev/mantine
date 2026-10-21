@@ -67,6 +67,19 @@ Example prompts:
 - "Review this settings page and make it consistent with the Mantine look"
 - "Build a pricing table with three plans, one of them highlighted"
 
+### `mantine-testing`
+
+Component tests for Mantine interfaces with React Testing Library in jsdom: render setup and stubs, how to interact with every Mantine input, modals and notifications, dnd-kit reordering, forms built with `@mantine/form`, and test structure (one behavior per test). Use it with the task skills whenever tests are part of the job.
+
+```sh
+npx skills add https://github.com/mantinedev/skills --skill mantine-testing
+```
+
+Example prompts:
+
+- "Write tests for the checkout form: validation, conditional shipping address, submit payload"
+- "The date picker tests fail in jsdom, fix them"
+
 ## Install All Skills
 
 ```sh
@@ -74,6 +87,7 @@ npx skills add https://github.com/mantinedev/skills --skill mantine-combobox
 npx skills add https://github.com/mantinedev/skills --skill mantine-form
 npx skills add https://github.com/mantinedev/skills --skill mantine-custom-components
 npx skills add https://github.com/mantinedev/skills --skill mantine-ui
+npx skills add https://github.com/mantinedev/skills --skill mantine-testing
 ```
 
 ## Maintainers

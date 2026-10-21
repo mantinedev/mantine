@@ -1,62 +1,60 @@
-import { useState } from 'react';
 import { IconPlus } from '@tabler/icons-react';
 import { Button, Group, Input, Stack, Text, useModal } from '@mantine/core';
+import { randomId } from '@mantine/hooks';
 import { FieldEditor } from './FieldEditor';
 import { FieldRow } from './FieldRow';
 import { SortableList } from './Sortable';
-import type { ContentModelFormType, FieldValues } from './types';
+import type { ContentField, ContentModelFormType, FieldValues } from './types';
 
 interface FieldListProps {
   form: ContentModelFormType;
-  addButtonRef: React.Ref<HTMLButtonElement>;
+  addFieldRef: React.Ref<HTMLButtonElement>;
 }
 
-export function FieldList({ form, addButtonRef }: FieldListProps) {
+export function FieldList({ form, addFieldRef }: FieldListProps) {
   const fields = form.useWatchValue('fields');
-  const [editing, setEditing] = useState<FieldValues | null>(null);
-  // Remounts the editor on every open so it starts from the edited field or from scratch
-  const [editorKey, setEditorKey] = useState(0);
+  const modal = useModal({ size: 'lg', fullScreenBelow: 'sm' });
 
-  const handleSave = (field: FieldValues) => {
-    const index = form.getValues().fields.findIndex((item) => item.id === field.id);
-    if (index === -1) {
-      form.insertListItem('fields', field);
-    } else {
-      form.replaceListItem('fields', index, field);
-    }
-    modal.close();
-  };
+  const openEditor = (field?: ContentField) => {
+    const otherKeys = form
+      .getValues()
+      .fields.filter((item) => item.id !== field?.id)
+      .map((item) => item.key);
 
-  const modal = useModal({
-    title: editing ? 'Edit field' : 'Add field',
-    size: 'lg',
-    fullScreenBelow: 'sm',
-    children: (
-      <FieldEditor
-        key={editorKey}
-        field={editing}
-        usedKeys={fields.filter((item) => item.id !== editing?.id).map((item) => item.key)}
-        onSave={handleSave}
-        onCancel={() => modal.close()}
-      />
-    ),
-  });
+    const handleSave = (values: FieldValues) => {
+      if (field) {
+        const index = form.getValues().fields.findIndex((item) => item.id === field.id);
+        form.replaceListItem('fields', index, { ...values, id: field.id });
+      } else {
+        form.insertListItem('fields', { ...values, id: randomId() });
+      }
+      modal.close();
+    };
 
-  const openEditor = (field: FieldValues | null) => {
-    setEditing(field);
-    setEditorKey((key) => key + 1);
-    modal.open();
+    modal.open({
+      title: field ? 'Edit field' : 'Add field',
+      children: (
+        <FieldEditor
+          key={field?.id ?? randomId()}
+          field={field}
+          existingKeys={otherKeys}
+          onSave={handleSave}
+          onCancel={() => modal.close()}
+        />
+      ),
+    });
   };
 
   return (
     <Stack gap="xs">
       <Input.Label required>Fields</Input.Label>
+
       {fields.length > 0 ? (
         <SortableList
           ids={fields.map((field) => field.id)}
-          onReorder={(move) => form.reorderListItem('fields', move)}
+          onReorder={(from, to) => form.reorderListItem('fields', { from, to })}
         >
-          <Stack gap="xs">
+          <Stack gap="xs" role="list" aria-label="Fields">
             {fields.map((field, index) => (
               <FieldRow
                 key={field.id}
@@ -70,13 +68,15 @@ export function FieldList({ form, addButtonRef }: FieldListProps) {
       ) : (
         <Text size="sm">No fields added</Text>
       )}
+
       {form.errors.fields && <Input.Error>{form.errors.fields}</Input.Error>}
+
       <Group>
         <Button
-          ref={addButtonRef}
+          ref={addFieldRef}
           variant="default"
           leftSection={<IconPlus size={18} />}
-          onClick={() => openEditor(null)}
+          onClick={() => openEditor()}
         >
           Add field
         </Button>

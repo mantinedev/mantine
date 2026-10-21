@@ -1,16 +1,21 @@
 import { Input, SegmentedControl } from '@mantine/core';
 import type { FieldFormType } from '../types';
 
+const DEFAULT_OPTIONS = [
+  { value: 'false', label: 'False' },
+  { value: 'true', label: 'True' },
+];
+
 export function BooleanOptions({ form }: { form: FieldFormType }) {
   return (
     <Input.Wrapper label="Default value">
-      <SegmentedControl
-        data={[
-          { value: 'false', label: 'False' },
-          { value: 'true', label: 'True' },
-        ]}
-        {...form.getInputProps('booleanDefault', { withError: false })}
-      />
+      <div>
+        <SegmentedControl
+          data={DEFAULT_OPTIONS}
+          aria-label="Default value"
+          {...form.getInputProps('booleanDefault', { withError: false })}
+        />
+      </div>
     </Input.Wrapper>
   );
 }

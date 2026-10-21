@@ -33,5 +33,7 @@ window.ResizeObserver = ResizeObserver;
 if (!document.fonts) {
   Object.defineProperty(document, 'fonts', {
     value: { addEventListener: () => {}, removeEventListener: () => {} },
+    configurable: true,
+    writable: true,
   });
 }

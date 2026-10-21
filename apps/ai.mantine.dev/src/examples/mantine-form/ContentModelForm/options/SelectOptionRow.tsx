@@ -1,6 +1,6 @@
 import { IconGripVertical, IconTrash } from '@tabler/icons-react';
 import { ActionIcon, Group, TextInput } from '@mantine/core';
-import { useSortableRow } from '../Sortable';
+import { useSortableItem } from '../Sortable';
 import type { FieldFormType } from '../types';
 import classes from './SelectOptionRow.module.css';
 
@@ -8,20 +8,21 @@ interface SelectOptionRowProps {
   form: FieldFormType;
   id: string;
   index: number;
+  onRemove: () => void;
 }
 
-export function SelectOptionRow({ form, id, index }: SelectOptionRowProps) {
-  const { rowProps, handleProps } = useSortableRow(id);
+export function SelectOptionRow({ form, id, index, onRemove }: SelectOptionRowProps) {
+  const { itemProps, handleProps } = useSortableItem(id);
   const position = index + 1;
 
   return (
-    <div {...rowProps}>
-      <Group gap="xs" wrap="nowrap" align="flex-start">
+    <div role="listitem" {...itemProps}>
+      <Group gap="xs" align="flex-start" wrap="nowrap">
         <ActionIcon
           variant="default"
           size="input-sm"
-          aria-label={`Reorder option ${position}`}
           {...handleProps}
+          aria-label={`Reorder option ${position}`}
         >
           <IconGripVertical size={16} />
         </ActionIcon>
@@ -29,20 +30,19 @@ export function SelectOptionRow({ form, id, index }: SelectOptionRowProps) {
           className={classes.input}
           aria-label={`Option ${position} value`}
           placeholder="Value"
-          classNames={{ input: classes.monospace }}
-          {...form.getInputProps(`options.${index}.value`)}
+          {...form.getInputProps(`selectOptions.${index}.value`)}
         />
         <TextInput
           className={classes.input}
           aria-label={`Option ${position} label`}
           placeholder="Label"
-          {...form.getInputProps(`options.${index}.label`)}
+          {...form.getInputProps(`selectOptions.${index}.label`)}
         />
         <ActionIcon
           variant="default"
           size="input-sm"
           aria-label={`Remove option ${position}`}
-          onClick={() => form.removeListItem('options', index)}
+          onClick={onRemove}
         >
           <IconTrash size={16} color="var(--mantine-color-red-text)" />
         </ActionIcon>

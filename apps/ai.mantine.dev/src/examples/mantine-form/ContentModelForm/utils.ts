@@ -1,14 +1,8 @@
 import { randomId } from '@mantine/hooks';
-import type {
-  ContentModelPayload,
-  ContentModelValues,
-  FieldPayload,
-  FieldType,
-  FieldValues,
-  SelectOption,
-} from './types';
+import type { ContentField, ContentModelValues, FieldType, FieldValues } from './types';
 
 export const KEY_PATTERN = /^[a-z0-9_]+$/;
+export const KEY_ERROR = 'Use lowercase letters, digits and underscores';
 
 export function slugify(value: string) {
   return value
@@ -19,13 +13,12 @@ export function slugify(value: string) {
     .replace(/^_+|_+$/g, '');
 }
 
-export function createOption(): SelectOption {
+export function createSelectOption() {
   return { id: randomId(), value: '', label: '' };
 }
 
-export function createField(type: FieldType): FieldValues {
+export function createFieldValues(type: FieldType): FieldValues {
   return {
-    id: randomId(),
     type,
     label: '',
     key: '',
@@ -36,62 +29,51 @@ export function createField(type: FieldType): FieldValues {
     textDefault: '',
     booleanDefault: 'false',
     jsonDefault: '',
-    options: [createOption(), createOption()],
-    defaultOption: null,
-    targetModel: null,
+    selectOptions: type === 'select' ? [createSelectOption(), createSelectOption()] : [],
+    selectDefault: null,
+    referenceModel: null,
     allowMultiple: false,
   };
 }
 
-function toFieldPayload(field: FieldValues): FieldPayload {
-  const base = {
-    label: field.label.trim(),
-    key: field.key,
-    description: field.description.trim(),
-    required: field.required,
-  };
-
+function getFieldOptions(field: ContentField) {
   switch (field.type) {
     case 'text':
       return {
-        ...base,
-        type: 'text',
         display: field.textDisplay,
         maxLength: field.maxLength === '' ? null : Number(field.maxLength),
-        defaultValue: field.textDefault,
+        defaultValue: field.textDefault === '' ? null : field.textDefault,
       };
     case 'boolean':
-      return { ...base, type: 'boolean', defaultValue: field.booleanDefault === 'true' };
+      return { defaultValue: field.booleanDefault === 'true' };
     case 'json':
       return {
-        ...base,
-        type: 'json',
         defaultValue: field.jsonDefault.trim() === '' ? null : JSON.parse(field.jsonDefault),
       };
     case 'select':
       return {
-        ...base,
-        type: 'select',
-        options: field.options.map(({ value, label }) => ({ value, label })),
-        defaultValue: field.defaultOption,
+        options: field.selectOptions.map(({ value, label }) => ({ value, label })),
+        defaultValue: field.selectDefault,
       };
     case 'reference':
-      return {
-        ...base,
-        type: 'reference',
-        targetModel: field.targetModel!,
-        allowMultiple: field.allowMultiple,
-      };
+      return { targetModel: field.referenceModel, allowMultiple: field.allowMultiple };
     default:
-      return { ...base, type: field.type };
+      return {};
   }
 }
 
-export function toModelPayload(values: ContentModelValues): ContentModelPayload {
+export function toModelJson(values: ContentModelValues) {
   return {
     name: values.name.trim(),
     key: values.key,
     description: values.description.trim(),
-    fields: values.fields.map(toFieldPayload),
+    fields: values.fields.map((field) => ({
+      type: field.type,
+      label: field.label.trim(),
+      key: field.key,
+      description: field.description.trim(),
+      required: field.required,
+      options: getFieldOptions(field),
+    })),
   };
 }

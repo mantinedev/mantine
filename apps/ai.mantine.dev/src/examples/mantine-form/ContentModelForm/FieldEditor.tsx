@@ -1,7 +1,6 @@
-import { useRef, useState } from 'react';
+import { useState } from 'react';
 import { Button, Group, Stack } from '@mantine/core';
 import {
-  FORM_INDEX,
   formRootRule,
   isInRange,
   isJSONString,
@@ -12,33 +11,38 @@ import {
 } from '@mantine/form';
 import { FieldOptionsForm } from './FieldOptionsForm';
 import { FieldTypePicker } from './FieldTypePicker';
-import type { FieldType, FieldValues } from './types';
-import { createField, KEY_PATTERN, slugify } from './utils';
+import type { ContentField, FieldType, FieldValues, SelectOption } from './types';
+import { createFieldValues, KEY_ERROR, KEY_PATTERN } from './utils';
 
 interface FieldEditorProps {
-  field: FieldValues | null;
-  usedKeys: string[];
-  onSave: (field: FieldValues) => void;
+  field?: ContentField;
+  existingKeys: string[];
+  onSave: (values: FieldValues) => void;
   onCancel: () => void;
 }
 
 const isType = (type: FieldType) => (values: FieldValues) => values.type === type;
 
-export function FieldEditor({ field, usedKeys, onSave, onCancel }: FieldEditorProps) {
-  const [step, setStep] = useState<'type' | 'options'>(field ? 'options' : 'type');
-  const addOptionRef = useRef<HTMLButtonElement>(null);
+function validateSelectOptions(options: SelectOption[]) {
+  if (options.length < 2) {
+    return 'Add at least two options';
+  }
+  const values = options.map((option) => option.value).filter((value) => value.trim() !== '');
+  return new Set(values).size === values.length ? null : 'Option values must be unique';
+}
+
+function toFieldValues({ id: _id, ...values }: ContentField): FieldValues {
+  return values;
+}
+
+export function FieldEditor({ field, existingKeys, onSave, onCancel }: FieldEditorProps) {
+  const isEditing = !!field;
+  const [step, setStep] = useState<'type' | 'options'>(isEditing ? 'options' : 'type');
 
   const form = useForm<FieldValues>({
-    name: 'content-model-field',
-    initialValues: field ?? createField('text'),
-    validateInputOnBlur: [
-      'label',
-      'key',
-      'maxLength',
-      'textDefault',
-      'jsonDefault',
-      `options.${FORM_INDEX}.value`,
-    ],
+    name: 'content-field',
+    initialValues: field ? toFieldValues(field) : createFieldValues('text'),
+    validateInputOnBlur: ['label', 'key', 'maxLength', 'textDefault', 'jsonDefault'],
     validate: {
       label: isNotEmpty('Label is required'),
       key: (value) => {
@@ -46,85 +50,68 @@ export function FieldEditor({ field, usedKeys, onSave, onCancel }: FieldEditorPr
           return 'Key is required';
         }
         if (!KEY_PATTERN.test(value)) {
-          return 'Use lowercase letters, digits and underscores';
+          return KEY_ERROR;
         }
-        return usedKeys.includes(value) ? 'Another field already uses this key' : null;
+        return existingKeys.includes(value) ? 'Another field already uses this key' : null;
       },
-      maxLength: when(
-        (values) => values.type === 'text' && values.maxLength !== '',
-        isInRange({ min: 1, max: 100_000 }, 'Max length must be between 1 and 100,000')
+      maxLength: when(isType('text'), (value) =>
+        value === ''
+          ? null
+          : isInRange({ min: 1, max: 100000 }, 'Enter a number from 1 to 100000')(value)
       ),
       textDefault: when(isType('text'), (value, values) =>
         typeof values.maxLength === 'number' && value.length > values.maxLength
-          ? 'Default value is longer than the max length'
+          ? `Default value is longer than ${values.maxLength} characters`
           : null
       ),
-      jsonDefault: when(
-        (values) => values.type === 'json' && values.jsonDefault.trim() !== '',
-        isJSONString('Invalid JSON')
+      jsonDefault: when(isType('json'), (value) =>
+        value.trim() === '' ? null : isJSONString('Enter valid JSON')(value)
       ),
-      options: {
-        [formRootRule]: when(isType('select'), (options) =>
-          options.length < 2 ? 'Add at least two options' : null
-        ),
-        value: when(isType('select'), (value, values, path) => {
-          if (value.trim() === '') {
-            return 'Value is required';
-          }
-          const index = Number(path.split('.')[1]);
-          const duplicate = values.options.some(
-            (option, optionIndex) => optionIndex !== index && option.value.trim() === value.trim()
-          );
-          return duplicate ? 'Values must be unique' : null;
-        }),
+      selectOptions: {
+        [formRootRule]: when(isType('select'), validateSelectOptions),
+        value: when(isType('select'), isNotEmpty('Value is required')),
         label: when(isType('select'), isNotEmpty('Label is required')),
       },
-      targetModel: when(isType('reference'), isNotEmpty('Select a target model')),
+      selectDefault: when(isType('select'), (value, values) =>
+        value && !values.selectOptions.some((option) => option.value === value)
+          ? 'Pick one of the options'
+          : null
+      ),
+      referenceModel: when(isType('reference'), isNotEmpty('Select a target model')),
     },
   });
 
-  // The key follows the label while it still matches the slug of the previous label
-  form.watch('label', ({ value, previousValue }) => {
-    if (form.getValues().key === slugify(previousValue)) {
-      form.setFieldValue('key', slugify(value), { forceUpdate: false });
-    }
-  });
-
-  form.watch('options', ({ value }) => {
-    const { defaultOption } = form.getValues();
-    if (defaultOption !== null && !value.some((option) => option.value === defaultOption)) {
-      form.setFieldValue('defaultOption', null);
-    }
-    if (form.errors.options) {
-      form.validateField('options');
-    }
-  });
-
+  // Common options typed before going back to the type picker are kept
   const handlePickType = (type: FieldType) => {
-    form.setFieldValue('type', type);
-    form.clearErrors();
+    const { label, key, description, required } = form.getValues();
+    form.setValues({ ...createFieldValues(type), label, key, description, required });
     setStep('options');
   };
 
   const handleErrors = (errors: FormErrors) => {
-    const firstPath = Object.keys(errors)[0];
-    if (firstPath === 'options') {
-      addOptionRef.current?.focus();
-    } else {
-      form.getInputNode(firstPath)?.focus();
-    }
+    form.getInputNode(Object.keys(errors)[0])?.focus();
   };
 
   if (step === 'type') {
-    return <FieldTypePicker onPick={handlePickType} />;
+    return (
+      <Stack>
+        <FieldTypePicker onPick={handlePickType} />
+        <Group justify="flex-end">
+          <Button variant="default" onClick={onCancel}>
+            Cancel
+          </Button>
+        </Group>
+      </Stack>
+    );
   }
 
   return (
-    <form onSubmit={form.onSubmit(onSave, handleErrors)}>
+    <form onSubmit={form.onSubmit(onSave, handleErrors)} noValidate>
       <Stack>
-        <FieldOptionsForm form={form} addOptionRef={addOptionRef} />
-        <Group justify={field ? 'flex-end' : 'space-between'} mt="md">
-          {!field && (
+        <FieldOptionsForm form={form} isEditing={isEditing} />
+
+        <Group justify={isEditing ? 'flex-end' : 'space-between'}>
+          {!isEditing && (
             <Button variant="default" onClick={() => setStep('type')}>
               Back
             </Button>

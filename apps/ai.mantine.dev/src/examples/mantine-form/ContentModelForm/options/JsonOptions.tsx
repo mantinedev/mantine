@@ -5,12 +5,10 @@ export function JsonOptions({ form }: { form: FieldFormType }) {
   return (
     <JsonInput
       label="Default value"
-      placeholder='{ "enabled": true }'
-      validationError="Invalid JSON"
-      formatOnBlur
+      placeholder='{ "key": "value" }'
       autosize
       minRows={4}
-      maxRows={12}
+      maxRows={10}
       {...form.getInputProps('jsonDefault')}
     />
   );

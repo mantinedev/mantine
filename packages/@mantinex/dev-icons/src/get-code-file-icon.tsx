@@ -21,5 +21,5 @@ export function getCodeFileIcon(fileName: string) {
 }
 
 export function getCodeFolderIcon(_folderPath: string, expanded: boolean) {
-  return expanded ? <FolderOpenIcon size={20} /> : <FolderIcon size={20} />;
+  return expanded ? <FolderOpenIcon size={18} /> : <FolderIcon size={18} />;
 }

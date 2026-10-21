@@ -63,7 +63,7 @@ export type CodeHighlightFileTreeStylesNames =
   | CodeHighlightStylesNames;
 
 export type CodeHighlightFileTreeCssVariables = {
-  root: '--ch-background' | '--ch-radius' | '--ch-tree-width';
+  root: '--ch-background' | '--ch-radius' | '--ch-tree-width' | '--ch-tree-sticky-top';
 };
 
 export interface CodeHighlightFileTreeProps
@@ -96,6 +96,9 @@ export interface CodeHighlightFileTreeProps
   /** Width of the file tree pane @default 220 @category appearance */
   treeWidth?: number | string;
 
+  /** Offset from the top of the viewport at which the file tree sticks while the page scrolls, for example the height of a fixed header @default 0 @category appearance */
+  treeStickyTop?: number | string;
+
   /** Breakpoint below which the file tree is replaced with a select, key of `theme.breakpoints`, number in px or any valid CSS value @default 'sm' @category appearance */
   hideTreeBelow?: CodeHighlightFileTreeBreakpoint;
 
@@ -125,11 +128,12 @@ const defaultProps = {
 } satisfies Partial<CodeHighlightFileTreeProps>;
 
 const varsResolver = createVarsResolver<CodeHighlightFileTreeFactory>(
-  (theme, { background, radius, treeWidth }) => ({
+  (theme, { background, radius, treeWidth, treeStickyTop }) => ({
     root: {
       '--ch-background': background ? getThemeColor(background, theme) : undefined,
       '--ch-radius': typeof radius !== 'undefined' ? getRadius(radius) : undefined,
       '--ch-tree-width': typeof treeWidth !== 'undefined' ? rem(treeWidth) : undefined,
+      '--ch-tree-sticky-top': typeof treeStickyTop !== 'undefined' ? rem(treeStickyTop) : undefined,
     },
   })
 );
@@ -173,6 +177,7 @@ export const CodeHighlightFileTree = factory<CodeHighlightFileTreeFactory>((_pro
     onActiveFileChange,
     defaultExpandedFolders,
     treeWidth,
+    treeStickyTop,
     hideTreeBelow,
     treeLabel,
     pinnedLabel,
@@ -333,9 +338,10 @@ export const CodeHighlightFileTree = factory<CodeHighlightFileTreeFactory>((_pro
       data-code-color-scheme={codeColorScheme}
     >
       {!belowBreakpoint && (
-        <ScrollArea
+        <ScrollArea.Autosize
           type="hover"
           scrollbarSize={4}
+          mah="calc(100vh - var(--ch-tree-sticky-top, 0px))"
           {...getStyles('files')}
           data-code-color-scheme={codeColorScheme}
         >
@@ -367,7 +373,7 @@ export const CodeHighlightFileTree = factory<CodeHighlightFileTreeFactory>((_pro
             attributes={{ root: treeAttributes, node: nodeAttributes }}
             unstyled={unstyled}
           />
-        </ScrollArea>
+        </ScrollArea.Autosize>
       )}
 
       {belowBreakpoint && (

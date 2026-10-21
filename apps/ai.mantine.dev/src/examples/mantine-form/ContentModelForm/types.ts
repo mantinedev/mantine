@@ -16,9 +16,7 @@ export interface SelectOption {
   label: string;
 }
 
-// One shape for every field type: options of other types are kept but left out of the payload
 export interface FieldValues {
-  id: string;
   type: FieldType;
   label: string;
   key: string;
@@ -29,52 +27,22 @@ export interface FieldValues {
   textDefault: string;
   booleanDefault: 'true' | 'false';
   jsonDefault: string;
-  options: SelectOption[];
-  defaultOption: string | null;
-  targetModel: string | null;
+  selectOptions: SelectOption[];
+  selectDefault: string | null;
+  referenceModel: string | null;
   allowMultiple: boolean;
 }
 
-export type FieldFormType = UseFormReturnType<FieldValues>;
+export interface ContentField extends FieldValues {
+  id: string;
+}
 
 export interface ContentModelValues {
   name: string;
   key: string;
   description: string;
-  fields: FieldValues[];
+  fields: ContentField[];
 }
 
-interface BaseFieldPayload {
-  label: string;
-  key: string;
-  description: string;
-  required: boolean;
-}
-
-export type FieldPayload = BaseFieldPayload &
-  (
-    | {
-        type: 'text';
-        display: 'input' | 'textarea';
-        maxLength: number | null;
-        defaultValue: string;
-      }
-    | { type: 'boolean'; defaultValue: boolean }
-    | { type: 'json'; defaultValue: unknown }
-    | {
-        type: 'select';
-        options: { value: string; label: string }[];
-        defaultValue: string | null;
-      }
-    | { type: 'reference'; targetModel: string; allowMultiple: boolean }
-    | { type: 'richText' | 'image' | 'file' }
-  );
-
-export interface ContentModelPayload {
-  name: string;
-  key: string;
-  description: string;
-  fields: FieldPayload[];
-}
-
-export type ContentModelFormType = UseFormReturnType<ContentModelValues, ContentModelPayload>;
+export type ContentModelFormType = UseFormReturnType<ContentModelValues>;
+export type FieldFormType = UseFormReturnType<FieldValues>;

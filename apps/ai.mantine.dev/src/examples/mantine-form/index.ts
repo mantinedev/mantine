@@ -1,7 +1,7 @@
 import type { SkillExample } from '../types';
 import contentModelFormCode from './ContentModelForm/code.json';
 import { ContentModelForm } from './ContentModelForm/ContentModelForm';
-import type { ContentModelValues, FieldValues } from './ContentModelForm/types';
+import type { ContentField, ContentModelValues } from './ContentModelForm/types';
 import jobApplicationFormCode from './JobApplicationForm/code.json';
 import { JobApplicationForm } from './JobApplicationForm/JobApplicationForm';
 import type { JobApplicationValues } from './JobApplicationForm/types';
@@ -13,8 +13,8 @@ function dateInDays(days: number) {
 }
 
 function modelField(
-  values: Partial<FieldValues> & Pick<FieldValues, 'id' | 'type' | 'label' | 'key'>
-): FieldValues {
+  values: Partial<ContentField> & Pick<ContentField, 'id' | 'type' | 'label' | 'key'>
+): ContentField {
   return {
     description: '',
     required: false,
@@ -23,9 +23,9 @@ function modelField(
     textDefault: '',
     booleanDefault: 'false',
     jsonDefault: '',
-    options: [],
-    defaultOption: null,
-    targetModel: null,
+    selectOptions: [],
+    selectDefault: null,
+    referenceModel: null,
     allowMultiple: false,
     ...values,
   };
@@ -157,12 +157,12 @@ Write tests for the component.`,
             label: 'Status',
             key: 'status',
             required: true,
-            options: [
+            selectOptions: [
               { id: 'draft', value: 'draft', label: 'Draft' },
               { id: 'published', value: 'published', label: 'Published' },
               { id: 'archived', value: 'archived', label: 'Archived' },
             ],
-            defaultOption: 'draft',
+            selectDefault: 'draft',
           }),
           modelField({
             id: 'author',
@@ -170,7 +170,7 @@ Write tests for the component.`,
             label: 'Author',
             key: 'author',
             required: true,
-            targetModel: 'author',
+            referenceModel: 'Author',
           }),
           modelField({
             id: 'featured',

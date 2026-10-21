@@ -1,4 +1,4 @@
-.row {
+.item {
   position: relative;
 
   &[data-dragging] {

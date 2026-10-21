@@ -35,6 +35,10 @@ component you are about to use, then write the UI.
   `c="var(--mantine-color-bright)"`.
 - **Every input has a `placeholder`**: the label text, or a format example when it helps more
   (`you@example.com`, `YYYY`).
+- **Inputs use the default font.** Monospace is for code inputs only (`JsonInput`, scripts);
+  keys, slugs and URLs are regular inputs. Inline controls under a label (`SegmentedControl`,
+  `Rating`, `Chip.Group`) are wrapped in a block so they do not share the line with the label,
+  see [inputs](references/components/inputs.md#non-input-controls-under-a-label).
 - **The input made for the data**: see [inputs](references/components/inputs.md) for the
   mapping. A plain `TextInput` is for free text only.
 - **Backgrounds step by one shade.** A card on a page is one `Surface` level up; nested
@@ -47,9 +51,10 @@ component you are about to use, then write the UI.
 - **Icons** come from the icon library already in the project (`@tabler/icons-react` or
   `@phosphor-icons/react`); `16` inside inputs and `md` action icons, `18` in `lg` tiles and
   buttons.
-- **Styles live in CSS modules.** A `style={{ … }}` attribute, more than two style props on
-  one element, or layout props on wrappers (`style={{ flex: 1, minWidth: 0 }}`) mean the
-  element needs a class in the component's `.module.css`. Style props are for one-off spacing
+- **Styles live in CSS modules, one per component.** A `style={{ … }}` attribute, more than two
+  style props on one element, or layout props on wrappers (`style={{ flex: 1, minWidth: 0 }}`)
+  mean the element needs a class in `<Component>.module.css` next to that component. One
+  stylesheet shared by several components is not used. Style props are for one-off spacing
   (`mt="md"`, `gap="sm"`), not for layout.
 - **No props that repeat the default.** `radius="md"` on `ThemeIcon`, `Button`, `Surface` and
   inputs, `size="sm"` on inputs, `variant="filled"` on `Button` and `Badge`, `wrap="wrap"` on
