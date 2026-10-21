@@ -1,53 +1,49 @@
 import dayjs from 'dayjs';
-import { Group, NumberInput, Radio } from '@mantine/core';
-import { DatePickerInput } from '@mantine/dates';
-import { DATE_FORMAT } from './recurrence';
+import { NumberInput, Radio, Stack } from '@mantine/core';
+import { MaskedDateInput } from '@mantine/dates';
+import { getDateFieldLabels } from './EventDateInput';
 import type { RecurringEventFormType } from './types';
 import { SERIES_END_OPTIONS } from './validation';
 
-interface SeriesEndFieldsProps {
-  form: RecurringEventFormType;
-}
-
-export function SeriesEndFields({ form }: SeriesEndFieldsProps) {
-  const ends = form.useWatchValue('recurrence.ends');
-  const startDate = form.useWatchValue('startDate');
+export function SeriesEndFields({ form }: { form: RecurringEventFormType }) {
+  const ends = form.useWatchValue('ends');
+  const start = form.useWatchValue('start');
 
   return (
-    <>
-      <Radio.Group label="Ends" {...form.getInputProps('recurrence.ends')}>
-        <Group mt="xs">
+    <Stack gap="xs">
+      <Radio.Group label="Ends" {...form.getInputProps('ends')}>
+        <Stack gap="xs" mt="xs">
           {SERIES_END_OPTIONS.map((option) => (
             <Radio key={option.value} value={option.value} label={option.label} />
           ))}
-        </Group>
+        </Stack>
       </Radio.Group>
 
       {ends === 'after' && (
         <NumberInput
           label="Occurrences"
           placeholder="Number of occurrences"
+          withAsterisk
+          maw={240}
           min={1}
           max={500}
-          clampBehavior="none"
+          clampBehavior="strict"
           allowNegative={false}
           allowDecimal={false}
-          maw={240}
-          withAsterisk
-          {...form.getInputProps('recurrence.count')}
+          {...form.getInputProps('count')}
         />
       )}
 
       {ends === 'on' && (
-        <DatePickerInput
-          label="Series end date"
-          placeholder="Pick a date"
-          valueFormat="MMMM D, YYYY"
-          minDate={startDate ? dayjs(startDate).add(1, 'day').format(DATE_FORMAT) : undefined}
+        <MaskedDateInput
+          label="Ends on"
           withAsterisk
-          {...form.getInputProps('recurrence.until')}
+          maw={240}
+          minDate={start ? dayjs(start).add(1, 'day').format('YYYY-MM-DD') : undefined}
+          {...getDateFieldLabels('Ends on')}
+          {...form.getInputProps('until')}
         />
       )}
-    </>
+    </Stack>
   );
 }

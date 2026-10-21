@@ -1,9 +1,10 @@
 import { isInRange, isNotEmpty, when, type FormRulesRecord } from '@mantine/form';
-import { formatDate, isOccurrence, toRecurrenceRule } from './recurrence';
-import type { RecurringEventValues, Repeat, SeriesEnd, Weekday } from './types';
+import { getRule, isInSeries } from './recurrence';
+import type { Frequency, Repeat, RecurringEventValues, SeriesEnd, Weekday } from './types';
 
 export const TIMEZONES = [
   { value: 'UTC', label: 'UTC' },
+  { value: 'Pacific/Honolulu', label: 'Honolulu' },
   { value: 'America/Los_Angeles', label: 'Los Angeles' },
   { value: 'America/Chicago', label: 'Chicago' },
   { value: 'America/New_York', label: 'New York' },
@@ -11,8 +12,7 @@ export const TIMEZONES = [
   { value: 'Europe/London', label: 'London' },
   { value: 'Europe/Berlin', label: 'Berlin' },
   { value: 'Asia/Dubai', label: 'Dubai' },
-  { value: 'Asia/Kolkata', label: 'Mumbai' },
-  { value: 'Asia/Singapore', label: 'Singapore' },
+  { value: 'Asia/Kolkata', label: 'Kolkata' },
   { value: 'Asia/Tokyo', label: 'Tokyo' },
   { value: 'Australia/Sydney', label: 'Sydney' },
 ];
@@ -25,11 +25,11 @@ export const REPEAT_OPTIONS: { value: Repeat; label: string }[] = [
   { value: 'yearly', label: 'Yearly' },
 ];
 
-export const INTERVAL_UNITS: Record<Exclude<Repeat, 'none'>, [string, string]> = {
-  daily: ['day', 'days'],
-  weekly: ['week', 'weeks'],
-  monthly: ['month', 'months'],
-  yearly: ['year', 'years'],
+export const INTERVAL_UNITS: Record<Frequency, string> = {
+  daily: 'days',
+  weekly: 'weeks',
+  monthly: 'months',
+  yearly: 'years',
 };
 
 export const WEEKDAY_OPTIONS: { value: Weekday; label: string }[] = [
@@ -48,62 +48,76 @@ export const SERIES_END_OPTIONS: { value: SeriesEnd; label: string }[] = [
   { value: 'on', label: 'On a date' },
 ];
 
-export const PREVIEW_LIMIT = 5;
+export const DEFAULT_START_TIME = '09:00:00';
+export const DEFAULT_END_TIME = '10:00:00';
 
-export function getDefaultTimezone() {
-  const browserTimezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
-  return TIMEZONES.some((timezone) => timezone.value === browserTimezone) ? browserTimezone : 'UTC';
+export function getBrowserTimezone() {
+  const { timeZone } = Intl.DateTimeFormat().resolvedOptions();
+  return TIMEZONES.some((timezone) => timezone.value === timeZone) ? timeZone : 'UTC';
 }
 
-const isTimed = (values: RecurringEventValues) => !values.allDay;
-const repeats = (values: RecurringEventValues) => values.recurrence.repeat !== 'none';
-const repeatsWeekly = (values: RecurringEventValues) => values.recurrence.repeat === 'weekly';
-const endsWith = (ends: SeriesEnd) => (values: RecurringEventValues) =>
-  repeats(values) && values.recurrence.ends === ends;
+export function getInitialValues(): RecurringEventValues {
+  return {
+    title: '',
+    description: '',
+    start: null,
+    end: null,
+    allDay: false,
+    timezone: getBrowserTimezone(),
+    location: '',
+    repeat: 'none',
+    interval: 1,
+    weekdays: [],
+    monthlyMode: 'dayOfMonth',
+    ends: 'never',
+    count: 10,
+    until: null,
+    exceptions: [],
+  };
+}
 
-export function getExceptionsError(exceptions: string[], values: RecurringEventValues) {
-  const rule = toRecurrenceRule(values.startDate, values.recurrence);
-  if (!rule) {
+const repeats = (values: RecurringEventValues) => values.repeat !== 'none';
+
+const isEndAfterStart = (end: string, values: RecurringEventValues) => {
+  if (!values.start) {
+    return true;
+  }
+  return values.allDay ? end.slice(0, 10) >= values.start.slice(0, 10) : end > values.start;
+};
+
+// Keys are in the order of the fields on screen: the first error key is the first invalid field
+export const recurringEventRules: FormRulesRecord<RecurringEventValues> = {
+  title: isNotEmpty('Enter a title'),
+  start: (value, values) =>
+    value ? null : values.allDay ? 'Enter a start date' : 'Enter a start date and time',
+  end: (value, values) => {
+    if (!value) {
+      return values.allDay ? 'Enter an end date' : 'Enter an end date and time';
+    }
+    return isEndAfterStart(value, values) ? null : 'End must be after the start';
+  },
+  timezone: isNotEmpty('Pick a timezone'),
+  interval: when(repeats, isInRange({ min: 1, max: 99 }, 'Enter a number from 1 to 99')),
+  weekdays: when((values) => values.repeat === 'weekly', isNotEmpty('Pick at least one day')),
+  count: when(
+    (values) => repeats(values) && values.ends === 'after',
+    isInRange({ min: 1, max: 500 }, 'Enter a number from 1 to 500')
+  ),
+  until: when(
+    (values) => repeats(values) && values.ends === 'on',
+    (value, values) =>
+      value && (!values.start || value > values.start.slice(0, 10))
+        ? null
+        : 'Enter a date after the start date'
+  ),
+  exceptions: when(repeats, (value, values) => {
+    if (new Set(value).size !== value.length) {
+      return 'Each date can be skipped only once';
+    }
+    const rule = getRule(values);
+    if (rule && value.some((date) => !isInSeries(rule, date))) {
+      return 'Skipped dates must be dates of the series';
+    }
     return null;
-  }
-  const duplicate = exceptions.find((date, index) => exceptions.indexOf(date) !== index);
-  if (duplicate) {
-    return `${formatDate(duplicate)} is already skipped`;
-  }
-  const outside = exceptions.find((date) => !isOccurrence(rule, date));
-  return outside ? `${formatDate(outside)} is not in the series` : null;
-}
-
-export const rules: FormRulesRecord<RecurringEventValues> = {
-  title: isNotEmpty('Title is required'),
-  startDate: isNotEmpty('Start date is required'),
-  startTime: when(isTimed, isNotEmpty('Start time is required')),
-  endDate: (value, values) => {
-    if (!value) {
-      return 'End date is required';
-    }
-    return values.startDate && value < values.startDate ? 'End must be after the start' : null;
-  },
-  endTime: when(isTimed, (value: string, values: RecurringEventValues) => {
-    if (!value) {
-      return 'End time is required';
-    }
-    const sameDay = values.endDate === values.startDate;
-    return sameDay && values.startTime && value <= values.startTime
-      ? 'End must be after the start'
-      : null;
   }),
-  timezone: isNotEmpty('Timezone is required'),
-  recurrence: {
-    interval: when(repeats, isInRange({ min: 1, max: 99 }, 'Enter a number from 1 to 99')),
-    weekdays: when(repeatsWeekly, isNotEmpty('Pick at least one day')),
-    count: when(endsWith('after'), isInRange({ min: 1, max: 500 }, 'Enter a number from 1 to 500')),
-    until: when(endsWith('on'), (value: string | null, values: RecurringEventValues) => {
-      if (!value) {
-        return 'Series end date is required';
-      }
-      return values.startDate && value <= values.startDate ? 'Must be after the start date' : null;
-    }),
-  },
-  exceptions: when(repeats, getExceptionsError),
 };

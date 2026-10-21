@@ -1,26 +1,23 @@
-import { Group, Radio } from '@mantine/core';
-import { describeDayOfMonth, describeWeekdayOfMonth } from '../recurrence';
+import dayjs from 'dayjs';
+import { Radio, Stack } from '@mantine/core';
+import { formatWeekdayOfMonth } from '../payload';
 import type { RecurringEventFormType } from '../types';
 
-interface MonthlyOptionsProps {
-  form: RecurringEventFormType;
-}
-
-export function MonthlyOptions({ form }: MonthlyOptionsProps) {
-  const startDate = form.useWatchValue('startDate');
+export function MonthlyOptions({ form }: { form: RecurringEventFormType }) {
+  const start = form.useWatchValue('start');
 
   return (
-    <Radio.Group label="Repeat on" {...form.getInputProps('recurrence.monthlyOn')}>
-      <Group mt="xs">
+    <Radio.Group label="Repeat on" {...form.getInputProps('monthlyMode')}>
+      <Stack gap="xs" mt="xs">
         <Radio
           value="dayOfMonth"
-          label={startDate ? describeDayOfMonth(startDate) : 'On the same day of the month'}
+          label={start ? `Day ${dayjs(start).date()} of the month` : 'The same day of the month'}
         />
         <Radio
           value="weekdayOfMonth"
-          label={startDate ? describeWeekdayOfMonth(startDate) : 'On the same weekday of the month'}
+          label={start ? `The ${formatWeekdayOfMonth(start)}` : 'The same weekday of the month'}
         />
-      </Group>
+      </Stack>
     </Radio.Group>
   );
 }

@@ -10,6 +10,14 @@
   rest while the request runs.
 - Button rows: `Group justify="flex-end"` for a form footer, `justify="space-between"` when a
   `Back` action sits on the left. The primary button is the last one.
+- **The submit button is never disabled.** A disabled button gives no reason and is skipped by
+  screen readers; submit validates and shows the errors instead. The only state change is
+  `loading` while the request runs. `disabled` is for actions that truly cannot run (no items
+  selected for a bulk action), with the reason visible next to it.
+- **Secondary actions sit where they act.** `Add position` / `Add another` goes directly under
+  the list it extends (left-aligned, `variant="default"`), never in the form footer; an action on
+  the whole list (`Remove all`, `Sort`) goes above the list; `Cancel` stays in the footer next to
+  the primary button, less prominent. The footer holds only actions on the whole form.
 - Label is a verb in sentence case: `Submit application`, `Send invitations`, not `SUBMIT` or
   `Ok`.
 

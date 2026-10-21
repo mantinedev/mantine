@@ -4,11 +4,10 @@ import { RecurringEventForm } from './RecurringEventForm';
 
 type User = ReturnType<typeof userEvent.setup>;
 
-const browserOptions = new Intl.DateTimeFormat().resolvedOptions();
-
 function mockBrowserTimezone(timeZone: string) {
+  const options = new Intl.DateTimeFormat().resolvedOptions();
   vi.spyOn(Intl.DateTimeFormat.prototype, 'resolvedOptions').mockReturnValue({
-    ...browserOptions,
+    ...options,
     timeZone,
   });
 }
@@ -24,35 +23,39 @@ function renderForm(onSubmit = vi.fn()) {
   return { user, onSubmit };
 }
 
-// The asterisk of a required label is part of the label text
-const field = (label: string) => screen.getByLabelText(new RegExp(`^${label}( \\*)?$`));
-const timezoneInput = () => screen.getByRole('combobox', { name: 'Timezone' });
-const dateButton = (label: string) => screen.getByRole('button', { name: new RegExp(`^${label}`) });
+const textbox = (name: string) => screen.getByRole('textbox', { name });
+const spinbutton = (name: string) => screen.getByRole('spinbutton', { name });
+const timezoneSelect = () => screen.getByRole('combobox', { name: 'Timezone' });
 
-async function pickDate(user: User, label: string, day: string) {
-  await user.click(dateButton(label));
-  const drawer = screen.getByRole('dialog');
-  await user.click(within(drawer).getByRole('button', { name: day }));
-  await user.click(within(drawer).getByRole('button', { name: 'Save' }));
+/** Types `DDMMYYYY` or `DDMMYYYYHHmm` into a masked date input, starting at its day field */
+async function typeDate(user: User, label: string, digits: string) {
+  await user.type(spinbutton(`${label} day`), digits);
 }
 
-async function typeTime(user: User, label: string, time: string) {
-  await user.clear(field(label));
-  await user.type(field(label), time);
+async function retype(user: User, name: string, digits: string) {
+  await user.click(spinbutton(name));
+  await user.keyboard(digits);
+}
+
+/** Error under a field, not its copy in the error summary */
+function inlineError(message: string) {
+  return screen.queryAllByText(message).find((element) => !element.closest('[role="alert"]'));
 }
 
 async function fillEvent(user: User) {
-  await user.type(field('Title'), 'Team sync');
-  await pickDate(user, 'Start date', '21 October 2026');
-  await typeTime(user, 'Start time', '09:00');
+  await user.type(textbox('Title'), 'Team sync');
+  // Wednesday, October 21, 2026, 10:00
+  await typeDate(user, 'Start', '211020261000');
 }
 
-async function chooseRepeat(user: User, repeat: string) {
-  await user.click(screen.getByRole('radio', { name: repeat }));
+async function chooseRepeat(user: User, name: string) {
+  await user.click(screen.getByRole('radio', { name }));
 }
 
-async function chooseSeriesEnd(user: User, option: string) {
-  await user.click(screen.getByRole('radio', { name: option }));
+async function skipDate(user: User, name: string) {
+  await user.click(screen.getByRole('button', { name: /Exceptions/ }));
+  await user.click(await screen.findByRole('button', { name }));
+  await user.click(screen.getByRole('button', { name: 'Save' }));
 }
 
 async function submit(user: User) {
@@ -66,57 +69,62 @@ function previewItems() {
 }
 
 beforeEach(() => {
-  vi.useFakeTimers({ toFake: ['Date'] });
-  vi.setSystemTime(new Date(2026, 9, 17, 12));
   mockBrowserTimezone('Europe/Berlin');
 });
 
 afterEach(() => {
-  vi.useRealTimers();
-  vi.restoreAllMocks();
   notifications.clean();
+  vi.restoreAllMocks();
 });
 
-describe('event fields', () => {
-  it('defaults the timezone to the browser timezone when it is in the list', () => {
+describe('event details', () => {
+  it('preselects the browser timezone when it is in the list', () => {
     renderForm();
-    expect(timezoneInput()).toHaveValue('Berlin');
+    expect(timezoneSelect()).toHaveValue('Berlin');
   });
 
-  it('defaults the timezone to UTC when the browser timezone is not in the list', () => {
-    mockBrowserTimezone('Europe/Moscow');
+  it('preselects UTC when the browser timezone is not in the list', () => {
+    vi.restoreAllMocks();
+    mockBrowserTimezone('America/Denver');
     renderForm();
-    expect(timezoneInput()).toHaveValue('UTC');
+    expect(timezoneSelect()).toHaveValue('UTC');
   });
 
-  it('sets the end to one hour after the start', async () => {
+  it('sets the end one hour after the start', async () => {
     const { user } = renderForm();
-    await fillEvent(user);
-    expect(dateButton('End date')).toHaveTextContent('October 21, 2026');
-    expect(field('End time')).toHaveValue('10:00');
+    await typeDate(user, 'Start', '211020261000');
+    expect(spinbutton('End day')).toHaveValue('21');
+    expect(spinbutton('End hours')).toHaveValue('11');
   });
 
-  it('moves the end with the start while the end was not edited', async () => {
+  it('moves the end with the start while the end is not edited', async () => {
     const { user } = renderForm();
-    await fillEvent(user);
-    await typeTime(user, 'Start time', '23:30');
-    expect(dateButton('End date')).toHaveTextContent('October 22, 2026');
-    expect(field('End time')).toHaveValue('00:30');
+    await typeDate(user, 'Start', '211020261000');
+    await retype(user, 'Start hours', '14');
+    expect(spinbutton('End hours')).toHaveValue('15');
   });
 
   it('keeps an edited end when the start changes', async () => {
     const { user } = renderForm();
-    await fillEvent(user);
-    await typeTime(user, 'End time', '12:00');
-    await typeTime(user, 'Start time', '10:00');
-    expect(field('End time')).toHaveValue('12:00');
+    await typeDate(user, 'Start', '211020261000');
+    await retype(user, 'End hours', '16');
+    await retype(user, 'Start hours', '12');
+    expect(spinbutton('End hours')).toHaveValue('16');
   });
 
-  it('hides the time inputs when All day is on', async () => {
+  it('hides the time parts when All day is on', async () => {
     const { user } = renderForm();
     await user.click(screen.getByRole('switch', { name: 'All day' }));
-    expect(screen.queryByLabelText('Start time')).not.toBeInTheDocument();
-    expect(screen.queryByLabelText('End time')).not.toBeInTheDocument();
+    expect(screen.queryByRole('spinbutton', { name: 'Start hours' })).not.toBeInTheDocument();
+    expect(screen.queryByRole('spinbutton', { name: 'End hours' })).not.toBeInTheDocument();
+  });
+
+  it('restores the times when All day is turned off', async () => {
+    const { user } = renderForm();
+    await typeDate(user, 'Start', '211020261000');
+    await user.click(screen.getByRole('switch', { name: 'All day' }));
+    await user.click(screen.getByRole('switch', { name: 'All day' }));
+    expect(spinbutton('Start hours')).toHaveValue('10');
   });
 });
 
@@ -124,416 +132,310 @@ describe('validation', () => {
   it('shows the required errors when submitted empty', async () => {
     const { user } = renderForm();
     await submit(user);
-    expect(screen.getByText('Title is required')).toBeInTheDocument();
-    expect(screen.getByText('Start date is required')).toBeInTheDocument();
-    expect(screen.getByText('Start time is required')).toBeInTheDocument();
-    expect(screen.getByText('End date is required')).toBeInTheDocument();
-    expect(screen.getByText('End time is required')).toBeInTheDocument();
+    expect(inlineError('Enter a title')).toBeInTheDocument();
+    expect(inlineError('Enter a start date and time')).toBeInTheDocument();
+    expect(inlineError('Enter an end date and time')).toBeInTheDocument();
   });
 
-  it('focuses the title when submitted empty', async () => {
+  it('focuses the first invalid field', async () => {
     const { user } = renderForm();
     await submit(user);
-    expect(field('Title')).toHaveFocus();
+    expect(textbox('Title')).toHaveFocus();
   });
 
-  it('requires a timezone', async () => {
+  it('focuses the start when the title is filled', async () => {
     const { user } = renderForm();
-    await fillEvent(user);
-    await user.click(timezoneInput());
-    await user.click(screen.getByRole('option', { name: 'Berlin' }));
+    await user.type(textbox('Title'), 'Team sync');
     await submit(user);
-    expect(screen.getByText('Timezone is required')).toBeInTheDocument();
+    expect(spinbutton('Start day')).toHaveFocus();
   });
 
-  it('rejects an end time before the start time on the same day', async () => {
+  it('rejects an end earlier on the same day as the start', async () => {
     const { user } = renderForm();
     await fillEvent(user);
-    await typeTime(user, 'End time', '08:00');
+    await retype(user, 'End hours', '09');
     await submit(user);
-    expect(screen.getByText('End must be after the start')).toBeInTheDocument();
-    expect(field('End time')).toHaveFocus();
+    expect(inlineError('End must be after the start')).toBeInTheDocument();
   });
 
-  it('accepts an earlier end time when the end is on a later day', async () => {
+  it('accepts an end at an earlier time on a later day', async () => {
     const { user, onSubmit } = renderForm();
     await fillEvent(user);
-    await pickDate(user, 'End date', '22 October 2026');
-    await typeTime(user, 'End time', '08:00');
+    await retype(user, 'End day', '22');
+    await retype(user, 'End hours', '09');
     await submit(user);
-    expect(onSubmit).toHaveBeenCalled();
+    expect(onSubmit).toHaveBeenCalledTimes(1);
   });
 
-  it('rejects an end date before the start date', async () => {
+  it('rejects an all-day end date before the start date', async () => {
     const { user } = renderForm();
     await fillEvent(user);
-    await pickDate(user, 'End date', '23 October 2026');
-    await pickDate(user, 'Start date', '25 October 2026');
-    await submit(user);
-    expect(screen.getByText('End must be after the start')).toBeInTheDocument();
-    expect(dateButton('End date')).toHaveFocus();
-  });
-
-  it('accepts an all-day event that starts and ends on the same day', async () => {
-    const { user, onSubmit } = renderForm();
     await user.click(screen.getByRole('switch', { name: 'All day' }));
-    await user.type(field('Title'), 'Offsite');
-    await pickDate(user, 'Start date', '21 October 2026');
+    await retype(user, 'End day', '20');
     await submit(user);
-    expect(onSubmit).toHaveBeenCalled();
+    expect(inlineError('End must be after the start')).toBeInTheDocument();
   });
 
-  it('clears the time errors when All day is turned on', async () => {
+  it('removes the error when the field is fixed', async () => {
     const { user } = renderForm();
     await submit(user);
-    await user.click(screen.getByRole('switch', { name: 'All day' }));
-    expect(screen.queryByText('Start time is required')).not.toBeInTheDocument();
+    await user.type(textbox('Title'), 'Team sync');
+    expect(inlineError('Enter a title')).toBeUndefined();
   });
 
-  it('clears the title error when a title is typed', async () => {
+  it('lists the errors in a summary above the form', async () => {
     const { user } = renderForm();
     await submit(user);
-    await user.type(field('Title'), 'Team sync');
-    expect(screen.queryByText('Title is required')).not.toBeInTheDocument();
+    const summary = screen.getByRole('alert', { name: 'There is a problem' });
+    expect(within(summary).getByRole('button', { name: 'Enter a title' })).toBeInTheDocument();
+    expect(
+      within(summary).getByRole('button', { name: 'Enter a start date and time' })
+    ).toBeInTheDocument();
   });
 
-  it('rejects an interval above 99', async () => {
+  it('focuses a field from its entry in the error summary', async () => {
     const { user } = renderForm();
-    await fillEvent(user);
-    await chooseRepeat(user, 'Daily');
-    await user.clear(field('Repeat every'));
-    await user.type(field('Repeat every'), '100');
     await submit(user);
-    expect(screen.getByText('Enter a number from 1 to 99')).toBeInTheDocument();
-    expect(field('Repeat every')).toHaveFocus();
+    const summary = screen.getByRole('alert', { name: 'There is a problem' });
+    await user.click(within(summary).getByRole('button', { name: 'Enter an end date and time' }));
+    expect(spinbutton('End day')).toHaveFocus();
+  });
+});
+
+describe('repeat', () => {
+  it('shows no recurrence fields when the event does not repeat', () => {
+    renderForm();
+    expect(screen.queryByRole('textbox', { name: 'Repeat every' })).not.toBeInTheDocument();
+    expect(screen.queryByRole('radiogroup', { name: 'Ends' })).not.toBeInTheDocument();
+    expect(screen.queryByRole('button', { name: /Exceptions/ })).not.toBeInTheDocument();
+  });
+
+  it('shows the interval with the unit of the selected repeat', async () => {
+    const { user } = renderForm();
+    await chooseRepeat(user, 'Monthly');
+    expect(textbox('Repeat every')).toHaveValue('1');
+    expect(screen.getByText('months')).toBeInTheDocument();
   });
 
   it('rejects an empty interval', async () => {
     const { user } = renderForm();
     await fillEvent(user);
     await chooseRepeat(user, 'Daily');
-    await user.clear(field('Repeat every'));
+    await user.clear(textbox('Repeat every'));
     await submit(user);
-    expect(screen.getByText('Enter a number from 1 to 99')).toBeInTheDocument();
+    expect(inlineError('Enter a number from 1 to 99')).toBeInTheDocument();
   });
 
-  it('requires at least one weekday for a weekly event', async () => {
+  it('does not accept an interval above 99', async () => {
     const { user } = renderForm();
-    await fillEvent(user);
-    await chooseRepeat(user, 'Weekly');
-    await user.click(screen.getByRole('checkbox', { name: 'Wed' }));
-    await submit(user);
-    expect(screen.getByText('Pick at least one day')).toBeInTheDocument();
-    expect(screen.getByRole('checkbox', { name: 'Mon' })).toHaveFocus();
-  });
-
-  it('rejects an occurrences count above 500', async () => {
-    const { user } = renderForm();
-    await fillEvent(user);
     await chooseRepeat(user, 'Daily');
-    await chooseSeriesEnd(user, 'After a number of occurrences');
-    await user.clear(field('Occurrences'));
-    await user.type(field('Occurrences'), '501');
-    await submit(user);
-    expect(screen.getByText('Enter a number from 1 to 500')).toBeInTheDocument();
+    await user.clear(textbox('Repeat every'));
+    await user.type(textbox('Repeat every'), '150');
+    expect(textbox('Repeat every')).toHaveValue('15');
   });
 
-  it('requires a series end date when the series ends on a date', async () => {
-    const { user } = renderForm();
-    await fillEvent(user);
-    await chooseRepeat(user, 'Daily');
-    await chooseSeriesEnd(user, 'On a date');
-    await submit(user);
-    expect(screen.getByText('Series end date is required')).toBeInTheDocument();
-  });
-
-  it('rejects a series end date that is not after the start date', async () => {
-    const { user } = renderForm();
-    await fillEvent(user);
-    await chooseRepeat(user, 'Daily');
-    await chooseSeriesEnd(user, 'On a date');
-    await pickDate(user, 'Series end date', '24 October 2026');
-    await pickDate(user, 'End date', '26 October 2026');
-    await pickDate(user, 'Start date', '26 October 2026');
-    await submit(user);
-    expect(screen.getByText('Must be after the start date')).toBeInTheDocument();
-  });
-
-  it('does not validate the hidden recurrence fields', async () => {
-    const { user, onSubmit } = renderForm();
-    await fillEvent(user);
-    await chooseRepeat(user, 'Daily');
-    await user.clear(field('Repeat every'));
-    await chooseRepeat(user, 'Does not repeat');
-    await submit(user);
-    expect(onSubmit).toHaveBeenCalled();
-  });
-});
-
-describe('recurrence fields', () => {
-  it('shows no recurrence fields when the event does not repeat', () => {
-    renderForm();
-    expect(screen.queryByLabelText('Repeat every')).not.toBeInTheDocument();
-    expect(screen.queryByRole('radiogroup', { name: 'Ends' })).not.toBeInTheDocument();
-  });
-
-  it('shows the interval unit of the selected repeat', async () => {
-    const { user } = renderForm();
-    await chooseRepeat(user, 'Monthly');
-    await user.clear(field('Repeat every'));
-    await user.type(field('Repeat every'), '3');
-    expect(screen.getByText('months')).toBeInTheDocument();
-  });
-
-  it('defaults the weekly days to the weekday of the start date', async () => {
+  it('preselects the weekday of the start for weekly events', async () => {
     const { user } = renderForm();
     await fillEvent(user);
     await chooseRepeat(user, 'Weekly');
     expect(screen.getByRole('checkbox', { name: 'Wed' })).toBeChecked();
   });
 
-  it('follows the start date with the default weekday', async () => {
+  it('requires at least one weekday', async () => {
     const { user } = renderForm();
     await fillEvent(user);
     await chooseRepeat(user, 'Weekly');
-    await pickDate(user, 'Start date', '23 October 2026');
-    expect(screen.getByRole('checkbox', { name: 'Fri' })).toBeChecked();
-    expect(screen.getByRole('checkbox', { name: 'Wed' })).not.toBeChecked();
+    await user.click(screen.getByRole('checkbox', { name: 'Wed' }));
+    await submit(user);
+    expect(inlineError('Pick at least one day')).toBeInTheDocument();
   });
 
-  it('shows the weekdays only for a weekly event', async () => {
-    const { user } = renderForm();
-    await chooseRepeat(user, 'Daily');
-    expect(screen.queryByRole('checkbox', { name: 'Mon' })).not.toBeInTheDocument();
-  });
-
-  it('derives the monthly options from the start date', async () => {
+  it('offers the day and the weekday of the start for monthly events', async () => {
     const { user } = renderForm();
     await fillEvent(user);
     await chooseRepeat(user, 'Monthly');
-    expect(screen.getByRole('radio', { name: 'On day 21' })).toBeChecked();
-    expect(screen.getByRole('radio', { name: 'On the third Wednesday' })).toBeInTheDocument();
+    expect(screen.getByRole('radio', { name: 'Day 21 of the month' })).toBeChecked();
+    expect(screen.getByRole('radio', { name: 'The third Wednesday' })).toBeInTheDocument();
   });
 
-  it('shows the occurrences input only when the series ends after a number of occurrences', async () => {
+  it('hides the weekdays when another repeat is selected', async () => {
     const { user } = renderForm();
+    await chooseRepeat(user, 'Weekly');
     await chooseRepeat(user, 'Daily');
-    expect(screen.queryByLabelText('Occurrences')).not.toBeInTheDocument();
-    await chooseSeriesEnd(user, 'After a number of occurrences');
-    expect(field('Occurrences')).toHaveValue('10');
+    expect(screen.queryByRole('checkbox', { name: 'Wed' })).not.toBeInTheDocument();
+  });
+});
+
+describe('series end', () => {
+  it('rejects an empty number of occurrences', async () => {
+    const { user } = renderForm();
+    await fillEvent(user);
+    await chooseRepeat(user, 'Daily');
+    await user.click(screen.getByRole('radio', { name: 'After a number of occurrences' }));
+    await user.clear(textbox('Occurrences'));
+    await submit(user);
+    expect(inlineError('Enter a number from 1 to 500')).toBeInTheDocument();
+  });
+
+  it('rejects an end date that is not after the start date', async () => {
+    const { user } = renderForm();
+    await fillEvent(user);
+    await chooseRepeat(user, 'Daily');
+    await user.click(screen.getByRole('radio', { name: 'On a date' }));
+    await typeDate(user, 'Ends on', '21102026');
+    await submit(user);
+    expect(inlineError('Enter a date after the start date')).toBeInTheDocument();
   });
 });
 
 describe('preview', () => {
-  it('shows the single occurrence of an event that does not repeat', async () => {
-    const { user } = renderForm();
-    await fillEvent(user);
-    expect(previewItems()).toEqual(['Wed, October 21, 2026, 09:00']);
-  });
-
-  it('shows No occurrences without a start date', () => {
-    renderForm();
-    expect(screen.getByText('No occurrences')).toBeInTheDocument();
-  });
-
-  it('lists the next 5 occurrences of a daily event with an interval', async () => {
-    const { user } = renderForm();
-    await fillEvent(user);
-    await chooseRepeat(user, 'Daily');
-    await user.clear(field('Repeat every'));
-    await user.type(field('Repeat every'), '2');
-    expect(previewItems()).toEqual([
-      'Wed, October 21, 2026, 09:00',
-      'Fri, October 23, 2026, 09:00',
-      'Sun, October 25, 2026, 09:00',
-      'Tue, October 27, 2026, 09:00',
-      'Thu, October 29, 2026, 09:00',
-    ]);
-  });
-
-  it('lists weekly occurrences on every selected weekday', async () => {
+  it('shows the next five occurrences', async () => {
     const { user } = renderForm();
     await fillEvent(user);
     await chooseRepeat(user, 'Weekly');
-    await user.click(screen.getByRole('checkbox', { name: 'Mon' }));
     expect(previewItems()).toEqual([
-      'Wed, October 21, 2026, 09:00',
-      'Mon, October 26, 2026, 09:00',
-      'Wed, October 28, 2026, 09:00',
-      'Mon, November 2, 2026, 09:00',
-      'Wed, November 4, 2026, 09:00',
+      'Wed, Oct 21, 2026, 10:00',
+      'Wed, Oct 28, 2026, 10:00',
+      'Wed, Nov 4, 2026, 10:00',
+      'Wed, Nov 11, 2026, 10:00',
+      'Wed, Nov 18, 2026, 10:00',
     ]);
   });
 
-  it('lists monthly occurrences on the same weekday of the month', async () => {
+  it('follows the interval and the weekday of the month', async () => {
     const { user } = renderForm();
     await fillEvent(user);
     await chooseRepeat(user, 'Monthly');
-    await user.click(screen.getByRole('radio', { name: 'On the third Wednesday' }));
+    await user.click(screen.getByRole('radio', { name: 'The third Wednesday' }));
+    await user.clear(textbox('Repeat every'));
+    await user.type(textbox('Repeat every'), '2');
     expect(previewItems()).toEqual([
-      'Wed, October 21, 2026, 09:00',
-      'Wed, November 18, 2026, 09:00',
-      'Wed, December 16, 2026, 09:00',
-      'Wed, January 20, 2027, 09:00',
-      'Wed, February 17, 2027, 09:00',
+      'Wed, Oct 21, 2026, 10:00',
+      'Wed, Dec 16, 2026, 10:00',
+      'Wed, Feb 17, 2027, 10:00',
+      'Wed, Apr 21, 2027, 10:00',
+      'Wed, Jun 16, 2027, 10:00',
     ]);
-  });
-
-  it('lists yearly occurrences', async () => {
-    const { user } = renderForm();
-    await fillEvent(user);
-    await chooseRepeat(user, 'Yearly');
-    expect(previewItems()[1]).toBe('Thu, October 21, 2027, 09:00');
   });
 
   it('stops after the number of occurrences', async () => {
     const { user } = renderForm();
     await fillEvent(user);
     await chooseRepeat(user, 'Daily');
-    await chooseSeriesEnd(user, 'After a number of occurrences');
-    await user.clear(field('Occurrences'));
-    await user.type(field('Occurrences'), '2');
-    expect(previewItems()).toEqual([
-      'Wed, October 21, 2026, 09:00',
-      'Thu, October 22, 2026, 09:00',
-    ]);
+    await user.click(screen.getByRole('radio', { name: 'After a number of occurrences' }));
+    await user.clear(textbox('Occurrences'));
+    await user.type(textbox('Occurrences'), '2');
+    expect(previewItems()).toEqual(['Wed, Oct 21, 2026, 10:00', 'Thu, Oct 22, 2026, 10:00']);
   });
 
-  it('shows dates without time for an all-day event', async () => {
+  it('leaves out skipped dates', async () => {
     const { user } = renderForm();
     await fillEvent(user);
-    await user.click(screen.getByRole('switch', { name: 'All day' }));
-    expect(previewItems()).toEqual(['Wed, October 21, 2026']);
+    await chooseRepeat(user, 'Weekly');
+    await skipDate(user, '28 October 2026');
+    expect(previewItems()).not.toContain('Wed, Oct 28, 2026, 10:00');
   });
 
-  it('shows No occurrences when every occurrence is skipped', async () => {
+  it('shows No occurrences when the rule produces none', async () => {
     const { user } = renderForm();
     await fillEvent(user);
-    await chooseRepeat(user, 'Daily');
-    await chooseSeriesEnd(user, 'After a number of occurrences');
-    await user.clear(field('Occurrences'));
-    await user.type(field('Occurrences'), '1');
-    await pickDate(user, 'Exceptions', '21 October 2026');
+    await chooseRepeat(user, 'Weekly');
+    await user.click(screen.getByRole('checkbox', { name: 'Wed' }));
     expect(screen.getByText('No occurrences')).toBeInTheDocument();
   });
 });
 
 describe('exceptions', () => {
-  it('adds a picked date to the skipped dates', async () => {
+  it('shows a skipped date as a pill', async () => {
     const { user } = renderForm();
     await fillEvent(user);
-    await chooseRepeat(user, 'Daily');
-    await pickDate(user, 'Exceptions', '22 October 2026');
-    const list = screen.getByRole('list', { name: 'Skipped dates' });
-    expect(within(list).getByText('October 22, 2026')).toBeInTheDocument();
-  });
-
-  it('leaves a skipped date out of the preview', async () => {
-    const { user } = renderForm();
-    await fillEvent(user);
-    await chooseRepeat(user, 'Daily');
-    await pickDate(user, 'Exceptions', '22 October 2026');
-    expect(previewItems()).not.toContain('Thu, October 22, 2026, 09:00');
+    await chooseRepeat(user, 'Weekly');
+    await skipDate(user, '28 October 2026');
+    expect(screen.getByText('Wed, Oct 28, 2026')).toBeInTheDocument();
   });
 
   it('removes a skipped date', async () => {
     const { user } = renderForm();
     await fillEvent(user);
-    await chooseRepeat(user, 'Daily');
-    await pickDate(user, 'Exceptions', '22 October 2026');
-    await user.click(screen.getByRole('button', { name: 'Remove October 22, 2026' }));
-    expect(screen.queryByRole('list', { name: 'Skipped dates' })).not.toBeInTheDocument();
+    await chooseRepeat(user, 'Weekly');
+    await skipDate(user, '28 October 2026');
+    await user.click(screen.getByLabelText('Remove Wed, Oct 28, 2026'));
+    expect(screen.queryByText('Wed, Oct 28, 2026')).not.toBeInTheDocument();
   });
 
-  it('rejects a date that is already skipped', async () => {
-    const { user } = renderForm();
-    await fillEvent(user);
-    await chooseRepeat(user, 'Daily');
-    await pickDate(user, 'Exceptions', '22 October 2026');
-    await pickDate(user, 'Exceptions', '22 October 2026');
-    expect(screen.getByText('October 22, 2026 is already skipped')).toBeInTheDocument();
-    expect(
-      within(screen.getByRole('list', { name: 'Skipped dates' })).getAllByRole('listitem')
-    ).toHaveLength(1);
-  });
-
-  it('disables the days that are not in the series', async () => {
+  it('offers only dates of the series', async () => {
     const { user } = renderForm();
     await fillEvent(user);
     await chooseRepeat(user, 'Weekly');
-    await user.click(dateButton('Exceptions'));
-    expect(screen.getByRole('button', { name: '22 October 2026' })).toBeDisabled();
+    await user.click(screen.getByRole('button', { name: /Exceptions/ }));
+    expect(await screen.findByRole('button', { name: '29 October 2026' })).toBeDisabled();
   });
 
-  it('rejects a skipped date that is no longer in the series', async () => {
+  it('does not offer a date that is already skipped', async () => {
     const { user } = renderForm();
     await fillEvent(user);
-    await chooseRepeat(user, 'Daily');
-    await pickDate(user, 'Exceptions', '22 October 2026');
     await chooseRepeat(user, 'Weekly');
+    await skipDate(user, '28 October 2026');
+    await user.click(screen.getByRole('button', { name: /Exceptions/ }));
+    expect(await screen.findByRole('button', { name: '28 October 2026' })).toBeDisabled();
+  });
+
+  it('rejects a skipped date that left the series after the rule changed', async () => {
+    const { user } = renderForm();
+    await fillEvent(user);
+    await chooseRepeat(user, 'Weekly');
+    await skipDate(user, '28 October 2026');
+    await user.click(screen.getByRole('checkbox', { name: 'Thu' }));
+    await user.click(screen.getByRole('checkbox', { name: 'Wed' }));
     await submit(user);
-    expect(screen.getByText('October 22, 2026 is not in the series')).toBeInTheDocument();
+    expect(inlineError('Skipped dates must be dates of the series')).toBeInTheDocument();
   });
 });
 
 describe('submit', () => {
-  it('submits a weekly event with only the weekly recurrence fields', async () => {
+  it('submits a weekly event with only the fields that apply', async () => {
     const { user, onSubmit } = renderForm();
     await fillEvent(user);
-    await user.type(field('Description'), 'Weekly planning');
-    await user.type(field('Location'), 'Room 4');
+    await user.type(textbox('Location'), 'Room 4');
     await chooseRepeat(user, 'Weekly');
-    await user.click(screen.getByRole('checkbox', { name: 'Mon' }));
-    await chooseSeriesEnd(user, 'After a number of occurrences');
-    await pickDate(user, 'Exceptions', '26 October 2026');
+    await user.click(screen.getByRole('checkbox', { name: 'Fri' }));
+    await user.click(screen.getByRole('radio', { name: 'After a number of occurrences' }));
+    await skipDate(user, '28 October 2026');
     await submit(user);
     expect(onSubmit).toHaveBeenCalledWith({
       title: 'Team sync',
-      description: 'Weekly planning',
-      start: '2026-10-21T09:00:00+02:00',
-      end: '2026-10-21T10:00:00+02:00',
+      description: '',
+      start: '2026-10-21T10:00:00+02:00',
+      end: '2026-10-21T11:00:00+02:00',
       allDay: false,
       timezone: 'Europe/Berlin',
       location: 'Room 4',
       recurrence: {
-        repeat: 'weekly',
+        frequency: 'weekly',
         interval: 1,
-        weekdays: ['MO', 'WE'],
+        weekdays: ['WE', 'FR'],
         ends: { type: 'after', count: 10 },
       },
-      exceptions: ['2026-10-26'],
+      exceptions: ['2026-10-28'],
     });
   });
 
-  it('submits a monthly event with the monthly option and the series end date', async () => {
+  it('submits the start and end in the selected timezone', async () => {
     const { user, onSubmit } = renderForm();
     await fillEvent(user);
-    await chooseRepeat(user, 'Monthly');
-    await user.click(screen.getByRole('radio', { name: 'On the third Wednesday' }));
-    await chooseSeriesEnd(user, 'On a date');
-    await pickDate(user, 'Series end date', '31 October 2026');
-    await submit(user);
-    expect(onSubmit.mock.calls[0][0].recurrence).toEqual({
-      repeat: 'monthly',
-      interval: 1,
-      monthlyOn: 'weekdayOfMonth',
-      ends: { type: 'on', date: '2026-10-31' },
-    });
-  });
-
-  it('submits no recurrence and no exceptions when the event does not repeat', async () => {
-    const { user, onSubmit } = renderForm();
-    await fillEvent(user);
-    await chooseRepeat(user, 'Daily');
-    await pickDate(user, 'Exceptions', '22 October 2026');
-    await chooseRepeat(user, 'Does not repeat');
+    await user.click(timezoneSelect());
+    await user.click(screen.getByRole('option', { name: 'Tokyo' }));
     await submit(user);
     expect(onSubmit).toHaveBeenCalledWith(
-      expect.objectContaining({ recurrence: null, exceptions: [] })
+      expect.objectContaining({
+        start: '2026-10-21T10:00:00+09:00',
+        end: '2026-10-21T11:00:00+09:00',
+        timezone: 'Asia/Tokyo',
+      })
     );
   });
 
-  it('submits dates without time for an all-day event', async () => {
+  it('submits dates without times for an all-day event', async () => {
     const { user, onSubmit } = renderForm();
     await fillEvent(user);
     await user.click(screen.getByRole('switch', { name: 'All day' }));
@@ -543,12 +445,53 @@ describe('submit', () => {
     );
   });
 
+  it('submits the weekday of the month for a monthly event', async () => {
+    const { user, onSubmit } = renderForm();
+    await fillEvent(user);
+    await chooseRepeat(user, 'Monthly');
+    await user.click(screen.getByRole('radio', { name: 'The third Wednesday' }));
+    await user.click(screen.getByRole('radio', { name: 'On a date' }));
+    await typeDate(user, 'Ends on', '31122026');
+    await submit(user);
+    expect(onSubmit).toHaveBeenCalledWith(
+      expect.objectContaining({
+        recurrence: {
+          frequency: 'monthly',
+          interval: 1,
+          monthly: { type: 'weekdayOfMonth', week: 3, weekday: 'WE' },
+          ends: { type: 'on', date: '2026-12-31' },
+        },
+      })
+    );
+  });
+
+  it('leaves out the recurrence of an event that does not repeat', async () => {
+    const { user, onSubmit } = renderForm();
+    await fillEvent(user);
+    await chooseRepeat(user, 'Weekly');
+    await skipDate(user, '28 October 2026');
+    await chooseRepeat(user, 'Does not repeat');
+    await submit(user);
+    expect(onSubmit).toHaveBeenCalledWith(
+      expect.objectContaining({ recurrence: null, exceptions: [] })
+    );
+  });
+
   it('shows a notification with the title and the first occurrence', async () => {
     const { user } = renderForm();
     await fillEvent(user);
     await submit(user);
     expect(await screen.findByText('Event created')).toBeInTheDocument();
-    expect(screen.getByText('Team sync · Wed, October 21, 2026, 09:00')).toBeInTheDocument();
+    expect(screen.getByText('Team sync · Wed, Oct 21, 2026, 10:00')).toBeInTheDocument();
+  });
+
+  it('names the first date that is not skipped in the notification', async () => {
+    const { user } = renderForm();
+    await fillEvent(user);
+    await chooseRepeat(user, 'Weekly');
+    await skipDate(user, '21 October 2026');
+    await submit(user);
+    expect(await screen.findByText('Team sync · Wed, Oct 28, 2026, 10:00')).toBeInTheDocument();
   });
 
   it('shows the event JSON under the form', async () => {
@@ -562,6 +505,6 @@ describe('submit', () => {
     const { user } = renderForm();
     await fillEvent(user);
     await submit(user);
-    expect(field('Title')).toHaveValue('Team sync');
+    expect(textbox('Title')).toHaveValue('Team sync');
   });
 });

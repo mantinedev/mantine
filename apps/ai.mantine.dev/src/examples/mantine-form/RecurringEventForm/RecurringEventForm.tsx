@@ -1,102 +1,87 @@
 import { useState } from 'react';
-import { Button, Code, Group, Stack, Textarea, TextInput, Title } from '@mantine/core';
+import { Button, Code, Fieldset, Group, Stack, Text } from '@mantine/core';
 import { useForm, type FormErrors } from '@mantine/form';
 import { notifications } from '@mantine/notifications';
+import { ErrorSummary } from './ErrorSummary';
+import { EventFields } from './EventFields';
+import { ExceptionsField } from './ExceptionsField';
 import { OccurrencePreview } from './OccurrencePreview';
-import { toEventPayload } from './payload';
-import { formatOccurrence, getOccurrences, toRecurrenceRule } from './recurrence';
-import { RecurrenceFields } from './RecurrenceFields';
-import { ScheduleFields } from './ScheduleFields';
-import type { EventPayload, RecurringEventValues } from './types';
+import { formatOccurrence, toPayload } from './payload';
+import { getOccurrences, getRule } from './recurrence';
+import { RepeatFields } from './RepeatFields';
+import { SeriesEndFields } from './SeriesEndFields';
+import type { RecurringEventPayload, RecurringEventValues } from './types';
 import { useDependentFields } from './useDependentFields';
-import { getDefaultTimezone, rules } from './validation';
+import { getInitialValues, recurringEventRules } from './validation';
+
+function getFirstOccurrence(values: RecurringEventValues) {
+  const rule = getRule(values);
+  const [first] = rule
+    ? getOccurrences(rule, {
+        exceptions: rule.repeat === 'none' ? [] : values.exceptions,
+        limit: 1,
+      })
+    : [];
+  return first ? formatOccurrence(first, values.start ?? '', values.allDay) : 'No occurrences';
+}
 
 interface RecurringEventFormProps {
-  onSubmit?: (event: EventPayload) => void;
+  onSubmit?: (payload: RecurringEventPayload) => void;
 }
 
 export function RecurringEventForm({ onSubmit }: RecurringEventFormProps) {
-  const [submitted, setSubmitted] = useState<EventPayload | null>(null);
+  const [submitted, setSubmitted] = useState<RecurringEventPayload | null>(null);
+  const [showSummary, setShowSummary] = useState(false);
 
-  const form = useForm<RecurringEventValues, EventPayload>({
+  const form = useForm<RecurringEventValues, RecurringEventPayload>({
     name: 'recurring-event',
-    initialValues: {
-      title: '',
-      description: '',
-      allDay: false,
-      startDate: null,
-      startTime: '',
-      endDate: null,
-      endTime: '',
-      timezone: getDefaultTimezone(),
-      location: '',
-      recurrence: {
-        repeat: 'none',
-        interval: 1,
-        weekdays: [],
-        monthlyOn: 'dayOfMonth',
-        ends: 'never',
-        count: 10,
-        until: null,
-      },
-      exceptions: [],
-    },
-    validate: rules,
-    transformValues: toEventPayload,
+    initialValues: getInitialValues(),
+    validate: recurringEventRules,
+    transformValues: toPayload,
   });
 
   useDependentFields(form);
+  const repeat = form.useWatchValue('repeat');
 
-  const handleSubmit = (event: EventPayload) => {
-    const values = form.getValues();
-    const rule = toRecurrenceRule(values.startDate, values.recurrence);
-    const [first] = rule ? getOccurrences(rule, values.exceptions, 1) : [];
-    const when = first
-      ? formatOccurrence(first, values.allDay ? null : values.startTime)
-      : 'No occurrences';
-
-    notifications.show({ title: 'Event created', message: `${event.title} · ${when}` });
-    setSubmitted(event);
-    onSubmit?.(event);
+  // Radio and checkbox groups and the masked date inputs put data-path on a wrapper
+  const focusField = (path: string) => {
+    const node = form.getInputNode(path);
+    (node?.querySelector('input') ?? node)?.focus();
   };
 
-  // Radio and checkbox groups put data-path on their wrapper: focus the first input inside
+  const handleSubmit = (payload: RecurringEventPayload) => {
+    setShowSummary(false);
+    setSubmitted(payload);
+    notifications.show({
+      title: 'Event created',
+      message: `${payload.title} · ${getFirstOccurrence(form.getValues())}`,
+    });
+    onSubmit?.(payload);
+  };
+
   const handleErrors = (errors: FormErrors) => {
-    const node = form.getInputNode(Object.keys(errors)[0]);
-    (node?.querySelector('input') ?? node)?.focus();
+    setShowSummary(true);
+    focusField(Object.keys(errors)[0]);
   };
 
   return (
     <Stack gap="xl">
       <form onSubmit={form.onSubmit(handleSubmit, handleErrors)} noValidate>
         <Stack>
-          <Title order={4}>Event</Title>
-          <TextInput
-            label="Title"
-            placeholder="Title"
-            withAsterisk
-            {...form.getInputProps('title')}
-          />
-          <Textarea
-            label="Description"
-            placeholder="What the event is about"
-            autosize
-            minRows={3}
-            maxRows={8}
-            {...form.getInputProps('description')}
-          />
-          <ScheduleFields form={form} />
-          <TextInput
-            label="Location"
-            placeholder="Room, address or meeting link"
-            {...form.getInputProps('location')}
-          />
+          {showSummary && <ErrorSummary form={form} onFocusField={focusField} />}
 
-          <Title order={4} mt="md">
-            Recurrence
-          </Title>
-          <RecurrenceFields form={form} />
-          <OccurrencePreview form={form} />
+          <Fieldset legend="Event" radius="md">
+            <EventFields form={form} />
+          </Fieldset>
+
+          <Fieldset legend="Recurrence" radius="md">
+            <Stack>
+              <RepeatFields form={form} />
+              {repeat !== 'none' && <SeriesEndFields form={form} />}
+              {repeat !== 'none' && <ExceptionsField form={form} />}
+              <OccurrencePreview form={form} />
+            </Stack>
+          </Fieldset>
 
           <Group justify="flex-end">
             <Button type="submit">Create event</Button>
@@ -105,9 +90,14 @@ export function RecurringEventForm({ onSubmit }: RecurringEventFormProps) {
       </form>
 
       {submitted && (
-        <Code block aria-label="Submitted event">
-          {JSON.stringify(submitted, null, 2)}
-        </Code>
+        <div>
+          <Text size="sm" fw={500} mb={4}>
+            Submitted event
+          </Text>
+          <Code block aria-label="Submitted event">
+            {JSON.stringify(submitted, null, 2)}
+          </Code>
+        </div>
       )}
     </Stack>
   );

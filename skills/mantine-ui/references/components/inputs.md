@@ -12,8 +12,8 @@ Pick the component made for the data. A plain `TextInput` is for free text only.
 | Date, date range | `DateInput` (typed), `DatePickerInput` (picked), `type="range"` for a period — see [date-pickers](date-pickers.md) |
 | Year, month, period of years or months | `YearPickerInput`, `MonthPickerInput`, with `type="range"` for a period |
 | Time | `TimeInput` |
-| One of a few options (2–5) | `Radio.Group` or `SegmentedControl` |
-| One of many options | `Select`; `Autocomplete` when free text is also allowed |
+| One of a few options (2–5) | `Radio.Group` (vertical) or `SegmentedControl` — see [radio](radio.md) |
+| One of many options | `Select`, `searchable` above ~15 options; `Autocomplete` when free text is also allowed — see [select](select.md) |
 | Several options | `MultiSelect`, `Checkbox.Group`, `TagsInput` for free-form tags |
 | Code, PIN, OTP | `PinInput` |
 | Formatted string (card number, IBAN, postal code) | `MaskInput` |
@@ -33,6 +33,11 @@ Rules:
   the two fields stop lining up. When one field needs a hint and the other does not, put the
   hint in the placeholder, or give the fields their own rows.
 - Labels are short nouns (`Email`, `Start date`), not sentences.
+- **Defaults only when nearly everyone keeps them.** A setting gets its sensible default (`Does
+  not repeat`, the browser timezone, `en-US` when the product is English-first); a question
+  starts empty (no preselected plan, country, reason or rating), and a required question is
+  never preselected, because an unchanged default is indistinguishable from an answer. Where
+  "none" is a real answer, it is an explicit option.
 
 ## Fonts in inputs
 
@@ -140,4 +145,31 @@ an input.
     />
   </Pill.Group>
 </PillsInput>
+```
+
+## Values collected one at a time
+
+A field that collects several values through a picker (dates to skip, selected entries, tags,
+attendees) shows what was collected next to the picker, as compactly as the input itself:
+
+- Values with no fields of their own (a date, a key, a tag) are pills: `Pill.Group` directly under
+  the picker (`mt="xs"`) with `withRemoveButton`, or the picker itself is a `PillsInput` (see
+  [custom inputs](#custom-inputs-that-open-a-picker)). Never a stack of bordered `Surface` rows
+  with a trash `ActionIcon`: such rows are taller than the input above them, and five skipped
+  dates become a card taller than the rest of the form.
+- Bordered rows are for items with several fields each (positions, line items, invitees with a
+  role), see [surface](surface.md).
+- The collected values have a caption that says what they are. Pills under the `Exceptions`
+  picker inherit its label; a list rendered elsewhere gets its own `Input.Label` ("Skipped
+  dates").
+
+```tsx
+<DatePickerInput label="Exceptions" placeholder="Pick a date to skip" value={null} onChange={addException} />
+{exceptions.length > 0 && (
+  <Pill.Group mt="xs">
+    {exceptions.map((date) => (
+      <Pill key={date} withRemoveButton onRemove={() => remove(date)}>{formatDate(date)}</Pill>
+    ))}
+  </Pill.Group>
+)}
 ```

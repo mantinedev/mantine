@@ -1,58 +1,94 @@
 import dayjs from 'dayjs';
-import timezone from 'dayjs/plugin/timezone';
+import timezonePlugin from 'dayjs/plugin/timezone';
 import utc from 'dayjs/plugin/utc';
-import { WEEK_ORDER } from './recurrence';
+import { getWeekday, getWeekOfMonth, WEEK_ORDER } from './recurrence';
 import type {
-  EventPayload,
-  RecurrenceEndPayload,
+  Frequency,
   RecurrencePayload,
-  RecurrenceValues,
+  RecurringEventPayload,
   RecurringEventValues,
   SeriesEnd,
+  SeriesEndPayload,
 } from './types';
 
 dayjs.extend(utc);
-dayjs.extend(timezone);
+dayjs.extend(timezonePlugin);
 
-// All-day events are dates without a zone; timed events carry the offset of the event timezone
-function toIsoString(date: string, time: string, allDay: boolean, zone: string) {
-  return allDay ? date : dayjs.tz(`${date} ${time}`, zone).format();
-}
-
-const SERIES_ENDS: Record<SeriesEnd, (recurrence: RecurrenceValues) => RecurrenceEndPayload> = {
-  never: () => ({ type: 'never' }),
-  after: (recurrence) => ({ type: 'after', count: Number(recurrence.count) }),
-  on: (recurrence) => ({ type: 'on', date: recurrence.until ?? '' }),
+const WEEK_NAMES: Record<number, string> = {
+  1: 'first',
+  2: 'second',
+  3: 'third',
+  4: 'fourth',
+  [-1]: 'last',
 };
 
-function toRecurrencePayload(recurrence: RecurrenceValues): RecurrencePayload | null {
-  const { repeat } = recurrence;
-  if (repeat === 'none') {
+/** "third Wednesday" for 2026-10-21 */
+export function formatWeekdayOfMonth(date: string) {
+  return `${WEEK_NAMES[getWeekOfMonth(date)]} ${dayjs(date).format('dddd')}`;
+}
+
+export function formatDate(date: string) {
+  return dayjs(date).format('ddd, MMM D, YYYY');
+}
+
+/** An occurrence date with the time of the event start */
+export function formatOccurrence(date: string, start: string, allDay: boolean) {
+  return allDay ? formatDate(date) : `${formatDate(date)}, ${start.slice(11, 16)}`;
+}
+
+function toIsoString(value: string, timezone: string, allDay: boolean) {
+  return allDay ? value.slice(0, 10) : dayjs.tz(value, timezone).format();
+}
+
+const RECURRENCE_DETAILS: Record<
+  Frequency,
+  (values: RecurringEventValues, start: string) => Partial<RecurrencePayload>
+> = {
+  daily: () => ({}),
+  weekly: (values) => ({
+    weekdays: WEEK_ORDER.filter((weekday) => values.weekdays.includes(weekday)),
+  }),
+  monthly: (values, start) => ({
+    monthly:
+      values.monthlyMode === 'dayOfMonth'
+        ? { type: 'dayOfMonth', day: dayjs(start).date() }
+        : { type: 'weekdayOfMonth', week: getWeekOfMonth(start), weekday: getWeekday(start) },
+  }),
+  yearly: () => ({}),
+};
+
+const SERIES_ENDS: Record<SeriesEnd, (values: RecurringEventValues) => SeriesEndPayload> = {
+  never: () => ({ type: 'never' }),
+  after: (values) => ({ type: 'after', count: Number(values.count) }),
+  on: (values) => ({ type: 'on', date: values.until ?? '' }),
+};
+
+function toRecurrence(values: RecurringEventValues, start: string): RecurrencePayload | null {
+  if (values.repeat === 'none') {
     return null;
   }
+
   return {
-    repeat,
-    interval: Number(recurrence.interval),
-    ...(repeat === 'weekly' && {
-      weekdays: WEEK_ORDER.filter((day) => recurrence.weekdays.includes(day)),
-    }),
-    ...(repeat === 'monthly' && { monthlyOn: recurrence.monthlyOn }),
-    ends: SERIES_ENDS[recurrence.ends](recurrence),
+    frequency: values.repeat,
+    interval: Number(values.interval),
+    ...RECURRENCE_DETAILS[values.repeat](values, start),
+    ends: SERIES_ENDS[values.ends](values),
   };
 }
 
-export function toEventPayload(values: RecurringEventValues): EventPayload {
-  const zone = values.timezone ?? 'UTC';
-  const recurrence = toRecurrencePayload(values.recurrence);
+export function toPayload(values: RecurringEventValues): RecurringEventPayload {
+  const start = values.start ?? '';
+  const end = values.end ?? '';
+
   return {
     title: values.title.trim(),
     description: values.description.trim(),
-    start: toIsoString(values.startDate ?? '', values.startTime, values.allDay, zone),
-    end: toIsoString(values.endDate ?? '', values.endTime, values.allDay, zone),
+    start: start && toIsoString(start, values.timezone, values.allDay),
+    end: end && toIsoString(end, values.timezone, values.allDay),
     allDay: values.allDay,
-    timezone: zone,
+    timezone: values.timezone,
     location: values.location.trim(),
-    recurrence,
-    exceptions: recurrence ? values.exceptions : [],
+    recurrence: toRecurrence(values, start),
+    exceptions: values.repeat === 'none' ? [] : [...values.exceptions].sort(),
   };
 }

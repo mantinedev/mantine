@@ -39,6 +39,29 @@ component you are about to use, then write the UI.
 - **`Input.Wrapper` around anything that is not an input gets `withBlockChildren`**
   (`Dropzone`, `SegmentedControl`, `RichTextEditor`, a button with pills under it): without it the
   child sticks to the description. 9.x: wrap the child in a `div` with the margin instead.
+- **Radios stack.** A `Radio.Group` with more than two options is a vertical `Stack gap="xs"`;
+  a row holds two options at most, `SegmentedControl` is the horizontal form for short words.
+  See [radio](references/components/radio.md).
+- **Coupled fields are one block.** A field and the inputs it reveals (`Repeat` + `Repeat
+  every`, `Ends` + count or date) sit in a `Stack gap="xs"` of their own, right under each
+  other, so the form's larger gap separates groups, not members of a group.
+- **`Select` is `searchable` only above about 15 options.** Twelve timezones or five statuses
+  are scanned, not searched. See [select](references/components/select.md).
+- **Collected values are pills.** Dates, keys and tags gathered one at a time show as
+  `Pill.Group` under their picker with the picker's label as caption, never as bordered rows
+  with trash icons. See [inputs](references/components/inputs.md#values-collected-one-at-a-time).
+- **Dates are typed first.** `MaskedDateInput` for a single date and `MaskedDateInput withTime`
+  for a moment; `DatePickerInput` only for dates found by browsing a calendar and for ranges
+  (`numberOfColumns={2}`); never a date input next to a `TimeInput`, never day / month / year
+  selects. See [date-pickers](references/components/date-pickers.md).
+- **The submit button is never disabled.** Submit validates and shows errors; `loading` is the
+  only state. Secondary actions sit where they act: `Add another` under its list, not in the
+  footer. See [button](references/components/button.md).
+- **Long forms get an error summary.** More than one screen or several steps: `Alert
+  color="red" title="There is a problem"` above the fields listing each error as a link to its
+  field, same wording as inline. See [alert](references/components/alert.md).
+- **Defaults only for settings.** Preselect what nearly everyone keeps (`Does not repeat`, the
+  browser timezone); questions start empty and a required question is never preselected.
 - **Custom inputs look like inputs.** A value picked in a modal or a popover is displayed in an
   `Input`-based component, never as a `Button` with chips under it: `PillsInput` with pills for
   several values (like `MultiSelect`), `InputBase readOnly pointer` with the value as text for one
@@ -90,7 +113,9 @@ component you are about to use, then write the UI.
 
 ## Components
 
-- [inputs](references/components/inputs.md) — which input for which data, placeholders, labels
+- [inputs](references/components/inputs.md) — which input for which data, placeholders, labels, custom inputs, collected values
+- [select](references/components/select.md) — when searchable, deselect, options
+- [radio](references/components/radio.md) — vertical options, SegmentedControl, coupled fields
 - [number-input](references/components/number-input.md) — controls, prefix, separators, clamping
 - [phone-input](references/components/phone-input.md) — `defaultCountry`, value format
 - [date-pickers](references/components/date-pickers.md) — `DateInput`, `DatePickerInput`,
@@ -101,6 +126,7 @@ component you are about to use, then write the UI.
 - [action-icon](references/components/action-icon.md) — row actions, drag handles, destructive icons
 - [theme-icon](references/components/theme-icon.md) — category icons with colors
 - [badge](references/components/badge.md) — when a badge is right, variants
+- [alert](references/components/alert.md) — error summary for long forms, server errors
 - [surface](references/components/surface.md) — levels, borders, cards, list rows
 - [fieldset](references/components/fieldset.md) — when a legend works and when it does not
 - [dropzone](references/components/dropzone.md) — size, texts, accepted files, previews

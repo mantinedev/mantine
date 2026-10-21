@@ -2,16 +2,12 @@ import { Checkbox, Group } from '@mantine/core';
 import type { RecurringEventFormType } from '../types';
 import { WEEKDAY_OPTIONS } from '../validation';
 
-interface WeeklyOptionsProps {
-  form: RecurringEventFormType;
-}
-
-export function WeeklyOptions({ form }: WeeklyOptionsProps) {
+export function WeeklyOptions({ form }: { form: RecurringEventFormType }) {
   return (
-    <Checkbox.Group label="Repeat on" withAsterisk {...form.getInputProps('recurrence.weekdays')}>
-      <Group mt="xs">
-        {WEEKDAY_OPTIONS.map((day) => (
-          <Checkbox key={day.value} value={day.value} label={day.label} />
+    <Checkbox.Group label="Repeat on" withAsterisk {...form.getInputProps('weekdays')}>
+      <Group gap="md" mt="xs">
+        {WEEKDAY_OPTIONS.map((option) => (
+          <Checkbox key={option.value} value={option.value} label={option.label} />
         ))}
       </Group>
     </Checkbox.Group>

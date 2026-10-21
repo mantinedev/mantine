@@ -1,48 +1,48 @@
 import type { UseFormReturnType } from '@mantine/form';
 
 export type Repeat = 'none' | 'daily' | 'weekly' | 'monthly' | 'yearly';
+export type Frequency = Exclude<Repeat, 'none'>;
 export type Weekday = 'MO' | 'TU' | 'WE' | 'TH' | 'FR' | 'SA' | 'SU';
-export type MonthlyOn = 'dayOfMonth' | 'weekdayOfMonth';
+export type MonthlyMode = 'dayOfMonth' | 'weekdayOfMonth';
 export type SeriesEnd = 'never' | 'after' | 'on';
-
-export interface RecurrenceValues {
-  repeat: Repeat;
-  interval: number | string;
-  weekdays: Weekday[];
-  monthlyOn: MonthlyOn;
-  ends: SeriesEnd;
-  count: number | string;
-  until: string | null;
-}
 
 export interface RecurringEventValues {
   title: string;
   description: string;
+  /** `YYYY-MM-DD HH:mm:ss`, the time is kept while All day is on */
+  start: string | null;
+  end: string | null;
   allDay: boolean;
-  startDate: string | null;
-  startTime: string;
-  endDate: string | null;
-  endTime: string;
-  timezone: string | null;
+  timezone: string;
   location: string;
-  recurrence: RecurrenceValues;
+  repeat: Repeat;
+  interval: number | string;
+  weekdays: Weekday[];
+  monthlyMode: MonthlyMode;
+  ends: SeriesEnd;
+  count: number | string;
+  until: string | null;
   exceptions: string[];
 }
 
-export type RecurrenceEndPayload =
+export type MonthlyPayload =
+  | { type: 'dayOfMonth'; day: number }
+  | { type: 'weekdayOfMonth'; week: number; weekday: Weekday };
+
+export type SeriesEndPayload =
   | { type: 'never' }
   | { type: 'after'; count: number }
   | { type: 'on'; date: string };
 
 export interface RecurrencePayload {
-  repeat: Exclude<Repeat, 'none'>;
+  frequency: Frequency;
   interval: number;
   weekdays?: Weekday[];
-  monthlyOn?: MonthlyOn;
-  ends: RecurrenceEndPayload;
+  monthly?: MonthlyPayload;
+  ends: SeriesEndPayload;
 }
 
-export interface EventPayload {
+export interface RecurringEventPayload {
   title: string;
   description: string;
   start: string;
@@ -54,4 +54,4 @@ export interface EventPayload {
   exceptions: string[];
 }
 
-export type RecurringEventFormType = UseFormReturnType<RecurringEventValues, EventPayload>;
+export type RecurringEventFormType = UseFormReturnType<RecurringEventValues, RecurringEventPayload>;
