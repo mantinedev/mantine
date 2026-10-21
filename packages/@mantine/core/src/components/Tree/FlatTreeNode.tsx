@@ -90,7 +90,7 @@ export const FlatTreeNode = memo(function FlatTreeNode({
   const collapseKey = dir === 'rtl' ? 'ArrowRight' : 'ArrowLeft';
 
   const handleKeyDown = (event: React.KeyboardEvent) => {
-    if (event.key === expandKey || event.nativeEvent.code === expandKey) {
+    if (event.nativeEvent.code === expandKey) {
       event.stopPropagation();
       event.preventDefault();
 
@@ -112,7 +112,7 @@ export const FlatTreeNode = memo(function FlatTreeNode({
       }
     }
 
-    if (event.key === collapseKey || event.nativeEvent.code === collapseKey) {
+    if (event.nativeEvent.code === collapseKey) {
       event.stopPropagation();
       event.preventDefault();
 
