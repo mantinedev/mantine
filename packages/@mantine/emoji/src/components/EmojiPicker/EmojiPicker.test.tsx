@@ -1,5 +1,5 @@
 import { act, fireEvent, waitFor } from '@testing-library/react';
-import { Input } from '@mantine/core';
+import { DirectionProvider, Input } from '@mantine/core';
 import { render, userEvent } from '@mantine-tests/core';
 import { EmojiPicker } from './EmojiPicker';
 
@@ -60,8 +60,29 @@ const boundaryData = {
   ),
 };
 
+const navData = {
+  categories: [
+    { id: 'people', label: 'People', emojis: ['a0'] },
+    { id: 'nature', label: 'Nature', emojis: ['b0'] },
+    { id: 'food', label: 'Food', emojis: ['c0'] },
+  ],
+  emojis: Object.fromEntries(['a0', 'b0', 'c0'].map((id) => [id, e(id)])),
+};
+
 function getGrid(container: HTMLElement) {
   return container.querySelector<HTMLElement>('[role="grid"]')!;
+}
+
+function getNavButtons(container: HTMLElement) {
+  return Array.from(
+    container.querySelector('.mantine-EmojiPicker-categoryNav')!.querySelectorAll('button')
+  );
+}
+
+function focusNavButton(container: HTMLElement, index: number) {
+  const button = getNavButtons(container)[index];
+  act(() => button.focus());
+  return button;
 }
 
 function getActiveEmoji(container: HTMLElement) {
@@ -389,6 +410,64 @@ describe('@mantine/emoji/EmojiPicker', () => {
       />
     );
     expect(container.querySelector('button[aria-label="Frequent"]')).not.toBeInTheDocument();
+  });
+
+  it('renders the category nav as a single tab stop', () => {
+    const { container } = render(<EmojiPicker data={navData} />);
+    expect(getNavButtons(container).map((button) => button.tabIndex)).toEqual([0, -1, -1]);
+  });
+
+  it('moves focus between category nav buttons with ArrowRight and wraps to the first button', () => {
+    const { container } = render(<EmojiPicker data={navData} />);
+    const [people, nature, food] = getNavButtons(container);
+    press(focusNavButton(container, 0), 'ArrowRight');
+    expect(nature).toHaveFocus();
+    press(nature, 'ArrowRight');
+    expect(food).toHaveFocus();
+    press(food, 'ArrowRight');
+    expect(people).toHaveFocus();
+  });
+
+  it('wraps focus from the first to the last category nav button with ArrowLeft', () => {
+    const { container } = render(<EmojiPicker data={navData} />);
+    press(focusNavButton(container, 0), 'ArrowLeft');
+    expect(getNavButtons(container)[2]).toHaveFocus();
+  });
+
+  it('moves focus to the first and last category nav buttons with Home and End', () => {
+    const { container } = render(<EmojiPicker data={navData} />);
+    const [people, nature, food] = getNavButtons(container);
+    press(focusNavButton(container, 1), 'End');
+    expect(food).toHaveFocus();
+    press(food, 'Home');
+    expect(people).toHaveFocus();
+    expect(nature).not.toHaveFocus();
+  });
+
+  it('moves focus to the previous category nav button with ArrowRight in RTL', () => {
+    const { container } = render(
+      <DirectionProvider initialDirection="rtl" detectDirection={false}>
+        <EmojiPicker data={navData} />
+      </DirectionProvider>
+    );
+    const [people, nature] = getNavButtons(container);
+    press(focusNavButton(container, 1), 'ArrowRight');
+    expect(people).toHaveFocus();
+    press(people, 'ArrowLeft');
+    expect(nature).toHaveFocus();
+  });
+
+  it('moves the category nav tab stop to the focused button', () => {
+    const { container } = render(<EmojiPicker data={navData} />);
+    press(focusNavButton(container, 0), 'ArrowRight');
+    expect(getNavButtons(container).map((button) => button.tabIndex)).toEqual([-1, 0, -1]);
+  });
+
+  it('does not scroll the grid when a category nav button receives focus through the arrows', () => {
+    const { container } = render(<EmojiPicker data={navData} />);
+    mockScrollToIndex.mockClear();
+    press(focusNavButton(container, 0), 'ArrowRight');
+    expect(mockScrollToIndex).not.toHaveBeenCalled();
   });
 
   it('derives emoji font size from emojiSize', () => {

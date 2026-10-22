@@ -501,6 +501,27 @@ describe('@mantine/dates/MaskedDateInput', () => {
     expect(screen.getByText('June 2024')).toBeInTheDocument();
   });
 
+  it('names the fields by default and groups them under the label', () => {
+    const { rerender } = render(<MaskedDateInput withTime withSeconds format="12h" />);
+    expect(screen.getByLabelText('Day')).toHaveAttribute('role', 'spinbutton');
+    expect(screen.getByLabelText('Month')).toBeInTheDocument();
+    expect(screen.getByLabelText('Year')).toBeInTheDocument();
+    expect(screen.getByLabelText('Hours')).toBeInTheDocument();
+    expect(screen.getByLabelText('Minutes')).toBeInTheDocument();
+    expect(screen.getByLabelText('Seconds')).toBeInTheDocument();
+    expect(screen.getByLabelText('AM/PM')).toBeInTheDocument();
+    expect(screen.getByRole('group')).not.toHaveAttribute('aria-labelledby');
+
+    rerender(
+      <>
+        <MaskedDateInput label="Birth date" />
+      </>
+    );
+    expect(screen.getByRole('group', { name: 'Birth date' })).toContainElement(
+      screen.getByLabelText('Day')
+    );
+  });
+
   it('does not render dropdown when withDropdown is false', async () => {
     render(<MaskedDateInput {...defaultProps} defaultValue="2024-06-15" withDropdown={false} />);
 

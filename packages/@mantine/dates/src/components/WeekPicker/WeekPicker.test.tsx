@@ -497,6 +497,20 @@ describe('@mantine/dates/WeekPicker', () => {
     expect(container.querySelectorAll('[data-selected]:not([data-week-control])')).toHaveLength(7);
   });
 
+  it('navigates to the month of the preset start instead of the normalized week start', async () => {
+    const { container } = render(
+      <WeekPicker
+        {...defaultProps}
+        type="range"
+        presets={[{ label: 'May', value: ['2022-05-01', '2022-05-31'] }]}
+      />
+    );
+    await userEvent.click(screen.getByText('May'));
+    expect(container.querySelector('.mantine-WeekPicker-calendarHeaderLevel')?.textContent).toBe(
+      'May 2022'
+    );
+  });
+
   it('normalizes range presets to week starts', async () => {
     const spy = jest.fn();
     const { container } = render(

@@ -38,9 +38,9 @@ export function Marks({
 
     return (
       <Box
+        key={index}
         {...getStyles('markWrapper')}
         __vars={{ '--mark-offset': `${getPosition({ value: mark.value, min, max })}%` }}
-        key={index}
       >
         <Box
           {...getStyles('mark')}

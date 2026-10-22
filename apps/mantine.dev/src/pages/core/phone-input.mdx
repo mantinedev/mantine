@@ -60,6 +60,8 @@ Country dropdown search is enabled by default. Set `searchable={false}` to disab
 
 Set `withCountryAutoDetect` to automatically detect and switch the country when the user
 types a dial code. For example, typing `+44` will switch to United Kingdom.
+Without the prop, the country still changes when a number starting with `+` and another dial code is typed or pasted.
+Area codes, for example `+1 204` for Canada, are detected only with the prop:
 
 <Demo data={PhoneInputDemos.countryAutoDetect} />
 
@@ -83,6 +85,8 @@ country is selected:
 ## Use within Popover
 
 To use `PhoneInput` within `Popover` or other overlay, set `comboboxProps={{ withinPortal: false }}`.
+Pressing `Escape` while the country list is open closes both the list and the `Popover`.
+Set `closeOnEscape={false}` on the `Popover` to keep it open. The country list still closes on `Escape`:
 
 <Demo data={PhoneInputDemos.withinPopover} />
 

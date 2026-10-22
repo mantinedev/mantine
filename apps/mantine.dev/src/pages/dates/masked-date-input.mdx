@@ -174,8 +174,9 @@ function Demo() {
 
 ## Accessibility
 
-Set `aria-label` for each field using the corresponding props. Also set an `aria-label` for the
-clear button if `clearable` is used:
+Each field has an English `aria-label` by default (Day, Month, Year, Hours, Minutes, Seconds, AM/PM),
+and the fields are grouped under the `label`. Use the corresponding props to translate the labels.
+Also set an `aria-label` for the clear button if `clearable` is used:
 
 ```tsx
 import { MaskedDateInput } from '@mantine/dates';
@@ -183,14 +184,11 @@ import { MaskedDateInput } from '@mantine/dates';
 function Demo() {
   return (
     <MaskedDateInput
-      dayInputLabel="Day"
-      monthInputLabel="Month"
-      yearInputLabel="Year"
-      hoursInputLabel="Hours"
-      minutesInputLabel="Minutes"
-      secondsInputLabel="Seconds"
-      amPmInputLabel="AM/PM"
-      clearButtonProps={{ 'aria-label': 'Clear date' }}
+      label="Fecha de nacimiento"
+      dayInputLabel="Día"
+      monthInputLabel="Mes"
+      yearInputLabel="Año"
+      clearButtonProps={{ 'aria-label': 'Borrar fecha' }}
     />
   );
 }

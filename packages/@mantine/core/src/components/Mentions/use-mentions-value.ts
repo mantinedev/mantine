@@ -24,14 +24,6 @@ interface PendingEdit {
   type: MentionsHistoryChangeType;
 }
 
-function toMarkupValue(value: unknown): string | undefined {
-  if (typeof value === 'object' && value !== null && 'value' in value) {
-    const markup = (value as { value?: unknown }).value;
-    return typeof markup === 'string' ? markup : undefined;
-  }
-  return typeof value === 'string' ? value : undefined;
-}
-
 export function useMentionsValue({
   value,
   defaultValue,
@@ -40,9 +32,8 @@ export function useMentionsValue({
   configs,
   setCaret,
 }: UseMentionsValueInput) {
-  const markupValue = toMarkupValue(value);
   const [_value, setValueState] = useUncontrolled({
-    value: markupValue === undefined ? undefined : normalizeNewlines(markupValue, singleLine),
+    value: value === undefined ? undefined : normalizeNewlines(value, singleLine),
     defaultValue:
       defaultValue === undefined ? undefined : normalizeNewlines(defaultValue, singleLine),
     finalValue: '',

@@ -124,25 +124,25 @@ export interface MaskedDateInputProps
   /** `form` prop passed down to the hidden input */
   form?: string;
 
-  /** `aria-label` of day input */
+  /** `aria-label` of day input @default 'Day' */
   dayInputLabel?: string;
 
-  /** `aria-label` of month input */
+  /** `aria-label` of month input @default 'Month' */
   monthInputLabel?: string;
 
-  /** `aria-label` of year input */
+  /** `aria-label` of year input @default 'Year' */
   yearInputLabel?: string;
 
-  /** `aria-label` of hours input */
+  /** `aria-label` of hours input @default 'Hours' */
   hoursInputLabel?: string;
 
-  /** `aria-label` of minutes input */
+  /** `aria-label` of minutes input @default 'Minutes' */
   minutesInputLabel?: string;
 
-  /** `aria-label` of seconds input */
+  /** `aria-label` of seconds input @default 'Seconds' */
   secondsInputLabel?: string;
 
-  /** `aria-label` of am/pm input */
+  /** `aria-label` of am/pm input @default 'AM/PM' */
   amPmInputLabel?: string;
 
   /** Props passed to day input */
@@ -251,6 +251,13 @@ const defaultProps = {
   hoursPlaceholder: '--',
   minutesPlaceholder: '--',
   secondsPlaceholder: '--',
+  dayInputLabel: 'Day',
+  monthInputLabel: 'Month',
+  yearInputLabel: 'Year',
+  hoursInputLabel: 'Hours',
+  minutesInputLabel: 'Minutes',
+  secondsInputLabel: 'Seconds',
+  amPmInputLabel: 'AM/PM',
 } satisfies Partial<MaskedDateInputProps>;
 
 export const MaskedDateInput = factory<MaskedDateInputFactory>((_props) => {
@@ -321,6 +328,7 @@ export const MaskedDateInput = factory<MaskedDateInputFactory>((_props) => {
     onBlurCapture,
     rightSection,
     size,
+    label,
     labelProps,
     pasteSplit,
     locale,
@@ -383,6 +391,7 @@ export const MaskedDateInput = factory<MaskedDateInputFactory>((_props) => {
   const _amPmRef = useMergedRef(controller.refs.amPm, amPmRef);
 
   const dayInputId = useId();
+  const labelId = `${dayInputId}-label`;
   const hasFocusRef = useRef(false);
   const [dropdownOpened, setDropdownOpened] = useState(false);
 
@@ -638,7 +647,8 @@ export const MaskedDateInput = factory<MaskedDateInputFactory>((_props) => {
           }
           __clearable={controller.isClearable}
           __clearSectionMode={clearSectionMode}
-          labelProps={{ htmlFor: dayInputId, ...labelProps }}
+          label={label}
+          labelProps={{ htmlFor: dayInputId, id: labelId, ...labelProps }}
           style={style}
           className={className}
           classNames={resolvedClassNames}
@@ -657,6 +667,8 @@ export const MaskedDateInput = factory<MaskedDateInputFactory>((_props) => {
             >
               <div
                 {...getStyles('fieldsGroup')}
+                role="group"
+                aria-labelledby={label ? labelProps?.id || labelId : undefined}
                 onBlur={handleBlur}
                 onKeyDown={handleKeyDown}
                 onClickCapture={() => setDropdownOpened(true)}

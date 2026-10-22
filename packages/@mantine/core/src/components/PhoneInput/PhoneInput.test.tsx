@@ -225,12 +225,86 @@ describe('@mantine/core/PhoneInput', () => {
     );
   });
 
-  it('does not auto-detect country when withCountryAutoDetect is disabled', () => {
+  it('detects country from a pasted international number without withCountryAutoDetect', () => {
+    const onChange = jest.fn();
+    const onCountryChange = jest.fn();
+    render(
+      <PhoneInput
+        {...testProps}
+        defaultCountry="us"
+        onChange={onChange}
+        onCountryChange={onCountryChange}
+      />
+    );
+
+    fireEvent.change(screen.getByRole('textbox'), { target: { value: '+442071234567' } });
+
+    expect(screen.getByRole('button', { name: /United Kingdom/ })).toBeInTheDocument();
+    expect(onCountryChange).toHaveBeenCalledWith(expect.objectContaining({ iso2: 'gb' }));
+    expect(onChange).toHaveBeenLastCalledWith('+442071234567', {
+      formattedValue: '+44 2071 234567',
+      country: expect.objectContaining({ iso2: 'gb', dialCode: '44' }),
+    });
+  });
+
+  it('detects country while typing an international number without withCountryAutoDetect', async () => {
+    const onChange = jest.fn();
+    render(<PhoneInput {...testProps} defaultCountry="us" onChange={onChange} />);
+    const input = screen.getByRole('textbox') as HTMLInputElement;
+
+    await userEvent.clear(input);
+    await userEvent.type(input, '+442071234567');
+
+    expect(screen.getByRole('button', { name: /United Kingdom/ })).toBeInTheDocument();
+    expect(input.value).toBe('+44 2071 234567');
+    expect(onChange).toHaveBeenLastCalledWith('+442071234567', {
+      formattedValue: '+44 2071 234567',
+      country: expect.objectContaining({ iso2: 'gb' }),
+    });
+  });
+
+  it('keeps a lone plus and an unmatched dial code as typed without withCountryAutoDetect', async () => {
+    const onChange = jest.fn();
+    const onCountryChange = jest.fn();
+    render(
+      <PhoneInput
+        {...testProps}
+        defaultCountry="us"
+        onChange={onChange}
+        onCountryChange={onCountryChange}
+      />
+    );
+    const input = screen.getByRole('textbox') as HTMLInputElement;
+
+    await userEvent.clear(input);
+    expect(onChange).toHaveBeenLastCalledWith('+1', expect.anything());
+
+    await userEvent.type(input, '+');
+    expect(input.value).toBe('+');
+    expect(onChange).toHaveBeenLastCalledWith('+', expect.anything());
+
+    await userEvent.type(input, '4');
+    expect(input.value).toBe('+4');
+    expect(onChange).toHaveBeenLastCalledWith('+4', expect.anything());
+    expect(screen.getByRole('button', { name: /United States/ })).toBeInTheDocument();
+    expect(onCountryChange).not.toHaveBeenCalled();
+  });
+
+  it('keeps selected country when national digits are typed without withCountryAutoDetect', async () => {
     const onCountryChange = jest.fn();
     render(<PhoneInput {...testProps} defaultCountry="us" onCountryChange={onCountryChange} />);
 
-    const input = screen.getByRole('textbox');
-    fireEvent.change(input, { target: { value: '+442071234567' } });
+    await userEvent.type(screen.getByRole('textbox'), '2045551234');
+
+    expect(screen.getByRole('button', { name: /United States/ })).toBeInTheDocument();
+    expect(onCountryChange).not.toHaveBeenCalled();
+  });
+
+  it('does not switch country on area code without withCountryAutoDetect', () => {
+    const onCountryChange = jest.fn();
+    render(<PhoneInput {...testProps} defaultCountry="us" onCountryChange={onCountryChange} />);
+
+    fireEvent.change(screen.getByRole('textbox'), { target: { value: '+12045551234' } });
 
     expect(screen.getByRole('button', { name: /United States/ })).toBeInTheDocument();
     expect(onCountryChange).not.toHaveBeenCalled();
@@ -595,6 +669,57 @@ describe('@mantine/core/PhoneInput', () => {
     render(<PhoneInput {...testProps} searchable={false} onlyCountries={['us', 'gb']} />);
     await userEvent.click(screen.getByRole('button', { name: /United States/ }));
     expect(screen.getByRole('textbox')).toHaveFocus();
+
+    await userEvent.keyboard('{ArrowDown}{ArrowDown}{Enter}');
+    expect(screen.getByRole('button', { name: /United Kingdom/ })).toBeInTheDocument();
+    expect(screen.queryByRole('listbox')).not.toBeInTheDocument();
+  });
+
+  it('does not open the country list on ArrowDown or ArrowUp in the phone input', async () => {
+    const onDropdownOpen = jest.fn();
+    render(<PhoneInput {...testProps} onDropdownOpen={onDropdownOpen} />);
+    const input = screen.getByRole('textbox');
+    await userEvent.click(input);
+
+    await userEvent.keyboard('{ArrowDown}');
+    expect(screen.queryByRole('listbox')).not.toBeInTheDocument();
+    expect(screen.queryByRole('option')).not.toBeInTheDocument();
+    expect(input).not.toHaveAttribute('aria-haspopup');
+    expect(input).not.toHaveAttribute('aria-controls');
+    expect(screen.getByRole('button', { name: /United States/ })).toHaveAttribute(
+      'aria-expanded',
+      'false'
+    );
+    expect(input).toHaveFocus();
+
+    await userEvent.keyboard('{ArrowUp}');
+    expect(screen.queryByRole('listbox')).not.toBeInTheDocument();
+    expect(onDropdownOpen).not.toHaveBeenCalled();
+  });
+
+  it('supports keyboard navigation in non-searchable list opened from country button', async () => {
+    render(<PhoneInput {...testProps} searchable={false} onlyCountries={['us', 'gb', 'ca']} />);
+    const input = screen.getByRole('textbox');
+    await userEvent.click(screen.getByRole('button', { name: /United States/ }));
+
+    await userEvent.keyboard('{ArrowDown}{ArrowDown}{ArrowUp}');
+    const selected = screen.getByRole('option', { name: /United States/ });
+    expect(selected).toHaveAttribute('data-combobox-selected');
+    expect(input).toHaveAttribute('aria-activedescendant', selected.id);
+    expect(input).toHaveAttribute('aria-controls', screen.getByRole('listbox').id);
+    expect(input).not.toHaveAttribute('aria-haspopup');
+
+    await userEvent.keyboard('{Escape}');
+    expect(screen.queryByRole('listbox')).not.toBeInTheDocument();
+    expect(input).not.toHaveAttribute('aria-activedescendant');
+    expect(input).not.toHaveAttribute('aria-controls');
+    expect(screen.getByRole('button', { name: /United States/ })).toBeInTheDocument();
+  });
+
+  it('selects option with ArrowDown and Enter in search after opening from country button', async () => {
+    render(<PhoneInput {...testProps} onlyCountries={['us', 'gb']} />);
+    await userEvent.click(screen.getByRole('button', { name: /United States/ }));
+    expect(screen.getByPlaceholderText('Search countries')).toHaveFocus();
 
     await userEvent.keyboard('{ArrowDown}{ArrowDown}{Enter}');
     expect(screen.getByRole('button', { name: /United Kingdom/ })).toBeInTheDocument();

@@ -308,8 +308,9 @@ export const WeekPicker: WeekPickerComponent = factory<WeekPickerFactory>((_prop
   ) => {
     const normalized = normalizeWeekValue(val as any, firstDayOfWeek) as typeof val;
     const _val = Array.isArray(normalized) ? normalized[0] : normalized;
+    const presetStart = Array.isArray(val) ? val[0] : val;
     if (_val !== undefined) {
-      setDateRef.current?.(_val);
+      setDateRef.current?.(presetStart ?? _val);
       setLevelRef.current?.('month');
       __onPresetSelect ? __onPresetSelect(normalized) : setValue(normalized);
     }

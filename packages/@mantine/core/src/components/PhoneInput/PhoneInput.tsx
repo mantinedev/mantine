@@ -180,6 +180,7 @@ export const PhoneInput = factory<PhoneInputFactory>((_props) => {
     selectCountryLabel,
     getCountryLabel,
     autoComplete,
+    onKeyDown,
     ref,
     ...others
   } = props;
@@ -230,6 +231,7 @@ export const PhoneInput = factory<PhoneInputFactory>((_props) => {
     initialCountry
   );
   const [search, setSearch] = useState('');
+  const [activeOptionId, setActiveOptionId] = useState<string | null>(null);
 
   const [_value, setValue] = useUncontrolled({
     value,
@@ -250,6 +252,7 @@ export const PhoneInput = factory<PhoneInputFactory>((_props) => {
     },
     onDropdownClose: () => {
       setSearch('');
+      setActiveOptionId(null);
       onDropdownClose?.();
     },
   });
@@ -328,8 +331,9 @@ export const PhoneInput = factory<PhoneInputFactory>((_props) => {
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const input = event.currentTarget;
-    const inputValue = input.value;
-    const cursorPos = input.selectionStart ?? inputValue.length;
+    const restartIndex = Math.max(input.value.lastIndexOf('+'), 0);
+    const inputValue = input.value.slice(restartIndex);
+    const cursorPos = Math.max((input.selectionStart ?? input.value.length) - restartIndex, 0);
     const digitsOnly = getDigits(inputValue).replace(/^\+/, '');
     const hasPlus = inputValue.includes('+');
     const autoDetectEnabled = withCountryAutoDetect || !selectedCountry;
@@ -338,14 +342,15 @@ export const PhoneInput = factory<PhoneInputFactory>((_props) => {
     if (!digitsOnly) {
       if (withCountryAutoDetect || !selectedCountry) {
         countryLockedRef.current = false;
-        if (hasPlus) {
-          emitChange('+', { formattedValue: '+', country: selectedCountry });
-          requestAnimationFrame(() => {
-            input.setSelectionRange(1, 1);
-          });
-        } else {
-          handleValueChange('', selectedCountry);
-        }
+      }
+
+      if (hasPlus) {
+        emitChange('+', { formattedValue: '+', country: selectedCountry });
+        requestAnimationFrame(() => {
+          input.setSelectionRange(1, 1);
+        });
+      } else if (withCountryAutoDetect || !selectedCountry) {
+        handleValueChange('', selectedCountry);
       } else if (!international) {
         handleValueChange('', selectedCountry);
       } else {
@@ -360,17 +365,17 @@ export const PhoneInput = factory<PhoneInputFactory>((_props) => {
     }
 
     const typedRaw = getDigits(inputValue);
-    const lockedDetected =
-      autoDetectEnabled &&
-      countryLockedRef.current &&
-      selectedCountry &&
-      (international || typedRaw.startsWith('+'))
+    const hasInternationalPrefix = typedRaw.startsWith('+');
+    const dialCodeTyped = hasInternationalPrefix || (autoDetectEnabled && international);
+    const typedCountry =
+      selectedCountry && dialCodeTyped && (countryLockedRef.current || !autoDetectEnabled)
         ? guessCountry(typedRaw, filteredCountries)
         : undefined;
-    const unlock = !!lockedDetected && lockedDetected.dialCode !== selectedCountry?.dialCode;
-    const detectNow = canAutoDetect || unlock;
+    const dialCodeChanged = !!typedCountry && typedCountry.dialCode !== selectedCountry?.dialCode;
+    const dialCodeIncomplete = hasInternationalPrefix && !canAutoDetect && !typedCountry;
+    const detectNow = canAutoDetect || dialCodeChanged || dialCodeIncomplete;
 
-    if (unlock) {
+    if (dialCodeChanged) {
       countryLockedRef.current = false;
     }
 
@@ -406,6 +411,27 @@ export const PhoneInput = factory<PhoneInputFactory>((_props) => {
     requestAnimationFrame(() => {
       input.setSelectionRange(newCursor, newCursor);
     });
+  };
+
+  const handleInputKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
+    onKeyDown?.(event);
+
+    if (readOnly || !combobox.dropdownOpened || event.nativeEvent.isComposing) {
+      return;
+    }
+
+    if (event.key === 'ArrowDown') {
+      event.preventDefault();
+      setActiveOptionId(combobox.selectNextOption());
+    } else if (event.key === 'ArrowUp') {
+      event.preventDefault();
+      setActiveOptionId(combobox.selectPreviousOption());
+    } else if (event.key === 'Enter' && combobox.getSelectedOptionIndex() !== -1) {
+      event.preventDefault();
+      combobox.clickSelectedOption();
+    } else if (event.key === 'Escape') {
+      combobox.closeDropdown('keyboard');
+    }
   };
 
   const handleCountrySelect = (iso2: string) => {
@@ -481,11 +507,16 @@ export const PhoneInput = factory<PhoneInputFactory>((_props) => {
       onOptionSubmit={handleCountrySelect}
       {...comboboxProps}
     >
-      <Combobox.Target targetType="input" autoComplete={autoComplete}>
+      <Combobox.Target targetType="input" withKeyboardNavigation={false} withAriaAttributes={false}>
         <InputBase
           ref={inputRef}
           type="tel"
           __staticSelector="PhoneInput"
+          autoComplete={autoComplete ?? 'off'}
+          aria-controls={combobox.dropdownOpened && combobox.listId ? combobox.listId : undefined}
+          aria-activedescendant={combobox.dropdownOpened ? activeOptionId || undefined : undefined}
+          data-expanded={combobox.dropdownOpened || undefined}
+          data-mantine-stop-propagation={combobox.dropdownOpened || undefined}
           leftSection={
             <UnstyledButton
               type="button"
@@ -515,6 +546,7 @@ export const PhoneInput = factory<PhoneInputFactory>((_props) => {
           error={error}
           value={displayValue}
           onChange={handleInputChange}
+          onKeyDown={handleInputKeyDown}
           attributes={attributes}
         />
       </Combobox.Target>

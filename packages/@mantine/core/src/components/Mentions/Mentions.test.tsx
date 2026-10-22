@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import { act, createEvent, fireEvent, waitFor } from '@testing-library/react';
-import { useForm } from '@mantine/form';
 import {
   inputDefaultProps,
   inputStylesApiSelectors,
@@ -269,26 +268,6 @@ describe('@mantine/core/Mentions', () => {
         <Mentions {...defaultProps} name="comment" disabled />
       );
       expect(container.querySelector('input[type="hidden"]')).toBeDisabled();
-    });
-  });
-
-  describe('form integration', () => {
-    it('keeps working when wired with form.getInputProps', async () => {
-      function Wrapper() {
-        const form = useForm({ initialValues: { comment: '' } });
-        return (
-          <Mentions {...form.getInputProps('comment')}>
-            <Mention trigger="@" data={users} />
-          </Mentions>
-        );
-      }
-
-      const { container } = await renderWithAct(<Wrapper />);
-      const textarea = getTextarea(container);
-      typeInto(textarea, 'h', 1);
-      expect(textarea.value).toBe('h');
-      typeInto(textarea, 'hi', 2);
-      expect(textarea.value).toBe('hi');
     });
   });
 
