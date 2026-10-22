@@ -10230,6 +10230,7 @@ __metadata:
     "@mantine/core": "workspace:*"
     "@mantine/dates": "workspace:*"
     "@mantine/dropzone": "workspace:*"
+    "@mantine/emoji": "workspace:*"
     "@mantine/form": "workspace:*"
     "@mantine/hooks": "workspace:*"
     "@mantine/lightbox": "workspace:*"

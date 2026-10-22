@@ -27,11 +27,15 @@ function deburr(value: string): string {
   return value.normalize('NFD').replace(/[\u0300-\u036f]/g, '');
 }
 
+export function normalizeMatchText(value: string, ignoreAccents?: boolean): string {
+  return (ignoreAccents ? deburr(value) : value).toLowerCase();
+}
+
 function defaultFilter(
   { query, items }: { query: string; items: MentionItem[] },
   ignoreAccents?: boolean
 ): MentionItem[] {
-  const normalize = (value: string) => (ignoreAccents ? deburr(value) : value).toLowerCase();
+  const normalize = (value: string) => normalizeMatchText(value, ignoreAccents);
   const normalizedQuery = normalize(query).trim();
   if (normalizedQuery.length === 0) {
     return items;
@@ -65,6 +69,8 @@ export function useMentionsQuery({
   const generationRef = useRef(0);
 
   const data = source?.props.data;
+  const dataRef = useRef(data);
+  dataRef.current = data;
   const maxSuggestions = source?.props.maxSuggestions;
   const debounceMs = source?.props.debounceMs ?? 0;
   const ignoreAccents = source?.props.ignoreAccents;
@@ -78,7 +84,6 @@ export function useMentionsQuery({
       return undefined;
     }
 
-    const dataFn = data as MentionDataFn;
     const controller = new AbortController();
     const context = { signal: controller.signal };
 
@@ -90,7 +95,7 @@ export function useMentionsQuery({
 
     const run = () => {
       Promise.resolve()
-        .then(() => dataFn(query, context))
+        .then(() => (dataRef.current as MentionDataFn)(query, context))
         .then((result) => {
           if (!controller.signal.aborted) {
             setAsyncState({
@@ -127,7 +132,7 @@ export function useMentionsQuery({
       controller.abort();
       window.clearTimeout(debounceRef.current);
     };
-  }, [sourceIndex, query, enabled, isFunctionData, data, maxSuggestions, debounceMs]);
+  }, [sourceIndex, query, enabled, isFunctionData, maxSuggestions, debounceMs]);
 
   const arrayState = useMemo<MentionsQueryState | null>(() => {
     if (isFunctionData || !enabled || query == null || !hasSource) {

@@ -31,7 +31,7 @@ function Demo() {
         <Text size="sm">
           Press <Kbd>/</Kbd> to focus the search field
         </Text>
-        <Badge color={isEditing ? 'gray' : 'teal'} variant="light">
+        <Badge color={isEditing ? 'gray' : 'teal'} variant="default">
           {isEditing ? 'Shortcut disabled' : 'Shortcut active'}
         </Badge>
       </Group>
@@ -65,7 +65,7 @@ function Demo() {
         <Text size="sm">
           Press <Kbd>/</Kbd> to focus the search field
         </Text>
-        <Badge color={isEditing ? 'gray' : 'teal'} variant="light">
+        <Badge color={isEditing ? 'gray' : 'teal'} variant="default">
           {isEditing ? 'Shortcut disabled' : 'Shortcut active'}
         </Badge>
       </Group>

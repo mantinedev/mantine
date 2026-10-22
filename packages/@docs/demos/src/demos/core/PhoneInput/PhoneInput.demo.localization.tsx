@@ -20,6 +20,9 @@ function Demo() {
       defaultCountry="es"
       onlyCountries={['us', 'gb', 'es', 'mx', 'ar']}
       nothingFoundMessage="No se encontraron países"
+      searchPlaceholder="Buscar países"
+      selectCountryLabel="Seleccionar país"
+      getCountryLabel={(country) => COUNTRIES_ES[country.iso2] ?? country.name}
       renderFlag={(country) => (
         <img
           src={\`https://hatscripts.github.io/circle-flags/flags/\${country?.iso2 ?? 'xx'}.svg\`}
@@ -61,6 +64,9 @@ function Demo() {
       defaultCountry="es"
       onlyCountries={['us', 'gb', 'es', 'mx', 'ar']}
       nothingFoundMessage="No se encontraron países"
+      searchPlaceholder="Buscar países"
+      selectCountryLabel="Seleccionar país"
+      getCountryLabel={(country) => COUNTRIES_ES[country.iso2] ?? country.name}
       renderFlag={(country) => (
         <img
           src={`https://hatscripts.github.io/circle-flags/flags/${country?.iso2 ?? 'xx'}.svg`}

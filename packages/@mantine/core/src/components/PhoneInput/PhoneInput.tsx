@@ -109,6 +109,15 @@ export interface PhoneInputProps
 
   /** Message displayed when no countries match the search query */
   nothingFoundMessage?: React.ReactNode;
+
+  /** Placeholder of the search input in the dropdown @default 'Search countries' */
+  searchPlaceholder?: string;
+
+  /** `aria-label` of the country button when no country is selected @default 'Select country' */
+  selectCountryLabel?: string;
+
+  /** Returns a localized country name, used as the country button `aria-label` and matched in search in addition to the English name */
+  getCountryLabel?: (country: PhoneInputCountryData) => string;
 }
 
 export type PhoneInputFactory = Factory<{
@@ -131,6 +140,8 @@ const defaultProps = {
   searchable: true,
   international: true,
   maxDropdownHeight: 250,
+  searchPlaceholder: 'Search countries',
+  selectCountryLabel: 'Select country',
 } satisfies Partial<PhoneInputProps>;
 
 export const PhoneInput = factory<PhoneInputFactory>((_props) => {
@@ -165,6 +176,9 @@ export const PhoneInput = factory<PhoneInputFactory>((_props) => {
     onDropdownClose,
     withChevron,
     nothingFoundMessage,
+    searchPlaceholder,
+    selectCountryLabel,
+    getCountryLabel,
     autoComplete,
     ref,
     ...others
@@ -188,6 +202,7 @@ export const PhoneInput = factory<PhoneInputFactory>((_props) => {
   const internalRef = useRef<HTMLInputElement>(null);
   const inputRef = useMergedRef(ref, internalRef);
   const countryLockedRef = useRef(false);
+  const lastEmittedValueRef = useRef<string | undefined>(undefined);
 
   const { countries: filteredCountries, preferredList } = useMemo(
     () =>
@@ -248,7 +263,8 @@ export const PhoneInput = factory<PhoneInputFactory>((_props) => {
     (detected.dialCode !== current?.dialCode || matchesAreaCode(detected, rawValue));
 
   useEffect(() => {
-    const detected = value ? guessCountry(value, filteredCountries) : undefined;
+    const isOwnEcho = value !== undefined && value === lastEmittedValueRef.current;
+    const detected = value && !isOwnEcho ? guessCountry(value, filteredCountries) : undefined;
 
     if (detected) {
       if (isDetectedCountryDifferent(detected, selectedCountry, value ?? '')) {
@@ -266,6 +282,12 @@ export const PhoneInput = factory<PhoneInputFactory>((_props) => {
       }
     }
   }, [value, filteredCountries]);
+
+  useEffect(() => {
+    if (combobox.dropdownOpened) {
+      combobox.selectFirstOption();
+    }
+  }, [search]);
 
   const toDisplayValue = (formatted: string, country: PhoneInputCountryData | null) =>
     international || !country ? formatted : formatted.replace(`+${country.dialCode} `, '');
@@ -293,10 +315,15 @@ export const PhoneInput = factory<PhoneInputFactory>((_props) => {
     [international]
   );
 
+  const emitChange = (rawValue: string, details: PhoneInputChangeDetails) => {
+    lastEmittedValueRef.current = rawValue;
+    setValue(rawValue);
+    onChange?.(rawValue, details);
+  };
+
   const handleValueChange = (rawValue: string, country: PhoneInputCountryData | null) => {
     const formattedValue = country ? formatPhoneNumber(rawValue, country) : rawValue;
-    setValue(rawValue);
-    onChange?.(rawValue, { formattedValue, country });
+    emitChange(rawValue, { formattedValue, country });
   };
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -305,14 +332,14 @@ export const PhoneInput = factory<PhoneInputFactory>((_props) => {
     const cursorPos = input.selectionStart ?? inputValue.length;
     const digitsOnly = getDigits(inputValue).replace(/^\+/, '');
     const hasPlus = inputValue.includes('+');
-    const canAutoDetect = (withCountryAutoDetect || !selectedCountry) && !countryLockedRef.current;
+    const autoDetectEnabled = withCountryAutoDetect || !selectedCountry;
+    const canAutoDetect = autoDetectEnabled && !countryLockedRef.current;
 
     if (!digitsOnly) {
       if (withCountryAutoDetect || !selectedCountry) {
         countryLockedRef.current = false;
         if (hasPlus) {
-          setValue('+');
-          onChange?.('+', { formattedValue: '+', country: selectedCountry });
+          emitChange('+', { formattedValue: '+', country: selectedCountry });
           requestAnimationFrame(() => {
             input.setSelectionRange(1, 1);
           });
@@ -332,10 +359,29 @@ export const PhoneInput = factory<PhoneInputFactory>((_props) => {
       return;
     }
 
-    const fullRaw = buildRawValue(inputValue, { canAutoDetect, international, selectedCountry });
+    const typedRaw = getDigits(inputValue);
+    const lockedDetected =
+      autoDetectEnabled &&
+      countryLockedRef.current &&
+      selectedCountry &&
+      (international || typedRaw.startsWith('+'))
+        ? guessCountry(typedRaw, filteredCountries)
+        : undefined;
+    const unlock = !!lockedDetected && lockedDetected.dialCode !== selectedCountry?.dialCode;
+    const detectNow = canAutoDetect || unlock;
+
+    if (unlock) {
+      countryLockedRef.current = false;
+    }
+
+    const fullRaw = buildRawValue(inputValue, {
+      canAutoDetect: detectNow,
+      international,
+      selectedCountry,
+    });
     let country = selectedCountry;
 
-    if (canAutoDetect) {
+    if (detectNow) {
       const detected = guessCountry(fullRaw, filteredCountries);
       if (detected && isDetectedCountryDifferent(detected, selectedCountry, fullRaw)) {
         country = detected;
@@ -344,7 +390,7 @@ export const PhoneInput = factory<PhoneInputFactory>((_props) => {
       }
     }
 
-    const newRaw = canAutoDetect ? fullRaw : clampToMask(fullRaw, country);
+    const newRaw = detectNow ? fullRaw : clampToMask(fullRaw, country);
     const newFormatted = country ? formatPhoneNumber(newRaw, country) : newRaw;
     const newDisplayRaw =
       international || !country ? newRaw : newRaw.slice(country.dialCode.length + 1);
@@ -355,8 +401,7 @@ export const PhoneInput = factory<PhoneInputFactory>((_props) => {
       toDisplayValue(newFormatted, country)
     );
 
-    setValue(newRaw);
-    onChange?.(newRaw, { formattedValue: newFormatted, country });
+    emitChange(newRaw, { formattedValue: newFormatted, country });
 
     requestAnimationFrame(() => {
       input.setSelectionRange(newCursor, newCursor);
@@ -406,9 +451,17 @@ export const PhoneInput = factory<PhoneInputFactory>((_props) => {
     [filteredCountries, preferredIso2Set]
   );
 
-  const searchedCountries = search ? filterCountries(mainCountries, search) : mainCountries;
+  const searchedCountries = search
+    ? filterCountries(mainCountries, search, getCountryLabel)
+    : mainCountries;
 
-  const searchedPreferred = search ? filterCountries(preferredList, search) : preferredList;
+  const searchedPreferred = search
+    ? filterCountries(preferredList, search, getCountryLabel)
+    : preferredList;
+
+  const countryButtonLabel = selectedCountry
+    ? (getCountryLabel?.(selectedCountry) ?? selectedCountry.name)
+    : selectCountryLabel;
 
   const countryButtonContent = renderFlag ? (
     <span {...getStyles('countryButtonFlag')}>{renderFlag(selectedCountry)}</span>
@@ -438,7 +491,7 @@ export const PhoneInput = factory<PhoneInputFactory>((_props) => {
               type="button"
               disabled={disabled || readOnly}
               onClick={() => combobox.toggleDropdown()}
-              aria-label={selectedCountry ? selectedCountry.name : 'Select country'}
+              aria-label={countryButtonLabel}
               aria-haspopup="listbox"
               aria-expanded={combobox.dropdownOpened}
               aria-controls={
@@ -474,7 +527,7 @@ export const PhoneInput = factory<PhoneInputFactory>((_props) => {
               setSearch(event.currentTarget.value);
               combobox.resetSelectedOption();
             }}
-            placeholder="Search countries"
+            placeholder={searchPlaceholder}
           />
         )}
 

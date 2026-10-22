@@ -41,7 +41,8 @@ export function getCountries(
 
 export function filterCountries(
   countries: PhoneInputCountryData[],
-  search: string
+  search: string,
+  getCountryLabel?: (country: PhoneInputCountryData) => string
 ): PhoneInputCountryData[] {
   if (!search) {
     return countries;
@@ -51,6 +52,10 @@ export function filterCountries(
 
   return countries.filter((c) => {
     if (c.name.toLowerCase().includes(term)) {
+      return true;
+    }
+
+    if (getCountryLabel && getCountryLabel(c).toLowerCase().includes(term)) {
       return true;
     }
 

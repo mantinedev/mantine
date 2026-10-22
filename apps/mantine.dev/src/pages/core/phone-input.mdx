@@ -68,6 +68,12 @@ types a dial code. For example, typing `+44` will switch to United Kingdom.
 Use `renderCountryOption` to customize how countries are displayed in the dropdown.
 This can be used to translate country names to a different language.
 
+`getCountryLabel` returns the translated name of a country. It is used as the
+country button label for screen readers and in the dropdown search, so users
+can search by translated names. `searchPlaceholder` and `selectCountryLabel`
+translate the search input placeholder and the button label shown before a
+country is selected:
+
 <Demo data={PhoneInputDemos.localization} />
 
 ## Dropdown position

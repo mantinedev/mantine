@@ -88,15 +88,20 @@ describe('@mantine/core/Mentions/use-mentions-query', () => {
 
   it('keeps the items of the same query while it is refetched and bumps the generation', async () => {
     const requests: ReturnType<typeof deferred>[] = [];
-    const makeData = () => () => {
+    const data = () => {
       const request = deferred();
       requests.push(request);
       return request.promise;
     };
+    const base = createSource(data);
+    const withMax = (maxSuggestions: number): ResolvedMentionSource => ({
+      ...base,
+      props: { ...base.props, maxSuggestions },
+    });
 
     const { result, rerender } = renderHook(
       ({ source }) => useMentionsQuery({ source, query: 'wa', enabled: true, filter: undefined }),
-      { initialProps: { source: createSource(makeData()) } }
+      { initialProps: { source: withMax(10) } }
     );
     await flush();
 
@@ -104,7 +109,7 @@ describe('@mantine/core/Mentions/use-mentions-query', () => {
       requests[0].resolve([walter]);
     });
 
-    rerender({ source: createSource(makeData()) });
+    rerender({ source: withMax(5) });
     await flush();
     expect(result.current).toEqual({ items: [walter], loading: true, error: null, generation: 1 });
 
@@ -112,5 +117,44 @@ describe('@mantine/core/Mentions/use-mentions-query', () => {
       requests[1].resolve([jesse]);
     });
     expect(result.current).toEqual({ items: [jesse], loading: false, error: null, generation: 2 });
+  });
+
+  it('does not call data again when its identity changes while the query is unchanged', async () => {
+    const calls: string[] = [];
+    const makeData = () => async (query: string) => {
+      calls.push(query);
+      return [walter];
+    };
+
+    const { result, rerender } = renderHook(
+      ({ source }) => useMentionsQuery({ source, query: 'wa', enabled: true, filter: undefined }),
+      { initialProps: { source: createSource(makeData()) } }
+    );
+    await flush();
+    expect(calls).toEqual(['wa']);
+    expect(result.current.items).toEqual([walter]);
+
+    rerender({ source: createSource(makeData()) });
+    await flush();
+    expect(calls).toEqual(['wa']);
+    expect(result.current).toEqual({ items: [walter], loading: false, error: null, generation: 1 });
+  });
+
+  it('uses the latest data function when the query changes', async () => {
+    const calls: string[] = [];
+    const makeData = (tag: string) => async (query: string) => {
+      calls.push(`${tag}:${query}`);
+      return [walter];
+    };
+
+    const { rerender } = renderHook(
+      ({ source, query }) => useMentionsQuery({ source, query, enabled: true, filter: undefined }),
+      { initialProps: { source: createSource(makeData('a')), query: 'w' } }
+    );
+    await flush();
+
+    rerender({ source: createSource(makeData('b')), query: 'wa' });
+    await flush();
+    expect(calls).toEqual(['a:w', 'b:wa']);
   });
 });

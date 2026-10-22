@@ -15,7 +15,7 @@ import {
 import { Combobox, ComboboxProps, useCombobox } from '../Combobox';
 import { __BaseInputProps, __InputStylesNames } from '../Input';
 import { InputBase } from '../InputBase';
-import { detectQuery, type ActiveMentionQuery } from './detect-query';
+import { detectQuery, isQueryInText, type ActiveMentionQuery } from './detect-query';
 import { buildHighlightSegments } from './highlight-segments';
 import { Mention, MentionProps } from './Mention';
 import type {
@@ -233,7 +233,7 @@ export const Mentions = factory<MentionsFactory>((_props) => {
   const inlineSuggestionRef = useRef<HTMLDivElement>(null);
   const mergedRef = useMergedRef(controlRef, ref);
 
-  const [query, setQuery] = useState<ActiveMentionQuery | null>(null);
+  const [proposedQuery, setQuery] = useState<ActiveMentionQuery | null>(null);
 
   const combobox = useCombobox({
     onDropdownClose: () => combobox.resetSelectedOption(),
@@ -258,6 +258,10 @@ export const Mentions = factory<MentionsFactory>((_props) => {
   const { plainText } = walk;
   const selectionStates = getSelectionStates(walk.spans, selection.start, selection.end);
   const segments = buildHighlightSegments(plainText, walk.spans, sources, selectionStates);
+  const query =
+    proposedQuery && isQueryInText(proposedQuery, plainText, sources, walk.spans)
+      ? proposedQuery
+      : null;
 
   const activeSource = query ? sources[query.sourceIndex] : null;
   const queryState = useMentionsQuery({
@@ -380,6 +384,7 @@ export const Mentions = factory<MentionsFactory>((_props) => {
     enabled: suggestionsDisplay === 'inline',
     query,
     queryState,
+    ignoreAccents: activeSource?.props.ignoreAccents,
     selection,
     plainText,
     onAccept: handleOptionSubmit,

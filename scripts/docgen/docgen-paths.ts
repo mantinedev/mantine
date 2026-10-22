@@ -132,6 +132,7 @@ const FILES_PATHS = getPaths([
   // ColorPicker
   'packages/@mantine/core/src/components/ColorPicker/AlphaSlider/AlphaSlider.tsx',
   'packages/@mantine/core/src/components/ColorPicker/HueSlider/HueSlider.tsx',
+  'packages/@mantine/core/src/components/Mentions/Mention.tsx',
 
   // Spotlight
   'packages/@mantine/spotlight/src/Spotlight.tsx',

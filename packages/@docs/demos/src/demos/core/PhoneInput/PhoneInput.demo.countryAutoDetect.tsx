@@ -28,6 +28,7 @@ function Demo() {
     <PhoneInput
       label="Phone number"
       placeholder="Type +44 to switch to UK"
+      defaultCountry="us"
       withCountryAutoDetect
       renderFlag={(country) => (
         <img

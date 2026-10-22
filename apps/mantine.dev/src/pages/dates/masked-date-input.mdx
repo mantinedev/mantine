@@ -67,7 +67,7 @@ The default order is `['day', 'month', 'year']`.
 ## Min and max dates
 
 Set the `minDate` and `maxDate` props to restrict the selectable date range. If a value outside
-the allowed range is entered, it will be clamped to the nearest valid date on blur.
+the allowed range is entered, it is clamped to the nearest valid date when the input loses focus.
 
 <Demo data={MaskedDateInputDemos.minMax} />
 
@@ -100,8 +100,9 @@ for each time field when using arrow keys:
 
 ## Paste events
 
-By default, `MaskedDateInput` does not handle paste events. With the `pasteSplit` prop you can
-provide a custom paste parser that extracts day, month, and year values from a pasted string:
+By default, `MaskedDateInput` handles pasted values in `YYYY-MM-DD` and `YYYY-MM-DD HH:mm:ss`
+formats. With the `pasteSplit` prop you can provide a custom paste parser that extracts day,
+month, and year values from a pasted string:
 
 <Demo data={MaskedDateInputDemos.pasteSplit} />
 

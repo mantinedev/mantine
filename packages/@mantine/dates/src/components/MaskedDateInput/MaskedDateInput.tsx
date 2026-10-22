@@ -11,6 +11,7 @@ import {
   ElementProps,
   factory,
   Factory,
+  Input,
   InputBase,
   InputVariant,
   MantineSize,
@@ -327,6 +328,7 @@ export const MaskedDateInput = factory<MaskedDateInputFactory>((_props) => {
     getDayProps,
     getMonthControlProps,
     getYearControlProps,
+    ref,
     ...others
   } = props;
 
@@ -384,13 +386,11 @@ export const MaskedDateInput = factory<MaskedDateInputFactory>((_props) => {
   const hasFocusRef = useRef(false);
   const [dropdownOpened, setDropdownOpened] = useState(false);
 
-  const _wrapperRef = useRef<HTMLDivElement>(null);
-  const _dropdownRef = useRef<HTMLDivElement>(null);
+  const [wrapperNode, setWrapperNode] = useState<HTMLDivElement | null>(null);
+  const [dropdownNode, setDropdownNode] = useState<HTMLDivElement | null>(null);
+  const _wrapperRef = useMergedRef(setWrapperNode, ref);
 
-  useClickOutside(() => setDropdownOpened(false), undefined, [
-    _wrapperRef.current,
-    _dropdownRef.current,
-  ]);
+  useClickOutside(() => setDropdownOpened(false), undefined, [wrapperNode, dropdownNode]);
 
   const handleFocus = (event: React.FocusEvent<any>) => {
     if (!hasFocusRef.current) {
@@ -402,6 +402,7 @@ export const MaskedDateInput = factory<MaskedDateInputFactory>((_props) => {
   const handleBlur = (event: React.FocusEvent<HTMLDivElement>) => {
     if (!event.currentTarget.contains(event.relatedTarget)) {
       hasFocusRef.current = false;
+      controller.clampToRange();
       onBlur?.(event);
     }
   };
@@ -447,10 +448,10 @@ export const MaskedDateInput = factory<MaskedDateInputFactory>((_props) => {
     }
   };
 
+  const yearComplete = controller.values.year !== null && controller.values.year >= 1000;
+
   const currentDateValue =
-    controller.values.day !== null &&
-    controller.values.month !== null &&
-    controller.values.year !== null
+    controller.values.day !== null && controller.values.month !== null && yearComplete
       ? `${String(controller.values.year).padStart(4, '0')}-${String(controller.values.month).padStart(2, '0')}-${String(controller.values.day).padStart(2, '0')}`
       : null;
 
@@ -485,7 +486,10 @@ export const MaskedDateInput = factory<MaskedDateInputFactory>((_props) => {
     },
   });
 
-  const dayMax = getDaysInMonth(controller.values.month, controller.values.year);
+  const dayMax = getDaysInMonth(
+    controller.values.month,
+    yearComplete ? controller.values.year : null
+  );
 
   const dateFields: Record<string, React.ReactNode> = {
     day: (
@@ -651,7 +655,12 @@ export const MaskedDateInput = factory<MaskedDateInputFactory>((_props) => {
                 scrollAreaProps: undefined,
               }}
             >
-              <div {...getStyles('fieldsGroup')} onBlur={handleBlur} onKeyDown={handleKeyDown}>
+              <div
+                {...getStyles('fieldsGroup')}
+                onBlur={handleBlur}
+                onKeyDown={handleKeyDown}
+                onClickCapture={() => setDropdownOpened(true)}
+              >
                 {fieldsOrder!.map((field, index) => (
                   <Fragment key={field}>
                     {index > 0 && <span {...getStyles('dateSeparator')}>{dateSeparator}</span>}
@@ -787,7 +796,7 @@ export const MaskedDateInput = factory<MaskedDateInputFactory>((_props) => {
       <Popover.Dropdown
         {...getStyles('dropdown')}
         onMouseDown={(event) => event.preventDefault()}
-        ref={_dropdownRef}
+        ref={setDropdownNode}
       >
         <Calendar
           __staticSelector="MaskedDateInput"
@@ -820,7 +829,7 @@ export const MaskedDateInput = factory<MaskedDateInputFactory>((_props) => {
 });
 
 MaskedDateInput.displayName = '@mantine/dates/MaskedDateInput';
-MaskedDateInput.classes = { ...classes, ...Calendar.classes };
+MaskedDateInput.classes = { ...Input.classes, ...Calendar.classes, ...classes };
 
 export namespace MaskedDateInput {
   export type Props = MaskedDateInputProps;

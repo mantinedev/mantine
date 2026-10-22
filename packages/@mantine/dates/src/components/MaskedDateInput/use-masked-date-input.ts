@@ -82,7 +82,7 @@ export function useMaskedDateInput({
     amPmLabels,
   });
 
-  const acceptChange = useRef(true);
+  const emittedValueRef = useRef<string | null | undefined>(undefined);
   const wasInvalidBefore = useRef(!initialDateString.valid);
 
   const [day, setDay] = useState<number | null>(initialParsed.day);
@@ -114,6 +114,19 @@ export function useMaskedDateInput({
       minutes !== null ||
       seconds !== null ||
       amPm !== null);
+
+  const emitChange = (next: string | null) => {
+    emittedValueRef.current = next;
+    onChange?.(next);
+  };
+
+  const isOutOfRange = (dateString: string) => {
+    const dateOnly = dateString.split(' ')[0];
+    return (
+      (!!minDate && dayjs(dateOnly).isBefore(minDate, 'day')) ||
+      (!!maxDate && dayjs(dateOnly).isAfter(maxDate, 'day'))
+    );
+  };
 
   const focus = (field: 'day' | 'month' | 'year' | 'hours' | 'minutes' | 'seconds' | 'amPm') => {
     if (field === 'day') {
@@ -157,8 +170,14 @@ export function useMaskedDateInput({
     const computedSeconds = field === 'seconds' ? val : seconds;
     const computedAmPm = field === 'amPm' ? val : amPm;
 
+    const yearIncomplete = computedYear !== null && computedYear < 1000;
+
     let clampedDay = computedDay;
-    if (computedDay !== null && (field === 'month' || field === 'year' || field === 'day')) {
+    if (
+      computedDay !== null &&
+      !yearIncomplete &&
+      (field === 'month' || field === 'year' || field === 'day')
+    ) {
       const maxDays = getDaysInMonth(computedMonth, computedYear);
       if (computedDay > maxDays) {
         clampedDay = maxDays;
@@ -180,12 +199,6 @@ export function useMaskedDateInput({
     });
 
     if (dateString.valid) {
-      const dateOnly = dateString.value.split(' ')[0];
-      const outOfRange =
-        (minDate && dayjs(dateOnly).isBefore(minDate, 'day')) ||
-        (maxDate && dayjs(dateOnly).isAfter(maxDate, 'day'));
-
-      acceptChange.current = false;
       wasInvalidBefore.current = false;
 
       if (field === 'day') {
@@ -222,15 +235,12 @@ export function useMaskedDateInput({
         setAmPm(val);
       }
 
-      if (!outOfRange) {
-        onChange?.(dateString.value);
+      if (!isOutOfRange(dateString.value)) {
+        emitChange(dateString.value);
       }
-    } else {
-      acceptChange.current = false;
-      if (!wasInvalidBefore.current) {
-        onChange?.(null);
-        wasInvalidBefore.current = true;
-      }
+    } else if (!wasInvalidBefore.current) {
+      emitChange(null);
+      wasInvalidBefore.current = true;
     }
   };
 
@@ -277,7 +287,6 @@ export function useMaskedDateInput({
   };
 
   const clear = () => {
-    acceptChange.current = false;
     setDay(null);
     setMonth(null);
     setYear(null);
@@ -285,13 +294,62 @@ export function useMaskedDateInput({
     setMinutes(null);
     setSeconds(null);
     setAmPm(null);
-    onChange?.(null);
+    emitChange(null);
     wasInvalidBefore.current = true;
     focus(fieldsOrder[0]);
   };
 
+  const clampToRange = () => {
+    if (readOnly || disabled) {
+      return;
+    }
+
+    const current = buildDateString({
+      day,
+      month,
+      year,
+      hours,
+      minutes,
+      seconds,
+      withTime: withTime || false,
+      withSeconds: withSeconds || false,
+      format,
+      amPm,
+      amPmLabels,
+    });
+
+    if (!current.valid || !isOutOfRange(current.value)) {
+      return;
+    }
+
+    const dateOnly = current.value.split(' ')[0];
+    const clampedDate = dayjs(dateOnly).isBefore(minDate, 'day') ? minDate! : maxDate!;
+    const clampedParsed = parseDateString(clampedDate);
+    setDay(clampedParsed.day);
+    setMonth(clampedParsed.month);
+    setYear(clampedParsed.year);
+
+    const next = buildDateString({
+      day: clampedParsed.day,
+      month: clampedParsed.month,
+      year: clampedParsed.year,
+      hours,
+      minutes,
+      seconds,
+      withTime: withTime || false,
+      withSeconds: withSeconds || false,
+      format,
+      amPm,
+      amPmLabels,
+    });
+
+    if (next.valid) {
+      wasInvalidBefore.current = false;
+      emitChange(next.value);
+    }
+  };
+
   const setFromDateString = (dateString: string) => {
-    acceptChange.current = false;
     const _parsed = parseDateString(dateString);
     setDay(_parsed.day);
     setMonth(_parsed.month);
@@ -323,11 +381,15 @@ export function useMaskedDateInput({
 
     wasInvalidBefore.current = !next.valid;
     if (next.valid) {
-      onChange?.(next.value);
+      emitChange(next.value);
     }
   };
 
   const onPaste = (event: React.ClipboardEvent<any>) => {
+    if (readOnly || disabled) {
+      return;
+    }
+
     const pastedValue = event.clipboardData.getData('text');
 
     let parsed: {
@@ -374,16 +436,7 @@ export function useMaskedDateInput({
       amPmLabels,
     });
 
-    if (dateString.valid) {
-      const pastedDateOnly = dateString.value.split(' ')[0];
-      if (minDate && dayjs(pastedDateOnly).isBefore(minDate, 'day')) {
-        return;
-      }
-      if (maxDate && dayjs(pastedDateOnly).isAfter(maxDate, 'day')) {
-        return;
-      }
-
-      acceptChange.current = false;
+    if (dateString.valid && !isOutOfRange(dateString.value)) {
       setDay(parsed.day);
       setMonth(parsed.month);
       setYear(parsed.year);
@@ -393,7 +446,8 @@ export function useMaskedDateInput({
       if (resolvedPasteAmPm !== amPm) {
         setAmPm(resolvedPasteAmPm);
       }
-      onChange?.(dateString.value);
+      wasInvalidBefore.current = false;
+      emitChange(dateString.value);
     }
   };
 
@@ -411,20 +465,21 @@ export function useMaskedDateInput({
     amPmLabels,
   });
 
-  let hiddenInputValue = hiddenInputResult;
-  if (hiddenInputResult.valid) {
-    const dateOnly = hiddenInputResult.value.split(' ')[0];
-    if (minDate && dayjs(dateOnly).isBefore(minDate, 'day')) {
-      hiddenInputValue = { valid: false, value: '' };
-    }
-    if (maxDate && dayjs(dateOnly).isAfter(maxDate, 'day')) {
-      hiddenInputValue = { valid: false, value: '' };
-    }
-  }
+  const hiddenInputValue =
+    hiddenInputResult.valid && !isOutOfRange(hiddenInputResult.value)
+      ? hiddenInputResult.value
+      : '';
 
   useDidUpdate(() => {
-    if (value === null || value === '') {
-      acceptChange.current = false;
+    const normalizedValue = value === '' ? null : value;
+    const isEcho = normalizedValue === emittedValueRef.current;
+    emittedValueRef.current = undefined;
+
+    if (isEcho || normalizedValue === undefined) {
+      return;
+    }
+
+    if (normalizedValue === null) {
       setDay(null);
       setMonth(null);
       setYear(null);
@@ -432,29 +487,33 @@ export function useMaskedDateInput({
       setMinutes(null);
       setSeconds(null);
       setAmPm(null);
-      acceptChange.current = true;
+      wasInvalidBefore.current = true;
       return;
     }
 
-    if (acceptChange.current && typeof value === 'string') {
-      const parsed = parseDateString(value);
-      setDay(parsed.day);
-      setMonth(parsed.month);
-      setYear(parsed.year);
+    const parsed = parseDateString(normalizedValue);
+    const converted = format === '12h' ? convertTo12h(parsed.hours, amPmLabels) : null;
+    setDay(parsed.day);
+    setMonth(parsed.month);
+    setYear(parsed.year);
+    setHours(converted ? converted.hours12 : parsed.hours);
+    setAmPm(converted ? converted.amPm : null);
+    setMinutes(parsed.minutes);
+    setSeconds(parsed.seconds);
 
-      if (format === '12h') {
-        const converted = convertTo12h(parsed.hours, amPmLabels);
-        setHours(converted.hours12);
-        setAmPm(converted.amPm);
-      } else {
-        setHours(parsed.hours);
-      }
-
-      setMinutes(parsed.minutes);
-      setSeconds(parsed.seconds);
-    }
-
-    acceptChange.current = true;
+    wasInvalidBefore.current = !buildDateString({
+      day: parsed.day,
+      month: parsed.month,
+      year: parsed.year,
+      hours: converted ? converted.hours12 : parsed.hours,
+      minutes: parsed.minutes,
+      seconds: parsed.seconds,
+      withTime: withTime || false,
+      withSeconds: withSeconds || false,
+      format,
+      amPm: converted ? converted.amPm : null,
+      amPmLabels,
+    }).valid;
   }, [value]);
 
   return {
@@ -477,9 +536,10 @@ export function useMaskedDateInput({
     setAmPm: onAmPmChange,
     focus,
     clear,
+    clampToRange,
     onPaste,
     setFromDateString,
     isClearable,
-    hiddenInputValue: hiddenInputValue.value,
+    hiddenInputValue,
   };
 }

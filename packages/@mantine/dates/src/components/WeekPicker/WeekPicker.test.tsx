@@ -85,6 +85,55 @@ describe('@mantine/dates/WeekPicker', () => {
     expect(controls[2]).toHaveAttribute('tabindex', '-1');
   });
 
+  it('skips a week disabled through getWeekControlProps in the tab order', () => {
+    const { container } = render(
+      <WeekPicker
+        {...defaultProps}
+        value="2022-04-13"
+        getWeekControlProps={(weekStart) => ({ disabled: weekStart === '2022-04-11' })}
+      />
+    );
+    const controls = weekControls(container);
+    expect(controls[2]).toBeDisabled();
+    expect(controls[2]).toHaveAttribute('data-disabled');
+    expect(controls[2]).toHaveAttribute('tabindex', '-1');
+    expect(controls[0]).toHaveAttribute('tabindex', '0');
+  });
+
+  it('does not select a week disabled through getWeekControlProps when one of its days is clicked', async () => {
+    const spy = jest.fn();
+    const { container } = render(
+      <WeekPicker
+        {...defaultProps}
+        onChange={spy}
+        getWeekControlProps={(weekStart) => ({ disabled: weekStart === '2022-04-11' })}
+      />
+    );
+    const day = container.querySelector('button[aria-label="13 April 2022"]') as HTMLButtonElement;
+    expect(day).toBeDisabled();
+    await userEvent.click(day);
+    expect(spy).not.toHaveBeenCalled();
+    expect(weekControls(container)[2]).not.toHaveAttribute('data-selected');
+  });
+
+  it('keeps focus on the week control when arrow navigation crosses into a month with no enabled weeks', async () => {
+    const { container } = render(
+      <WeekPicker
+        {...defaultProps}
+        getWeekControlProps={(weekStart) => ({ disabled: weekStart < '2022-04-01' })}
+      />
+    );
+    const first = Array.from(weekControls(container)).find((control) => !control.disabled)!;
+    first.focus();
+    await userEvent.keyboard('{ArrowUp}');
+    expect(container.querySelector('.mantine-WeekPicker-calendarHeaderLevel')?.textContent).toBe(
+      'April 2022'
+    );
+    expect(document.activeElement).toBe(
+      Array.from(weekControls(container)).find((control) => !control.disabled)
+    );
+  });
+
   it('selects the week when its control is clicked or activated with keyboard', async () => {
     const spy = jest.fn();
     const { container } = render(<WeekPicker {...defaultProps} onChange={spy} />);

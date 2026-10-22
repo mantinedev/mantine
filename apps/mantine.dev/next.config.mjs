@@ -33,6 +33,7 @@ const nextConfig = {
       '@mantine/lightbox',
       '@mantine/code-highlight',
       '@mantine/dropzone',
+      '@mantine/emoji',
       '@mantine/modals',
       '@mantine/notifications',
       '@mantine/nprogress',

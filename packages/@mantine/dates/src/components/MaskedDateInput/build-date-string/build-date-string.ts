@@ -28,6 +28,10 @@ export function buildDateString(input: BuildDateStringInput): BuildDateStringRes
     return invalid;
   }
 
+  if (input.year < 1000) {
+    return invalid;
+  }
+
   if (input.month < 1 || input.month > 12) {
     return invalid;
   }
@@ -57,7 +61,7 @@ export function buildDateString(input: BuildDateStringInput): BuildDateStringRes
     }
   }
 
-  if (input.format === '12h') {
+  if (input.withTime && input.format === '12h') {
     if (input.amPm == null) {
       return invalid;
     }

@@ -1,4 +1,5 @@
-import { act, fireEvent } from '@testing-library/react';
+import { useState } from 'react';
+import { act, fireEvent, within } from '@testing-library/react';
 import {
   inputDefaultProps,
   inputStylesApiSelectors,
@@ -156,6 +157,19 @@ describe('@mantine/core/PhoneInput', () => {
     const options = screen.getAllByRole('option');
     expect(options.length).toBeGreaterThanOrEqual(1);
     expect(options[0]).toHaveAttribute('value', 'de');
+  });
+
+  it('selects the first filtered option on Enter after typing in search', async () => {
+    const onCountryChange = jest.fn();
+    render(<PhoneInput {...testProps} onCountryChange={onCountryChange} />);
+    await userEvent.click(screen.getByRole('button', { name: /United States/ }));
+
+    await userEvent.type(screen.getByPlaceholderText('Search countries'), 'germ');
+    await userEvent.keyboard('{Enter}');
+
+    expect(onCountryChange).toHaveBeenCalledWith(expect.objectContaining({ iso2: 'de' }));
+    expect(screen.getByRole('button', { name: /Germany/ })).toBeInTheDocument();
+    expect(screen.queryByRole('listbox')).toBe(null);
   });
 
   it('hides search when searchable is false', async () => {
@@ -330,6 +344,150 @@ describe('@mantine/core/PhoneInput', () => {
     );
     expect(screen.getByRole('button', { name: /Canada/ })).toBeInTheDocument();
     expect(onCountryChange).not.toHaveBeenCalled();
+  });
+
+  it('does not re-detect country from the component own onChange echo in controlled mode', async () => {
+    const onCountryChange = jest.fn();
+    function Controlled() {
+      const [value, setValue] = useState('+1');
+      return (
+        <PhoneInput
+          {...testProps}
+          defaultCountry="us"
+          value={value}
+          onChange={setValue}
+          onCountryChange={onCountryChange}
+        />
+      );
+    }
+
+    render(<Controlled />);
+    await userEvent.type(screen.getByRole('textbox'), '4165550199');
+
+    expect((screen.getByRole('textbox') as HTMLInputElement).value).toBe('+1 (416) 555-0199');
+    expect(screen.getByRole('button', { name: /United States/ })).toBeInTheDocument();
+    expect(onCountryChange).not.toHaveBeenCalled();
+  });
+
+  it('auto-detects a different dial code after a country was picked from the dropdown', async () => {
+    const onChange = jest.fn();
+    render(
+      <PhoneInput
+        {...testProps}
+        withCountryAutoDetect
+        onlyCountries={['us', 'gb', 'ca']}
+        onChange={onChange}
+      />
+    );
+
+    await userEvent.click(screen.getByRole('button', { name: /United States/ }));
+    await userEvent.click(screen.getByRole('option', { name: /United Kingdom/ }));
+    expect(screen.getByRole('button', { name: /United Kingdom/ })).toBeInTheDocument();
+
+    fireEvent.change(screen.getByRole('textbox'), { target: { value: '+12025551234' } });
+
+    expect(screen.getByRole('button', { name: /United States/ })).toBeInTheDocument();
+    expect(onChange).toHaveBeenLastCalledWith('+12025551234', expect.anything());
+  });
+
+  it('keeps the lock when national digits are typed with international false', async () => {
+    const onCountryChange = jest.fn();
+    render(
+      <PhoneInput
+        {...testProps}
+        international={false}
+        withCountryAutoDetect
+        onlyCountries={['us', 'ca', 'eg']}
+        onCountryChange={onCountryChange}
+      />
+    );
+
+    await userEvent.click(screen.getByRole('button', { name: /United States/ }));
+    await userEvent.click(screen.getByRole('option', { name: /United States/ }));
+    onCountryChange.mockClear();
+
+    fireEvent.change(screen.getByRole('textbox'), { target: { value: '2045551234' } });
+
+    expect(screen.getByRole('button', { name: /United States/ })).toBeInTheDocument();
+    expect(onCountryChange).not.toHaveBeenCalled();
+  });
+
+  it('keeps the picked country on an area code match while locked', async () => {
+    const onCountryChange = jest.fn();
+    render(
+      <PhoneInput
+        {...testProps}
+        withCountryAutoDetect
+        onlyCountries={['us', 'gb', 'ca']}
+        onCountryChange={onCountryChange}
+      />
+    );
+
+    await userEvent.click(screen.getByRole('button', { name: /United States/ }));
+    await userEvent.click(screen.getByRole('option', { name: /United States/ }));
+    onCountryChange.mockClear();
+
+    fireEvent.change(screen.getByRole('textbox'), { target: { value: '+12045551234' } });
+
+    expect(screen.getByRole('button', { name: /United States/ })).toBeInTheDocument();
+    expect(onCountryChange).not.toHaveBeenCalled();
+  });
+
+  it('matches localized labels from getCountryLabel in search', async () => {
+    const labels: Record<string, string> = { us: 'Estados Unidos', gb: 'Reino Unido' };
+    render(
+      <PhoneInput
+        {...testProps}
+        onlyCountries={['us', 'gb', 'de']}
+        getCountryLabel={(country) => labels[country.iso2] ?? country.name}
+      />
+    );
+
+    await userEvent.click(screen.getByRole('button', { name: 'Estados Unidos' }));
+    await userEvent.type(screen.getByPlaceholderText('Search countries'), 'reino');
+
+    const options = screen.getAllByRole('option');
+    expect(options).toHaveLength(1);
+    expect(options[0]).toHaveAttribute('value', 'gb');
+  });
+
+  it('renders searchPlaceholder and selectCountryLabel', async () => {
+    render(
+      <PhoneInput
+        label="Phone"
+        searchPlaceholder="Buscar países"
+        selectCountryLabel="Seleccionar país"
+      />
+    );
+
+    await userEvent.click(screen.getByRole('button', { name: 'Seleccionar país' }));
+    expect(screen.getByPlaceholderText('Buscar países')).toBeInTheDocument();
+  });
+
+  it('renders renderFlag output in the country button and in options', async () => {
+    render(
+      <PhoneInput
+        {...testProps}
+        onlyCountries={['us', 'gb']}
+        renderFlag={(country) => <span data-testid={`flag-${country?.iso2 ?? 'none'}`} />}
+      />
+    );
+
+    const button = screen.getByRole('button', { name: /United States/ });
+    expect(within(button).getByTestId('flag-us')).toBeInTheDocument();
+    expect(button).not.toHaveTextContent('US');
+
+    await userEvent.click(button);
+    const options = screen.getAllByRole('option');
+    expect(within(options[0]).getByTestId('flag-us')).toBeInTheDocument();
+    expect(within(options[1]).getByTestId('flag-gb')).toBeInTheDocument();
+  });
+
+  it('renders no flag when renderFlag returns null', () => {
+    const { container } = render(<PhoneInput {...testProps} renderFlag={() => null} />);
+    const button = screen.getByRole('button', { name: /United States/ });
+    expect(button).not.toHaveTextContent('US');
+    expect(container.querySelectorAll('img')).toHaveLength(0);
   });
 
   it('auto-detects country from typed dial code when international is false', () => {

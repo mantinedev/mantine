@@ -96,14 +96,14 @@ describe('@mantine/dates/buildDateString', () => {
       buildDateString({
         day: 5,
         month: 3,
-        year: 24,
+        year: 2024,
         hours: null,
         minutes: null,
         seconds: null,
         withTime: false,
         withSeconds: false,
       })
-    ).toEqual({ valid: true, value: '0024-03-05' });
+    ).toEqual({ valid: true, value: '2024-03-05' });
   });
 
   it('converts 12h AM time to 24h correctly', () => {
@@ -156,6 +156,37 @@ describe('@mantine/dates/buildDateString', () => {
         format: '12h',
         amPm: null,
         amPmLabels: { am: 'AM', pm: 'PM' },
+      })
+    ).toEqual({ valid: false, value: '' });
+  });
+  it('ignores amPm for 12h format when withTime is false', () => {
+    expect(
+      buildDateString({
+        day: 15,
+        month: 6,
+        year: 2024,
+        hours: null,
+        minutes: null,
+        seconds: null,
+        withTime: false,
+        withSeconds: false,
+        format: '12h',
+        amPm: null,
+      })
+    ).toEqual({ valid: true, value: '2024-06-15' });
+  });
+
+  it('returns invalid when year is below 1000', () => {
+    expect(
+      buildDateString({
+        day: 15,
+        month: 6,
+        year: 202,
+        hours: null,
+        minutes: null,
+        seconds: null,
+        withTime: false,
+        withSeconds: false,
       })
     ).toEqual({ valid: false, value: '' });
   });

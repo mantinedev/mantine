@@ -4,7 +4,9 @@ import { DateStringValue } from '../../../types';
 interface GetWeekInTabOrderInput {
   dates: DateStringValue[][];
   isDayDisabled: (date: DateStringValue) => boolean;
-  getWeekControlProps: ((weekStart: DateStringValue) => { selected?: boolean }) | undefined;
+  getWeekControlProps:
+    | ((weekStart: DateStringValue) => { selected?: boolean; disabled?: boolean })
+    | undefined;
 }
 
 export function getWeekInTabOrder({
@@ -14,7 +16,7 @@ export function getWeekInTabOrder({
 }: GetWeekInTabOrderInput): number {
   const enabledWeeks = dates
     .map((row, index) => ({ row, index }))
-    .filter(({ row }) => !row.every(isDayDisabled));
+    .filter(({ row }) => !row.every(isDayDisabled) && !getWeekControlProps?.(row[0])?.disabled);
 
   const selectedWeek = enabledWeeks.find(({ row }) => getWeekControlProps?.(row[0])?.selected);
 

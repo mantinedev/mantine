@@ -66,6 +66,19 @@ describe('@mantine/dates/get-week-in-tab-order', () => {
     ).toBe(1);
   });
 
+  it('skips weeks disabled through getWeekControlProps', () => {
+    expect(
+      getWeekInTabOrder({
+        dates,
+        isDayDisabled: () => false,
+        getWeekControlProps: (weekStart) => ({
+          selected: weekStart === '2026-03-16',
+          disabled: weekStart === '2026-03-16',
+        }),
+      })
+    ).toBe(0);
+  });
+
   it('returns -1 when every week is disabled', () => {
     expect(
       getWeekInTabOrder({ dates, isDayDisabled: () => true, getWeekControlProps: undefined })

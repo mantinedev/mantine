@@ -267,6 +267,60 @@ describe('@mantine/emoji/EmojiPickerInput', () => {
     expect(getTrigger(container)).toHaveFocus();
   });
 
+  it('applies style props to the root element instead of the inner input wrapper', () => {
+    const { container } = render(<EmojiPickerInput data={testData} label="Reaction" mt="xl" />);
+    expect(container.querySelector('.mantine-EmojiPickerInput-root')).toHaveStyle({
+      marginTop: 'var(--mantine-spacing-xl)',
+    });
+    expect(container.querySelector('.mantine-EmojiPickerInput-wrapper')).not.toHaveStyle({
+      marginTop: 'var(--mantine-spacing-xl)',
+    });
+  });
+
+  it.each(['readOnly', 'disabled'] as const)(
+    'does not open the picker on click and hides the clear button when %s',
+    async (prop) => {
+      const onOpenedChange = jest.fn();
+      const { container, queryByRole } = render(
+        <EmojiPickerInput
+          data={testData}
+          defaultValue="grinning"
+          clearable
+          popoverProps={popoverProps}
+          onOpenedChange={onOpenedChange}
+          {...{ [prop]: true }}
+        />
+      );
+      await userEvent.click(getTrigger(container));
+      expect(queryByRole('grid')).not.toBeInTheDocument();
+      expect(onOpenedChange).not.toHaveBeenCalled();
+      expect(screen.queryByRole('button', { name: 'Clear emoji' })).not.toBeInTheDocument();
+    }
+  );
+
+  it('honours controlled opened prop', async () => {
+    const onOpenedChange = jest.fn();
+    const { container, queryByRole } = render(
+      <EmojiPickerInput
+        data={testData}
+        opened
+        onOpenedChange={onOpenedChange}
+        popoverProps={popoverProps}
+      />
+    );
+    expect(queryByRole('grid')).toBeInTheDocument();
+    await userEvent.click(getTrigger(container));
+    expect(onOpenedChange).toHaveBeenLastCalledWith(false);
+    expect(queryByRole('grid')).toBeInTheDocument();
+  });
+
+  it('opens on mount with defaultOpened', () => {
+    const { queryByRole } = render(
+      <EmojiPickerInput data={testData} defaultOpened popoverProps={popoverProps} />
+    );
+    expect(queryByRole('grid')).toBeInTheDocument();
+  });
+
   it('supports clearButtonProps', () => {
     render(
       <EmojiPickerInput

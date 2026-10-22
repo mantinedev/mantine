@@ -43,3 +43,22 @@ export function detectQuery(
 
   return overlapsMention ? null : active;
 }
+
+export function isQueryInText(
+  query: ActiveMentionQuery,
+  plainText: string,
+  sources: ResolvedMentionSource[],
+  spans: MentionSpan[] = []
+): boolean {
+  if (query.queryEnd > plainText.length) {
+    return false;
+  }
+
+  const detected = detectQuery(plainText, query.queryEnd, sources, spans);
+  return (
+    detected !== null &&
+    detected.sourceIndex === query.sourceIndex &&
+    detected.queryStart === query.queryStart &&
+    detected.query === query.query
+  );
+}

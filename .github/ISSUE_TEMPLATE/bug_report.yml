@@ -32,6 +32,7 @@ body:
         - '@mantine/code-highlight'
         - '@mantine/modals'
         - '@mantine/dropzone'
+        - '@mantine/emoji'
         - '@mantine/spotlight'
         - '@mantine/nprogress'
         - '@mantine/carousel'

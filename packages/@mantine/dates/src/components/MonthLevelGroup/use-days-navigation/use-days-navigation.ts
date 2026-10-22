@@ -50,6 +50,7 @@ interface PendingFocus {
   step: number;
   month: DateStringValue;
   weekControls: boolean;
+  revert?: boolean;
 }
 
 interface FocusDateInput {
@@ -141,7 +142,7 @@ export function useDaysNavigation({
 
       if (nodes.length === 0) {
         allowCrossing && crossPeriod(current, step, weekControls);
-        return;
+        return false;
       }
 
       const enabled = nodes.filter(isFocusable);
@@ -149,11 +150,31 @@ export function useDaysNavigation({
 
       if (node) {
         node.focus();
-        return;
+        return true;
       }
 
       current = addDays(current, step);
     }
+
+    return false;
+  };
+
+  const revertCrossing = (request: PendingFocus) => {
+    const handler = request.step < 0 ? onNext : onPrevious;
+    const disabled = request.step < 0 ? nextDisabled : previousDisabled;
+
+    if (!handler || disabled) {
+      return;
+    }
+
+    pending.current = {
+      date: addDays(request.date, -request.step),
+      step: -request.step,
+      month,
+      weekControls: request.weekControls,
+      revert: true,
+    };
+    handler();
   };
 
   useEffect(() => {
@@ -161,12 +182,16 @@ export function useDaysNavigation({
     pending.current = null;
 
     if (request && request.month !== month) {
-      focusDate({
+      const focused = focusDate({
         date: request.date,
         step: request.step,
         weekControls: request.weekControls,
         allowCrossing: false,
       });
+
+      if (!focused && !request.revert) {
+        revertCrossing(request);
+      }
     }
   });
 

@@ -1,3 +1,5 @@
+import { createRef, useState } from 'react';
+import { act, fireEvent } from '@testing-library/react';
 import { render, screen, tests, userEvent } from '@mantine-tests/core';
 import {
   MaskedDateInput,
@@ -249,5 +251,260 @@ describe('@mantine/dates/MaskedDateInput', () => {
     await userEvent.type(screen.getByLabelText('test-seconds'), '45');
 
     expect(spy).toHaveBeenCalledWith('2024-06-15 10:30:45');
+  });
+  it('keeps other fields when a field is cleared in controlled mode', async () => {
+    const Wrapper = () => {
+      const [value, setValue] = useState<string | null>('2024-06-15');
+      return (
+        <>
+          <MaskedDateInput {...defaultProps} value={value} onChange={setValue} />
+          <div data-testid="value">{String(value)}</div>
+        </>
+      );
+    };
+    render(<Wrapper />);
+
+    await userEvent.type(screen.getByLabelText('test-day'), '{backspace}');
+
+    expect(screen.getByTestId('value')).toHaveTextContent('null');
+    expect(screen.getByLabelText('test-day')).toHaveValue('');
+    expect(screen.getByLabelText('test-month')).toHaveValue('06');
+    expect(screen.getByLabelText('test-year')).toHaveValue('2024');
+  });
+
+  it('applies external controlled value after a keystroke that did not emit onChange', async () => {
+    const Wrapper = () => {
+      const [value, setValue] = useState<string | null>(null);
+      return (
+        <>
+          <MaskedDateInput {...defaultProps} value={value} onChange={setValue} />
+          <button type="button" onClick={() => setValue('2024-06-15')}>
+            set
+          </button>
+        </>
+      );
+    };
+    render(<Wrapper />);
+
+    await userEvent.type(screen.getByLabelText('test-day'), '1');
+    await userEvent.click(screen.getByRole('button', { name: 'set' }));
+
+    expect(screen.getByLabelText('test-day')).toHaveValue('15');
+    expect(screen.getByLabelText('test-month')).toHaveValue('06');
+    expect(screen.getByLabelText('test-year')).toHaveValue('2024');
+  });
+
+  it('does not clamp the day while the year is incomplete', async () => {
+    const spy = jest.fn();
+    render(<MaskedDateInput {...defaultProps} onChange={spy} />);
+
+    await userEvent.type(screen.getByLabelText('test-day'), '29');
+    await userEvent.type(screen.getByLabelText('test-month'), '2');
+    await userEvent.type(screen.getByLabelText('test-year'), '2024');
+
+    expect(screen.getByLabelText('test-day')).toHaveValue('29');
+    expect(spy).toHaveBeenCalledTimes(1);
+    expect(spy).toHaveBeenCalledWith('2024-02-29');
+  });
+
+  it('calls onChange once when the year is typed digit by digit', async () => {
+    const spy = jest.fn();
+    render(<MaskedDateInput {...defaultProps} onChange={spy} />);
+
+    await userEvent.type(screen.getByLabelText('test-day'), '15');
+    await userEvent.type(screen.getByLabelText('test-month'), '6');
+    await userEvent.type(screen.getByLabelText('test-year'), '2024');
+
+    expect(spy).toHaveBeenCalledTimes(1);
+    expect(spy).toHaveBeenCalledWith('2024-06-15');
+  });
+
+  it('does not emit an out of range date and keeps the hidden input empty', async () => {
+    const spy = jest.fn();
+    const { container } = render(
+      <MaskedDateInput
+        {...defaultProps}
+        name="date"
+        minDate="2024-01-01"
+        maxDate="2024-12-31"
+        onChange={spy}
+      />
+    );
+
+    await userEvent.type(screen.getByLabelText('test-day'), '15');
+    await userEvent.type(screen.getByLabelText('test-month'), '6');
+    await userEvent.type(screen.getByLabelText('test-year'), '2020');
+
+    expect(spy).not.toHaveBeenCalled();
+    expect(container.querySelector('input[name="date"]')).toHaveValue('');
+
+    await userEvent.clear(screen.getByLabelText('test-year'));
+    await userEvent.type(screen.getByLabelText('test-year'), '2024');
+
+    expect(spy).toHaveBeenCalledWith('2024-06-15');
+    expect(container.querySelector('input[name="date"]')).toHaveValue('2024-06-15');
+  });
+
+  it('clamps an out of range date to maxDate when focus leaves the input', async () => {
+    const spy = jest.fn();
+    render(
+      <MaskedDateInput
+        {...defaultProps}
+        defaultValue="2024-06-15"
+        minDate="2024-01-01"
+        maxDate="2024-12-31"
+        onChange={spy}
+      />
+    );
+
+    await userEvent.type(screen.getByLabelText('test-year'), '2025');
+    expect(screen.getByLabelText('test-year')).toHaveValue('2025');
+    expect(spy).not.toHaveBeenCalledWith('2025-06-15');
+
+    await userEvent.tab();
+
+    expect(screen.getByLabelText('test-day')).toHaveValue('31');
+    expect(screen.getByLabelText('test-month')).toHaveValue('12');
+    expect(screen.getByLabelText('test-year')).toHaveValue('2024');
+    expect(spy).toHaveBeenLastCalledWith('2024-12-31');
+  });
+
+  it('clamps an out of range date to minDate when focus leaves the input', async () => {
+    const spy = jest.fn();
+    render(
+      <MaskedDateInput
+        {...defaultProps}
+        defaultValue="2024-06-15"
+        minDate="2024-03-01"
+        maxDate="2024-12-31"
+        onChange={spy}
+      />
+    );
+
+    await userEvent.type(screen.getByLabelText('test-month'), '1');
+    await userEvent.tab();
+
+    expect(screen.getByLabelText('test-day')).toHaveValue('01');
+    expect(screen.getByLabelText('test-month')).toHaveValue('03');
+    expect(screen.getByLabelText('test-year')).toHaveValue('2024');
+    expect(spy).toHaveBeenLastCalledWith('2024-03-01');
+  });
+
+  it('does not clamp an out of range value on blur when readOnly is set', async () => {
+    const spy = jest.fn();
+    render(
+      <MaskedDateInput
+        {...defaultProps}
+        readOnly
+        defaultValue="2025-06-15"
+        maxDate="2024-12-31"
+        onChange={spy}
+      />
+    );
+
+    await userEvent.click(screen.getByLabelText('test-year'));
+    await userEvent.tab();
+
+    expect(screen.getByLabelText('test-year')).toHaveValue('2025');
+    expect(spy).not.toHaveBeenCalled();
+  });
+
+  it('calls onChange with date only value for 12h format without withTime', async () => {
+    const spy = jest.fn();
+    render(<MaskedDateInput {...defaultProps} format="12h" onChange={spy} />);
+
+    await userEvent.type(screen.getByLabelText('test-day'), '15');
+    await userEvent.type(screen.getByLabelText('test-month'), '6');
+    await userEvent.type(screen.getByLabelText('test-year'), '2024');
+
+    expect(spy).toHaveBeenCalledWith('2024-06-15');
+  });
+
+  it('sets fields from a pasted YYYY-MM-DD value by default', () => {
+    const spy = jest.fn();
+    render(<MaskedDateInput {...defaultProps} onChange={spy} />);
+
+    fireEvent.paste(screen.getByLabelText('test-day'), {
+      clipboardData: { getData: () => '2024-06-15' },
+    });
+
+    expect(screen.getByLabelText('test-day')).toHaveValue('15');
+    expect(screen.getByLabelText('test-month')).toHaveValue('06');
+    expect(screen.getByLabelText('test-year')).toHaveValue('2024');
+    expect(spy).toHaveBeenCalledWith('2024-06-15');
+  });
+
+  it('ignores paste when readOnly is set', () => {
+    const spy = jest.fn();
+    render(<MaskedDateInput {...defaultProps} readOnly onChange={spy} />);
+
+    fireEvent.paste(screen.getByLabelText('test-day'), {
+      clipboardData: { getData: () => '2024-06-15' },
+    });
+
+    expect(screen.getByLabelText('test-day')).toHaveValue('');
+    expect(spy).not.toHaveBeenCalled();
+  });
+
+  it('ignores paste when disabled is set', () => {
+    const spy = jest.fn();
+    render(<MaskedDateInput {...defaultProps} disabled onChange={spy} />);
+
+    fireEvent.paste(screen.getByLabelText('test-day'), {
+      clipboardData: { getData: () => '2024-06-15' },
+    });
+
+    expect(screen.getByLabelText('test-day')).toHaveValue('');
+    expect(spy).not.toHaveBeenCalled();
+  });
+
+  it('passes ref to the root element and keeps click outside handling', async () => {
+    const ref = createRef<HTMLDivElement>();
+    render(<MaskedDateInput {...defaultProps} ref={ref} defaultValue="2024-06-15" />);
+
+    expect(ref.current).toBeInstanceOf(HTMLDivElement);
+    expect(ref.current).toContainElement(screen.getByLabelText('test-day'));
+
+    await userEvent.click(screen.getByLabelText('test-day'));
+    expect(screen.getByText('June 2024')).toBeInTheDocument();
+
+    await act(async () => {
+      fireEvent.mouseDown(document.body);
+    });
+    expect(screen.queryByText('June 2024')).not.toBeInTheDocument();
+  });
+
+  it('sets fields when a day is clicked in the dropdown', async () => {
+    const spy = jest.fn();
+    render(<MaskedDateInput {...defaultProps} defaultValue="2024-06-15" onChange={spy} />);
+
+    await userEvent.click(screen.getByLabelText('test-day'));
+    await userEvent.click(screen.getByText('20'));
+
+    expect(screen.getByLabelText('test-day')).toHaveValue('20');
+    expect(screen.getByLabelText('test-month')).toHaveValue('06');
+    expect(screen.getByLabelText('test-year')).toHaveValue('2024');
+    expect(spy).toHaveBeenLastCalledWith('2024-06-20');
+    expect(screen.queryByText('June 2024')).not.toBeInTheDocument();
+  });
+
+  it('reopens the dropdown when an already focused field is clicked after Escape', async () => {
+    render(<MaskedDateInput {...defaultProps} defaultValue="2024-06-15" />);
+
+    await userEvent.click(screen.getByLabelText('test-day'));
+    expect(screen.getByText('June 2024')).toBeInTheDocument();
+
+    await userEvent.keyboard('{Escape}');
+    expect(screen.queryByText('June 2024')).not.toBeInTheDocument();
+
+    await userEvent.click(screen.getByLabelText('test-day'));
+    expect(screen.getByText('June 2024')).toBeInTheDocument();
+  });
+
+  it('does not render dropdown when withDropdown is false', async () => {
+    render(<MaskedDateInput {...defaultProps} defaultValue="2024-06-15" withDropdown={false} />);
+
+    await userEvent.click(screen.getByLabelText('test-day'));
+    expect(screen.queryByText('June 2024')).not.toBeInTheDocument();
   });
 });

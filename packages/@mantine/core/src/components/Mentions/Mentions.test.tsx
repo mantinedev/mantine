@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { act, createEvent, fireEvent, waitFor } from '@testing-library/react';
+import { useForm } from '@mantine/form';
 import {
   inputDefaultProps,
   inputStylesApiSelectors,
@@ -271,6 +272,26 @@ describe('@mantine/core/Mentions', () => {
     });
   });
 
+  describe('form integration', () => {
+    it('keeps working when wired with form.getInputProps', async () => {
+      function Wrapper() {
+        const form = useForm({ initialValues: { comment: '' } });
+        return (
+          <Mentions {...form.getInputProps('comment')}>
+            <Mention trigger="@" data={users} />
+          </Mentions>
+        );
+      }
+
+      const { container } = await renderWithAct(<Wrapper />);
+      const textarea = getTextarea(container);
+      typeInto(textarea, 'h', 1);
+      expect(textarea.value).toBe('h');
+      typeInto(textarea, 'hi', 2);
+      expect(textarea.value).toBe('hi');
+    });
+  });
+
   describe('suggestions', () => {
     it('opens the dropdown with filtered suggestions and inserts a mention', async () => {
       const onChange = jest.fn();
@@ -370,7 +391,11 @@ describe('@mantine/core/Mentions', () => {
               rerender {count}
             </button>
             <Mentions defaultValue="">
-              <Mention trigger="@" data={async () => users.map((user) => ({ ...user }))} />
+              <Mention
+                trigger="@"
+                data={async () => users.map((user) => ({ ...user }))}
+                maxSuggestions={10 + count}
+              />
             </Mentions>
           </>
         );
@@ -674,6 +699,29 @@ describe('@mantine/core/Mentions', () => {
       expect(textarea.selectionStart).toBe(8);
     });
 
+    it('does not open the dropdown or record history when the parent rejects the edit', async () => {
+      const onChange = jest.fn();
+      const { container } = await renderWithAct(
+        <Mentions value="hello" onChange={onChange} nothingFoundMessage="Nothing found">
+          <Mention trigger="@" data={users} />
+        </Mentions>
+      );
+      const textarea = getTextarea(container);
+      textarea.focus();
+      setCaret(textarea, 5);
+      typeInto(textarea, 'hello @', 7);
+      await act(async () => {});
+
+      expect(textarea.value).toBe('hello');
+      expect(onChange).toHaveBeenCalledTimes(1);
+      expect(screen.queryByRole('listbox')).not.toBeInTheDocument();
+      expect(screen.queryByText('Jesse Pinkman')).not.toBeInTheDocument();
+
+      fireEvent.keyDown(textarea, { key: 'z', ctrlKey: true });
+      await act(async () => {});
+      expect(onChange).toHaveBeenCalledTimes(1);
+    });
+
     it('keeps the re-detected query open across repeated undo key presses', async () => {
       const onChange = jest.fn();
       const { container } = await renderWithAct(
@@ -884,6 +932,16 @@ describe('@mantine/core/Mentions', () => {
       expect(getGhost(container)).toHaveTextContent('lter White');
       typeInto(textarea, '@hit');
       expect(getGhost(container)).not.toBeInTheDocument();
+    });
+
+    it('renders the ghost for the first suggestion that starts with the query', async () => {
+      const { container } = await renderInline({}, [
+        users[1],
+        { id: 'saul', display: 'Saul Goodman' },
+      ]);
+      const textarea = getTextarea(container);
+      typeInto(textarea, '@s');
+      expect(getGhost(container)).toHaveTextContent('aul Goodman');
     });
 
     it('does not render the ghost while the query is loading', async () => {

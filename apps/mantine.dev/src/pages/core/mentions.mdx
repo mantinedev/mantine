@@ -80,6 +80,31 @@ function Demo() {
 - `'insert-text'` – text was dragged and dropped into the field
 - `'undo'` and `'redo'` – the change came from the undo history
 
+## Usage with form
+
+`Mentions` `onChange` receives a payload object, so `form.getInputProps` alone does not store
+the markup string. Spread `getInputProps` for `error` and `onBlur`, then set `value` and
+`onChange` yourself:
+
+```tsx
+import { Mentions } from '@mantine/core';
+import { useForm } from '@mantine/form';
+
+function Demo() {
+  const form = useForm({ initialValues: { comment: '' } });
+
+  return (
+    <Mentions
+      {...form.getInputProps('comment')}
+      value={form.values.comment}
+      onChange={(payload) => form.setFieldValue('comment', payload.value)}
+    >
+      <Mentions.Mention trigger="@" data={users} />
+    </Mentions>
+  );
+}
+```
+
 ## onAdd
 
 `onAdd` on `Mentions.Mention` is called when a suggestion is inserted. `startPos` and `endPos`

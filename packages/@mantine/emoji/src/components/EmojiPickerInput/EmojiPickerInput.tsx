@@ -3,6 +3,7 @@ import {
   BoxProps,
   createVarsResolver,
   ElementProps,
+  extractStyleProps,
   factory,
   Factory,
   Input,
@@ -155,6 +156,7 @@ export const EmojiPickerInput = factory<EmojiPickerInputFactory>((_props) => {
     ...others
   } = props;
 
+  const { styleProps, rest } = extractStyleProps(others);
   const inputRef = useRef<HTMLButtonElement>(null);
   const mergedRef = useMergedRef(inputRef, ref);
 
@@ -279,6 +281,7 @@ export const EmojiPickerInput = factory<EmojiPickerInputFactory>((_props) => {
     mod,
     attributes,
     ..._wrapperProps,
+    ...styleProps,
     id: _id,
   };
 
@@ -304,7 +307,7 @@ export const EmojiPickerInput = factory<EmojiPickerInputFactory>((_props) => {
             component="button"
             type="button"
             pointer
-            {...others}
+            {...rest}
             ref={mergedRef}
             classNames={resolvedClassNames}
             styles={resolvedStyles}

@@ -330,7 +330,7 @@ export const Month = factory<MonthFactory>((_props) => {
     const { selected: weekSelected, ...weekControlProps } = __withWeekControls
       ? __getWeekControlProps?.(weekStart) || {}
       : {};
-    const weekDisabled = row.every(isDayDisabled);
+    const weekDisabled = row.every(isDayDisabled) || !!weekControlProps.disabled;
 
     return (
       <tr key={rowIndex} {...getStyles('monthRow')}>

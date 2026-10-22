@@ -1,11 +1,12 @@
 import { useState } from 'react';
 import type { ActiveMentionQuery } from './detect-query';
-import type { MentionsQueryState } from './use-mentions-query';
+import { normalizeMatchText, type MentionsQueryState } from './use-mentions-query';
 
 interface UseMentionsInlineSuggestionInput {
   enabled: boolean;
   query: ActiveMentionQuery | null;
   queryState: MentionsQueryState;
+  ignoreAccents: boolean | undefined;
   selection: { start: number; end: number };
   plainText: string;
   onAccept: (id: string) => void;
@@ -15,6 +16,7 @@ export function useMentionsInlineSuggestion({
   enabled,
   query,
   queryState,
+  ignoreAccents,
   selection,
   plainText,
   onAccept,
@@ -22,22 +24,21 @@ export function useMentionsInlineSuggestion({
   const [dismissedQuery, setDismissedQuery] = useState<string | null>(null);
 
   const queryKey = query ? `${query.sourceIndex}:${query.queryStart}:${query.query}` : null;
-  const candidate =
+  const canSuggest =
     enabled &&
-    query &&
+    query != null &&
     !queryState.loading &&
     queryKey !== dismissedQuery &&
-    selection.start === selection.end
-      ? queryState.items[0]
-      : undefined;
+    selection.start === selection.end &&
+    plainText.slice(query.queryEnd).split('\n')[0] === '';
+  const normalizedQuery = query ? normalizeMatchText(query.query, ignoreAccents) : '';
+  const candidate = canSuggest
+    ? queryState.items.find((item) =>
+        normalizeMatchText(item.display ?? item.id, ignoreAccents).startsWith(normalizedQuery)
+      )
+    : undefined;
   const display = candidate ? (candidate.display ?? candidate.id) : '';
-  const inlineCompletion =
-    candidate &&
-    query &&
-    display.toLowerCase().startsWith(query.query.toLowerCase()) &&
-    plainText.slice(query.queryEnd).split('\n')[0] === ''
-      ? display.slice(query.query.length)
-      : '';
+  const inlineCompletion = candidate && query ? display.slice(query.query.length) : '';
   const inlineItem = inlineCompletion ? candidate : undefined;
 
   const handleInlineKeyDown = (event: React.KeyboardEvent<HTMLTextAreaElement>) => {

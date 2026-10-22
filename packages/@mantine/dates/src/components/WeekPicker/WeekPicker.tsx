@@ -169,6 +169,8 @@ export const WeekPicker: WeekPickerComponent = factory<WeekPickerFactory>((_prop
   const ctx = useDatesContext();
   const firstDayOfWeek = ctx.getFirstDayOfWeek(calendarProps.firstDayOfWeek);
   const [hoveredWeek, setHoveredWeek] = useState<DateStringValue | null>(null);
+  const isWeekDisabled = (weekStart: DateStringValue) =>
+    !!getWeekControlProps?.(weekStart)?.disabled;
 
   const normalizedValue = useMemo(
     () => normalizeWeekValue(value, firstDayOfWeek),
@@ -244,11 +246,16 @@ export const WeekPicker: WeekPickerComponent = factory<WeekPickerFactory>((_prop
         __onDayMouseEnter?.(_event, date);
       }}
       __onDayClick={(_event, date) => {
-        onDateChange(getStartOfWeek(date, firstDayOfWeek));
+        const weekStart = getStartOfWeek(date, firstDayOfWeek);
+        if (isWeekDisabled(weekStart)) {
+          return;
+        }
+        onDateChange(weekStart);
         __onDayClick?.(_event, date);
       }}
       getDayProps={(date) => ({
         ...getWeekPickerDayProps({ date, firstDayOfWeek, hoveredWeek, getControlProps }),
+        ...(isWeekDisabled(getStartOfWeek(date, firstDayOfWeek)) ? { disabled: true } : {}),
         ...calendarProps.getDayProps?.(date),
       })}
       getMonthControlProps={(date) => ({
