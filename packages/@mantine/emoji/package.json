@@ -1,8 +1,19 @@
 {
   "name": "@mantine/emoji",
-  "description": "Emoji picker components for Mantine",
-  "author": "Vitaly Rtishchev <rtivital@gmail.com>",
   "version": "9.0.1",
+  "description": "Emoji picker components for Mantine",
+  "homepage": "https://mantine.dev",
+  "license": "MIT",
+  "author": "Vitaly Rtishchev <rtivital@gmail.com>",
+  "keywords": [
+    "emoji",
+    "emoji-picker",
+    "mantine",
+    "react"
+  ],
+  "sideEffects": [
+    "*.css"
+  ],
   "main": "cjs/index.cjs",
   "module": "esm/index.mjs",
   "types": "lib/index.d.ts",
@@ -20,24 +31,10 @@
     "./styles.css": "./styles.css",
     "./styles.layer.css": "./styles.layer.css"
   },
-  "sideEffects": [
-    "*.css"
-  ],
-  "license": "MIT",
   "repository": {
     "type": "git",
     "url": "https://github.com/mantinedev/mantine.git",
     "directory": "packages/@mantine/emoji"
-  },
-  "homepage": "https://mantine.dev",
-  "keywords": [
-    "react",
-    "mantine",
-    "emoji",
-    "emoji-picker"
-  ],
-  "dependencies": {
-    "@tanstack/react-virtual": "^3.14.13"
   },
   "peerDependencies": {
     "@mantine/core": "9.0.1",
@@ -45,12 +42,15 @@
     "react": "^19.2.0",
     "react-dom": "^19.2.0"
   },
+  "dependencies": {
+    "@tanstack/react-virtual": "^3.14.22"
+  },
   "devDependencies": {
     "@emoji-mart/data": "^1.2.1",
     "@mantine-tests/core": "workspace:*",
     "@mantine/core": "workspace:*",
     "@mantine/hooks": "workspace:*",
-    "react": "19.3.0",
-    "react-dom": "19.3.0"
+    "react": "19.3.1",
+    "react-dom": "19.3.1"
   }
 }
