@@ -24,7 +24,20 @@ export const allVersions = [
     date: 'October 6, 2026',
     github: 'https://github.com/mantinedev/mantine/releases/tag/9.7.0',
     link: 'https://mantine.dev/changelog/9-7-0',
-    patches: [],
+    patches: [
+      {
+        version: '9.7.3',
+        date: 'October 17, 2026',
+      },
+      {
+        version: '9.7.2',
+        date: 'October 11, 2026',
+      },
+      {
+        version: '9.7.1',
+        date: 'October 6, 2026',
+      },
+    ],
   },
   {
     version: '9.6.0',
