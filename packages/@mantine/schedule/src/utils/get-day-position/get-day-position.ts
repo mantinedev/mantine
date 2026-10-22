@@ -17,6 +17,14 @@ interface GetDayPositionInput {
   intervalMinutes?: number;
 }
 
+function toSeconds(hours: number, minutes: number, seconds: number) {
+  return hours * 3600 + minutes * 60 + seconds;
+}
+
+function getWallClockSeconds(date: dayjs.Dayjs) {
+  return toSeconds(date.hour(), date.minute(), date.second());
+}
+
 /** Calculates day position within given start and end time boundaries. Returns top and height in percentages. */
 export function getDayPosition({
   event,
@@ -41,14 +49,21 @@ export function getDayPosition({
     .second(parsedEndTime.seconds);
 
   const intervalSeconds = clampIntervalMinutes(intervalMinutes) * 60;
-  const literalRangeSeconds = literalEnd.diff(boundaryStart, 'second');
+  const boundaryStartSeconds = toSeconds(
+    parsedStartTime.hours,
+    parsedStartTime.minutes,
+    parsedStartTime.seconds
+  );
+  const literalRangeSeconds =
+    toSeconds(parsedEndTime.hours, parsedEndTime.minutes, parsedEndTime.seconds) -
+    boundaryStartSeconds;
   const totalSeconds = Math.ceil(literalRangeSeconds / intervalSeconds) * intervalSeconds;
 
   const clippedEventStart = eventStart.isBefore(boundaryStart) ? boundaryStart : eventStart;
-  const eventStartSeconds = clippedEventStart.diff(boundaryStart, 'second');
+  const eventStartSeconds = getWallClockSeconds(clippedEventStart) - boundaryStartSeconds;
 
   const clippedEventEnd = eventEnd.isAfter(literalEnd) ? literalEnd : eventEnd;
-  const eventEndSeconds = clippedEventEnd.diff(boundaryStart, 'second');
+  const eventEndSeconds = getWallClockSeconds(clippedEventEnd) - boundaryStartSeconds;
 
   const startPercent = (eventStartSeconds / totalSeconds) * 100;
   const endPercent = (eventEndSeconds / totalSeconds) * 100;
