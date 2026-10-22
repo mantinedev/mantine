@@ -53,6 +53,7 @@ export function MenuSelectableItem({
   const subCtx = use(SubMenuContext);
   const theme = useMantineTheme();
   const { dir } = useDirection();
+  const closeKey = dir === 'rtl' ? 'ArrowRight' : 'ArrowLeft';
   const itemRef = useRef<HTMLButtonElement>(null);
 
   const handleClick = createEventHandler<any>(others.onClick, () => {
@@ -81,7 +82,7 @@ export function MenuSelectableItem({
   });
 
   const handleKeydown = createEventHandler<any>(others.onKeyDown, (event) => {
-    if (event.key === 'ArrowLeft' && subCtx) {
+    if (event.key === closeKey && subCtx) {
       subCtx.close();
       subCtx.focusParentItem();
     }

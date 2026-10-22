@@ -1,6 +1,13 @@
 import { useEffect, useRef } from 'react';
 import { useMergedRef } from '@mantine/hooks';
-import { createEventHandler, ElementProps, factory, Factory, useProps } from '../../../core';
+import {
+  createEventHandler,
+  ElementProps,
+  factory,
+  Factory,
+  useDirection,
+  useProps,
+} from '../../../core';
 import { Input, InputProps } from '../../Input/Input';
 import { useMenuContext } from '../Menu.context';
 import classes from '../Menu.module.css';
@@ -67,6 +74,7 @@ export const MenuSearch = factory<MenuSearchFactory>((props) => {
     useProps('MenuSearch', defaultProps, props);
 
   const ctx = useMenuContext();
+  const { dir } = useDirection();
   const inputRef = useRef<HTMLInputElement>(null);
   const mergedRef = useMergedRef(ref, inputRef);
   const onChangeRef = useRef(onChange);
@@ -158,7 +166,10 @@ export const MenuSearch = factory<MenuSearchFactory>((props) => {
           if (target.hasAttribute('data-sub-menu-item')) {
             target.focus();
             target.dispatchEvent(
-              new KeyboardEvent('keydown', { key: 'ArrowRight', bubbles: true })
+              new KeyboardEvent('keydown', {
+                key: dir === 'rtl' ? 'ArrowLeft' : 'ArrowRight',
+                bubbles: true,
+              })
             );
           } else {
             target.click();
