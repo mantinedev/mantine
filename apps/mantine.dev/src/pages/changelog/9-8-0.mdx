@@ -142,3 +142,13 @@ multiple triggers, async data sources with `AbortSignal` cancellation, caret-anc
 suggestions and caret-aware mention styling, all with no third-party dependencies:
 
 <Demo data={MentionsDemos.usage} />
+
+## Other changes
+
+- [DayView](/schedule/day-view/#slot-label-interval) and [WeekView](/schedule/week-view/#slot-label-interval) support `slotLabelInterval` prop to display time labels more often than once per hour
+- [DayView](/schedule/day-view/#business-hours) and [WeekView](/schedule/week-view/#business-hours) `businessHours` prop accepts exact minutes, business hours colors can be changed with CSS variables
+- [MobileMonthView](/schedule/mobile-month-view/#hide-weekend-days) supports `withWeekendDays` prop to hide weekend days
+- [ScrollArea](/core/scroll-area/#offset-size) supports `--scrollarea-offset-size` CSS variable to change the gap reserved by `offsetScrollbars`
+- [Popover](/core/popover/#click-outside) and components based on it support `clickOutsideCapture` prop to close the dropdown when the click target stops event propagation
+- `getUploadImageExtension` in [@mantine/tiptap](/x/tiptap/#pasted-html-content) uploads images embedded in pasted HTML, use `shouldUploadPastedImage` option to control which images are uploaded
+- `@mantine/form` exports `UseContextForm` type
