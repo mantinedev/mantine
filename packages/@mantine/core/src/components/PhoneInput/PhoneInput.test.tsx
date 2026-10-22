@@ -1,4 +1,4 @@
-import { fireEvent } from '@testing-library/react';
+import { act, fireEvent } from '@testing-library/react';
 import {
   inputDefaultProps,
   inputStylesApiSelectors,
@@ -374,7 +374,9 @@ describe('@mantine/core/PhoneInput', () => {
     expect(input.value).toBe('(202) 555-1234');
 
     fireEvent.change(input, { target: { value: '(2092) 555-1234', selectionStart: 4 } });
-    await new Promise((resolve) => setTimeout(resolve, 30));
+    await act(async () => {
+      await new Promise((resolve) => setTimeout(resolve, 30));
+    });
 
     expect(input.value).toBe('(209) 255-5123');
     expect(input.selectionStart).toBe(4);
@@ -386,7 +388,9 @@ describe('@mantine/core/PhoneInput', () => {
     expect(input.value).toBe('(2');
 
     fireEvent.change(input, { target: { value: '9(2', selectionStart: 1 } });
-    await new Promise((resolve) => setTimeout(resolve, 30));
+    await act(async () => {
+      await new Promise((resolve) => setTimeout(resolve, 30));
+    });
 
     expect(input.value).toBe('(92');
     expect(input.selectionStart).toBe(2);
@@ -415,7 +419,9 @@ describe('@mantine/core/PhoneInput', () => {
     );
     await userEvent.click(screen.getByRole('button', { name: /United States/ }));
     await userEvent.click(screen.getByRole('option', { name: /United Kingdom/ }));
-    await new Promise((resolve) => setTimeout(resolve, 30));
+    await act(async () => {
+      await new Promise((resolve) => setTimeout(resolve, 30));
+    });
 
     const input = screen.getByRole('textbox') as HTMLInputElement;
     expect(input.value).not.toContain('+44');
