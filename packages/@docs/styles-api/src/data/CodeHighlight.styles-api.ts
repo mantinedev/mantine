@@ -58,6 +58,7 @@ export const CodeHighlightFileTreeStylesApi: StylesApiData<CodeHighlightFileTree
     folderIcon: 'Folder icon rendered with `getFolderIcon`',
     chevron: 'Folder chevron icon, rendered when `getFolderIcon` is not set',
     select: 'File select displayed below `hideTreeBelow` breakpoint',
+    pinned: 'Pinned files tree, rendered above the main tree when some files have `pinned: true`',
   },
 
   vars: {
@@ -65,6 +66,8 @@ export const CodeHighlightFileTreeStylesApi: StylesApiData<CodeHighlightFileTree
       '--ch-background': 'Background color',
       '--ch-radius': 'Border radius',
       '--ch-tree-width': 'Width of the file tree pane',
+      '--ch-tree-sticky-top':
+        'Top offset of the sticky file tree, controlled by `treeStickyTop` prop',
     },
   },
 

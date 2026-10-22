@@ -23,3 +23,38 @@
 
 <NumberInput label="Tickets" placeholder="Tickets" min={1} max={10} clampBehavior="strict" />
 ```
+
+## A value and its unit are one input
+
+An amount and its currency, an interval and its period (`every 2 weeks`), a duration and its
+unit, a size and `px` / `%`: the unit is a select inside the number input, in the `rightSection`,
+not a separate field or a radio group next to it. The pair reads as one value and takes one
+input's height.
+
+- `NumberInput` with `rightSection={<NativeSelect data={UNITS} aria-label="Unit" variant="unstyled" />}`
+  and `rightSectionWidth` sized to the longest unit label (about 92 for `months`). `NativeSelect`
+  is the right choice inside an input: it has no dropdown of its own to collide with the
+  input's focus ring. The pattern is the Currency input on ui.mantine.dev.
+- The number and the unit are two form fields (`interval`, `frequency`); the composite is one
+  component in its own file (`IntervalInput.tsx`) that takes both `getInputProps` results.
+- A select shows the plural unit always (`weeks`); the singular / plural switch is only for
+  units rendered as text.
+- "Off" states (`Does not repeat`) are a `Switch` or `Checkbox` above the composite that hides
+  it, not a sixth option in the unit select and not a radio group that repeats the units.
+
+```tsx
+<Switch label="Repeats" {...form.getInputProps('repeats', { type: 'checkbox' })} />
+{repeats && (
+  <NumberInput
+    label="Repeat every"
+    placeholder="1"
+    min={1}
+    max={99}
+    hideControls
+    maw={240}
+    rightSection={<NativeSelect data={FREQUENCIES} aria-label="Frequency" variant="unstyled" {...form.getInputProps('frequency')} />}
+    rightSectionWidth={92}
+    {...form.getInputProps('interval')}
+  />
+)}
+```

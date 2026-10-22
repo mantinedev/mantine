@@ -15,7 +15,10 @@ export type QuarterPickerInputStylesNames =
   | __InputStylesNames
   | 'placeholder'
   | QuarterPickerStylesNames
-  | 'submitButton';
+  | 'submitButton'
+  | 'pill'
+  | 'pillsList'
+  | 'inputField';
 
 export interface QuarterPickerInputProps<Type extends DatePickerType = 'default'>
   extends

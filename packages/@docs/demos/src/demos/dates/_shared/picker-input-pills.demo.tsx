@@ -1,0 +1,49 @@
+import { useState } from 'react';
+import { MantineDemo } from '@mantinex/demo';
+
+const getCode = (name: string) => `
+import { useState } from 'react';
+import { ${name} } from '@mantine/dates';
+
+function Demo() {
+  const [value, setValue] = useState<string[]>([]);
+  return (
+    <${name}
+      type="multiple"
+      valueDisplay="pills"
+      label="Pick dates"
+      placeholder="Pick dates"
+      value={value}
+      onChange={setValue}
+      clearable
+    />
+  );
+}
+`;
+
+function getDemo(Component: React.FC<any>) {
+  return () => {
+    const [value, setValue] = useState<string[]>([]);
+    return (
+      <Component
+        type="multiple"
+        valueDisplay="pills"
+        label="Pick dates"
+        placeholder="Pick dates"
+        value={value}
+        onChange={setValue}
+        clearable
+      />
+    );
+  };
+}
+
+export function getPickerInputPillsDemo(Component: React.FC<any>): MantineDemo {
+  return {
+    type: 'code',
+    centered: true,
+    maxWidth: 400,
+    code: getCode(Component.displayName!.replace('@mantine/dates/', '')),
+    component: getDemo(Component),
+  };
+}

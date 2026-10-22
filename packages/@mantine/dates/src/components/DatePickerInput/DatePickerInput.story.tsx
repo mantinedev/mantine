@@ -439,3 +439,45 @@ export function WithArrow() {
     </div>
   );
 }
+
+export function MultiplePills() {
+  const [value, setValue] = useState<string[]>(['2026-10-21', '2026-10-26']);
+  return (
+    <div style={{ padding: 40, maxWidth: 400 }}>
+      <DatePickerInput
+        type="multiple"
+        valueDisplay="pills"
+        label="Dates to skip"
+        placeholder="Pick dates"
+        value={value}
+        onChange={setValue}
+        clearable
+      />
+      <DatePickerInput
+        type="multiple"
+        valueDisplay="pills"
+        label="Read only"
+        value={value}
+        readOnly
+        mt="md"
+      />
+      <DatePickerInput
+        type="multiple"
+        valueDisplay="pills"
+        label="Disabled"
+        value={value}
+        disabled
+        mt="md"
+      />
+      <DatePickerInput
+        type="multiple"
+        valueDisplay="pills"
+        label="With error"
+        error="Pick at least three dates"
+        value={value}
+        onChange={setValue}
+        mt="md"
+      />
+    </div>
+  );
+}

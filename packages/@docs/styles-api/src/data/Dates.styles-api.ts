@@ -255,6 +255,9 @@ export const YearPickerInputStylesApi: StylesApiData<YearPickerInputFactory> = {
     ...YearPickerStylesApi.selectors,
     placeholder: 'Placeholder element',
     submitButton: 'Submit button, displayed in modal and drawer dropdown types',
+    pillsList: 'List of pills, displayed with `type="multiple"` and `valueDisplay="pills"`',
+    pill: 'Pill of a selected date, displayed with `type="multiple"` and `valueDisplay="pills"`',
+    inputField: 'Focusable field inside the pills list, displayed with `valueDisplay="pills"`',
   },
 
   vars: {},
@@ -268,6 +271,9 @@ export const MonthPickerInputStylesApi: StylesApiData<MonthPickerInputFactory> =
     ...MonthPickerStylesApi.selectors,
     placeholder: 'Placeholder element',
     submitButton: 'Submit button, displayed in modal and drawer dropdown types',
+    pillsList: 'List of pills, displayed with `type="multiple"` and `valueDisplay="pills"`',
+    pill: 'Pill of a selected date, displayed with `type="multiple"` and `valueDisplay="pills"`',
+    inputField: 'Focusable field inside the pills list, displayed with `valueDisplay="pills"`',
   },
 
   vars: {},
@@ -281,6 +287,9 @@ export const QuarterPickerInputStylesApi: StylesApiData<QuarterPickerInputFactor
     ...QuarterPickerStylesApi.selectors,
     placeholder: 'Placeholder element',
     submitButton: 'Submit button, displayed in modal and drawer dropdown types',
+    pillsList: 'List of pills, displayed with `type="multiple"` and `valueDisplay="pills"`',
+    pill: 'Pill of a selected date, displayed with `type="multiple"` and `valueDisplay="pills"`',
+    inputField: 'Focusable field inside the pills list, displayed with `valueDisplay="pills"`',
   },
 
   vars: {},
@@ -294,6 +303,9 @@ export const DatePickerInputStylesApi: StylesApiData<DatePickerInputFactory> = {
     ...DatePickerStylesApi.selectors,
     placeholder: 'Placeholder element',
     submitButton: 'Submit button, displayed in modal and drawer dropdown types',
+    pillsList: 'List of pills, displayed with `type="multiple"` and `valueDisplay="pills"`',
+    pill: 'Pill of a selected date, displayed with `type="multiple"` and `valueDisplay="pills"`',
+    inputField: 'Focusable field inside the pills list, displayed with `valueDisplay="pills"`',
   },
 
   vars: {},
@@ -307,6 +319,9 @@ export const WeekPickerInputStylesApi: StylesApiData<WeekPickerInputFactory> = {
     ...WeekPickerStylesApi.selectors,
     placeholder: 'Placeholder element',
     submitButton: 'Submit button, displayed in modal and drawer dropdown types',
+    pillsList: 'List of pills, displayed with `type="multiple"` and `valueDisplay="pills"`',
+    pill: 'Pill of a selected date, displayed with `type="multiple"` and `valueDisplay="pills"`',
+    inputField: 'Focusable field inside the pills list, displayed with `valueDisplay="pills"`',
   },
 
   vars: {},

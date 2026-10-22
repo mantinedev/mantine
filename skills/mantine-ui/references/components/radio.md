@@ -1,11 +1,11 @@
-# Radio, SegmentedControl and coupled fields
+# Radio, Checkbox groups, SegmentedControl and coupled fields
 
 ## Layout of the options
 
-- A `Radio.Group` with more than two options is a vertical `Stack gap="xs"`. A row of three or
+- A `Radio.Group` or `Checkbox.Group` with more than two options is a vertical `Stack gap="xs"`; the same for a row of `Switch`es. A row of three or
   more radios reads as a sentence the eye has to parse (`Does not repeat  Daily  Weekly  Monthly
   Yearly`) and wraps unpredictably on narrow screens.
-- A row is for exactly two options (`Yes / No`, `Personal / Company`).
+- A row is for exactly two options (`Yes / No`, `Personal / Company`). Weekdays, permissions, categories: seven or five checkboxes in a row read as a sentence and wrap; stack them, or use `Chip.Group multiple` when the options are one short word each and a horizontal row is the point (weekday pickers).
 - When the options are short words and there are 2 to 5 of them, `SegmentedControl` is the
   compact horizontal alternative (`fullWidth` under a label, inside `Input.Wrapper
   withBlockChildren`).

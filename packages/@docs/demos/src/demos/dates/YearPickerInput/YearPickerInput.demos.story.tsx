@@ -77,3 +77,8 @@ export const Demo_controller = {
   name: '⭐ Demo: controller',
   render: renderDemo(demos.controller),
 };
+
+export const Demo_pills = {
+  name: '⭐ Demo: pills',
+  render: renderDemo(demos.pills),
+};

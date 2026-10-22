@@ -14,7 +14,10 @@ export type YearPickerInputStylesNames =
   | __InputStylesNames
   | 'placeholder'
   | YearPickerStylesNames
-  | 'submitButton';
+  | 'submitButton'
+  | 'pill'
+  | 'pillsList'
+  | 'inputField';
 
 export interface YearPickerInputProps<Type extends DatePickerType = 'default'>
   extends

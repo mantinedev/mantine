@@ -4,6 +4,7 @@ import { getSharedPickerInputDemos } from '../_shared';
 export const {
   usage,
   multiple,
+  pills,
   range,
   configurator,
   dropdownType,

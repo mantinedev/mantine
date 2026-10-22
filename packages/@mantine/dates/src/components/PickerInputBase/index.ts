@@ -3,6 +3,8 @@ export type {
   PickerInputBaseFactory,
   PickerInputBaseProps,
   PickerInputBaseStylesNames,
+  PickerInputValueDisplay,
+  PickerInputPillsStylesNames,
   DateInputSharedProps,
 } from './PickerInputBase';
 export type {

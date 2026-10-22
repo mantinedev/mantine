@@ -54,6 +54,7 @@ export const InputStylesApi: StylesApiData<InputFactory> = {
 export const InputWrapperStylesApi: StylesApiData<InputWrapperFactory> = {
   selectors: {
     root: 'Root element',
+    childrenWrapper: 'Container of `children`, rendered only when `withBlockChildren` prop is set',
     label: 'Label element',
     required: 'Required asterisk element, rendered inside label',
     description: 'Description element',

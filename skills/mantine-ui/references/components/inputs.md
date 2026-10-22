@@ -150,26 +150,27 @@ an input.
 ## Values collected one at a time
 
 A field that collects several values through a picker (dates to skip, selected entries, tags,
-attendees) shows what was collected next to the picker, as compactly as the input itself:
+attendees) shows what was collected inside the input, as compactly as the input itself:
 
-- Values with no fields of their own (a date, a key, a tag) are pills: `Pill.Group` directly under
-  the picker (`mt="xs"`) with `withRemoveButton`, or the picker itself is a `PillsInput` (see
-  [custom inputs](#custom-inputs-that-open-a-picker)). Never a stack of bordered `Surface` rows
-  with a trash `ActionIcon`: such rows are taller than the input above them, and five skipped
-  dates become a card taller than the rest of the form.
-- Bordered rows are for items with several fields each (positions, line items, invitees with a
-  role), see [surface](surface.md).
-- The collected values have a caption that says what they are. Pills under the `Exceptions`
-  picker inherit its label; a list rendered elsewhere gets its own `Input.Label` ("Skipped
-  dates").
+- Several dates: `DatePickerInput type="multiple" valueDisplay="pills"`. The selected dates are
+  pills inside the input with a remove button each, Backspace removes the last one, the calendar
+  adds more. Nothing to build. (9.x has no `valueDisplay`: render `Pill.Group mt="xs"` under the
+  picker instead.)
+- Several keys, tags or entries picked elsewhere: a `PillsInput`-based input, see
+  [custom inputs](#custom-inputs-that-open-a-picker).
+- Never a stack of bordered `Surface` rows with a trash `ActionIcon` for values that have no
+  fields of their own: such rows are taller than the input above them, and five skipped dates
+  become a card taller than the rest of the form. Bordered rows are for items with several fields
+  each (positions, line items, invitees with a role), see [surface](surface.md).
 
 ```tsx
-<DatePickerInput label="Exceptions" placeholder="Pick a date to skip" value={null} onChange={addException} />
-{exceptions.length > 0 && (
-  <Pill.Group mt="xs">
-    {exceptions.map((date) => (
-      <Pill key={date} withRemoveButton onRemove={() => remove(date)}>{formatDate(date)}</Pill>
-    ))}
-  </Pill.Group>
-)}
+<DatePickerInput
+  type="multiple"
+  valueDisplay="pills"
+  label="Exceptions"
+  placeholder="Pick dates to skip"
+  minDate={start}
+  excludeDate={(date) => !isInSeries(rule, date)}
+  {...form.getInputProps('exceptions')}
+/>
 ```

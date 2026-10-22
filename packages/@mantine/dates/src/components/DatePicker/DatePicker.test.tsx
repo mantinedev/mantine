@@ -169,9 +169,7 @@ describe('@mantine/dates/DatePicker', () => {
   });
 
   it('supports enhanced keyboard navigation', async () => {
-    render(
-      <DatePicker {...defaultProps} ariaLabels={{ monthLevelControl: 'month-level' }} />
-    );
+    render(<DatePicker {...defaultProps} ariaLabels={{ monthLevelControl: 'month-level' }} />);
     const levelControl = () => screen.getByLabelText('month-level');
     levelControl().focus();
 

@@ -14,7 +14,10 @@ export type DatePickerInputStylesNames =
   | __InputStylesNames
   | 'placeholder'
   | DatePickerStylesNames
-  | 'submitButton';
+  | 'submitButton'
+  | 'pill'
+  | 'pillsList'
+  | 'inputField';
 
 export interface DatePickerInputProps<Type extends DatePickerType = 'default'>
   extends

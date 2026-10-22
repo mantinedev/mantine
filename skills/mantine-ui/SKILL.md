@@ -39,17 +39,18 @@ component you are about to use, then write the UI.
 - **`Input.Wrapper` around anything that is not an input gets `withBlockChildren`**
   (`Dropzone`, `SegmentedControl`, `RichTextEditor`, a button with pills under it): without it the
   child sticks to the description. 9.x: wrap the child in a `div` with the margin instead.
-- **Radios stack.** A `Radio.Group` with more than two options is a vertical `Stack gap="xs"`;
-  a row holds two options at most, `SegmentedControl` is the horizontal form for short words.
+- **Radios and checkboxes stack.** A `Radio.Group` or `Checkbox.Group` with more than two
+  options is a vertical `Stack gap="xs"`; a row holds two options at most. `SegmentedControl`
+  (one choice) and `Chip.Group multiple` (several) are the horizontal forms for short words.
   See [radio](references/components/radio.md).
 - **Coupled fields are one block.** A field and the inputs it reveals (`Repeat` + `Repeat
   every`, `Ends` + count or date) sit in a `Stack gap="xs"` of their own, right under each
   other, so the form's larger gap separates groups, not members of a group.
 - **`Select` is `searchable` only above about 15 options.** Twelve timezones or five statuses
   are scanned, not searched. See [select](references/components/select.md).
-- **Collected values are pills.** Dates, keys and tags gathered one at a time show as
-  `Pill.Group` under their picker with the picker's label as caption, never as bordered rows
-  with trash icons. See [inputs](references/components/inputs.md#values-collected-one-at-a-time).
+- **Collected values are pills inside the input.** Several dates are
+  `DatePickerInput type="multiple" valueDisplay="pills"`; keys and tags picked elsewhere live in
+  a `PillsInput`-based input; never bordered rows with trash icons. See [inputs](references/components/inputs.md#values-collected-one-at-a-time).
 - **Dates are typed first.** `MaskedDateInput` for a single date and `MaskedDateInput withTime`
   for a moment; `DatePickerInput` only for dates found by browsing a calendar and for ranges
   (`numberOfColumns={2}`); never a date input next to a `TimeInput`, never day / month / year
@@ -62,6 +63,10 @@ component you are about to use, then write the UI.
   field, same wording as inline. See [alert](references/components/alert.md).
 - **Defaults only for settings.** Preselect what nearly everyone keeps (`Does not repeat`, the
   browser timezone); questions start empty and a required question is never preselected.
+- **A value and its unit are one input.** Amount + currency, interval + period (`every 2
+  weeks`), size + `px`: `NumberInput` with a `NativeSelect` in the `rightSection`, never a
+  number field beside a radio group or a second select. See
+  [number-input](references/components/number-input.md#a-value-and-its-unit-are-one-input).
 - **Custom inputs look like inputs.** A value picked in a modal or a popover is displayed in an
   `Input`-based component, never as a `Button` with chips under it: `PillsInput` with pills for
   several values (like `MultiSelect`), `InputBase readOnly pointer` with the value as text for one

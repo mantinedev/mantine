@@ -15,7 +15,10 @@ export type WeekPickerInputStylesNames =
   | __InputStylesNames
   | 'placeholder'
   | WeekPickerStylesNames
-  | 'submitButton';
+  | 'submitButton'
+  | 'pill'
+  | 'pillsList'
+  | 'inputField';
 
 export interface WeekPickerInputProps<Type extends DatePickerType = 'default'>
   extends

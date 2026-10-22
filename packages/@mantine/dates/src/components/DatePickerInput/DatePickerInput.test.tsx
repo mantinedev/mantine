@@ -10,7 +10,13 @@ import {
   tests,
   userEvent,
 } from '@mantine-tests/core';
-import { clickControl, clickInput, datesTests, expectValue } from '@mantine-tests/dates';
+import {
+  clickControl,
+  clickInput,
+  datesTests,
+  expectOpenedPopover,
+  expectValue,
+} from '@mantine-tests/dates';
 import { DatesProvider } from '../DatesProvider';
 import { DatePickerInput, DatePickerInputProps } from './DatePickerInput';
 
@@ -436,5 +442,95 @@ describe('@mantine/dates/DatePickerInput responsive dropdownType', () => {
     await userEvent.click(screen.getByRole('button', { name: 'Save' }));
     expect(onOpenedChange).toHaveBeenLastCalledWith(false);
     expect(container.querySelector('.mantine-Modal-content')).not.toBeInTheDocument();
+  });
+
+  describe('valueDisplay="pills"', () => {
+    const pillsProps = {
+      ...defaultProps,
+      type: 'multiple' as const,
+      valueDisplay: 'pills' as const,
+      dropdownType: 'popover' as const,
+      valueFormat: 'MMM D',
+      label: 'Dates',
+    };
+
+    it('renders a pill per selected date instead of the joined text', () => {
+      render(<DatePickerInput {...pillsProps} value={['2022-04-11', '2022-05-11']} />);
+      expect(screen.getByText('Apr 11')).toBeInTheDocument();
+      expect(screen.getByText('May 11')).toBeInTheDocument();
+      expect(screen.queryByText('Apr 11, May 11')).not.toBeInTheDocument();
+      expect(screen.getByRole('textbox', { name: 'Dates' })).toHaveAttribute('readonly');
+    });
+
+    it('shows the placeholder while no date is selected', () => {
+      render(<DatePickerInput {...pillsProps} value={[]} placeholder="Pick dates" />);
+      expect(screen.getByRole('textbox', { name: 'Dates' })).toHaveAttribute(
+        'placeholder',
+        'Pick dates'
+      );
+    });
+
+    it('hides the placeholder when dates are selected', () => {
+      render(<DatePickerInput {...pillsProps} value={['2022-04-11']} placeholder="Pick dates" />);
+      expect(screen.getByRole('textbox', { name: 'Dates' })).not.toHaveAttribute('placeholder');
+    });
+
+    it('removes a date with its pill remove button', async () => {
+      const spy = jest.fn();
+      render(
+        <DatePickerInput {...pillsProps} value={['2022-04-11', '2022-05-11']} onChange={spy} />
+      );
+      await userEvent.click(screen.getByLabelText('Remove Apr 11'));
+      expect(spy).toHaveBeenCalledWith(['2022-05-11']);
+    });
+
+    it('removes the last date with Backspace', async () => {
+      const spy = jest.fn();
+      render(
+        <DatePickerInput {...pillsProps} value={['2022-04-11', '2022-05-11']} onChange={spy} />
+      );
+      screen.getByRole('textbox', { name: 'Dates' }).focus();
+      await userEvent.keyboard('{Backspace}');
+      expect(spy).toHaveBeenCalledWith(['2022-04-11']);
+    });
+
+    it('opens the dropdown on click', async () => {
+      const { container } = render(<DatePickerInput {...pillsProps} value={[]} />);
+      await clickInput(container);
+      expectOpenedPopover(container);
+    });
+
+    it('opens the dropdown with Enter on the field', async () => {
+      const { container } = render(<DatePickerInput {...pillsProps} value={[]} />);
+      screen.getByRole('textbox', { name: 'Dates' }).focus();
+      await userEvent.keyboard('{Enter}');
+      expectOpenedPopover(container);
+    });
+
+    it('does not render remove buttons when readOnly', () => {
+      render(<DatePickerInput {...pillsProps} value={['2022-04-11']} readOnly />);
+      expect(screen.queryByLabelText('Remove Apr 11')).not.toBeInTheDocument();
+    });
+
+    it('ignores valueDisplay with other types', () => {
+      const { container } = render(
+        <DatePickerInput {...pillsProps} type="default" value="2022-04-11" />
+      );
+      expectValue(container, 'Apr 11');
+      expect(screen.queryByRole('textbox')).not.toBeInTheDocument();
+    });
+
+    it('supports pill, pillsList and inputField Styles API selectors', () => {
+      const { container } = render(
+        <DatePickerInput
+          {...pillsProps}
+          value={['2022-04-11']}
+          classNames={{ pill: 'test-pill', pillsList: 'test-list', inputField: 'test-field' }}
+        />
+      );
+      expect(container.querySelector('.test-pill')).toBeInTheDocument();
+      expect(container.querySelector('.test-list')).toBeInTheDocument();
+      expect(container.querySelector('.test-field')).toBeInTheDocument();
+    });
   });
 });

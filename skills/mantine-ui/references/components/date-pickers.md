@@ -5,6 +5,7 @@
 | A single date (birth date, document date, due date, start date) | `MaskedDateInput`: typed day / month / year fields with a calendar dropdown |
 | Date and time (event start, deadline with a time) | `MaskedDateInput withTime` |
 | A date found by browsing a calendar (availability, delivery slot) | `DatePickerInput`, with `excludeDate` for unavailable days |
+| Several separate dates (days to skip, delivery days) | `DatePickerInput type="multiple" valueDisplay="pills"` |
 | A period | `DatePickerInput type="range" numberOfColumns={2}`, `MonthPickerInput type="range"`, `YearPickerInput type="range"` |
 | A year or a month | `YearPickerInput`, `MonthPickerInput` |
 | A time alone | `TimeInput` |

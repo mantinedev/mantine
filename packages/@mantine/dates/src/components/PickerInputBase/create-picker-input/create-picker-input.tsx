@@ -6,7 +6,7 @@ import {
   useResolvedStylesApi,
 } from '@mantine/core';
 import { CalendarLevel } from '../../../types';
-import { DateFormatter } from '../../../utils';
+import { DateFormatter, getFormattedDate } from '../../../utils';
 import { pickCalendarProps } from '../../Calendar';
 import { useDatesContext } from '../../DatesProvider';
 import { getSheetPickerProps } from '../get-sheet-picker-props/get-sheet-picker-props';
@@ -73,6 +73,7 @@ export function createPickerInput<Payload extends FactoryPayload>({
       attributes,
       applyOnSubmit,
       controller: controllerProp,
+      valueDisplay,
       ...rest
     } = props;
 
@@ -86,6 +87,8 @@ export function createPickerInput<Payload extends FactoryPayload>({
     const ctx = useDatesContext();
     const resolvedDropdownType = useResolvedDropdownType(dropdownType);
     const isSheet = resolvedDropdownType === 'drawer';
+
+    const formatter = valueFormatter || getValueFormatter?.(calendarProps, ctx);
 
     const pickerInput = usePickerInput({
       useControllerHook,
@@ -103,7 +106,7 @@ export function createPickerInput<Payload extends FactoryPayload>({
       labelSeparator,
       closeOnChange,
       sortDates,
-      valueFormatter: valueFormatter || getValueFormatter?.(calendarProps, ctx),
+      valueFormatter: formatter,
       minDate,
       maxDate,
       disabled: others.disabled,
@@ -113,9 +116,32 @@ export function createPickerInput<Payload extends FactoryPayload>({
       applyOnSubmit,
     });
 
+    const withPills = valueDisplay === 'pills' && type === 'multiple';
+    const multipleValue =
+      withPills && Array.isArray(pickerInput.datesInput._value)
+        ? (pickerInput.datesInput._value as string[])
+        : [];
+    const pillsLabels = withPills
+      ? multipleValue.map((date) =>
+          getFormattedDate({
+            type: 'default',
+            date,
+            locale: ctx.getLocale(locale),
+            format: valueFormat,
+            labelSeparator: ctx.getLabelSeparator(labelSeparator),
+            formatter,
+          })
+        )
+      : undefined;
+    const handleRemovePill = (index: number) =>
+      pickerInput.datesInput.setValue(multipleValue.filter((_, i) => i !== index));
+
     return (
       <PickerInputBase
         formattedValue={pickerInput.datesInput.formattedValue}
+        valueDisplay={valueDisplay}
+        pillsLabels={pillsLabels}
+        onRemovePill={handleRemovePill}
         withPresets={!!presets}
         dropdownOpened={pickerInput.dropdownOpened}
         dropdownHandlers={pickerInput.dropdownHandlers}

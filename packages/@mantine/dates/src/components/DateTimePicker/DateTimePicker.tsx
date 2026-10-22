@@ -31,6 +31,7 @@ import {
   DateInputSharedProps,
   PickerInputBase,
   PickerInputBaseStylesNames,
+  PickerInputPillsStylesNames,
 } from '../PickerInputBase';
 import { getSheetPickerProps } from '../PickerInputBase/get-sheet-picker-props/get-sheet-picker-props';
 import {
@@ -47,7 +48,7 @@ import {
 export type DateTimePickerStylesNames =
   | InlineDateTimePickerStylesNames
   | 'placeholder'
-  | PickerInputBaseStylesNames
+  | Exclude<PickerInputBaseStylesNames, PickerInputPillsStylesNames>
   | CalendarStylesNames;
 
 export interface DateTimePickerProps<Type extends 'default' | 'range' = 'default'>

@@ -14,7 +14,10 @@ export type MonthPickerInputStylesNames =
   | __InputStylesNames
   | 'placeholder'
   | MonthPickerStylesNames
-  | 'submitButton';
+  | 'submitButton'
+  | 'pill'
+  | 'pillsList'
+  | 'inputField';
 
 export interface MonthPickerInputProps<Type extends DatePickerType = 'default'>
   extends
