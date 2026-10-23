@@ -41,7 +41,7 @@
 
   &:where(:hover, :focus, [data-menu-active]) {
     &:where(:not(:disabled, [data-disabled])) {
-      background-color: var(--menu-item-hover, var(--mantine-color-hover-strong));
+      background-color: var(--menu-item-hover, var(--mantine-color-hover));
 
       .chevron,
       .itemDescription {
@@ -52,6 +52,14 @@
 
   &:where([data-sub-menu-item]) {
     padding-inline-end: 5px;
+  }
+
+  &:where([data-with-color]) {
+    @mixin dark {
+      &:where(:hover, :focus, [data-menu-active]):where(:not(:disabled, [data-disabled])) {
+        background-color: color-mix(in srgb, var(--menu-item-hover) 50%, transparent);
+      }
+    }
   }
 }
 

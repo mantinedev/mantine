@@ -92,13 +92,7 @@
 .item {
   --item-border-color: var(--mantine-color-border);
 
-  @mixin where-light {
-    --item-filled-color: var(--mantine-color-gray-0);
-  }
-
-  @mixin where-dark {
-    --item-filled-color: var(--mantine-color-dark-6);
-  }
+  --item-filled-color: var(--mantine-color-surface-muted);
 }
 
 .item--default {

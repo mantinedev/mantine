@@ -55,7 +55,7 @@
 
   @mixin where-hover {
     &:where(:not([data-variant='none'])) {
-      background-color: var(--mantine-color-hover-strong);
+      background-color: var(--mantine-color-hover);
     }
   }
 

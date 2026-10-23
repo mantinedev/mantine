@@ -20,7 +20,7 @@
 
   &:where(:hover, :focus-visible, [data-expanded]) {
     &:where(:not(:disabled, [data-disabled])) {
-      background-color: var(--mantine-color-hover-strong);
+      background-color: var(--mantine-color-hover);
     }
   }
 }

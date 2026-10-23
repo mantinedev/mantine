@@ -15,6 +15,6 @@
 
 .root .closeButton:where(:not([data-disabled], :disabled)) {
   @mixin hover {
-    background-color: var(--mantine-color-hover-strong);
+    background-color: var(--mantine-color-hover);
   }
 }

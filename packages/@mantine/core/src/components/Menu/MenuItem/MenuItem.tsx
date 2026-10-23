@@ -137,6 +137,7 @@ export const MenuItem = polymorphicFactory<MenuItemFactory>((props) => {
       role="menuitem"
       disabled={disabled}
       data-menu-item
+      data-with-color={color && ctx.variant !== 'filled' ? true : undefined}
       data-disabled={disabled || dataDisabled || undefined}
       data-mantine-stop-propagation
       onClick={handleClick}

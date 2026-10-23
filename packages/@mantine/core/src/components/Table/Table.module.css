@@ -10,15 +10,9 @@
 
   --table-border-color: var(--mantine-color-border);
 
-  --table-hover-color: var(--mantine-color-hover-strong);
+  --table-hover-color: var(--mantine-color-hover);
 
-  @mixin where-light {
-    --table-striped-color: var(--mantine-color-gray-0);
-  }
-
-  @mixin where-dark {
-    --table-striped-color: var(--mantine-color-dark-6);
-  }
+  --table-striped-color: var(--mantine-color-surface-muted);
 
   &:where([data-with-table-border]) {
     border: rem(1px) solid var(--table-border-color);
@@ -31,13 +25,7 @@
   &:where([data-variant='vertical']) :where(.th) {
     font-weight: var(--mantine-font-weight-medium);
 
-    @mixin where-light {
-      background-color: var(--mantine-color-gray-0);
-    }
-
-    @mixin where-dark {
-      background-color: var(--mantine-color-dark-6);
-    }
+    background-color: var(--mantine-color-surface-muted);
   }
 }
 
@@ -80,10 +68,14 @@
     }
 
     &:where([data-striped='odd']:nth-of-type(odd)) {
+      --table-hover-color: var(--mantine-color-hover-strong);
+
       background-color: var(--table-striped-color);
     }
 
     &:where([data-striped='even']:nth-of-type(even)) {
+      --table-hover-color: var(--mantine-color-hover-strong);
+
       background-color: var(--table-striped-color);
     }
 

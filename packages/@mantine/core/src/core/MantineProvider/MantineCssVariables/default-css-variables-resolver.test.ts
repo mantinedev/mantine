@@ -53,7 +53,7 @@ describe('semantic color role variables', () => {
     });
 
     it('--mantine-color-border-subtle resolves to var(--mantine-color-dark-5) in dark', () => {
-      expect(result.dark['--mantine-color-border-subtle']).toBe('var(--mantine-color-dark-5)');
+      expect(result.dark['--mantine-color-border-subtle']).toBe('var(--mantine-color-dark-6)');
     });
 
     it('--mantine-color-border-strong resolves to var(--mantine-color-dark-3) in dark', () => {
@@ -76,8 +76,8 @@ describe('semantic color role variables', () => {
       expect(result.dark['--mantine-color-selected']).toBe('var(--mantine-color-dark-5)');
     });
 
-    it('--mantine-color-track resolves to var(--mantine-color-neutral-4) in dark', () => {
-      expect(result.dark['--mantine-color-track']).toBe('var(--mantine-color-neutral-4)');
+    it('--mantine-color-track resolves to var(--mantine-color-dark-5) in dark', () => {
+      expect(result.dark['--mantine-color-track']).toBe('var(--mantine-color-dark-5)');
     });
   });
 
@@ -296,9 +296,9 @@ describe('surface-input token', () => {
 describe('surface-muted token', () => {
   const result = defaultCssVariablesResolver(DEFAULT_THEME);
 
-  it('resolves surface-muted one step off white in light and to dark-5 in dark', () => {
+  it('resolves surface-muted one step off white in light and to dark-6 in dark', () => {
     expect(result.light['--mantine-color-surface-muted']).toBe('var(--mantine-color-gray-0)');
-    expect(result.dark['--mantine-color-surface-muted']).toBe('var(--mantine-color-dark-5)');
+    expect(result.dark['--mantine-color-surface-muted']).toBe('var(--mantine-color-dark-6)');
   });
 });
 

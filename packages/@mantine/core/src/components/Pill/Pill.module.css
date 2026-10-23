@@ -82,6 +82,10 @@
 
 .root--default {
   background-color: var(--mantine-color-neutral-3);
+
+  @mixin dark {
+    background-color: var(--mantine-color-neutral-2);
+  }
 }
 
 .root--contrast {
