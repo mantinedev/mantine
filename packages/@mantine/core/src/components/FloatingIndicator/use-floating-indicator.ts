@@ -96,6 +96,7 @@ export function useFloatingIndicator({
 
   const targetResizeObserver = useRef<ResizeObserver>(null);
   const parentResizeObserver = useRef<ResizeObserver>(null);
+  const parentMutationObserver = useRef<MutationObserver>(null);
 
   useEffect(() => {
     if (initialized && previousTarget.current !== target && onTransitionStart) {
@@ -112,11 +113,19 @@ export function useFloatingIndicator({
       if (parent) {
         parentResizeObserver.current = new ResizeObserver(updatePositionWithoutAnimation);
         parentResizeObserver.current.observe(parent);
+
+        parentMutationObserver.current = new MutationObserver(() => {
+          if (parent.contains(target)) {
+            updatePosition();
+          }
+        });
+        parentMutationObserver.current.observe(parent, { childList: true, subtree: true });
       }
 
       return () => {
         targetResizeObserver.current?.disconnect();
         parentResizeObserver.current?.disconnect();
+        parentMutationObserver.current?.disconnect();
       };
     }
 
