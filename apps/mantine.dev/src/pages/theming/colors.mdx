@@ -231,22 +231,22 @@ Key role variables and their defaults:
   head={['Variable', 'Light', 'Dark']}
   data={[
     [<Code>--mantine-color-border</Code>, <Code>gray-3</Code>, <Code>dark-5</Code>],
-    [<Code>--mantine-color-border-subtle</Code>, <Code>gray-2</Code>, <Code>dark-6</Code>],
+    [<Code>--mantine-color-border-subtle</Code>, <Code>gray-2</Code>, <Code>dark-7</Code>],
     [<Code>--mantine-color-border-strong</Code>, <Code>gray-5</Code>, <Code>dark-3</Code>],
     [<Code>--mantine-color-border-input</Code>, <Code>gray-4</Code>, <Code>dark-4</Code>],
     [<Code>--mantine-color-divider</Code>, <Code>gray-3</Code>, <Code>dark-5</Code>],
-    [<Code>--mantine-color-hover</Code>, <Code>gray-0</Code>, <Code>dark-6</Code>],
-    [<Code>--mantine-color-hover-strong</Code>, <Code>gray-1</Code>, <Code>dark-5</Code>],
-    [<Code>--mantine-color-active</Code>, <Code>gray-1</Code>, <Code>dark-5</Code>],
+    [<Code>--mantine-color-hover</Code>, <Code>gray-0</Code>, <Code>dark-7</Code>],
+    [<Code>--mantine-color-hover-strong</Code>, <Code>gray-1</Code>, <Code>dark-6</Code>],
+    [<Code>--mantine-color-active</Code>, <Code>gray-1</Code>, <Code>dark-6</Code>],
     [<Code>--mantine-color-track</Code>, <Code>gray-3</Code>, <Code>dark-5</Code>],
     [<Code>--mantine-color-text-muted</Code>, <Code>gray-6</Code>, <Code>dark-2</Code>],
     [<Code>--mantine-color-subtle-color</Code>, <Code>gray-7</Code>, <Code>dark-1</Code>],
-    [<Code>--mantine-color-surface-page</Code>, <Code>white</Code>, <Code>dark-7</Code>],
-    [<Code>--mantine-color-surface-panel</Code>, <Code>white</Code>, <Code>dark-6</Code>],
+    [<Code>--mantine-color-surface-page</Code>, <Code>white</Code>, <Code>dark-8</Code>],
+    [<Code>--mantine-color-surface-panel</Code>, <Code>white</Code>, <Code>dark-7</Code>],
     [<Code>--mantine-color-surface-panel-2</Code>, <Code>white</Code>, <Code>dark-5</Code>],
     [<Code>--mantine-color-surface-sunken</Code>, <Code>gray-1</Code>, <Code>dark-9</Code>],
-    [<Code>--mantine-color-surface-muted</Code>, <Code>gray-0</Code>, <Code>dark-6</Code>],
-    [<Code>--mantine-color-surface-input</Code>, <Code>white</Code>, <Code>dark-7</Code>],
+    [<Code>--mantine-color-surface-muted</Code>, <Code>gray-0</Code>, <Code>dark-7</Code>],
+    [<Code>--mantine-color-surface-input</Code>, <Code>white</Code>, <Code>dark-8</Code>],
     [<Code>--mantine-color-focus-ring</Code>, <Code>blue-6</Code>, <Code>blue-5</Code>],
   ]}
 />
@@ -272,9 +272,9 @@ CSS when you need a neutral shade that adapts to the color scheme without hardco
 <DataTable
   head={['Variable', 'Role', 'Light', 'Dark']}
   data={[
-    [<Code>--mantine-color-neutral-0</Code>, 'Page', <Code>white</Code>, <Code>dark-7</Code>],
-    [<Code>--mantine-color-neutral-1</Code>, 'Panel', <Code>white</Code>, <Code>dark-6</Code>],
-    [<Code>--mantine-color-neutral-2</Code>, 'Hover / raised', <Code>gray-0</Code>, <Code>dark-5</Code>],
+    [<Code>--mantine-color-neutral-0</Code>, 'Page', <Code>white</Code>, <Code>dark-8</Code>],
+    [<Code>--mantine-color-neutral-1</Code>, 'Panel', <Code>white</Code>, <Code>dark-7</Code>],
+    [<Code>--mantine-color-neutral-2</Code>, 'Hover / raised', <Code>gray-0</Code>, <Code>dark-6</Code>],
     [<Code>--mantine-color-neutral-3</Code>, 'Active', <Code>gray-2</Code>, <Code>dark-4</Code>],
     [<Code>--mantine-color-neutral-4</Code>, 'Border', <Code>gray-3</Code>, <Code>dark-4</Code>],
     [<Code>--mantine-color-neutral-5</Code>, 'Border strong / disabled', <Code>gray-5</Code>, <Code>dark-3</Code>],
@@ -397,9 +397,8 @@ matching the six surface tokens documented above.
 sunken on every `Surface` level instead of blending into a card.
 
 `--mantine-color-surface-muted` is the background of code and inset content – `Code`, `Kbd`,
-`CodeHighlight`, `JsonViewer`, and `Typography` `pre`/`code`/`kbd`. It is one light step off the
-page in light mode (`gray-0`) and sits two steps *above* the page in dark mode (`dark-5`), so code
-reads as raised rather than as a hole and keeps its edge inside a `Card` or a level-1 `Surface`.
+`CodeHighlight`, `JsonViewer`, `Typography` `pre`/`code`/`kbd`, striped table rows and filled
+`Fieldset` and `Accordion`. It is one step off the page in both color schemes (`gray-0` / `dark-7`).
 `--mantine-color-surface-sunken` stays on the well value (`gray-1` / `dark-9`) used by the
 `SegmentedControl` root, the `Tabs` `contained` list, and `ScrollArea` scrollbars, where a raised
 indicator sits inside the well.

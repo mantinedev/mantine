@@ -111,15 +111,17 @@ one level per nesting; set `autoDepth={false}` on the nested `Surface` to keep t
 
 ### Darker dark theme
 
-The dark color scheme is darker than in 9.x. If your styles use `dark-N` colors for backgrounds,
-test the application in dark color scheme and adjust them. Dropdowns, code elements, scrollbars,
+The dark color scheme is darker than in 9.x and the `dark` palette is distributed differently.
+The page is `dark-8`, panels are `dark-7`, and `dark-6` is the hover color of panels.
+If your styles use `dark-N` colors for backgrounds, use the semantic variables below or shift the
+index by one, for example `dark-7` for a page background becomes `dark-8`. Dropdowns, code elements, scrollbars,
 `SegmentedControl` and `contained` `Tabs` have new background colors as well.
 
 Focus rings now use the `--mantine-color-focus-ring` variable instead of the primary filled color.
 If you override the focus ring color, override this variable.
 
-Inputs, checkboxes, radios, `Dropzone` and `RichTextEditor` use the page color (`dark-7`) as background
-in dark color scheme instead of `dark-6`, and their border is the new `--mantine-color-border-input` variable.
+Inputs, checkboxes, radios, `Dropzone` and `RichTextEditor` use the page color as background
+in dark color scheme instead of the panel color, and their border is the new `--mantine-color-border-input` variable.
 `--mantine-color-border` and `--mantine-color-default-border` are now `dark-5` in dark color scheme, so
 containers, dividers and default variant controls have a quieter border than inputs. To keep the 9.x input background, set the `input` surface:
 
@@ -129,7 +131,7 @@ import { createTheme } from '@mantine/core';
 const theme = createTheme({
   surfaces: {
     dark: {
-      input: 'var(--mantine-color-dark-6)',
+      input: 'var(--mantine-color-surface-panel)',
     },
   },
 });
