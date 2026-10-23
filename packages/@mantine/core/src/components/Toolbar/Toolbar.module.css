@@ -155,15 +155,8 @@
   }
 
   &:where([data-disabled][data-active]) {
-    @mixin where-light {
-      background-color: var(--mantine-color-gray-4);
-      color: var(--mantine-color-gray-6);
-    }
-
-    @mixin where-dark {
-      background-color: var(--mantine-color-dark-4);
-      color: var(--mantine-color-dark-2);
-    }
+    background-color: var(--mantine-color-neutral-4);
+    color: var(--mantine-color-dimmed);
   }
 }
 
