@@ -71,6 +71,11 @@
     transform-origin: right center;
   }
 
+  &:where([data-position='top']) {
+    top: 0;
+    bottom: auto;
+  }
+
   &:where([data-paused]) {
     opacity: 0;
     animation-play-state: paused, running;
