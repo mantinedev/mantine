@@ -161,6 +161,7 @@ export const v8CssVariablesResolver: CSSVariablesResolver = (theme) => {
       '--mantine-color-default-hover': 'var(--mantine-color-gray-0)',
       '--mantine-color-default-color': 'var(--mantine-color-black)',
       '--mantine-color-default-border': 'var(--mantine-color-gray-4)',
+      '--mantine-color-border-input': 'var(--mantine-color-gray-4)',
       '--mantine-color-dimmed': 'var(--mantine-color-gray-6)',
     },
     dark: {
@@ -177,6 +178,7 @@ export const v8CssVariablesResolver: CSSVariablesResolver = (theme) => {
       '--mantine-color-default-hover': 'var(--mantine-color-dark-5)',
       '--mantine-color-default-color': 'var(--mantine-color-white)',
       '--mantine-color-default-border': 'var(--mantine-color-dark-4)',
+      '--mantine-color-border-input': 'var(--mantine-color-dark-4)',
       '--mantine-color-dimmed': 'var(--mantine-color-dark-2)',
     },
   };

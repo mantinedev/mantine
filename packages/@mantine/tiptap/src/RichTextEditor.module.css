@@ -16,7 +16,7 @@
     overflow: clip;
   }
 
-  border-color: var(--mantine-color-default-border);
+  border-color: var(--mantine-color-border-input);
 }
 
 .Typography {
@@ -514,8 +514,8 @@
     border-radius: var(--mantine-radius-sm);
     vertical-align: middle;
     position: relative;
-    background-color: var(--mantine-color-default);
-    border-color: var(--mantine-color-default-border);
+    background-color: var(--mantine-color-surface-input);
+    border-color: var(--mantine-color-border-input);
 
     &:checked {
       background-color: var(--mantine-primary-color-filled);

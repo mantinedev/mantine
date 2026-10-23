@@ -16,7 +16,7 @@
   }
 
   background-color: var(--mantine-color-surface-input);
-  border-color: var(--mantine-color-default-border);
+  border-color: var(--mantine-color-border-input);
 
   @mixin hover {
     &:where([data-activate-on-click]:not([data-loading], [data-uploading])) {

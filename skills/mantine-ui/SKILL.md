@@ -117,8 +117,8 @@ component you are about to use, then write the UI.
   see [inputs](references/components/inputs.md#non-input-controls-under-a-label).
 - **The input made for the data**: see [inputs](references/components/inputs.md) for the
   mapping. A plain `TextInput` is for free text only.
-- **Backgrounds step by one shade.** A card on a page is one `Surface` level up; nested
-  containers go one more level, never two. Never place a bordered or filled element so that its
+- **Backgrounds step by one shade.** A card on a page is a `Surface` at level 0, the page color
+  with a border; nested containers go one level up each, never two. Never place a bordered or filled element so that its
   label or legend sits on two different backgrounds. Inputs keep their own background
   (`--mantine-color-surface-input`, the page color in dark mode) and stay visible on every
   `Surface` level, see [surface](references/components/surface.md).

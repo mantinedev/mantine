@@ -31,8 +31,8 @@ scheme all levels are white by default, switch to dark color scheme to see the d
 
 ## Automatic depth
 
-By default, each `Surface` renders one level above its parent: a standalone `Surface`
-has level 1, a `Surface` nested inside it has level 2. Deeper nesting stays at level 2:
+By default, a `Surface` without a parent `Surface` has level 0 and matches the page background.
+Each nested `Surface` renders one level above its parent, deeper nesting stays at level 2:
 
 <Demo data={SurfaceDemos.autoDepth} />
 
@@ -44,9 +44,9 @@ import { Surface } from '@mantine/core';
 function Demo() {
   return (
     <Surface p="md">
-      Level 1
+      Level 0
       <Surface p="md" autoDepth={false}>
-        Also level 1 – same background as the parent
+        Also level 0 – same background as the parent
       </Surface>
     </Surface>
   );
@@ -141,16 +141,8 @@ function Demo() {
 }
 ```
 
-In dark color scheme a standalone `Surface` is one shade lighter than `Paper`.
-Set `level={0}` to keep the `Paper` appearance:
-
-```tsx
-import { Surface } from '@mantine/core';
-
-function Demo() {
-  return <Surface level={0} shadow="sm" p="md">Same background as Paper</Surface>;
-}
-```
+A standalone `Surface` has the same background as `Paper`. Unlike `Paper`, nested surfaces
+step up one level in dark color scheme.
 
 <Polymorphic
   defaultElement="div"

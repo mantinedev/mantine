@@ -21,9 +21,9 @@ describe('@mantine/core/Surface', () => {
     expect(container.querySelector('div')).not.toHaveAttribute('data-with-border');
   });
 
-  it('starts at surface level 1 when rendered without a parent Surface', () => {
+  it('starts at surface level 0 when rendered without a parent Surface', () => {
     const { container } = render(<Surface {...defaultProps} />);
-    expect(container.querySelector('div')).toHaveAttribute('data-mantine-surface-level', '1');
+    expect(container.querySelector('div')).toHaveAttribute('data-mantine-surface-level', '0');
   });
 
   it('sets --surface-bg to the named surface token for its level', () => {
@@ -49,13 +49,16 @@ describe('@mantine/core/Surface', () => {
 
   it('increments data-mantine-surface-level for nested surfaces, clamping at 2', () => {
     render(
-      <Surface data-testid="level-1">
-        <Surface data-testid="level-2">
-          <Surface data-testid="level-3" />
+      <Surface data-testid="level-0">
+        <Surface data-testid="level-1">
+          <Surface data-testid="level-2">
+            <Surface data-testid="level-3" />
+          </Surface>
         </Surface>
       </Surface>
     );
 
+    expect(screen.getByTestId('level-0')).toHaveAttribute('data-mantine-surface-level', '0');
     expect(screen.getByTestId('level-1')).toHaveAttribute('data-mantine-surface-level', '1');
     expect(screen.getByTestId('level-2')).toHaveAttribute('data-mantine-surface-level', '2');
     expect(screen.getByTestId('level-3')).toHaveAttribute('data-mantine-surface-level', '2');
@@ -76,8 +79,9 @@ describe('@mantine/core/Surface', () => {
       </Surface>
     );
 
-    expect(screen.getByTestId('l1')).toHaveAttribute('data-mantine-surface-level', '1');
-    expect(screen.getByTestId('l2')).toHaveAttribute('data-mantine-surface-level', '2');
+    expect(screen.getByTestId('l1')).toHaveAttribute('data-mantine-surface-level', '0');
+    expect(screen.getByTestId('l2')).toHaveAttribute('data-mantine-surface-level', '1');
+    expect(screen.getByTestId('l3')).toHaveAttribute('data-mantine-surface-level', '2');
     expect(screen.getByTestId('l6')).toHaveAttribute('data-mantine-surface-level', '2');
   });
 
@@ -90,9 +94,9 @@ describe('@mantine/core/Surface', () => {
       </Surface>
     );
 
-    expect(screen.getByTestId('parent')).toHaveAttribute('data-mantine-surface-level', '1');
-    expect(screen.getByTestId('child')).toHaveAttribute('data-mantine-surface-level', '1');
-    expect(screen.getByTestId('grandchild')).toHaveAttribute('data-mantine-surface-level', '2');
+    expect(screen.getByTestId('parent')).toHaveAttribute('data-mantine-surface-level', '0');
+    expect(screen.getByTestId('child')).toHaveAttribute('data-mantine-surface-level', '0');
+    expect(screen.getByTestId('grandchild')).toHaveAttribute('data-mantine-surface-level', '1');
   });
 
   it('keeps the root surface at level 0 when autoDepth is false', () => {

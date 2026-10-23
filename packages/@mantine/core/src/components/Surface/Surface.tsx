@@ -1,3 +1,4 @@
+import { useContext } from 'react';
 import {
   Box,
   BoxProps,
@@ -12,7 +13,7 @@ import {
   useProps,
   useStyles,
 } from '../../core';
-import { SurfaceDepthContext, useSurfaceDepth } from './Surface.context';
+import { SurfaceDepthContext } from './Surface.context';
 import classes from './Surface.module.css';
 
 const MIN_SURFACE_LEVEL = 0;
@@ -67,16 +68,26 @@ function clampLevel(value: number) {
   return Math.min(Math.max(Math.round(value), MIN_SURFACE_LEVEL), MAX_SURFACE_LEVEL);
 }
 
-function resolveLevel(level: number | string | undefined, autoDepth: boolean, parentLevel: number) {
+function resolveLevel(
+  level: number | string | undefined,
+  autoDepth: boolean,
+  parentLevel: number | null
+) {
+  const base = parentLevel ?? 0;
+
   if (level !== undefined) {
     if (typeof level === 'string' && /^[+-]\d+$/.test(level)) {
-      return clampLevel(parentLevel + Number(level));
+      return clampLevel(base + Number(level));
     }
 
     return clampLevel(Number(level));
   }
 
-  return clampLevel(autoDepth ? parentLevel + 1 : parentLevel);
+  if (!autoDepth) {
+    return base;
+  }
+
+  return parentLevel === null ? 0 : clampLevel(parentLevel + 1);
 }
 
 export const Surface = polymorphicFactory<SurfaceFactory>((_props) => {
@@ -99,7 +110,7 @@ export const Surface = polymorphicFactory<SurfaceFactory>((_props) => {
     ...others
   } = props;
 
-  const parentLevel = useSurfaceDepth();
+  const parentLevel = useContext(SurfaceDepthContext);
   const resolvedLevel = resolveLevel(level, autoDepth, parentLevel);
 
   const getStyles = useStyles<SurfaceFactory>({

@@ -99,7 +99,7 @@
   }
 
   &[data-variant='default'] {
-    --input-bd: var(--mantine-color-default-border);
+    --input-bd: var(--mantine-color-border-input);
     --input-bg: var(--mantine-color-surface-input);
     --input-bd-focus: var(--mantine-color-focus-ring);
   }

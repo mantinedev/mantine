@@ -48,7 +48,7 @@
   -webkit-tap-highlight-color: transparent;
 
   background-color: var(--mantine-color-surface-input);
-  border-color: var(--mantine-color-default-border);
+  border-color: var(--mantine-color-border-input);
 
   &:where([data-with-error-styles][data-error]) {
     border-color: var(--mantine-color-error);

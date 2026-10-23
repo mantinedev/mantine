@@ -1,7 +1,7 @@
 import { createContext, useContext } from 'react';
 
-export const SurfaceDepthContext = createContext<number>(0);
+export const SurfaceDepthContext = createContext<number | null>(null);
 
 export function useSurfaceDepth(): number {
-  return useContext(SurfaceDepthContext);
+  return useContext(SurfaceDepthContext) ?? 0;
 }

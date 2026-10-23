@@ -271,7 +271,7 @@
   }
 
   &:where([data-color-scheme='dark']) {
-    border-color: var(--mantine-color-dark-4);
+    border-color: var(--mantine-color-border);
     color: var(--mantine-color-dark-0);
 
     &:where([data-active]) {

@@ -37,7 +37,7 @@
   justify-content: center;
 
   background-color: var(--mantine-color-surface-input);
-  border-color: var(--mantine-color-default-border);
+  border-color: var(--mantine-color-border-input);
 
   &[data-indeterminate],
   &[data-checked] {

@@ -27,11 +27,11 @@ export function NestedSurfaces() {
   return (
     <div style={{ padding: 40, maxWidth: 600 }}>
       <Surface p="xl" radius="md">
-        Level 1
+        Level 0
         <Surface p="xl" radius="md" mt="md">
-          Level 2
+          Level 1
           <Surface p="xl" radius="md" mt="md">
-            Level 2 (clamped)
+            Level 2
           </Surface>
         </Surface>
       </Surface>
@@ -56,9 +56,9 @@ export function AutoDepthDisabled() {
   return (
     <div style={{ padding: 40, maxWidth: 600 }}>
       <Surface p="xl" radius="md">
-        Level 1
+        Level 0
         <Surface p="xl" radius="md" mt="md" autoDepth={false}>
-          autoDepth=false (stays at level 1)
+          autoDepth=false (stays at level 0)
         </Surface>
       </Surface>
     </div>
@@ -85,19 +85,25 @@ export function WithInputs() {
   return (
     <div style={{ padding: 40, maxWidth: 600 }}>
       <Text size="sm" mb="xs">
-        Level 0 (page)
+        On the page
       </Text>
       {fields}
       <Surface withBorder p="md" mt="xl">
         <Text size="sm" mb="xs">
-          Level 1
+          Level 0
         </Text>
         {fields}
         <Surface withBorder p="md" mt="md">
           <Text size="sm" mb="xs">
-            Level 2
+            Level 1
           </Text>
           {fields}
+          <Surface withBorder p="md" mt="md">
+            <Text size="sm" mb="xs">
+              Level 2
+            </Text>
+            {fields}
+          </Surface>
         </Surface>
       </Surface>
     </div>

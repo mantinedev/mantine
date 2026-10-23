@@ -106,8 +106,8 @@ function Demo() {
 }
 ```
 
-In dark color scheme `Surface` is one shade lighter than `Paper`, and nested surfaces step up
-one more level. To keep the `Paper` look, set `level={0}`.
+A standalone `Surface` looks the same as `Paper`. In dark color scheme nested surfaces step up
+one level per nesting; set `autoDepth={false}` on the nested `Surface` to keep the `Paper` look.
 
 ### Darker dark theme
 
@@ -119,7 +119,9 @@ Focus rings now use the `--mantine-color-focus-ring` variable instead of the pri
 If you override the focus ring color, override this variable.
 
 Inputs, checkboxes, radios, `Dropzone` and `RichTextEditor` use the page color (`dark-7`) as background
-in dark color scheme instead of `dark-6`. To keep the 9.x color, set the `input` surface:
+in dark color scheme instead of `dark-6`, and their border is the new `--mantine-color-border-input` variable.
+`--mantine-color-border` and `--mantine-color-default-border` are now `dark-5` in dark color scheme, so
+containers, dividers and default variant controls have a quieter border than inputs. To keep the 9.x input background, set the `input` surface:
 
 ```tsx
 import { createTheme } from '@mantine/core';

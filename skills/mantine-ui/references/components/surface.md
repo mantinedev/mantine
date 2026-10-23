@@ -4,8 +4,8 @@
 in a list. Its background depends on the depth level (0 page, 1 panel, 2 panel-2), one shade
 lighter per level in dark mode and white in light mode. `Paper` is deprecated, use `Surface`.
 
-- A card on the page: `<Surface withBorder p="lg">`. Nesting one `Surface` inside
-  another steps the level up automatically; never jump two levels.
+- A card on the page: `<Surface withBorder p="lg">`, level 0, the page color with a border.
+  Nesting one `Surface` inside another steps the level up automatically; never jump two levels.
 - **Repeated rows that contain inputs** (positions, invoice lines, invitees) are either
   `Surface withBorder p="md"` cards or plain blocks; both keep the inputs readable because inputs
   use `--mantine-color-surface-input`, the page color in dark mode. A plain row has a header row
