@@ -92,6 +92,10 @@
   @mixin where-light {
     background-color: var(--mantine-color-white);
   }
+
+  @mixin where-dark {
+    background-color: var(--mantine-color-neutral-1);
+  }
 }
 
 .label {

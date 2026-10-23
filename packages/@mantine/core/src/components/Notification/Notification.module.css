@@ -16,7 +16,7 @@
   padding-inline-start: rem(14px);
   border-radius: var(--notification-radius);
   box-shadow: var(--mantine-shadow-md);
-  background-color: var(--mantine-color-surface-panel);
+  background-color: var(--mantine-color-surface-page);
 
   &::before {
     content: '';
@@ -41,6 +41,12 @@
 
   &:where([data-with-border]) {
     border: 1px solid var(--mantine-color-border);
+  }
+
+  @mixin dark {
+    &:where(:not([data-with-border])) {
+      border: 1px solid var(--mantine-color-border);
+    }
   }
 }
 

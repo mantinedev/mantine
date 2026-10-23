@@ -15,7 +15,7 @@
     flex-direction: column;
   }
 
-  background-color: var(--mantine-color-surface-panel);
+  background-color: var(--mantine-color-surface-page);
 }
 
 .section {

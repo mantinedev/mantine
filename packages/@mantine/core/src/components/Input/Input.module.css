@@ -110,6 +110,7 @@
 
   @mixin light {
     &[data-variant='filled'] {
+      --input-bg: var(--mantine-color-surface-sunken);
       --input-bd: transparent;
       --input-bd-focus: var(--mantine-color-focus-ring);
     }
