@@ -60,13 +60,7 @@
   }
 
   &:has([data-week-hovered]) > td {
-    @mixin where-light {
-      background-color: var(--mantine-color-gray-0);
-    }
-
-    @mixin where-dark {
-      background-color: var(--mantine-color-dark-5);
-    }
+    background-color: var(--mantine-color-hover);
   }
 
   &:has([data-in-range]) > td {

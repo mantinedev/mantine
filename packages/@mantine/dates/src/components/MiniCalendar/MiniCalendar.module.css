@@ -39,7 +39,7 @@
 
   @mixin hover {
     &:where(:not([data-disabled], [data-selected])) {
-      background-color: var(--mantine-color-hover-strong);
+      background-color: var(--mantine-color-hover);
     }
   }
 }
@@ -93,7 +93,7 @@
 
   @mixin hover {
     &:where(:not([data-disabled])) {
-      background-color: var(--mantine-color-hover-strong);
+      background-color: var(--mantine-color-hover);
     }
   }
 }
