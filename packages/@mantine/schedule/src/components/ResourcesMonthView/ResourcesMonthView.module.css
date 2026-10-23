@@ -197,13 +197,7 @@
   }
 
   &:where([data-weekend]) {
-    @mixin where-light {
-      background-color: var(--mantine-color-gray-0);
-    }
-
-    @mixin where-dark {
-      background-color: var(--mantine-color-dark-8);
-    }
+    background-color: var(--mantine-color-surface-muted);
   }
 
   &:where([data-drop-target]) {

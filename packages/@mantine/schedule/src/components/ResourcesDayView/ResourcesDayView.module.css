@@ -10,13 +10,7 @@
   --resources-day-view-border-color: var(--mantine-color-border);
   --resources-day-view-business-hours-bg: var(--mantine-color-body);
 
-  @mixin where-light {
-    --resources-day-view-non-business-hours-bg: var(--mantine-color-gray-0);
-  }
-
-  @mixin where-dark {
-    --resources-day-view-non-business-hours-bg: var(--mantine-color-dark-6);
-  }
+  --resources-day-view-non-business-hours-bg: var(--mantine-color-surface-muted);
 
   @mixin rtl {
     --_business-hours-direction: to left;
@@ -207,7 +201,14 @@
 
   @mixin hover {
     background-image: none;
-    background-color: var(--mantine-color-hover-strong);
+    background-color: var(--mantine-color-hover);
+  }
+
+  &:where([data-non-business-hours]) {
+    @mixin hover {
+      background-image: none;
+      background-color: var(--mantine-color-hover-strong);
+    }
   }
 
   &:where(:last-of-type) {
