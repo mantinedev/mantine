@@ -1,32 +1,32 @@
+import { useId } from 'react';
 import { List, Text } from '@mantine/core';
-import { useId } from '@mantine/hooks';
-import { formatOccurrence } from './payload';
-import { getOccurrences } from './recurrence';
+import { formatOccurrence, upcomingOccurrences, type RecurrenceRule } from './recurrence';
 import type { RecurringEventFormType } from './types';
-import { useRecurrenceRule } from './useRecurrenceRule';
 
-export function OccurrencePreview({ form }: { form: RecurringEventFormType }) {
-  const id = useId();
-  const rule = useRecurrenceRule(form);
-  const start = form.useWatchValue('start');
-  const allDay = form.useWatchValue('allDay');
+const PREVIEW_SIZE = 5;
+
+interface OccurrencePreviewProps {
+  form: RecurringEventFormType;
+  rule: RecurrenceRule | null;
+}
+
+export function OccurrencePreview({ form, rule }: OccurrencePreviewProps) {
+  const labelId = useId();
   const exceptions = form.useWatchValue('exceptions');
-
-  const occurrences = rule
-    ? getOccurrences(rule, { exceptions: rule.repeat === 'none' ? [] : exceptions, limit: 5 })
-    : [];
+  const allDay = form.useWatchValue('allDay');
+  const dates = rule ? upcomingOccurrences(rule, exceptions, PREVIEW_SIZE) : [];
 
   return (
     <div>
-      <Text id={id} size="sm" fw={500} mb={4}>
+      <Text id={labelId} size="sm" fw={500} mb={4}>
         Next occurrences
       </Text>
-      {occurrences.length === 0 ? (
+      {dates.length === 0 ? (
         <Text size="sm">No occurrences</Text>
       ) : (
-        <List size="sm" aria-labelledby={id}>
-          {occurrences.map((date) => (
-            <List.Item key={date}>{formatOccurrence(date, start ?? '', allDay)}</List.Item>
+        <List size="sm" aria-labelledby={labelId}>
+          {dates.map((date) => (
+            <List.Item key={date.valueOf()}>{formatOccurrence(date, allDay)}</List.Item>
           ))}
         </List>
       )}

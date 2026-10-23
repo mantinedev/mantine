@@ -1,19 +1,16 @@
-import { useMemo } from 'react';
-import { getRule } from './recurrence';
+import { getRecurrenceRule } from './recurrence';
 import type { RecurringEventFormType } from './types';
 
 export function useRecurrenceRule(form: RecurringEventFormType) {
-  const start = form.useWatchValue('start');
-  const repeat = form.useWatchValue('repeat');
-  const interval = form.useWatchValue('interval');
-  const weekdays = form.useWatchValue('weekdays');
-  const monthlyMode = form.useWatchValue('monthlyMode');
-  const ends = form.useWatchValue('ends');
-  const count = form.useWatchValue('count');
-  const until = form.useWatchValue('until');
-
-  return useMemo(
-    () => getRule({ start, repeat, interval, weekdays, monthlyMode, ends, count, until }),
-    [start, repeat, interval, weekdays, monthlyMode, ends, count, until]
-  );
+  return getRecurrenceRule({
+    repeats: form.useWatchValue('repeats'),
+    start: form.useWatchValue('start'),
+    frequency: form.useWatchValue('frequency'),
+    interval: form.useWatchValue('interval'),
+    weekdays: form.useWatchValue('weekdays'),
+    monthlyMode: form.useWatchValue('monthlyMode'),
+    ends: form.useWatchValue('ends'),
+    count: form.useWatchValue('count'),
+    until: form.useWatchValue('until'),
+  });
 }

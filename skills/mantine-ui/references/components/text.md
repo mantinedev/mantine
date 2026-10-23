@@ -4,9 +4,13 @@
   card) with `c="var(--mantine-color-bright)"` when they are the main heading of the view.
 - Secondary text (hints under inputs, counters, captions, labels in a summary) is smaller text,
   `size="sm"` or `size="xs"`, in the default color. Never `c="dimmed"`.
-- Labels of label/value pairs (stat cards, review steps) use the theme's medium weight:
-  `fw={500}` or `font-weight: var(--mantine-font-weight-medium)`, the value is regular weight and
-  one size larger or `c="var(--mantine-color-bright)"` when it is the headline number.
+- Labels of label/value pairs (stat cards, review steps) and captions above a block (`Next
+  occurrences`, `Submitted event`) use the theme's medium weight through the token, never a
+  number: `font-weight: var(--mantine-font-weight-medium)` in the component's CSS module, or
+  `fw="var(--mantine-font-weight-medium)"` inline. `fw={500}`, `fw={600}` and `fw="bold"` are
+  not used. The value is regular weight and one size larger or `c="var(--mantine-color-bright)"`
+  when it is the headline number. A caption above a non-input block can also be
+  `<Input.Label labelElement="div">`, which has the right weight and size built in.
 - Error text is never a red `Text`: inputs show errors through their `error` prop, non-input
   content through `Input.Error` or `Input.Wrapper`.
 - Empty states are one short sentence in `size="sm"` (`No positions added`), no icon, no card.
@@ -22,11 +26,17 @@ on a nested `Text`:
 ```tsx
 // FieldRow.tsx
 <div className={classes.texts}>
-  <Text size="sm" fw={500} truncate>{field.label}</Text>
+  <Text size="sm" className={classes.label} truncate>{field.label}</Text>
   <Text size="xs" truncate>
     <span className={classes.key}>{field.key}</span> · {type.label}
   </Text>
 </div>
+```
+
+```css
+.label {
+  font-weight: var(--mantine-font-weight-medium);
+}
 
 // FieldRow.module.css
 .texts { flex: 1; min-width: 0; }

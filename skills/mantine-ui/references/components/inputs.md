@@ -60,8 +60,11 @@ an input:
 </Input.Wrapper>
 ```
 
-9.x: the prop does not exist; wrap the control in a `div` with `margin-top: calc(var(--mantine-spacing-xs) / 2)`
-when a description is present (and the same `margin-bottom` before an error).
+Check the installed version by its types, not by the version string of a tarball or lockfile: when
+`withBlockChildren` is in `node_modules/@mantine/core/lib/components/Input/InputWrapper/InputWrapper.d.ts`,
+use the prop. Only when it is missing (9.x) wrap the control in a `div` with
+`margin-top: calc(var(--mantine-spacing-xs) / 2)` when a description is present (and the same
+`margin-bottom` before an error).
 
 ## Lists of checkboxes, radios and switches
 
@@ -154,8 +157,8 @@ attendees) shows what was collected inside the input, as compactly as the input 
 
 - Several dates: `DatePickerInput type="multiple" valueDisplay="pills"`. The selected dates are
   pills inside the input with a remove button each, Backspace removes the last one, the calendar
-  adds more. Nothing to build. (9.x has no `valueDisplay`: render `Pill.Group mt="xs"` under the
-  picker instead.)
+  adds more. Nothing to build. (When `valueDisplay` is missing from the installed `DatePickerInput` types, 9.x,
+  render `Pill.Group mt="xs"` under the picker instead.)
 - Several keys, tags or entries picked elsewhere: a `PillsInput`-based input, see
   [custom inputs](#custom-inputs-that-open-a-picker).
 - Never a stack of bordered `Surface` rows with a trash `ActionIcon` for values that have no

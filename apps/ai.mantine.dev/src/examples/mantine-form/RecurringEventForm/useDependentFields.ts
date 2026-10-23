@@ -1,59 +1,90 @@
 import dayjs from 'dayjs';
+import utc from 'dayjs/plugin/utc';
 import { useRef } from 'react';
-import { getWeekday } from './recurrence';
-import type { RecurringEventFormType, RecurringEventValues, Weekday } from './types';
+import { weekdayOf } from './recurrence';
+import type { RecurringEventFormType } from './types';
 
-const RECURRENCE_PATHS = ['interval', 'weekdays', 'count', 'until', 'exceptions'] as const;
+dayjs.extend(utc);
 
-/** Fields filled from the start until the user edits them, and errors that depend on other fields */
+export type GeneratedField = 'end' | 'weekdays';
+
+const DATE_TIME_FORMAT = 'YYYY-MM-DD HH:mm:ss';
+const timeOf = (value: string | null) => (value && value.length > 10 ? value.slice(11) : null);
+
+/**
+ * Keeps generated fields in sync with the start until the user edits them,
+ * converts start and end when "All day" changes and clears errors of fields that get hidden
+ */
 export function useDependentFields(form: RecurringEventFormType) {
-  // The last values written automatically: a field still holding it was not edited by the user
-  const autoEnd = useRef<string | null>(null);
-  const autoWeekdays = useRef<Weekday[]>([]);
-
-  const revalidate = (...paths: (keyof RecurringEventValues)[]) => {
-    paths.forEach((path) => {
-      if (form.errors[path]) {
-        form.validateField(path);
-      }
-    });
-  };
+  const edited = useRef<Record<GeneratedField, boolean>>({ end: false, weekdays: false });
+  const times = useRef({ start: '09:00:00', end: '10:00:00' });
 
   form.watch('start', ({ value }) => {
     if (!value) {
       return;
     }
 
-    const { end, weekdays } = form.getValues();
-
-    if (end === autoEnd.current) {
-      autoEnd.current = dayjs(value).add(1, 'hour').format('YYYY-MM-DD HH:mm:ss');
-      form.setFieldValue('end', autoEnd.current);
+    if (!edited.current.end) {
+      const end = form.getValues().allDay
+        ? value
+        : dayjs.utc(value).add(1, 'hour').format(DATE_TIME_FORMAT);
+      form.setFieldValue('end', end);
     }
 
-    if (weekdays.join() === autoWeekdays.current.join()) {
-      autoWeekdays.current = [getWeekday(value)];
-      form.setFieldValue('weekdays', autoWeekdays.current);
+    if (!edited.current.weekdays) {
+      form.setFieldValue('weekdays', [weekdayOf(value)]);
+    }
+  });
+
+  form.watch('allDay', ({ value: allDay }) => {
+    const { start, end } = form.getValues();
+
+    if (allDay) {
+      times.current = {
+        start: timeOf(start) ?? times.current.start,
+        end: timeOf(end) ?? times.current.end,
+      };
     }
 
-    revalidate('end', 'until', 'exceptions');
+    const convert = (date: string | null, time: string) => {
+      if (!date) {
+        return null;
+      }
+
+      return allDay ? date.slice(0, 10) : `${date.slice(0, 10)} ${time}`;
+    };
+
+    form.setValues({
+      start: convert(start, times.current.start),
+      end: convert(end, times.current.end),
+    });
   });
 
-  form.watch('allDay', () => revalidate('start', 'end'));
-
-  form.watch('repeat', () => {
-    RECURRENCE_PATHS.forEach((path) => form.clearFieldError(path));
+  form.watch('repeats', ({ value }) => {
+    if (!value) {
+      ['interval', 'weekdays', 'count', 'until', 'exceptions'].forEach(form.clearFieldError);
+    }
   });
 
-  form.watch('ends', () => {
-    form.clearFieldError('count');
-    form.clearFieldError('until');
-    revalidate('exceptions');
+  form.watch('frequency', ({ value }) => {
+    if (value !== 'weekly') {
+      form.clearFieldError('weekdays');
+    }
   });
 
-  form.watch('interval', () => revalidate('exceptions'));
-  form.watch('weekdays', () => revalidate('exceptions'));
-  form.watch('monthlyMode', () => revalidate('exceptions'));
-  form.watch('count', () => revalidate('exceptions'));
-  form.watch('until', () => revalidate('exceptions'));
+  form.watch('ends', ({ value }) => {
+    if (value !== 'after') {
+      form.clearFieldError('count');
+    }
+
+    if (value !== 'on') {
+      form.clearFieldError('until');
+    }
+  });
+
+  return {
+    markEdited: (field: GeneratedField) => {
+      edited.current[field] = true;
+    },
+  };
 }

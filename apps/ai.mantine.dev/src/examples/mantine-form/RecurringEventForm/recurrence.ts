@@ -1,187 +1,208 @@
 import dayjs, { type Dayjs } from 'dayjs';
+import utc from 'dayjs/plugin/utc';
 import type {
+  EndsMode,
   Frequency,
   MonthlyMode,
-  Repeat,
+  MonthlyOn,
   RecurringEventValues,
-  SeriesEnd,
   Weekday,
 } from './types';
 
+// Calendar math runs on wall-clock time in UTC mode, so the machine's DST transitions
+// cannot shift or skip occurrences
+dayjs.extend(utc);
+
 export interface RecurrenceRule {
-  /** `YYYY-MM-DD` */
   start: string;
-  repeat: Repeat;
+  frequency: Frequency;
   interval: number;
   weekdays: Weekday[];
   monthlyMode: MonthlyMode;
-  ends: SeriesEnd;
+  ends: EndsMode;
   count: number;
   until: string | null;
 }
 
-export type RuleValues = Pick<
-  RecurringEventValues,
-  'start' | 'repeat' | 'interval' | 'weekdays' | 'monthlyMode' | 'ends' | 'count' | 'until'
->;
+const MAX_PERIODS = 10_000;
 
-/** Indexed like `Dayjs.day()`: 0 is Sunday */
-const DAY_INDEX: Weekday[] = ['SU', 'MO', 'TU', 'WE', 'TH', 'FR', 'SA'];
+// Indexed by dayjs `day()`: 0 is Sunday
+const WEEKDAY_BY_DAY: Weekday[] = ['SU', 'MO', 'TU', 'WE', 'TH', 'FR', 'SA'];
 
-/** Weeks start on Monday, as in RFC 5545 */
-export const WEEK_ORDER: Weekday[] = ['MO', 'TU', 'WE', 'TH', 'FR', 'SA', 'SU'];
+export const WEEKDAY_NAMES: Record<Weekday, string> = {
+  MO: 'Monday',
+  TU: 'Tuesday',
+  WE: 'Wednesday',
+  TH: 'Thursday',
+  FR: 'Friday',
+  SA: 'Saturday',
+  SU: 'Sunday',
+};
 
-/** Upper bound of periods scanned, so that a rule with no dates cannot loop forever */
-const MAX_PERIODS = 5000;
+const ORDINALS: Record<number, string> = {
+  1: 'first',
+  2: 'second',
+  3: 'third',
+  4: 'fourth',
+  [-1]: 'last',
+};
 
-const DATE_FORMAT = 'YYYY-MM-DD';
+export const toDateKey = (date: Dayjs) => date.format('YYYY-MM-DD');
 
-export function getWeekday(date: string): Weekday {
-  return DAY_INDEX[dayjs(date).day()];
-}
+export const weekdayOf = (date: string): Weekday => WEEKDAY_BY_DAY[dayjs.utc(date).day()];
 
-/** Position of the date's weekday in its month: 1 to 4, or -1 for the fifth (last) one */
-export function getWeekOfMonth(date: string) {
-  const week = Math.ceil(dayjs(date).date() / 7);
+/** 1 to 4, or -1 for the fifth weekday of a month, which is always its last */
+export function weekOfMonth(date: string) {
+  const week = Math.ceil(dayjs.utc(date).date() / 7);
   return week === 5 ? -1 : week;
 }
 
-function getNthWeekday(month: Dayjs, week: number, weekday: Weekday) {
-  const dayIndex = DAY_INDEX.indexOf(weekday);
+export function getMonthlyOn(start: string, mode: MonthlyMode): MonthlyOn {
+  return mode === 'day'
+    ? { type: 'day', day: dayjs.utc(start).date() }
+    : { type: 'weekday', weekday: weekdayOf(start), week: weekOfMonth(start) };
+}
 
+export function describeMonthlyOn(monthlyOn: MonthlyOn) {
+  return monthlyOn.type === 'day'
+    ? `On day ${monthlyOn.day}`
+    : `On the ${ORDINALS[monthlyOn.week]} ${WEEKDAY_NAMES[monthlyOn.weekday]}`;
+}
+
+function nthWeekdayOfMonth(monthStart: Dayjs, weekday: number, week: number) {
   if (week === -1) {
-    const last = month.endOf('month').startOf('day');
-    return last.subtract((last.day() - dayIndex + 7) % 7, 'day');
+    const last = monthStart.date(monthStart.daysInMonth());
+    return last.subtract((last.day() - weekday + 7) % 7, 'day');
   }
 
-  const first = month.startOf('month');
-  const date = first.add(((dayIndex - first.day() + 7) % 7) + (week - 1) * 7, 'day');
-  return date.month() === month.month() ? date : null;
+  return monthStart.add((weekday - monthStart.day() + 7) % 7, 'day').add((week - 1) * 7, 'day');
 }
 
-function getDayOfMonth(month: Dayjs, day: number) {
-  const date = month.date(day);
-  return date.month() === month.month() ? date : null;
-}
+type PeriodDates = (start: Dayjs, step: number, rule: RecurrenceRule) => Dayjs[];
 
-type PeriodDates = (start: Dayjs, period: number, rule: RecurrenceRule) => (Dayjs | null)[];
+const dailyDates: PeriodDates = (start, step) => [start.add(step, 'day')];
 
-const PERIOD_DATES: Record<Frequency, PeriodDates> = {
-  daily: (start, period, rule) => [start.add(period * rule.interval, 'day')],
-  weekly: (start, period, rule) => {
-    const monday = start.subtract((start.day() + 6) % 7, 'day').add(period * rule.interval, 'week');
-    return WEEK_ORDER.filter((weekday) => rule.weekdays.includes(weekday)).map((weekday) =>
-      monday.add(WEEK_ORDER.indexOf(weekday), 'day')
-    );
-  },
-  monthly: (start, period, rule) => {
-    const month = start.startOf('month').add(period * rule.interval, 'month');
-    return [
-      rule.monthlyMode === 'dayOfMonth'
-        ? getDayOfMonth(month, start.date())
-        : getNthWeekday(month, getWeekOfMonth(rule.start), getWeekday(rule.start)),
-    ];
-  },
-  yearly: (start, period, rule) => {
-    const year = start.startOf('month').add(period * rule.interval, 'year');
-    return [getDayOfMonth(year, start.date())];
-  },
+const weeklyDates: PeriodDates = (start, step, rule) => {
+  const monday = start.subtract((start.day() + 6) % 7, 'day').add(step, 'week');
+  return rule.weekdays
+    .map((weekday) => monday.add((WEEKDAY_BY_DAY.indexOf(weekday) + 6) % 7, 'day'))
+    .sort((a, b) => a.valueOf() - b.valueOf());
 };
 
-interface OccurrenceOptions {
-  exceptions?: string[];
-  /** Stop after this many dates (exceptions do not count) */
-  limit?: number;
-  /** Stop after this date, `YYYY-MM-DD` */
-  through?: string;
-}
+const monthlyDates: PeriodDates = (start, step, rule) => {
+  const monthStart = start.date(1).add(step, 'month');
 
-/** Dates (`YYYY-MM-DD`) of the series in order. `count` counts the dates skipped by exceptions too */
-export function getOccurrences(
-  rule: RecurrenceRule,
-  { exceptions = [], limit = Infinity, through }: OccurrenceOptions = {}
-) {
-  if (rule.repeat === 'none') {
-    return exceptions.includes(rule.start) ? [] : [rule.start];
+  if (rule.monthlyMode === 'weekday') {
+    return [nthWeekdayOfMonth(monthStart, start.day(), weekOfMonth(rule.start))];
   }
 
-  const start = dayjs(rule.start);
-  const getDates = PERIOD_DATES[rule.repeat];
-  const result: string[] = [];
-  let generated = 0;
+  // Months without the day (31st, 30th, 29th) are skipped, like in calendar apps
+  return start.date() > monthStart.daysInMonth() ? [] : [monthStart.date(start.date())];
+};
+
+const yearlyDates: PeriodDates = (start, step) => {
+  const monthStart = start.date(1).add(step, 'year');
+  return start.date() > monthStart.daysInMonth() ? [] : [monthStart.date(start.date())];
+};
+
+const PERIOD_DATES: Record<Frequency, PeriodDates> = {
+  daily: dailyDates,
+  weekly: weeklyDates,
+  monthly: monthlyDates,
+  yearly: yearlyDates,
+};
+
+export function* occurrences(rule: RecurrenceRule): Generator<Dayjs> {
+  if (rule.frequency === 'weekly' && rule.weekdays.length === 0) {
+    return;
+  }
+
+  const start = dayjs.utc(rule.start);
+  const until = rule.ends === 'on' && rule.until ? dayjs.utc(rule.until).endOf('day') : null;
+  let produced = 0;
 
   for (let period = 0; period < MAX_PERIODS; period += 1) {
-    for (const date of getDates(start, period, rule)) {
-      if (!date || date.isBefore(start, 'day')) {
+    for (const date of PERIOD_DATES[rule.frequency](start, period * rule.interval, rule)) {
+      if (date.isBefore(start)) {
         continue;
       }
 
-      const value = date.format(DATE_FORMAT);
-      const ended =
-        (rule.ends === 'on' && rule.until !== null && value > rule.until) ||
-        (rule.ends === 'after' && generated >= rule.count) ||
-        (through !== undefined && value > through);
-
-      if (ended) {
-        return result;
+      if ((until && date.isAfter(until)) || (rule.ends === 'after' && produced >= rule.count)) {
+        return;
       }
 
-      generated += 1;
+      produced += 1;
+      yield date;
+    }
+  }
+}
 
-      if (!exceptions.includes(value)) {
-        result.push(value);
-        if (result.length >= limit) {
-          return result;
-        }
-      }
+export function upcomingOccurrences(rule: RecurrenceRule, exceptions: string[], limit: number) {
+  const skipped = new Set(exceptions);
+  const result: Dayjs[] = [];
+
+  for (const date of occurrences(rule)) {
+    if (result.length === limit) {
+      break;
+    }
+
+    if (!skipped.has(toDateKey(date))) {
+      result.push(date);
     }
   }
 
   return result;
 }
 
-export function isInSeries(rule: RecurrenceRule, date: string) {
-  if (date < rule.start) {
-    return false;
+export function isInSeries(rule: RecurrenceRule, dateKey: string) {
+  for (const date of occurrences(rule)) {
+    const key = toDateKey(date);
+
+    if (key >= dateKey) {
+      return key === dateKey;
+    }
   }
-  const dates = getOccurrences(rule, { through: date });
-  return dates[dates.length - 1] === date;
+
+  return false;
 }
 
-function toInteger(value: number | string, min: number, max: number) {
-  const number = Number(value);
-  return value !== '' && Number.isInteger(number) && number >= min && number <= max ? number : null;
-}
+const isWholeNumberIn = (value: number | string, min: number, max: number) =>
+  typeof value === 'number' && Number.isInteger(value) && value >= min && value <= max;
 
-/** The rule described by the form values, `null` while the values cannot describe one */
-export function getRule(values: RuleValues): RecurrenceRule | null {
-  if (!values.start) {
+export type RuleValues = Pick<
+  RecurringEventValues,
+  | 'repeats'
+  | 'start'
+  | 'frequency'
+  | 'interval'
+  | 'weekdays'
+  | 'monthlyMode'
+  | 'ends'
+  | 'count'
+  | 'until'
+>;
+
+/** The rule described by the form values, `null` when the event does not repeat or the rule is incomplete */
+export function getRecurrenceRule(values: RuleValues): RecurrenceRule | null {
+  if (!values.repeats || !values.start || !isWholeNumberIn(values.interval, 1, 99)) {
     return null;
   }
 
-  const start = values.start.slice(0, 10);
-  const base = {
-    start,
-    repeat: values.repeat,
-    interval: 1,
+  if (values.ends === 'after' && !isWholeNumberIn(values.count, 1, 500)) {
+    return null;
+  }
+
+  return {
+    start: values.start,
+    frequency: values.frequency,
+    interval: Number(values.interval),
     weekdays: values.weekdays,
     monthlyMode: values.monthlyMode,
-    ends: 'never' as SeriesEnd,
-    count: 0,
-    until: null,
+    ends: values.ends,
+    count: Number(values.count),
+    until: values.until,
   };
-
-  if (values.repeat === 'none') {
-    return base;
-  }
-
-  const interval = toInteger(values.interval, 1, 99);
-  const count = values.ends === 'after' ? toInteger(values.count, 1, 500) : 0;
-  const until = values.ends === 'on' ? values.until : null;
-
-  if (interval === null || count === null || (values.ends === 'on' && !until)) {
-    return null;
-  }
-
-  return { ...base, interval, ends: values.ends, count, until };
 }
+
+export const formatOccurrence = (date: Dayjs, allDay: boolean) =>
+  date.format(allDay ? 'ddd, MMM D, YYYY' : 'ddd, MMM D, YYYY, HH:mm');

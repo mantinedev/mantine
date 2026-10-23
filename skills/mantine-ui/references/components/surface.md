@@ -8,7 +8,7 @@ lighter per level in dark mode and white in light mode. `Paper` is deprecated, u
   another steps the level up automatically; never jump two levels.
 - Repeated rows of a list (positions, invoices lines, team members) are `Surface withBorder
   p="md"` blocks inside the form, with a header row: a small medium-weight title
-  (`<Text size="sm" fw={500}>Position 1</Text>`) on the left and the remove `ActionIcon` on the
+  (`<Text size="sm" className={classes.title}>Position 1</Text>`, medium weight through the token) on the left and the remove `ActionIcon` on the
   right, then the inputs. Use this instead of `Fieldset`, see [fieldset](fieldset.md).
 - Single-line rows (a field of a model, a member, a file) are `Surface withBorder p="sm"` with
   one `Group gap="sm" wrap="nowrap"`: drag handle, category `ThemeIcon`, two-line texts
@@ -27,7 +27,7 @@ lighter per level in dark mode and white in light mode. `Paper` is deprecated, u
 ```tsx
 <Surface withBorder p="md">
   <Group justify="space-between" mb="sm">
-    <Text size="sm" fw={500}>Position {index + 1}</Text>
+    <Text size="sm" className={classes.title}>Position {index + 1}</Text>
     <ActionIcon variant="default" size="input-sm" aria-label={`Remove position ${index + 1}`}>
       <IconTrash size={16} color="var(--mantine-color-red-text)" />
     </ActionIcon>

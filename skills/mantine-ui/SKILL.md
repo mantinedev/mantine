@@ -38,7 +38,8 @@ component you are about to use, then write the UI.
   drop zones (the hint text).
 - **`Input.Wrapper` around anything that is not an input gets `withBlockChildren`**
   (`Dropzone`, `SegmentedControl`, `RichTextEditor`, a button with pills under it): without it the
-  child sticks to the description. 9.x: wrap the child in a `div` with the margin instead.
+  child sticks to the description. Decide by the installed types, not a version string: only when
+  the prop is missing (9.x) wrap the child in a `div` with the margin instead.
 - **Radios and checkboxes stack.** A `Radio.Group` or `Checkbox.Group` with more than two
   options is a vertical `Stack gap="xs"`; a row holds two options at most. `SegmentedControl`
   (one choice) and `Chip.Group multiple` (several) are the horizontal forms for short words.

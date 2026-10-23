@@ -1,0 +1,5 @@
+/* 9.x Input.Wrapper has no withBlockChildren: the chips need their own spacing from the label and the error */
+.chips {
+  margin-top: calc(var(--mantine-spacing-xs) / 2);
+  margin-bottom: calc(var(--mantine-spacing-xs) / 2);
+}

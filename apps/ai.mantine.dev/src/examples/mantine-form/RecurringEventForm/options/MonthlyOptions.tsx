@@ -1,7 +1,13 @@
-import dayjs from 'dayjs';
 import { Radio, Stack } from '@mantine/core';
-import { formatWeekdayOfMonth } from '../payload';
-import type { RecurringEventFormType } from '../types';
+import { describeMonthlyOn, getMonthlyOn } from '../recurrence';
+import type { MonthlyMode, RecurringEventFormType } from '../types';
+
+const FALLBACK_LABELS: Record<MonthlyMode, string> = {
+  day: 'On the same day of the month',
+  weekday: 'On the same weekday of the month',
+};
+
+const MODES: MonthlyMode[] = ['day', 'weekday'];
 
 export function MonthlyOptions({ form }: { form: RecurringEventFormType }) {
   const start = form.useWatchValue('start');
@@ -9,14 +15,13 @@ export function MonthlyOptions({ form }: { form: RecurringEventFormType }) {
   return (
     <Radio.Group label="Repeat on" {...form.getInputProps('monthlyMode')}>
       <Stack gap="xs" mt="xs">
-        <Radio
-          value="dayOfMonth"
-          label={start ? `Day ${dayjs(start).date()} of the month` : 'The same day of the month'}
-        />
-        <Radio
-          value="weekdayOfMonth"
-          label={start ? `The ${formatWeekdayOfMonth(start)}` : 'The same weekday of the month'}
-        />
+        {MODES.map((mode) => (
+          <Radio
+            key={mode}
+            value={mode}
+            label={start ? describeMonthlyOn(getMonthlyOn(start, mode)) : FALLBACK_LABELS[mode]}
+          />
+        ))}
       </Stack>
     </Radio.Group>
   );

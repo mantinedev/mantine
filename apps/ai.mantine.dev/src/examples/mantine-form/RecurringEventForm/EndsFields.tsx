@@ -1,11 +1,10 @@
 import dayjs from 'dayjs';
 import { NumberInput, Radio, Stack } from '@mantine/core';
 import { MaskedDateInput } from '@mantine/dates';
-import { getDateFieldLabels } from './EventDateInput';
 import type { RecurringEventFormType } from './types';
-import { SERIES_END_OPTIONS } from './validation';
+import { ENDS_OPTIONS } from './validation';
 
-export function SeriesEndFields({ form }: { form: RecurringEventFormType }) {
+export function EndsFields({ form }: { form: RecurringEventFormType }) {
   const ends = form.useWatchValue('ends');
   const start = form.useWatchValue('start');
 
@@ -13,7 +12,7 @@ export function SeriesEndFields({ form }: { form: RecurringEventFormType }) {
     <Stack gap="xs">
       <Radio.Group label="Ends" {...form.getInputProps('ends')}>
         <Stack gap="xs" mt="xs">
-          {SERIES_END_OPTIONS.map((option) => (
+          {ENDS_OPTIONS.map((option) => (
             <Radio key={option.value} value={option.value} label={option.label} />
           ))}
         </Stack>
@@ -23,24 +22,25 @@ export function SeriesEndFields({ form }: { form: RecurringEventFormType }) {
         <NumberInput
           label="Occurrences"
           placeholder="Number of occurrences"
-          withAsterisk
-          maw={240}
           min={1}
           max={500}
-          clampBehavior="strict"
-          allowNegative={false}
           allowDecimal={false}
+          allowNegative={false}
+          maw={240}
+          withAsterisk
           {...form.getInputProps('count')}
         />
       )}
 
       {ends === 'on' && (
         <MaskedDateInput
-          label="Ends on"
-          withAsterisk
-          maw={240}
+          label="End date"
           minDate={start ? dayjs(start).add(1, 'day').format('YYYY-MM-DD') : undefined}
-          {...getDateFieldLabels('Ends on')}
+          maw={240}
+          withAsterisk
+          dayInputLabel="End date day"
+          monthInputLabel="End date month"
+          yearInputLabel="End date year"
           {...form.getInputProps('until')}
         />
       )}
