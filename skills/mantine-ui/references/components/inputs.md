@@ -123,10 +123,12 @@ an input.
   and the keyboard: Enter, Space and ArrowDown open the picker, Backspace removes the last value.
   `onClick` on `PillsInput` opens the picker, `rightSection={<Combobox.Chevron />}` with
   `rightSectionPointerEvents="none"`. This is how `MultiSelect` is built.
-- One value: no pills. `InputBase readOnly pointer` with the value as `value` and the placeholder
-  when empty, `rightSection={<Combobox.Chevron />}`, the same click and keyboard handlers
-  (Backspace clears). This is how `Select` is built; a single value shown as a pill looks like a
-  multi select that happens to hold one item.
+- One value: never a `Pill`, never a remove button on the value. `InputBase readOnly pointer`
+  with the value as text and the placeholder when empty, `rightSection={<Combobox.Chevron />}`,
+  the same click and keyboard handlers (Backspace clears). When the field is optional and the
+  user needs to clear it, use `Input.ClearButton` in the `rightSection` while a value is set,
+  exactly like `Select clearable`. This is how `Select` is built; a pill with an × on a single
+  value looks like a multi select that happens to hold one item.
 - The picker itself is a modal (`useModal`) with the search input first, filters second, a list of
   `Checkbox.Card` / `Radio.Card` rows and Cancel + confirm buttons at the end.
 

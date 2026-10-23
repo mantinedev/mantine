@@ -33,18 +33,16 @@ has to show it. Spacing alone does not: when the pair sits in the form `Stack` w
 as every other field, nothing tells the user that `Repeat every` is part of `Repeat`.
 
 - Put the controlling field and its dependent fields in one block with a smaller gap than the
-  form: `Stack gap="xs"` inside the form's `Stack` (default `md` gap), or a bordered `Surface`
-  with the controlling field first when the group has several dependents.
+  form: `Stack gap="xs"` inside the form's `Stack` (default `md` gap).
 - Dependent fields appear directly under their controlling field, never after unrelated fields.
 - A group with a name of its own (`Recurrence`, `Shipping address`) gets a `Fieldset` legend or
   a `Surface` title row, see [fieldset](fieldset.md).
-- The revealed fields are narrower than the form when their value is short (`maw={240}` for a
-  count or an interval), so the block does not look like a new full-width section.
+- Revealed fields keep the form's width like every other input; no `maw` or `w` on inputs.
 
 ```tsx
 <Stack gap="xs">
   <Radio.Group label="Ends" {...form.getInputProps('ends')}>…</Radio.Group>
-  {ends === 'after' && <NumberInput label="Occurrences" maw={240} {...form.getInputProps('count')} />}
-  {ends === 'on' && <DatePickerInput label="End date" maw={240} {...form.getInputProps('until')} />}
+  {ends === 'after' && <NumberInput label="Occurrences" {...form.getInputProps('count')} />}
+  {ends === 'on' && <DatePickerInput label="End date" {...form.getInputProps('until')} />}
 </Stack>
 ```

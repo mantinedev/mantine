@@ -90,6 +90,13 @@ component you are about to use, then write the UI.
   background; red appears on the destructive button label or icon and on the confirm button in
   the modal, never on a container border, background or title. See
   [surface](references/components/surface.md#danger-zones-and-destructive-areas).
+- **Inputs take the full width** of their column. No `maw`, `w` or `style={{ width }}` on an
+  input because its value is short; a short value sits in a `SimpleGrid` column or a `Group`
+  with its sibling instead.
+- **Loading skeletons match the fields.** A static form's skeleton has one label and one input
+  skeleton per field in the real layout, so nothing shifts when the data arrives; a generic set
+  of skeleton rows is only for forms whose fields come from the data. See
+  [skeleton](references/components/skeleton.md).
 - **Custom inputs look like inputs.** A value picked in a modal or a popover is displayed in an
   `Input`-based component, never as a `Button` with chips under it: `PillsInput` with pills for
   several values (like `MultiSelect`), `InputBase readOnly pointer` with the value as text for one
@@ -118,8 +125,11 @@ component you are about to use, then write the UI.
 - **Drop zones are tall.** A `Dropzone` is a target people drop files on: `mih={140}` (single
   file) or more, icon above two lines of text, never a one-line strip, see
   [dropzone](references/components/dropzone.md).
-- **Repeated rows** (positions, line items, invitees, fields) are bordered `Surface` blocks with
-  a header row or a single line (icon, texts, actions), not `Fieldset`.
+- **No `Surface` inside forms unless asked.** Inputs use the level-1 background and blend into a
+  `Surface` in dark mode. Repeated rows with inputs (positions, line items, invitees) are plain
+  blocks: a header row (small medium-weight title, remove action) above the inputs, rows
+  separated by `Divider` or the form gap. `Surface` rows are for read-only items (a model's
+  field, a member, a file). See [surface](references/components/surface.md).
 - **Category icons** (field types, statuses, kinds) are `ThemeIcon variant="default"` with the
   icon colored by a theme color per category, see [theme-icon](references/components/theme-icon.md).
 - **Icons** come from the icon library already in the project (`@tabler/icons-react` or
@@ -158,7 +168,8 @@ component you are about to use, then write the UI.
 - [badge](references/components/badge.md) — when a badge is right, variants
 - [action-bar](references/components/action-bar.md) — one unsaved-changes bar for a page, selection actions
 - [alert](references/components/alert.md) — error summary for long forms, server errors
-- [surface](references/components/surface.md) — levels, borders, cards, list rows
+- [surface](references/components/surface.md) — levels, borders, cards, list rows, no surfaces inside forms
+- [skeleton](references/components/skeleton.md) — loading states that keep the layout
 - [fieldset](references/components/fieldset.md) — when a legend works and when it does not
 - [dropzone](references/components/dropzone.md) — size, texts, accepted files, previews
 - [modal](references/components/modal.md) — `useModal`, forms in modals, one modal for many items, closing

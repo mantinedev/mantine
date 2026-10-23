@@ -6,11 +6,13 @@ lighter per level in dark mode and white in light mode. `Paper` is deprecated, u
 
 - A card on the page: `<Surface withBorder p="lg">`. Nesting one `Surface` inside
   another steps the level up automatically; never jump two levels.
-- Repeated rows of a list (positions, invoices lines, team members) are `Surface withBorder
-  p="md"` blocks inside the form, with a header row: a small medium-weight title
-  (`<Text size="sm" className={classes.title}>Position 1</Text>`, medium weight through the token) on the left and the remove `ActionIcon` on the
-  right, then the inputs. Use this instead of `Fieldset`, see [fieldset](fieldset.md).
-- Single-line rows (a field of a model, a member, a file) are `Surface withBorder p="sm"` with
+- **Repeated rows that contain inputs** (positions, invoice lines, invitees) are not `Surface`
+  blocks: the inputs' default background is the level-1 color and they blend into the block in
+  dark mode. Each row is a plain block with a header row (small medium-weight title
+  `<Text size="sm" className={classes.title}>Position 1</Text>` on the left, the remove
+  `ActionIcon` on the right) above the inputs; rows are separated by `Divider` or the form gap.
+  `Surface` around any part of a form only when the user asks for cards.
+- Single-line read-only rows (a field of a model, a member, a file) are `Surface withBorder p="sm"` with
   one `Group gap="sm" wrap="nowrap"`: drag handle, category `ThemeIcon`, two-line texts
   (`flex: 1; min-width: 0` through a class), then the actions in `Group gap={6}`. Everything in
   the row is the same `size` (`lg`). `radius="md"` is the default, leave it out.
@@ -25,15 +27,17 @@ lighter per level in dark mode and white in light mode. `Paper` is deprecated, u
 - Do not set a background color on `Surface` by hand; pick the level with nesting or `level`.
 
 ```tsx
-<Surface withBorder p="md">
+// A repeated row with inputs: no Surface, a header row and the inputs
+<div>
   <Group justify="space-between" mb="sm">
     <Text size="sm" className={classes.title}>Position {index + 1}</Text>
-    <ActionIcon variant="default" size="input-sm" aria-label={`Remove position ${index + 1}`}>
-      <IconTrash size={16} color="var(--mantine-color-red-text)" />
+    <ActionIcon variant="default" size="lg" aria-label={`Remove position ${index + 1}`}>
+      <IconTrash size={18} color="var(--mantine-color-red-text)" />
     </ActionIcon>
   </Group>
   <SimpleGrid cols={{ base: 1, sm: 2 }}>…inputs…</SimpleGrid>
-</Surface>
+</div>
+{index < positions.length - 1 && <Divider />}
 ```
 
 ## Danger zones and destructive areas

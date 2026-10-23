@@ -54,7 +54,6 @@ input's height.
     min={1}
     max={99}
     hideControls
-    maw={240}
     rightSection={
       <NativeSelect
         data={FREQUENCIES}
