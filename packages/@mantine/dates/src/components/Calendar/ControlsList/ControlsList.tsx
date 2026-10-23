@@ -26,7 +26,6 @@ type ListStylesNames<Kind extends ControlsListKind> =
 export type MonthsListStylesNames = ListStylesNames<'months'>;
 export type QuartersListStylesNames = ListStylesNames<'quarters'>;
 export type YearsListStylesNames = ListStylesNames<'years'>;
-export type ControlsListStylesNames = ListStylesNames<ControlsListKind>;
 
 export type GetControlProps = (
   date: DateStringValue

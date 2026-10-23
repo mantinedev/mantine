@@ -35,5 +35,7 @@ jobs:
         run: npm run test:esm-entrypoints
       - name: Compile MCP documentation data
         run: npm run compile:llm && npm run compile:mcp
+      - name: Check for dead code
+        run: npm run knip
       - name: Run tests
         run: npm test

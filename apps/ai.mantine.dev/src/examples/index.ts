@@ -13,7 +13,3 @@ export const EXAMPLES: Record<SkillId, SkillExample[]> = {
   'mantine-custom-components': CUSTOM_COMPONENTS_EXAMPLES,
   'mantine-ui': UI_EXAMPLES,
 };
-
-export function getExample(skill: SkillId, example: string): SkillExample | undefined {
-  return EXAMPLES[skill].find((item) => item.id === example);
-}

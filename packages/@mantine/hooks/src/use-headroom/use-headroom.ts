@@ -3,8 +3,6 @@ import { useIsomorphicEffect } from '../use-isomorphic-effect/use-isomorphic-eff
 import { useScrollDirection } from '../use-scroll-direction/use-scroll-direction';
 import { useWindowScroll } from '../use-window-scroll/use-window-scroll';
 
-export { useScrollDirection } from '../use-scroll-direction/use-scroll-direction';
-
 export const isFixed = (current: number, fixedAt: number) => current <= fixedAt;
 export const isPinned = (current: number, previous: number) => current <= previous;
 export const isReleased = (current: number, previous: number, fixedAt: number) =>

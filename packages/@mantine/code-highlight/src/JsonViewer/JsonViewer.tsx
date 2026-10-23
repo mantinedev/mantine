@@ -23,7 +23,7 @@ import { getExpandablePaths, safeStringify } from './json-viewer-utils';
 import { JsonViewerNode } from './JsonViewerNode';
 import classes from './JsonViewer.module.css';
 
-export { PATH_SEPARATOR, serializePath } from './json-viewer-utils.js';
+export { serializePath } from './json-viewer-utils.js';
 
 export type JsonViewerStylesNames =
   | 'root'

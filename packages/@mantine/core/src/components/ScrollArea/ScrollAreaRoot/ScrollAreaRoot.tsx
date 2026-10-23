@@ -1,25 +1,8 @@
 import { useState } from 'react';
 import { useMergedRef } from '@mantine/hooks';
-import { Box, BoxProps, ElementProps, Factory, GetStylesApi, useProps } from '../../../core';
+import { Box, BoxProps, ElementProps, GetStylesApi, useProps } from '../../../core';
 import type { ScrollAreaFactory } from '../ScrollArea';
 import { ScrollAreaProvider } from '../ScrollArea.context';
-
-export type ScrollAreaRootStylesNames =
-  | 'root'
-  | 'viewport'
-  | 'viewportInner'
-  | 'scrollbar'
-  | 'thumb'
-  | 'corner';
-
-export type ScrollAreaRootCssVariables = {
-  root: '--sa-corner-width' | '--sa-corner-height';
-};
-
-export interface ScrollAreaRootStylesCtx {
-  cornerWidth: number;
-  cornerHeight: number;
-}
 
 export interface ScrollAreaRootProps extends BoxProps, ElementProps<'div'> {
   getStyles: GetStylesApi<ScrollAreaFactory>;
@@ -27,12 +10,6 @@ export interface ScrollAreaRootProps extends BoxProps, ElementProps<'div'> {
   scrollbars?: 'x' | 'y' | 'xy' | false;
   scrollHideDelay?: number;
 }
-
-export type ScrollAreaRootFactory = Factory<{
-  props: ScrollAreaRootProps;
-  ref: HTMLDivElement;
-  stylesNames: ScrollAreaRootStylesNames;
-}>;
 
 const defaultProps = {
   scrollHideDelay: 1000,

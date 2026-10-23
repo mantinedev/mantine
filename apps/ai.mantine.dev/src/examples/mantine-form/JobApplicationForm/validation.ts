@@ -99,7 +99,3 @@ const STEP_PATHS: ((values: JobApplicationValues) => string[])[] = [
 export function getStepPaths(step: number, values: JobApplicationValues) {
   return STEP_PATHS[step](values);
 }
-
-export function findStepOfPath(path: string, values: JobApplicationValues) {
-  return STEP_PATHS.findIndex((paths) => paths(values).includes(path));
-}

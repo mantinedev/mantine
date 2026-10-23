@@ -1,1 +1,1 @@
-export { MdxLayout, Layout } from './MdxLayout';
+export { Layout } from './MdxLayout';

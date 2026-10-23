@@ -668,25 +668,6 @@ function numCharCountBits(mode: QrSegmentMode, ver: int): int {
   return mode[Math.floor((ver + 7) / 17) + 1];
 }
 
-// Returns a QR Code representing the given Unicode text string at the given error correction level.
-// As a conservative upper bound, this function is guaranteed to succeed for strings that have 738 or fewer
-// Unicode code points (not UTF-16 code units) if the low error correction level is used. The smallest possible
-// QR Code version is automatically chosen for the output. The ECC level of the result may be higher than the
-// ecl argument if it can be done without increasing the version.
-export function encodeText(text: string, ecl: QrCodeEcc): QrCode {
-  const segs: Array<QrSegment> = makeSegments(text);
-  return encodeSegments(segs, ecl);
-}
-
-// Returns a QR Code representing the given binary data at the given error correction level.
-// This function always encodes using the binary segment mode, not any text mode. The maximum number of
-// bytes allowed is 2953. The smallest possible QR Code version is automatically chosen for the output.
-// The ECC level of the result may be higher than the ecl argument if it can be done without increasing the version.
-export function encodeBinary(data: Readonly<Array<byte>>, ecl: QrCodeEcc): QrCode {
-  const seg: QrSegment = makeBytes(data);
-  return encodeSegments([seg], ecl);
-}
-
 // Returns a segment representing the given binary data encoded in
 // byte mode. All input byte arrays are acceptable. Any text string
 // can be converted to UTF-8 bytes and encoded as a byte mode segment.

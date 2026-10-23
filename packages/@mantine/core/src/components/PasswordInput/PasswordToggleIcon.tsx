@@ -2,8 +2,6 @@ export interface PasswordToggleIconProps {
   reveal: boolean;
 }
 
-export type PasswordInputVisibilityToggleIcon = React.FC<PasswordToggleIconProps>;
-
 export function PasswordToggleIcon({ reveal }: PasswordToggleIconProps) {
   return (
     <svg

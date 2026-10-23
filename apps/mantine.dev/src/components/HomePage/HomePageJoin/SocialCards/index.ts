@@ -1,1 +1,1 @@
-export { SocialCards, DiscordCard } from './SocialCards';
+export { DiscordCard } from './SocialCards';

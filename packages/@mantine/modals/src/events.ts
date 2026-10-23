@@ -52,10 +52,6 @@ export const openContextModal: ModalsEvents['openContextModal'] = <TKey extends 
 
 export const closeModal = createEvent('closeModal');
 
-export const closeContextModal: ModalsEvents['closeContextModal'] = <TKey extends MantineModal>(
-  id: TKey
-) => createEvent('closeContextModal')(id);
-
 export const closeAllModals = createEvent('closeAllModals');
 
 export const updateModal = (payload: { modalId: string } & Partial<ModalSettings>) =>

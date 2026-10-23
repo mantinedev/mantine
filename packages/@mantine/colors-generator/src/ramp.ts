@@ -18,7 +18,6 @@ export const DARK_LIGHTNESS_RAMP = [
 export const LIGHTNESS_RAMP = STANDARD_LIGHTNESS_RAMP;
 
 export const CHROMA_ENVELOPE = [0.1, 0.2, 0.38, 0.6, 0.84, 1.0, 0.99, 0.9, 0.74, 0.56] as const;
-export const PRIMARY_INDEX = { light: 6, dark: 8 } as const;
 
 /**
  * Returns a weight in [0, 1] describing how "bright/warm" a hue is.

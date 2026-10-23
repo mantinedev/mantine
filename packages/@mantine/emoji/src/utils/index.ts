@@ -7,4 +7,4 @@ export {
   getEmojiItemIndex,
   applySkinTone,
 } from './emoji-grid-utils';
-export type { EmojiGridModel, EmojiGridDirection } from './emoji-grid-utils';
+export type { EmojiGridDirection } from './emoji-grid-utils';

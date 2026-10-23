@@ -1,7 +1,5 @@
 import { AnyDateValue, ScheduleEventData } from '../../types';
-import { EventsByDay, groupEventsByDay } from '../../utils/group-events-by-day/group-events-by-day';
-
-export type AgendaGroupedEvents = EventsByDay;
+import { groupEventsByDay } from '../../utils/group-events-by-day/group-events-by-day';
 
 interface GetAgendaViewEventsInput {
   rangeStart: AnyDateValue;

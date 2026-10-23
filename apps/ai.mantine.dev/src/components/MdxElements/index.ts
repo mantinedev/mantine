@@ -1,1 +1,1 @@
-export { MdxTitle, useMDXComponents } from './MdxElements';
+export { useMDXComponents } from './MdxElements';

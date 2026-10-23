@@ -1,5 +1,4 @@
 const DAYS_IN_WEEK = 7;
-const COLUMN_WIDTH = 100 / DAYS_IN_WEEK;
 
 /**
  * Builds a map from a full week-day index (0–6, relative to the first day of
@@ -77,5 +76,3 @@ export function clipSpanToVisibleColumns(
 
   return spans;
 }
-
-export { DAYS_IN_WEEK, COLUMN_WIDTH };
