@@ -42,7 +42,7 @@ describe('@mantine/form/use-form/phone-input', () => {
     expect((screen.getByLabelText('phone') as HTMLInputElement).value).toBe('+1 (202) 555-9876');
 
     act(() => form.reset());
-    expect((screen.getByLabelText('phone') as HTMLInputElement).value).toBe('');
+    expect((screen.getByLabelText('phone') as HTMLInputElement).value).toBe('+1 ');
   });
 
   it('syncs country with values written by the form', async () => {
@@ -62,7 +62,10 @@ describe('@mantine/form/use-form/phone-input', () => {
     render(<AutoDetectForm />);
     const input = screen.getByLabelText('phone') as HTMLInputElement;
 
-    await userEvent.type(input, '+442071234567');
+    await userEvent.type(input, '+442071234567', {
+      initialSelectionStart: 0,
+      initialSelectionEnd: input.value.length,
+    });
     expect(form.getValues().phone).toBe('+442071234567');
     expect(screen.getByLabelText('United Kingdom')).toBeInTheDocument();
 

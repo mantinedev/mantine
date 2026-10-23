@@ -14,7 +14,7 @@ const files = [
 ];
 
 function getTreeItem(name: string) {
-  return screen.getByText(name).closest('[role="treeitem"]')!;
+  return screen.getByText(name).closest<HTMLElement>('[role="treeitem"]')!;
 }
 
 function queryTreeItem(name: string) {
