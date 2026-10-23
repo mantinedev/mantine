@@ -51,16 +51,10 @@
   --dg-tree-indent: rem(20px);
   --dg-border-color: var(--mantine-color-border);
   --dg-row-border-color: var(--dg-border-color);
-  --dg-hover-color: var(--mantine-color-hover-strong);
+  --dg-hover-color: var(--mantine-color-hover);
   --dg-selected-color: var(--mantine-color-selected);
 
-  @mixin where-light {
-    --dg-striped-color: var(--mantine-color-gray-0);
-  }
-
-  @mixin where-dark {
-    --dg-striped-color: var(--mantine-color-dark-6);
-  }
+  --dg-striped-color: var(--mantine-color-surface-muted);
 
   position: relative;
   overflow: clip;
@@ -152,6 +146,8 @@
   }
 
   &:where([data-striped]) {
+    --dg-hover-color: var(--mantine-color-hover-strong);
+
     background-color: var(--dg-striped-color);
   }
 
@@ -660,6 +656,8 @@
   }
 
   &:where([data-striped]) {
+    --dg-hover-color: var(--mantine-color-hover-strong);
+
     background-color: var(--dg-striped-color);
   }
 
@@ -871,6 +869,8 @@
   }
 
   &:where([data-striped]) {
+    --dg-hover-color: var(--mantine-color-hover-strong);
+
     background-color: var(--dg-striped-color);
   }
 
