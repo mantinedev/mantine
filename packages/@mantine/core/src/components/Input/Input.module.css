@@ -100,7 +100,7 @@
 
   &[data-variant='default'] {
     --input-bd: var(--mantine-color-default-border);
-    --input-bg: var(--mantine-color-default);
+    --input-bg: var(--mantine-color-surface-input);
     --input-bd-focus: var(--mantine-color-focus-ring);
   }
 

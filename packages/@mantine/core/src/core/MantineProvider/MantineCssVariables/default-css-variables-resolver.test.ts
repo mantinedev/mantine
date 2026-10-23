@@ -257,6 +257,16 @@ describe('theme.surfaces overrides', () => {
     expect(resolved.light['--mantine-color-surface-sunken']).toBe('var(--mantine-color-gray-2)');
   });
 
+  it('applies a theme.surfaces input override per scheme', () => {
+    const theme = mergeMantineTheme(
+      DEFAULT_THEME,
+      createTheme({ surfaces: { dark: { input: '#0b0b0b' } } })
+    );
+    const resolved = defaultCssVariablesResolver(theme);
+    expect(resolved.dark['--mantine-color-surface-input']).toBe('#0b0b0b');
+    expect(resolved.light['--mantine-color-surface-input']).toBe('var(--mantine-color-white)');
+  });
+
   it('applies a theme.surfaces muted override per scheme', () => {
     const theme = mergeMantineTheme(
       DEFAULT_THEME,
@@ -266,6 +276,15 @@ describe('theme.surfaces overrides', () => {
     expect(resolved.dark['--mantine-color-surface-muted']).toBe('#1f2023');
     expect(resolved.dark['--mantine-color-surface-panel-2']).toBe('var(--mantine-color-dark-5)');
     expect(resolved.light['--mantine-color-surface-muted']).toBe('var(--mantine-color-gray-0)');
+  });
+});
+
+describe('surface-input token', () => {
+  const result = defaultCssVariablesResolver(DEFAULT_THEME);
+
+  it('resolves surface-input to white in light and to the page surface in dark', () => {
+    expect(result.light['--mantine-color-surface-input']).toBe('var(--mantine-color-white)');
+    expect(result.dark['--mantine-color-surface-input']).toBe('var(--mantine-color-surface-page)');
   });
 });
 

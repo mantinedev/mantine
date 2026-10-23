@@ -70,6 +70,7 @@ export const defaultCssVariablesResolver: CSSVariablesResolver = (theme) => {
       '--mantine-color-surface-panel-2': 'var(--mantine-color-white)',
       '--mantine-color-surface-sunken': 'var(--mantine-color-gray-1)',
       '--mantine-color-surface-muted': 'var(--mantine-color-gray-0)',
+      '--mantine-color-surface-input': 'var(--mantine-color-white)',
       '--mantine-color-body': 'var(--mantine-color-surface-page)',
       '--mantine-color-error': 'var(--mantine-color-red-6)',
       '--mantine-color-success': 'var(--mantine-color-teal-8)',
@@ -111,6 +112,7 @@ export const defaultCssVariablesResolver: CSSVariablesResolver = (theme) => {
       '--mantine-color-surface-panel-2': 'var(--mantine-color-dark-5)',
       '--mantine-color-surface-sunken': 'var(--mantine-color-dark-9)',
       '--mantine-color-surface-muted': 'var(--mantine-color-dark-5)',
+      '--mantine-color-surface-input': 'var(--mantine-color-surface-page)',
       '--mantine-color-body': 'var(--mantine-color-surface-page)',
       '--mantine-color-error': 'var(--mantine-color-red-7)',
       '--mantine-color-success': 'var(--mantine-color-teal-7)',
@@ -150,6 +152,7 @@ export const defaultCssVariablesResolver: CSSVariablesResolver = (theme) => {
     panel2: '--mantine-color-surface-panel-2',
     sunken: '--mantine-color-surface-sunken',
     muted: '--mantine-color-surface-muted',
+    input: '--mantine-color-surface-input',
   } as const;
 
   (['light', 'dark'] as const).forEach((scheme) => {

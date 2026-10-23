@@ -59,7 +59,7 @@
   cursor: var(--mantine-cursor-type);
   -webkit-tap-highlight-color: transparent;
 
-  background-color: var(--mantine-color-default);
+  background-color: var(--mantine-color-surface-input);
   border-color: var(--mantine-color-default-border);
 
   &:checked {

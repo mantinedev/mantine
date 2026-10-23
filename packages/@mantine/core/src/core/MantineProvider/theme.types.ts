@@ -265,6 +265,9 @@ export interface MantineThemeSurfaceValues {
 
   /** Background of code and inset content surfaces (Code, Kbd, CodeHighlight, Typography `pre`), `--mantine-color-surface-muted` */
   muted?: string;
+
+  /** Background of inputs and other editable fields (Input, Checkbox, Radio, Dropzone, RichTextEditor), `--mantine-color-surface-input`. Same as the page in dark mode, so fields are sunken on every Surface level. */
+  input?: string;
 }
 
 export interface MantineThemeSurfaces {

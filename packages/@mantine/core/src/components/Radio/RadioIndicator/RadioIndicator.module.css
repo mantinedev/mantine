@@ -32,7 +32,7 @@
   align-items: center;
   justify-content: center;
 
-  background-color: var(--mantine-color-default);
+  background-color: var(--mantine-color-surface-input);
   border-color: var(--mantine-color-default-border);
 
   &[data-checked] {
