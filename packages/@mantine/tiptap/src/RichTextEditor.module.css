@@ -48,7 +48,7 @@
 }
 
 .content {
-  background-color: var(--mantine-color-body);
+  background-color: var(--mantine-color-surface-input);
   border-radius: var(--mantine-radius-default);
 
   & :global(.ProseMirror) {
@@ -387,7 +387,7 @@
 
 .controlsGroup {
   display: flex;
-  background-color: var(--mantine-color-body);
+  background-color: var(--mantine-color-surface-input);
 
   &:where([data-variant='default']) {
     & :where([data-rich-text-editor-control]) {
@@ -454,7 +454,7 @@
   flex-wrap: wrap;
   gap: var(--mantine-spacing-sm);
   top: var(--rte-sticky-offset, 0px);
-  background-color: var(--mantine-color-body);
+  background-color: var(--mantine-color-surface-input);
   z-index: 1;
   border-start-end-radius: var(--mantine-radius-default);
   border-start-start-radius: var(--mantine-radius-default);

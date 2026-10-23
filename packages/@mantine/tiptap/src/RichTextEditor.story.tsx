@@ -21,7 +21,7 @@ import js from 'highlight.js/lib/languages/javascript';
 import ts from 'highlight.js/lib/languages/typescript';
 import html from 'highlight.js/lib/languages/xml';
 import { createLowlight } from 'lowlight';
-import { AppShell } from '@mantine/core';
+import { AppShell, Stack, Surface, TagsInput, Text, Textarea, TextInput } from '@mantine/core';
 import { Link } from './extensions/Link';
 import { getTaskListExtension } from './extensions/TaskList';
 import { getUploadImageExtension } from './extensions/UploadImage';
@@ -250,6 +250,58 @@ export function Usage() {
 
 export function SubtleVariant() {
   return <BasicEditor editorProps={{ variant: 'subtle' }} />;
+}
+
+function FormEditor() {
+  const editor = useEditor({
+    extensions: [StarterKit],
+    content: '<h2>What is new</h2><p>A new colors system and a faster form engine.</p>',
+  });
+
+  return (
+    <RichTextEditor editor={editor}>
+      <RichTextEditor.Toolbar>
+        <RichTextEditor.ControlsGroup>
+          <RichTextEditor.Bold />
+          <RichTextEditor.Italic />
+        </RichTextEditor.ControlsGroup>
+        <RichTextEditor.ControlsGroup>
+          <RichTextEditor.H2 />
+          <RichTextEditor.H3 />
+        </RichTextEditor.ControlsGroup>
+        <RichTextEditor.ControlsGroup>
+          <RichTextEditor.BulletList />
+          <RichTextEditor.OrderedList />
+        </RichTextEditor.ControlsGroup>
+      </RichTextEditor.Toolbar>
+      <RichTextEditor.Content />
+    </RichTextEditor>
+  );
+}
+
+function FormFields() {
+  return (
+    <Stack gap="sm">
+      <TextInput label="Title" defaultValue="Launching Mantine 10" />
+      <TagsInput label="Tags" defaultValue={['release', 'news']} />
+      <Textarea label="Excerpt" defaultValue="Everything that changed in the new major release." />
+      <Text size="sm" fw={500}>
+        Body
+      </Text>
+      <FormEditor />
+    </Stack>
+  );
+}
+
+export function WithInputs() {
+  return (
+    <div style={{ padding: 40, maxWidth: 700 }}>
+      <FormFields />
+      <Surface withBorder p="md" mt="xl">
+        <FormFields />
+      </Surface>
+    </div>
+  );
 }
 
 function escapeHtml(unsafe: string) {
