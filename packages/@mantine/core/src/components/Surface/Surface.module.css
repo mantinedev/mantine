@@ -12,6 +12,10 @@
 
   --surface-border-color: var(--mantine-color-border);
 
+  &:where([data-mantine-surface-level='2']) {
+    --surface-border-color: var(--mantine-color-neutral-4);
+  }
+
   &:where([data-with-border]) {
     border: rem(1px) solid var(--surface-border-color);
   }

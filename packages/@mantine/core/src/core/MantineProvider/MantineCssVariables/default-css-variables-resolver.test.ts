@@ -22,8 +22,8 @@ describe('semantic color role variables', () => {
       expect(result.light['--mantine-color-border-subtle']).toBe('var(--mantine-color-gray-2)');
     });
 
-    it('--mantine-color-border-strong resolves to var(--mantine-color-gray-4) in light', () => {
-      expect(result.light['--mantine-color-border-strong']).toBe('var(--mantine-color-gray-4)');
+    it('--mantine-color-border-strong resolves to var(--mantine-color-gray-5) in light', () => {
+      expect(result.light['--mantine-color-border-strong']).toBe('var(--mantine-color-gray-5)');
     });
 
     it('--mantine-color-hover resolves to var(--mantine-color-neutral-2) in light', () => {
@@ -100,8 +100,8 @@ describe('semantic color role variables', () => {
       expect(result.light['--mantine-color-default']).toBe('var(--mantine-color-surface-panel)');
     });
 
-    it('--mantine-color-default-border is unchanged in light', () => {
-      expect(result.light['--mantine-color-default-border']).toBe('var(--mantine-color-gray-4)');
+    it('--mantine-color-default-border resolves to gray-3 in light', () => {
+      expect(result.light['--mantine-color-default-border']).toBe('var(--mantine-color-gray-3)');
     });
 
     it('--mantine-color-dimmed is re-anchored onto neutral-6 in light', () => {
