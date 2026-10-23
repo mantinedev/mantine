@@ -1,35 +1,31 @@
-import { NativeSelect, NumberInput } from '@mantine/core';
-import type { RecurringEventFormType } from './types';
-import { FREQUENCY_UNITS } from './validation';
+import { NumberInput, Text } from '@mantine/core';
+import type { Frequency, RecurringEventFormType } from './types';
+import { INTERVAL_LIMITS, INTERVAL_UNITS } from './validation';
 
-export function IntervalInput({ form }: { form: RecurringEventFormType }) {
+export function IntervalInput({
+  form,
+  frequency,
+}: {
+  form: RecurringEventFormType;
+  frequency: Frequency;
+}) {
   const interval = form.useWatchValue('interval');
-  const units = FREQUENCY_UNITS.map((unit) => ({
-    value: unit.value,
-    label: Number(interval) === 1 ? unit.singular : unit.plural,
-  }));
+  const [singular, plural] = INTERVAL_UNITS[frequency];
 
   return (
     <NumberInput
       label="Repeat every"
       placeholder="1"
-      min={1}
-      max={99}
-      allowDecimal={false}
+      min={INTERVAL_LIMITS.min}
+      max={INTERVAL_LIMITS.max}
       allowNegative={false}
+      allowDecimal={false}
       hideControls
       maw={240}
+      rightSection={<Text size="sm">{Number(interval) === 1 ? singular : plural}</Text>}
+      rightSectionWidth={72}
+      rightSectionPointerEvents="none"
       withAsterisk
-      rightSection={
-        <NativeSelect
-          data={units}
-          aria-label="Frequency"
-          variant="unstyled"
-          rightSectionWidth={28}
-          {...form.getInputProps('frequency', { withError: false })}
-        />
-      }
-      rightSectionWidth={92}
       {...form.getInputProps('interval')}
     />
   );

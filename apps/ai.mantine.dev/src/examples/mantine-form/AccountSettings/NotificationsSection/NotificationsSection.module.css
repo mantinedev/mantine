@@ -1,20 +1,16 @@
 .table {
-  max-width: 560px;
-}
-
-.event {
-  font-weight: var(--mantine-font-weight-medium);
+  max-width: 480px;
 }
 
 .channel {
-  width: 88px;
+  width: 80px;
   text-align: center;
 }
 
 .checkbox {
-  display: inline-flex;
+  display: inline-block;
 }
 
 .digestDay {
-  max-width: 280px;
+  max-width: 240px;
 }

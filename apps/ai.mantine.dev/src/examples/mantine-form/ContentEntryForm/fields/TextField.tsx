@@ -1,31 +1,35 @@
 import { Text, Textarea, TextInput } from '@mantine/core';
-import type { FieldInputProps, TextModelField } from '../types';
+import { fieldPath } from '../entry';
+import type { FieldInputProps } from '../types';
+import { labelProps } from './field-props';
 
-function Counter({ length, max }: { length: number; max: number }) {
-  return (
-    <Text size="xs" ta="right" c={length >= max ? 'red' : undefined}>
-      {length}/{max}
+export function TextField({ form, field }: FieldInputProps<'text'>) {
+  const path = fieldPath(field);
+  const value = form.useWatchValue(path) as string;
+
+  const counter = field.maxLength !== null && (
+    <Text size="xs" ta="right" c={value.length >= field.maxLength ? 'red' : undefined}>
+      {value.length}/{field.maxLength}
     </Text>
   );
-}
 
-export function TextField({ form, field }: FieldInputProps<TextModelField>) {
-  const path = `fields.${field.key}` as const;
-  const value = (form.useWatchValue(path) as string | undefined) ?? '';
-  const counter =
-    field.maxLength === null ? undefined : <Counter length={value.length} max={field.maxLength} />;
-  const common = {
-    label: field.label,
-    description: field.description || undefined,
+  const props = {
+    ...labelProps(field),
     placeholder: field.label,
-    withAsterisk: field.required,
     maxLength: field.maxLength ?? undefined,
     ...form.getInputProps(path),
   };
 
-  return field.display === 'textarea' ? (
-    <Textarea {...common} autosize minRows={3} maxRows={8} bottomSection={counter} />
-  ) : (
-    <TextInput {...common} rightSection={counter} rightSectionWidth={64} />
+  if (field.display === 'textarea') {
+    return <Textarea autosize minRows={3} maxRows={8} bottomSection={counter} {...props} />;
+  }
+
+  return (
+    <TextInput
+      rightSection={counter}
+      rightSectionWidth={64}
+      rightSectionPointerEvents="none"
+      {...props}
+    />
   );
 }

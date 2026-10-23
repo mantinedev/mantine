@@ -50,9 +50,11 @@ A test may have several `expect` calls when they describe the same behavior from
 Tests pass on any machine and in any CI runner. Nothing in a test depends on the machine's
 timezone, locale or clock:
 
-- fake `Date` with `vi.useFakeTimers({ toFake: ['Date'] })` + `vi.setSystemTime(...)`;
+- fake `Date` (jest: `jest.useFakeTimers({ now, advanceTimers: true })`; vitest:
+  `vi.useFakeTimers({ toFake: ['Date'] })` + `vi.setSystemTime(...)`);
 - when the component reads the browser timezone (`Intl.DateTimeFormat().resolvedOptions()`),
-  mock it in `beforeEach` (`vi.spyOn(Intl.DateTimeFormat.prototype, 'resolvedOptions')`) instead
+  mock it in `beforeEach` (`jest.spyOn(Intl.DateTimeFormat.prototype, 'resolvedOptions')`,
+  `vi.spyOn` with vitest) instead
   of asserting the value of the machine the tests were written on;
 - expected ISO strings with offsets (`2026-10-21T10:00:00+02:00`) come from a timezone the
   test itself selected or mocked, never from the default.

@@ -1,3 +1,4 @@
+import { useId } from 'react';
 import { Skeleton, Stack, Text, Title } from '@mantine/core';
 import classes from './SettingsSection.module.css';
 
@@ -9,26 +10,28 @@ interface SettingsSectionProps {
 }
 
 export function SettingsSection({ title, description, loading, children }: SettingsSectionProps) {
-  const headingId = `${title.toLowerCase().replace(/\s+/g, '-')}-section-title`;
+  const titleId = useId();
 
   return (
-    <section aria-labelledby={headingId} className={classes.root}>
-      <div className={classes.header}>
-        <Title order={3} id={headingId} c="var(--mantine-color-bright)">
-          {title}
-        </Title>
-        <Text size="sm">{description}</Text>
-      </div>
+    <section aria-labelledby={titleId} aria-busy={loading}>
+      <Title order={3} id={titleId} c="var(--mantine-color-bright)">
+        {title}
+      </Title>
+      <Text size="sm" mt={4}>
+        {description}
+      </Text>
 
-      {loading ? (
-        <Stack gap="md" role="status" aria-label={`Loading ${title.toLowerCase()} settings`}>
-          <Skeleton height={56} />
-          <Skeleton height={56} />
-          <Skeleton height={56} />
-        </Stack>
-      ) : (
-        children
-      )}
+      <div className={classes.body}>
+        {loading ? (
+          <Stack gap="md" role="status" aria-label={`Loading ${title}`}>
+            <Skeleton height={36} />
+            <Skeleton height={36} />
+            <Skeleton height={36} width="60%" />
+          </Stack>
+        ) : (
+          children
+        )}
+      </div>
     </section>
   );
 }

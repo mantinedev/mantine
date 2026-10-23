@@ -36,12 +36,17 @@ component touches before writing the tests.
 - **Assert outcomes, not implementation.** The error text under an input, the focused element,
   the payload passed to `onSubmit`, the notification title — not internal state, not that a
   callback was called with a form object.
-- **Deterministic time.** Freeze `Date` when the component compares against today
-  (`vi.useFakeTimers({ toFake: ['Date'] })` + `vi.setSystemTime`), restore in `afterEach`. Do
-  not fake all timers around `user-event` unless you pass `advanceTimers` to `userEvent.setup`.
+- **Deterministic time.** Freeze `Date` when the component compares against today: jest
+  `jest.useFakeTimers({ now: new Date(2026, 9, 17, 12), advanceTimers: true })` with
+  `userEvent.setup({ advanceTimers: jest.advanceTimersByTime })`; vitest
+  `vi.useFakeTimers({ toFake: ['Date'] })` + `vi.setSystemTime`. Restore in `afterEach`. Never
+  fake all timers around `user-event` without `advanceTimers`.
 - **No snapshots, no console mocks.** A React warning in a test is a bug to fix (an `act`
   wrapper, a missing `key`, a controlled/uncontrolled switch), not noise to silence.
-- **Clean up what persists**: `notifications.clean()` and `vi.useRealTimers()` in `afterEach`.
+- **Clean up what persists**: `notifications.clean()` and `useRealTimers()` in `afterEach`.
+- **Use the project's runner and its API.** `jest.fn` / `jest.mock` / `jest.useFakeTimers` in a
+  jest project, `vi.*` in a vitest project; never import `vitest` into a jest project or the
+  other way round. The equivalents are listed in [setup](references/setup.md#runners).
 
 ## References
 

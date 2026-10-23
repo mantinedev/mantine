@@ -1,19 +1,19 @@
 import { JsonInput } from '@mantine/core';
-import type { FieldInputProps, JsonModelField } from '../types';
+import { fieldPath } from '../entry';
+import type { FieldInputProps } from '../types';
+import { labelProps } from './field-props';
 
-export function JsonField({ form, field }: FieldInputProps<JsonModelField>) {
+export function JsonField({ form, field }: FieldInputProps<'json'>) {
   return (
     <JsonInput
-      label={field.label}
-      description={field.description || undefined}
+      {...labelProps(field)}
       placeholder='{ "key": "value" }'
-      withAsterisk={field.required}
       formatOnBlur
       validationError={`${field.label} must be valid JSON`}
       autosize
       minRows={4}
       maxRows={12}
-      {...form.getInputProps(`fields.${field.key}`)}
+      {...form.getInputProps(fieldPath(field))}
     />
   );
 }

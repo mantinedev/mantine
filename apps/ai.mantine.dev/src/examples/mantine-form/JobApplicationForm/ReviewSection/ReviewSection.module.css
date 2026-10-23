@@ -1,0 +1,8 @@
+.label {
+  font-weight: var(--mantine-font-weight-medium);
+}
+
+.value {
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}

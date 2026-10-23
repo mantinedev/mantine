@@ -1,12 +1,10 @@
-import dayjs from 'dayjs';
 import { NumberInput, Radio, Stack } from '@mantine/core';
 import { MaskedDateInput } from '@mantine/dates';
 import type { RecurringEventFormType } from './types';
-import { ENDS_OPTIONS } from './validation';
+import { COUNT_LIMITS, ENDS_OPTIONS } from './validation';
 
 export function EndsFields({ form }: { form: RecurringEventFormType }) {
   const ends = form.useWatchValue('ends');
-  const start = form.useWatchValue('start');
 
   return (
     <Stack gap="xs">
@@ -21,11 +19,11 @@ export function EndsFields({ form }: { form: RecurringEventFormType }) {
       {ends === 'after' && (
         <NumberInput
           label="Occurrences"
-          placeholder="Number of occurrences"
-          min={1}
-          max={500}
-          allowDecimal={false}
+          placeholder="10"
+          min={COUNT_LIMITS.min}
+          max={COUNT_LIMITS.max}
           allowNegative={false}
+          allowDecimal={false}
           maw={240}
           withAsterisk
           {...form.getInputProps('count')}
@@ -35,7 +33,6 @@ export function EndsFields({ form }: { form: RecurringEventFormType }) {
       {ends === 'on' && (
         <MaskedDateInput
           label="End date"
-          minDate={start ? dayjs(start).add(1, 'day').format('YYYY-MM-DD') : undefined}
           maw={240}
           withAsterisk
           dayInputLabel="End date day"

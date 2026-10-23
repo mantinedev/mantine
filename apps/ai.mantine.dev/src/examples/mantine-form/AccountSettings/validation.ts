@@ -1,57 +1,49 @@
-import {
-  hasLength,
-  isEmail,
-  isNotEmpty,
-  isUrl,
-  when,
-  type FormRulesRecord,
-  type FormValidateInput,
-} from '@mantine/form';
-import { BIO_MAX_LENGTH } from './data';
-import type {
-  Address,
-  BillingValues,
-  NotificationsValues,
-  OrganizationValues,
-  ProfileValues,
-} from './types';
+import { hasLength, isEmail, isNotEmpty, isUrl, when } from '@mantine/form';
+import { BIO_MAX_LENGTH } from './constants';
+import type { BillingValues, NotificationsValues } from './types';
 
-export const profileRules: FormValidateInput<ProfileValues> = {
+const requiredEmail = (requiredError: string) => (value: string) =>
+  value.trim() === '' ? requiredError : isEmail('Enter a valid email address')(value.trim());
+
+const optionalUrl = (value: string) =>
+  value.trim() === ''
+    ? null
+    : isUrl('Enter a valid URL, for example https://example.com')(value.trim());
+
+export const addressRules = {
+  street: isNotEmpty('Enter a street'),
+  city: isNotEmpty('Enter a city'),
+  postalCode: isNotEmpty('Enter a postal code'),
+  country: isNotEmpty('Select a country'),
+};
+
+export const profileRules = {
   fullName: isNotEmpty('Enter your full name'),
-  email: isEmail('Enter a valid email address'),
+  email: requiredEmail('Enter your email'),
   bio: hasLength({ max: BIO_MAX_LENGTH }, `Bio must be ${BIO_MAX_LENGTH} characters or fewer`),
 };
 
-function addressRules<Values>(
-  applies: (values: Values) => boolean = () => true
-): FormRulesRecord<Address, Values> {
-  return {
-    street: when(applies, isNotEmpty('Enter a street')),
-    city: when(applies, isNotEmpty('Enter a city')),
-    postalCode: when(applies, isNotEmpty('Enter a postal code')),
-    country: when(applies, isNotEmpty('Pick a country')),
-  };
-}
-
-const optionalUrl = isUrl(
-  { protocols: ['http', 'https'] },
-  'Enter a valid URL, like https://acme.com'
-);
-
-export const organizationRules: FormValidateInput<OrganizationValues> = {
+export const organizationRules = {
   name: isNotEmpty('Enter the organization name'),
-  website: (value) => (value.trim() === '' ? null : optionalUrl(value)),
-  address: addressRules(),
+  website: optionalUrl,
+  address: addressRules,
 };
 
-export const billingRules: FormValidateInput<BillingValues> = {
-  email: isEmail('Enter a valid billing email'),
-  address: addressRules<BillingValues>((values) => !values.sameAsOrganization),
+const ownBillingAddress = (values: BillingValues) => !values.sameAsOrganization;
+
+export const billingRules = {
+  billingEmail: requiredEmail('Enter a billing email'),
+  address: {
+    street: when(ownBillingAddress, addressRules.street),
+    city: when(ownBillingAddress, addressRules.city),
+    postalCode: when(ownBillingAddress, addressRules.postalCode),
+    country: when(ownBillingAddress, addressRules.country),
+  },
 };
 
 export const hasDigestChannel = (values: NotificationsValues) =>
   Object.values(values.events.weeklyDigest).some(Boolean);
 
-export const notificationsRules: FormValidateInput<NotificationsValues> = {
-  digestDay: when(hasDigestChannel, isNotEmpty('Pick a day for the digest')),
+export const notificationsRules = {
+  digestDay: when(hasDigestChannel, isNotEmpty('Select a digest day')),
 };

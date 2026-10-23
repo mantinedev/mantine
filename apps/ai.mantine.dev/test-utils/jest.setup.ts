@@ -1,8 +1,4 @@
-import React from 'react';
 import '@testing-library/jest-dom';
-import { vi } from './vite-plus-test';
-
-Object.assign(globalThis, { React, vi });
 
 const { getComputedStyle } = window;
 window.getComputedStyle = (elt) => getComputedStyle(elt);

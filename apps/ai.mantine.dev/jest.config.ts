@@ -3,15 +3,13 @@ import type { Config } from 'jest';
 const config: Config = {
   testEnvironment: 'jest-environment-jsdom',
   transform: {
-    '^.+\\.tsx?$': '<rootDir>/test-utils/jest-transform.cjs',
-    '^.+\\.m?js$': 'esbuild-jest',
+    '^.+\\.[tj]sx?$': ['@swc/jest', { jsc: { transform: { react: { runtime: 'automatic' } } } }],
   },
   testMatch: ['<rootDir>/src/examples/**/?(*.)+(test).ts?(x)'],
   setupFilesAfterEnv: ['<rootDir>/test-utils/jest.setup.ts'],
   moduleNameMapper: {
     '^@test-utils$': '<rootDir>/test-utils',
     '^@/(.*)$': '<rootDir>/src/$1',
-    '^vite-plus/test$': '<rootDir>/test-utils/vite-plus-test.ts',
     '\\.(css)$': 'identity-obj-proxy',
   },
 };

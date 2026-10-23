@@ -27,7 +27,7 @@ export interface OrganizationValues {
 }
 
 export interface BillingValues {
-  email: string;
+  billingEmail: string;
   sameAsOrganization: boolean;
   address: Address;
   invoiceNotes: string;
@@ -42,16 +42,11 @@ export type NotificationEvent =
 
 export type NotificationChannel = 'email' | 'push' | 'sms';
 
-export type NotificationMatrix = Record<NotificationEvent, Record<NotificationChannel, boolean>>;
+export type ChannelSettings = Record<NotificationChannel, boolean>;
 
 export interface NotificationsValues {
-  events: NotificationMatrix;
+  events: Record<NotificationEvent, ChannelSettings>;
   digestDay: string | null;
-}
-
-export interface Member {
-  value: string;
-  label: string;
 }
 
 export interface AccountSettingsData {
@@ -59,12 +54,12 @@ export interface AccountSettingsData {
   organization: OrganizationValues;
   billing: BillingValues;
   notifications: NotificationsValues;
-  ownerId: string;
 }
 
-export type SectionId = 'profile' | 'organization' | 'billing' | 'notifications';
+export type SectionKey = keyof AccountSettingsData;
 
 export type ProfileFormType = UseFormReturnType<ProfileValues>;
 export type OrganizationFormType = UseFormReturnType<OrganizationValues>;
 export type BillingFormType = UseFormReturnType<BillingValues>;
 export type NotificationsFormType = UseFormReturnType<NotificationsValues>;
+export type AddressFormType = UseFormReturnType<{ address: Address }>;

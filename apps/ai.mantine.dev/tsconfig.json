@@ -17,8 +17,7 @@
     "incremental": true,
     "paths": {
       "@/*": ["./src/*"],
-      "@test-utils": ["./test-utils"],
-      "vite-plus/test": ["./test-utils/vite-plus-test.ts"]
+      "@test-utils": ["./test-utils"]
     },
     "plugins": [
       {

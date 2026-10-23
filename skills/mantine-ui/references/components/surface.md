@@ -35,3 +35,13 @@ lighter per level in dark mode and white in light mode. `Paper` is deprecated, u
   <SimpleGrid cols={{ base: 1, sm: 2 }}>…inputs…</SimpleGrid>
 </Surface>
 ```
+
+## Danger zones and destructive areas
+
+A section with destructive actions (delete organization, transfer ownership, revoke keys) looks
+like every other section: default border, default background, the same title and description.
+Red lives only on the destructive action itself, the button label (`variant="default" c="red"`)
+or the trash icon color, and on the filled confirm button inside the confirmation modal. Never a
+red border, a red background tint or a red title on the container: in the dark scheme a red
+`Surface` border reads as an error state for the whole block and clashes with every other border
+on the page.

@@ -3,11 +3,11 @@ import { AccountSettings } from './AccountSettings/AccountSettings';
 import accountSettingsCode from './AccountSettings/code.json';
 import type { OrganizationValues, ProfileValues } from './AccountSettings/types';
 import contentEntryFormCode from './ContentEntryForm/code.json';
-import { ContentEntryPage } from './ContentEntryForm/ContentEntryPage';
+import { ContentEntryDemo } from './ContentEntryForm/ContentEntryDemo';
 import type { EntryValues } from './ContentEntryForm/types';
 import contentModelFormCode from './ContentModelForm/code.json';
 import { ContentModelForm } from './ContentModelForm/ContentModelForm';
-import type { ContentField, ContentModelValues } from './ContentModelForm/types';
+import type { ContentModelValues, ModelField } from './ContentModelForm/types';
 import jobApplicationFormCode from './JobApplicationForm/code.json';
 import { JobApplicationForm } from './JobApplicationForm/JobApplicationForm';
 import type { JobApplicationValues } from './JobApplicationForm/types';
@@ -22,20 +22,16 @@ function dateInDays(days: number) {
 }
 
 function modelField(
-  values: Partial<ContentField> & Pick<ContentField, 'id' | 'type' | 'label' | 'key'>
-): ContentField {
+  values: Partial<ModelField> & Pick<ModelField, 'id' | 'type' | 'label' | 'key'>
+): ModelField {
   return {
     description: '',
     required: false,
-    textDisplay: 'input',
-    maxLength: '',
-    textDefault: '',
-    booleanDefault: 'false',
-    jsonDefault: '',
-    selectOptions: [],
-    selectDefault: null,
-    referenceModel: null,
-    allowMultiple: false,
+    text: { display: 'input', maxLength: '', defaultValue: '' },
+    boolean: { defaultValue: 'false' },
+    json: { defaultValue: '' },
+    select: { options: [], defaultValue: null },
+    reference: { targetModel: null, multiple: false },
     ...values,
   };
 }
@@ -97,7 +93,7 @@ Write tests for the component.`,
         ],
         startDate: dateInDays(7),
         salary: 120000,
-        workArrangement: 'hybrid',
+        workMode: 'hybrid',
         notes: 'Available for a call any weekday after 2pm.',
       });
     },
@@ -150,11 +146,11 @@ Write tests for the component.`,
             label: 'Title',
             key: 'title',
             required: true,
-            maxLength: 120,
+            text: { display: 'input', maxLength: 120, defaultValue: '' },
           }),
           modelField({
             id: 'body',
-            type: 'richText',
+            type: 'rich_text',
             label: 'Body',
             key: 'body',
             description: 'Main article content',
@@ -166,12 +162,14 @@ Write tests for the component.`,
             label: 'Status',
             key: 'status',
             required: true,
-            selectOptions: [
-              { id: 'draft', value: 'draft', label: 'Draft' },
-              { id: 'published', value: 'published', label: 'Published' },
-              { id: 'archived', value: 'archived', label: 'Archived' },
-            ],
-            selectDefault: 'draft',
+            select: {
+              options: [
+                { id: 'draft', value: 'draft', label: 'Draft' },
+                { id: 'published', value: 'published', label: 'Published' },
+                { id: 'archived', value: 'archived', label: 'Archived' },
+              ],
+              defaultValue: 'draft',
+            },
           }),
           modelField({
             id: 'author',
@@ -179,7 +177,7 @@ Write tests for the component.`,
             label: 'Author',
             key: 'author',
             required: true,
-            referenceModel: 'Author',
+            reference: { targetModel: 'author', multiple: false },
           }),
           modelField({
             id: 'featured',
@@ -227,14 +225,14 @@ Behavior:
 - on submit show a short notification (entry key and model name), display the entry JSON (key, language, tags, model key, values keyed by field key) under the form and keep the form as is
 
 Write tests for the component.`,
-    component: ContentEntryPage,
+    component: ContentEntryDemo,
     code: contentEntryFormCode as SkillExample['code'],
     fill: async (filler) => {
       filler.setValues<EntryValues>('content-entry', {
         key: 'launching-mantine-10',
         language: 'en-US',
         tags: ['release', 'news'],
-        fields: {
+        values: {
           title: 'Launching Mantine 10',
           excerpt: 'Everything that changed in the new major release and how to migrate.',
           body: '<h2>What is new</h2><p>A new colors system, a faster form engine and a dozen new components.</p>',
@@ -296,11 +294,10 @@ Write tests for the component.`,
         allDay: false,
         timezone: 'Europe/Berlin',
         location: 'Room 4 / Meet link in the invite',
-        repeats: true,
-        frequency: 'weekly',
+        repeat: 'weekly',
         interval: 2,
         weekdays: ['TU', 'TH'],
-        monthlyMode: 'day',
+        monthlyBy: 'dayOfMonth',
         ends: 'after',
         count: 12,
         until: null,
@@ -336,12 +333,12 @@ Write tests for the component.`,
     component: AccountSettings,
     code: accountSettingsCode as SkillExample['code'],
     fill: async (filler) => {
-      filler.setValues<ProfileValues>('profile-settings', {
+      filler.setValues<ProfileValues>('profile', {
         displayName: 'Ada L.',
         jobTitle: 'VP of Engineering',
         bio: 'Leads the analytical engine team and writes about compilers.',
       });
-      filler.setValues<OrganizationValues>('organization-settings', {
+      filler.setValues<OrganizationValues>('organization', {
         website: 'https://acme.dev',
         taxId: 'GB987654321',
       });

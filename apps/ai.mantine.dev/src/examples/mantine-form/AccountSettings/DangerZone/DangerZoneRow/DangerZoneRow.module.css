@@ -1,0 +1,20 @@
+.row {
+  display: flex;
+  align-items: center;
+  gap: var(--mantine-spacing-md);
+  padding: var(--mantine-spacing-md);
+}
+
+.texts {
+  flex: 1;
+  min-width: 0;
+}
+
+.title {
+  font-weight: var(--mantine-font-weight-medium);
+  color: var(--mantine-color-bright);
+}
+
+.action {
+  flex-shrink: 0;
+}

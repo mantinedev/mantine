@@ -1,0 +1,9 @@
+.body {
+  &[data-with-description] {
+    margin-top: calc(var(--mantine-spacing-xs) / 2);
+  }
+
+  &[data-with-error] {
+    margin-bottom: calc(var(--mantine-spacing-xs) / 2);
+  }
+}

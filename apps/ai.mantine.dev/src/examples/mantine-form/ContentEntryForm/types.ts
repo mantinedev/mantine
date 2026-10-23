@@ -1,6 +1,14 @@
 import type { UseFormReturnType } from '@mantine/form';
 
-export type ReferenceModel = 'author' | 'category' | 'page' | 'product';
+export type FieldType =
+  | 'text'
+  | 'richText'
+  | 'boolean'
+  | 'json'
+  | 'select'
+  | 'image'
+  | 'file'
+  | 'reference';
 
 interface FieldBase {
   key: string;
@@ -9,65 +17,71 @@ interface FieldBase {
   required: boolean;
 }
 
-export interface TextModelField extends FieldBase {
+export interface TextFieldSchema extends FieldBase {
   type: 'text';
   display: 'input' | 'textarea';
   maxLength: number | null;
   defaultValue: string;
 }
 
-export interface RichTextModelField extends FieldBase {
+export interface RichTextFieldSchema extends FieldBase {
   type: 'richText';
 }
 
-export interface BooleanModelField extends FieldBase {
+export interface BooleanFieldSchema extends FieldBase {
   type: 'boolean';
   defaultValue: boolean;
 }
 
-export interface JsonModelField extends FieldBase {
+export interface JsonFieldSchema extends FieldBase {
   type: 'json';
   defaultValue: string;
 }
 
-export interface SelectModelField extends FieldBase {
+export interface SelectOption {
+  value: string;
+  label: string;
+}
+
+export interface SelectFieldSchema extends FieldBase {
   type: 'select';
-  options: { value: string; label: string }[];
+  options: SelectOption[];
   defaultValue: string | null;
 }
 
-export interface ImageModelField extends FieldBase {
+export interface ImageFieldSchema extends FieldBase {
   type: 'image';
 }
 
-export interface FileModelField extends FieldBase {
+export interface FileFieldSchema extends FieldBase {
   type: 'file';
 }
 
-export interface ReferenceModelField extends FieldBase {
+export interface ReferenceFieldSchema extends FieldBase {
   type: 'reference';
   targetModel: ReferenceModel | null;
-  allowMultiple: boolean;
+  multiple: boolean;
 }
 
-export type ModelField =
-  | TextModelField
-  | RichTextModelField
-  | BooleanModelField
-  | JsonModelField
-  | SelectModelField
-  | ImageModelField
-  | FileModelField
-  | ReferenceModelField;
+export type ContentField =
+  | TextFieldSchema
+  | RichTextFieldSchema
+  | BooleanFieldSchema
+  | JsonFieldSchema
+  | SelectFieldSchema
+  | ImageFieldSchema
+  | FileFieldSchema
+  | ReferenceFieldSchema;
 
-export type FieldType = ModelField['type'];
+export type FieldOfType<T extends FieldType> = Extract<ContentField, { type: T }>;
 
 export interface ContentModel {
   name: string;
   key: string;
-  description: string;
-  fields: ModelField[];
+  fields: ContentField[];
 }
+
+export type ReferenceModel = 'author' | 'category' | 'page' | 'product';
 
 export interface ReferenceEntry {
   key: string;
@@ -79,31 +93,28 @@ export type FieldValue = string | boolean | string[] | File | null;
 
 export interface EntryValues {
   key: string;
-  language: string | null;
+  language: string;
   tags: string[];
-  fields: Record<string, FieldValue>;
+  values: Record<string, FieldValue>;
 }
 
 export type EntryFormType = UseFormReturnType<EntryValues>;
 
-export interface FieldInputProps<Field extends ModelField> {
-  form: EntryFormType;
-  field: Field;
-}
-
-export interface FilePayload {
+export interface FileSummary {
   name: string;
   size: number;
   type: string;
 }
 
-// JSON fields hold any parsed JSON value
-export type EntryPayloadValue = string | boolean | string[] | FilePayload | null | object | number;
-
-export interface EntryPayload {
+export interface ContentEntry {
   key: string;
-  language: string | null;
+  language: string;
   tags: string[];
   model: string;
-  values: Record<string, EntryPayloadValue>;
+  values: Record<string, unknown>;
+}
+
+export interface FieldInputProps<T extends FieldType> {
+  form: EntryFormType;
+  field: FieldOfType<T>;
 }

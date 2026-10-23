@@ -1,67 +1,85 @@
+import { closestCenter, DndContext, type DragEndEvent } from '@dnd-kit/core';
+import { SortableContext, verticalListSortingStrategy } from '@dnd-kit/sortable';
 import { IconPlus } from '@tabler/icons-react';
 import { Button, Group, Input, Select, Stack } from '@mantine/core';
-import { SortableList } from '../Sortable';
-import type { FieldFormType } from '../types';
-import { createSelectOption } from '../utils';
-import { SelectOptionRow } from './SelectOptionRow';
+import { getMove, useSortableSensors } from '../dnd';
+import { createSelectOption } from '../fields';
+import type { SelectOption } from '../types';
+import type { OptionsProps } from './options';
+import { SelectOptionRow } from './SelectOptionRow/SelectOptionRow';
 
-export function SelectOptions({ form }: { form: FieldFormType }) {
-  const options = form.useWatchValue('selectOptions');
-  const listError = form.errors.selectOptions;
+function getDefaultOptions(options: SelectOption[]) {
+  const seen = new Set<string>();
+  return options.flatMap(({ value, label }) => {
+    const trimmed = value.trim();
+    if (trimmed === '' || seen.has(trimmed)) {
+      return [];
+    }
+    seen.add(trimmed);
+    return [{ value: trimmed, label: label.trim() || trimmed }];
+  });
+}
 
-  // Uniqueness depends on all values, revalidate the list while its error is shown
-  form.watch('selectOptions', () => {
-    if (form.errors.selectOptions) {
-      form.validateField('selectOptions');
+export function SelectOptions({ form, listActionRef }: OptionsProps) {
+  const options = form.useWatchValue('select.options');
+  const sensors = useSortableSensors();
+  const ids = options.map((option) => option.id);
+
+  // Uniqueness depends on every value: revalidate the list while its error is shown
+  form.watch('select.options', ({ value }) => {
+    if (form.errors['select.options']) {
+      form.validateField('select.options');
+    }
+    const { defaultValue } = form.getValues().select;
+    if (defaultValue && !value.some((option) => option.value.trim() === defaultValue)) {
+      form.setFieldValue('select.defaultValue', null);
     }
   });
 
-  // Select does not support duplicate values, the list error reports them instead
-  const defaultData = options
-    .filter(
-      (option, index) =>
-        option.value !== '' && options.findIndex((item) => item.value === option.value) === index
-    )
-    .map((option) => ({ value: option.value, label: option.label || option.value }));
+  const handleDragEnd = (event: DragEndEvent) => {
+    const move = getMove(ids, event);
+    move && form.reorderListItem('select.options', move);
+  };
 
   return (
     <Stack>
       <Stack gap="xs">
-        <Input.Label required>Options</Input.Label>
-        <SortableList
-          ids={options.map((option) => option.id)}
-          onReorder={(from, to) => form.reorderListItem('selectOptions', { from, to })}
-        >
-          <Stack gap="xs" role="list" aria-label="Options">
+        <Input.Label required labelElement="div">
+          Options
+        </Input.Label>
+        <DndContext sensors={sensors} collisionDetection={closestCenter} onDragEnd={handleDragEnd}>
+          <SortableContext items={ids} strategy={verticalListSortingStrategy}>
             {options.map((option, index) => (
               <SelectOptionRow
                 key={option.id}
                 form={form}
                 id={option.id}
                 index={index}
-                onRemove={() => form.removeListItem('selectOptions', index)}
+                onRemove={() => form.removeListItem('select.options', index)}
               />
             ))}
-          </Stack>
-        </SortableList>
-        {listError && <Input.Error>{listError}</Input.Error>}
+          </SortableContext>
+        </DndContext>
+        {form.errors['select.options'] && (
+          <Input.Error>{form.errors['select.options']}</Input.Error>
+        )}
         <Group>
           <Button
+            ref={listActionRef}
             variant="default"
             leftSection={<IconPlus size={18} />}
-            onClick={() => form.insertListItem('selectOptions', createSelectOption())}
+            onClick={() => form.insertListItem('select.options', createSelectOption())}
           >
             Add option
           </Button>
         </Group>
       </Stack>
-
       <Select
         label="Default option"
         placeholder="No default"
+        data={getDefaultOptions(options)}
         clearable
-        data={defaultData}
-        {...form.getInputProps('selectDefault')}
+        {...form.getInputProps('select.defaultValue')}
       />
     </Stack>
   );

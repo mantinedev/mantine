@@ -1,43 +1,44 @@
-import { Fieldset, Stack, Switch } from '@mantine/core';
+import { Radio, Stack, Title } from '@mantine/core';
 import { EndsFields } from './EndsFields';
-import { ExceptionsField } from './ExceptionsField';
+import { ExceptionsInput } from './ExceptionsInput';
 import { IntervalInput } from './IntervalInput';
-import { OccurrencePreview } from './OccurrencePreview';
-import { MonthlyOptions } from './options/MonthlyOptions';
-import { WeeklyOptions } from './options/WeeklyOptions';
+import { MonthlyOptions } from './MonthlyOptions';
+import { OccurrencesPreview } from './OccurrencesPreview';
 import type { RecurringEventFormType } from './types';
-import { useRecurrenceRule } from './useRecurrenceRule';
+import { REPEAT_OPTIONS } from './validation';
+import { WeekdaysInput } from './WeekdaysInput/WeekdaysInput';
 
-interface RecurrenceFieldsProps {
-  form: RecurringEventFormType;
-  onWeekdaysEdit: () => void;
-}
-
-export function RecurrenceFields({ form, onWeekdaysEdit }: RecurrenceFieldsProps) {
-  const repeats = form.useWatchValue('repeats');
-  const frequency = form.useWatchValue('frequency');
-  const rule = useRecurrenceRule(form);
+export function RecurrenceFields({ form }: { form: RecurringEventFormType }) {
+  const repeat = form.useWatchValue('repeat');
 
   return (
-    <Fieldset legend="Recurrence">
-      <Stack>
-        <Stack gap="xs">
-          <Switch label="Repeat" {...form.getInputProps('repeats', { type: 'checkbox' })} />
-          {repeats && <IntervalInput form={form} />}
-          {repeats && frequency === 'weekly' && (
-            <WeeklyOptions form={form} onEdit={onWeekdaysEdit} />
-          )}
-          {repeats && frequency === 'monthly' && <MonthlyOptions form={form} />}
-        </Stack>
+    <Stack>
+      <Title order={3} c="var(--mantine-color-bright)">
+        Recurrence
+      </Title>
 
-        {repeats && (
-          <>
-            <EndsFields form={form} />
-            <ExceptionsField form={form} rule={rule} />
-            <OccurrencePreview form={form} rule={rule} />
-          </>
-        )}
+      <Stack gap="xs">
+        <Radio.Group label="Repeat" {...form.getInputProps('repeat')}>
+          <Stack gap="xs" mt="xs">
+            {REPEAT_OPTIONS.map((option) => (
+              <Radio key={option.value} value={option.value} label={option.label} />
+            ))}
+          </Stack>
+        </Radio.Group>
+
+        {repeat !== 'none' && <IntervalInput form={form} frequency={repeat} />}
+        {repeat === 'weekly' && <WeekdaysInput form={form} />}
+        {repeat === 'monthly' && <MonthlyOptions form={form} />}
       </Stack>
-    </Fieldset>
+
+      {repeat !== 'none' && (
+        <>
+          <EndsFields form={form} />
+          <ExceptionsInput form={form} />
+        </>
+      )}
+
+      <OccurrencesPreview form={form} />
+    </Stack>
   );
 }

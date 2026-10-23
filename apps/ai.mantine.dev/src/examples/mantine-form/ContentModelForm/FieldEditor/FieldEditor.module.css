@@ -1,0 +1,8 @@
+.texts {
+  flex: 1;
+  min-width: 0;
+}
+
+.type {
+  font-weight: var(--mantine-font-weight-medium);
+}

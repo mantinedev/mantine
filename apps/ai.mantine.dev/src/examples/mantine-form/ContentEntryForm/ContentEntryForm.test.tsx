@@ -1,595 +1,317 @@
-import { render, screen, userEvent, waitFor, within } from '@test-utils';
-import { Notifications, notifications } from '@mantine/notifications';
-import { ContentEntryForm } from './ContentEntryForm';
-import { BLOG_POST_MODEL } from './models';
-import type { ContentModel, EntryPayload, ModelField } from './types';
-
-type User = ReturnType<typeof userEvent.setup>;
-
-function renderForm(model: ContentModel = BLOG_POST_MODEL, options?: { applyAccept?: boolean }) {
-  const user = userEvent.setup(options);
-  const onSubmit = vi.fn<(entry: EntryPayload) => void>();
-  render(
-    <>
-      <Notifications />
-      <ContentEntryForm model={model} onSubmit={onSubmit} />
-    </>
-  );
-  return { user, onSubmit };
-}
-
-function modelWith(...fields: ModelField[]): ContentModel {
-  return { name: 'Test', key: 'test', description: '', fields };
-}
-
-const textbox = (name: string) => screen.getByRole('textbox', { name });
-const combobox = (name: string) => screen.getByRole('combobox', { name });
-const pills = (name: string) => within(textbox(name).parentElement as HTMLElement);
-const submit = (user: User) => user.click(screen.getByRole('button', { name: 'Create entry' }));
-
-const imageFile = () => new File(['image'], 'cover.png', { type: 'image/png' });
-
-function entryOption(dialog: HTMLElement, key: string) {
-  const name = new RegExp(`^${key} `);
-  return (
-    within(dialog).queryByRole('checkbox', { name }) ?? within(dialog).getByRole('radio', { name })
-  );
-}
-
-async function pickEntries(user: User, fieldLabel: string, keys: string[]) {
-  await user.click(textbox(fieldLabel));
-  const dialog = screen.getByRole('dialog');
-  for (const key of keys) {
-    await user.click(entryOption(dialog, key));
-  }
-  await user.click(within(dialog).getByRole('button', { name: /^Select entr/ }));
-}
-
-async function fillRequiredBlogPost(user: User) {
-  await user.type(textbox('Content key'), 'hello-world');
-  await user.type(textbox('Title'), 'Hello world');
-  await user.type(textbox('Body'), 'First post');
-  await user.upload(screen.getByLabelText('Upload Cover image'), imageFile());
-  await pickEntries(user, 'Author', ['ada-lovelace']);
-}
+import { screen, waitFor, within } from '@test-utils';
+import { notifications } from '@mantine/notifications';
+import { BLOG_POST_MODEL } from './data';
+import {
+  booleanField,
+  fillKey,
+  jsonField,
+  modelWith,
+  referenceField,
+  renderForm,
+  richTextField,
+  selectField,
+  submit,
+  textField,
+} from './test-helpers';
 
 afterEach(() => {
   notifications.clean();
 });
 
-describe('fields from the model', () => {
-  it('renders the model fields in model order after the entry details', () => {
-    renderForm();
-    const labels = [
-      'Content key',
-      'Language',
-      'Tags',
-      ...BLOG_POST_MODEL.fields.map((field) => field.label),
-    ];
-    const nodes = labels.map((label) => screen.getAllByText(label)[0]);
-    nodes.slice(1).forEach((node, index) => {
-      expect(
-        nodes[index].compareDocumentPosition(node) & Node.DOCUMENT_POSITION_FOLLOWING
-      ).toBeTruthy();
-    });
+describe('entry settings', () => {
+  it('starts with English selected as the language', () => {
+    renderForm(modelWith(textField()));
+    expect(screen.getByRole('combobox', { name: 'Language' })).toHaveValue('English (en-US)');
   });
 
-  it('shows the field description under the label', () => {
-    renderForm();
-    expect(screen.getByText('Shown as the page heading')).toBeInTheDocument();
-  });
-
-  it('renders a textarea for a text field displayed as textarea', () => {
-    renderForm();
-    expect(textbox('Excerpt').tagName).toBe('TEXTAREA');
-    expect(textbox('Title').tagName).toBe('INPUT');
-  });
-
-  it('pre-fills the defaults of the fields', () => {
-    renderForm();
-    expect(combobox('Language')).toHaveValue('English (en-US)');
-    expect(combobox('Category')).toHaveValue('News');
-    expect(screen.getByRole('checkbox', { name: 'Featured' })).not.toBeChecked();
-    expect(textbox('SEO metadata')).toHaveValue('{\n  "index": true,\n  "follow": true\n}');
-  });
-
-  it('pre-fills a text default and a checked boolean default', () => {
-    renderForm(
-      modelWith(
-        {
-          type: 'text',
-          key: 'headline',
-          label: 'Headline',
-          description: '',
-          required: false,
-          display: 'input',
-          maxLength: null,
-          defaultValue: 'Hello',
-        },
-        {
-          type: 'boolean',
-          key: 'cta',
-          label: 'Show CTA',
-          description: '',
-          required: false,
-          defaultValue: true,
-        }
-      )
-    );
-    expect(textbox('Headline')).toHaveValue('Hello');
-    expect(screen.getByRole('checkbox', { name: 'Show CTA' })).toBeChecked();
-  });
-});
-
-describe('entry details', () => {
-  it('requires the content key', async () => {
-    const { user } = renderForm();
+  it('shows an error and focuses the content key when submitted without it', async () => {
+    const { user } = renderForm(modelWith(textField()));
     await submit(user);
     expect(screen.getByText('Content key is required')).toBeInTheDocument();
+    expect(screen.getByRole('textbox', { name: 'Content key' })).toHaveFocus();
   });
 
   it('rejects a content key with uppercase letters or spaces on blur', async () => {
-    const { user } = renderForm();
-    await user.type(textbox('Content key'), 'Hello World');
+    const { user } = renderForm(modelWith(textField()));
+    await fillKey(user, 'Hello World');
     await user.tab();
-    expect(screen.getByText('Use lowercase letters, digits and dashes')).toBeInTheDocument();
+    expect(screen.getByText('Use lowercase letters, digits and dashes only')).toBeInTheDocument();
   });
 
-  it('clears the key error when the key is fixed', async () => {
-    const { user } = renderForm();
-    await user.type(textbox('Content key'), 'Hello');
+  it('removes the content key error once the key is fixed', async () => {
+    const { user } = renderForm(modelWith(textField()));
+    await fillKey(user, 'Hello');
     await user.tab();
-    await user.clear(textbox('Content key'));
-    await user.type(textbox('Content key'), 'hello-2');
-    expect(screen.queryByText('Use lowercase letters, digits and dashes')).not.toBeInTheDocument();
+    const input = screen.getByRole('textbox', { name: 'Content key' });
+    await user.clear(input);
+    await user.type(input, 'hello');
+    expect(
+      screen.queryByText('Use lowercase letters, digits and dashes only')
+    ).not.toBeInTheDocument();
   });
 
-  it('lets the user pick another language', async () => {
-    const { user } = renderForm();
-    await user.click(combobox('Language'));
+  it('submits the chosen language and tags', async () => {
+    const { user, onSubmit } = renderForm(modelWith(textField()));
+    await fillKey(user);
+    await user.click(screen.getByRole('combobox', { name: 'Language' }));
     await user.click(screen.getByRole('option', { name: 'German (de-DE)' }));
-    expect(combobox('Language')).toHaveValue('German (de-DE)');
-  });
-
-  it('offers the suggested tags', async () => {
-    const { user } = renderForm();
-    await user.click(combobox('Tags'));
-    expect(screen.getAllByRole('option').map((option) => option.textContent)).toEqual([
-      'featured',
-      'evergreen',
-      'seasonal',
-      'internal',
-      'draft-review',
-    ]);
-  });
-
-  it('accepts free-form tags', async () => {
-    const { user } = renderForm();
-    await user.type(combobox('Tags'), 'launch{Enter}');
-    expect(screen.getByText('launch')).toBeInTheDocument();
-  });
-
-  it('does not add a duplicate tag', async () => {
-    const { user } = renderForm();
-    await user.type(combobox('Tags'), 'launch{Enter}launch{Enter}');
-    expect(screen.getAllByText('launch')).toHaveLength(1);
-  });
-
-  it('stops adding tags after ten', async () => {
-    const { user } = renderForm();
-    for (let index = 1; index <= 11; index += 1) {
-      await user.type(combobox('Tags'), `tag-${index}{Enter}`);
-    }
-    expect(screen.getByText('tag-10')).toBeInTheDocument();
-    expect(screen.queryByText('tag-11')).not.toBeInTheDocument();
+    await user.click(screen.getByRole('combobox', { name: 'Tags' }));
+    await user.click(screen.getByRole('option', { name: 'news' }));
+    await user.type(screen.getByRole('combobox', { name: 'Tags' }), 'launch{Enter}');
+    await submit(user);
+    expect(onSubmit).toHaveBeenCalledWith(
+      expect.objectContaining({ language: 'de-DE', tags: ['news', 'launch'] })
+    );
   });
 });
 
-describe('text fields', () => {
-  it('shows a character counter with the max length', async () => {
-    const { user } = renderForm();
-    await user.type(textbox('Title'), 'Hello');
-    expect(screen.getByText('5/80')).toBeInTheDocument();
+describe('fields from the model', () => {
+  it('renders the fields in model order', () => {
+    renderForm(
+      modelWith(
+        selectField({ key: 'a', label: 'Theme' }),
+        textField({ key: 'b', label: 'Title' }),
+        booleanField({ key: 'c', label: 'Featured' })
+      )
+    );
+    const theme = screen.getByRole('combobox', { name: 'Theme' });
+    const title = screen.getByRole('textbox', { name: 'Title' });
+    const featured = screen.getByRole('checkbox', { name: 'Featured' });
+    expect(theme.compareDocumentPosition(title)).toBe(Node.DOCUMENT_POSITION_FOLLOWING);
+    expect(title.compareDocumentPosition(featured)).toBe(Node.DOCUMENT_POSITION_FOLLOWING);
   });
 
-  it('requires a required text field', async () => {
-    const { user } = renderForm();
+  it('shows the field description', () => {
+    renderForm(modelWith(textField({ description: 'Shown as the page heading' })));
+    expect(screen.getByRole('textbox', { name: 'Title' })).toHaveAccessibleDescription(
+      'Shown as the page heading'
+    );
+  });
+});
+
+describe('text field', () => {
+  it('pre-fills the default value', () => {
+    renderForm(modelWith(textField({ defaultValue: 'Build faster' })));
+    expect(screen.getByRole('textbox', { name: 'Title' })).toHaveValue('Build faster');
+  });
+
+  it('renders a textarea when the display setting is textarea', () => {
+    renderForm(modelWith(textField({ display: 'textarea' })));
+    expect(screen.getByRole('textbox', { name: 'Title' }).tagName).toBe('TEXTAREA');
+  });
+
+  it('counts the characters against the max length', async () => {
+    const { user } = renderForm(modelWith(textField({ maxLength: 20 })));
+    await user.type(screen.getByRole('textbox', { name: 'Title' }), 'Hello');
+    expect(screen.getByText('5/20')).toBeInTheDocument();
+  });
+
+  it('shows an error when required and empty', async () => {
+    const { user } = renderForm(modelWith(textField({ required: true })));
+    await fillKey(user);
     await submit(user);
     expect(screen.getByText('Title is required')).toBeInTheDocument();
   });
 
   it('rejects a value longer than the max length', async () => {
-    const { user } = renderForm(
-      modelWith({
-        type: 'text',
-        key: 'code',
-        label: 'Code',
-        description: '',
-        required: false,
-        display: 'input',
-        maxLength: 3,
-        defaultValue: 'abcdef',
-      })
-    );
+    const { user } = renderForm(modelWith(textField({ maxLength: 5, defaultValue: 'Too long' })));
+    await fillKey(user);
     await submit(user);
-    expect(screen.getByText('Code must be at most 3 characters')).toBeInTheDocument();
+    expect(screen.getByText('Title must be at most 5 characters')).toBeInTheDocument();
   });
 });
 
-describe('rich text', () => {
-  it('requires content in a required rich text field', async () => {
-    const { user } = renderForm();
+describe('rich text field', () => {
+  it('shows an error when required and empty', async () => {
+    const { user } = renderForm(modelWith(richTextField({ required: true })));
+    await fillKey(user);
     await submit(user);
     expect(screen.getByText('Body is required')).toBeInTheDocument();
   });
 
-  it('shows the formatting controls', () => {
-    renderForm();
-    ['Bold', 'Italic', 'Heading 2', 'Bullet list', 'Ordered list', 'Link'].forEach((name) => {
-      expect(screen.getByRole('button', { name })).toBeInTheDocument();
-    });
-  });
-
-  it('clears the required error once text is typed', async () => {
-    const { user } = renderForm();
+  it('submits the editor content as HTML', async () => {
+    const { user, onSubmit } = renderForm(modelWith(richTextField({ required: true })));
+    await fillKey(user);
+    await user.click(await screen.findByRole('textbox', { name: 'Body' }));
+    await user.keyboard('Hello world');
     await submit(user);
-    await user.type(textbox('Body'), 'Some text');
-    expect(screen.queryByText('Body is required')).not.toBeInTheDocument();
-  });
-});
-
-describe('boolean fields', () => {
-  it('requires a required checkbox to be checked', async () => {
-    const { user } = renderForm(
-      modelWith({
-        type: 'boolean',
-        key: 'approved',
-        label: 'Approved',
-        description: '',
-        required: true,
-        defaultValue: false,
-      })
+    expect(onSubmit).toHaveBeenCalledWith(
+      expect.objectContaining({ values: { body: '<p>Hello world</p>' } })
     );
-    await submit(user);
-    expect(screen.getByText('Approved must be checked')).toBeInTheDocument();
+  });
+
+  it('has formatting controls for bold, italic, headings, lists and links', async () => {
+    renderForm(modelWith(richTextField()));
+    for (const name of [
+      'Bold',
+      'Italic',
+      'Heading 2',
+      'Heading 3',
+      'Heading 4',
+      'Bullet list',
+      'Ordered list',
+      'Link',
+      'Remove link',
+    ]) {
+      expect(await screen.findByRole('button', { name })).toBeInTheDocument();
+    }
   });
 });
 
-describe('json fields', () => {
-  it('rejects invalid JSON on blur', async () => {
-    const { user } = renderForm();
-    await user.clear(textbox('SEO metadata'));
-    await user.type(textbox('SEO metadata'), 'not json');
-    await user.tab();
-    expect(screen.getByText('SEO metadata must be valid JSON')).toBeInTheDocument();
+describe('boolean field', () => {
+  it('starts with the default from the model', () => {
+    renderForm(modelWith(booleanField({ defaultValue: true })));
+    expect(screen.getByRole('checkbox', { name: 'Featured' })).toBeChecked();
+  });
+
+  it('submits the checkbox state', async () => {
+    const { user, onSubmit } = renderForm(modelWith(booleanField()));
+    await fillKey(user);
+    await user.click(screen.getByRole('checkbox', { name: 'Featured' }));
+    await submit(user);
+    expect(onSubmit).toHaveBeenCalledWith(expect.objectContaining({ values: { featured: true } }));
+  });
+
+  it('requires a required checkbox to be checked', async () => {
+    const { user } = renderForm(modelWith(booleanField({ required: true })));
+    await fillKey(user);
+    await submit(user);
+    expect(screen.getByText('Featured must be checked')).toBeInTheDocument();
+  });
+});
+
+describe('json field', () => {
+  it('pre-fills the default pretty-printed', () => {
+    renderForm(modelWith(jsonField({ defaultValue: '{"a":1}' })));
+    expect(screen.getByRole('textbox', { name: 'Settings' })).toHaveValue('{\n  "a": 1\n}');
   });
 
   it('pretty-prints valid JSON on blur', async () => {
-    const { user } = renderForm();
-    await user.clear(textbox('SEO metadata'));
-    await user.click(textbox('SEO metadata'));
-    await user.paste('{"a":1}');
+    const { user } = renderForm(modelWith(jsonField()));
+    await user.click(screen.getByRole('textbox', { name: 'Settings' }));
+    await user.paste('{"b":[1,2]}');
     await user.tab();
-    expect(textbox('SEO metadata')).toHaveValue('{\n  "a": 1\n}');
+    expect(screen.getByRole('textbox', { name: 'Settings' })).toHaveValue(
+      '{\n  "b": [\n    1,\n    2\n  ]\n}'
+    );
   });
 
-  it('requires a required JSON field', async () => {
-    const { user } = renderForm(
-      modelWith({
-        type: 'json',
-        key: 'config',
-        label: 'Config',
-        description: '',
-        required: true,
-        defaultValue: '',
-      })
-    );
+  it('shows an error for invalid JSON', async () => {
+    const { user } = renderForm(modelWith(jsonField()));
+    await fillKey(user);
+    await user.click(screen.getByRole('textbox', { name: 'Settings' }));
+    await user.paste('{"b":');
     await submit(user);
-    expect(screen.getByText('Config is required')).toBeInTheDocument();
+    expect(screen.getByText('Settings must be valid JSON')).toBeInTheDocument();
+  });
+
+  it('submits the parsed JSON value', async () => {
+    const { user, onSubmit } = renderForm(modelWith(jsonField({ defaultValue: '{"a":1}' })));
+    await fillKey(user);
+    await submit(user);
+    expect(onSubmit).toHaveBeenCalledWith(
+      expect.objectContaining({ values: { settings: { a: 1 } } })
+    );
   });
 });
 
-describe('select fields', () => {
-  const statusField: ModelField = {
-    type: 'select',
-    key: 'status',
-    label: 'Status',
-    description: '',
-    required: true,
-    options: [
-      { value: 'draft', label: 'Draft' },
-      { value: 'live', label: 'Live' },
-    ],
-    defaultValue: null,
-  };
-
-  it('lists the options of the field', async () => {
-    const { user } = renderForm(modelWith(statusField));
-    await user.click(combobox('Status'));
-    expect(screen.getAllByRole('option').map((option) => option.textContent)).toEqual([
-      'Draft',
-      'Live',
-    ]);
+describe('select field', () => {
+  it('starts with the default option', () => {
+    renderForm(modelWith(selectField({ defaultValue: 'dark' })));
+    expect(screen.getByRole('combobox', { name: 'Theme' })).toHaveValue('Dark');
   });
 
-  it('requires a required select', async () => {
-    const { user } = renderForm(modelWith(statusField));
+  it('shows an error when required and nothing is picked', async () => {
+    const { user } = renderForm(modelWith(selectField({ required: true })));
+    await fillKey(user);
     await submit(user);
-    expect(screen.getByText('Status is required')).toBeInTheDocument();
-  });
-});
-
-describe('image fields', () => {
-  it('shows a preview of the chosen image', async () => {
-    const { user } = renderForm();
-    await user.upload(screen.getByLabelText('Upload Cover image'), imageFile());
-    expect(screen.getByRole('img', { name: 'Preview of cover.png' })).toBeInTheDocument();
+    expect(screen.getByText('Theme is required')).toBeInTheDocument();
   });
 
-  it('removes the chosen image', async () => {
-    const { user } = renderForm();
-    await user.upload(screen.getByLabelText('Upload Cover image'), imageFile());
-    await user.click(screen.getByRole('button', { name: 'Remove cover.png' }));
-    expect(screen.queryByRole('img', { name: 'Preview of cover.png' })).not.toBeInTheDocument();
-    expect(screen.getByLabelText('Upload Cover image')).toBeInTheDocument();
-  });
-
-  it('rejects a file that is not an image', async () => {
-    const { user } = renderForm(BLOG_POST_MODEL, { applyAccept: false });
-    await user.upload(
-      screen.getByLabelText('Upload Cover image'),
-      new File(['%PDF'], 'report.pdf', { type: 'application/pdf' })
-    );
-    expect(await screen.findByText('File type must be an image')).toBeInTheDocument();
-  });
-
-  it('requires a required image', async () => {
-    const { user } = renderForm();
+  it('submits the picked option value', async () => {
+    const { user, onSubmit } = renderForm(modelWith(selectField()));
+    await fillKey(user);
+    await user.click(screen.getByRole('combobox', { name: 'Theme' }));
+    await user.click(screen.getByRole('option', { name: 'Light' }));
     await submit(user);
-    expect(screen.getByText('Cover image is required')).toBeInTheDocument();
-  });
-});
-
-describe('file fields', () => {
-  it('shows the name and size of the chosen file', async () => {
-    const { user } = renderForm();
-    await user.upload(
-      screen.getByLabelText('Upload Attachment'),
-      new File(['a'.repeat(2048)], 'guide.pdf', { type: 'application/pdf' })
-    );
-    expect(screen.getByText('guide.pdf')).toBeInTheDocument();
-    expect(screen.getByText('2.05 kB')).toBeInTheDocument();
-  });
-
-  it('removes the chosen file', async () => {
-    const { user } = renderForm();
-    await user.upload(screen.getByLabelText('Upload Attachment'), new File(['a'], 'guide.pdf'));
-    await user.click(screen.getByRole('button', { name: 'Remove guide.pdf' }));
-    expect(screen.queryByText('guide.pdf')).not.toBeInTheDocument();
-  });
-
-  it('requires a required file', async () => {
-    const { user } = renderForm(
-      modelWith({
-        type: 'file',
-        key: 'contract',
-        label: 'Contract',
-        description: '',
-        required: true,
-      })
-    );
-    await submit(user);
-    expect(screen.getByText('Contract is required')).toBeInTheDocument();
-  });
-});
-
-describe('reference fields', () => {
-  it('shows a placeholder while no entry is selected', () => {
-    renderForm();
-    expect(textbox('Author')).toHaveAttribute('placeholder', 'Select entry');
-    expect(textbox('Related content')).toHaveAttribute('placeholder', 'Select entries');
-  });
-
-  it('opens the picker from the keyboard', async () => {
-    const { user } = renderForm();
-    textbox('Author').focus();
-    await user.keyboard('{Enter}');
-    expect(screen.getByRole('dialog')).toBeInTheDocument();
-  });
-
-  it('opens a picker with a search input', async () => {
-    const { user } = renderForm();
-    await user.click(textbox('Author'));
-    expect(
-      within(screen.getByRole('dialog')).getByRole('textbox', { name: 'Search entries' })
-    ).toBeInTheDocument();
-  });
-
-  it('lists only entries of the target model when it is fixed', async () => {
-    const { user } = renderForm();
-    await user.click(textbox('Author'));
-    const dialog = screen.getByRole('dialog');
-    expect(
-      within(dialog)
-        .getAllByRole('radio')
-        .map((radio) => radio.getAttribute('aria-label'))
-    ).toEqual([
-      'ada-lovelace (Ada Lovelace)',
-      'grace-hopper (Grace Hopper)',
-      'alan-turing (Alan Turing)',
-    ]);
-    expect(within(dialog).queryByRole('radiogroup', { name: 'Model' })).not.toBeInTheDocument();
-  });
-
-  it('filters entries by the search text', async () => {
-    const { user } = renderForm();
-    await user.click(textbox('Author'));
-    const dialog = screen.getByRole('dialog');
-    await user.type(within(dialog).getByRole('textbox', { name: 'Search entries' }), 'grace');
-    expect(within(dialog).getAllByRole('radio')).toHaveLength(1);
-    expect(entryOption(dialog, 'grace-hopper')).toBeInTheDocument();
-  });
-
-  it('filters entries by model when the target model is not fixed', async () => {
-    const { user } = renderForm();
-    await user.click(textbox('Related content'));
-    const dialog = screen.getByRole('dialog');
-    await user.click(within(dialog).getByRole('radio', { name: 'Product' }));
-    expect(
-      within(dialog)
-        .getAllByRole('checkbox')
-        .map((checkbox) => checkbox.getAttribute('aria-label'))
-    ).toEqual([
-      'starter-plan (Starter plan)',
-      'team-plan (Team plan)',
-      'enterprise-plan (Enterprise plan)',
-    ]);
-  });
-
-  it('shows the selected entry keys as pills inside the input', async () => {
-    const { user } = renderForm();
-    await pickEntries(user, 'Related content', ['pricing', 'design']);
-    expect(pills('Related content').getByText('pricing')).toBeInTheDocument();
-    expect(pills('Related content').getByText('design')).toBeInTheDocument();
-  });
-
-  it('replaces the entry of a single reference field', async () => {
-    const { user } = renderForm();
-    await pickEntries(user, 'Author', ['ada-lovelace']);
-    await pickEntries(user, 'Author', ['alan-turing']);
-    expect(textbox('Author')).toHaveValue('alan-turing');
-  });
-
-  it('removes an entry with its pill remove button', async () => {
-    const { user } = renderForm();
-    await pickEntries(user, 'Related content', ['pricing', 'design']);
-    await user.click(screen.getByLabelText('Remove pricing'));
-    expect(pills('Related content').queryByText('pricing')).not.toBeInTheDocument();
-    expect(pills('Related content').getByText('design')).toBeInTheDocument();
-  });
-
-  it('shows a single selection as the input value, without a pill', async () => {
-    const { user } = renderForm();
-    await pickEntries(user, 'Author', ['ada-lovelace']);
-    expect(textbox('Author')).toHaveValue('ada-lovelace');
-    expect(screen.queryByLabelText('Remove ada-lovelace')).not.toBeInTheDocument();
-  });
-
-  it('clears a single selection with Backspace', async () => {
-    const { user } = renderForm();
-    await pickEntries(user, 'Author', ['ada-lovelace']);
-    textbox('Author').focus();
-    await user.keyboard('{Backspace}');
-    expect(textbox('Author')).toHaveValue('');
-  });
-
-  it('removes the last entry with Backspace', async () => {
-    const { user } = renderForm();
-    await pickEntries(user, 'Related content', ['pricing', 'design']);
-    textbox('Related content').focus();
-    await user.keyboard('{Backspace}');
-    expect(pills('Related content').queryByText('design')).not.toBeInTheDocument();
-    expect(pills('Related content').getByText('pricing')).toBeInTheDocument();
-  });
-
-  it('keeps the selection when the picker is cancelled', async () => {
-    const { user } = renderForm();
-    await pickEntries(user, 'Author', ['ada-lovelace']);
-    await user.click(textbox('Author'));
-    const dialog = screen.getByRole('dialog');
-    await user.click(entryOption(dialog, 'alan-turing'));
-    await user.click(within(dialog).getByRole('button', { name: 'Cancel' }));
-    expect(textbox('Author')).toHaveValue('ada-lovelace');
-  });
-
-  it('requires at least one entry in a required reference field', async () => {
-    const { user } = renderForm();
-    await submit(user);
-    expect(screen.getByText('Select an entry')).toBeInTheDocument();
+    expect(onSubmit).toHaveBeenCalledWith(expect.objectContaining({ values: { theme: 'light' } }));
   });
 });
 
 describe('submit', () => {
-  it('focuses the content key when everything is empty', async () => {
-    const { user } = renderForm();
+  it('focuses the first invalid field in model order', async () => {
+    const { user } = renderForm(
+      modelWith(
+        textField({ key: 'a', label: 'Title' }),
+        selectField({ key: 'b', label: 'Theme', required: true }),
+        textField({ key: 'c', label: 'Subtitle', required: true })
+      )
+    );
+    await fillKey(user);
     await submit(user);
-    expect(textbox('Content key')).toHaveFocus();
+    expect(screen.getByRole('combobox', { name: 'Theme' })).toHaveFocus();
   });
 
-  it('focuses the first invalid model field', async () => {
-    const { user } = renderForm();
-    await user.type(textbox('Content key'), 'hello-world');
-    await user.type(textbox('Title'), 'Hello world');
+  it('focuses the rich text editor when it is the first invalid field', async () => {
+    const { user } = renderForm(modelWith(richTextField({ required: true })));
+    await fillKey(user);
     await submit(user);
-    expect(textbox('Body')).toHaveFocus();
+    expect(screen.getByRole('textbox', { name: 'Body' })).toHaveFocus();
   });
 
   it('focuses the reference input when it is the first invalid field', async () => {
-    const { user } = renderForm();
-    await user.type(textbox('Content key'), 'hello-world');
-    await user.type(textbox('Title'), 'Hello world');
-    await user.type(textbox('Body'), 'First post');
-    await user.upload(screen.getByLabelText('Upload Cover image'), imageFile());
+    const { user } = renderForm(modelWith(referenceField({ required: true })));
+    await fillKey(user);
     await submit(user);
-    expect(textbox('Author')).toHaveFocus();
+    expect(screen.getByRole('textbox', { name: 'Author' })).toHaveFocus();
   });
 
   it('does not submit while a field is invalid', async () => {
-    const { user, onSubmit } = renderForm();
+    const { user, onSubmit } = renderForm(modelWith(textField({ required: true })));
+    await fillKey(user);
     await submit(user);
     expect(onSubmit).not.toHaveBeenCalled();
   });
 
-  it('submits the entry with values keyed by field key', async () => {
-    const { user, onSubmit } = renderForm();
-    await fillRequiredBlogPost(user);
-    await user.type(combobox('Tags'), 'launch{Enter}');
-    await user.click(screen.getByRole('checkbox', { name: 'Featured' }));
-    await pickEntries(user, 'Related content', ['pricing', 'starter-plan']);
-    await submit(user);
-
-    expect(onSubmit).toHaveBeenCalledWith({
-      key: 'hello-world',
-      language: 'en-US',
-      tags: ['launch'],
-      model: 'blog_post',
-      values: {
-        title: 'Hello world',
-        excerpt: '',
-        body: '<p>First post</p>',
-        cover: { name: 'cover.png', size: 5, type: 'image/png' },
-        category: 'news',
-        featured: true,
-        author: 'ada-lovelace',
-        related: ['pricing', 'starter-plan'],
-        seo: { index: true, follow: true },
-        attachment: null,
-      },
-    });
-  });
-
-  it('shows a short notification with the entry key and model', async () => {
-    const { user } = renderForm();
-    await fillRequiredBlogPost(user);
+  it('shows a notification with the entry key and model name', async () => {
+    const { user } = renderForm(modelWith(textField()));
+    await fillKey(user);
     await submit(user);
     expect(await screen.findByText('Entry created')).toBeInTheDocument();
-    expect(screen.getByText('hello-world · Blog post')).toBeInTheDocument();
+    expect(screen.getByText('hello-world · Test model')).toBeInTheDocument();
   });
 
   it('shows the entry JSON under the form', async () => {
-    const { user } = renderForm();
-    await fillRequiredBlogPost(user);
+    const { user } = renderForm(modelWith(textField({ defaultValue: 'Hello' })));
+    await fillKey(user);
     await submit(user);
-    expect(screen.getByText(/"model": "blog_post"/)).toBeInTheDocument();
+    const section = screen.getByRole('region', { name: 'Entry JSON' });
+    expect(JSON.parse(within(section).getByText(/"key"/).textContent!)).toEqual({
+      key: 'hello-world',
+      language: 'en-US',
+      tags: [],
+      model: 'test_model',
+      values: { title: 'Hello' },
+    });
   });
 
-  it('keeps the values after submit', async () => {
-    const { user } = renderForm();
-    await fillRequiredBlogPost(user);
+  it('keeps the form values after submit', async () => {
+    const { user } = renderForm(modelWith(textField()));
+    await fillKey(user);
+    await user.type(screen.getByRole('textbox', { name: 'Title' }), 'Hello');
     await submit(user);
     await waitFor(() => expect(screen.getByText('Entry created')).toBeInTheDocument());
-    expect(textbox('Content key')).toHaveValue('hello-world');
-    expect(textbox('Title')).toHaveValue('Hello world');
-    expect(textbox('Author')).toHaveValue('ada-lovelace');
+    expect(screen.getByRole('textbox', { name: 'Content key' })).toHaveValue('hello-world');
+    expect(screen.getByRole('textbox', { name: 'Title' })).toHaveValue('Hello');
+  });
+
+  it('shows every required error of the blog post model', async () => {
+    const { user } = renderForm(BLOG_POST_MODEL);
+    await fillKey(user);
+    await submit(user);
+    expect(screen.getByText('Title is required')).toBeInTheDocument();
+    expect(screen.getByText('Body is required')).toBeInTheDocument();
+    expect(screen.getByText('Select an entry')).toBeInTheDocument();
+    expect(screen.getByText('Cover image is required')).toBeInTheDocument();
   });
 });

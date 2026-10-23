@@ -1,0 +1,17 @@
+.card {
+  padding: var(--mantine-spacing-xs) var(--mantine-spacing-sm);
+
+  &[data-checked] {
+    border-color: var(--mantine-primary-color-filled);
+  }
+}
+
+.texts {
+  flex: 1;
+  min-width: 0;
+}
+
+.key {
+  font-weight: 500;
+  color: var(--mantine-color-bright);
+}

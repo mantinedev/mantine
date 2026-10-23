@@ -2,7 +2,7 @@ import type { UseFormReturnType } from '@mantine/form';
 
 export type FieldType =
   | 'text'
-  | 'richText'
+  | 'rich_text'
   | 'boolean'
   | 'json'
   | 'select'
@@ -10,39 +10,77 @@ export type FieldType =
   | 'file'
   | 'reference';
 
+export type TextDisplay = 'input' | 'textarea';
+
 export interface SelectOption {
   id: string;
   value: string;
   label: string;
 }
 
-export interface FieldValues {
+export interface TextSettings {
+  display: TextDisplay;
+  maxLength: number | string;
+  defaultValue: string;
+}
+
+export interface BooleanSettings {
+  defaultValue: 'true' | 'false';
+}
+
+export interface JsonSettings {
+  defaultValue: string;
+}
+
+export interface SelectSettings {
+  options: SelectOption[];
+  defaultValue: string | null;
+}
+
+export interface ReferenceSettings {
+  targetModel: string | null;
+  multiple: boolean;
+}
+
+// Every field keeps the settings of all types: switching the type in the editor
+// is not possible, and the JSON output picks only the settings of the field type
+export interface ModelField {
+  id: string;
   type: FieldType;
   label: string;
   key: string;
   description: string;
   required: boolean;
-  textDisplay: 'input' | 'textarea';
-  maxLength: number | string;
-  textDefault: string;
-  booleanDefault: 'true' | 'false';
-  jsonDefault: string;
-  selectOptions: SelectOption[];
-  selectDefault: string | null;
-  referenceModel: string | null;
-  allowMultiple: boolean;
+  text: TextSettings;
+  boolean: BooleanSettings;
+  json: JsonSettings;
+  select: SelectSettings;
+  reference: ReferenceSettings;
 }
 
-export interface ContentField extends FieldValues {
-  id: string;
-}
+export type FieldEditorFormType = UseFormReturnType<ModelField>;
 
 export interface ContentModelValues {
   name: string;
   key: string;
   description: string;
-  fields: ContentField[];
+  fields: ModelField[];
 }
 
 export type ContentModelFormType = UseFormReturnType<ContentModelValues>;
-export type FieldFormType = UseFormReturnType<FieldValues>;
+
+export interface FieldJson {
+  key: string;
+  label: string;
+  type: FieldType;
+  description: string | null;
+  required: boolean;
+  options: Record<string, unknown>;
+}
+
+export interface ContentModelJson {
+  name: string;
+  key: string;
+  description: string | null;
+  fields: FieldJson[];
+}

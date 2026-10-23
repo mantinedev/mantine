@@ -1,67 +1,64 @@
 import dayjs from 'dayjs';
 import timezone from 'dayjs/plugin/timezone';
 import utc from 'dayjs/plugin/utc';
-import { getMonthlyOn } from './recurrence';
+import { getMonthlyRule, sortWeekdays } from './recurrence';
 import type {
+  Recurrence,
   RecurrenceEnd,
-  RecurrencePayload,
   RecurringEventPayload,
   RecurringEventValues,
 } from './types';
-import { WEEKDAY_OPTIONS } from './validation';
 
 dayjs.extend(utc);
 dayjs.extend(timezone);
 
-/** Wall-clock time in the event timezone as an ISO string with that zone's offset */
-function toIsoString(value: string, allDay: boolean, zone: string) {
-  return allDay ? value.slice(0, 10) : dayjs.tz(value, zone).format();
-}
-
-function getEnd(values: RecurringEventValues): RecurrenceEnd {
+function getRecurrenceEnd(values: RecurringEventValues): RecurrenceEnd {
   if (values.ends === 'after') {
-    return { type: 'after', count: Number(values.count) };
+    return { ends: 'after', count: Number(values.count) };
   }
 
-  if (values.ends === 'on') {
-    return { type: 'on', until: values.until! };
+  if (values.ends === 'on' && values.until) {
+    return { ends: 'on', until: values.until };
   }
 
-  return { type: 'never' };
+  return { ends: 'never' };
 }
 
-function getRecurrence(values: RecurringEventValues): RecurrencePayload {
-  if (!values.repeats) {
-    return { repeat: 'none' };
+/** The recurrence rule with only the fields that apply to the selected repeat option */
+export function getRecurrence(values: RecurringEventValues): Recurrence | null {
+  if (values.repeat === 'none' || !values.start) {
+    return null;
   }
 
   return {
-    repeat: values.frequency,
+    frequency: values.repeat,
     interval: Number(values.interval),
-    ...(values.frequency === 'weekly' && {
-      weekdays: WEEKDAY_OPTIONS.map((option) => option.value).filter((weekday) =>
-        values.weekdays.includes(weekday)
-      ),
-    }),
-    ...(values.frequency === 'monthly' && {
-      monthlyOn: getMonthlyOn(values.start!, values.monthlyMode),
-    }),
-    ends: getEnd(values),
+    ...(values.repeat === 'weekly' && { weekdays: sortWeekdays(values.weekdays) }),
+    ...(values.repeat === 'monthly' && { monthly: getMonthlyRule(values.start, values.monthlyBy) }),
+    ...getRecurrenceEnd(values),
   };
 }
 
-export function buildPayload(values: RecurringEventValues): RecurringEventPayload {
-  const zone = values.timezone!;
+function toIsoString(value: string | null, values: RecurringEventValues) {
+  if (!value || values.allDay) {
+    return value;
+  }
+
+  return dayjs.tz(value, values.timezone ?? 'UTC').format();
+}
+
+export function toPayload(values: RecurringEventValues): RecurringEventPayload {
+  const recurrence = getRecurrence(values);
 
   return {
     title: values.title.trim(),
-    description: values.description.trim() || null,
-    start: toIsoString(values.start!, values.allDay, zone),
-    end: toIsoString(values.end!, values.allDay, zone),
+    description: values.description.trim(),
+    start: toIsoString(values.start, values),
+    end: toIsoString(values.end, values),
     allDay: values.allDay,
-    timezone: zone,
-    location: values.location.trim() || null,
-    recurrence: getRecurrence(values),
-    ...(values.repeats && { exceptions: [...values.exceptions].sort() }),
+    timezone: values.timezone,
+    location: values.location.trim(),
+    recurrence,
+    exceptions: recurrence ? [...values.exceptions].sort() : [],
   };
 }

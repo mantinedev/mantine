@@ -1,0 +1,14 @@
+.dropzone[data-invalid] {
+  border-color: var(--mantine-color-error);
+}
+
+.result {
+  padding: var(--mantine-spacing-xs);
+  border: 1px solid var(--mantine-color-default-border);
+  border-radius: var(--mantine-radius-default);
+}
+
+.texts {
+  flex: 1;
+  min-width: 0;
+}

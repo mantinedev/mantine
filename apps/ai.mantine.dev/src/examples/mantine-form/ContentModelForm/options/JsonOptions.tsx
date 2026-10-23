@@ -1,15 +1,18 @@
 import { JsonInput } from '@mantine/core';
-import type { FieldFormType } from '../types';
+import { JSON_ERROR } from '../validation';
+import type { OptionsProps } from './options';
 
-export function JsonOptions({ form }: { form: FieldFormType }) {
+export function JsonOptions({ form }: OptionsProps) {
   return (
     <JsonInput
       label="Default value"
-      placeholder='{ "key": "value" }'
+      placeholder='{ "featured": false }'
+      validationError={JSON_ERROR}
+      formatOnBlur
       autosize
       minRows={4}
       maxRows={10}
-      {...form.getInputProps('jsonDefault')}
+      {...form.getInputProps('json.defaultValue')}
     />
   );
 }

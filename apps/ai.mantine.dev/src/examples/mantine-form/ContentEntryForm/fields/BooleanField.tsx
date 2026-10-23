@@ -1,22 +1,24 @@
-import { Checkbox } from '@mantine/core';
-import type { BooleanModelField, FieldInputProps } from '../types';
-import classes from './BooleanField.module.css';
+import { Checkbox, Text } from '@mantine/core';
+import { fieldPath } from '../entry';
+import type { FieldInputProps } from '../types';
 
-export function BooleanField({ form, field }: FieldInputProps<BooleanModelField>) {
+export function BooleanField({ form, field }: FieldInputProps<'boolean'>) {
+  const label = field.required ? (
+    <>
+      {field.label}{' '}
+      <Text span c="red" aria-hidden>
+        *
+      </Text>
+    </>
+  ) : (
+    field.label
+  );
+
   return (
     <Checkbox
-      label={
-        <>
-          {field.label}
-          {field.required && (
-            <span className={classes.required} aria-hidden>
-              *
-            </span>
-          )}
-        </>
-      }
+      label={label}
       description={field.description || undefined}
-      {...form.getInputProps(`fields.${field.key}`, { type: 'checkbox' })}
+      {...form.getInputProps(fieldPath(field), { type: 'checkbox' })}
     />
   );
 }

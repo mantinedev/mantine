@@ -1,59 +1,57 @@
 import type { UseFormReturnType } from '@mantine/form';
 
-export type Frequency = 'daily' | 'weekly' | 'monthly' | 'yearly';
+export type Repeat = 'none' | 'daily' | 'weekly' | 'monthly' | 'yearly';
+export type Frequency = Exclude<Repeat, 'none'>;
 export type Weekday = 'MO' | 'TU' | 'WE' | 'TH' | 'FR' | 'SA' | 'SU';
-export type MonthlyMode = 'day' | 'weekday';
-export type EndsMode = 'never' | 'after' | 'on';
+export type MonthlyBy = 'dayOfMonth' | 'weekdayOfMonth';
+export type Ends = 'never' | 'after' | 'on';
 
 export interface RecurringEventValues {
   title: string;
-  description: string;
   allDay: boolean;
-  /** `YYYY-MM-DD HH:mm:ss`, or `YYYY-MM-DD` when `allDay` is on */
+  /** `YYYY-MM-DD HH:mm:ss`, or `YYYY-MM-DD` when allDay is on */
   start: string | null;
   end: string | null;
   timezone: string | null;
   location: string;
-  repeats: boolean;
-  frequency: Frequency;
+  description: string;
+  repeat: Repeat;
   interval: number | string;
   weekdays: Weekday[];
-  monthlyMode: MonthlyMode;
-  ends: EndsMode;
+  monthlyBy: MonthlyBy;
+  ends: Ends;
   count: number | string;
   until: string | null;
   exceptions: string[];
 }
 
-export type MonthlyOn =
-  | { type: 'day'; day: number }
-  | { type: 'weekday'; weekday: Weekday; week: number };
+export type MonthlyRule =
+  | { by: 'dayOfMonth'; day: number }
+  /** week is 1–4, or -1 for the last weekday of the month */
+  | { by: 'weekdayOfMonth'; weekday: Weekday; week: number };
 
 export type RecurrenceEnd =
-  | { type: 'never' }
-  | { type: 'after'; count: number }
-  | { type: 'on'; until: string };
+  | { ends: 'never' }
+  | { ends: 'after'; count: number }
+  | { ends: 'on'; until: string };
 
-export type RecurrencePayload =
-  | { repeat: 'none' }
-  | {
-      repeat: Frequency;
-      interval: number;
-      weekdays?: Weekday[];
-      monthlyOn?: MonthlyOn;
-      ends: RecurrenceEnd;
-    };
+export type Recurrence = {
+  frequency: Frequency;
+  interval: number;
+  weekdays?: Weekday[];
+  monthly?: MonthlyRule;
+} & RecurrenceEnd;
 
 export interface RecurringEventPayload {
   title: string;
-  description: string | null;
-  start: string;
-  end: string;
+  description: string;
+  start: string | null;
+  end: string | null;
   allDay: boolean;
-  timezone: string;
-  location: string | null;
-  recurrence: RecurrencePayload;
-  exceptions?: string[];
+  timezone: string | null;
+  location: string;
+  recurrence: Recurrence | null;
+  exceptions: string[];
 }
 
 export type RecurringEventFormType = UseFormReturnType<RecurringEventValues, RecurringEventPayload>;

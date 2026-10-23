@@ -1,142 +1,72 @@
-import type React from 'react';
-import {
-  hasLength,
-  isJSONString,
-  isNotEmpty,
-  isNotEmptyHTML,
-  isOneOf,
-  matches,
-  type FormRulesRecord,
-} from '@mantine/form';
-import { REFERENCE_ENTRIES } from './models';
-import type {
-  BooleanModelField,
-  ContentModel,
-  EntryValues,
-  FieldType,
-  FieldValue,
-  FileModelField,
-  ImageModelField,
-  JsonModelField,
-  ModelField,
-  ReferenceModel,
-  ReferenceModelField,
-  RichTextModelField,
-  SelectModelField,
-  TextModelField,
-} from './types';
+import type { ReactNode } from 'react';
+import { isJSONString, isNotEmpty, isNotEmptyHTML, isOneOf, matches } from '@mantine/form';
+import { LANGUAGES, MAX_TAGS } from './data';
+import type { ContentField, ContentModel, FieldOfType, FieldType } from './types';
 
-export const LANGUAGES = [
-  { value: 'en-US', label: 'English (en-US)' },
-  { value: 'de-DE', label: 'German (de-DE)' },
-  { value: 'fr-FR', label: 'French (fr-FR)' },
-  { value: 'es-ES', label: 'Spanish (es-ES)' },
-];
+type Rule = (value: any) => ReactNode | null;
 
-export const DEFAULT_LANGUAGE = 'en-US';
-
-export const SUGGESTED_TAGS = ['featured', 'evergreen', 'seasonal', 'internal', 'draft-review'];
-
-export const MAX_TAGS = 10;
-
-export const REFERENCE_MODELS: { value: ReferenceModel; label: string }[] = [
-  { value: 'author', label: 'Author' },
-  { value: 'category', label: 'Category' },
-  { value: 'page', label: 'Page' },
-  { value: 'product', label: 'Product' },
-];
-
-export const IMAGE_MIME_PREFIX = 'image/';
-
-type Rule = (value: any) => React.ReactNode;
-
-function compose(...rules: (Rule | false)[]): Rule {
-  const active = rules.filter((rule): rule is Rule => rule !== false);
-  return (value) => {
-    for (const rule of active) {
-      const error = rule(value);
+const firstError =
+  (...rules: (Rule | false)[]): Rule =>
+  (value) => {
+    for (const rule of rules) {
+      const error = rule && rule(value);
       if (error) {
         return error;
       }
     }
     return null;
   };
-}
 
-function optional(rule: Rule): Rule {
-  return (value) => (value === '' || value === null ? null : rule(value));
-}
+const required = (field: ContentField) =>
+  field.required && isNotEmpty(`${field.label} is required`);
 
-const isFile = (value: FieldValue): value is File => value instanceof File;
-
-export const isImageFile = (error: string) => (value: FieldValue) =>
-  isFile(value) && !value.type.startsWith(IMAGE_MIME_PREFIX) ? error : null;
-
-const hasNoDuplicates = (error: string) => (value: string[]) =>
-  new Set(value.map((item) => item.toLowerCase())).size === value.length ? null : error;
-
-const requiredError = (field: ModelField) => `${field.label} is required`;
-
-const referencesExist = (targetModel: ReferenceModel | null, error: string) => (value: string[]) =>
-  value.every((key) =>
-    REFERENCE_ENTRIES.some(
-      (entry) => entry.key === key && (targetModel === null || entry.model === targetModel)
-    )
-  )
-    ? null
-    : error;
-
-const textRule = (field: TextModelField) =>
-  compose(
-    field.required && isNotEmpty(requiredError(field)),
+const textRule = (field: FieldOfType<'text'>) =>
+  firstError(
+    required(field),
     field.maxLength !== null &&
-      hasLength(
-        { max: field.maxLength },
-        `${field.label} must be at most ${field.maxLength} characters`
-      )
+      ((value: string) =>
+        value.length > field.maxLength!
+          ? `${field.label} must be at most ${field.maxLength} characters`
+          : null)
   );
 
-const richTextRule = (field: RichTextModelField) =>
-  compose(field.required && isNotEmptyHTML(requiredError(field)));
+const richTextRule = (field: FieldOfType<'richText'>) =>
+  firstError(field.required && isNotEmptyHTML(`${field.label} is required`));
 
-const booleanRule = (field: BooleanModelField) =>
-  compose(field.required && isNotEmpty(`${field.label} must be checked`));
-
-const jsonRule = (field: JsonModelField) =>
-  compose(
-    field.required && isNotEmpty(requiredError(field)),
-    optional(isJSONString(`${field.label} must be valid JSON`))
+const booleanRule = (field: FieldOfType<'boolean'>) =>
+  firstError(
+    field.required && ((value: boolean) => (value ? null : `${field.label} must be checked`))
   );
 
-const selectRule = (field: SelectModelField) =>
-  compose(
-    field.required && isNotEmpty(requiredError(field)),
-    optional(
-      isOneOf(
-        field.options.map((option) => option.value),
-        `${field.label} must be one of the options`
-      )
-    )
+const jsonRule = (field: FieldOfType<'json'>) =>
+  firstError(required(field), (value: string) =>
+    value.trim() === '' ? null : isJSONString(`${field.label} must be valid JSON`)(value)
   );
 
-const imageRule = (field: ImageModelField) =>
-  compose(
-    field.required && isNotEmpty(requiredError(field)),
-    isImageFile(`${field.label} must be an image`)
+const selectRule = (field: FieldOfType<'select'>) =>
+  firstError(required(field), (value: string | null) =>
+    value === null
+      ? null
+      : isOneOf(
+          field.options.map((option) => option.value),
+          `Pick one of the ${field.label} options`
+        )(value)
   );
 
-const fileRule = (field: FileModelField) =>
-  compose(field.required && isNotEmpty(requiredError(field)));
-
-const referenceRule = (field: ReferenceModelField) =>
-  compose(
-    field.required &&
-      isNotEmpty(field.allowMultiple ? 'Select at least one entry' : 'Select an entry'),
-    !field.allowMultiple && hasLength({ max: 1 }, 'Only one entry can be selected'),
-    referencesExist(field.targetModel, 'Selected entry is not available')
+const imageRule = (field: FieldOfType<'image'>) =>
+  firstError(required(field), (value: File | null) =>
+    value && !value.type.startsWith('image/') ? `${field.label} must be an image` : null
   );
 
-const FIELD_RULES: { [Type in FieldType]: (field: Extract<ModelField, { type: Type }>) => Rule } = {
+const fileRule = (field: FieldOfType<'file'>) => firstError(required(field));
+
+const referenceRule = (field: FieldOfType<'reference'>) =>
+  firstError(
+    field.required && isNotEmpty(field.multiple ? `Select at least one entry` : `Select an entry`),
+    !field.multiple && ((value: string[]) => (value.length > 1 ? 'Select only one entry' : null))
+  );
+
+const FIELD_RULES: { [T in FieldType]: (field: FieldOfType<T>) => Rule } = {
   text: textRule,
   richText: richTextRule,
   boolean: booleanRule,
@@ -147,38 +77,42 @@ const FIELD_RULES: { [Type in FieldType]: (field: Extract<ModelField, { type: Ty
   reference: referenceRule,
 };
 
-export function buildFieldRule(field: ModelField): Rule {
-  return (FIELD_RULES[field.type] as (field: ModelField) => Rule)(field);
-}
+const fieldRule = (field: ContentField) =>
+  (FIELD_RULES[field.type] as (field: ContentField) => Rule)(field);
 
-export function buildValidate(model: ContentModel): FormRulesRecord<EntryValues> {
-  return {
-    key: compose(
-      isNotEmpty('Content key is required'),
-      matches(/^[a-z0-9-]+$/, 'Use lowercase letters, digits and dashes')
-    ),
-    language: compose(
-      isNotEmpty('Language is required'),
-      isOneOf(
-        LANGUAGES.map((language) => language.value),
-        'Select a supported language'
-      )
-    ),
-    tags: compose(
-      hasLength({ max: MAX_TAGS }, `Use at most ${MAX_TAGS} tags`),
-      hasNoDuplicates('Tags must be unique')
-    ),
-    fields: Object.fromEntries(model.fields.map((field) => [field.key, buildFieldRule(field)])),
-  };
-}
+const keyRule = firstError(
+  isNotEmpty('Content key is required'),
+  matches(/^[a-z0-9-]+$/, 'Use lowercase letters, digits and dashes only')
+);
 
-const BLUR_VALIDATED: ModelField['type'][] = ['text', 'json'];
+const languageRule = firstError(
+  isNotEmpty('Language is required'),
+  isOneOf(
+    LANGUAGES.map((language) => language.value),
+    'Pick a language from the list'
+  )
+);
 
-export function getBlurValidatedPaths(model: ContentModel) {
-  return [
-    'key',
-    ...model.fields
-      .filter((field) => BLUR_VALIDATED.includes(field.type))
-      .map((field) => `fields.${field.key}`),
-  ];
-}
+const tagsRule = (tags: string[]) => {
+  if (tags.length > MAX_TAGS) {
+    return `Add at most ${MAX_TAGS} tags`;
+  }
+  return new Set(tags).size !== tags.length ? 'Tags must be unique' : null;
+};
+
+// Keys follow the visual order, so the first error key is the first invalid field
+export const buildRules = (model: ContentModel) => ({
+  key: keyRule,
+  language: languageRule,
+  tags: tagsRule,
+  values: Object.fromEntries(model.fields.map((field) => [field.key, fieldRule(field)])),
+});
+
+const BLUR_VALIDATED: FieldType[] = ['text', 'json'];
+
+export const buildBlurPaths = (model: ContentModel) => [
+  'key',
+  ...model.fields
+    .filter((field) => BLUR_VALIDATED.includes(field.type))
+    .map((field) => `values.${field.key}`),
+];

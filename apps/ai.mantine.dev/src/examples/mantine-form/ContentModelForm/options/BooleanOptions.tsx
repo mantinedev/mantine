@@ -1,19 +1,13 @@
-import { Input, SegmentedControl } from '@mantine/core';
-import type { FieldFormType } from '../types';
+import { Group, Radio } from '@mantine/core';
+import type { OptionsProps } from './options';
 
-const DEFAULT_OPTIONS = [
-  { value: 'false', label: 'False' },
-  { value: 'true', label: 'True' },
-];
-
-export function BooleanOptions({ form }: { form: FieldFormType }) {
+export function BooleanOptions({ form }: OptionsProps) {
   return (
-    <Input.Wrapper label="Default value" withBlockChildren>
-      <SegmentedControl
-        data={DEFAULT_OPTIONS}
-        aria-label="Default value"
-        {...form.getInputProps('booleanDefault', { withError: false })}
-      />
-    </Input.Wrapper>
+    <Radio.Group label="Default value" {...form.getInputProps('boolean.defaultValue')}>
+      <Group mt="xs">
+        <Radio value="true" label="True" />
+        <Radio value="false" label="False" />
+      </Group>
+    </Radio.Group>
   );
 }

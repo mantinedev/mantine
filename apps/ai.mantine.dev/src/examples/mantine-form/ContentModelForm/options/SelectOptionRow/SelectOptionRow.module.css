@@ -1,0 +1,17 @@
+.row {
+  position: relative;
+
+  &[data-dragging] {
+    z-index: 1;
+  }
+}
+
+.handle {
+  cursor: grab;
+  touch-action: none;
+}
+
+.input {
+  flex: 1;
+  min-width: 0;
+}

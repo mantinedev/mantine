@@ -1,11 +1,3 @@
-.root {
-  display: flex;
-  flex-direction: column;
-  gap: var(--mantine-spacing-lg);
-}
-
-.header {
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
+.body {
+  margin-top: var(--mantine-spacing-lg);
 }

@@ -34,16 +34,17 @@ async function fillPersonal(user: User) {
 }
 ```
 
-Render through one `renderForm(onSubmit = vi.fn())` helper that sets up `userEvent` and
+Render through one `renderForm(onSubmit = jest.fn())` helper (`vi.fn()` with vitest) that sets up `userEvent` and
 `<Notifications />` and returns `{ user, onSubmit }`.
 
 ## Timing
 
 - Debounced validation (`validateDebounce`, async validators): use `await screen.findByText(...)`
   or `waitFor`, not arbitrary sleeps.
-- Forms comparing against today: `vi.useFakeTimers({ toFake: ['Date'] })` and
-  `vi.setSystemTime(new Date(2026, 9, 17, 12))` in `beforeEach`, real timers in `afterEach`.
-  Faking only `Date` keeps `user-event` and `waitFor` working.
+- Forms comparing against today: jest `jest.useFakeTimers({ now: new Date(2026, 9, 17, 12),
+  advanceTimers: true })` in `beforeEach` and `userEvent.setup({ advanceTimers:
+  jest.advanceTimersByTime })`, so timers keep running for `user-event` and `waitFor`; vitest
+  `vi.useFakeTimers({ toFake: ['Date'] })` + `vi.setSystemTime(...)`. Real timers in `afterEach`.
 - `form.submitting` while the handler's promise is pending: assert the button's `loading` state
   by its `data-loading` attribute or disabled state, then resolve the promise.
 

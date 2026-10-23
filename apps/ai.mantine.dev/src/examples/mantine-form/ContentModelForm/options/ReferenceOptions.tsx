@@ -1,20 +1,22 @@
 import { Checkbox, Select, Stack } from '@mantine/core';
-import { REFERENCE_MODELS } from '../fieldTypes';
-import type { FieldFormType } from '../types';
+import { REFERENCE_MODELS } from '../constants';
+import type { OptionsProps } from './options';
 
-export function ReferenceOptions({ form }: { form: FieldFormType }) {
+export function ReferenceOptions({ form }: OptionsProps) {
   return (
     <Stack>
       <Select
         label="Target model"
-        placeholder="Select a model"
-        withAsterisk
+        placeholder="Pick a model"
         data={REFERENCE_MODELS}
-        {...form.getInputProps('referenceModel')}
+        allowDeselect={false}
+        withAsterisk
+        {...form.getInputProps('reference.targetModel')}
       />
       <Checkbox
         label="Allow multiple"
-        {...form.getInputProps('allowMultiple', { type: 'checkbox' })}
+        description="Entries can link to several entries of the target model"
+        {...form.getInputProps('reference.multiple', { type: 'checkbox' })}
       />
     </Stack>
   );

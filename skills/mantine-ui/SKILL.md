@@ -86,6 +86,10 @@ component you are about to use, then write the UI.
   notification renders a snapshot of its last open content until the transition ends; state is
   cleared in `onExitTransitionEnd`, never in `onClose`. See
   [transitions](references/components/transitions.md).
+- **Red only on the action.** Danger zones and delete rows keep the default border and
+  background; red appears on the destructive button label or icon and on the confirm button in
+  the modal, never on a container border, background or title. See
+  [surface](references/components/surface.md#danger-zones-and-destructive-areas).
 - **Custom inputs look like inputs.** A value picked in a modal or a popover is displayed in an
   `Input`-based component, never as a `Button` with chips under it: `PillsInput` with pills for
   several values (like `MultiSelect`), `InputBase readOnly pointer` with the value as text for one

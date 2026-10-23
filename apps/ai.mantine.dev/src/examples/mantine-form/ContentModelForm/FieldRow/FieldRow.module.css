@@ -1,0 +1,30 @@
+.row {
+  position: relative;
+
+  &[data-dragging] {
+    z-index: 1;
+  }
+}
+
+.handle {
+  cursor: grab;
+  touch-action: none;
+}
+
+.texts {
+  flex: 1;
+  min-width: 0;
+}
+
+.label {
+  font-weight: var(--mantine-font-weight-medium);
+}
+
+.required {
+  color: var(--mantine-color-error);
+  margin-inline-start: 4px;
+}
+
+.key {
+  font-family: var(--mantine-font-family-monospace);
+}

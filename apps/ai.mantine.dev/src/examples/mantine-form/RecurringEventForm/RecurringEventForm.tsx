@@ -1,100 +1,72 @@
-import dayjs from 'dayjs';
-import utc from 'dayjs/plugin/utc';
 import { useState } from 'react';
-import { Button, Code, Group, Stack, Text } from '@mantine/core';
+import { Button, Code, Divider, Group, Input, Stack } from '@mantine/core';
 import { useForm, type FormErrors } from '@mantine/form';
 import { notifications } from '@mantine/notifications';
-import { ErrorSummary } from './ErrorSummary';
 import { EventFields } from './EventFields';
-import { focusField } from './focusField';
-import { buildPayload } from './payload';
-import { formatOccurrence, getRecurrenceRule, upcomingOccurrences } from './recurrence';
+import { toPayload } from './payload';
+import { formatOccurrence, getOccurrences } from './recurrence';
 import { RecurrenceFields } from './RecurrenceFields';
 import type { RecurringEventPayload, RecurringEventValues } from './types';
-import { useDependentFields } from './useDependentFields';
-import { getDefaultTimezone, RULES } from './validation';
-
-dayjs.extend(utc);
-
-function describeFirstOccurrence(values: RecurringEventValues) {
-  const rule = getRecurrenceRule(values);
-  const first = rule ? upcomingOccurrences(rule, values.exceptions, 1)[0] : dayjs.utc(values.start);
-  return first ? formatOccurrence(first, values.allDay) : 'No occurrences';
-}
+import { useEventDefaults } from './use-event-defaults';
+import { FORM_NAME, getInitialValues, RULES } from './validation';
 
 interface RecurringEventFormProps {
   onSubmit?: (payload: RecurringEventPayload) => void;
 }
 
+function getFirstOccurrence(values: RecurringEventValues, payload: RecurringEventPayload) {
+  const [first] = getOccurrences(values.start!, payload.recurrence, payload.exceptions, 1);
+  return first ? formatOccurrence(first, values.start!, values.allDay) : 'No occurrences';
+}
+
 export function RecurringEventForm({ onSubmit }: RecurringEventFormProps) {
-  const [payload, setPayload] = useState<RecurringEventPayload | null>(null);
-  const [showSummary, setShowSummary] = useState(false);
+  const [submitted, setSubmitted] = useState<RecurringEventPayload | null>(null);
 
   const form = useForm<RecurringEventValues, RecurringEventPayload>({
-    name: 'recurring-event',
-    initialValues: {
-      title: '',
-      description: '',
-      allDay: false,
-      start: null,
-      end: null,
-      timezone: getDefaultTimezone(),
-      location: '',
-      repeats: false,
-      frequency: 'weekly',
-      interval: 1,
-      weekdays: [],
-      monthlyMode: 'day',
-      ends: 'never',
-      count: 10,
-      until: null,
-      exceptions: [],
-    },
-    validateInputOnBlur: ['title', 'interval', 'count'],
+    name: FORM_NAME,
+    initialValues: getInitialValues(),
     validate: RULES,
-    transformValues: buildPayload,
+    transformValues: toPayload,
   });
 
-  const { markEdited } = useDependentFields(form);
+  useEventDefaults(form);
 
-  const handleSubmit = (event: RecurringEventPayload) => {
-    setShowSummary(false);
-    setPayload(event);
-    onSubmit?.(event);
+  const handleSubmit = (payload: RecurringEventPayload) => {
+    setSubmitted(payload);
+    onSubmit?.(payload);
     notifications.show({
       title: 'Event created',
-      message: `${event.title} · ${describeFirstOccurrence(form.getValues())}`,
+      message: `${payload.title} · ${getFirstOccurrence(form.getValues(), payload)}`,
     });
   };
 
+  // Radio groups, chips and masked date inputs carry data-path on a wrapper: focus the input inside
   const handleErrors = (errors: FormErrors) => {
-    setShowSummary(true);
-    focusField(form, Object.keys(errors)[0]);
+    const node = form.getInputNode(Object.keys(errors)[0]);
+    const focusable = node?.matches('input, button, textarea')
+      ? node
+      : node?.querySelector('input');
+    focusable?.focus();
   };
 
   return (
     <Stack gap="xl">
       <form onSubmit={form.onSubmit(handleSubmit, handleErrors)} noValidate>
-        <Stack>
-          {showSummary && <ErrorSummary form={form} />}
-          <EventFields form={form} onEndEdit={() => markEdited('end')} />
-          <RecurrenceFields form={form} onWeekdaysEdit={() => markEdited('weekdays')} />
+        <Stack gap="xl">
+          <EventFields form={form} />
+          <Divider />
+          <RecurrenceFields form={form} />
           <Group justify="flex-end">
-            {/* preventDefault keeps focus in the field, so its blur error does not shift the button */}
-            <Button type="submit" onMouseDown={(event) => event.preventDefault()}>
-              Create event
-            </Button>
+            <Button type="submit">Create event</Button>
           </Group>
         </Stack>
       </form>
 
-      {payload && (
+      {submitted && (
         <div>
-          <Text size="sm" fw={500} mb="xs">
-            Event JSON
-          </Text>
-          <Code block aria-label="Event JSON">
-            {JSON.stringify(payload, null, 2)}
+          <Input.Label labelElement="div">Submitted event</Input.Label>
+          <Code block aria-label="Submitted event">
+            {JSON.stringify(submitted, null, 2)}
           </Code>
         </div>
       )}

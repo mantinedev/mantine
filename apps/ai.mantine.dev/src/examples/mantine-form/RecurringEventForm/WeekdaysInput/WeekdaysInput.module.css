@@ -1,0 +1,5 @@
+/* Input.Wrapper in 9.x has no withBlockChildren and spaces only inputs from the label and the error */
+.chips {
+  margin-top: calc(var(--mantine-spacing-xs) / 2);
+  margin-bottom: calc(var(--mantine-spacing-xs) / 2);
+}

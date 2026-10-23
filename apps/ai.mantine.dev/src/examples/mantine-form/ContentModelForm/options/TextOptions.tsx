@@ -1,45 +1,36 @@
-import { Input, NumberInput, SegmentedControl, Stack, Textarea, TextInput } from '@mantine/core';
-import type { FieldFormType } from '../types';
+import { Group, NumberInput, Radio, Stack, Textarea, TextInput } from '@mantine/core';
+import type { OptionsProps } from './options';
 
-const DISPLAY_OPTIONS = [
-  { value: 'input', label: 'Input' },
-  { value: 'textarea', label: 'Textarea' },
-];
-
-export function TextOptions({ form }: { form: FieldFormType }) {
-  const display = form.useWatchValue('textDisplay');
-  const maxLength = form.useWatchValue('maxLength');
-  const defaultProps = {
+export function TextOptions({ form }: OptionsProps) {
+  const display = form.useWatchValue('text.display');
+  const defaultValueProps = {
     label: 'Default value',
     placeholder: 'Default value',
-    maxLength: typeof maxLength === 'number' && maxLength > 0 ? maxLength : undefined,
-    ...form.getInputProps('textDefault'),
+    ...form.getInputProps('text.defaultValue'),
   };
 
   return (
     <Stack>
-      <Input.Wrapper label="Display" withBlockChildren>
-        <SegmentedControl
-          data={DISPLAY_OPTIONS}
-          aria-label="Display"
-          {...form.getInputProps('textDisplay', { withError: false })}
-        />
-      </Input.Wrapper>
-
+      <Radio.Group label="Display" {...form.getInputProps('text.display')}>
+        <Group mt="xs">
+          <Radio value="input" label="Input" />
+          <Radio value="textarea" label="Textarea" />
+        </Group>
+      </Radio.Group>
       <NumberInput
         label="Max characters"
         placeholder="No limit"
-        min={1}
-        max={100000}
         allowNegative={false}
         allowDecimal={false}
-        {...form.getInputProps('maxLength')}
+        thousandSeparator=","
+        hideControls
+        maw={240}
+        {...form.getInputProps('text.maxLength')}
       />
-
       {display === 'textarea' ? (
-        <Textarea autosize minRows={3} maxRows={8} {...defaultProps} />
+        <Textarea autosize minRows={3} maxRows={8} {...defaultValueProps} />
       ) : (
-        <TextInput {...defaultProps} />
+        <TextInput {...defaultValueProps} />
       )}
     </Stack>
   );

@@ -30,11 +30,11 @@ export { userEvent };
 
 ## jsdom stubs
 
-jsdom lacks APIs Mantine components use. Put these in the test setup file (`vitest.setup.mjs`
-or `jest.setup.ts`):
+jsdom lacks APIs Mantine components use. Put these in the test setup file (`jest.setup.ts`, or
+`vitest.setup.mjs` with `vi.fn` and `@testing-library/jest-dom/vitest`):
 
 ```ts
-import '@testing-library/jest-dom/vitest'; // or '@testing-library/jest-dom' with jest
+import '@testing-library/jest-dom';
 
 const { getComputedStyle } = window;
 window.getComputedStyle = (elt) => getComputedStyle(elt);
@@ -42,15 +42,15 @@ window.HTMLElement.prototype.scrollIntoView = () => {};
 
 Object.defineProperty(window, 'matchMedia', {
   writable: true,
-  value: vi.fn().mockImplementation((query) => ({
+  value: jest.fn().mockImplementation((query: string) => ({
     matches: false,
     media: query,
     onchange: null,
-    addListener: vi.fn(),
-    removeListener: vi.fn(),
-    addEventListener: vi.fn(),
-    removeEventListener: vi.fn(),
-    dispatchEvent: vi.fn(),
+    addListener: jest.fn(),
+    removeListener: jest.fn(),
+    addEventListener: jest.fn(),
+    removeEventListener: jest.fn(),
+    dispatchEvent: jest.fn(),
   })),
 });
 
@@ -71,7 +71,7 @@ if (!document.fonts) {
 
 - `matchMedia` returning `matches: false` means every responsive component takes its `base`
   branch: picker inputs open a drawer, `hiddenFrom`/`visibleFrom` hide the desktop variant.
-  Mock it per test (`vi.spyOn(window, 'matchMedia')` returning `matches: true` for
+  Mock it per test (`jest.spyOn(window, 'matchMedia')` returning `matches: true` for
   `min-width` queries) when the desktop behavior is under test.
 - `document.fonts` is needed by `Textarea autosize`; keep the stub `configurable` so a test can
   override it.
@@ -89,8 +89,19 @@ if (!document.fonts) {
 
 ## Runners
 
+Use the runner the project already has; look at `package.json` scripts and the config file, not
+at the version string of a dependency.
+
+- jest: `testEnvironment: 'jest-environment-jsdom'`, `setupFilesAfterEnv: ['<rootDir>/jest.setup.ts']`,
+  `@swc/jest` (or `babel-jest`) as the transform so `jest.mock` calls are hoisted above the imports,
+  `moduleNameMapper` for the path aliases and `'\\.(css)$': 'identity-obj-proxy'` for CSS modules.
+  With the automatic JSX runtime (`jsc.transform.react.runtime: 'automatic'`) no `React` global is
+  needed.
 - vitest: `environment: 'jsdom'`, `globals: true`, `setupFiles`, `include: ['src/**/*.test.tsx']`.
-- jest: `testEnvironment: 'jest-environment-jsdom'`, `setupFilesAfterEnv`, CSS modules mapped
-  to `identity-obj-proxy`, and `React` on `globalThis` when the transform uses the classic JSX
-  runtime.
+
+Equivalents, jest → vitest: `jest.fn` → `vi.fn`; `jest.spyOn` → `vi.spyOn`; `jest.mock(path,
+factory)` → `vi.mock(path, factory)` with shared mocks declared in `vi.hoisted`;
+`jest.useFakeTimers({ now, advanceTimers: true })` → `vi.useFakeTimers({ toFake: ['Date'] })` +
+`vi.setSystemTime(now)`; `jest.advanceTimersByTimeAsync` → `vi.advanceTimersByTimeAsync`;
+`jest.useRealTimers` → `vi.useRealTimers`; `jest.restoreAllMocks` → `vi.restoreAllMocks`.
 - Tests must pass with `--run`/`--ci` in both; do not rely on watch mode or on test order.

@@ -1,125 +1,156 @@
-import dayjs from 'dayjs';
 import { isInRange, isNotEmpty, when, type FormRulesRecord } from '@mantine/form';
-import { getRecurrenceRule, isInSeries } from './recurrence';
-import type { EndsMode, Frequency, RecurringEventValues, Weekday } from './types';
+import { getRecurrence } from './payload';
+import { formatDate, isInSeries } from './recurrence';
+import type { Ends, Frequency, Repeat, RecurringEventValues } from './types';
+
+export const FORM_NAME = 'recurring-event';
 
 export const TIMEZONES = [
-  { value: 'UTC', label: 'UTC' },
   { value: 'America/Los_Angeles', label: 'Los Angeles' },
+  { value: 'America/Denver', label: 'Denver' },
   { value: 'America/Chicago', label: 'Chicago' },
   { value: 'America/New_York', label: 'New York' },
   { value: 'America/Sao_Paulo', label: 'São Paulo' },
+  { value: 'UTC', label: 'UTC' },
   { value: 'Europe/London', label: 'London' },
   { value: 'Europe/Berlin', label: 'Berlin' },
   { value: 'Asia/Dubai', label: 'Dubai' },
-  { value: 'Asia/Kolkata', label: 'Mumbai' },
-  { value: 'Asia/Singapore', label: 'Singapore' },
+  { value: 'Asia/Kolkata', label: 'Kolkata' },
   { value: 'Asia/Tokyo', label: 'Tokyo' },
   { value: 'Australia/Sydney', label: 'Sydney' },
 ];
 
-export function getDefaultTimezone() {
-  const browserTimezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
-  return TIMEZONES.some((timezone) => timezone.value === browserTimezone) ? browserTimezone : 'UTC';
-}
-
-export const FREQUENCY_UNITS: { value: Frequency; singular: string; plural: string }[] = [
-  { value: 'daily', singular: 'day', plural: 'days' },
-  { value: 'weekly', singular: 'week', plural: 'weeks' },
-  { value: 'monthly', singular: 'month', plural: 'months' },
-  { value: 'yearly', singular: 'year', plural: 'years' },
+export const REPEAT_OPTIONS: { value: Repeat; label: string }[] = [
+  { value: 'none', label: 'Does not repeat' },
+  { value: 'daily', label: 'Daily' },
+  { value: 'weekly', label: 'Weekly' },
+  { value: 'monthly', label: 'Monthly' },
+  { value: 'yearly', label: 'Yearly' },
 ];
 
-export const WEEKDAY_OPTIONS: { value: Weekday; label: string }[] = [
-  { value: 'MO', label: 'Mon' },
-  { value: 'TU', label: 'Tue' },
-  { value: 'WE', label: 'Wed' },
-  { value: 'TH', label: 'Thu' },
-  { value: 'FR', label: 'Fri' },
-  { value: 'SA', label: 'Sat' },
-  { value: 'SU', label: 'Sun' },
-];
+export const INTERVAL_UNITS: Record<Frequency, [singular: string, plural: string]> = {
+  daily: ['day', 'days'],
+  weekly: ['week', 'weeks'],
+  monthly: ['month', 'months'],
+  yearly: ['year', 'years'],
+};
 
-export const ENDS_OPTIONS: { value: EndsMode; label: string }[] = [
+export const ENDS_OPTIONS: { value: Ends; label: string }[] = [
   { value: 'never', label: 'Never' },
   { value: 'after', label: 'After a number of occurrences' },
   { value: 'on', label: 'On a date' },
 ];
 
-export const DATE_FORMAT = 'MMM D, YYYY';
+export const INTERVAL_LIMITS = { min: 1, max: 99 };
+export const COUNT_LIMITS = { min: 1, max: 500 };
 
-const repeats = (values: RecurringEventValues) => values.repeats;
-const repeatsWith =
-  (check: (values: RecurringEventValues) => boolean) => (values: RecurringEventValues) =>
-    values.repeats && check(values);
+export function getDefaultTimezone() {
+  const { timeZone } = Intl.DateTimeFormat().resolvedOptions();
+  return TIMEZONES.some((timezone) => timezone.value === timeZone) ? timeZone : 'UTC';
+}
 
-function validateEnd(end: string | null, values: RecurringEventValues) {
-  if (!end) {
+export function getInitialValues(): RecurringEventValues {
+  return {
+    title: '',
+    allDay: false,
+    start: null,
+    end: null,
+    timezone: getDefaultTimezone(),
+    location: '',
+    description: '',
+    repeat: 'none',
+    interval: 1,
+    weekdays: [],
+    monthlyBy: 'dayOfMonth',
+    ends: 'never',
+    count: 10,
+    until: null,
+    exceptions: [],
+  };
+}
+
+const repeats = (values: RecurringEventValues) => values.repeat !== 'none';
+
+const intervalRule = isInRange(
+  INTERVAL_LIMITS,
+  `Interval must be between ${INTERVAL_LIMITS.min} and ${INTERVAL_LIMITS.max}`
+);
+
+const countRule = isInRange(
+  COUNT_LIMITS,
+  `Occurrences must be between ${COUNT_LIMITS.min} and ${COUNT_LIMITS.max}`
+);
+
+function endRule(value: string | null, values: RecurringEventValues) {
+  if (!value) {
     return 'End is required';
   }
 
-  if (!values.start) {
-    return null;
-  }
-
-  // All-day events may end on the day they start, timed events must end later
-  const unit = values.allDay ? 'day' : 'minute';
-  const endsAfterStart = values.allDay
-    ? !dayjs(end).isBefore(values.start, unit)
-    : dayjs(end).isAfter(values.start, unit);
-
-  return endsAfterStart ? null : 'End must be after start';
-}
-
-function validateUntil(until: string | null, values: RecurringEventValues) {
-  if (!until) {
-    return 'Pick the date the series ends on';
-  }
-
-  return values.start && !dayjs(until).isAfter(values.start, 'day')
-    ? 'End date must be after the start date'
-    : null;
-}
-
-function validateExceptions(exceptions: string[], values: RecurringEventValues) {
-  const rule = getRecurrenceRule(values);
-  const seen = new Set<string>();
-
-  for (const exception of exceptions) {
-    const label = dayjs(exception).format(DATE_FORMAT);
-
-    if (seen.has(exception)) {
-      return `${label} is added twice`;
-    }
-
-    if (rule && !isInSeries(rule, exception)) {
-      return `${label} is not an occurrence of the series`;
-    }
-
-    seen.add(exception);
+  // Values are YYYY-MM-DD[ HH:mm:ss] strings, so string order is time order;
+  // an all-day event may end on the day it starts
+  if (values.start && (values.allDay ? value < values.start : value <= values.start)) {
+    return 'End must be after the start';
   }
 
   return null;
 }
 
-// Rules are in the visual order of the fields: the first error key is the first invalid field
+function untilRule(value: string | null, values: RecurringEventValues) {
+  if (!value) {
+    return 'End date is required';
+  }
+
+  if (values.start && value <= values.start.slice(0, 10)) {
+    return 'End date must be after the start date';
+  }
+
+  return null;
+}
+
+const seriesRules = {
+  interval: when(repeats, intervalRule),
+  weekdays: when(
+    (values: RecurringEventValues) => values.repeat === 'weekly',
+    (value: string[]) => (value.length > 0 ? null : 'Pick at least one weekday')
+  ),
+  count: when(
+    (values: RecurringEventValues) => repeats(values) && values.ends === 'after',
+    countRule
+  ),
+  until: when((values: RecurringEventValues) => repeats(values) && values.ends === 'on', untilRule),
+};
+
+/** The fields that shape the series are valid, so its dates can be computed */
+export function isRuleComplete(values: RecurringEventValues) {
+  return (
+    !!values.start &&
+    !seriesRules.interval(values.interval, values, 'interval') &&
+    !seriesRules.weekdays(values.weekdays, values, 'weekdays') &&
+    !seriesRules.count(values.count, values, 'count') &&
+    !seriesRules.until(values.until, values, 'until')
+  );
+}
+
+function exceptionsRule(value: string[], values: RecurringEventValues) {
+  if (new Set(value).size !== value.length) {
+    return 'Exception dates must be unique';
+  }
+
+  // Other fields report their own errors while the series cannot be computed
+  if (!isRuleComplete(values)) {
+    return null;
+  }
+
+  const outside = value.find((date) => !isInSeries(values.start!, getRecurrence(values), date));
+  return outside ? `${formatDate(outside)} is not a date of the series` : null;
+}
+
+// Rules are listed in the order of the fields on screen, the first error key is focused on submit
 export const RULES: FormRulesRecord<RecurringEventValues> = {
   title: isNotEmpty('Title is required'),
   start: isNotEmpty('Start is required'),
-  end: validateEnd,
+  end: endRule,
   timezone: isNotEmpty('Timezone is required'),
-  interval: when(repeats, isInRange({ min: 1, max: 99 }, 'Interval must be from 1 to 99')),
-  weekdays: when(
-    repeatsWith((values) => values.frequency === 'weekly'),
-    isNotEmpty('Pick at least one weekday')
-  ),
-  count: when(
-    repeatsWith((values) => values.ends === 'after'),
-    isInRange({ min: 1, max: 500 }, 'Occurrences must be from 1 to 500')
-  ),
-  until: when(
-    repeatsWith((values) => values.ends === 'on'),
-    validateUntil
-  ),
-  exceptions: when(repeats, validateExceptions),
+  ...seriesRules,
+  exceptions: when(repeats, exceptionsRule),
 };

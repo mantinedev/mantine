@@ -1,11 +1,8 @@
 import { SimpleGrid, Stack, Text, Textarea, TextInput } from '@mantine/core';
+import { MODEL_DESCRIPTION_MAX_LENGTH, MODEL_NAME_MAX_LENGTH } from './constants';
 import type { ContentModelFormType } from './types';
-import { useGeneratedKey } from './useGeneratedKey';
-
-const DESCRIPTION_LIMIT = 200;
 
 export function ModelDetails({ form }: { form: ContentModelFormType }) {
-  const keyProps = useGeneratedKey(form, 'name', 'key');
   const description = form.useWatchValue('description');
 
   return (
@@ -15,31 +12,31 @@ export function ModelDetails({ form }: { form: ContentModelFormType }) {
           label="Model name"
           placeholder="Blog post"
           withAsterisk
+          maxLength={MODEL_NAME_MAX_LENGTH}
+          data-autofocus
           {...form.getInputProps('name')}
         />
         <TextInput
           label="Model key"
           placeholder="blog_post"
           withAsterisk
-          description="Lowercase letters, digits and underscores"
-          {...keyProps}
+          {...form.getInputProps('key')}
         />
       </SimpleGrid>
-
       <Textarea
         label="Description"
-        placeholder="What entries of this model contain"
+        placeholder="What entries of this model are used for"
         autosize
         minRows={2}
         maxRows={6}
-        maxLength={DESCRIPTION_LIMIT}
+        maxLength={MODEL_DESCRIPTION_MAX_LENGTH}
         bottomSection={
           <Text
             size="xs"
             ta="right"
-            c={description.length >= DESCRIPTION_LIMIT ? 'red' : undefined}
+            c={description.length >= MODEL_DESCRIPTION_MAX_LENGTH ? 'red' : undefined}
           >
-            {description.length}/{DESCRIPTION_LIMIT}
+            {description.length}/{MODEL_DESCRIPTION_MAX_LENGTH}
           </Text>
         }
         {...form.getInputProps('description')}

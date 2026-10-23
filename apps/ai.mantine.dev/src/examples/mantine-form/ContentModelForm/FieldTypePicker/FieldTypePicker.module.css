@@ -1,0 +1,23 @@
+.option {
+  padding: var(--mantine-spacing-sm);
+  border: 1px solid var(--mantine-color-default-border);
+  border-radius: var(--mantine-radius-md);
+
+  @mixin hover {
+    background-color: var(--mantine-color-default-hover);
+  }
+
+  &:focus-visible {
+    outline: 2px solid var(--mantine-primary-color-filled);
+    outline-offset: 2px;
+  }
+}
+
+.texts {
+  flex: 1;
+  min-width: 0;
+}
+
+.label {
+  font-weight: var(--mantine-font-weight-medium);
+}

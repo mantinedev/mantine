@@ -1,0 +1,8 @@
+.editor[data-invalid] {
+  border-color: var(--mantine-color-error);
+}
+
+.content :global(.ProseMirror) {
+  min-height: 160px;
+  font-size: var(--mantine-font-size-sm);
+}

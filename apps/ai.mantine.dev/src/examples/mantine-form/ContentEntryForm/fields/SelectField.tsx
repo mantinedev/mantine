@@ -1,17 +1,17 @@
 import { Select } from '@mantine/core';
-import type { FieldInputProps, SelectModelField } from '../types';
+import { fieldPath } from '../entry';
+import type { FieldInputProps } from '../types';
+import { labelProps } from './field-props';
 
-export function SelectField({ form, field }: FieldInputProps<SelectModelField>) {
+export function SelectField({ form, field }: FieldInputProps<'select'>) {
   return (
     <Select
-      label={field.label}
-      description={field.description || undefined}
+      {...labelProps(field)}
       placeholder={field.label}
-      withAsterisk={field.required}
       data={field.options}
-      clearable={!field.required}
       allowDeselect={!field.required}
-      {...form.getInputProps(`fields.${field.key}`)}
+      clearable={!field.required}
+      {...form.getInputProps(fieldPath(field))}
     />
   );
 }
