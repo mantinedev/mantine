@@ -19,13 +19,7 @@
     }
   }
 
-  @mixin where-light {
-    --ch-background: var(--mantine-color-surface-muted);
-  }
-
-  @mixin where-dark {
-    --ch-background: var(--mantine-color-dark-8);
-  }
+  --ch-background: var(--mantine-color-surface-muted);
 }
 
 .inlineCodeHighlight {
@@ -47,13 +41,7 @@
     }
   }
 
-  @mixin where-light {
-    --ch-background: var(--mantine-color-surface-muted);
-  }
-
-  @mixin where-dark {
-    --ch-background: var(--mantine-color-dark-8);
-  }
+  --ch-background: var(--mantine-color-surface-muted);
 }
 
 .pre {
@@ -271,7 +259,7 @@
   }
 
   &:where([data-color-scheme='dark']) {
-    border-color: var(--mantine-color-border);
+    border-color: var(--mantine-color-dark-5);
     color: var(--mantine-color-dark-0);
 
     &:where([data-active]) {

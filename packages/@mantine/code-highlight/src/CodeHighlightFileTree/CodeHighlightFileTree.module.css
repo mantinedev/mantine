@@ -18,13 +18,7 @@
     }
   }
 
-  @mixin where-light {
-    --ch-background: var(--mantine-color-surface-muted);
-  }
-
-  @mixin where-dark {
-    --ch-background: var(--mantine-color-dark-8);
-  }
+  --ch-background: var(--mantine-color-surface-muted);
 
   &:where([data-collapsed]) {
     padding-inline-start: var(--ch-tree-width, rem(220px));
