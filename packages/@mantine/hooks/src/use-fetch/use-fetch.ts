@@ -51,7 +51,7 @@ export function useFetch<T>(
         if (isCurrentRequest()) {
           setLoading(false);
 
-          if (err.name !== 'AbortError') {
+          if (!requestController.signal.aborted) {
             setError(err);
           }
         }

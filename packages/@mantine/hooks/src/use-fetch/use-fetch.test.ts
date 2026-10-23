@@ -2,7 +2,6 @@ import { act, renderHook, waitFor } from '@testing-library/react';
 import { useFetch } from './use-fetch';
 
 interface PendingRequest {
-  url: string;
   respond: (status: number, body?: unknown) => void;
 }
 
@@ -10,10 +9,9 @@ function mockFetch() {
   const requests: PendingRequest[] = [];
 
   global.fetch = jest.fn(
-    (url: string, init: RequestInit) =>
+    (_url: string, init: RequestInit) =>
       new Promise((resolve, reject) => {
         requests.push({
-          url,
           respond: (status, body = {}) =>
             resolve({
               ok: status >= 200 && status < 300,
@@ -22,9 +20,7 @@ function mockFetch() {
             } as Response),
         });
 
-        init.signal?.addEventListener('abort', () =>
-          reject(new DOMException('Aborted', 'AbortError'))
-        );
+        init.signal?.addEventListener('abort', () => reject(init.signal!.reason));
       })
   ) as any;
 
