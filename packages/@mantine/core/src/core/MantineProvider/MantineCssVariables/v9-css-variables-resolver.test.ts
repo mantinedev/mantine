@@ -28,7 +28,21 @@ describe('v9CssVariablesResolver', () => {
     const v10Dark = v10.dark as Record<string, string>;
     const allDarkKeys = new Set([...Object.keys(v9Dark), ...Object.keys(v10Dark)]);
     const darkDiffKeys = [...allDarkKeys].filter((k) => v9Dark[k] !== v10Dark[k]);
-    const expectedDarkKeys = ['--mantine-color-error', '--mantine-color-success'];
+    const expectedDarkKeys = [
+      '--mantine-color-error',
+      '--mantine-color-success',
+      '--mantine-color-surface-page',
+      '--mantine-color-surface-panel',
+      '--mantine-color-surface-muted',
+      '--mantine-color-border-subtle',
+      '--mantine-color-hover-strong',
+      '--mantine-color-active',
+      '--mantine-color-selected',
+      '--mantine-color-neutral-0',
+      '--mantine-color-neutral-1',
+      '--mantine-color-neutral-2',
+      '--mantine-color-neutral-3',
+    ];
     darkDiffKeys.forEach((k) => {
       expect(
         expectedDarkKeys.includes(k) || expectedSuffixes.some((suffix) => k.endsWith(suffix))

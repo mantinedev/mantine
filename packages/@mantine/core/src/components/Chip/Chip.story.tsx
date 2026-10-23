@@ -137,7 +137,7 @@ export function States() {
     <div style={{ padding: 40 }}>
       <div data-surface="body">{rows('var(--mantine-color-body)')}</div>
       <div data-surface="demo">
-        {rows('light-dark(var(--mantine-color-gray-0), var(--mantine-color-dark-8))')}
+        {rows('light-dark(var(--mantine-color-gray-0), var(--mantine-color-dark-9))')}
       </div>
     </div>
   );

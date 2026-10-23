@@ -101,7 +101,7 @@ export function DarkScheme() {
   return (
     <div
       data-mantine-color-scheme="dark"
-      style={{ padding: 40, background: 'var(--mantine-color-dark-7)' }}
+      style={{ padding: 40, background: 'var(--mantine-color-dark-8)' }}
     >
       <QRCode value="https://mantine.dev" />
     </div>

@@ -50,11 +50,11 @@ describe('@mantine/core/V10_DEFAULT_COLORS', () => {
     }
   });
 
-  it('dark[8] is near-black (lightness ≤ 0.18)', () => {
+  it('dark[8] is the page shade (lightness ≤ 0.2)', () => {
     const shade = V10_DEFAULT_COLORS.dark[8];
     const match = shade.match(/oklch\(([\d.]+)/);
     expect(match).not.toBeNull();
-    expect(Number(match![1])).toBeLessThanOrEqual(0.18);
+    expect(Number(match![1])).toBeLessThanOrEqual(0.2);
   });
 });
 
@@ -88,7 +88,7 @@ describe('@mantine/core/dark-colors', () => {
   });
 
   it('darkColors follows DARK_LIGHTNESS_RAMP', () => {
-    const ramp = [0.83, 0.74, 0.65, 0.5, 0.4, 0.32, 0.24, 0.2, 0.18, 0.16];
+    const ramp = [0.83, 0.74, 0.65, 0.5, 0.4, 0.32, 0.28, 0.24, 0.2, 0.16];
     for (const [i, expected] of ramp.entries()) {
       const match = darkColors[i].match(/oklch\(([\d.]+)/);
       expect(match).not.toBeNull();
