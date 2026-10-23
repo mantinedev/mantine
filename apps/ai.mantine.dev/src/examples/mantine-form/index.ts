@@ -2,6 +2,9 @@ import type { SkillExample } from '../types';
 import { AccountSettings } from './AccountSettings/AccountSettings';
 import accountSettingsCode from './AccountSettings/code.json';
 import type { OrganizationValues, ProfileValues } from './AccountSettings/types';
+import { AutomationRuleForm } from './AutomationRuleForm/AutomationRuleForm';
+import automationRuleFormCode from './AutomationRuleForm/code.json';
+import type { RuleValues } from './AutomationRuleForm/types';
 import contentEntryFormCode from './ContentEntryForm/code.json';
 import { ContentEntryDemo } from './ContentEntryForm/ContentEntryDemo';
 import type { EntryValues } from './ContentEntryForm/types';
@@ -341,6 +344,116 @@ Write tests for the component.`,
       filler.setValues<OrganizationValues>('organization', {
         website: 'https://acme.dev',
         taxId: 'GB987654321',
+      });
+    },
+  },
+  {
+    id: 'automation-rule-form',
+    title: 'Automation rule builder',
+    description: 'Trigger, nested condition groups with type-dependent inputs and sortable actions',
+    prompt: `Build a form for creating an automation rule in a project management app. A rule has a trigger ("when"), conditions ("if") and actions ("then").
+
+Rule:
+
+- name (required), description (optional), enabled switch (on by default)
+
+Trigger:
+
+- event (select: issue created, issue updated, comment added, due date approaching, status changed); "status changed" reveals optional "from status" and "to status" selects
+
+Conditions:
+
+- a root group of conditions combined with AND or OR (toggle on the group); a group can contain nested groups up to two levels deep; each group has "add condition", "add group" and, for nested groups, "remove group"
+- a condition row is field + operator + value: field (select: title, description, status, priority, assignee, labels, story points, due date, created at, is blocked); the operator list depends on the field type (text: contains, does not contain, equals, is empty; number: equals, not equals, greater than, less than, between; date: before, after, within the next N days, is empty; option: is any of, is none of; boolean: is true, is false); the value input depends on field type and operator (text input, number input or two inputs for between, date picker or number of days, multi-select of the field's options, nothing for is empty / is true / is false)
+- changing the field resets the operator and the value; changing the operator resets the value when its shape changes
+- validation: the root group has at least one condition; every condition has an operator and a value when the operator needs one; between needs min lower than max; within the next N days needs 1 to 365; a nested group without conditions is an error
+
+Actions:
+
+- an ordered list of 1 to 5 actions, reorderable by drag and drop and by keyboard; action type (select: assign to member, set priority, add labels, move to status, post comment, send Slack message, set due date); each type has its own parameters (member select; priority select; labels multi-select; status select; comment textarea that supports {{issue.title}} and {{issue.assignee}} placeholders; Slack channel select and message; number of days from now)
+- an action type can appear only once, except add labels and post comment
+
+Behavior:
+
+- a plain-language summary of the rule, updated live ("When an issue is created, if priority is High and labels include bug, then assign to Ada Lovelace and post a comment")
+- "Test rule" opens a modal with a hard-coded sample issue shown as read-only values; it evaluates the conditions against the sample and lists each condition with matched / not matched and the actions that would run
+- submit validates everything and focuses the first invalid field; on submit show a short notification (rule name and trigger) and display the rule JSON under the form; keep the form as is
+
+Write tests for the component.`,
+    component: AutomationRuleForm,
+    code: automationRuleFormCode as SkillExample['code'],
+    fill: async (filler) => {
+      const condition = {
+        text: '',
+        number: '',
+        min: '',
+        max: '',
+        date: null,
+        days: '',
+        options: [] as string[],
+      };
+      const action = {
+        memberId: null,
+        priority: null,
+        labels: [] as string[],
+        status: null,
+        comment: '',
+        slackChannel: null,
+        slackMessage: '',
+        dueInDays: '',
+      };
+      filler.setValues<RuleValues>('automation-rule', {
+        name: 'Escalate urgent bugs',
+        description: 'Routes high-priority bugs to the on-call engineer.',
+        enabled: true,
+        trigger: { event: 'issue_created', fromStatus: null, toStatus: null },
+        root: {
+          id: 'root',
+          combinator: 'and',
+          conditions: [
+            {
+              ...condition,
+              id: 'c1',
+              field: 'priority',
+              operator: 'is_any_of',
+              options: ['high', 'urgent'],
+            },
+            { ...condition, id: 'c2', field: 'labels', operator: 'is_any_of', options: ['bug'] },
+          ],
+          groups: [
+            {
+              id: 'g1',
+              combinator: 'or',
+              conditions: [
+                {
+                  ...condition,
+                  id: 'c3',
+                  field: 'storyPoints',
+                  operator: 'greater_than',
+                  number: 5,
+                },
+                { ...condition, id: 'c4', field: 'isBlocked', operator: 'is_true' },
+              ],
+              groups: [],
+            },
+          ],
+        },
+        actions: [
+          { ...action, id: 'a1', type: 'assign_member', memberId: 'ada' },
+          {
+            ...action,
+            id: 'a2',
+            type: 'post_comment',
+            comment: 'Escalated: {{issue.title}} is assigned to {{issue.assignee}}.',
+          },
+          {
+            ...action,
+            id: 'a3',
+            type: 'send_slack_message',
+            slackChannel: 'alerts',
+            slackMessage: 'Urgent bug reported',
+          },
+        ],
       });
     },
   },

@@ -1,0 +1,10 @@
+.row {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--mantine-spacing-xs);
+  align-items: start;
+
+  @media (min-width: $mantine-breakpoint-sm) {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) minmax(0, 1.4fr) auto;
+  }
+}

@@ -1,0 +1,19 @@
+.list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.item {
+  padding-block: var(--mantine-spacing-xs);
+  border-bottom: 1px solid var(--mantine-color-default-border);
+}
+
+.nested {
+  padding-inline-start: var(--mantine-spacing-md);
+  border-inline-start: 2px solid var(--mantine-color-default-border);
+}
+
+.title {
+  font-weight: var(--mantine-font-weight-medium);
+}

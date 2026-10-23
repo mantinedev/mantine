@@ -1,0 +1,16 @@
+.row {
+  position: relative;
+  background-color: var(--mantine-color-body);
+
+  &[data-dragging] {
+    z-index: 1;
+  }
+}
+
+.handle {
+  cursor: grab;
+}
+
+.title {
+  font-weight: var(--mantine-font-weight-medium);
+}
