@@ -6,28 +6,27 @@ lighter per level in dark mode and white in light mode. `Paper` is deprecated, u
 
 - A card on the page: `<Surface withBorder p="lg">`. Nesting one `Surface` inside
   another steps the level up automatically; never jump two levels.
-- **Repeated rows that contain inputs** (positions, invoice lines, invitees) are not `Surface`
-  blocks: the inputs' default background is the level-1 color and they blend into the block in
-  dark mode. Each row is a plain block with a header row (small medium-weight title
-  `<Text size="sm" className={classes.title}>Position 1</Text>` on the left, the remove
-  `ActionIcon` on the right) above the inputs; rows are separated by `Divider` or the form gap.
-  `Surface` around any part of a form only when the user asks for cards.
+- **Repeated rows that contain inputs** (positions, invoice lines, invitees) are either
+  `Surface withBorder p="md"` cards or plain blocks; both keep the inputs readable because inputs
+  use `--mantine-color-surface-input`, the page color in dark mode. A plain row has a header row
+  (small medium-weight title `<Text size="sm" className={classes.title}>Position 1</Text>` on the
+  left, the remove `ActionIcon` on the right) above the inputs; rows are separated by `Divider`
+  or the form gap. Use one style for all rows of a form.
 - Single-line read-only rows (a field of a model, a member, a file) are `Surface withBorder p="sm"` with
   one `Group gap="sm" wrap="nowrap"`: drag handle, category `ThemeIcon`, two-line texts
   (`flex: 1; min-width: 0` through a class), then the actions in `Group gap={6}`. Everything in
   the row is the same `size` (`lg`). `radius="md"` is the default, leave it out.
 - Read-only summaries (review steps, receipts) are `Surface withBorder` sections with a title row
   (`Title order={4}` + an `Edit` anchor) and label/value pairs in small text.
-- **Forms are not wrapped in a `Surface`.** Inputs use `--mantine-color-default` as background,
-  which is the level-1 panel color in dark mode: on a `Surface` card the inputs blend into the card
-  and lose their edges. A form sits on the page background with its own spacing; a card around it
-  is only for a page that shows other content next to the form, and then the inputs must keep
-  contrast (level 0 surface or `variant="filled"` inputs). Review summaries and list rows inside a
-  form are still `Surface withBorder` blocks — they hold text, not inputs.
+- **A form sits on the page background by default.** A `Surface` card around it is a layout
+  choice for a page that shows other content next to the form, or when the user asks for cards.
+  Inputs, checkboxes, radios, `Dropzone` and `RichTextEditor` use `--mantine-color-surface-input`
+  (white in light mode, the page color in dark mode), so they stay one shade below any `Surface`
+  level and never blend into the card.
 - Do not set a background color on `Surface` by hand; pick the level with nesting or `level`.
 
 ```tsx
-// A repeated row with inputs: no Surface, a header row and the inputs
+// A repeated row with inputs as a plain block: a header row and the inputs
 <div>
   <Group justify="space-between" mb="sm">
     <Text size="sm" className={classes.title}>Position {index + 1}</Text>

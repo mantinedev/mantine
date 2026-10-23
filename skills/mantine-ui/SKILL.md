@@ -119,17 +119,18 @@ component you are about to use, then write the UI.
   mapping. A plain `TextInput` is for free text only.
 - **Backgrounds step by one shade.** A card on a page is one `Surface` level up; nested
   containers go one more level, never two. Never place a bordered or filled element so that its
-  label or legend sits on two different backgrounds. **Forms are not wrapped in a `Surface`**:
-  inputs share the panel color in dark mode and blend into the card, see
-  [surface](references/components/surface.md).
+  label or legend sits on two different backgrounds. Inputs keep their own background
+  (`--mantine-color-surface-input`, the page color in dark mode) and stay visible on every
+  `Surface` level, see [surface](references/components/surface.md).
 - **Drop zones are tall.** A `Dropzone` is a target people drop files on: `mih={140}` (single
   file) or more, icon above two lines of text, never a one-line strip, see
   [dropzone](references/components/dropzone.md).
-- **No `Surface` inside forms unless asked.** Inputs use the level-1 background and blend into a
-  `Surface` in dark mode. Repeated rows with inputs (positions, line items, invitees) are plain
-  blocks: a header row (small medium-weight title, remove action) above the inputs, rows
-  separated by `Divider` or the form gap. `Surface` rows are for read-only items (a model's
-  field, a member, a file). See [surface](references/components/surface.md).
+- **`Surface` inside forms is a layout choice.** A form sits on the page by default; a
+  `Surface withBorder` card around a group of fields or a repeated row (positions, line items,
+  invitees) is used when the page shows other content next to the form or the user asks for
+  cards. Rows without a card are plain blocks: a header row (small medium-weight title, remove
+  action) above the inputs, rows separated by `Divider` or the form gap. See
+  [surface](references/components/surface.md).
 - **Category icons** (field types, statuses, kinds) are `ThemeIcon variant="default"` with the
   icon colored by a theme color per category, see [theme-icon](references/components/theme-icon.md).
 - **Icons** come from the icon library already in the project (`@tabler/icons-react` or

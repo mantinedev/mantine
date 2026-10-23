@@ -545,6 +545,7 @@ The project CSS goes through `postcss-preset-mantine`, which adds:
 Semantic variables follow the color scheme by themselves, prefer them to `gray-N` / `dark-N` pairs:
 `--mantine-color-surface-page` (page, modals and dropdowns, also `--mantine-color-body`),
 `--mantine-color-surface-panel` and `--mantine-color-surface-panel-2` (cards, nested cards),
+`--mantine-color-surface-input` (inputs and other editable fields),
 `--mantine-color-surface-sunken`, `--mantine-color-surface-muted` (code), `--mantine-color-border`,
 `--mantine-color-border-subtle`, `--mantine-color-border-strong`, `--mantine-color-hover`,
 `--mantine-color-active`, `--mantine-color-selected`, `--mantine-color-track`, `--mantine-color-text`,
