@@ -162,13 +162,7 @@
   &:where([data-drop-target]) {
     background-image: none;
 
-    @mixin where-light {
-      background-color: var(--mantine-color-blue-1);
-    }
-
-    @mixin where-dark {
-      background-color: var(--mantine-color-dark-5);
-    }
+    background-color: var(--mantine-primary-color-light);
 
     &::before {
       content: '';
