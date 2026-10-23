@@ -245,6 +245,7 @@ Key role variables and their defaults:
     [<Code>--mantine-color-surface-panel-2</Code>, <Code>white</Code>, <Code>dark-5</Code>],
     [<Code>--mantine-color-surface-sunken</Code>, <Code>gray-1</Code>, <Code>dark-9</Code>],
     [<Code>--mantine-color-surface-muted</Code>, <Code>gray-0</Code>, <Code>dark-5</Code>],
+    [<Code>--mantine-color-surface-input</Code>, <Code>white</Code>, <Code>dark-7</Code>],
     [<Code>--mantine-color-focus-ring</Code>, <Code>blue-6</Code>, <Code>blue-5</Code>],
   ]}
 />
@@ -387,8 +388,12 @@ const theme = createTheme({
 });
 ```
 
-Each scheme (`light`/`dark`) accepts `page`, `panel`, `panel2`, `sunken`, and `muted` keys, matching
-the five surface tokens documented above.
+Each scheme (`light`/`dark`) accepts `page`, `panel`, `panel2`, `sunken`, `muted` and `input` keys,
+matching the six surface tokens documented above.
+
+`--mantine-color-surface-input` is the background of inputs, checkboxes, radios, `Dropzone` and
+`RichTextEditor`. It is white in light mode and the page color in dark mode, so fields read as
+sunken on every `Surface` level instead of blending into a card.
 
 `--mantine-color-surface-muted` is the background of code and inset content – `Code`, `Kbd`,
 `CodeHighlight`, `JsonViewer`, and `Typography` `pre`/`code`/`kbd`. It is one light step off the

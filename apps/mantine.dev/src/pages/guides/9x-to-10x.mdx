@@ -118,6 +118,21 @@ test the application in dark color scheme and adjust them. Dropdowns, code eleme
 Focus rings now use the `--mantine-color-focus-ring` variable instead of the primary filled color.
 If you override the focus ring color, override this variable.
 
+Inputs, checkboxes, radios, `Dropzone` and `RichTextEditor` use the page color (`dark-7`) as background
+in dark color scheme instead of `dark-6`. To keep the 9.x color, set the `input` surface:
+
+```tsx
+import { createTheme } from '@mantine/core';
+
+const theme = createTheme({
+  surfaces: {
+    dark: {
+      input: 'var(--mantine-color-dark-6)',
+    },
+  },
+});
+```
+
 ### New semantic color variables
 
 Components now use semantic variables such as `--mantine-color-border` instead of `gray-N` and
