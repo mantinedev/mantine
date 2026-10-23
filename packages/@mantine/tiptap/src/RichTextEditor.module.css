@@ -220,7 +220,7 @@
     border: 1px solid var(--rte-details-border-color);
     border-radius: var(--mantine-radius-default);
     --rte-details-border-color: var(--mantine-color-border);
-    --rte-details-button-hover: var(--mantine-color-hover-strong);
+    --rte-details-button-hover: var(--mantine-color-hover);
   }
 
   & :global([data-type='details'] > button) {
@@ -365,7 +365,7 @@
       }
 
       &:where([data-variant='subtle']) {
-        background-color: var(--mantine-color-hover-strong);
+        background-color: var(--mantine-color-hover);
       }
     }
   }
