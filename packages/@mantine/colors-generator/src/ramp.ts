@@ -11,7 +11,7 @@ export const BRIGHT_LIGHTNESS_RAMP = [
  * Used exclusively by the `dark` palette; `gray` uses `STANDARD_LIGHTNESS_RAMP`.
  */
 export const DARK_LIGHTNESS_RAMP = [
-  0.83, 0.74, 0.65, 0.5, 0.4, 0.32, 0.24, 0.2, 0.18, 0.16,
+  0.83, 0.74, 0.65, 0.5, 0.4, 0.32, 0.28, 0.24, 0.2, 0.16,
 ] as const;
 
 /** Back-compat: existing imports use LIGHTNESS_RAMP (the cool/standard ramp). */
