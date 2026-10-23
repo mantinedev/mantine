@@ -1,4 +1,4 @@
-import { useRef } from 'react';
+import { useEffect, useRef } from 'react';
 import { CloseButton, Input, InputProps, InputWrapperContext } from '@mantine/core';
 import { useMergedRef } from '@mantine/hooks';
 import { useEmojiPickerContext } from './EmojiPicker.context';
@@ -39,6 +39,12 @@ export function EmojiPickerSearch({
   const localRef = useRef<HTMLInputElement>(null);
   const mergedRef = useMergedRef(localRef, inputRef);
 
+  useEffect(() => {
+    if (autoFocus) {
+      localRef.current?.focus({ preventScroll: true });
+    }
+  }, []);
+
   const handleClear = () => {
     onQueryChange('');
     localRef.current?.focus();
@@ -58,7 +64,6 @@ export function EmojiPickerSearch({
           aria-label={ctx.labels.search}
           aria-controls={controls}
           aria-activedescendant={activeDescendant}
-          autoFocus={autoFocus}
           onKeyDown={onKeyDown}
           rightSectionPointerEvents="all"
           rightSection={

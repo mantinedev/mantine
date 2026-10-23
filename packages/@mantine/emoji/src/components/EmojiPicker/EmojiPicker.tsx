@@ -1,4 +1,4 @@
-import { useCallback, useId, useMemo, useRef, useState } from 'react';
+import { useCallback, useEffect, useId, useMemo, useRef, useState } from 'react';
 import {
   Box,
   BoxProps,
@@ -312,9 +312,14 @@ export const EmojiPicker = factory<EmojiPickerFactory>((_props) => {
     [getStyles, mergedLabels, size]
   );
 
-  const flattenedItems = useMemo<FlattenedRowItem[]>(() => {
-    if (isSearching) {
-      return flattenEmojiData(
+  const categoryItems = useMemo<FlattenedRowItem[]>(
+    () => flattenEmojiData(filteredData, cols, categoryLabels),
+    [filteredData, cols, categoryLabels]
+  );
+
+  const searchItems = useMemo<FlattenedRowItem[]>(
+    () =>
+      flattenEmojiData(
         {
           emojis: filteredData.emojis,
           categories: [
@@ -326,20 +331,21 @@ export const EmojiPicker = factory<EmojiPickerFactory>((_props) => {
           ],
         },
         cols
-      );
-    }
-    return flattenEmojiData(filteredData, cols, categoryLabels);
-  }, [filteredData, cols, categoryLabels, isSearching, results, mergedLabels.searchResults]);
+      ),
+    [filteredData.emojis, cols, results, mergedLabels.searchResults]
+  );
+
+  const flattenedItems = isSearching ? searchItems : categoryItems;
 
   const navCategories = useMemo(
     () =>
-      flattenedItems.reduce<EmojiPickerNavCategory[]>((acc, item) => {
+      categoryItems.reduce<EmojiPickerNavCategory[]>((acc, item) => {
         if (item.type === 'header') {
           acc.push({ id: item.categoryId, label: item.label });
         }
         return acc;
       }, []),
-    [flattenedItems]
+    [categoryItems]
   );
 
   const scrollToItem = useCallback((itemIndex: number) => {
@@ -407,7 +413,7 @@ export const EmojiPicker = factory<EmojiPickerFactory>((_props) => {
     [model, setPointerIndex, handleEmojiSelect, skinTone]
   );
 
-  const handleCategoryClick = useCallback(
+  const scrollToCategory = useCallback(
     (categoryId: string) => {
       const itemIndex = flattenedItems.findIndex(
         (item) => item.type === 'header' && item.categoryId === categoryId
@@ -419,6 +425,28 @@ export const EmojiPicker = factory<EmojiPickerFactory>((_props) => {
     },
     [flattenedItems, model, setAnchorIndex]
   );
+
+  const pendingCategoryRef = useRef<string | null>(null);
+
+  const handleCategoryClick = useCallback(
+    (categoryId: string) => {
+      if (isSearching) {
+        pendingCategoryRef.current = categoryId;
+        setQuery('');
+        return;
+      }
+      scrollToCategory(categoryId);
+    },
+    [isSearching, setQuery, scrollToCategory]
+  );
+
+  useEffect(() => {
+    if (!isSearching && pendingCategoryRef.current !== null) {
+      const categoryId = pendingCategoryRef.current;
+      pendingCategoryRef.current = null;
+      scrollToCategory(categoryId);
+    }
+  }, [isSearching, scrollToCategory]);
 
   return (
     <EmojiPickerProvider value={ctxValue}>
@@ -437,7 +465,7 @@ export const EmojiPicker = factory<EmojiPickerFactory>((_props) => {
           />
         )}
 
-        {withCategoryNav && !isSearching && (
+        {withCategoryNav && (
           <EmojiPickerCategoryNav
             categories={navCategories}
             onCategoryClick={handleCategoryClick}

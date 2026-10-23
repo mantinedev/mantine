@@ -560,6 +560,7 @@ export const PhoneInput = factory<PhoneInputFactory>((_props) => {
               combobox.resetSelectedOption();
             }}
             placeholder={searchPlaceholder}
+            autoComplete="search-countries"
           />
         )}
 

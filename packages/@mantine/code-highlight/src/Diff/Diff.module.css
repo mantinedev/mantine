@@ -76,7 +76,7 @@
 
 .addedLine {
   @mixin where-light {
-    background-color: var(--diff-add-color, var(--mantine-color-teal-0));
+    background-color: var(--diff-add-color, rgba(8, 127, 91, 0.08));
   }
 
   @mixin where-dark {
@@ -86,7 +86,7 @@
 
 .removedLine {
   @mixin where-light {
-    background-color: var(--diff-remove-color, var(--mantine-color-red-0));
+    background-color: var(--diff-remove-color, rgba(201, 42, 42, 0.07));
   }
 
   @mixin where-dark {
@@ -98,7 +98,7 @@
   color: var(--mantine-color-bright);
 
   @mixin where-light {
-    background-color: var(--diff-add-highlight-color, var(--mantine-color-teal-2));
+    background-color: var(--diff-add-highlight-color, rgba(8, 127, 91, 0.22));
   }
 
   @mixin where-dark {
@@ -110,7 +110,7 @@
   color: var(--mantine-color-bright);
 
   @mixin where-light {
-    background-color: var(--diff-remove-highlight-color, var(--mantine-color-red-2));
+    background-color: var(--diff-remove-highlight-color, rgba(201, 42, 42, 0.2));
   }
 
   @mixin where-dark {

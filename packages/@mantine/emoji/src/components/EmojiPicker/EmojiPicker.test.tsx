@@ -390,6 +390,32 @@ describe('@mantine/emoji/EmojiPicker', () => {
     expect(mockScrollToIndex).toHaveBeenLastCalledWith(4, { align: 'auto' });
   });
 
+  it('keeps the category nav while searching', async () => {
+    const { container } = render(<EmojiPicker data={boundaryData} columns={3} />);
+    const search = container.querySelector<HTMLInputElement>('[role="searchbox"]')!;
+    await userEvent.type(search, 'b');
+    expect(getNavButtons(container).map((button) => button.title)).toEqual(['People', 'Nature']);
+  });
+
+  it('clears the search and scrolls to the category on category nav click while searching', async () => {
+    mockScrollToIndex.mockClear();
+    const { container, getByLabelText } = render(<EmojiPicker data={boundaryData} columns={3} />);
+    const search = container.querySelector<HTMLInputElement>('[role="searchbox"]')!;
+    await userEvent.type(search, 'b');
+    await userEvent.click(getByLabelText('Nature'));
+    expect(search.value).toBe('');
+    expect(mockScrollToIndex).toHaveBeenLastCalledWith(3, { align: 'start' });
+  });
+
+  it('focuses the search input without scrolling when autoFocus is set', () => {
+    const spy = jest.spyOn(HTMLElement.prototype, 'focus');
+    const { container } = render(<EmojiPicker data={boundaryData} autoFocus />);
+    const search = container.querySelector<HTMLInputElement>('[role="searchbox"]')!;
+    expect(search).toHaveFocus();
+    expect(spy).toHaveBeenCalledWith({ preventScroll: true });
+    spy.mockRestore();
+  });
+
   it('applies category label overrides to category nav buttons', () => {
     const { container } = render(
       <EmojiPicker {...defaultProps} categoryLabels={{ people: 'Custom People' }} />

@@ -27,26 +27,25 @@ All funds are used to improve Mantine and create new features and components.
 
 ## @mantine/emoji package
 
-New `@mantine/emoji` package provides emoji picker components. The package works with
-any emoji data source through adapters — built-in adapters for
-[emoji-mart](https://www.npmjs.com/package/@emoji-mart/data) and
-[emojibase-data](https://www.npmjs.com/package/emojibase-data) are included.
+New `@mantine/emoji` package provides emoji picker components. It works with any emoji
+data source through adapters, [emoji-mart](https://www.npmjs.com/package/@emoji-mart/data)
+and [emojibase-data](https://www.npmjs.com/package/emojibase-data) adapters are included.
 
-### EmojiPicker
+## EmojiPicker
 
 [EmojiPicker](/emoji/emoji-picker) displays a searchable emoji grid with category navigation,
 skin tone selector, and emoji preview.
 
 <Demo data={EmojiPickerDemos.usage} />
 
-### EmojiPickerInput
+## EmojiPickerInput
 
 [EmojiPickerInput](/emoji/emoji-picker-input) is an input with an emoji picker dropdown.
 It supports all standard input features like labels, descriptions, error messages, and sizes.
 
 <Demo data={EmojiPickerInputDemos.usage} />
 
-### EmojiPickerPopover
+## EmojiPickerPopover
 
 [EmojiPickerPopover](/emoji/emoji-picker-popover) renders an emoji picker inside a popover dropdown.
 Use it to build custom emoji picker triggers.
@@ -84,6 +83,8 @@ and `MonthPickerInput`; the value is the first day of the selected quarter in `Y
 
 <Demo data={QuarterPickerDemos.usage} />
 
+<br />
+
 <Demo data={QuarterPickerInputDemos.usage} />
 
 ## WeekPicker and WeekPickerInput components
@@ -94,52 +95,29 @@ the value is the first day of the week according to `firstDayOfWeek` in `YYYY-MM
 
 <Demo data={WeekPickerDemos.usage} />
 
+<br />
+
 <Demo data={WeekPickerInputDemos.usage} />
-
-## Keyboard navigation improvements in @mantine/dates
-
-Keyboard navigation in [DatePicker](/dates/date-picker), [MonthPicker](/dates/month-picker),
-[YearPicker](/dates/year-picker), [QuarterPicker](/dates/quarter-picker), [WeekPicker](/dates/week-picker)
-and the corresponding input components has been reworked:
-
-- Arrow navigation in the dates grid is no longer limited to the current month: visible outside dates
-  can be focused, and when the target date is not displayed, the calendar switches to the previous/next
-  month (year or decade in other pickers) and focuses the target date
-- Presets have a roving tab index: only one preset is in the tab order, `ArrowDown`/`ArrowUp` move focus
-  between presets and `Tab` moves focus to the calendar
-- When the level is changed with the keyboard, focus moves to the label of the new level
-- When the dropdown of `DatePickerInput` and other input components is closed after a keyboard interaction,
-  focus is returned to the input
-- Dropdown start padding is reduced when presets are displayed
 
 ## use-active-element hook
 
-New [use-active-element](/hooks/use-active-element) hook reactively tracks
-`document.activeElement` – the element that currently has focus. It updates as focus moves,
-pierces shadow roots to return the truly-focused element inside web components, and can observe
-DOM removals so the returned value stays in sync when the focused element is unmounted. It is
-useful to build focus-aware UI or to decide whether a global keyboard shortcut should fire:
+New [use-active-element](/hooks/use-active-element) hook tracks the element that currently has focus.
+Use it to build focus-aware UI or to disable global keyboard shortcuts while the user is typing:
 
 <Demo data={UseActiveElementDemos.usage} />
 
 ## use-browser-language hook
 
-New [use-browser-language](/hooks/use-browser-language) hook reactively reads the user's browser
-language preference from `navigator.language` and updates when it changes. It ships with a
-`usePreferredLanguages` sibling hook that returns the full ordered list of preferred languages
-from `navigator.languages`. Both hooks are useful to pick a default locale for formatting or i18n
-fallback without a full internationalization library:
+New [use-browser-language](/hooks/use-browser-language) hook returns the browser language and
+updates when the user changes it. Use it to pick a default locale for formatting or translations:
 
 <Demo data={UseBrowserLanguageDemos.usage} />
 
 ## Mentions component
 
-New [Mentions](/core/mentions) component captures `@`-mentions (and any other trigger) in a textarea.
-Typing a trigger opens a suggestions dropdown; picking a suggestion inserts a structured mention token
-into the value. The value is stored as markup (`@[Display](id)`) that preserves a stable id for each
-mention and round-trips through editing, while the user only ever sees the plain text. It supports
-multiple triggers, async data sources with `AbortSignal` cancellation, caret-anchored or inline
-suggestions and caret-aware mention styling, all with no third-party dependencies:
+New [Mentions](/core/mentions) component is a textarea that opens a suggestions dropdown when
+the user types `@` or any other trigger. Picked mentions are stored in the value as `@[Display](id)`
+markup, the user sees only the display text:
 
 <Demo data={MentionsDemos.usage} />
 
@@ -151,4 +129,5 @@ suggestions and caret-aware mention styling, all with no third-party dependencie
 - [ScrollArea](/core/scroll-area/#offset-size) supports `--scrollarea-offset-size` CSS variable to change the gap reserved by `offsetScrollbars`
 - [Popover](/core/popover/#click-outside) and components based on it support `clickOutsideCapture` prop to close the dropdown when the click target stops event propagation
 - `getUploadImageExtension` in [@mantine/tiptap](/x/tiptap/#pasted-html-content) uploads images embedded in pasted HTML, use `shouldUploadPastedImage` option to control which images are uploaded
+- Keyboard navigation in [DatePicker](/dates/date-picker) and other `@mantine/dates` pickers has been improved: arrow keys move focus across months and focus returns to the input when the dropdown closes
 - `@mantine/form` exports `UseContextForm` type
