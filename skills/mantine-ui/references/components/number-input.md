@@ -39,8 +39,9 @@ input's height.
   own to collide with the input's focus ring. The pattern is the Currency input on ui.mantine.dev.
 - The number and the unit are two form fields (`interval`, `frequency`); the composite is one
   component in its own file (`IntervalInput.tsx`) that takes both `getInputProps` results.
-- A select shows the plural unit always (`weeks`); the singular / plural switch is only for
-  units rendered as text.
+- The unit follows the number: `1 week`, `2 weeks`. Build the select `data` from the current
+  value (`form.useWatchValue('interval')`) with a singular and a plural label per unit, the
+  `value` stays the same so the selection survives the switch.
 - "Off" states (`Does not repeat`) are a `Switch` or `Checkbox` above the composite that hides
   it, not a sixth option in the unit select and not a radio group that repeats the units.
 

@@ -68,6 +68,24 @@ component you are about to use, then write the UI.
   weeks`), size + `px`: `NumberInput` with a `NativeSelect` in the `rightSection`, never a
   number field beside a radio group or a second select. See
   [number-input](references/components/number-input.md#a-value-and-its-unit-are-one-input).
+- **One unsaved-changes bar per page.** Several independent forms share one `ActionBar` at the
+  bottom (`opened` while any form is dirty, Cancel resets them all, Save submits them all);
+  sections have no Save/Cancel rows of their own. See
+  [action-bar](references/components/action-bar.md).
+- **Section headers go above the fields**, full width, never in a side column. See
+  [text](references/components/text.md#section-headers).
+- **`Fieldset` always has its border.** `variant="unstyled"` is not used; inside a `Surface`
+  use a titled `Surface` instead. See [fieldset](references/components/fieldset.md).
+- **A field and its action share a line** on desktop (`Group align="flex-end"`, field grows,
+  button keeps its width). See [inputs](references/components/inputs.md#a-field-and-its-action).
+- **Buttons never shrink** in a row with text: the text block flexes, the button keeps its width.
+- **Growing fields go last.** `Textarea autosize`, rich text, dropzones and code inputs are the
+  last input of their section; short inputs never sit below them. See
+  [textarea](references/components/textarea.md#position-in-the-form).
+- **Exiting elements keep their content.** A closing `ActionBar`, `Modal`, `Drawer` or
+  notification renders a snapshot of its last open content until the transition ends; state is
+  cleared in `onExitTransitionEnd`, never in `onClose`. See
+  [transitions](references/components/transitions.md).
 - **Custom inputs look like inputs.** A value picked in a modal or a popover is displayed in an
   `Input`-based component, never as a `Button` with chips under it: `PillsInput` with pills for
   several values (like `MultiSelect`), `InputBase readOnly pointer` with the value as text for one
@@ -105,7 +123,9 @@ component you are about to use, then write the UI.
   buttons.
 - **Styles live in CSS modules, one per component.** A `style={{ … }}` attribute, more than two
   style props on one element, or layout props on wrappers (`style={{ flex: 1, minWidth: 0 }}`)
-  mean the element needs a class in `<Component>.module.css` next to that component. One
+  mean the element needs a class in `<Component>.module.css`. A component with a CSS module (or
+  a test file) lives in its own folder, `TransferOwnership/TransferOwnership.tsx` next to
+  `TransferOwnership.module.css`, not as two files in a flat list. One
   stylesheet shared by several components is not used. Style props are for one-off spacing
   (`mt="md"`, `gap="sm"`), not for layout.
 - **No props that repeat the default.** `radius="md"` on `ThemeIcon`, `Button`, `Surface` and
@@ -132,9 +152,11 @@ component you are about to use, then write the UI.
 - [action-icon](references/components/action-icon.md) — row actions, drag handles, destructive icons
 - [theme-icon](references/components/theme-icon.md) — category icons with colors
 - [badge](references/components/badge.md) — when a badge is right, variants
+- [action-bar](references/components/action-bar.md) — one unsaved-changes bar for a page, selection actions
 - [alert](references/components/alert.md) — error summary for long forms, server errors
 - [surface](references/components/surface.md) — levels, borders, cards, list rows
 - [fieldset](references/components/fieldset.md) — when a legend works and when it does not
 - [dropzone](references/components/dropzone.md) — size, texts, accepted files, previews
-- [modal](references/components/modal.md) — `useModal`, forms in modals, one modal for many items
+- [modal](references/components/modal.md) — `useModal`, forms in modals, one modal for many items, closing
+- [transitions](references/components/transitions.md) — exiting elements keep their content
 - [text](references/components/text.md) — hierarchy, secondary text, values, required markers

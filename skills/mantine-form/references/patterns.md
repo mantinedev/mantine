@@ -559,7 +559,12 @@ Call it in the component that renders the total (a table component), not in the 
 
 Id: `SameAsBilling`. Copy the group when the checkbox is checked and keep it in sync while it
 stays checked. `cascadeUpdates: true` notifies watchers of `shipping.city` when the whole
-`shipping` object is set. `enhanceGetInputProps` disables the copied inputs:
+`shipping` object is set. `enhanceGetInputProps` disables the copied inputs.
+
+The toggle is reversible: remember the values it replaces (`const replaced = useRef<Address |
+null>(null)`) and restore them when it is unchecked, so checking and unchecking leaves the form
+exactly as it was and `isDirty()` is false again. Keeping the copied values after unchecking turns
+a "look, same address" click into an unsaved change the user never made:
 
 ```tsx
 const form = useForm<CheckoutValues>({

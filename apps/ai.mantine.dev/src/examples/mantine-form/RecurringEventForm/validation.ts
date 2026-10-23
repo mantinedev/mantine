@@ -23,11 +23,11 @@ export function getDefaultTimezone() {
   return TIMEZONES.some((timezone) => timezone.value === browserTimezone) ? browserTimezone : 'UTC';
 }
 
-export const FREQUENCY_UNITS: { value: Frequency; label: string }[] = [
-  { value: 'daily', label: 'days' },
-  { value: 'weekly', label: 'weeks' },
-  { value: 'monthly', label: 'months' },
-  { value: 'yearly', label: 'years' },
+export const FREQUENCY_UNITS: { value: Frequency; singular: string; plural: string }[] = [
+  { value: 'daily', singular: 'day', plural: 'days' },
+  { value: 'weekly', singular: 'week', plural: 'weeks' },
+  { value: 'monthly', singular: 'month', plural: 'months' },
+  { value: 'yearly', singular: 'year', plural: 'years' },
 ];
 
 export const WEEKDAY_OPTIONS: { value: Weekday; label: string }[] = [

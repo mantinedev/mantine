@@ -177,3 +177,26 @@ attendees) shows what was collected inside the input, as compactly as the input 
   {...form.getInputProps('exceptions')}
 />
 ```
+
+## A field and its action
+
+An action that uses the value of one field (`New owner` + `Transfer ownership`, `Invite email` +
+`Send invite`, `Coupon` + `Apply`) sits on the same line as the field on desktop: the field grows,
+the button keeps its width and aligns with the input, not with the label.
+
+```tsx
+<Group align="flex-end" wrap="nowrap">
+  <Select label="New owner" placeholder="Pick a member" data={MEMBERS} className={classes.field} {...form.getInputProps('memberId')} />
+  <Button type="submit" variant="default">Transfer ownership</Button>
+</Group>
+```
+
+```css
+.field {
+  flex: 1;
+  min-width: 0;
+}
+```
+
+Below `sm` the pair stacks (`SimpleGrid cols={{ base: 1, sm: 2 }}` or a `flex-direction: column`
+media query); the button then spans the field's width.

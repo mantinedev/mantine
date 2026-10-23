@@ -23,3 +23,11 @@
   }
 />
 ```
+
+## Position in the form
+
+A growing field (`Textarea autosize`, a rich text editor, a dropzone, a code input) is the last
+input of its section or form. Fields placed under it move every time it grows, and a tall field
+between two rows of short inputs breaks the rhythm of the section (`Bio` between `Email` and
+`Language` pushes two selects to the bottom of the Profile section). When a section has two
+growing fields, they are the last two.

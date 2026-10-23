@@ -126,7 +126,11 @@ file per variant (`options/TextOptions.tsx`, `options/SelectOptions.tsx`), not o
 constants live in `validation.ts`. Name the form type after the values, not after the component:
 `type ProfileFormType = UseFormReturnType<ProfileValues>` when the component is `ProfileForm`. A
 file over about 150 lines is a sign to split further. Each component that needs styles has its
-own `<Name>.module.css` next to it; no shared stylesheet for the whole form.
+own `<Name>.module.css`; no shared stylesheet for the whole form. A component that has a CSS
+module or a test file gets its own folder (`SaveBar/SaveBar.tsx`, `SaveBar/SaveBar.module.css`,
+`SaveBar/SaveBar.test.tsx`); single-file components and the plain modules (`types.ts`,
+`validation.ts`, `api.ts`) stay at the root of the feature folder. Never a flat list where
+`X.tsx` and `X.module.css` sit between twenty other files.
 See [splitting a form into components](references/patterns.md#splitting-a-form-into-components).
 
 A form built from a schema dispatches per field type through an object keyed by the type, with one

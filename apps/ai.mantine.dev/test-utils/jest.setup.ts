@@ -46,3 +46,7 @@ document.elementFromPoint = () => null;
 Range.prototype.getClientRects = () => [] as unknown as DOMRectList;
 Range.prototype.getBoundingClientRect = () => emptyRect as DOMRect;
 Element.prototype.getClientRects = () => [] as unknown as DOMRectList;
+
+if (typeof globalThis.structuredClone !== 'function') {
+  globalThis.structuredClone = <T>(value: T): T => JSON.parse(JSON.stringify(value));
+}

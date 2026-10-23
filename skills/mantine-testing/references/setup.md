@@ -81,6 +81,10 @@ if (!document.fonts) {
   `Element.prototype.getClientRects = () => []` when the component renders an editor.
 - `URL.createObjectURL` / `revokeObjectURL` are stubbed when a component previews files
   (Node's implementation rejects jsdom `File` objects).
+- `structuredClone` does not exist in jest's jsdom environment (it does in vitest). Code that
+  clones fixtures with it fails silently inside a promise and the component never finishes
+  loading: add `globalThis.structuredClone ??= (value) => JSON.parse(JSON.stringify(value))` to
+  the jest setup, or clone with the spread operator in the component.
 - Never put these stubs inside a test file: they belong to the setup file, once.
 
 ## Runners

@@ -1,0 +1,20 @@
+.table {
+  max-width: 560px;
+}
+
+.event {
+  font-weight: var(--mantine-font-weight-medium);
+}
+
+.channel {
+  width: 88px;
+  text-align: center;
+}
+
+.checkbox {
+  display: inline-flex;
+}
+
+.digestDay {
+  max-width: 280px;
+}

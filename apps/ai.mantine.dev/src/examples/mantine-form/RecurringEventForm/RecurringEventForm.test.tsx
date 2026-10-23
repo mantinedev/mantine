@@ -118,6 +118,16 @@ describe('event fields', () => {
 });
 
 describe('recurrence fields', () => {
+  it('shows the unit in singular for 1 and plural for other intervals', async () => {
+    const { user } = renderForm();
+    await user.click(screen.getByRole('switch', { name: 'Repeat' }));
+    const frequency = screen.getByRole('combobox', { name: 'Frequency' });
+    expect(within(frequency).getByRole('option', { name: 'week' })).toBeInTheDocument();
+    await user.clear(screen.getByRole('textbox', { name: 'Repeat every' }));
+    await user.type(screen.getByRole('textbox', { name: 'Repeat every' }), '2');
+    expect(within(frequency).getByRole('option', { name: 'weeks' })).toBeInTheDocument();
+  });
+
   it('shows no recurrence fields when the event does not repeat', () => {
     renderForm();
     expect(screen.queryByRole('textbox', { name: 'Repeat every' })).not.toBeInTheDocument();
@@ -148,7 +158,7 @@ describe('recurrence fields', () => {
   it('hides the weekdays for other repeat options', async () => {
     const { user } = renderForm();
     await repeatWeekly(user);
-    await chooseFrequency(user, 'days');
+    await chooseFrequency(user, 'daily');
     expect(screen.queryByRole('checkbox', { name: 'Mon' })).not.toBeInTheDocument();
   });
 
@@ -156,7 +166,7 @@ describe('recurrence fields', () => {
     const { user } = renderForm();
     await fillEvent(user);
     await repeatWeekly(user);
-    await chooseFrequency(user, 'months');
+    await chooseFrequency(user, 'monthly');
     expect(screen.getByRole('radio', { name: 'On day 21' })).toBeChecked();
     expect(screen.getByRole('radio', { name: 'On the third Wednesday' })).toBeInTheDocument();
   });
@@ -214,7 +224,7 @@ describe('occurrences preview', () => {
     await repeatWeekly(user);
     await user.clear(screen.getByRole('textbox', { name: 'Repeat every' }));
     await user.type(screen.getByRole('textbox', { name: 'Repeat every' }), '3');
-    await chooseFrequency(user, 'days');
+    await chooseFrequency(user, 'daily');
     expect(previewItems().slice(0, 3)).toEqual([
       'Wed, Oct 21, 2026, 10:30',
       'Sat, Oct 24, 2026, 10:30',
@@ -226,7 +236,7 @@ describe('occurrences preview', () => {
     const { user } = renderForm();
     await fillEvent(user);
     await repeatWeekly(user);
-    await chooseFrequency(user, 'months');
+    await chooseFrequency(user, 'monthly');
     await user.click(screen.getByRole('radio', { name: 'On the third Wednesday' }));
     expect(previewItems()).toEqual([
       'Wed, Oct 21, 2026, 10:30',
@@ -483,7 +493,7 @@ describe('submit', () => {
     const { user, onSubmit } = renderForm();
     await fillEvent(user);
     await repeatWeekly(user);
-    await chooseFrequency(user, 'months');
+    await chooseFrequency(user, 'monthly');
     await user.click(screen.getByRole('radio', { name: 'On the third Wednesday' }));
     await user.click(screen.getByRole('radio', { name: 'On a date' }));
     await typeDate(user, 'End date', '31122026');

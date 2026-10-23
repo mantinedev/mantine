@@ -20,6 +20,11 @@
   the primary button, less prominent. The footer holds only actions on the whole form.
 - Label is a verb in sentence case: `Submit application`, `Send invitations`, not `SUBMIT` or
   `Ok`.
+- **Buttons never shrink.** In a row with text (`Delete organization` with its explanation on
+  the left, the button on the right) the text block takes the remaining space (`flex: 1;
+  min-width: 0`) and the button keeps its intrinsic width: `Group wrap="nowrap"
+  preventGrowOverflow={false}` or a class with `flex-shrink: 0` on the button. A button whose
+  label is clipped or wraps mid-word is a layout bug.
 
 ```tsx
 <Group justify="space-between" mt="xl">

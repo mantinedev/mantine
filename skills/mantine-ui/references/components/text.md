@@ -50,3 +50,11 @@ Required is shown with a red asterisk after the label, the same mark inputs use:
 a span: `{field.label}{field.required && <span className={classes.required}>*</span>}` with
 `.required { color: var(--mantine-color-error); margin-inline-start: 4px; }`. Never a `Required`
 badge or the word "required" in the text.
+
+## Section headers
+
+A page made of sections (settings, a long form) puts each section's title and one-line description
+above its fields, full width: `Title order={3} c="var(--mantine-color-bright)"` then `Text
+size="sm"`, then the fields. No side column for the header: a left column takes a quarter of the
+width from every input and the description rarely needs more than one line. Sections are
+separated by `Divider` or the page `Stack gap="xl"`.

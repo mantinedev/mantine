@@ -1,4 +1,7 @@
 import type { SkillExample } from '../types';
+import { AccountSettings } from './AccountSettings/AccountSettings';
+import accountSettingsCode from './AccountSettings/code.json';
+import type { OrganizationValues, ProfileValues } from './AccountSettings/types';
 import contentEntryFormCode from './ContentEntryForm/code.json';
 import { ContentEntryPage } from './ContentEntryForm/ContentEntryPage';
 import type { EntryValues } from './ContentEntryForm/types';
@@ -302,6 +305,45 @@ Write tests for the component.`,
         count: 12,
         until: null,
         exceptions: [],
+      });
+    },
+  },
+  {
+    id: 'account-settings',
+    title: 'Account settings',
+    description:
+      'Settings page with independent section forms, one unsaved-changes bar and a reusable address block',
+    prompt: `Build the account settings page of a SaaS app. The page has several independent sections; each section is its own form with its own save.
+
+Sections:
+
+- Profile: full name (required), display name, email (required, valid email), job title, bio (textarea, up to 200 characters with a counter), language (select: English, German, French, Spanish), timezone (select from a hard-coded list of 12 IANA timezones with city labels)
+- Organization: organization name (required), legal name, website (optional, valid URL), tax ID, address: street, city, postal code, country (select), state or region (optional)
+- Billing: billing email (required, valid email), "Same as organization address" checkbox, billing address with the same fields as the organization address, invoice notes (textarea, optional)
+- Notifications: a matrix of events (comments, mentions, weekly digest, security alerts, product updates) by channels (email, push, SMS); security alerts cannot be turned off for email; a digest day select (Monday to Sunday) is shown only while the weekly digest has at least one channel on
+- Danger zone: transfer ownership (select a member from a hard-coded list of 5, with a confirmation modal), delete organization (confirmation modal that requires typing the organization name)
+
+Behavior:
+
+- the page loads the current settings asynchronously (hard-coded data behind a simulated delay); every section shows a loading state until the data is there
+- each section shows a save bar with Save and Cancel only while the section is dirty; Cancel resets the section to the last saved values; Save simulates a request with a delay, shows a short notification and makes the saved values the new baseline
+- the address fields are one reusable component used by the organization and billing sections
+- "Same as organization address" copies the current organization address into the billing address and keeps those fields disabled while it is on; turning it off keeps the copied values and makes them editable again
+- saving the profile with the email taken@example.com fails with a server error that is shown on the email field
+- closing or reloading the browser tab with unsaved changes in any section asks for confirmation (beforeunload)
+
+Write tests for the component.`,
+    component: AccountSettings,
+    code: accountSettingsCode as SkillExample['code'],
+    fill: async (filler) => {
+      filler.setValues<ProfileValues>('profile-settings', {
+        displayName: 'Ada L.',
+        jobTitle: 'VP of Engineering',
+        bio: 'Leads the analytical engine team and writes about compilers.',
+      });
+      filler.setValues<OrganizationValues>('organization-settings', {
+        website: 'https://acme.dev',
+        taxId: 'GB987654321',
       });
     },
   },

@@ -3,7 +3,7 @@ import type { Config } from 'jest';
 const config: Config = {
   testEnvironment: 'jest-environment-jsdom',
   transform: {
-    '^.+\\.tsx?$': 'esbuild-jest',
+    '^.+\\.tsx?$': '<rootDir>/test-utils/jest-transform.cjs',
     '^.+\\.m?js$': 'esbuild-jest',
   },
   testMatch: ['<rootDir>/src/examples/**/?(*.)+(test).ts?(x)'],

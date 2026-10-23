@@ -30,3 +30,10 @@ const modal = useModal({
   action as `variant="default"` on the left of the footer, Save on the right.
 - Size: `size="lg"` for forms with two columns, default size otherwise; `fullScreenBelow="sm"`
   for forms on phones.
+
+## Closing
+
+The modal animates out; its content stays visible during the exit. Do not clear the item the
+modal shows (`selectedField`, the entry being deleted) in `onClose`: clear it in
+`onExitTransitionEnd`, otherwise the title and fields flash to their empty state while the modal
+fades. See [transitions](transitions.md).
