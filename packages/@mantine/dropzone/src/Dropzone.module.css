@@ -15,7 +15,7 @@
     cursor: default;
   }
 
-  background-color: var(--mantine-color-default);
+  background-color: var(--mantine-color-surface-input);
   border-color: var(--mantine-color-default-border);
 
   @mixin hover {
