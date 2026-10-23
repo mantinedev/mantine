@@ -127,7 +127,7 @@ const cssCode = `.root {
 
   @mixin dark {
     --loading-overlay-bg: rgba(0, 0, 0, 0.35);
-    --disabled-bg: var(--mantine-color-dark-6);
+    --disabled-bg: var(--mantine-color-dark-7);
     --disabled-color: var(--mantine-color-dark-3);
   }
 
@@ -221,7 +221,7 @@ export function HighlightJsAdapter() {
           radius="md"
           withBorder
           language="tsx"
-          background="var(--mantine-color-dark-8)"
+          background="var(--mantine-color-dark-9)"
           codeColorScheme="dark"
         />
       </CodeHighlightAdapterProvider>
@@ -294,7 +294,7 @@ export function TabsWithColorScheme() {
           radius="md"
           getFileIcon={getCodeFileIcon}
           codeColorScheme="dark"
-          background="var(--mantine-color-dark-8)"
+          background="var(--mantine-color-dark-9)"
           code={[
             { fileName: 'Component.tsx', code: tsxCode, language: 'tsx' },
             { fileName: 'Component.module.css', code: cssCode, language: 'scss' },

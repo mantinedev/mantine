@@ -108,7 +108,7 @@ export function ColorSchemes() {
       <CodeHighlightFileTree
         code={code}
         codeColorScheme="dark"
-        background="var(--mantine-color-dark-8)"
+        background="var(--mantine-color-dark-9)"
         getFileIcon={getCodeFileIcon}
         withBorder
         radius="md"

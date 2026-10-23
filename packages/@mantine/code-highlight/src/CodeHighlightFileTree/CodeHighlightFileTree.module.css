@@ -10,7 +10,7 @@
     border: 1px solid var(--mantine-color-border-subtle);
 
     &:where([data-code-color-scheme='dark']) {
-      border: 1px solid var(--mantine-color-dark-6);
+      border: 1px solid var(--mantine-color-dark-7);
     }
 
     &:where([data-code-color-scheme='light']) {
@@ -50,7 +50,7 @@
   border-bottom: 1px solid var(--mantine-color-border-subtle);
 
   &:where([data-code-color-scheme='dark']) {
-    border-color: var(--mantine-color-dark-6);
+    border-color: var(--mantine-color-dark-7);
   }
 
   &:where([data-code-color-scheme='light']) {
@@ -107,7 +107,7 @@
     color: var(--mantine-color-dark-0);
 
     @mixin hover {
-      background-color: var(--mantine-color-dark-6);
+      background-color: var(--mantine-color-dark-7);
     }
   }
 }
@@ -158,7 +158,7 @@
   border-inline-start: 1px solid var(--mantine-color-border-subtle);
 
   &:where([data-code-color-scheme='dark']) {
-    border-color: var(--mantine-color-dark-6);
+    border-color: var(--mantine-color-dark-7);
   }
 
   &:where([data-code-color-scheme='light']) {

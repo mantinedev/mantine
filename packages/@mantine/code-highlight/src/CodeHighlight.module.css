@@ -11,7 +11,7 @@
     border: 1px solid var(--mantine-color-border-subtle);
 
     &:where([data-code-color-scheme='dark']) {
-      border: 1px solid var(--mantine-color-dark-6);
+      border: 1px solid var(--mantine-color-dark-7);
     }
 
     &:where([data-code-color-scheme='light']) {
@@ -33,7 +33,7 @@
     border: 1px solid var(--mantine-color-border-subtle);
 
     &:where([data-code-color-scheme='dark']) {
-      border: 1px solid var(--mantine-color-dark-6);
+      border: 1px solid var(--mantine-color-dark-7);
     }
 
     &:where([data-code-color-scheme='light']) {
