@@ -35,9 +35,9 @@ describe('v9CssVariablesResolver', () => {
       ).toBe(true);
     });
     expect(v9Dark['--mantine-color-error']).toBe('var(--mantine-color-red-8)');
-    expect(v10Dark['--mantine-color-error']).toBe('var(--mantine-color-red-7)');
+    expect(v10Dark['--mantine-color-error']).toBe('var(--mantine-color-red-5)');
     expect(v9Dark['--mantine-color-success']).toBe('var(--mantine-color-teal-8)');
-    expect(v10Dark['--mantine-color-success']).toBe('var(--mantine-color-teal-7)');
+    expect(v10Dark['--mantine-color-success']).toBe('var(--mantine-color-teal-5)');
 
     const v9Light = v9.light as Record<string, string>;
     const v10Light = v10.light as Record<string, string>;
