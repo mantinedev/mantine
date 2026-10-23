@@ -63,3 +63,27 @@ export function DiscordCard() {
     />
   );
 }
+
+export function GitHubCard() {
+  return (
+    <CardBase
+      icon="github"
+      className={classes.github}
+      href={meta.gitHubLinks.discussions}
+      title="Start a discussion"
+      description="Request new features, ask questions and provide feedback with GitHub discussions"
+    />
+  );
+}
+
+export function TwitterCard() {
+  return (
+    <CardBase
+      icon="twitter"
+      className={classes.twitter}
+      href={meta.twitterLink}
+      title="Follow on X"
+      description="Get notified about new minor and major releases"
+    />
+  );
+}
