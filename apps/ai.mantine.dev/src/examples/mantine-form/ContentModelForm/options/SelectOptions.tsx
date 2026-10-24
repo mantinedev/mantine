@@ -47,7 +47,12 @@ export function SelectOptions({ form, listActionRef }: OptionsProps) {
         <Input.Label required labelElement="div">
           Options
         </Input.Label>
-        <DndContext sensors={sensors} collisionDetection={closestCenter} onDragEnd={handleDragEnd}>
+        <DndContext
+          id="select-options"
+          sensors={sensors}
+          collisionDetection={closestCenter}
+          onDragEnd={handleDragEnd}
+        >
           <SortableContext items={ids} strategy={verticalListSortingStrategy}>
             {options.map((option, index) => (
               <SelectOptionRow

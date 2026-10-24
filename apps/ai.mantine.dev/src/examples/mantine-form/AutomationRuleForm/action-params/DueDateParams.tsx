@@ -6,14 +6,11 @@ export function DueDateParams({ form, path }: ActionParamsProps) {
   return (
     <NumberInput
       label="Days from now"
-      placeholder="Days from now"
-      min={1}
-      max={MAX_DAYS}
-      clampBehavior="none"
+      placeholder={`1 to ${MAX_DAYS}`}
       allowNegative={false}
       allowDecimal={false}
       withAsterisk
-      {...form.getInputProps(`${path}.dueInDays`)}
+      {...form.getInputProps(`${path}.days`)}
     />
   );
 }

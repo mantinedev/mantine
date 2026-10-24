@@ -2,19 +2,15 @@ import { NumberInput } from '@mantine/core';
 import { MAX_DAYS } from '../constants';
 import type { ValueInputProps } from './types';
 
-export function DaysValue({ form, path }: ValueInputProps) {
+export function DaysValue({ form, path, label }: ValueInputProps) {
   return (
     <NumberInput
-      aria-label="Number of days"
-      placeholder="Number of days"
-      suffix=" days"
-      min={1}
-      max={MAX_DAYS}
-      clampBehavior="none"
+      aria-label={label}
+      placeholder={`Days, 1 to ${MAX_DAYS}`}
       allowNegative={false}
       allowDecimal={false}
       hideControls
-      {...form.getInputProps(`${path}.days`)}
+      {...form.getInputProps(path)}
     />
   );
 }

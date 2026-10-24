@@ -1,16 +1,13 @@
 import { MultiSelect } from '@mantine/core';
-import { FIELDS } from '../constants';
 import type { ValueInputProps } from './types';
 
-export function OptionsValue({ form, path, field }: ValueInputProps) {
-  const values = form.useWatchValue(`${path}.options`) as string[];
-
+export function OptionsValue({ form, path, label, field }: ValueInputProps) {
   return (
     <MultiSelect
-      aria-label="Values"
-      placeholder={values.length === 0 ? 'Pick values' : undefined}
-      data={FIELDS[field].options}
-      {...form.getInputProps(`${path}.options`)}
+      aria-label={label}
+      placeholder={`Pick ${field.label.toLowerCase()}`}
+      data={field.options ?? []}
+      {...form.getInputProps(path)}
     />
   );
 }

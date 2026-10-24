@@ -22,7 +22,7 @@
   {
     "fileName": "ResizableAppShell.module.css",
     "language": "css",
-    "code": ".main {\n  background-color: light-dark(var(--mantine-color-gray-0), var(--mantine-color-dark-8));\n}\n\n.header {\n  container-type: inline-size;\n}\n\n@container (width < 800px) {\n  .search {\n    display: none;\n  }\n}\n"
+    "code": ".main {\n  background-color: light-dark(var(--mantine-color-gray-0), var(--mantine-color-dark-9));\n}\n\n.header {\n  container-type: inline-size;\n}\n\n@container (width < 800px) {\n  .search {\n    display: none;\n  }\n}\n"
   },
   {
     "fileName": "UserMenu.tsx",

@@ -1,0 +1,8 @@
+.legend {
+  font-size: var(--mantine-font-size-md);
+  font-weight: var(--mantine-font-weight-bold);
+}
+
+.caption {
+  font-weight: var(--mantine-font-weight-medium);
+}

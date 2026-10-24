@@ -27,7 +27,7 @@
   {
     "fileName": "ResizableAltLayout.module.css",
     "language": "css",
-    "code": ".main {\n  background-color: light-dark(var(--mantine-color-gray-0), var(--mantine-color-dark-8));\n}\n\n.header {\n  container-type: inline-size;\n}\n\n@media (min-width: $mantine-breakpoint-sm) {\n  @container (width < 660px) {\n    .search {\n      display: none;\n    }\n  }\n\n  @container (width < 400px) {\n    .notifications {\n      display: none;\n    }\n  }\n\n  @container (width < 340px) {\n    .user {\n      display: none;\n    }\n  }\n}\n"
+    "code": ".main {\n  background-color: light-dark(var(--mantine-color-gray-0), var(--mantine-color-dark-9));\n}\n\n.header {\n  container-type: inline-size;\n}\n\n@media (min-width: $mantine-breakpoint-sm) {\n  @container (width < 660px) {\n    .search {\n      display: none;\n    }\n  }\n\n  @container (width < 400px) {\n    .notifications {\n      display: none;\n    }\n  }\n\n  @container (width < 340px) {\n    .user {\n      display: none;\n    }\n  }\n}\n"
   },
   {
     "fileName": "UserMenu.tsx",

@@ -1,38 +1,20 @@
 import { useState } from 'react';
-import { Button, Group, Stack, Title, useModal } from '@mantine/core';
-import { useForm, type FormErrors } from '@mantine/form';
+import { Button, Code, Fieldset, Group, Stack, Text, useModal } from '@mantine/core';
+import { useForm } from '@mantine/form';
 import { notifications } from '@mantine/notifications';
-import { ActionsSection } from './ActionsSection';
-import { createAction, createCondition } from './conditions';
-import { ConditionsSection } from './ConditionsSection';
-import { FORM_NAME, getOptionLabel, TRIGGER_EVENTS } from './constants';
-import { toRulePayload } from './payload';
-import { RuleSection } from './RuleSection';
-import { RuleSummary } from './RuleSummary';
-import { SubmittedRule } from './SubmittedRule';
-import { TestRuleResults } from './TestRuleResults';
-import { TriggerSection } from './TriggerSection';
-import type { RulePayload, RuleValues } from './types';
+import { ActionList } from './ActionList/ActionList';
+import { ConditionGroupEditor } from './ConditionGroupEditor/ConditionGroupEditor';
+import { createInitialValues, FORM_NAME } from './constants';
+import { eventLabel } from './describe';
+import { focusFirstError } from './form-utils';
+import { RuleFields } from './RuleFields';
+import { RuleSummary } from './RuleSummary/RuleSummary';
+import { TestRuleResults } from './TestRuleResults/TestRuleResults';
+import type { RuleValues } from './types';
 import { validateRule } from './validation';
+import classes from './AutomationRuleForm.module.css';
 
-function createInitialValues(): RuleValues {
-  return {
-    name: '',
-    description: '',
-    enabled: true,
-    trigger: { event: null, fromStatus: null, toStatus: null },
-    root: { id: 'root', combinator: 'and', conditions: [createCondition()], groups: [] },
-    actions: [createAction()],
-  };
-}
-
-// Select, MultiSelect and the masked date input put data-path on a wrapper or a hidden input
-function focusNode(node: HTMLElement | null) {
-  const target = node?.matches('input:not([type="hidden"]), textarea, button')
-    ? node
-    : node?.querySelector<HTMLElement>('input:not([type="hidden"]), textarea, button');
-  target?.focus();
-}
+export type RulePayload = RuleValues & { enabled: true };
 
 interface AutomationRuleFormProps {
   onSubmit?: (rule: RulePayload) => void;
@@ -43,38 +25,44 @@ export function AutomationRuleForm({ onSubmit }: AutomationRuleFormProps) {
   const form = useForm<RuleValues>({
     name: FORM_NAME,
     initialValues: createInitialValues(),
-    validateInputOnBlur: ['name'],
     validate: validateRule,
+  });
+
+  form.watch('trigger.event', ({ value }) => {
+    if (value !== 'status_changed') {
+      form.setFieldValue('trigger.fromStatus', null);
+      form.setFieldValue('trigger.toStatus', null);
+    }
   });
 
   const testModal = useModal({ title: 'Test rule', size: 'lg' });
 
   const handleSubmit = (values: RuleValues) => {
-    const rule = toRulePayload(values);
+    const rule: RulePayload = { ...values, enabled: true };
     notifications.show({
       title: 'Rule created',
-      message: `${rule.name} · ${getOptionLabel(TRIGGER_EVENTS, rule.trigger.event)}`,
+      message: `${values.name} · ${eventLabel(values.trigger.event)}`,
     });
     setSubmitted(rule);
     onSubmit?.(rule);
   };
 
-  const handleErrors = (errors: FormErrors) => {
-    focusNode(form.getInputNode(Object.keys(errors)[0]));
-  };
-
   return (
     <Stack gap="xl">
-      <form onSubmit={form.onSubmit(handleSubmit, handleErrors)} noValidate>
-        <Stack gap="xl">
-          <Title order={2} c="var(--mantine-color-bright)">
-            New automation rule
-          </Title>
-          <RuleSection form={form} />
-          <TriggerSection form={form} />
-          <ConditionsSection form={form} />
-          <ActionsSection form={form} />
+      <form onSubmit={form.onSubmit(handleSubmit, focusFirstError)} noValidate>
+        <Stack gap="lg">
+          <RuleFields form={form} />
+
+          <Fieldset legend="Conditions" classNames={{ legend: classes.legend }}>
+            <ConditionGroupEditor form={form} path="conditions" depth={0} />
+          </Fieldset>
+
+          <Fieldset legend="Actions" classNames={{ legend: classes.legend }}>
+            <ActionList form={form} />
+          </Fieldset>
+
           <RuleSummary form={form} />
+
           <Group justify="flex-end">
             <Button
               variant="default"
@@ -84,14 +72,19 @@ export function AutomationRuleForm({ onSubmit }: AutomationRuleFormProps) {
             >
               Test rule
             </Button>
-            {/* preventDefault keeps focus in the name input so its blur error does not move the button */}
-            <Button type="submit" onMouseDown={(event) => event.preventDefault()}>
-              Create rule
-            </Button>
+            <Button type="submit">Create rule</Button>
           </Group>
         </Stack>
       </form>
-      {submitted && <SubmittedRule rule={submitted} />}
+
+      {submitted && (
+        <Stack gap="xs">
+          <Text size="sm" className={classes.caption}>
+            Submitted rule
+          </Text>
+          <Code block>{JSON.stringify(submitted, null, 2)}</Code>
+        </Stack>
+      )}
     </Stack>
   );
 }

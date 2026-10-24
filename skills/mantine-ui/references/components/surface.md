@@ -23,6 +23,9 @@ lighter per level in dark mode and white in light mode. `Paper` is deprecated, u
   Inputs, checkboxes, radios, `Dropzone` and `RichTextEditor` use `--mantine-color-surface-input`
   (white in light mode, the page color in dark mode), so they stay one shade below any `Surface`
   level and never blend into the card.
+- **Nested blocks inside a form** (a sub-group of rows, an indented set of fields) use the
+  sunken background, `var(--mantine-color-sunken)` with the default border, never a raised
+  `Surface`: sunken is darker than the inputs in both schemes, so the inputs keep their edges.
 - Do not set a background color on `Surface` by hand; pick the level with nesting or `level`.
 
 ```tsx

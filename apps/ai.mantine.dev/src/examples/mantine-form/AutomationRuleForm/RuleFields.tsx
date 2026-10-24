@@ -1,23 +1,33 @@
-import { Select, SimpleGrid, Stack } from '@mantine/core';
-import { STATUSES, TRIGGER_EVENTS } from './constants';
-import { FormSection } from './FormSection';
+import { Select, SimpleGrid, Stack, Textarea, TextInput } from '@mantine/core';
+import { EVENTS, STATUSES } from './constants';
 import type { RuleFormType } from './types';
 
-export function TriggerSection({ form }: { form: RuleFormType }) {
+export function RuleFields({ form }: { form: RuleFormType }) {
   const event = form.useWatchValue('trigger.event');
 
   return (
-    <FormSection title="When" description="The event that starts the rule.">
+    <Stack gap="md">
+      <TextInput label="Name" placeholder="Name" withAsterisk {...form.getInputProps('name')} />
+
+      <Textarea
+        label="Description"
+        placeholder="What this rule is for"
+        autosize
+        minRows={2}
+        maxRows={6}
+        {...form.getInputProps('description')}
+      />
+
       <Stack gap="xs">
         <Select
           label="Event"
           placeholder="Pick an event"
-          data={TRIGGER_EVENTS}
+          data={EVENTS}
           withAsterisk
           {...form.getInputProps('trigger.event')}
         />
         {event === 'status_changed' && (
-          <SimpleGrid cols={{ base: 1, sm: 2 }} spacing="xs">
+          <SimpleGrid cols={{ base: 1, sm: 2 }} spacing="md">
             <Select
               label="From status"
               placeholder="Any status"
@@ -35,6 +45,6 @@ export function TriggerSection({ form }: { form: RuleFormType }) {
           </SimpleGrid>
         )}
       </Stack>
-    </FormSection>
+    </Stack>
   );
 }

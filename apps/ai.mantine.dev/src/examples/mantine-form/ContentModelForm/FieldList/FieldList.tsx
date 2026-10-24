@@ -28,7 +28,12 @@ export function FieldList({ form, addButtonRef, onAdd, onEdit }: FieldListProps)
   return (
     <Stack gap="xs">
       {fields.length > 0 ? (
-        <DndContext sensors={sensors} collisionDetection={closestCenter} onDragEnd={handleDragEnd}>
+        <DndContext
+          id="field-list"
+          sensors={sensors}
+          collisionDetection={closestCenter}
+          onDragEnd={handleDragEnd}
+        >
           <SortableContext items={ids} strategy={verticalListSortingStrategy}>
             <ul className={classes.list} aria-label="Fields">
               {fields.map((field, index) => (

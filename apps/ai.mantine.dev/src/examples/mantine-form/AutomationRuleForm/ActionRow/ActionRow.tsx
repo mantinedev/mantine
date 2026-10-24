@@ -1,40 +1,41 @@
 import { useSortable } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
 import { IconGripVertical, IconTrash } from '@tabler/icons-react';
-import { ActionIcon, Group, Select, Stack, Text } from '@mantine/core';
+import { ActionIcon, Select, Text } from '@mantine/core';
 import { ACTION_PARAMS } from '../action-params';
-import { ACTION_TYPES, REPEATABLE_ACTIONS } from '../constants';
-import type { ActionType, RuleFormType } from '../types';
+import { ACTION_TYPES, createAction } from '../constants';
+import type { ActionType, RuleAction, RuleFormType } from '../types';
 import classes from './ActionRow.module.css';
 
 interface ActionRowProps {
   form: RuleFormType;
-  id: string;
+  action: RuleAction;
   index: number;
-  /** Types picked by the other actions of the list */
   usedTypes: ActionType[];
   onRemove: () => void;
 }
 
-export function ActionRow({ form, id, index, usedTypes, onRemove }: ActionRowProps) {
-  const path = `actions.${index}`;
-  const type = form.useWatchValue(`${path}.type`) as ActionType | null;
-  const Params = type ? ACTION_PARAMS[type] : null;
+export function ActionRow({ form, action, index, usedTypes, onRemove }: ActionRowProps) {
+  const { attributes, listeners, setNodeRef, transform, transition, isDragging } = useSortable({
+    id: action.id,
+  });
   const label = `Action ${index + 1}`;
-  const {
-    attributes,
-    listeners,
-    setNodeRef,
-    setActivatorNodeRef,
-    transform,
-    transition,
-    isDragging,
-  } = useSortable({ id });
+  const path = `actions.${index}`;
+  const typeProps = form.getInputProps(`${path}.type`);
+  const Params = action.type ? ACTION_PARAMS[action.type] : null;
 
-  const typeOptions = ACTION_TYPES.map((option) => ({
-    ...option,
-    disabled: !REPEATABLE_ACTIONS.includes(option.value) && usedTypes.includes(option.value),
+  const typeOptions = ACTION_TYPES.map((type) => ({
+    value: type.value,
+    label: type.label,
+    disabled: !type.repeatable && type.value !== action.type && usedTypes.includes(type.value),
   }));
+
+  const handleTypeChange = (next: string | null) => {
+    if (next === action.type) {
+      return;
+    }
+    form.setFieldValue(path, createAction(next as ActionType | null, action.id));
+  };
 
   return (
     <div
@@ -43,40 +44,45 @@ export function ActionRow({ form, id, index, usedTypes, onRemove }: ActionRowPro
       aria-label={label}
       className={classes.row}
       data-dragging={isDragging || undefined}
-      style={{ transform: CSS.Translate.toString(transform), transition }}
+      style={{ transform: CSS.Transform.toString(transform), transition }}
     >
-      <Group justify="space-between" wrap="nowrap" mb="sm">
-        <Group gap="xs" wrap="nowrap">
-          <ActionIcon
-            ref={setActivatorNodeRef}
-            variant="default"
-            className={classes.handle}
-            aria-label={`Reorder action ${index + 1}`}
-            {...attributes}
-            {...listeners}
-          >
-            <IconGripVertical size={16} />
-          </ActionIcon>
-          <Text size="sm" className={classes.title}>
-            {label}
-          </Text>
-        </Group>
-        <ActionIcon variant="default" aria-label={`Remove action ${index + 1}`} onClick={onRemove}>
-          <IconTrash size={16} color="var(--mantine-color-red-text)" />
+      <div className={classes.header}>
+        <ActionIcon
+          variant="default"
+          size="input-sm"
+          aria-label={`Reorder action ${index + 1}`}
+          className={classes.handle}
+          {...attributes}
+          {...listeners}
+        >
+          <IconGripVertical size={16} />
         </ActionIcon>
-      </Group>
-
-      <Stack gap="xs">
+        <Text size="sm" className={classes.number}>
+          {index + 1}.
+        </Text>
         <Select
-          label="Action type"
+          aria-label={`${label} type`}
           placeholder="Pick an action"
           data={typeOptions}
-          withAsterisk
           allowDeselect={false}
-          {...form.getInputProps(`${path}.type`)}
+          className={classes.type}
+          {...typeProps}
+          onChange={handleTypeChange}
         />
-        {Params && <Params form={form} path={path} />}
-      </Stack>
+        <ActionIcon
+          variant="default"
+          size="input-sm"
+          aria-label={`Remove action ${index + 1}`}
+          onClick={onRemove}
+        >
+          <IconTrash size={16} color="var(--mantine-color-red-text)" />
+        </ActionIcon>
+      </div>
+      {Params && (
+        <div className={classes.params}>
+          <Params form={form} path={`${path}.params`} />
+        </div>
+      )}
     </div>
   );
 }

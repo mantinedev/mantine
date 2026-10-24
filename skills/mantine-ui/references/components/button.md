@@ -32,3 +32,7 @@
   <Button type="submit" loading={form.submitting}>Submit application</Button>
 </Group>
 ```
+- **One kind of remove per level.** Items in a list remove themselves with the trash
+  `ActionIcon` at the end of their row; the container (a group of rows, a section, a card) is
+  removed with a text button (`Remove group`, `variant="default"`) in its header. Two identical
+  trash icons next to each other that delete different things make the user guess.

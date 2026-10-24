@@ -1,105 +1,111 @@
 import dayjs from 'dayjs';
-import { isConditionComplete } from './conditions';
-import { FIELDS } from './constants';
-import type { Condition, ConditionGroup, FieldType, Operator, SampleIssue } from './types';
+import { getShape } from './constants';
+import { describeCondition } from './describe';
+import type {
+  Combinator,
+  Condition,
+  ConditionGroup,
+  NumberRange,
+  Operator,
+  RuleValues,
+  SampleIssue,
+} from './types';
+import { validateRule } from './validation';
 
 export type ConditionStatus = 'matched' | 'not_matched' | 'incomplete';
 
 export interface ConditionResult {
   id: string;
-  condition: Condition;
+  text: string;
   status: ConditionStatus;
 }
 
 export interface GroupResult {
   id: string;
-  combinator: ConditionGroup['combinator'];
+  combinator: Combinator;
   matched: boolean;
   conditions: ConditionResult[];
   groups: GroupResult[];
 }
 
 type IssueValue = SampleIssue[keyof SampleIssue];
-type Evaluator = (value: IssueValue, condition: Condition, today: dayjs.Dayjs) => boolean;
+type Evaluate = (actual: IssueValue, expected: Condition['value'], today: Date) => boolean;
 
-const text = (value: IssueValue) => String(value ?? '').toLowerCase();
-const list = (value: IssueValue) =>
-  Array.isArray(value) ? value : value === null ? [] : [String(value)];
+const text = (value: unknown) => String((value as string | number | null) ?? '').toLowerCase();
+const asList = (value: IssueValue) => (Array.isArray(value) ? value : [String(value)]);
 
-const EVALUATORS: { [T in FieldType]: Partial<Record<Operator, Evaluator>> } = {
-  text: {
-    contains: (value, c) => text(value).includes(c.text.trim().toLowerCase()),
-    not_contains: (value, c) => !text(value).includes(c.text.trim().toLowerCase()),
-    equals: (value, c) => text(value) === c.text.trim().toLowerCase(),
-    is_empty: (value) => text(value).trim() === '',
+const EVALUATORS: Record<Operator, Evaluate> = {
+  contains: (actual, expected) => text(actual).includes(text(expected)),
+  not_contains: (actual, expected) => !text(actual).includes(text(expected)),
+  equals: (actual, expected) =>
+    typeof actual === 'number'
+      ? actual === expected
+      : text(actual).trim() === text(expected).trim(),
+  not_equals: (actual, expected) => actual !== expected,
+  greater_than: (actual, expected) => (actual as number) > (expected as number),
+  less_than: (actual, expected) => (actual as number) < (expected as number),
+  between: (actual, expected) => {
+    const { min, max } = expected as NumberRange;
+    return (actual as number) >= (min as number) && (actual as number) <= (max as number);
   },
-  number: {
-    equals: (value, c) => value === c.number,
-    not_equals: (value, c) => value !== c.number,
-    greater_than: (value, c) => Number(value) > Number(c.number),
-    less_than: (value, c) => Number(value) < Number(c.number),
-    between: (value, c) => Number(value) >= Number(c.min) && Number(value) <= Number(c.max),
+  before: (actual, expected) => dayjs(actual as string).isBefore(expected as string, 'day'),
+  after: (actual, expected) => dayjs(actual as string).isAfter(expected as string, 'day'),
+  within_next_days: (actual, expected, today) => {
+    const days = dayjs(actual as string).diff(dayjs(today).startOf('day'), 'day');
+    return days >= 0 && days <= (expected as number);
   },
-  date: {
-    before: (value, c) => value !== null && dayjs(String(value)).isBefore(c.date, 'day'),
-    after: (value, c) => value !== null && dayjs(String(value)).isAfter(c.date, 'day'),
-    within_next_days: (value, c, today) => {
-      if (value === null) {
-        return false;
-      }
-      const date = dayjs(String(value));
-      return !date.isBefore(today, 'day') && !date.isAfter(today.add(Number(c.days), 'day'), 'day');
-    },
-    is_empty: (value) => value === null,
-  },
-  option: {
-    is_any_of: (value, c) => list(value).some((item) => c.options.includes(item)),
-    is_none_of: (value, c) => !list(value).some((item) => c.options.includes(item)),
-  },
-  boolean: {
-    is_true: (value) => value === true,
-    is_false: (value) => value === false,
-  },
+  is_empty: (actual) => text(actual).trim() === '',
+  any_of: (actual, expected) =>
+    asList(actual).some((item) => (expected as string[]).includes(item)),
+  none_of: (actual, expected) =>
+    !asList(actual).some((item) => (expected as string[]).includes(item)),
+  is_true: (actual) => actual === true,
+  is_false: (actual) => actual === false,
 };
+
+function hasErrorUnder(errors: Record<string, unknown>, path: string) {
+  return Object.keys(errors).some((key) => key.startsWith(`${path}.`));
+}
 
 function evaluateCondition(
   condition: Condition,
+  path: string,
+  errors: Record<string, unknown>,
   issue: SampleIssue,
-  today: dayjs.Dayjs
-): ConditionStatus {
-  if (!isConditionComplete(condition)) {
-    return 'incomplete';
+  today: Date
+): ConditionResult {
+  const shape = getShape(condition.field, condition.operator);
+  const result = { id: condition.id, text: describeCondition(condition) };
+  if (!condition.field || !condition.operator || !shape || hasErrorUnder(errors, path)) {
+    return { ...result, status: 'incomplete' };
   }
-  const field = condition.field!;
-  const evaluator = EVALUATORS[FIELDS[field].type][condition.operator!]!;
-  return evaluator(issue[field], condition, today) ? 'matched' : 'not_matched';
+  const matched = EVALUATORS[condition.operator](issue[condition.field], condition.value, today);
+  return { ...result, status: matched ? 'matched' : 'not_matched' };
 }
 
-/** Incomplete conditions and empty groups count as not matched */
-export function evaluateGroup(
+function evaluateGroup(
   group: ConditionGroup,
+  path: string,
+  errors: Record<string, unknown>,
   issue: SampleIssue,
-  today = dayjs()
+  today: Date
 ): GroupResult {
-  const conditions = group.conditions.map((condition) => ({
-    id: condition.id,
-    condition,
-    status: evaluateCondition(condition, issue, today),
-  }));
-  const groups = group.groups.map((nested) => evaluateGroup(nested, issue, today));
+  const conditions = group.conditions.map((condition, index) =>
+    evaluateCondition(condition, `${path}.conditions.${index}`, errors, issue, today)
+  );
+  const groups = group.groups.map((child, index) =>
+    evaluateGroup(child, `${path}.groups.${index}`, errors, issue, today)
+  );
   const outcomes = [
-    ...conditions.map((result) => result.status === 'matched'),
-    ...groups.map((result) => result.matched),
+    ...conditions.map((item) => item.status === 'matched'),
+    ...groups.map((item) => item.matched),
   ];
   const matched =
     outcomes.length > 0 &&
     (group.combinator === 'and' ? outcomes.every(Boolean) : outcomes.some(Boolean));
-
   return { id: group.id, combinator: group.combinator, matched, conditions, groups };
 }
 
-export function renderPlaceholders(template: string, issue: SampleIssue, assignee: string) {
-  return template
-    .replace(/{{\s*issue\.title\s*}}/g, issue.title)
-    .replace(/{{\s*issue\.assignee\s*}}/g, assignee);
+export function evaluateRule(values: RuleValues, issue: SampleIssue, today = new Date()) {
+  return evaluateGroup(values.conditions, 'conditions', validateRule(values), issue, today);
 }

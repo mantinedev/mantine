@@ -1,8 +1,0 @@
-.nested {
-  padding-inline-start: var(--mantine-spacing-md);
-  border-inline-start: 2px solid var(--mantine-color-default-border);
-}
-
-.title {
-  font-weight: var(--mantine-font-weight-medium);
-}

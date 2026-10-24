@@ -97,6 +97,27 @@ component you are about to use, then write the UI.
   skeleton per field in the real layout, so nothing shifts when the data arrives; a generic set
   of skeleton rows is only for forms whose fields come from the data. See
   [skeleton](references/components/skeleton.md).
+- **Every control says what it does.** A select or input without a visible label (rows of
+  field / operator / value, a conjunction, a unit) gets its meaning from a caption row over the
+  grid (`size="xs"`, once per group) or from the sentence it sits in (`Match [all] of the
+  following conditions`), never from a placeholder alone. A select that changes the meaning of
+  a whole list reads as a sentence, not as a toggle floating above the list.
+- **Progress components show progress.** `Stepper` and `Timeline` are for sequences and states
+  (a wizard, a history); parts of a form that are all editable at once are sections, with a
+  `Fieldset` legend when their body is a list of rows. See [fieldset](references/components/fieldset.md).
+- **The thing's own fields come first.** Name, description and the one or two values that
+  identify the item sit at the top as plain fields; the lists and groups that configure it
+  follow in fieldsets; a derived summary, if any, sits below them as structured text (a line,
+  then bullets), never as one long sentence. See [text](references/components/text.md#derived-summaries).
+- **One kind of remove per level.** Rows remove themselves with a trash `ActionIcon`; the
+  container that holds the rows (a group, a section) is removed with a text button
+  (`Remove group`, `variant="default"`), so two identical icons that delete different things
+  never sit side by side. See [button](references/components/button.md).
+- **Similar actions share one size.** `Add condition`, `Add group`, `Add action`, `Remove group`
+  in one form are all the default button size; `compact-*` sizes are for dense bars (`ActionBar`,
+  table rows), not for some of the form's buttons.
+- **No enabled switch on a create form.** A new rule, webhook or integration is created enabled;
+  enabling and disabling is an action on the saved item (a `Switch` in its list row or settings).
 - **Custom inputs look like inputs.** A value picked in a modal or a popover is displayed in an
   `Input`-based component, never as a `Button` with chips under it: `PillsInput` with pills for
   several values (like `MultiSelect`), `InputBase readOnly pointer` with the value as text for one
@@ -151,6 +172,11 @@ component you are about to use, then write the UI.
   class on the wrapper, not nested `Text` with `inherit`.
 - **Spacing** uses theme values (`gap="sm"`, `mt="md"`), never pixel literals in props, except
   the `gap={6}` between grouped icon actions.
+- **Only global CSS variables outside the component that defines them.** `--mantine-*` tokens
+  are global; `--input-height-sm`, `--input-fz`, `--button-height` and other component variables
+  exist only inside that component's root. Used in a layout rule (`grid-template-columns: …
+  var(--input-height-sm)`) they are undefined, the whole declaration is dropped and the layout
+  collapses silently. Write the value (`36px` for an `sm` input) or use `auto`.
 
 ## Components
 

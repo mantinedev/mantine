@@ -1,73 +1,88 @@
 import { IconTrash } from '@tabler/icons-react';
-import { ActionIcon, Select } from '@mantine/core';
+import { ActionIcon, Select, Text } from '@mantine/core';
 import { VALUE_INPUTS } from '../condition-values';
-import { EMPTY_CONDITION_VALUE, getOperators, getValueShape } from '../conditions';
-import { FIELD_OPTIONS, OPERATOR_LABELS } from '../constants';
-import type { Condition, FieldKey, Operator, RuleFormType } from '../types';
+import { emptyValue, FIELD_OPTIONS, FIELDS, getShape, OPERATORS } from '../constants';
+import type { FieldKey, Operator, RuleFormType } from '../types';
 import classes from './ConditionRow.module.css';
 
 interface ConditionRowProps {
   form: RuleFormType;
   path: string;
-  label: string;
+  index: number;
   onRemove: () => void;
 }
 
-export function ConditionRow({ form, path, label, onRemove }: ConditionRowProps) {
+export function ConditionCaptions() {
+  return (
+    <div className={classes.captions} aria-hidden>
+      <Text size="xs">Field</Text>
+      <Text size="xs">Operator</Text>
+      <Text size="xs">Value</Text>
+    </div>
+  );
+}
+
+export function ConditionRow({ form, path, index, onRemove }: ConditionRowProps) {
   const field = form.useWatchValue(`${path}.field`) as FieldKey | null;
   const operator = form.useWatchValue(`${path}.operator`) as Operator | null;
-  const shape = getValueShape(field, operator);
-  const ValueInput = shape === 'none' ? null : VALUE_INPUTS[shape];
-  const operators = getOperators(field).map((value) => ({
-    value,
-    label: OPERATOR_LABELS[value],
-  }));
+  const fieldProps = form.getInputProps(`${path}.field`);
+  const operatorProps = form.getInputProps(`${path}.operator`);
 
-  const updateCondition = (update: (condition: Condition) => Condition) =>
-    form.setFieldValue(path, update as never);
+  const label = `Condition ${index + 1}`;
+  const definition = field ? FIELDS[field] : null;
+  const shape = getShape(field, operator);
+  const ValueInput = shape && shape !== 'none' ? VALUE_INPUTS[shape] : null;
 
-  const handleFieldChange = (value: string | null) =>
-    updateCondition((condition) => ({
-      ...condition,
-      ...EMPTY_CONDITION_VALUE,
-      field: value as FieldKey | null,
-      operator: null,
-    }));
+  const handleFieldChange = (next: string | null) => {
+    if (next === field) {
+      return;
+    }
+    fieldProps.onChange(next);
+    form.setFieldValue(`${path}.operator`, null);
+    form.setFieldValue(`${path}.value`, null);
+  };
 
-  const handleOperatorChange = (value: string | null) =>
-    updateCondition((condition) => {
-      const next = value as Operator | null;
-      const sameShape =
-        getValueShape(condition.field, next) === getValueShape(condition.field, condition.operator);
-      return sameShape
-        ? { ...condition, operator: next }
-        : { ...condition, ...EMPTY_CONDITION_VALUE, operator: next };
-    });
+  const handleOperatorChange = (next: string | null) => {
+    operatorProps.onChange(next);
+    const nextShape = getShape(field, next as Operator | null);
+    if (nextShape !== shape) {
+      form.setFieldValue(`${path}.value`, emptyValue(nextShape));
+    }
+  };
 
   return (
-    <div role="group" aria-label={label} className={classes.row}>
+    <div className={classes.row}>
       <Select
-        aria-label="Field"
+        aria-label={`${label} field`}
         placeholder="Field"
         data={FIELD_OPTIONS}
         allowDeselect={false}
-        {...form.getInputProps(`${path}.field`)}
+        {...fieldProps}
         onChange={handleFieldChange}
       />
       <Select
-        aria-label="Operator"
-        placeholder="Operator"
-        data={operators}
-        disabled={!field}
+        aria-label={`${label} operator`}
+        placeholder={definition ? 'Operator' : 'Pick a field first'}
+        data={definition ? OPERATORS[definition.type] : []}
+        disabled={!definition}
         allowDeselect={false}
-        {...form.getInputProps(`${path}.operator`)}
+        {...operatorProps}
         onChange={handleOperatorChange}
       />
-      <div>{ValueInput && field && <ValueInput form={form} path={path} field={field} />}</div>
+      <div>
+        {ValueInput && definition && (
+          <ValueInput
+            form={form}
+            path={`${path}.value`}
+            label={`${label} value`}
+            field={definition}
+          />
+        )}
+      </div>
       <ActionIcon
         variant="default"
         size="input-sm"
-        aria-label={`Remove ${label.toLowerCase()}`}
+        aria-label={`Remove condition ${index + 1}`}
         onClick={onRemove}
       >
         <IconTrash size={16} color="var(--mantine-color-red-text)" />

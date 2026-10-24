@@ -1,10 +1,11 @@
 import type { FormErrors } from '@mantine/form';
-import { countConditions, getValueShape, isNumber, isValidDays } from './conditions';
-import { COMMENT_PLACEHOLDERS, MAX_DAYS } from './constants';
+import { COMMENT_PLACEHOLDERS, getShape, MAX_DAYS } from './constants';
 import type {
+  ActionParams,
   ActionType,
   Condition,
   ConditionGroup,
+  NumberRange,
   RuleAction,
   RuleValues,
   ValueShape,
@@ -12,113 +13,148 @@ import type {
 
 type Errors = Record<string, string>;
 
-const DAYS_ERROR = `Enter 1 to ${MAX_DAYS} days`;
+const isBlank = (value: unknown) =>
+  value === null ||
+  value === undefined ||
+  value === '' ||
+  (Array.isArray(value) && value.length === 0);
 
-function required(path: string, valid: boolean, message: string): Errors {
-  return valid ? {} : { [path]: message };
-}
+type ValueRule = (value: unknown, path: string, errors: Errors) => void;
 
-function rangeRule(condition: Condition, path: string): Errors {
-  const { min, max } = condition;
-  return {
-    ...required(`${path}.min`, isNumber(min), 'Enter a minimum'),
-    ...(isNumber(max)
-      ? required(`${path}.max`, !isNumber(min) || min < max, 'Must be greater than the minimum')
-      : { [`${path}.max`]: 'Enter a maximum' }),
+const required =
+  (message: string): ValueRule =>
+  (value, path, errors) => {
+    if (isBlank(value)) {
+      errors[path] = message;
+    }
   };
-}
 
-const VALUE_RULES: Record<ValueShape, (condition: Condition, path: string) => Errors> = {
-  text: (condition, path) =>
-    required(`${path}.text`, condition.text.trim() !== '', 'Enter a value'),
-  number: (condition, path) =>
-    required(`${path}.number`, isNumber(condition.number), 'Enter a number'),
-  range: rangeRule,
-  date: (condition, path) => required(`${path}.date`, condition.date !== null, 'Pick a date'),
-  days: (condition, path) => required(`${path}.days`, isValidDays(condition.days), DAYS_ERROR),
-  options: (condition, path) =>
-    required(`${path}.options`, condition.options.length > 0, 'Select at least one value'),
-  none: () => ({}),
+const VALUE_RULES: Record<ValueShape, ValueRule> = {
+  none: () => {},
+  text: (value, path, errors) => {
+    if (typeof value !== 'string' || value.trim() === '') {
+      errors[path] = 'Enter a value';
+    }
+  },
+  number: required('Enter a number'),
+  date: required('Pick a date'),
+  options: required('Pick at least one option'),
+  days: (value, path, errors) => {
+    const error = validateDays(value as number | '');
+    if (error) {
+      errors[path] = error;
+    }
+  },
+  range: (value, path, errors) => {
+    const { min, max } = (value ?? { min: '', max: '' }) as NumberRange;
+    if (min === '') {
+      errors[`${path}.min`] = 'Enter a minimum';
+    }
+    if (max === '') {
+      errors[`${path}.max`] = 'Enter a maximum';
+    } else if (min !== '' && min >= max) {
+      errors[`${path}.max`] = 'Must be greater than the minimum';
+    }
+  },
 };
 
-function validateCondition(condition: Condition, path: string): Errors {
+function validateCondition(condition: Condition, path: string, errors: Errors) {
   if (!condition.field) {
-    return { [`${path}.field`]: 'Select a field' };
+    errors[`${path}.field`] = 'Pick a field';
+    return;
   }
-  if (!condition.operator) {
-    return { [`${path}.operator`]: 'Select an operator' };
+  const shape = getShape(condition.field, condition.operator);
+  if (!shape) {
+    errors[`${path}.operator`] = 'Pick an operator';
+    return;
   }
-  return VALUE_RULES[getValueShape(condition.field, condition.operator)](condition, path);
+  VALUE_RULES[shape](condition.value, `${path}.value`, errors);
 }
 
-// Errors are collected in display order, the first key is the field focused after submit
-function validateGroup(group: ConditionGroup, path: string, nested: boolean): Errors {
-  const emptyError = nested
-    ? 'Add at least one condition to this group'
-    : 'Add at least one condition';
-
-  return {
-    ...required(`${path}.conditions`, countConditions(group) > 0, emptyError),
-    ...Object.assign(
-      {},
-      ...group.conditions.map((condition, index) =>
-        validateCondition(condition, `${path}.conditions.${index}`)
-      )
-    ),
-    ...Object.assign(
-      {},
-      ...group.groups.map((child, index) => validateGroup(child, `${path}.groups.${index}`, true))
-    ),
-  };
-}
-
-function unknownPlaceholder(text: string) {
-  return (text.match(/{{[^}]*}}/g) ?? []).find(
-    (placeholder) => !COMMENT_PLACEHOLDERS.includes(placeholder.replace(/\s/g, ''))
+export function countConditions(group: ConditionGroup): number {
+  return (
+    group.conditions.length + group.groups.reduce((sum, child) => sum + countConditions(child), 0)
   );
 }
 
-function commentRule(action: RuleAction, path: string): Errors {
-  if (action.comment.trim() === '') {
-    return { [`${path}.comment`]: 'Enter a comment' };
+function validateGroup(group: ConditionGroup, path: string, isRoot: boolean, errors: Errors) {
+  if (countConditions(group) === 0) {
+    errors[path] = isRoot
+      ? 'Add at least one condition'
+      : 'Add a condition to this group or remove it';
   }
-  const unknown = unknownPlaceholder(action.comment);
-  return required(`${path}.comment`, !unknown, `Unknown placeholder ${unknown}`);
+  group.conditions.forEach((condition, index) => {
+    validateCondition(condition, `${path}.conditions.${index}`, errors);
+  });
+  group.groups.forEach((child, index) => {
+    validateGroup(child, `${path}.groups.${index}`, false, errors);
+  });
 }
 
-const ACTION_RULES: Record<ActionType, (action: RuleAction, path: string) => Errors> = {
-  assign_member: (action, path) =>
-    required(`${path}.memberId`, action.memberId !== null, 'Select a member'),
-  set_priority: (action, path) =>
-    required(`${path}.priority`, action.priority !== null, 'Select a priority'),
-  add_labels: (action, path) =>
-    required(`${path}.labels`, action.labels.length > 0, 'Select at least one label'),
-  move_to_status: (action, path) =>
-    required(`${path}.status`, action.status !== null, 'Select a status'),
-  post_comment: commentRule,
-  send_slack_message: (action, path) => ({
-    ...required(`${path}.slackChannel`, action.slackChannel !== null, 'Select a channel'),
-    ...required(`${path}.slackMessage`, action.slackMessage.trim() !== '', 'Enter a message'),
+const PLACEHOLDER = /\{\{[^}]*\}\}/g;
+
+function validateComment(body: string) {
+  if (body.trim() === '') {
+    return 'Enter a comment';
+  }
+  const unknown = [...body.matchAll(PLACEHOLDER)]
+    .map((match) => match[0])
+    .find((placeholder) => !COMMENT_PLACEHOLDERS.includes(placeholder));
+  return unknown ? `Unknown placeholder ${unknown}` : null;
+}
+
+function validateDays(days: number | '') {
+  if (days === '') {
+    return 'Enter a number of days';
+  }
+  return days < 1 || days > MAX_DAYS ? `Enter 1 to ${MAX_DAYS} days` : null;
+}
+
+type ParamErrors = Record<string, string | null>;
+
+const PARAM_RULES: { [T in ActionType]: (params: ActionParams[T]) => ParamErrors } = {
+  assign_member: ({ memberId }) => ({ memberId: memberId ? null : 'Pick a member' }),
+  set_priority: ({ priority }) => ({ priority: priority ? null : 'Pick a priority' }),
+  add_labels: ({ labels }) => ({ labels: labels.length > 0 ? null : 'Pick at least one label' }),
+  move_to_status: ({ status }) => ({ status: status ? null : 'Pick a status' }),
+  post_comment: ({ body }) => ({ body: validateComment(body) }),
+  send_slack_message: ({ channel, message }) => ({
+    channel: channel ? null : 'Pick a channel',
+    message: message.trim() ? null : 'Enter a message',
   }),
-  set_due_date: (action, path) =>
-    required(`${path}.dueInDays`, isValidDays(action.dueInDays), DAYS_ERROR),
+  set_due_date: ({ days }) => ({ days: validateDays(days) }),
 };
 
-function validateAction(action: RuleAction, path: string): Errors {
-  return action.type
-    ? ACTION_RULES[action.type](action, path)
-    : { [`${path}.type`]: 'Select an action type' };
+function validateAction(action: RuleAction, path: string, errors: Errors) {
+  if (action.type === null) {
+    errors[`${path}.type`] = 'Pick an action';
+    return;
+  }
+  const paramErrors = (PARAM_RULES[action.type] as (params: unknown) => ParamErrors)(action.params);
+  Object.entries(paramErrors).forEach(([key, message]) => {
+    if (message) {
+      errors[`${path}.params.${key}`] = message;
+    }
+  });
 }
 
+// Errors are collected in the order fields appear on screen, so the first key is the field to focus
 export function validateRule(values: RuleValues): FormErrors {
-  return {
-    ...required('name', values.name.trim() !== '', 'Enter a rule name'),
-    ...required('trigger.event', values.trigger.event !== null, 'Select a trigger event'),
-    ...validateGroup(values.root, 'root', false),
-    ...required('actions', values.actions.length > 0, 'Add at least one action'),
-    ...Object.assign(
-      {},
-      ...values.actions.map((action, index) => validateAction(action, `actions.${index}`))
-    ),
-  };
+  const errors: Errors = {};
+
+  if (values.name.trim() === '') {
+    errors.name = 'Name is required';
+  }
+  if (!values.trigger.event) {
+    errors['trigger.event'] = 'Pick an event';
+  }
+
+  validateGroup(values.conditions, 'conditions', true, errors);
+
+  if (values.actions.length === 0) {
+    errors.actions = 'Add at least one action';
+  }
+  values.actions.forEach((action, index) => validateAction(action, `actions.${index}`, errors));
+
+  return errors;
 }

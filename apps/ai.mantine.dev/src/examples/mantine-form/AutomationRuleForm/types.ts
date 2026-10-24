@@ -25,7 +25,6 @@ export type Operator =
   | 'contains'
   | 'not_contains'
   | 'equals'
-  | 'is_empty'
   | 'not_equals'
   | 'greater_than'
   | 'less_than'
@@ -33,31 +32,29 @@ export type Operator =
   | 'before'
   | 'after'
   | 'within_next_days'
-  | 'is_any_of'
-  | 'is_none_of'
+  | 'is_empty'
+  | 'any_of'
+  | 'none_of'
   | 'is_true'
   | 'is_false';
 
-/** Which input the value of a condition needs */
-export type ValueShape = 'text' | 'number' | 'range' | 'date' | 'days' | 'options' | 'none';
+export type ValueShape = 'none' | 'text' | 'number' | 'range' | 'date' | 'days' | 'options';
 
-export type Combinator = 'and' | 'or';
-
-export interface ConditionValueFields {
-  text: string;
-  number: number | string;
-  min: number | string;
-  max: number | string;
-  date: string | null;
-  days: number | string;
-  options: string[];
+export interface NumberRange {
+  min: number | '';
+  max: number | '';
 }
 
-export interface Condition extends ConditionValueFields {
+export type ConditionValue = string | number | string[] | NumberRange | null;
+
+export interface Condition {
   id: string;
   field: FieldKey | null;
   operator: Operator | null;
+  value: ConditionValue;
 }
+
+export type Combinator = 'and' | 'or';
 
 export interface ConditionGroup {
   id: string;
@@ -75,20 +72,21 @@ export type ActionType =
   | 'send_slack_message'
   | 'set_due_date';
 
-export interface RuleAction {
-  id: string;
-  type: ActionType | null;
-  memberId: string | null;
-  priority: string | null;
-  labels: string[];
-  status: string | null;
-  comment: string;
-  slackChannel: string | null;
-  slackMessage: string;
-  dueInDays: number | string;
+export interface ActionParams {
+  assign_member: { memberId: string | null };
+  set_priority: { priority: string | null };
+  add_labels: { labels: string[] };
+  move_to_status: { status: string | null };
+  post_comment: { body: string };
+  send_slack_message: { channel: string | null; message: string };
+  set_due_date: { days: number | '' };
 }
 
-export interface RuleTrigger {
+export type RuleAction =
+  | { id: string; type: null; params: Record<string, never> }
+  | { [T in ActionType]: { id: string; type: T; params: ActionParams[T] } }[ActionType];
+
+export interface Trigger {
   event: TriggerEvent | null;
   fromStatus: string | null;
   toStatus: string | null;
@@ -97,9 +95,8 @@ export interface RuleTrigger {
 export interface RuleValues {
   name: string;
   description: string;
-  enabled: boolean;
-  trigger: RuleTrigger;
-  root: ConditionGroup;
+  trigger: Trigger;
+  conditions: ConditionGroup;
   actions: RuleAction[];
 }
 
@@ -115,33 +112,10 @@ export interface SampleIssue {
   description: string;
   status: string;
   priority: string;
-  assignee: string | null;
+  assignee: string;
   labels: string[];
   storyPoints: number;
-  dueDate: string | null;
+  dueDate: string;
   createdAt: string;
   isBlocked: boolean;
-}
-
-export interface ConditionPayload {
-  field: FieldKey;
-  operator: Operator;
-  value?: string | number | string[] | { min: number; max: number };
-}
-
-export interface ConditionGroupPayload {
-  combinator: Combinator;
-  conditions: ConditionPayload[];
-  groups: ConditionGroupPayload[];
-}
-
-export type ActionPayload = { type: ActionType } & Record<string, unknown>;
-
-export interface RulePayload {
-  name: string;
-  description: string;
-  enabled: boolean;
-  trigger: { event: TriggerEvent; fromStatus?: string | null; toStatus?: string | null };
-  conditions: ConditionGroupPayload;
-  actions: ActionPayload[];
 }

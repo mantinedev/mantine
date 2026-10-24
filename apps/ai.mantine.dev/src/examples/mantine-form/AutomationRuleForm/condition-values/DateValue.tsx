@@ -1,14 +1,14 @@
 import { MaskedDateInput } from '@mantine/dates';
 import type { ValueInputProps } from './types';
 
-export function DateValue({ form, path }: ValueInputProps) {
+export function DateValue({ form, path, label }: ValueInputProps) {
   return (
     <MaskedDateInput
-      aria-label="Date"
-      dayInputLabel="Date day"
-      monthInputLabel="Date month"
-      yearInputLabel="Date year"
-      {...form.getInputProps(`${path}.date`)}
+      aria-label={label}
+      dayInputLabel={`${label} day`}
+      monthInputLabel={`${label} month`}
+      yearInputLabel={`${label} year`}
+      {...form.getInputProps(path)}
     />
   );
 }

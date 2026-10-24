@@ -383,75 +383,40 @@ Write tests for the component.`,
     component: AutomationRuleForm,
     code: automationRuleFormCode as SkillExample['code'],
     fill: async (filler) => {
-      const condition = {
-        text: '',
-        number: '',
-        min: '',
-        max: '',
-        date: null,
-        days: '',
-        options: [] as string[],
-      };
-      const action = {
-        memberId: null,
-        priority: null,
-        labels: [] as string[],
-        status: null,
-        comment: '',
-        slackChannel: null,
-        slackMessage: '',
-        dueInDays: '',
-      };
       filler.setValues<RuleValues>('automation-rule', {
         name: 'Escalate urgent bugs',
         description: 'Routes high-priority bugs to the on-call engineer.',
-        enabled: true,
         trigger: { event: 'issue_created', fromStatus: null, toStatus: null },
-        root: {
+        conditions: {
           id: 'root',
           combinator: 'and',
           conditions: [
-            {
-              ...condition,
-              id: 'c1',
-              field: 'priority',
-              operator: 'is_any_of',
-              options: ['high', 'urgent'],
-            },
-            { ...condition, id: 'c2', field: 'labels', operator: 'is_any_of', options: ['bug'] },
+            { id: 'c1', field: 'priority', operator: 'any_of', value: ['high', 'urgent'] },
+            { id: 'c2', field: 'labels', operator: 'any_of', value: ['bug'] },
           ],
           groups: [
             {
               id: 'g1',
               combinator: 'or',
               conditions: [
-                {
-                  ...condition,
-                  id: 'c3',
-                  field: 'storyPoints',
-                  operator: 'greater_than',
-                  number: 5,
-                },
-                { ...condition, id: 'c4', field: 'isBlocked', operator: 'is_true' },
+                { id: 'c3', field: 'storyPoints', operator: 'greater_than', value: 5 },
+                { id: 'c4', field: 'isBlocked', operator: 'is_true', value: null },
               ],
               groups: [],
             },
           ],
         },
         actions: [
-          { ...action, id: 'a1', type: 'assign_member', memberId: 'ada' },
+          { id: 'a1', type: 'assign_member', params: { memberId: 'ada' } },
           {
-            ...action,
             id: 'a2',
             type: 'post_comment',
-            comment: 'Escalated: {{issue.title}} is assigned to {{issue.assignee}}.',
+            params: { body: 'Escalated: {{issue.title}} is assigned to {{issue.assignee}}.' },
           },
           {
-            ...action,
             id: 'a3',
             type: 'send_slack_message',
-            slackChannel: 'alerts',
-            slackMessage: 'Urgent bug reported',
+            params: { channel: 'alerts', message: 'Urgent bug reported' },
           },
         ],
       });

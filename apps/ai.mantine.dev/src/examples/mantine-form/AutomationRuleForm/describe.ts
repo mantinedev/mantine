@@ -1,182 +1,165 @@
 import dayjs from 'dayjs';
-import { isConditionComplete, isValidDays } from './conditions';
 import {
+  ACTION_TYPES,
+  EVENTS,
   FIELDS,
-  getOptionLabel,
+  getOperator,
   LABELS,
   MEMBERS,
+  optionLabel,
   PRIORITIES,
   SLACK_CHANNELS,
   STATUSES,
 } from './constants';
 import type {
+  ActionParams,
   ActionType,
   Condition,
-  ConditionGroup,
-  FieldKey,
-  FieldType,
+  NumberRange,
   Operator,
+  Option,
   RuleAction,
-  RuleTrigger,
+  Trigger,
   TriggerEvent,
 } from './types';
-
-export function joinList(items: string[], conjunction = 'and') {
-  if (items.length <= 1) {
-    return items.join('');
-  }
-  return `${items.slice(0, -1).join(', ')} ${conjunction} ${items[items.length - 1]}`;
-}
-
-function plural(count: number, word: string) {
-  return `${count} ${word}${count === 1 ? '' : 's'}`;
-}
-
-export function formatDate(date: string) {
-  return dayjs(date).format('MMM D, YYYY');
-}
 
 const EVENT_PHRASES: Record<TriggerEvent, string> = {
   issue_created: 'an issue is created',
   issue_updated: 'an issue is updated',
   comment_added: 'a comment is added',
   due_date_approaching: 'a due date is approaching',
-  status_changed: 'the status of an issue changes',
+  status_changed: 'the status changes',
 };
 
-export function describeTrigger(trigger: RuleTrigger) {
+export function describeTrigger(trigger: Trigger) {
   if (!trigger.event) {
     return null;
   }
-  if (trigger.event !== 'status_changed') {
-    return EVENT_PHRASES[trigger.event];
+  let phrase = `When ${EVENT_PHRASES[trigger.event]}`;
+  if (trigger.event === 'status_changed') {
+    if (trigger.fromStatus) {
+      phrase += ` from ${optionLabel(STATUSES, trigger.fromStatus)}`;
+    }
+    if (trigger.toStatus) {
+      phrase += ` to ${optionLabel(STATUSES, trigger.toStatus)}`;
+    }
   }
-  const from = trigger.fromStatus ? ` from ${getOptionLabel(STATUSES, trigger.fromStatus)}` : '';
-  const to = trigger.toStatus ? ` to ${getOptionLabel(STATUSES, trigger.toStatus)}` : '';
-  return `${EVENT_PHRASES.status_changed}${from}${to}`;
+  return phrase;
 }
 
-type Describer = (condition: Condition, noun: string) => string;
-
-function describeOptions(condition: Condition, noun: string) {
-  const { options = [], multiple } = FIELDS[condition.field!];
-  const names = condition.options.map((value) => getOptionLabel(options, value));
-  const list = joinList(names, 'or');
-
-  if (multiple) {
-    return condition.operator === 'is_any_of'
-      ? `${noun} include ${list}`
-      : `${noun} do not include ${list}`;
-  }
-  if (condition.operator === 'is_any_of') {
-    return `${noun} is ${list}`;
-  }
-  return names.length === 1 ? `${noun} is not ${list}` : `${noun} is none of ${joinList(names)}`;
+export function eventLabel(event: TriggerEvent | null) {
+  return EVENTS.find((item) => item.value === event)?.label ?? '';
 }
 
-const DESCRIBERS: { [T in FieldType]: Partial<Record<Operator, Describer>> } = {
-  text: {
-    contains: (c, noun) => `${noun} contains "${c.text.trim()}"`,
-    not_contains: (c, noun) => `${noun} does not contain "${c.text.trim()}"`,
-    equals: (c, noun) => `${noun} is "${c.text.trim()}"`,
-    is_empty: (_, noun) => `${noun} is empty`,
+export const formatDate = (value: string) => dayjs(value).format('MMM D, YYYY');
+
+const joinOr = (items: string[]) =>
+  items.length > 1 ? `${items.slice(0, -1).join(', ')} or ${items[items.length - 1]}` : items[0];
+
+const joinAnd = (items: string[]) =>
+  items.length > 1 ? `${items.slice(0, -1).join(', ')} and ${items[items.length - 1]}` : items[0];
+
+type Describe = (subject: string, value: Condition['value'], options: Option[]) => string;
+
+const isMulti = (subject: string) => subject === 'labels';
+
+// Scalar operators always hold a string or a number, see OPERATORS in constants
+const scalar = (value: Condition['value']) => String(value as string | number);
+
+const OPERATOR_PHRASES: Record<Operator, Describe> = {
+  contains: (subject, value) => `${subject} contains "${scalar(value)}"`,
+  not_contains: (subject, value) => `${subject} does not contain "${scalar(value)}"`,
+  equals: (subject, value) =>
+    typeof value === 'number'
+      ? `${subject} equals ${value}`
+      : `${subject} equals "${scalar(value)}"`,
+  not_equals: (subject, value) => `${subject} does not equal ${scalar(value)}`,
+  greater_than: (subject, value) => `${subject} is greater than ${scalar(value)}`,
+  less_than: (subject, value) => `${subject} is less than ${scalar(value)}`,
+  between: (subject, value) => {
+    const { min, max } = value as NumberRange;
+    return `${subject} is between ${min} and ${max}`;
   },
-  number: {
-    equals: (c, noun) => `${noun} is ${c.number}`,
-    not_equals: (c, noun) => `${noun} is not ${c.number}`,
-    greater_than: (c, noun) => `${noun} is greater than ${c.number}`,
-    less_than: (c, noun) => `${noun} is less than ${c.number}`,
-    between: (c, noun) => `${noun} is between ${c.min} and ${c.max}`,
+  before: (subject, value) => `${subject} is before ${formatDate(value as string)}`,
+  after: (subject, value) => `${subject} is after ${formatDate(value as string)}`,
+  within_next_days: (subject, value) =>
+    `${subject} is within the next ${scalar(value)} ${value === 1 ? 'day' : 'days'}`,
+  is_empty: (subject) => `${subject} is empty`,
+  any_of: (subject, value, options) => {
+    const labels = joinOr((value as string[]).map((item) => optionLabel(options, item)));
+    return isMulti(subject) ? `${subject} include ${labels}` : `${subject} is ${labels}`;
   },
-  date: {
-    before: (c, noun) => `${noun} is before ${formatDate(c.date!)}`,
-    after: (c, noun) => `${noun} is after ${formatDate(c.date!)}`,
-    within_next_days: (c, noun) => `${noun} is within the next ${plural(Number(c.days), 'day')}`,
-    is_empty: (_, noun) => `${noun} is empty`,
+  none_of: (subject, value, options) => {
+    const labels = joinOr((value as string[]).map((item) => optionLabel(options, item)));
+    return isMulti(subject) ? `${subject} do not include ${labels}` : `${subject} is not ${labels}`;
   },
-  option: { is_any_of: describeOptions, is_none_of: describeOptions },
-  boolean: {
-    is_true: (_, noun) => `the issue is ${noun}`,
-    is_false: (_, noun) => `the issue is not ${noun}`,
-  },
+  is_true: () => 'the issue is blocked',
+  is_false: () => 'the issue is not blocked',
 };
 
-/** Plain-language condition, `null` while the condition is incomplete */
-export function describeCondition(condition: Condition) {
-  if (!isConditionComplete(condition)) {
-    return null;
+const hasValue = (value: Condition['value']) => {
+  if (value === null || value === '') {
+    return false;
   }
-  const { type, noun } = FIELDS[condition.field as FieldKey];
-  return DESCRIBERS[type][condition.operator!]!(condition, noun);
+  if (Array.isArray(value)) {
+    return value.length > 0;
+  }
+  if (typeof value === 'object') {
+    return value.min !== '' && value.max !== '';
+  }
+  return true;
+};
+
+export function describeCondition({ field, operator, value }: Condition) {
+  if (!field) {
+    return 'Incomplete condition';
+  }
+  const definition = FIELDS[field];
+  const subject = definition.label.toLowerCase();
+  const operatorDefinition = getOperator(field, operator);
+  if (!operatorDefinition) {
+    return `${definition.label} …`;
+  }
+  if (operatorDefinition.shape !== 'none' && !hasValue(value)) {
+    return `${definition.label} ${operatorDefinition.label} …`;
+  }
+  const phrase = OPERATOR_PHRASES[operatorDefinition.value](
+    subject,
+    value,
+    definition.options ?? []
+  );
+  return phrase.charAt(0).toUpperCase() + phrase.slice(1);
 }
 
-function describeGroupParts(group: ConditionGroup): string[] {
-  const conditions = group.conditions
-    .map(describeCondition)
-    .filter((text): text is string => text !== null);
-  const groups = group.groups
-    .map((nested) => ({ parts: describeGroupParts(nested), combinator: nested.combinator }))
-    .filter(({ parts }) => parts.length > 0)
-    .map(({ parts, combinator }) => {
-      const text = parts.join(` ${combinator} `);
-      return parts.length > 1 ? `(${text})` : text;
-    });
-
-  return [...conditions, ...groups];
-}
-
-export function describeGroup(group: ConditionGroup) {
-  return describeGroupParts(group).join(` ${group.combinator} `);
-}
-
-const ACTION_DESCRIBERS: Record<ActionType, (action: RuleAction) => string> = {
-  assign_member: (action) =>
-    action.memberId
-      ? `assign to ${getOptionLabel(MEMBERS, action.memberId)}`
-      : 'assign to a member',
-  set_priority: (action) =>
-    action.priority
-      ? `set priority to ${getOptionLabel(PRIORITIES, action.priority)}`
-      : 'set the priority',
-  add_labels: (action) => {
-    const labels = action.labels.map((label) => getOptionLabel(LABELS, label));
-    if (labels.length === 0) {
-      return 'add labels';
-    }
-    return labels.length === 1 ? `add the label ${labels[0]}` : `add labels ${joinList(labels)}`;
-  },
-  move_to_status: (action) =>
-    action.status ? `move to ${getOptionLabel(STATUSES, action.status)}` : 'move to a status',
-  post_comment: () => 'post a comment',
-  send_slack_message: (action) =>
-    action.slackChannel
-      ? `send a Slack message to ${getOptionLabel(SLACK_CHANNELS, action.slackChannel)}`
-      : 'send a Slack message',
-  set_due_date: (action) =>
-    isValidDays(action.dueInDays)
-      ? `set the due date to ${plural(Number(action.dueInDays), 'day')} from now`
-      : 'set the due date',
+const ACTION_PHRASES: { [T in ActionType]: (params: ActionParams[T]) => string } = {
+  assign_member: ({ memberId }) =>
+    memberId ? `Assign to ${optionLabel(MEMBERS, memberId)}` : 'Assign to …',
+  set_priority: ({ priority }) =>
+    priority ? `Set priority to ${optionLabel(PRIORITIES, priority)}` : 'Set priority to …',
+  add_labels: ({ labels }) =>
+    labels.length > 0
+      ? `Add ${labels.length === 1 ? 'label' : 'labels'} ${joinAnd(labels.map((label) => optionLabel(LABELS, label)))}`
+      : 'Add labels …',
+  move_to_status: ({ status }) =>
+    status ? `Move to ${optionLabel(STATUSES, status)}` : 'Move to …',
+  post_comment: () => 'Post a comment',
+  send_slack_message: ({ channel }) =>
+    channel
+      ? `Send a Slack message to ${optionLabel(SLACK_CHANNELS, channel)}`
+      : 'Send a Slack message to …',
+  set_due_date: ({ days }) =>
+    days === ''
+      ? 'Set the due date to …'
+      : `Set the due date to ${days} ${days === 1 ? 'day' : 'days'} from now`,
 };
 
 export function describeAction(action: RuleAction) {
-  return action.type ? ACTION_DESCRIBERS[action.type](action) : null;
+  if (action.type === null) {
+    return 'Incomplete action';
+  }
+  return (ACTION_PHRASES[action.type] as (params: unknown) => string)(action.params);
 }
 
-export function describeRule(values: {
-  trigger: RuleTrigger;
-  root: ConditionGroup;
-  actions: RuleAction[];
-}) {
-  const trigger = describeTrigger(values.trigger);
-  if (!trigger) {
-    return null;
-  }
-  const conditions = describeGroup(values.root);
-  const actions = joinList(
-    values.actions.map(describeAction).filter((text): text is string => text !== null)
-  );
-
-  return [`When ${trigger}`, conditions && `if ${conditions}`, actions && `then ${actions}`]
-    .filter(Boolean)
-    .join(', ');
+export function actionTypeLabel(type: ActionType) {
+  return ACTION_TYPES.find((item) => item.value === type)?.label ?? type;
 }

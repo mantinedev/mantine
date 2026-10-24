@@ -22,7 +22,7 @@
   {
     "fileName": "StaticMode.module.css",
     "language": "css",
-    "code": ".main {\n  background-color: light-dark(var(--mantine-color-gray-0), var(--mantine-color-dark-8));\n}\n"
+    "code": ".main {\n  background-color: light-dark(var(--mantine-color-gray-0), var(--mantine-color-dark-9));\n}\n"
   },
   {
     "fileName": "UserMenu.tsx",

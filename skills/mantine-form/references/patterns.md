@@ -873,6 +873,10 @@ button appears, and `Table.ScrollContainer minWidth maxHeight` with `stickyHeade
 
 ## Reordering with drag and drop
 
+Give `DndContext` a stable `id`: dnd-kit numbers its `aria-describedby` ids with a global counter,
+and without the prop the server and client counters differ, which is a hydration mismatch on every
+page rendered on the server (Next.js, Remix).
+
 Id: `ReorderListItems`. With dnd-kit, use the stable item ids as sortable ids and call
 `reorderListItem` on drop:
 
@@ -888,7 +892,7 @@ const handleDragEnd = ({ active, over }: DragEndEvent) => {
   }
 };
 
-<DndContext sensors={sensors} collisionDetection={closestCenter} onDragEnd={handleDragEnd}>
+<DndContext id="positions" sensors={sensors} collisionDetection={closestCenter} onDragEnd={handleDragEnd}>
   <SortableContext items={ids} strategy={verticalListSortingStrategy}>
     {ids.map((id, index) => (
       <SortableItem key={id} id={id} index={index} form={form} />

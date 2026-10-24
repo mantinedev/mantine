@@ -8,7 +8,7 @@ import { SlackParams } from './SlackParams';
 import { StatusParams } from './StatusParams';
 import type { ActionParamsProps } from './types';
 
-export const ACTION_PARAMS: Record<ActionType, (props: ActionParamsProps) => React.ReactNode> = {
+export const ACTION_PARAMS: Record<ActionType, React.ComponentType<ActionParamsProps>> = {
   assign_member: MemberParams,
   set_priority: PriorityParams,
   add_labels: LabelsParams,

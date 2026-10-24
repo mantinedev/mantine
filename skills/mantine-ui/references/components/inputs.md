@@ -202,3 +202,19 @@ the button keeps its width and aligns with the input, not with the label.
 
 Below `sm` the pair stacks (`SimpleGrid cols={{ base: 1, sm: 2 }}` or a `flex-direction: column`
 media query); the button then spans the field's width.
+
+## Rows of unlabeled inputs
+
+A grid of inputs that repeats per row (field / operator / value, quantity / unit / price) cannot
+carry a label on every input without doubling its height. Two tools replace the labels:
+
+- A caption row above the rows, one `Text size="xs"` per column, once per group, in the same
+  grid as the rows. The row inputs keep `aria-label`s for screen readers and placeholders for
+  the empty state.
+- A sentence around a select that changes the meaning of the list: `Match [all ▾] of the
+  following conditions`, `Repeat every [2] [weeks ▾]`. The select is inline, its `aria-label` is
+  the sentence's subject, and no separate toggle sits above the list.
+
+Row controls share one size (`size="input-sm"` icons next to `sm` inputs), the last column is
+`auto` for the remove icon, and a column whose input is sometimes absent keeps its track so rows
+stay aligned.

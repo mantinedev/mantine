@@ -1,21 +1,28 @@
+import { randomId } from '@mantine/hooks';
 import type {
+  ActionParams,
   ActionType,
+  Condition,
+  ConditionGroup,
+  ConditionValue,
   FieldKey,
   FieldType,
   Operator,
   Option,
+  RuleAction,
+  RuleValues,
   SampleIssue,
   TriggerEvent,
   ValueShape,
 } from './types';
 
 export const FORM_NAME = 'automation-rule';
-export const MAX_ACTIONS = 5;
-/** Nested groups go two levels below the root group */
+
 export const MAX_GROUP_DEPTH = 2;
+export const MAX_ACTIONS = 5;
 export const MAX_DAYS = 365;
 
-export const TRIGGER_EVENTS: { value: TriggerEvent; label: string }[] = [
+export const EVENTS: { value: TriggerEvent; label: string }[] = [
   { value: 'issue_created', label: 'Issue created' },
   { value: 'issue_updated', label: 'Issue updated' },
   { value: 'comment_added', label: 'Comment added' },
@@ -50,105 +57,165 @@ export const LABELS: Option[] = [
   { value: 'feature', label: 'feature' },
   { value: 'frontend', label: 'frontend' },
   { value: 'backend', label: 'backend' },
+  { value: 'docs', label: 'docs' },
   { value: 'security', label: 'security' },
-  { value: 'documentation', label: 'documentation' },
 ];
 
 export const SLACK_CHANNELS: Option[] = [
   { value: 'engineering', label: '#engineering' },
+  { value: 'product', label: '#product' },
   { value: 'support', label: '#support' },
   { value: 'releases', label: '#releases' },
-  { value: 'alerts', label: '#alerts' },
 ];
 
-interface FieldDefinition {
+export interface FieldDefinition {
+  value: FieldKey;
   label: string;
-  /** How the field is named inside the summary sentence */
-  noun: string;
   type: FieldType;
   options?: Option[];
-  /** The issue holds several values (labels), the summary says "include" instead of "is" */
-  multiple?: boolean;
 }
 
 export const FIELDS: Record<FieldKey, FieldDefinition> = {
-  title: { label: 'Title', noun: 'title', type: 'text' },
-  description: { label: 'Description', noun: 'description', type: 'text' },
-  status: { label: 'Status', noun: 'status', type: 'option', options: STATUSES },
-  priority: { label: 'Priority', noun: 'priority', type: 'option', options: PRIORITIES },
-  assignee: { label: 'Assignee', noun: 'assignee', type: 'option', options: MEMBERS },
-  labels: { label: 'Labels', noun: 'labels', type: 'option', options: LABELS, multiple: true },
-  storyPoints: { label: 'Story points', noun: 'story points', type: 'number' },
-  dueDate: { label: 'Due date', noun: 'due date', type: 'date' },
-  createdAt: { label: 'Created at', noun: 'creation date', type: 'date' },
-  isBlocked: { label: 'Is blocked', noun: 'blocked', type: 'boolean' },
+  title: { value: 'title', label: 'Title', type: 'text' },
+  description: { value: 'description', label: 'Description', type: 'text' },
+  status: { value: 'status', label: 'Status', type: 'option', options: STATUSES },
+  priority: { value: 'priority', label: 'Priority', type: 'option', options: PRIORITIES },
+  assignee: { value: 'assignee', label: 'Assignee', type: 'option', options: MEMBERS },
+  labels: { value: 'labels', label: 'Labels', type: 'option', options: LABELS },
+  storyPoints: { value: 'storyPoints', label: 'Story points', type: 'number' },
+  dueDate: { value: 'dueDate', label: 'Due date', type: 'date' },
+  createdAt: { value: 'createdAt', label: 'Created at', type: 'date' },
+  isBlocked: { value: 'isBlocked', label: 'Is blocked', type: 'boolean' },
 };
 
-export const FIELD_OPTIONS = (Object.keys(FIELDS) as FieldKey[]).map((key) => ({
-  value: key,
-  label: FIELDS[key].label,
-}));
+export const FIELD_OPTIONS = Object.values(FIELDS).map(({ value, label }) => ({ value, label }));
 
-export const OPERATOR_LABELS: Record<Operator, string> = {
-  contains: 'Contains',
-  not_contains: 'Does not contain',
-  equals: 'Equals',
-  is_empty: 'Is empty',
-  not_equals: 'Not equals',
-  greater_than: 'Greater than',
-  less_than: 'Less than',
-  between: 'Between',
-  before: 'Before',
-  after: 'After',
-  within_next_days: 'Within the next N days',
-  is_any_of: 'Is any of',
-  is_none_of: 'Is none of',
-  is_true: 'Is true',
-  is_false: 'Is false',
+export interface OperatorDefinition {
+  value: Operator;
+  label: string;
+  shape: ValueShape;
+}
+
+export const OPERATORS: Record<FieldType, OperatorDefinition[]> = {
+  text: [
+    { value: 'contains', label: 'contains', shape: 'text' },
+    { value: 'not_contains', label: 'does not contain', shape: 'text' },
+    { value: 'equals', label: 'equals', shape: 'text' },
+    { value: 'is_empty', label: 'is empty', shape: 'none' },
+  ],
+  number: [
+    { value: 'equals', label: 'equals', shape: 'number' },
+    { value: 'not_equals', label: 'not equals', shape: 'number' },
+    { value: 'greater_than', label: 'greater than', shape: 'number' },
+    { value: 'less_than', label: 'less than', shape: 'number' },
+    { value: 'between', label: 'between', shape: 'range' },
+  ],
+  date: [
+    { value: 'before', label: 'before', shape: 'date' },
+    { value: 'after', label: 'after', shape: 'date' },
+    { value: 'within_next_days', label: 'within the next N days', shape: 'days' },
+    { value: 'is_empty', label: 'is empty', shape: 'none' },
+  ],
+  option: [
+    { value: 'any_of', label: 'is any of', shape: 'options' },
+    { value: 'none_of', label: 'is none of', shape: 'options' },
+  ],
+  boolean: [
+    { value: 'is_true', label: 'is true', shape: 'none' },
+    { value: 'is_false', label: 'is false', shape: 'none' },
+  ],
 };
 
-/** Operators of each field type and the value each of them needs */
-export const OPERATOR_SHAPES: { [T in FieldType]: Partial<Record<Operator, ValueShape>> } = {
-  text: { contains: 'text', not_contains: 'text', equals: 'text', is_empty: 'none' },
-  number: {
-    equals: 'number',
-    not_equals: 'number',
-    greater_than: 'number',
-    less_than: 'number',
-    between: 'range',
-  },
-  date: { before: 'date', after: 'date', within_next_days: 'days', is_empty: 'none' },
-  option: { is_any_of: 'options', is_none_of: 'options' },
-  boolean: { is_true: 'none', is_false: 'none' },
+export function getOperator(field: FieldKey | null, operator: Operator | null) {
+  if (!field || !operator) {
+    return undefined;
+  }
+  return OPERATORS[FIELDS[field].type].find((item) => item.value === operator);
+}
+
+export function getShape(field: FieldKey | null, operator: Operator | null): ValueShape | null {
+  return getOperator(field, operator)?.shape ?? null;
+}
+
+const EMPTY_VALUES: Record<ValueShape, () => ConditionValue> = {
+  none: () => null,
+  text: () => '',
+  number: () => '',
+  range: () => ({ min: '', max: '' }),
+  date: () => null,
+  days: () => '',
+  options: () => [],
 };
 
-export const ACTION_TYPES: { value: ActionType; label: string }[] = [
-  { value: 'assign_member', label: 'Assign to member' },
-  { value: 'set_priority', label: 'Set priority' },
-  { value: 'add_labels', label: 'Add labels' },
-  { value: 'move_to_status', label: 'Move to status' },
-  { value: 'post_comment', label: 'Post comment' },
-  { value: 'send_slack_message', label: 'Send Slack message' },
-  { value: 'set_due_date', label: 'Set due date' },
+export function emptyValue(shape: ValueShape | null): ConditionValue {
+  return shape ? EMPTY_VALUES[shape]() : null;
+}
+
+export const ACTION_TYPES: { value: ActionType; label: string; repeatable: boolean }[] = [
+  { value: 'assign_member', label: 'Assign to member', repeatable: false },
+  { value: 'set_priority', label: 'Set priority', repeatable: false },
+  { value: 'add_labels', label: 'Add labels', repeatable: true },
+  { value: 'move_to_status', label: 'Move to status', repeatable: false },
+  { value: 'post_comment', label: 'Post comment', repeatable: true },
+  { value: 'send_slack_message', label: 'Send Slack message', repeatable: false },
+  { value: 'set_due_date', label: 'Set due date', repeatable: false },
 ];
-
-export const REPEATABLE_ACTIONS: ActionType[] = ['add_labels', 'post_comment'];
 
 export const COMMENT_PLACEHOLDERS = ['{{issue.title}}', '{{issue.assignee}}'];
 
+const EMPTY_PARAMS: { [T in ActionType]: () => ActionParams[T] } = {
+  assign_member: () => ({ memberId: null }),
+  set_priority: () => ({ priority: null }),
+  add_labels: () => ({ labels: [] }),
+  move_to_status: () => ({ status: null }),
+  post_comment: () => ({ body: '' }),
+  send_slack_message: () => ({ channel: null, message: '' }),
+  set_due_date: () => ({ days: '' }),
+};
+
+export function createAction(type: ActionType | null = null, id = randomId()): RuleAction {
+  if (type === null) {
+    return { id, type: null, params: {} };
+  }
+  return { id, type, params: EMPTY_PARAMS[type]() } as RuleAction;
+}
+
+export function createCondition(): Condition {
+  return { id: randomId(), field: null, operator: null, value: null };
+}
+
+export function createGroup(withCondition = true): ConditionGroup {
+  return {
+    id: randomId(),
+    combinator: 'and',
+    conditions: withCondition ? [createCondition()] : [],
+    groups: [],
+  };
+}
+
+export function createInitialValues(): RuleValues {
+  return {
+    name: '',
+    description: '',
+    trigger: { event: null, fromStatus: null, toStatus: null },
+    conditions: createGroup(),
+    actions: [createAction()],
+  };
+}
+
 export const SAMPLE_ISSUE: SampleIssue = {
-  title: 'Checkout button does nothing in Safari',
-  description: 'Clicking Pay on the checkout page has no effect in Safari 18.',
+  title: 'Checkout button does not respond on Safari',
+  description: 'Clicking Pay now on Safari 17 does nothing, no error in the console.',
   status: 'in_progress',
   priority: 'high',
   assignee: 'ada',
   labels: ['bug', 'frontend'],
   storyPoints: 3,
-  dueDate: '2026-10-28',
+  dueDate: '2026-10-30',
   createdAt: '2026-10-12',
   isBlocked: false,
 };
 
-export function getOptionLabel(options: Option[], value: string | null) {
+export function optionLabel(options: Option[], value: string | null) {
   return options.find((option) => option.value === value)?.label ?? value ?? '';
 }

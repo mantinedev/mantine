@@ -1,10 +1,23 @@
-.row {
+.row,
+.captions {
   display: grid;
-  grid-template-columns: minmax(0, 1fr);
   gap: var(--mantine-spacing-xs);
   align-items: start;
 
-  @media (min-width: $mantine-breakpoint-sm) {
-    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) minmax(0, 1.4fr) auto;
+  @media (max-width: $mantine-breakpoint-sm) {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+/* The last column holds the remove button: as wide as the sm input it sits next to */
+.row {
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) minmax(0, 1.4fr) auto;
+}
+
+.captions {
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) minmax(0, 1.4fr) 36px;
+
+  @media (max-width: $mantine-breakpoint-sm) {
+    display: none;
   }
 }

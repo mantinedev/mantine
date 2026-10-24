@@ -57,4 +57,16 @@ A page made of sections (settings, a long form) puts each section's title and on
 above its fields, full width: `Title order={3} c="var(--mantine-color-bright)"` then `Text
 size="sm"`, then the fields. No side column for the header: a left column takes a quarter of the
 width from every input and the description rarely needs more than one line. Sections are
-separated by `Divider` or the page `Stack gap="xl"`.
+separated by `Divider` or the page `Stack gap="xl"`. A title and a description alone do not
+separate sections whose body is a list of rows (conditions, actions, line items): those need a
+`Fieldset` legend or a container, see [fieldset](fieldset.md).
+
+## Derived summaries
+
+Text the form derives from its own values (what a rule does, what a schedule produces, what an
+order costs) is structured, not a paragraph: one line for the subject (`When an issue is
+created`), then a `List size="sm"` per group of items (conditions as bullets, ordered steps as
+`type="ordered"`), nested lists for nested groups. It sits once, below the fields it describes and
+above the submit row, in plain `Text`, with a placeholder line while there is nothing to
+describe. A sentence that joins twelve clauses with commas and parentheses is unreadable past the
+third clause.

@@ -7,7 +7,7 @@
   {
     "fileName": "NestedAppShell.module.css",
     "language": "css",
-    "code": ".main {\n  background-color: light-dark(var(--mantine-color-gray-0), var(--mantine-color-dark-8));\n}\n\n.projectName {\n  font-weight: var(--mantine-font-weight-medium);\n}\n"
+    "code": ".main {\n  background-color: light-dark(var(--mantine-color-gray-0), var(--mantine-color-dark-9));\n}\n\n.projectName {\n  font-weight: var(--mantine-font-weight-medium);\n}\n"
   },
   {
     "fileName": "SettingsForm.tsx",

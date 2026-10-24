@@ -9,7 +9,7 @@ import type { ValueInputProps } from './types';
 
 export const VALUE_INPUTS: Record<
   Exclude<ValueShape, 'none'>,
-  (props: ValueInputProps) => React.ReactNode
+  React.ComponentType<ValueInputProps>
 > = {
   text: TextValue,
   number: NumberValue,
