@@ -18,7 +18,8 @@ including `children`, are updated every time the component that called the hook 
 <Demo data={ModalDemos.useModalHook} />
 
 `modal.open` accepts props that are applied on top of the hook options until the next `modal.open` call.
-Use it to open the same modal with different content:
+Use it to open the same modal with different content. The content is remounted on every `modal.open` call
+unless `keepMounted` is set, so a form inside it always starts from its initial values:
 
 <Demo data={ModalDemos.useModalOverrides} />
 

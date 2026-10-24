@@ -3,6 +3,7 @@ import { useSyncExternalStore } from 'react';
 export interface ManagedOverlayEntry<Props extends Record<string, any>> {
   id: string;
   opened: boolean;
+  openCount: number;
   props: Props;
   overrides: Partial<Props> | null;
   onClose: () => void;

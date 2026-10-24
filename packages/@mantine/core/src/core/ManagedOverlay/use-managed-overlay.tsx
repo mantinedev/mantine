@@ -55,6 +55,7 @@ export function useManagedOverlay<Props extends Record<string, any>>(
   const [opened, setOpened] = useState(options.defaultOpened || false);
   const [overrides, setOverrides] = useState<Partial<Props> | null>(null);
   const openedRef = useRef(opened);
+  const openCountRef = useRef(0);
   const optionsRef = useLatestRef(options);
   const syncedRef = useRef<{ id: string; opened: boolean } | null>(null);
   openedRef.current = opened;
@@ -67,6 +68,7 @@ export function useManagedOverlay<Props extends Record<string, any>>(
     }
 
     openedRef.current = true;
+    openCountRef.current += 1;
     setOpened(true);
     optionsRef.current.onOpen?.();
   }, []);
@@ -98,7 +100,14 @@ export function useManagedOverlay<Props extends Record<string, any>>(
       synced.opened;
 
     if (shouldSync) {
-      store.setEntry({ id, opened, props: props as unknown as Props, overrides, onClose: close });
+      store.setEntry({
+        id,
+        opened,
+        openCount: openCountRef.current,
+        props: props as unknown as Props,
+        overrides,
+        onClose: close,
+      });
       syncedRef.current = { id, opened };
     }
   });

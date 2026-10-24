@@ -1,4 +1,4 @@
-import { use, useEffect, useId } from 'react';
+import { Fragment, use, useEffect, useId } from 'react';
 import { useProviderOutletStore } from '../MantineProvider/ProviderOutlets';
 import { useProps } from '../MantineProvider/use-props/use-props';
 import { OverlayStackContextType } from '../OverlayStack';
@@ -44,7 +44,10 @@ function ManagedOverlay({
   id,
 }: ConfigProps & { store: ManagedOverlayStore<any>; id: string }) {
   const entry = useManagedOverlayEntry(store, id);
-  const { keepMounted } = useProps(config.name, null, { ...entry?.props, ...entry?.overrides });
+  const { keepMounted, children } = useProps(config.name, null, {
+    ...entry?.props,
+    ...entry?.overrides,
+  });
 
   if (!entry) {
     return null;
@@ -65,7 +68,9 @@ function ManagedOverlay({
         stackId={entry.id}
         opened={entry.opened}
         onClose={entry.onClose}
-      />
+      >
+        {keepMounted ? children : <Fragment key={entry.openCount}>{children}</Fragment>}
+      </Component>
     </ManagedOverlayStackGate>
   );
 }

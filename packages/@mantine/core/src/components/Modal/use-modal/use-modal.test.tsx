@@ -460,6 +460,36 @@ describe('@mantine/core/useModal', () => {
   });
 
   describe('exit transition', () => {
+    it('remounts content when reopened during the exit transition', async () => {
+      function Content() {
+        const [count, setCount] = useState(0);
+        return (
+          <button type="button" onClick={() => setCount((c) => c + 1)}>
+            count {count}
+          </button>
+        );
+      }
+
+      render(
+        <Caller
+          options={{ title: 'Remount', transitionProps: { duration: 30 }, children: <Content /> }}
+        />,
+        undefined,
+        { env: 'default' }
+      );
+
+      fireEvent.click(screen.getByText('open'));
+      await waitFor(() => expect(screen.getByText('count 0')).toBeInTheDocument());
+      fireEvent.click(screen.getByText('count 0'));
+      expect(screen.getByText('count 1')).toBeInTheDocument();
+
+      fireEvent.click(screen.getByText('close open'));
+      fireEvent.click(screen.getByText('open'));
+      await act(() => new Promise((resolve) => setTimeout(resolve, 100)));
+
+      expect(screen.getByText('count 0')).toBeVisible();
+    });
+
     it.each(['props', 'overrides', 'theme'] as const)(
       'keeps content state after close and reopen with keepMounted from %s',
       async (source) => {
