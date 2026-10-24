@@ -20,6 +20,8 @@ export { DrawerHeader } from './DrawerHeader';
 export { DrawerOverlay } from './DrawerOverlay';
 export { DrawerTitle } from './DrawerTitle';
 export { useDrawer, DrawerOutlet } from './use-drawer';
+export { useDrawerCloseGuard } from './use-drawer-close-guard';
+export type { DrawerCloseGuard } from './use-drawer-close-guard';
 export type { UseDrawerOptions, UseDrawerReturnValue } from './use-drawer';
 export { DrawerStack, DrawerStackContext } from './DrawerStack';
 export { useDrawerContext } from './Drawer.context';

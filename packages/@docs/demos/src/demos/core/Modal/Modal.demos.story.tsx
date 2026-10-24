@@ -137,3 +137,8 @@ export const Demo_useModalShared = {
   name: '⭐ Demo: useModalShared',
   render: renderDemo(demos.useModalShared),
 };
+
+export const Demo_closeGuard = {
+  name: '⭐ Demo: closeGuard',
+  render: renderDemo(demos.closeGuard),
+};

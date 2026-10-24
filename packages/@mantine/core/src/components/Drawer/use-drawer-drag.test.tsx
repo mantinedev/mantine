@@ -1,5 +1,5 @@
 import { useRef } from 'react';
-import { act, fireEvent } from '@testing-library/react';
+import { act, fireEvent, waitFor } from '@testing-library/react';
 import { render, screen } from '@mantine-tests/core';
 import { ColorPicker } from '../ColorPicker';
 import { RangeSlider, Slider } from '../Slider';
@@ -9,7 +9,7 @@ import { useDrawerDrag, UseDrawerDragInput } from './use-drawer-drag';
 const DRAWER_SIZE = 400;
 
 interface ProbeProps extends Partial<UseDrawerDragInput> {
-  onClose: () => void;
+  onClose: () => void | Promise<boolean>;
   scrollTop?: number;
   children?: React.ReactNode;
 }
@@ -971,5 +971,52 @@ describe('@mantine/core/use-drawer-drag release boundaries', () => {
     fireOnWindow('pointermove', { y: -80, t: 20 });
     fireOnWindow('pointerup', { y: -80, t: 30 });
     expect(onSnapPointChange).toHaveBeenCalledWith(1);
+  });
+
+  it('restores the snap point offset and progress when a swipe to close is denied', async () => {
+    const onClose = jest.fn(() => Promise.resolve(false));
+    const onProgress = jest.fn();
+    render(
+      <Probe
+        onClose={onClose}
+        onProgress={onProgress}
+        snapPoints={[0.5, 1]}
+        defaultActiveSnapPoint={1}
+      />
+    );
+    fireOn(screen.getByTestId('handle'), 'pointerdown', { y: 0, t: 0 });
+    fireOnWindow('pointermove', { y: 10, t: 10 });
+    fireOnWindow('pointermove', { y: 300, t: 20 });
+    fireOnWindow('pointerup', { y: 300, t: 30 });
+
+    expect(onClose).toHaveBeenCalledTimes(1);
+    expect(onProgress).toHaveBeenLastCalledWith(1);
+
+    await waitFor(() => expect(onProgress).toHaveBeenLastCalledWith(0));
+    expect(screen.getByTestId('offset')).toHaveTextContent('0');
+  });
+
+  it('keeps the dismissal progress when a swipe to close is allowed', async () => {
+    const onClose = jest.fn(() => Promise.resolve(true));
+    const onProgress = jest.fn();
+    render(
+      <Probe
+        onClose={onClose}
+        onProgress={onProgress}
+        snapPoints={[0.5, 1]}
+        defaultActiveSnapPoint={1}
+      />
+    );
+    fireOn(screen.getByTestId('handle'), 'pointerdown', { y: 0, t: 0 });
+    fireOnWindow('pointermove', { y: 10, t: 10 });
+    fireOnWindow('pointermove', { y: 300, t: 20 });
+    fireOnWindow('pointerup', { y: 300, t: 30 });
+
+    await act(async () => {
+      await Promise.resolve();
+    });
+
+    expect(onClose).toHaveBeenCalledTimes(1);
+    expect(onProgress).toHaveBeenLastCalledWith(1);
   });
 });

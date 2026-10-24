@@ -20,6 +20,7 @@ import {
   ModalBaseProps,
   ModalBaseProvider,
   ModalBaseStylesNames,
+  useCloseGuards,
   useOverlay,
 } from '../ModalBase';
 import { useBelowBreakpoint } from '../ModalBase/use-below-breakpoint';
@@ -162,13 +163,15 @@ export const ModalRoot = factory<ModalRootFactory>((_props) => {
     varsResolver,
   });
 
+  const { requestClose, registerCloseGuard } = useCloseGuards(opened, onClose);
+
   const overlay = useOverlay({
     id,
     transitionProps,
     opened,
     trapFocus,
     closeOnEscape,
-    onClose,
+    onClose: requestClose,
     returnFocus,
     handledEscapeEvents: __handledEscapeEvents,
     stackActive: __stackActive,
@@ -192,7 +195,9 @@ export const ModalRoot = factory<ModalRootFactory>((_props) => {
         value={{
           ...overlay,
           opened,
-          onClose,
+          onClose: requestClose,
+          requestClose,
+          registerCloseGuard,
           closeOnClickOutside,
           onExitTransitionEnd,
           onEnterTransitionEnd,

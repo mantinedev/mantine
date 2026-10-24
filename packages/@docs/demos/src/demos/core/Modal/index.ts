@@ -25,3 +25,4 @@ export { useModalOverrides } from './Modal.demo.useModalOverrides';
 export { useModalTable } from './Modal.demo.useModalTable';
 export { useModalConfirm } from './Modal.demo.useModalConfirm';
 export { useModalShared } from './Modal.demo.useModalShared';
+export { closeGuard } from './Modal.demo.closeGuard';

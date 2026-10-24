@@ -25,6 +25,8 @@ export { useModalStackContext } from './use-modal-stack-context';
 export type { UseModalStackContextReturnType } from './use-modal-stack-context';
 export { useModalContext } from './Modal.context';
 export { useModal, ModalOutlet } from './use-modal';
+export { useModalCloseGuard } from './use-modal-close-guard';
+export type { ModalCloseGuard } from './use-modal-close-guard';
 export type { UseModalOptions, UseModalReturnValue } from './use-modal';
 
 export type {

@@ -20,6 +20,7 @@ import {
   ModalBaseProps,
   ModalBaseProvider,
   ModalBaseStylesNames,
+  useCloseGuards,
   useOverlay,
 } from '../ModalBase';
 import { useBelowBreakpoint } from '../ModalBase/use-below-breakpoint';
@@ -250,13 +251,15 @@ export const DrawerRoot = factory<DrawerRootFactory>((_props) => {
   const drawerTransition = (dir === 'rtl' ? rtlTransitions : transitions)[position];
   const mergedTransitionProps = { transition: drawerTransition, ...transitionProps };
 
+  const { requestClose, registerCloseGuard } = useCloseGuards(opened, onClose);
+
   const overlay = useOverlay({
     id,
     transitionProps: mergedTransitionProps,
     opened,
     trapFocus,
     closeOnEscape,
-    onClose,
+    onClose: requestClose,
     returnFocus,
     handledEscapeEvents: __handledEscapeEvents,
     stackActive: __stackActive,
@@ -287,7 +290,9 @@ export const DrawerRoot = factory<DrawerRootFactory>((_props) => {
         value={{
           ...overlay,
           opened,
-          onClose,
+          onClose: requestClose,
+          requestClose,
+          registerCloseGuard,
           closeOnClickOutside,
           onExitTransitionEnd,
           onEnterTransitionEnd,

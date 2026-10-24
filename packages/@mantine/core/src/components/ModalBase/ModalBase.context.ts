@@ -1,5 +1,6 @@
 import { createSafeContext } from '../../core';
 import { TransitionOverride } from '../Transition';
+import { RegisterCloseGuard } from './use-close-guards';
 import { UseOverlayReturn } from './use-overlay';
 
 interface ModalBaseContextValue extends UseOverlayReturn {
@@ -11,6 +12,8 @@ interface ModalBaseContextValue extends UseOverlayReturn {
 
   opened: boolean;
   onClose: () => void;
+  requestClose: () => Promise<boolean>;
+  registerCloseGuard: RegisterCloseGuard;
 
   closeOnEscape: boolean | undefined;
   trapFocus: boolean | undefined;

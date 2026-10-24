@@ -74,7 +74,7 @@ export const DrawerContent = factory<DrawerContentFactory>((_props) => {
     dir,
     enabled: !!(ctx.withSwipe && active),
     opened: baseCtx.opened,
-    onClose: baseCtx.onClose,
+    onClose: baseCtx.requestClose,
     scrollRef,
     threshold: ctx.swipeThreshold,
     onProgress: __onDragProgress,

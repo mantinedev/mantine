@@ -268,6 +268,25 @@ it will make the component less accessible.
 - `closeOnClickOutside` – determines whether the drawer should be closed when user clicks on the overlay
 - `returnFocus` – determines whether focus should be returned to the element that was focused before the drawer was opened
 
+## Close guard
+
+`useDrawerCloseGuard` works the same way as [useModalCloseGuard](/core/modal/#close-guard).
+The guard is called before the drawer is closed with the close button, Escape, overlay click or swipe:
+
+```tsx
+import { Button, useDrawerCloseGuard } from '@mantine/core';
+
+function DrawerContent({ submitting }: { submitting: boolean }) {
+  const closeDrawer = useDrawerCloseGuard(() => !submitting);
+
+  return (
+    <Button variant="default" onClick={closeDrawer}>
+      Cancel
+    </Button>
+  );
+}
+```
+
 ## react-remove-scroll settings
 
 `Drawer` uses [react-remove-scroll](https://github.com/theKashey/react-remove-scroll)

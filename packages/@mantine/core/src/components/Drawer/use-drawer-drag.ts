@@ -10,7 +10,7 @@ export interface UseDrawerDragInput {
   enabled: boolean;
   /** drawer opened state; the uncontrolled active snap point resets to its default every time it becomes `true` */
   opened?: boolean;
-  onClose: () => void;
+  onClose: () => void | Promise<boolean>;
   /** ref to the content root; used as the upper boundary when resolving the scrollable container under the pointer */
   scrollRef: React.RefObject<HTMLElement | null>;
   /** fraction of drawer size past which release dismisses @default 0.25 */
@@ -267,7 +267,17 @@ export function useDrawerDrag({
 
         if (size > 0 && (pastSmallest || (fastFlick && projected > smallestRest))) {
           onProgress?.(1);
-          onClose();
+          const closing = onClose();
+
+          if (closing) {
+            closing.then((closed) => {
+              if (!closed) {
+                setOffset(current.restOffset);
+                onProgress?.(0);
+              }
+            });
+          }
+
           return;
         }
 

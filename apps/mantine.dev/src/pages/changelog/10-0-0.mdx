@@ -244,6 +244,13 @@ Pass props to `open` to change the content or settings for one opening:
 
 <Demo data={DrawerDemos.useDrawerHook} />
 
+## Modal and Drawer close guard
+
+New [useModalCloseGuard](/core/modal/#close-guard) and `useDrawerCloseGuard` hooks are called inside
+modal content to keep the modal opened while a form is submitting or to ask before discarding changes:
+
+<Demo data={ModalDemos.closeGuard} />
+
 ## Alert redesign
 
 [Alert](/core/alert) has a new look:

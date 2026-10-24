@@ -206,6 +206,16 @@ it will make the component less accessible.
 - `closeOnClickOutside` – determines whether the modal should be closed when the user clicks on the overlay
 - `returnFocus` – determines whether focus should be returned to the element that was focused before the modal was opened
 
+## Close guard
+
+Use the `useModalCloseGuard` hook inside modal content to decide whether the user can close the modal.
+The guard is called when the close button is clicked, Escape is pressed or the overlay is clicked.
+Return `false`, or a promise that resolves to `false`, to keep the modal opened.
+The hook returns a function that closes the modal through the same guard, use it for Cancel buttons.
+`modal.close()` and the `opened` prop are not affected by guards:
+
+<Demo data={ModalDemos.closeGuard} />
+
 ## react-remove-scroll settings
 
 `Modal` uses the [react-remove-scroll](https://github.com/theKashey/react-remove-scroll)
