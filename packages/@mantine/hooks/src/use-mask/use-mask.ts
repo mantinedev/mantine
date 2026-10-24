@@ -5,7 +5,7 @@ const DEFAULT_TOKENS: Record<string, RegExp> = {
   a: /[A-Za-z]/,
   A: /[A-Z]/,
   '*': /[A-Za-z0-9]/,
-  '#': /[-+0-9]/,
+  '#': /[+\-0-9]/,
 };
 
 export interface UseMaskOptions {
