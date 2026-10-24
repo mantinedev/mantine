@@ -1050,34 +1050,61 @@ the pending path and focuses it in `Accordion.Panel onTransitionEnd`.
 
 ## Form in a modal
 
-Id: `FormInModal`. Reset the form whenever the modal closes, including after a successful submit,
-and block closing while submitting:
+Id: `FormInModal`. The form lives in the modal content: the component rendered as `children`
+owns its `useForm`, and `useModal` remounts its content on every `open()`, so every opening starts
+clean and nothing is reset. `useModalCloseGuard`
+keeps the modal open while submitting; the function it returns closes through the guard and is
+used for Cancel. `modal.close()` is not guarded, so the save handler can close while
+`form.submitting` is still true:
 
 ```tsx
-const handleSubmit = async (values: UserValues) => {
-  await createUser(values);
+function UserForm({ user, isNew, onSave }: UserFormProps) {
+  const form = useForm<User>({ initialValues: user, validate: USER_RULES });
+  const closeModal = useModalCloseGuard(() => !form.submitting);
+
+  const handleSubmit = async (values: User) => {
+    onSave(await saveUser(values));
+  };
+
+  return (
+    <form onSubmit={form.onSubmit(handleSubmit, handleErrors)}>
+      <TextInput label="Name" placeholder="Name" data-autofocus {...form.getInputProps('name')} />
+      <Group justify="flex-end" mt="md">
+        <Button variant="default" onClick={closeModal} disabled={form.submitting}>Cancel</Button>
+        <Button type="submit" loading={form.submitting}>{isNew ? 'Add user' : 'Save changes'}</Button>
+      </Group>
+    </form>
+  );
+}
+
+// In the list component: one modal, Add and every Edit button open it with their own content
+const modal = useModal({ closeOnClickOutside: false });
+
+const handleSave = (user: User) => {
+  setUsers((current) =>
+    current.some((item) => item.id === user.id)
+      ? current.map((item) => (item.id === user.id ? user : item))
+      : [...current, user]
+  );
   modal.close();
 };
 
-// onClose runs for every way the modal is closed, including a successful submit
-const modal = useModal({
-  title: 'Add user',
-  onClose: form.reset,
-  closeOnClickOutside: !form.submitting,
-  closeOnEscape: !form.submitting,
-  withCloseButton: !form.submitting,
-  children: (
-    <form onSubmit={form.onSubmit(handleSubmit, handleErrors)}>
-      <UserForm form={form} onCancel={() => modal.close()} />
-    </form>
-  ),
-});
-
-<Button onClick={() => modal.open()}>Add user</Button>;
+const openEditor = (user: User | null) => {
+  modal.open({
+    title: user ? 'Edit user' : 'Add user',
+    children: <UserForm user={user ?? createUser()} isNew={!user} onSave={handleSave} />,
+  });
+};
 ```
 
-With `<Modal opened onClose>`, call `form.reset()` in the same `onClose`. Put `data-autofocus` on
-the first input.
+Handlers passed through `open()` are captured at click time: update through functional `setState`
+or form list handlers, never through the list variable of that render. Validation that depends on
+the other items (a unique email) receives them as a prop computed at open time. With an inline
+`<Modal>` (9.x), put `key={user.id}` on the form component so it remounts per record.
+
+A form owned by the component that calls `useModal` (needed when the page reads the form while
+the modal is open) is reset when the modal opens, `onOpen: form.reset`, never in `onClose`: a
+reset on close blanks the fields while the modal is still fading out.
 
 ---
 
@@ -1220,14 +1247,16 @@ After a successful save, `form.setInitialValues(saved)` and `form.resetDirty(sav
 
 ## Reusing one form for different records
 
-`initialize` works once. For a form that stays mounted and is opened for different records (an
-edit dialog over a table), set new initial values and reset:
+The default is one form per record: render the form component with the record as
+`initialValues` and let it remount per record (`useModal` content remounts on every open, see
+[form in a modal](#form-in-a-modal); elsewhere use `key={record.id}`). When one
+long-lived form must switch records (a details panel beside a table), `initialize` is not an
+option because it works once. Set new initial values and reset when the record changes:
 
 ```tsx
-const openFor = (user: UserValues) => {
+const showRecord = (user: UserValues) => {
   form.setInitialValues(user);
   form.reset();
-  setOpened(true);
 };
 ```
 

@@ -20,6 +20,9 @@ expect(screen.queryByRole('dialog')).not.toBeInTheDocument();
 - The close button is `getByRole('button', { name: 'Close' })` (or the `closeButtonProps['aria-label']`).
 - `Escape` closes: `await user.keyboard('{Escape}')`; click outside: `await user.click(document.body)`.
 - A modal rendered with `useModal` needs no `Modal.Outlet` in tests; the provider renders it.
+- A close blocked by `useModalCloseGuard` keeps the dialog in the DOM right after Escape or the
+  close button click; a guard that resolves asynchronously closes later, so `waitFor` the dialog
+  to disappear. `modal.close()` is never guarded.
 - Focus: after close, the element that opened the modal has focus — assert it when the component
   promises it.
 

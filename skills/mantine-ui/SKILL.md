@@ -221,6 +221,6 @@ component you are about to use, then write the UI.
 - [skeleton](references/components/skeleton.md) — loading states that keep the layout
 - [fieldset](references/components/fieldset.md) — when a legend works and when it does not
 - [dropzone](references/components/dropzone.md) — size, texts, accepted files, previews
-- [modal](references/components/modal.md) — `useModal`, forms in modals, one modal for many items, closing
+- [modal](references/components/modal.md) — `useModal`, forms in modals, one modal for many items, close guard, closing
 - [transitions](references/components/transitions.md) — exiting elements keep their content
 - [text](references/components/text.md) — hierarchy, secondary text, values, required markers
