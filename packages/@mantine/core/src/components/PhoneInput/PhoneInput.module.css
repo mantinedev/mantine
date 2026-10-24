@@ -37,6 +37,11 @@
     width: 20px;
     height: 20px;
   }
+
+  & [data-phone-input-globe] {
+    width: 1.25em;
+    height: 1.25em;
+  }
 }
 
 .countryButtonCode {

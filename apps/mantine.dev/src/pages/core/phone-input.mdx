@@ -7,7 +7,8 @@ export default Layout(MDX_DATA.PhoneInput);
 ## Usage
 
 `PhoneInput` is an international phone number input with a country selector
-and per-country formatting:
+and per-country formatting. Set `defaultCountry` prop: without it, no country is selected
+until the user picks one or types a dial code:
 
 <Demo data={PhoneInputDemos.usage} />
 

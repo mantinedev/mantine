@@ -23,6 +23,7 @@ import { filterCountries, getCountries } from './get-countries/get-countries';
 import { getDigits } from './get-digits/get-digits';
 import { guessCountry, matchesAreaCode } from './guess-country/guess-country';
 import { ALL_COUNTRIES, PhoneInputCountryData } from './phone-data';
+import { PhoneInputGlobeIcon } from './PhoneInputGlobeIcon';
 import classes from './PhoneInput.module.css';
 
 export type PhoneInputStylesNames =
@@ -421,7 +422,11 @@ export const PhoneInput = factory<PhoneInputFactory>((_props) => {
     <span {...getStyles('countryButtonFlag')}>{renderFlag(selectedCountry)}</span>
   ) : selectedCountry ? (
     <span {...getStyles('countryButtonCode')}>{selectedCountry.iso2.toUpperCase()}</span>
-  ) : null;
+  ) : (
+    <span {...getStyles('countryButtonFlag')}>
+      <PhoneInputGlobeIcon />
+    </span>
+  );
 
   return (
     <Combobox

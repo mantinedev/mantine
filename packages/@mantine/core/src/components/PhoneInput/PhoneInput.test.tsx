@@ -538,6 +538,31 @@ describe('@mantine/core/PhoneInput', () => {
     expect(container.querySelector('[data-combobox-chevron]')).not.toBe(null);
   });
 
+  it('renders placeholder icon with accessible name when no country is selected', () => {
+    render(<PhoneInput label="Phone" />);
+    const button = screen.getByRole('button', { name: 'Select country' });
+    expect(button.querySelector('[data-phone-input-globe]')).not.toBe(null);
+  });
+
+  it('replaces placeholder icon with country code once a country is selected', async () => {
+    render(<PhoneInput label="Phone" onlyCountries={['us', 'gb']} />);
+    await userEvent.click(screen.getByRole('button', { name: 'Select country' }));
+    await userEvent.click(screen.getByRole('option', { name: /United Kingdom/ }));
+
+    const button = screen.getByRole('button', { name: 'United Kingdom' });
+    expect(button.querySelector('[data-phone-input-globe]')).toBe(null);
+    expect(button).toHaveTextContent('GB');
+  });
+
+  it('passes null to renderFlag instead of the placeholder icon when no country is selected', () => {
+    const renderFlag = jest.fn(() => <span data-testid="custom-flag" />);
+    render(<PhoneInput label="Phone" renderFlag={renderFlag} />);
+    const button = screen.getByRole('button', { name: 'Select country' });
+    expect(renderFlag).toHaveBeenCalledWith(null);
+    expect(button.querySelector('[data-testid="custom-flag"]')).not.toBe(null);
+    expect(button.querySelector('[data-phone-input-globe]')).toBe(null);
+  });
+
   describe('country detection follows the resolved value', () => {
     it.each<FormMode>(['uncontrolled', 'controlled'])(
       'restores country and formatting after form.reset() in %s form mode',

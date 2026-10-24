@@ -24,6 +24,22 @@ export function Usage() {
   );
 }
 
+export function NoDefaultCountry() {
+  return (
+    <div style={{ padding: 40, maxWidth: 340 }}>
+      <PhoneInput label="No defaultCountry" placeholder="Your phone number" />
+      <PhoneInput label="With chevron" placeholder="Your phone number" withChevron mt="md" />
+      <PhoneInput
+        label="Custom flag"
+        placeholder="Your phone number"
+        renderFlag={renderFlag}
+        mt="md"
+      />
+      <PhoneInput label="Size xl" placeholder="Your phone number" size="xl" mt="md" />
+    </div>
+  );
+}
+
 export function DefaultValue() {
   return (
     <div style={{ padding: 40, maxWidth: 340 }}>
