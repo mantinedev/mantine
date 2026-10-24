@@ -64,7 +64,8 @@ function Demo() {
 ## Bottom section
 
 Use `bottomSection` prop to render content inside the input border at the bottom.
-This is useful for displaying character counters, hints, or other supplementary information:
+This is useful for displaying character counters, hints, or other supplementary information.
+A click on the bottom section focuses the textarea. If the section contains buttons or links, set `bottomSectionPointerEvents="all"`:
 
 <Demo data={TextareaDemos.bottomSection} />
 

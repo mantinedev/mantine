@@ -24,6 +24,8 @@ export const InputStylesApi: StylesApiData<InputFactory> = {
       '--input-radius': '`border-radius` of the input element',
       '--input-left-section-pointer-events': 'Controls `pointer-events` of the left section',
       '--input-right-section-pointer-events': 'Controls `pointer-events` of the right section',
+      '--input-bottom-section-pointer-events':
+        'Controls `pointer-events` of the bottom section, `none` by default',
     },
   },
 

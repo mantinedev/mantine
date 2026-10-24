@@ -639,6 +639,7 @@ with the same font size as other inputs:
 - [PhoneInput](/core/phone-input) without `defaultCountry` now displays a globe icon in the country button until a country is selected.
 - [Select](/core/select#scrollable-dropdown) and other `Combobox`-based components now support `scrollBehavior="smooth"` for keyboard navigation.
 - [Stepper.Step](/core/stepper#wrapping-stepperstep) and [Timeline.Item](/core/timeline#wrapping-timelineitem) can now be wrapped in other components.
+- [Textarea](/core/textarea#bottom-section) `bottomSection` no longer blocks clicks: a click on it focuses the textarea. Set `bottomSectionPointerEvents="all"` for interactive content.
 - [Timeline.Item](/core/timeline) now supports `active` and `lineActive` props.
 - [Tooltip](/core/tooltip) now opens on keyboard focus, set `events={{ hover: true, focus: false, touch: false }}` to restore the previous behavior.
 - [Combobox.Target](/core/combobox) now sets `role="combobox"` and `aria-expanded`, set `withExpandedAttribute={false}` to restore the previous behavior.

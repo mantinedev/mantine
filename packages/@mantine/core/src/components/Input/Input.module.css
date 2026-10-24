@@ -63,6 +63,28 @@
 
   &[data-with-bottom-section] {
     --input-bottom-section-height: 28px;
+
+    &::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      border: rem(1px) solid var(--input-bd);
+      border-radius: var(--input-radius);
+      transition: border-color 100ms ease;
+      pointer-events: none;
+    }
+
+    &:has(> .input:is(:focus, :focus-within)) {
+      --input-bd: var(--input-bd-focus);
+    }
+
+    &[data-error]:has(> .input:is(:focus, :focus-within)):not([data-variant='unstyled']) {
+      --input-bd: var(--mantine-color-error);
+    }
+
+    &[data-success]:has(> .input:is(:focus, :focus-within)):not([data-variant='unstyled']) {
+      --input-bd: var(--mantine-color-success);
+    }
   }
 
   &[data-multiline] {
@@ -209,6 +231,10 @@
     --input-overflow: hidden;
   }
 
+  &:where(textarea) {
+    clip-path: inset(0 round var(--input-radius));
+  }
+
   /* Used as data attribute in PillsInput component, does not have associated prop on the Input component */
   &[data-pills] {
     .wrapper:where(:not([data-variant='unstyled'])) > & {
@@ -279,22 +305,22 @@
   }
 
   .wrapper[data-with-bottom-section] > & {
-    padding-bottom: calc(var(--input-padding-y, 0rem) + var(--input-bottom-section-height));
+    border-bottom-width: calc(var(--input-bottom-section-height) + rem(1px));
+    border-color: transparent;
   }
 }
 
 .bottomSection {
   position: absolute;
-  bottom: 1px;
-  left: 1px;
-  right: 1px;
-  height: var(--input-bottom-section-height);
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: calc(var(--input-bottom-section-height) + rem(1px));
   display: flex;
   align-items: center;
   justify-content: flex-start;
-  padding-inline: var(--input-padding);
-  border-radius: 0 0 var(--input-radius) var(--input-radius);
-  pointer-events: all;
+  padding-inline: calc(var(--input-padding) + rem(1px));
+  pointer-events: var(--input-bottom-section-pointer-events, none);
   color: var(--mantine-color-dimmed);
   font-size: var(--input-fz, var(--mantine-font-size-sm));
 }

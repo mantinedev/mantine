@@ -39,6 +39,9 @@ export interface TextareaProps
 
   /** Props passed down to the `bottomSection` element */
   bottomSectionProps?: BottomSectionProps;
+
+  /** Sets `pointer-events` styles on the `bottomSection` element. Use `'all'` when section contains interactive elements (buttons, links). @default 'none' */
+  bottomSectionPointerEvents?: React.CSSProperties['pointerEvents'];
 }
 
 export type TextareaFactory = Factory<{
@@ -56,6 +59,7 @@ export const Textarea = factory<TextareaFactory>((props) => {
     resize,
     bottomSection,
     bottomSectionProps,
+    bottomSectionPointerEvents,
     ...others
   } = useProps(['Input', 'InputWrapper', 'Textarea'], null, props);
 
@@ -69,6 +73,7 @@ export const Textarea = factory<TextareaFactory>((props) => {
       __staticSelector={__staticSelector || 'Textarea'}
       __bottomSection={bottomSection}
       __bottomSectionProps={bottomSectionProps}
+      __bottomSectionPointerEvents={bottomSectionPointerEvents}
       multiline
       data-no-overflow={(autosize && maxRows === undefined) || undefined}
       __vars={{ '--input-resize': resize }}

@@ -60,4 +60,13 @@ describe('@mantine/core/Textarea', () => {
     expect(wrapper).not.toHaveAttribute('data-with-bottom-section');
     expect(screen.queryByText('bottom-content')).not.toBeInTheDocument();
   });
+
+  it('sets bottomSection pointer-events with bottomSectionPointerEvents prop', () => {
+    const { container, rerender } = render(<Textarea bottomSection="bottom-content" />);
+    const wrapper = container.querySelector<HTMLElement>('.mantine-Textarea-wrapper')!;
+    expect(wrapper.style.getPropertyValue('--input-bottom-section-pointer-events')).toBe('');
+
+    rerender(<Textarea bottomSection="bottom-content" bottomSectionPointerEvents="all" />);
+    expect(wrapper.style.getPropertyValue('--input-bottom-section-pointer-events')).toBe('all');
+  });
 });

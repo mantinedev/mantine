@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { Button } from '../Button';
 import { Splitter } from '../Splitter';
 import { Textarea } from './Textarea';
 
@@ -70,6 +71,71 @@ export function BottomSectionCharCounter() {
           <span>
             {value.length}/{maxLength}
           </span>
+        }
+      />
+    </div>
+  );
+}
+
+const longText = Array.from({ length: 20 }, (_, index) => `Line ${index + 1}`).join('\n');
+
+export function BottomSectionAutosizeOverflow() {
+  const [value, setValue] = useState(longText);
+  const counter = <span>{value.length}/200</span>;
+
+  return (
+    <div style={{ padding: 40, maxWidth: 400, display: 'flex', flexDirection: 'column', gap: 20 }}>
+      <Textarea
+        label="Autosize, maxRows={4}"
+        autosize
+        maxRows={4}
+        value={value}
+        onChange={(event) => setValue(event.currentTarget.value)}
+        bottomSection={counter}
+      />
+      <Textarea
+        label="Without autosize, rows={4}"
+        rows={4}
+        value={value}
+        onChange={(event) => setValue(event.currentTarget.value)}
+        bottomSection={counter}
+      />
+      <Textarea
+        label="With rightSection and error"
+        autosize
+        maxRows={4}
+        value={value}
+        onChange={(event) => setValue(event.currentTarget.value)}
+        rightSection="$"
+        error="Error message"
+        bottomSection={counter}
+      />
+      <Textarea
+        label="Filled variant"
+        variant="filled"
+        autosize
+        maxRows={4}
+        value={value}
+        onChange={(event) => setValue(event.currentTarget.value)}
+        bottomSection={counter}
+      />
+      <Textarea
+        label="Radius xl"
+        radius="xl"
+        autosize
+        minRows={1}
+        maxRows={4}
+        defaultValue="Short"
+        bottomSection={counter}
+      />
+      <Textarea
+        label="Interactive bottom section"
+        placeholder="Click the button"
+        bottomSectionPointerEvents="all"
+        bottomSection={
+          <Button size="compact-xs" variant="default" onClick={() => setValue('Template text')}>
+            Insert template
+          </Button>
         }
       />
     </div>

@@ -88,6 +88,7 @@ export type InputCssVariables = {
     | '--input-right-section-width'
     | '--input-left-section-pointer-events'
     | '--input-right-section-pointer-events'
+    | '--input-bottom-section-pointer-events'
     | '--input-padding-y'
     | '--input-margin-top'
     | '--input-margin-bottom';
@@ -170,6 +171,9 @@ export interface __InputProps {
 
   /** Props passed down to the `__bottomSection` element */
   __bottomSectionProps?: React.ComponentProps<'div'> & DataAttributes;
+
+  /** Sets `pointer-events` styles on the `__bottomSection` element @default 'none' */
+  __bottomSectionPointerEvents?: React.CSSProperties['pointerEvents'];
 }
 
 export interface InputProps extends BoxProps, __InputProps, StylesApiProps<InputFactory> {
@@ -245,6 +249,7 @@ const varsResolver = createVarsResolver<InputFactory>((_, props, ctx) => ({
     '--input-padding-y': props.multiline ? getSize(props.size, 'input-padding-y') : undefined,
     '--input-left-section-pointer-events': props.leftSectionPointerEvents,
     '--input-right-section-pointer-events': props.rightSectionPointerEvents,
+    '--input-bottom-section-pointer-events': props.__bottomSectionPointerEvents,
   },
 }));
 
@@ -292,6 +297,7 @@ export const Input = polymorphicFactory<InputFactory>((_props) => {
     loadingPosition,
     __bottomSection,
     __bottomSectionProps,
+    __bottomSectionPointerEvents,
     rootRef,
     dir,
     ...others
