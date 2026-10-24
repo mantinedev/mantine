@@ -3,6 +3,14 @@
   margin-top: var(--input-margin-top, 0rem);
   margin-bottom: var(--input-margin-bottom, 0rem);
 
+  --input-margin-top: initial;
+  --input-margin-bottom: initial;
+  --input-padding-y: initial;
+  --input-left-section-width: initial;
+  --input-right-section-width: initial;
+  --input-section-color: initial;
+  --input-bottom-section-height: initial;
+
   --input-height-xs: 30px;
   --input-height-sm: 36px;
   --input-height-md: 42px;
@@ -75,24 +83,24 @@
   &[data-with-right-section] {
     --input-padding-inline-end: var(--input-right-section-size);
 
-    &:has([data-combined-clear-section]) {
-      .wrapper[data-size='xs'] & {
+    &:has(> .section > [data-combined-clear-section]) {
+      &[data-size='xs'] {
         --input-padding-inline-end: 41px;
       }
 
-      .wrapper[data-size='sm'] & {
+      &[data-size='sm'] {
         --input-padding-inline-end: 50px;
       }
 
-      .wrapper[data-size='md'] & {
+      &[data-size='md'] {
         --input-padding-inline-end: 60px;
       }
 
-      .wrapper[data-size='lg'] & {
+      &[data-size='lg'] {
         --input-padding-inline-end: 72px;
       }
 
-      .wrapper[data-size='xl'] & {
+      &[data-size='xl'] {
         --input-padding-inline-end: 89px;
       }
     }
@@ -227,11 +235,11 @@
     outline: none;
     --input-bd: var(--input-bd-focus);
 
-    .wrapper[data-error] & {
+    .wrapper[data-error] > & {
       --input-bd: var(--mantine-color-error);
     }
 
-    .wrapper[data-success] & {
+    .wrapper[data-success] > & {
       --input-bd: var(--mantine-color-success);
     }
   }
@@ -270,7 +278,7 @@
     caret-color: transparent;
   }
 
-  [data-with-bottom-section] & {
+  .wrapper[data-with-bottom-section] > & {
     padding-bottom: calc(var(--input-padding-y, 0rem) + var(--input-bottom-section-height));
   }
 }
@@ -312,24 +320,24 @@
     --section-size: var(--input-right-section-size);
     --section-border-radius: var(--right-section-border-radius);
 
-    &:has([data-combined-clear-section]) {
-      .wrapper[data-size='xs'] & {
+    &:has(> [data-combined-clear-section]) {
+      .wrapper[data-size='xs'] > & {
         --section-size: 41px;
       }
 
-      .wrapper[data-size='sm'] & {
+      .wrapper[data-size='sm'] > & {
         --section-size: 50px;
       }
 
-      .wrapper[data-size='md'] & {
+      .wrapper[data-size='md'] > & {
         --section-size: 60px;
       }
 
-      .wrapper[data-size='lg'] & {
+      .wrapper[data-size='lg'] > & {
         --section-size: 72px;
       }
 
-      .wrapper[data-size='xl'] & {
+      .wrapper[data-size='xl'] > & {
         --section-size: 89px;
       }
     }

@@ -31,12 +31,10 @@ unit, a size and `px` / `%`: the unit is a select inside the number input, in th
 not a separate field or a radio group next to it. The pair reads as one value and takes one
 input's height.
 
-- `NumberInput` with `rightSection={<NativeSelect data={UNITS} aria-label="Unit" variant="unstyled" rightSectionWidth={28} />}`
-  and `rightSectionWidth` sized to the longest unit label (about 92 for `months`). The inner
-  select needs its own `rightSectionWidth={28}` (its chevron width): an input nested in another
-  input's section inherits the outer `--input-right-section-width` and pads its text out of
-  view without it. `NativeSelect` is the right choice inside an input: it has no dropdown of its
-  own to collide with the input's focus ring. The pattern is the Currency input on ui.mantine.dev.
+- `NumberInput` with `rightSection={<NativeSelect data={UNITS} aria-label="Unit" variant="unstyled" />}`
+  and `rightSectionWidth` sized to the longest unit label (about 92 for `months`). `NativeSelect`
+  is the right choice inside an input: it has no dropdown of its own to collide with the input's
+  focus ring. The pattern is the Currency input on ui.mantine.dev.
 - The number and the unit are two form fields (`interval`, `frequency`); the composite is one
   component in its own file (`IntervalInput.tsx`) that takes both `getInputProps` results.
 - The unit follows the number: `1 week`, `2 weeks`. Build the select `data` from the current
@@ -59,7 +57,6 @@ input's height.
         data={FREQUENCIES}
         aria-label="Frequency"
         variant="unstyled"
-        rightSectionWidth={28}
         {...form.getInputProps('frequency', { withError: false })}
       />
     }

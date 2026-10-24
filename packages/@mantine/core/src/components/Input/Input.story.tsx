@@ -1,5 +1,8 @@
 import { Button } from '../Button';
+import { NativeSelect } from '../NativeSelect';
+import { NumberInput } from '../NumberInput';
 import { SegmentedControl } from '../SegmentedControl';
+import { Select } from '../Select';
 import { Input } from './Input';
 
 export default { title: 'Input' };
@@ -174,6 +177,31 @@ export function WithBlockChildren() {
       <Input.Wrapper label="Without the prop" description="Control sits next to the label" mt="md">
         <SegmentedControl data={['Input', 'Textarea']} />
       </Input.Wrapper>
+    </div>
+  );
+}
+
+export function NestedInputs() {
+  return (
+    <div style={{ padding: 40, maxWidth: 400 }}>
+      <NumberInput
+        label="Repeat every"
+        defaultValue={2}
+        rightSectionWidth={92}
+        rightSection={<NativeSelect data={['weeks', 'months']} variant="unstyled" />}
+      />
+
+      <NumberInput
+        label="Outer input with error"
+        error="Outer error"
+        size="lg"
+        defaultValue={2}
+        rightSectionWidth={140}
+        rightSection={
+          <Select data={['weeks', 'months']} defaultValue="weeks" clearable variant="unstyled" />
+        }
+        mt="md"
+      />
     </div>
   );
 }
