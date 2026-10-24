@@ -5,7 +5,7 @@ import { ScheduleEventData, WeekView } from '@mantine/schedule';
 import { MantineDemo } from '@mantinex/demo';
 import { _eventDetailsCode, EventDetails } from '../_EventDetails';
 
-const today = dayjs();
+const today = dayjs().startOf('day');
 const startOfWeek = today.subtract((today.day() + 6) % 7, 'day');
 
 const eventData: ScheduleEventData[] = [

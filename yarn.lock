@@ -15559,6 +15559,7 @@ __metadata:
     oxc-config-mantine: "npm:^1.0.3"
     oxfmt: "npm:^0.70.0"
     oxlint: "npm:^1.85.0"
+    playwright: "npm:1.64.1"
     postcss: "npm:^8.5.28"
     postcss-loader: "npm:^8.2.1"
     postcss-preset-mantine: "npm:1.18.0"
@@ -17886,6 +17887,26 @@ __metadata:
   dependencies:
     find-up: "npm:^6.3.0"
   checksum: 10c0/1afb23d2efb1ec9d8b2c4a0c37bf146822ad2774f074cb05b853be5dca1b40815c5960dd126df30ab8908349262a266f31b771e877235870a3b8fd313beebec5
+  languageName: node
+  linkType: hard
+
+"playwright-core@npm:1.64.1":
+  version: 1.64.1
+  resolution: "playwright-core@npm:1.64.1"
+  bin:
+    playwright-core: cli.js
+  checksum: 10c0/91c4f5ed1cff4b0e18b6ac62f66770f5f1b6c204d4aebd6a321c07466dca18a70822ac692597c6059705a703f9768097ac551df179fb49294d639509148e04f3
+  languageName: node
+  linkType: hard
+
+"playwright@npm:1.64.1":
+  version: 1.64.1
+  resolution: "playwright@npm:1.64.1"
+  dependencies:
+    playwright-core: "npm:1.64.1"
+  bin:
+    playwright: cli.js
+  checksum: 10c0/edf52d0a79feca37bf383e841a467aa68750684128218eac560063991c9e4b615a94901f580cd8a088bb05fd53008ab4a0e5e8d976067698b60ae5d1de2459f3
   languageName: node
   linkType: hard
 
