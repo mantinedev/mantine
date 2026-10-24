@@ -1,4 +1,16 @@
 .root {
+  --rte-control-size-xs: 22px;
+  --rte-control-size-sm: 26px;
+  --rte-control-size-md: 30px;
+  --rte-control-size-lg: 34px;
+  --rte-control-size-xl: 38px;
+
+  --rte-control-icon-size-xs: 14px;
+  --rte-control-icon-size-sm: 16px;
+  --rte-control-icon-size-md: 18px;
+  --rte-control-icon-size-lg: 20px;
+  --rte-control-icon-size-xl: 22px;
+
   position: relative;
   border: 1px solid;
   border-radius: var(--mantine-radius-default);
@@ -50,6 +62,7 @@
 .content {
   background-color: var(--mantine-color-surface-input);
   border-radius: var(--mantine-radius-default);
+  font-size: var(--rte-fz, var(--mantine-font-size-sm));
 
   & :global(.ProseMirror) {
     outline: 0;
@@ -334,15 +347,15 @@
 
   &:where([data-variant='default']) {
     border: 1px solid;
-    min-width: 26px;
-    height: 26px;
+    min-width: var(--rte-control-size, 26px);
+    height: var(--rte-control-size, 26px);
     background-color: var(--mantine-color-default);
   }
 
   &:where([data-variant='subtle']) {
-    --control-icon-size: 20px;
-    min-width: 32px;
-    height: 32px;
+    --control-icon-size: calc(var(--rte-control-icon-size, 16px) + 4px);
+    min-width: calc(var(--rte-control-size, 26px) + 6px);
+    height: calc(var(--rte-control-size, 26px) + 6px);
     background-color: var(--mantine-color-neutral-0);
   }
 
@@ -381,8 +394,8 @@
 }
 
 .controlIcon {
-  width: var(--control-icon-size, 16px);
-  height: var(--control-icon-size, 16px);
+  width: var(--control-icon-size, var(--rte-control-icon-size, 16px));
+  height: var(--control-icon-size, var(--rte-control-icon-size, 16px));
 }
 
 .controlsGroup {

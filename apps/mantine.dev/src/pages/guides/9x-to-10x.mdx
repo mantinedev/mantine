@@ -491,6 +491,10 @@ Remove the `beforeMaskedStateChange` option from `useMask` and the prop from `Ma
 If you set your own `data-empty` attribute on `TimeInput`, rename it. The component now sets
 `data-empty` on the input element while it has no value.
 
+## RichTextEditor content font size
+
+`RichTextEditor` content now uses `sm` font size, the same as other inputs. Set `size="md"` to restore the previous font size. If you set `font-size` on `.ProseMirror` to match the inputs around the editor, remove it.
+
 ## RollingNumber root element
 
 `RollingNumber` now renders a `span` root element, so it can be placed inside text. If you type its `ref` as `HTMLDivElement`, change it to `HTMLSpanElement`.

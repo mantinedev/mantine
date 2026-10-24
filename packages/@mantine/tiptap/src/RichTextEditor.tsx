@@ -3,9 +3,13 @@ import { Editor } from '@tiptap/react';
 import {
   Box,
   BoxProps,
+  createVarsResolver,
   ElementProps,
   factory,
   Factory,
+  getFontSize,
+  getSize,
+  MantineSize,
   StylesApiProps,
   useProps,
   useStyles,
@@ -74,10 +78,17 @@ export type RichTextEditorStylesNames =
   | 'tableInsertCell'
   | 'tableInsertLabel';
 
+export type RichTextEditorCssVariables = {
+  root: '--rte-fz' | '--rte-control-size' | '--rte-control-icon-size';
+};
+
 export interface RichTextEditorProps
   extends BoxProps, StylesApiProps<RichTextEditorFactory>, ElementProps<'div'> {
   /** Tiptap editor instance */
   editor: Editor | null;
+
+  /** Controls content font size and controls size, use the same value as in the form inputs @default 'sm' */
+  size?: MantineSize | (string & {});
 
   /** Determines whether code highlight styles should be added @default true */
   withCodeHighlightStyles?: boolean;
@@ -105,6 +116,7 @@ export type RichTextEditorFactory = Factory<{
   props: RichTextEditorProps;
   ref: HTMLDivElement;
   stylesNames: RichTextEditorStylesNames;
+  vars: RichTextEditorCssVariables;
   variant: RichTextEditorVariant;
   staticComponents: {
     Content: typeof RichTextEditorContent;
@@ -168,7 +180,16 @@ const defaultProps = {
   withCodeHighlightStyles: true,
   withTypographyStyles: true,
   variant: 'default',
+  size: 'sm',
 } satisfies Partial<RichTextEditorProps>;
+
+const varsResolver = createVarsResolver<RichTextEditorFactory>((_theme, { size }) => ({
+  root: {
+    '--rte-fz': getFontSize(size),
+    '--rte-control-size': getSize(size, 'rte-control-size'),
+    '--rte-control-icon-size': getSize(size, 'rte-control-icon-size'),
+  },
+}));
 
 export const RichTextEditor = factory<RichTextEditorFactory>((_props) => {
   const props = useProps('RichTextEditor', defaultProps, _props);
@@ -188,6 +209,7 @@ export const RichTextEditor = factory<RichTextEditorFactory>((_props) => {
     labels,
     children,
     variant,
+    size,
     attributes,
     ...others
   } = props;
@@ -203,6 +225,7 @@ export const RichTextEditor = factory<RichTextEditorFactory>((_props) => {
     unstyled,
     attributes,
     vars,
+    varsResolver,
   });
 
   const mergedLabels = useMemo(() => ({ ...DEFAULT_LABELS, ...labels }), [labels]);
@@ -222,7 +245,7 @@ export const RichTextEditor = factory<RichTextEditorFactory>((_props) => {
         variant,
       }}
     >
-      <Box {...getStyles('root')} {...others}>
+      <Box {...getStyles('root')} size={size} {...others}>
         {children}
       </Box>
     </RichTextEditorProvider>
@@ -230,6 +253,7 @@ export const RichTextEditor = factory<RichTextEditorFactory>((_props) => {
 });
 
 RichTextEditor.classes = classes;
+RichTextEditor.varsResolver = varsResolver;
 RichTextEditor.displayName = '@mantine/tiptap/RichTextEditor';
 
 // Generic components
@@ -299,6 +323,7 @@ RichTextEditor.InvisibleCharacters = RichTextEditorInvisibleCharactersControl;
 export namespace RichTextEditor {
   export type Props = RichTextEditorProps;
   export type StylesNames = RichTextEditorStylesNames;
+  export type CssVariables = RichTextEditorCssVariables;
   export type Factory = RichTextEditorFactory;
 
   export namespace Toolbar {

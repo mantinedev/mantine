@@ -21,7 +21,13 @@ export const RichTextEditorStylesApi: StylesApiData<RichTextEditorFactory> = {
     tableInsertLabel: 'RichTextEditor.TableInsert selected size label',
   },
 
-  vars: {},
+  vars: {
+    root: {
+      '--rte-fz': 'Controls content `font-size`',
+      '--rte-control-size': 'Controls toolbar controls `height` and `min-width`',
+      '--rte-control-icon-size': 'Controls toolbar controls icon `width` and `height`',
+    },
+  },
 
   modifiers: [
     {

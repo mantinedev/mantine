@@ -11,10 +11,10 @@ any other: label, description, placeholder, error.
   ordered lists, link and unlink. No alignment, colors or tables unless the field asks for them.
 - Wrap in `Input.Wrapper withBlockChildren` for `label`, `description`, `withAsterisk` and
   `error`; pass `data-invalid` or a class to the editor for the red border.
-- The editor has no `size` prop and its content renders at `md`, one step larger than the `sm`
-  inputs around it. Set `font-size: var(--mantine-font-size-sm)` on `.ProseMirror` through the
-  `RichTextEditor.Content` class in the component's CSS module; the placeholder inherits it. The editor content is the input;
-  focus it when it is the first invalid field (`editor.commands.focus()`).
+- `size` controls the content font size and the toolbar controls. The default `sm` matches the
+  other inputs; in an `md` or `lg` form pass the same `size` to the editor. Do not set
+  `font-size` on `.ProseMirror`. The editor content is the input; focus it when it is the first
+  invalid field (`editor.commands.focus()`).
 - Value is the HTML string from `editor.getHTML()`; "required" means the text content is not
   empty (`editor.getText().trim() !== ''`), not the HTML (`<p></p>` is empty).
 - With `@mantine/form`, wire it through `useFormField`: `onChange` on `editor.onUpdate`,

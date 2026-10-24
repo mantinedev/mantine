@@ -12,6 +12,7 @@ export { details } from './TipTap.demo.details';
 export { invisibleCharacters } from './TipTap.demo.invisibleCharacters';
 export { typographyStyles } from './TipTap.demo.typographyStyles';
 export { subtleVariant } from './TipTap.demo.subtleVariant';
+export { size } from './TipTap.demo.size';
 export { sourceCodeSwitcher } from './TipTap.demo.sourceCodeSwitcher';
 export { imageUpload } from './TipTap.demo.imageUpload';
 export { imageUploadError } from './TipTap.demo.imageUploadError';

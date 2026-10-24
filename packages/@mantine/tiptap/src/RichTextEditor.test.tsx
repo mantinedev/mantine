@@ -59,6 +59,7 @@ describe('@mantine/tiptap/RichTextEditor', () => {
     displayName: '@mantine/tiptap/RichTextEditor',
     stylesApiSelectors: ['root'],
     variant: false,
+    size: true,
   });
 
   tests.axe([
@@ -74,6 +75,19 @@ describe('@mantine/tiptap/RichTextEditor', () => {
   it('exposes static components', () => {
     expect(RichTextEditor.Toolbar).toBe(RichTextEditorToolbar);
     expect(RichTextEditor.Content).toBe(RichTextEditorContent);
+  });
+
+  it('sets content font size and controls size css variables from size prop', () => {
+    const { container, rerender } = render(<RichTextEditor {...defaultProps} />);
+    const root = container.querySelector('.mantine-RichTextEditor-root')!;
+    expect(root).toHaveStyle({ '--rte-fz': 'var(--mantine-font-size-sm)' });
+    expect(root).toHaveStyle({ '--rte-control-size': 'var(--rte-control-size-sm)' });
+    expect(root).toHaveStyle({ '--rte-control-icon-size': 'var(--rte-control-icon-size-sm)' });
+
+    rerender(<RichTextEditor {...defaultProps} size="lg" />);
+    expect(root).toHaveStyle({ '--rte-fz': 'var(--mantine-font-size-lg)' });
+    expect(root).toHaveStyle({ '--rte-control-size': 'var(--rte-control-size-lg)' });
+    expect(root).toHaveStyle({ '--rte-control-icon-size': 'var(--rte-control-icon-size-lg)' });
   });
 });
 

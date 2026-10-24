@@ -73,6 +73,11 @@ export const Demo_subtleVariant = {
   render: renderDemo(demos.subtleVariant),
 };
 
+export const Demo_size = {
+  name: '⭐ Demo: size',
+  render: renderDemo(demos.size),
+};
+
 export const Demo_sourceCodeSwitcher = {
   name: '⭐ Demo: sourceCodeSwitcher',
   render: renderDemo(demos.sourceCodeSwitcher),

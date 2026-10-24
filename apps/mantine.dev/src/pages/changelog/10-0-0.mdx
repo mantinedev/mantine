@@ -24,6 +24,7 @@ import {
   SwitchDemos,
   TabsDemos,
   ThemingDemos,
+  TipTapDemos,
   TreeDemos,
 } from '@docs/demos';
 import { Code } from '@mantine/core';
@@ -611,6 +612,13 @@ file can be controlled with `activeFile` and `onActiveFileChange` props, and bel
 breakpoint the tree is replaced with a select:
 
 <Demo data={CodeHighlightDemos.fileTree} />
+
+## RichTextEditor size
+
+[RichTextEditor](/x/tiptap#size) now supports `size` prop. The default `sm` size renders content
+with the same font size as other inputs:
+
+<Demo data={TipTapDemos.size} />
 
 ## Other changes
 

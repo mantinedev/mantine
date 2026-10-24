@@ -1,5 +1,6 @@
 import type { ResolvedRichTextEditorLabels, RichTextEditorLabels } from './labels';
 import type {
+  RichTextEditorCssVariables,
   RichTextEditorFactory,
   RichTextEditorProps,
   RichTextEditorStylesNames,
@@ -29,6 +30,7 @@ export { RichTextEditorContent } from './RichTextEditorContent/RichTextEditorCon
 export type {
   RichTextEditorProps,
   RichTextEditorStylesNames,
+  RichTextEditorCssVariables,
   RichTextEditorFactory,
   RichTextEditorToolbarProps,
   RichTextEditorControlProps,

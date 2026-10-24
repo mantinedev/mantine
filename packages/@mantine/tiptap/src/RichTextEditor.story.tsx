@@ -252,6 +252,26 @@ export function SubtleVariant() {
   return <BasicEditor editorProps={{ variant: 'subtle' }} />;
 }
 
+export function Sizes() {
+  return (
+    <Stack gap="xl">
+      {(['xs', 'sm', 'md', 'lg', 'xl'] as const).map((size) => (
+        <BasicEditor key={size} editorProps={{ size }} />
+      ))}
+    </Stack>
+  );
+}
+
+export function SubtleSizes() {
+  return (
+    <Stack gap="xl">
+      {(['xs', 'sm', 'md', 'lg', 'xl'] as const).map((size) => (
+        <BasicEditor key={size} editorProps={{ size, variant: 'subtle' }} />
+      ))}
+    </Stack>
+  );
+}
+
 function FormEditor() {
   const editor = useEditor({
     extensions: [StarterKit],

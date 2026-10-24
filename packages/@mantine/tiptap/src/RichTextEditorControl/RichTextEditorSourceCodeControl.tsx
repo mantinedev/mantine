@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import type { Content, Editor, EditorEvents } from '@tiptap/react';
-import { BoxProps, ElementProps, rem, useProps } from '@mantine/core';
+import { BoxProps, ElementProps, useProps } from '@mantine/core';
 import { IconBraces } from '../icons/Icons';
 import { useRichTextEditorContext } from '../RichTextEditor.context';
 import { RichTextEditorControl } from './RichTextEditorControl';
@@ -23,7 +23,7 @@ function getSourceCodeContent(html: string) {
 
 export function RichTextEditorSourceCodeControl(props: RichTextEditorSourceCodeControlProps) {
   const { ...others } = useProps('RichTextEditorSourceCodeControl', defaultProps, props);
-  const { editor, labels, variant, onSourceCodeTextSwitch } = useRichTextEditorContext();
+  const { editor, labels, variant, onSourceCodeTextSwitch, getStyles } = useRichTextEditorContext();
   const [isSourceCodeModeActive, setIsSourceCodeModeActive] = useState(false);
   const internalUpdate = useRef(false);
 
@@ -80,7 +80,7 @@ export function RichTextEditorSourceCodeControl(props: RichTextEditorSourceCodeC
       title={labels.sourceCodeControlLabel}
       onClick={() => handleStateChange()}
     >
-      <IconBraces style={{ width: rem(16), height: rem(16) }} />
+      <IconBraces {...getStyles('controlIcon')} />
     </RichTextEditorControl>
   );
 }
