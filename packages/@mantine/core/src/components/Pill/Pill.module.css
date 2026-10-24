@@ -99,7 +99,7 @@
   display: block;
   overflow: hidden;
   height: 100%;
-  line-height: var(--pill-height);
+  line-height: calc(var(--pill-height) - rem(2px));
   text-overflow: ellipsis;
 }
 
