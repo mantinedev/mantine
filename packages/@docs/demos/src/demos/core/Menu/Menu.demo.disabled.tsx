@@ -17,7 +17,7 @@ function Demo() {
   return (
     <Menu>
       <Menu.Target>
-        <Button>Toggle menu</Button>
+        <Button variant="default">Toggle menu</Button>
       </Menu.Target>
 
       <Menu.Dropdown>
@@ -39,7 +39,7 @@ function Demo() {
   return (
     <Menu>
       <Menu.Target>
-        <Button>Toggle menu</Button>
+        <Button variant="default">Toggle menu</Button>
       </Menu.Target>
 
       <Menu.Dropdown>

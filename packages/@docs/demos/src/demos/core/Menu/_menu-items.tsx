@@ -13,7 +13,7 @@ export function DemoMenuItems({ widthRightSection = true, withTarget = true }) {
     <>
       {withTarget && (
         <Menu.Target>
-          <Button>Toggle menu</Button>
+          <Button variant="default">Toggle menu</Button>
         </Menu.Target>
       )}
 

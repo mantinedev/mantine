@@ -30,7 +30,7 @@ function Demo() {
   return (
     <Menu width={240} onOpen={handleOpen}>
       <Menu.Target>
-        <Button>Recent files</Button>
+        <Button variant="default">Recent files</Button>
       </Menu.Target>
 
       <Menu.Dropdown>
@@ -76,7 +76,7 @@ function Demo() {
   return (
     <Menu width={240} onOpen={handleOpen}>
       <Menu.Target>
-        <Button>Recent files</Button>
+        <Button variant="default">Recent files</Button>
       </Menu.Target>
 
       <Menu.Dropdown>

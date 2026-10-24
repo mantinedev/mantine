@@ -29,7 +29,7 @@ function Demo() {
   return (
     <Menu width={200} position="bottom-start">
       <Menu.Target>
-        <Button>File actions</Button>
+        <Button variant="default">File actions</Button>
       </Menu.Target>
 
       <Menu.Dropdown>
@@ -91,7 +91,7 @@ function Demo() {
   return (
     <Menu width={200} position="bottom-start">
       <Menu.Target>
-        <Button>File actions</Button>
+        <Button variant="default">File actions</Button>
       </Menu.Target>
 
       <Menu.Dropdown>

@@ -34,7 +34,7 @@ function Demo() {
   return (
     <Menu width={220}>
       <Menu.Target>
-        <Button>Assign to user</Button>
+        <Button variant="default">Assign to user</Button>
       </Menu.Target>
 
       <Menu.Dropdown>
@@ -83,7 +83,7 @@ function Demo() {
   return (
     <Menu width={220}>
       <Menu.Target>
-        <Button>Assign to user</Button>
+        <Button variant="default">Assign to user</Button>
       </Menu.Target>
 
       <Menu.Dropdown>

@@ -10,7 +10,7 @@ function Demo() {
   return (
     <Menu shadow="md" width={260}>
       <Menu.Target>
-        <Button>Share</Button>
+        <Button variant="default">Share</Button>
       </Menu.Target>
 
       <Menu.Dropdown>
@@ -53,7 +53,7 @@ function Demo() {
   return (
     <Menu shadow="md" width={260} withinPortal>
       <Menu.Target>
-        <Button>Share</Button>
+        <Button variant="default">Share</Button>
       </Menu.Target>
 
       <Menu.Dropdown>

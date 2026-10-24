@@ -10,7 +10,7 @@ function Demo() {
   return (
     <Menu width={200} shadow="md">
       <Menu.Target>
-        <Button>Toggle menu</Button>
+        <Button variant="default">Toggle menu</Button>
       </Menu.Target>
 
       <Menu.Dropdown>
@@ -35,7 +35,7 @@ function Demo() {
   return (
     <Menu width={200} shadow="md">
       <Menu.Target>
-        <Button>Toggle menu</Button>
+        <Button variant="default">Toggle menu</Button>
       </Menu.Target>
 
       <Menu.Dropdown>

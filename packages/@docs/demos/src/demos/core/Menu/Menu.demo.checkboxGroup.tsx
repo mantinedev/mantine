@@ -12,7 +12,7 @@ function Demo() {
   return (
     <Menu shadow="md" width={220} closeOnItemClick={false}>
       <Menu.Target>
-        <Button>Columns</Button>
+        <Button variant="default">Columns</Button>
       </Menu.Target>
 
       <Menu.Dropdown>
@@ -35,7 +35,7 @@ function Demo() {
   return (
     <Menu shadow="md" width={220} closeOnItemClick={false}>
       <Menu.Target>
-        <Button>Columns</Button>
+        <Button variant="default">Columns</Button>
       </Menu.Target>
 
       <Menu.Dropdown>

@@ -77,7 +77,7 @@ function Demo() {
   return (
     <Menu shadow="md" width={240}>
       <Menu.Target>
-        <Button>Toggle menu</Button>
+        <Button variant="default">Toggle menu</Button>
       </Menu.Target>
 
       <Menu.Dropdown>
@@ -171,7 +171,7 @@ function Demo() {
   return (
     <Menu shadow="md" width={240}>
       <Menu.Target>
-        <Button>Toggle menu</Button>
+        <Button variant="default">Toggle menu</Button>
       </Menu.Target>
 
       <Menu.Dropdown>

@@ -17,7 +17,7 @@ function Demo() {
   return (
     <Menu shadow="md" width={220} closeOnItemClick={false} checkIcon={<CheckIcon size={12} weight="bold" />}>
       <Menu.Target>
-        <Button>Filters</Button>
+        <Button variant="default">Filters</Button>
       </Menu.Target>
 
       <Menu.Dropdown>
@@ -55,7 +55,7 @@ function Demo() {
       checkIcon={<CheckIcon size={12} weight="bold" />}
     >
       <Menu.Target>
-        <Button>Filters</Button>
+        <Button variant="default">Filters</Button>
       </Menu.Target>
 
       <Menu.Dropdown>

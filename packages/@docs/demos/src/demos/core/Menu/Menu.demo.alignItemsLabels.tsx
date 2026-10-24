@@ -1,11 +1,11 @@
-import { Menu, MenuProps } from '@mantine/core';
+import { Button, Menu, MenuProps } from '@mantine/core';
 import { MantineDemo } from '@mantinex/demo';
 
 function Wrapper(props: MenuProps) {
   return (
     <Menu opened trapFocus={false} closeOnItemClick={false} width={240} shadow="md" {...props}>
       <Menu.Target>
-        <button type="button">Toggle menu</button>
+        <Button variant="default">Toggle menu</Button>
       </Menu.Target>
 
       <Menu.Dropdown>
@@ -25,13 +25,13 @@ function Wrapper(props: MenuProps) {
 }
 
 const code = `
-import { Menu } from '@mantine/core';
+import { Button, Menu } from '@mantine/core';
 
 function Demo() {
   return (
     <Menu{{props}}>
       <Menu.Target>
-        <button type="button">Toggle menu</button>
+        <Button variant="default">Toggle menu</Button>
       </Menu.Target>
       <Menu.Dropdown>
         <Menu.Item>View details</Menu.Item>

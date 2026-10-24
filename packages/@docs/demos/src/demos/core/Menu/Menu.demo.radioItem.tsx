@@ -12,7 +12,7 @@ function Demo() {
   return (
     <Menu shadow="md" width={220} closeOnItemClick={false}>
       <Menu.Target>
-        <Button>Sort by</Button>
+        <Button variant="default">Sort by</Button>
       </Menu.Target>
 
       <Menu.Dropdown>
@@ -35,7 +35,7 @@ function Demo() {
   return (
     <Menu shadow="md" width={220} closeOnItemClick={false}>
       <Menu.Target>
-        <Button>Sort by</Button>
+        <Button variant="default">Sort by</Button>
       </Menu.Target>
 
       <Menu.Dropdown>

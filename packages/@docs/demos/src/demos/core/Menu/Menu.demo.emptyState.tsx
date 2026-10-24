@@ -12,7 +12,7 @@ function Demo() {
   return (
     <Menu width={240}>
       <Menu.Target>
-        <Button>Switch workspace</Button>
+        <Button variant="default">Switch workspace</Button>
       </Menu.Target>
 
       <Menu.Dropdown>
@@ -36,7 +36,7 @@ function Demo() {
   return (
     <Menu width={240}>
       <Menu.Target>
-        <Button>Switch workspace</Button>
+        <Button variant="default">Switch workspace</Button>
       </Menu.Target>
 
       <Menu.Dropdown>

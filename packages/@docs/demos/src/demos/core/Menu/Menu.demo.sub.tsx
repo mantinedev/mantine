@@ -8,7 +8,7 @@ function Demo() {
   return (
     <Menu width={200} position="bottom-start">
       <Menu.Target>
-        <Button>Toggle Menu</Button>
+        <Button variant="default">Toggle Menu</Button>
       </Menu.Target>
 
       <Menu.Dropdown>
@@ -64,7 +64,7 @@ function Demo() {
   return (
     <Menu width={200} position="bottom-start">
       <Menu.Target>
-        <Button>Toggle Menu</Button>
+        <Button variant="default">Toggle Menu</Button>
       </Menu.Target>
 
       <Menu.Dropdown>
@@ -129,7 +129,7 @@ function Demo() {
   return (
     <Menu width={200} position="bottom-start">
       <Menu.Target>
-        <Button>Toggle Menu</Button>
+        <Button variant="default">Toggle Menu</Button>
       </Menu.Target>
 
       <Menu.Dropdown>
@@ -161,7 +161,7 @@ function SafeAreaPolygonDemo() {
   return (
     <Menu width={200} position="bottom-start">
       <Menu.Target>
-        <Button>Toggle Menu</Button>
+        <Button variant="default">Toggle Menu</Button>
       </Menu.Target>
 
       <Menu.Dropdown>
