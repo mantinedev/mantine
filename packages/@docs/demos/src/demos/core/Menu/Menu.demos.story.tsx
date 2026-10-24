@@ -132,3 +132,8 @@ export const Demo_asyncSub = {
   name: '⭐ Demo: asyncSub',
   render: renderDemo(demos.asyncSub),
 };
+
+export const Demo_virtualized = {
+  name: '⭐ Demo: virtualized',
+  render: renderDemo(demos.virtualized),
+};

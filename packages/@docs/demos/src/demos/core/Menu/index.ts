@@ -23,3 +23,4 @@ export { asyncLoading } from './Menu.demo.asyncLoading';
 export { emptyState } from './Menu.demo.emptyState';
 export { loadMore } from './Menu.demo.loadMore';
 export { asyncSub } from './Menu.demo.asyncSub';
+export { virtualized } from './Menu.demo.virtualized';

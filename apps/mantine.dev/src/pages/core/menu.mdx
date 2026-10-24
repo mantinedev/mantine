@@ -69,6 +69,15 @@ there are no more items to load. Wrap long lists in `Menu.ScrollArea` to limit t
 
 <Demo data={MenuDemos.loadMore} demoProps={{ defaultExpanded: false }} />
 
+## Virtualization
+
+Use a virtualizer such as [@tanstack/react-virtual](https://tanstack.com/virtual/latest) to render
+only the visible part of a long list. Pass `viewportRef` of `Menu.ScrollArea` to the virtualizer
+as its scroll element. Keyboard navigation and type-ahead only see rendered items, so handle
+`Home`, `End` and looping from the first and last item yourself with `scrollToIndex`:
+
+<Demo data={MenuDemos.virtualized} demoProps={{ defaultExpanded: false }} />
+
 ## Checkbox items
 
 `Menu.CheckboxItem` renders a menu item with a check indicator. It works like a regular

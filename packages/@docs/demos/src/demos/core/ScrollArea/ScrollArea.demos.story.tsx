@@ -77,3 +77,8 @@ export const Demo_offsetSize = {
   name: '⭐ Demo: offsetSize',
   render: renderDemo(demos.offsetSize),
 };
+
+export const Demo_virtualized = {
+  name: '⭐ Demo: virtualized',
+  render: renderDemo(demos.virtualized),
+};

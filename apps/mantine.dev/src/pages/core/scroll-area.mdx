@@ -109,6 +109,14 @@ Unlike using `viewportRef` with `useEffect`, this approach avoids the flash of c
 
 <Demo data={ScrollAreaDemos.scrollIntoView} />
 
+## Virtualization
+
+To render only the visible rows of a long list, pass the viewport element to a virtualizer
+as its scroll element. The example uses [@tanstack/react-virtual](https://tanstack.com/virtual/latest)
+with a `viewportRef` callback, so the virtualizer picks up the viewport once it is mounted:
+
+<Demo data={ScrollAreaDemos.virtualized} />
+
 ## ScrollArea.Autosize
 
 `ScrollArea.Autosize` component allows to create scrollable containers when given max-height is reached.
