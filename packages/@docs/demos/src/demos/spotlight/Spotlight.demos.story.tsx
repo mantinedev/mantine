@@ -37,3 +37,8 @@ export const Demo_fuzzySearch = {
   name: '⭐ Demo: fuzzySearch',
   render: renderDemo(demos.fuzzySearch),
 };
+
+export const Demo_virtualized = {
+  name: '⭐ Demo: virtualized',
+  render: renderDemo(demos.virtualized),
+};

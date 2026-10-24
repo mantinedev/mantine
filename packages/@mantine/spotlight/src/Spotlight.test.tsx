@@ -1,11 +1,18 @@
 import { act } from '@testing-library/react';
 import { render, screen, tests, userEvent } from '@mantine-tests/core';
 import { Spotlight, SpotlightProps, SpotlightStylesNames } from './Spotlight';
-import { createSpotlightStore, spotlight, triggerSelectedAction } from './spotlight.store';
+import {
+  createSpotlightStore,
+  spotlight,
+  SpotlightStore,
+  triggerSelectedAction,
+  useSpotlight,
+} from './spotlight.store';
 import { SpotlightAction } from './SpotlightAction';
 import { SpotlightActionsList } from './SpotlightActionsList';
 import { SpotlightEmpty } from './SpotlightEmpty';
 import { SpotlightFooter } from './SpotlightFooter';
+import { SpotlightRoot } from './SpotlightRoot';
 import { SpotlightSearch } from './SpotlightSearch';
 
 const defaultProps: SpotlightProps = {
@@ -213,5 +220,229 @@ describe('@mantine/core/Spotlight', () => {
 
     await userEvent.type(screen.getByRole('combobox'), 'test');
     expect(screen.getByRole('status')).toHaveTextContent('Found 3');
+  });
+  describe('virtualized list', () => {
+    function VirtualizedList({
+      store,
+      count,
+      rendered,
+    }: {
+      store: SpotlightStore;
+      count: number;
+      rendered: number[];
+    }) {
+      const { selected } = useSpotlight(store);
+      return (
+        <SpotlightActionsList totalActionsCount={count}>
+          {rendered.map((index) => (
+            <SpotlightAction
+              key={index}
+              label={`action-${index}`}
+              selected={index === selected}
+              onClick={() => {}}
+            />
+          ))}
+        </SpotlightActionsList>
+      );
+    }
+
+    function renderVirtualized(store: SpotlightStore, count: number, rendered: number[]) {
+      return render(
+        <SpotlightRoot
+          store={store}
+          forceOpened
+          withinPortal={false}
+          transitionProps={{ duration: 0 }}
+        >
+          <SpotlightSearch />
+          <VirtualizedList store={store} count={count} rendered={rendered} />
+        </SpotlightRoot>
+      );
+    }
+
+    it('navigates by totalActionsCount instead of rendered actions', async () => {
+      const store = createSpotlightStore();
+      renderVirtualized(store, 100, [0, 1, 2]);
+      await act(async () => {});
+      const input = screen.getByRole('combobox');
+
+      await userEvent.type(input, '{ArrowDown}{ArrowUp}');
+      expect(store.getState().selected).toBe(99);
+
+      await userEvent.type(input, '{ArrowDown}');
+      expect(store.getState().selected).toBe(0);
+
+      await userEvent.type(input, '{ArrowDown}{ArrowDown}{ArrowDown}');
+      expect(store.getState().selected).toBe(3);
+      expect(screen.queryByRole('option', { selected: true })).toBe(null);
+    });
+
+    it('marks the rendered action with selected prop and sets aria-activedescendant', async () => {
+      const store = createSpotlightStore();
+      renderVirtualized(store, 100, [0, 1, 2]);
+      await act(async () => {});
+      const input = screen.getByRole('combobox');
+
+      await userEvent.type(input, '{ArrowDown}{ArrowDown}');
+      const second = screen.getByRole('option', { name: 'action-1' });
+      expect(second).toHaveAttribute('aria-selected', 'true');
+      expect(second).toHaveAttribute('data-selected', 'true');
+      expect(screen.getByRole('option', { name: 'action-0' })).toHaveAttribute(
+        'aria-selected',
+        'false'
+      );
+      expect(input).toHaveAttribute('aria-activedescendant', second.id);
+    });
+
+    it('keeps aria-activedescendant when query changes and selected index stays the same', async () => {
+      const store = createSpotlightStore();
+      renderVirtualized(store, 100, [0, 1, 2]);
+      await act(async () => {});
+      const input = screen.getByRole('combobox');
+
+      await userEvent.type(input, '{ArrowDown}');
+      const first = screen.getByRole('option', { name: 'action-0' });
+      expect(input).toHaveAttribute('aria-activedescendant', first.id);
+
+      await userEvent.type(input, 'a');
+      await act(async () => {});
+      expect(store.getState().selected).toBe(0);
+      expect(input).toHaveAttribute('aria-activedescendant', first.id);
+    });
+
+    it('triggers the selected rendered action on Enter', async () => {
+      const store = createSpotlightStore();
+      const spy = jest.fn();
+      store.setState({ ...store.getState(), opened: true });
+
+      function List() {
+        const { selected } = useSpotlight(store);
+        return (
+          <SpotlightActionsList totalActionsCount={50}>
+            <SpotlightAction label="action-0" selected={selected === 0} onClick={() => {}} />
+            <SpotlightAction label="action-1" selected={selected === 1} onClick={spy} />
+          </SpotlightActionsList>
+        );
+      }
+
+      render(
+        <SpotlightRoot store={store} withinPortal={false} transitionProps={{ duration: 0 }}>
+          <SpotlightSearch />
+          <List />
+        </SpotlightRoot>
+      );
+      await act(async () => {});
+
+      await userEvent.type(screen.getByRole('combobox'), '{ArrowDown}{ArrowDown}{Enter}');
+      expect(spy).toHaveBeenCalledTimes(1);
+    });
+
+    it('clamps selected index when totalActionsCount shrinks and resets when it is 0', async () => {
+      const store = createSpotlightStore();
+      const { rerender } = renderVirtualized(store, 100, [0, 1, 2]);
+      await act(async () => {});
+
+      await userEvent.type(screen.getByRole('combobox'), '{ArrowDown}{ArrowUp}');
+      expect(store.getState().selected).toBe(99);
+
+      rerender(
+        <SpotlightRoot
+          store={store}
+          forceOpened
+          withinPortal={false}
+          transitionProps={{ duration: 0 }}
+        >
+          <SpotlightSearch />
+          <VirtualizedList store={store} count={10} rendered={[0, 1, 2]} />
+        </SpotlightRoot>
+      );
+      await act(async () => {});
+      expect(store.getState().selected).toBe(9);
+
+      rerender(
+        <SpotlightRoot
+          store={store}
+          forceOpened
+          withinPortal={false}
+          transitionProps={{ duration: 0 }}
+        >
+          <SpotlightSearch />
+          <VirtualizedList store={store} count={0} rendered={[]} />
+        </SpotlightRoot>
+      );
+      await act(async () => {});
+      expect(store.getState().selected).toBe(-1);
+    });
+
+    it('clears aria-activedescendant when the selected action unmounts', async () => {
+      const store = createSpotlightStore();
+      const { rerender } = renderVirtualized(store, 100, [0, 1, 2]);
+      await act(async () => {});
+      const input = screen.getByRole('combobox');
+
+      await userEvent.type(input, '{ArrowDown}');
+      expect(input).toHaveAttribute('aria-activedescendant');
+
+      rerender(
+        <SpotlightRoot
+          store={store}
+          forceOpened
+          withinPortal={false}
+          transitionProps={{ duration: 0 }}
+        >
+          <SpotlightSearch />
+          <VirtualizedList store={store} count={100} rendered={[50, 51, 52]} />
+        </SpotlightRoot>
+      );
+      await act(async () => {});
+      expect(store.getState().selected).toBe(0);
+      expect(input).not.toHaveAttribute('aria-activedescendant');
+    });
+
+    it('switches back to DOM-based navigation when totalActionsCount is removed', async () => {
+      const store = createSpotlightStore();
+      function List({ virtualized }: { virtualized: boolean }) {
+        return (
+          <SpotlightActionsList totalActionsCount={virtualized ? 100 : undefined}>
+            <SpotlightAction label="action-0" onClick={() => {}} />
+            <SpotlightAction label="action-1" onClick={() => {}} />
+          </SpotlightActionsList>
+        );
+      }
+      const renderList = (virtualized: boolean) => (
+        <SpotlightRoot
+          store={store}
+          forceOpened
+          withinPortal={false}
+          transitionProps={{ duration: 0 }}
+        >
+          <SpotlightSearch />
+          <List virtualized={virtualized} />
+        </SpotlightRoot>
+      );
+
+      const { rerender } = render(renderList(true));
+      await act(async () => {});
+      expect(store.getState().totalActionsCount).toBe(100);
+
+      rerender(renderList(false));
+      await act(async () => {});
+      expect(store.getState().totalActionsCount).toBe(null);
+
+      await userEvent.type(screen.getByRole('combobox'), '{ArrowDown}{ArrowDown}{ArrowDown}');
+      expect(screen.getByRole('option', { name: 'action-0' })).toHaveAttribute(
+        'aria-selected',
+        'true'
+      );
+    });
+
+    it('clears totalActionsCount when the list unmounts', async () => {
+      const store = createSpotlightStore();
+      const { unmount } = renderVirtualized(store, 100, [0, 1, 2]);
+      await act(async () => {});
+      expect(store.getState().totalActionsCount).toBe(100);
+      unmount();
+      expect(store.getState().totalActionsCount).toBe(null);
+    });
   });
 });

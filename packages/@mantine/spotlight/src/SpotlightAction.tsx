@@ -1,4 +1,4 @@
-import { useId } from 'react';
+import { useEffect, useId } from 'react';
 import {
   Box,
   BoxProps,
@@ -53,6 +53,9 @@ export interface SpotlightActionProps
 
   /** Keywords that are used for default filtering, not displayed anywhere, can be a string: "react,router,javascript" or an array: ['react', 'router', 'javascript'] @category behavior */
   keywords?: string | string[];
+
+  /** Controlled selected state, used with virtualized lists where `Spotlight.ActionsList` has `totalActionsCount` set @category state */
+  selected?: boolean;
 }
 
 export type SpotlightActionFactory = Factory<{
@@ -87,12 +90,26 @@ export const SpotlightAction = factory<SpotlightActionFactory>((_props) => {
     onClick,
     onMouseDown,
     keywords,
+    selected,
     vars,
     ...others
   } = props;
 
   const ctx = useSpotlightContext();
   const actionId = `mantine-${useId().replace(/:/g, '')}`;
+
+  useEffect(() => {
+    if (!selected) {
+      return undefined;
+    }
+
+    spotlightActions.setSelectedActionId(actionId, ctx.store);
+    return () => {
+      if (ctx.store.getState().selectedActionId === actionId) {
+        spotlightActions.setSelectedActionId(null, ctx.store);
+      }
+    };
+  }, [selected, actionId]);
 
   const stylesApi = { classNames, styles };
 
@@ -113,9 +130,10 @@ export const SpotlightAction = factory<SpotlightActionFactory>((_props) => {
   return (
     <UnstyledButton
       data-action
+      data-selected={selected || undefined}
       id={actionId}
       role="option"
-      aria-selected={false}
+      aria-selected={selected ?? false}
       {...ctx.getStyles('action', { className, style, ...stylesApi })}
       {...others}
       onMouseDown={(event) => {

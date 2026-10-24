@@ -199,6 +199,17 @@ For example, with the compound components pattern, you can customize action cont
 
 <Demo data={SpotlightDemos.customAction} />
 
+## Virtualization
+
+Keyboard navigation of `Spotlight` is based on rendered actions. To virtualize the list,
+set `totalActionsCount` on `Spotlight.ActionsList`: arrow keys then move `selected` index
+in the store across all actions, not only rendered ones. Read `selected` with `useSpotlight`,
+scroll the virtualizer to it and pass `selected` prop to the rendered actions.
+The example uses [@tanstack/react-virtual](https://tanstack.com/virtual/latest) with
+`viewportRef` of `Spotlight.ActionsList` as the scroll element:
+
+<Demo data={SpotlightDemos.virtualized} />
+
 ## Fixed elements offset
 
 The `Spotlight` component uses the [react-remove-scroll](https://github.com/theKashey/react-remove-scroll)

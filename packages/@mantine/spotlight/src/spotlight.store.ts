@@ -7,6 +7,7 @@ export interface SpotlightState {
   listId: string;
   query: string;
   selectedActionId: string | null;
+  totalActionsCount: number | null;
 }
 
 export type SpotlightStore = MantineStore<SpotlightState>;
@@ -18,6 +19,7 @@ export const createSpotlightStore = () =>
     selectedActionId: null,
     listId: '',
     query: '',
+    totalActionsCount: null,
   });
 
 export const useSpotlight = (store: SpotlightStore) => useStore(store);
@@ -54,8 +56,16 @@ export function setSelectedAction(
   store.setState((state) => ({ ...state, selected: index, selectedActionId }));
 }
 
+export function setSelectedActionId(selectedActionId: string | null, store: SpotlightStore) {
+  store.setState((state) => ({ ...state, selectedActionId }));
+}
+
 export function setListId(id: string, store: SpotlightStore) {
   store.setState((state) => ({ ...state, listId: id }));
+}
+
+export function setTotalActionsCount(totalActionsCount: number | null, store: SpotlightStore) {
+  store.setState((state) => ({ ...state, totalActionsCount }));
 }
 
 function findElementById<T extends HTMLElement>(
@@ -81,8 +91,27 @@ function findElementById<T extends HTMLElement>(
   return null;
 }
 
+function selectActionByCount(index: number, count: number, store: SpotlightStore): number {
+  if (count <= 0) {
+    setSelectedAction(-1, store, null);
+    return -1;
+  }
+
+  const state = store.getState();
+  const nextIndex = index === -1 ? count - 1 : index === count ? 0 : index;
+  const selectedIndex = clamp(nextIndex, 0, count - 1);
+  const selectedActionId = selectedIndex === state.selected ? state.selectedActionId : null;
+  setSelectedAction(selectedIndex, store, selectedActionId);
+  return selectedIndex;
+}
+
 export function selectAction(index: number, store: SpotlightStore): number {
   const state = store.getState();
+
+  if (state.totalActionsCount !== null) {
+    return selectActionByCount(index, state.totalActionsCount, store);
+  }
+
   const actionsList = state.listId ? findElementById(state.listId) : null;
   const selected = actionsList?.querySelector<HTMLButtonElement>('[data-selected]');
   const actions = actionsList?.querySelectorAll<HTMLButtonElement>('[data-action]') ?? [];
@@ -139,7 +168,9 @@ export const spotlightActions = {
   toggle: toggleSpotlightAction,
   updateState: updateSpotlightStateAction,
   setSelectedAction,
+  setSelectedActionId,
   setListId,
+  setTotalActionsCount,
   selectAction,
   selectNextAction,
   selectPreviousAction,
