@@ -112,7 +112,7 @@
   {
     "fileName": "fields/RichTextField/RichTextField.module.css",
     "language": "css",
-    "code": ".editor[data-invalid] {\n  border-color: var(--mantine-color-error);\n}\n\n.content :global(.ProseMirror) {\n  min-height: 160px;\n  font-size: var(--mantine-font-size-sm);\n}\n"
+    "code": ".editor[data-invalid] {\n  border-color: var(--mantine-color-error);\n}\n\n.content :global(.ProseMirror) {\n  min-height: 160px;\n}\n"
   },
   {
     "fileName": "fields/RichTextField/RichTextField.tsx",

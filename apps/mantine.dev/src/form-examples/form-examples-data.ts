@@ -242,9 +242,9 @@ export const FORM_EXAMPLES_DATA: FormExample[] = [
   {
     id: 'FormInModal',
     name: 'Form in modal',
-    description: 'Form opened with useModal hook, reset when the modal is closed',
+    description: 'One modal adds and edits table rows, the form lives in the modal content',
     type: 'layout',
-    features: ['reset', 'submitting', 'useModal', 'Modal'],
+    features: ['submitting', 'useModal', 'useModalCloseGuard', 'Modal'],
   },
   {
     id: 'TabsWithErrorCount',

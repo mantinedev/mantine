@@ -1,70 +1,55 @@
 import { useState } from 'react';
 import { Button, useModal } from '@mantine/core';
-import { FormErrors, isEmail, isNotEmpty, useForm } from '@mantine/form';
+import { randomId } from '@mantine/hooks';
 import { notifications } from '@mantine/notifications';
-import { User, UserValues } from './types';
+import { User } from './types';
 import { UserForm } from './UserForm';
 import { UsersTable } from './UsersTable';
 
-function createUser(values: UserValues) {
-  return new Promise<User>((resolve) => {
-    setTimeout(() => {
-      resolve({
-        ...values,
-        id: Date.now(),
-      });
-    }, 1000);
-  });
+const INITIAL_USERS: User[] = [
+  { id: 'ann', name: 'Ann Smith', email: 'ann@mantine.dev', role: 'Admin' },
+  { id: 'john', name: 'John Doe', email: 'john@mantine.dev', role: 'Editor' },
+];
+
+function createUser(): User {
+  return {
+    id: randomId(),
+    name: '',
+    email: '',
+    role: null,
+  };
 }
 
 export function FormInModal() {
-  const [users, setUsers] = useState<User[]>([]);
+  const [users, setUsers] = useState<User[]>(INITIAL_USERS);
+  const modal = useModal({ closeOnClickOutside: false });
 
-  const form = useForm<UserValues>({
-    initialValues: {
-      name: '',
-      email: '',
-      role: null,
-    },
-    validate: {
-      name: isNotEmpty('Name is required'),
-      email: isEmail('Invalid email'),
-      role: isNotEmpty('Select a role'),
-    },
-  });
-
-  const handleSubmit = async (values: UserValues) => {
-    const user = await createUser(values);
-    setUsers((current) => [...current, user]);
+  // Handlers passed to modal.open are captured at click time: update through the current state
+  const handleSave = (user: User) => {
+    setUsers((current) =>
+      current.some((item) => item.id === user.id)
+        ? current.map((item) => (item.id === user.id ? user : item))
+        : [...current, user]
+    );
     notifications.show({
-      title: 'User added',
-      message: `${user.name} added as ${user.role}`,
+      title: 'User saved',
+      message: `${user.name} · ${user.role}`,
     });
     modal.close();
   };
 
-  const handleErrors = (errors: FormErrors) => {
-    form.getInputNode(Object.keys(errors)[0])?.focus();
+  // Modal content is remounted on every open, so the form always starts from the opened user
+  const openEditor = (user: User | null) => {
+    modal.open({
+      title: user ? 'Edit user' : 'Add user',
+      children: <UserForm user={user ?? createUser()} isNew={!user} onSave={handleSave} />,
+    });
   };
-
-  // onClose runs for every way the modal is closed, including a successful submit
-  const modal = useModal({
-    title: 'Add user',
-    onClose: form.reset,
-    closeOnClickOutside: !form.submitting,
-    closeOnEscape: !form.submitting,
-    withCloseButton: !form.submitting,
-    children: (
-      <form onSubmit={form.onSubmit(handleSubmit, handleErrors)}>
-        <UserForm form={form} onCancel={() => modal.close()} />
-      </form>
-    ),
-  });
 
   return (
     <>
-      <Button onClick={() => modal.open()}>Add user</Button>
-      <UsersTable users={users} />
+      <Button onClick={() => openEditor(null)}>Add user</Button>
+      <UsersTable users={users} onEdit={openEditor} />
     </>
   );
 }
