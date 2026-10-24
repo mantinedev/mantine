@@ -104,6 +104,13 @@ export const JsonInput = factory<JsonInputFactory>((props) => {
       onFocus={handleFocus}
       onBlur={handleBlur}
       readOnly={readOnly}
+      spellCheck={false}
+      autoCorrect="off"
+      autoCapitalize="off"
+      data-gramm="false"
+      data-gramm_editor="false"
+      data-enable-grammarly="false"
+      data-lt-active="false"
       {...others}
       autoComplete="off"
       __staticSelector="JsonInput"

@@ -346,6 +346,30 @@ describe('@mantine/core/JsonInput', () => {
     expect(input).toHaveAttribute('autocomplete', 'off');
   });
 
+  it('disables spellcheck, autocorrect and grammar extensions', () => {
+    const { container } = render(<JsonInput label="test" />);
+    const input = container.querySelector('textarea')!;
+
+    expect(input).toHaveAttribute('spellcheck', 'false');
+    expect(input).toHaveAttribute('autocorrect', 'off');
+    expect(input).toHaveAttribute('autocapitalize', 'off');
+    expect(input).toHaveAttribute('data-gramm', 'false');
+    expect(input).toHaveAttribute('data-gramm_editor', 'false');
+    expect(input).toHaveAttribute('data-enable-grammarly', 'false');
+    expect(input).toHaveAttribute('data-lt-active', 'false');
+  });
+
+  it('allows overriding spellcheck and grammar extension attributes', () => {
+    const { container } = render(
+      <JsonInput label="test" spellCheck autoCapitalize="sentences" data-gramm="true" />
+    );
+    const input = container.querySelector('textarea')!;
+
+    expect(input).toHaveAttribute('spellcheck', 'true');
+    expect(input).toHaveAttribute('autocapitalize', 'sentences');
+    expect(input).toHaveAttribute('data-gramm', 'true');
+  });
+
   describe('validity follows the resolved value', () => {
     it.each<FormMode>(['uncontrolled', 'controlled'])(
       'clears invalid state after form.reset() in %s form mode',
