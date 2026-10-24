@@ -5,6 +5,13 @@
 - A `Radio.Group` or `Checkbox.Group` with more than two options is a vertical `Stack gap="xs"`; the same for a row of `Switch`es. A row of three or
   more radios reads as a sentence the eye has to parse (`Does not repeat  Daily  Weekly  Monthly
   Yearly`) and wraps unpredictably on narrow screens.
+- A stacked group never shares a `SimpleGrid` row with a single input: it is two to three
+  inputs tall, and the row's other column hangs at the top next to an empty space. Give it a
+  row of its own or pair it with another stacked group.
+- Set `withBlockChildren` on a stacked `Checkbox.Group` / `Radio.Group` (10.0): the options are
+  block children, and the prop keeps the xs/2 gap between the last option and the error, and
+  between the description and the first option. In 9.x give the options `Stack` an `mb="xs"`
+  when the group can show an error.
 - A row is for exactly two options (`Yes / No`, `Personal / Company`). Weekdays, permissions, categories: seven or five checkboxes in a row read as a sentence and wrap; stack them, or use `Chip.Group multiple` when the options are one short word each and a horizontal row is the point (weekday pickers).
 - When the options are short words and there are 2 to 5 of them, `SegmentedControl` is the
   compact horizontal alternative (`fullWidth` under a label, inside `Input.Wrapper

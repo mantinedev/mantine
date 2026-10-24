@@ -6,12 +6,15 @@ lighter per level in dark mode and white in light mode. `Paper` is deprecated, u
 
 - A card on the page: `<Surface withBorder p="lg">`, level 0, the page color with a border.
   Nesting one `Surface` inside another steps the level up automatically; never jump two levels.
-- **Repeated rows that contain inputs** (positions, invoice lines, invitees) are either
-  `Surface withBorder p="md"` cards or plain blocks; both keep the inputs readable because inputs
-  use `--mantine-color-surface-input`, the page color in dark mode. A plain row has a header row
-  (small medium-weight title `<Text size="sm" className={classes.title}>Position 1</Text>` on the
-  left, the remove `ActionIcon` on the right) above the inputs; rows are separated by `Divider`
-  or the form gap. Use one style for all rows of a form.
+- **Repeated rows that contain inputs** come in two layouts, picked by the rows' shape. Rows with
+  the same fields (invoice lines, conditions, invitees) are a grid with one caption row and
+  unlabeled inputs, see [inputs](inputs.md#rows-of-unlabeled-inputs). Rows whose fields differ
+  by type (actions, positions with their own field sets) or need more than one line are blocks:
+  a header row (small medium-weight title `<Text size="sm" className={classes.title}>Position 1
+  </Text>` on the left, the remove `ActionIcon` on the right) above labeled inputs, rows
+  separated by `Divider` or the form gap. A block is plain by default; `Surface withBorder
+  p="md"` cards only when the page shows other content next to the form. One style for all rows
+  of a list.
 - Single-line read-only rows (a field of a model, a member, a file) are `Surface withBorder p="sm"` with
   one `Group gap="sm" wrap="nowrap"`: drag handle, category `ThemeIcon`, two-line texts
   (`flex: 1; min-width: 0` through a class), then the actions in `Group gap={6}`. Everything in
@@ -29,7 +32,7 @@ lighter per level in dark mode and white in light mode. `Paper` is deprecated, u
 - Do not set a background color on `Surface` by hand; pick the level with nesting or `level`.
 
 ```tsx
-// A repeated row with inputs as a plain block: a header row and the inputs
+// A row whose fields differ by type, as a plain block: a header row and labeled inputs
 <div>
   <Group justify="space-between" mb="sm">
     <Text size="sm" className={classes.title}>Position {index + 1}</Text>

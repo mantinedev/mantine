@@ -207,23 +207,30 @@ for example `null` from an empty `Select` checked with `z.string()`. Format erro
 
 ### When to validate
 
-Fields are validated on submit only by default. Choose the trigger per field:
+Fields are validated on submit, and submit validation is the right choice for nearly every
+field: the user fills the form, presses the button, and sees every problem at once with the
+first invalid field focused. An error that appears while the user is still working on the value
+("too early validation") is a defect, not a feature: picking a field and switching its unit from
+`%` to a currency, typing the first digits of a price, or tabbing through a date must never show
+an error.
+
+The exceptions are rare and specific:
 
 ```tsx
-validateInputOnBlur: ['email', 'linkedin', 'salary'],  // single-value inputs
-validateInputOnChange: ['username'],                   // async availability checks, with validateDebounce
-validateInputOnChange: [`skills.${FORM_INDEX}.name`],  // list items, FORM_INDEX is exported from @mantine/form
+validateInputOnChange: ['username'],  // async availability checks only, with validateDebounce
 ```
 
-- Never validate multi-part inputs (phone with a country select, date ranges, `PinInput`) on blur
-  or on change: moving between the parts shows an error before the user could finish.
-- Never validate numeric or length rules on change: every partial value is an error. Validate on
-  blur or on submit, and show live feedback for length rules as a counter, for example in the
-  `bottomSection` of a `Textarea`.
+- `validateInputOnBlur` only for a free-text format check on a single-value input that nobody
+  edits in parts (an email address). Never for numbers, lengths, dates, pin inputs, phone inputs,
+  value + unit composites or anything with a select next to it: blur happens when the user moves
+  to the unit select, and the error fires on a half-finished value.
+- Never validate numeric or length rules on change: every partial value is an error. Show live
+  feedback for length rules as a counter, for example in the `bottomSection` of a `Textarea`,
+  and judge the value on submit.
 - With validation on blur, pressing the submit button blurs the field, its error appears and
   shifts the layout under the pointer, and the click misses the button. Add
   `onMouseDown={(event) => event.preventDefault()}` to the submit button: the field keeps focus
-  until the click completes.
+  until the click completes. Not needing this trick is one more reason to validate on submit.
 
 ## What rerenders
 

@@ -17,8 +17,9 @@ border; the `legend` sits on the border line.
   inputs and nothing shows which fields it covers. Inside a card, panel or any `Surface`, where the
   default variant's background would differ from the container, use a bordered `Surface` with a
   title row instead, see [surface](surface.md).
-- A group of repeated rows (positions, line items) is never a stack of fieldsets; each row is a
-  `Surface` block with a header row.
+- A group of repeated rows is never a stack of fieldsets. Rows with the same fields (line items,
+  conditions) are a grid under one caption row, see [inputs](inputs.md#rows-of-unlabeled-inputs);
+  rows whose fields differ by type are blocks with a header row, see [surface](surface.md).
 - `disabled` on the fieldset when the whole group is unavailable (an address copied from another
   section while "Same as" is on).
 

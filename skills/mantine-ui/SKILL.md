@@ -44,6 +44,10 @@ component you are about to use, then write the UI.
   options is a vertical `Stack gap="xs"`; a row holds two options at most. `SegmentedControl`
   (one choice) and `Chip.Group multiple` (several) are the horizontal forms for short words.
   See [radio](references/components/radio.md).
+- **A row holds inputs of one height.** A `SimpleGrid` row pairs an input with an input; a
+  stacked `Checkbox.Group` or `Radio.Group` (two to three times the height of a select) gets a
+  row of its own or sits next to another stacked group, never beside a single input or a date.
+  See [radio](references/components/radio.md).
 - **Coupled fields are one block.** A field and the inputs it reveals (`Repeat` + `Repeat
   every`, `Ends` + count or date) sit in a `Stack gap="xs"` of their own, right under each
   other, so the form's larger gap separates groups, not members of a group.
@@ -57,11 +61,14 @@ component you are about to use, then write the UI.
   (`numberOfColumns={2}`); never a date input next to a `TimeInput`, never day / month / year
   selects. See [date-pickers](references/components/date-pickers.md).
 - **The submit button is never disabled.** Submit validates and shows errors; `loading` is the
-  only state. Secondary actions sit where they act: `Add another` under its list, not in the
+  only state. Validation runs on submit, not while the user is still in the field: a value with
+  a unit select (`10 [%]` → `[USD]`), a date, a number must be changeable without an error
+  appearing mid-edit (see the mantine-form skill). Secondary actions sit where they act: `Add another` under its list, not in the
   footer. See [button](references/components/button.md).
 - **Long forms get an error summary.** More than one screen or several steps: `Alert
   color="red" title="There is a problem"` above the fields listing each error as a link to its
-  field, same wording as inline. See [alert](references/components/alert.md).
+  field, same wording as inline; the links take the alert's color (`Anchor c="red"`), never the
+  default blue. See [alert](references/components/alert.md).
 - **Defaults only for settings.** Preselect what nearly everyone keeps (`Does not repeat`, the
   browser timezone); questions start empty and a required question is never preselected.
 - **A value and its unit are one input.** Amount + currency, interval + period (`every 2
@@ -76,8 +83,13 @@ component you are about to use, then write the UI.
   [text](references/components/text.md#section-headers).
 - **`Fieldset` always has its border.** `variant="unstyled"` is not used; inside a `Surface`
   use a titled `Surface` instead. See [fieldset](references/components/fieldset.md).
-- **A field and its action share a line** on desktop (`Group align="flex-end"`, field grows,
-  button keeps its width). See [inputs](references/components/inputs.md#a-field-and-its-action).
+- **A field and its action share a line** on desktop: the field grows, the button keeps its
+  width and is rendered through the input's `inputContainer`, so an error under the field never
+  pushes the button. See [inputs](references/components/inputs.md#a-field-and-its-action).
+- **Errors never move neighbors.** Rows of inputs align to the top (`align-items: start` on the
+  grid, never `align="flex-end"` on a `Group`): an error message grows its own cell downward and
+  the inputs beside it stay where they were. The alignment problem and its fixes are described
+  at https://help.mantine.dev/q/align-input-button.
 - **Buttons never shrink** in a row with text: the text block flexes, the button keeps its width.
 - **Growing fields go last.** `Textarea autosize`, rich text, dropzones and code inputs are the
   last input of their section; short inputs never sit below them. See
@@ -102,12 +114,22 @@ component you are about to use, then write the UI.
   grid (`size="xs"`, once per group) or from the sentence it sits in (`Match [all] of the
   following conditions`), never from a placeholder alone. A select that changes the meaning of
   a whole list reads as a sentence, not as a toggle floating above the list.
+- **Rows of one shape are a grid, rows of many shapes are blocks.** A list whose rows all have
+  the same fields (line items, conditions, invitees) is one grid: a caption row, then one row per
+  item with unlabeled inputs; the drag handle is the first thing in the row, the other controls
+  (duplicate, remove) fill the last `auto` column; no per-row title, the row number lives in the
+  `aria-label`s; an input most rows never
+  show (a custom rate behind `Custom`) sits under its trigger in the same cell, not in a column
+  of its own. Rows whose fields depend
+  on the row's type (actions with per-type parameters) or that need more than one line of inputs
+  are blocks: a header row (small title, remove action) above labeled inputs. One pattern per
+  list. See [inputs](references/components/inputs.md#rows-of-unlabeled-inputs).
 - **Progress components show progress.** `Stepper` and `Timeline` are for sequences and states
   (a wizard, a history); parts of a form that are all editable at once are sections, with a
   `Fieldset` legend when their body is a list of rows. See [fieldset](references/components/fieldset.md).
 - **The thing's own fields come first.** Name, description and the one or two values that
-  identify the item sit at the top as plain fields; the lists and groups that configure it
-  follow in fieldsets; a derived summary, if any, sits below them as structured text (a line,
+  identify the item sit at the top as plain fields under the page title, never in a fieldset
+  whose legend repeats that title; the lists and groups that configure it follow in fieldsets; a derived summary, if any, sits below them as structured text (a line,
   then bullets), never as one long sentence. See [text](references/components/text.md#derived-summaries).
 - **One kind of remove per level.** Rows remove themselves with a trash `ActionIcon`; the
   container that holds the rows (a group, a section) is removed with a text button
@@ -147,10 +169,10 @@ component you are about to use, then write the UI.
   file) or more, icon above two lines of text, never a one-line strip, see
   [dropzone](references/components/dropzone.md).
 - **`Surface` inside forms is a layout choice.** A form sits on the page by default; a
-  `Surface withBorder` card around a group of fields or a repeated row (positions, line items,
-  invitees) is used when the page shows other content next to the form or the user asks for
-  cards. Rows without a card are plain blocks: a header row (small medium-weight title, remove
-  action) above the inputs, rows separated by `Divider` or the form gap. See
+  `Surface withBorder` card around a group of fields is used when the page shows other content
+  next to the form or the user asks for cards. Blocks inside the form (a nested group, a totals
+  or summary block) are never raised `Surface`s: plain text, or the default border with the
+  sunken background when the block needs an edge. See
   [surface](references/components/surface.md).
 - **Category icons** (field types, statuses, kinds) are `ThemeIcon variant="default"` with the
   icon colored by a theme color per category, see [theme-icon](references/components/theme-icon.md).

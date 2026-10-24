@@ -16,13 +16,16 @@ the error summary.
   (that is `description`).
 - `variant="default"`, no `withCloseButton` on validation summaries (fixing the errors removes
   it).
+- **Links inside an `Alert` take the alert's color.** A red alert has red links (`Anchor
+  c="red"`), a yellow one yellow links; the default blue `Anchor` inside a colored alert reads as
+  a second, unrelated accent.
 
 ```tsx
 {errorList.length > 0 && (
   <Alert color="red" title="There is a problem" ref={summaryRef} tabIndex={-1}>
     <Stack gap={4}>
       {errorList.map(({ path, message }) => (
-        <Anchor key={path} component="button" type="button" size="sm" onClick={() => form.getInputNode(path)?.focus()}>
+        <Anchor key={path} component="button" type="button" size="sm" c="red" onClick={() => form.getInputNode(path)?.focus()}>
           {message}
         </Anchor>
       ))}

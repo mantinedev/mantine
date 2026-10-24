@@ -184,13 +184,25 @@ attendees) shows what was collected inside the input, as compactly as the input 
 
 An action that uses the value of one field (`New owner` + `Transfer ownership`, `Invite email` +
 `Send invite`, `Coupon` + `Apply`) sits on the same line as the field on desktop: the field grows,
-the button keeps its width and aligns with the input, not with the label.
+the button keeps its width and aligns with the input, not with the label. `Group align="flex-end"`
+around the field and the button breaks as soon as the field shows an error: the error adds height
+below the input and the button drops with it (https://help.mantine.dev/q/align-input-button).
+Render the button inside the input's `inputContainer` instead, so label, input + button and error
+stack in one wrapper:
 
 ```tsx
-<Group align="flex-end" wrap="nowrap">
-  <Select label="New owner" placeholder="Pick a member" data={MEMBERS} className={classes.field} {...form.getInputProps('memberId')} />
-  <Button type="submit" variant="default">Transfer ownership</Button>
-</Group>
+<Select
+  label="New owner"
+  placeholder="Pick a member"
+  data={MEMBERS}
+  inputContainer={(children) => (
+    <Group align="flex-start" wrap="nowrap">
+      <div className={classes.field}>{children}</div>
+      <Button type="submit" variant="default">Transfer ownership</Button>
+    </Group>
+  )}
+  {...form.getInputProps('memberId')}
+/>
 ```
 
 ```css
@@ -199,6 +211,9 @@ the button keeps its width and aligns with the input, not with the label.
   min-width: 0;
 }
 ```
+
+The same holds for every row of inputs: the grid aligns to the top (`align-items: start`), and an
+error grows only its own cell.
 
 Below `sm` the pair stacks (`SimpleGrid cols={{ base: 1, sm: 2 }}` or a `flex-direction: column`
 media query); the button then spans the field's width.
@@ -215,6 +230,28 @@ carry a label on every input without doubling its height. Two tools replace the 
   following conditions`, `Repeat every [2] [weeks ▾]`. The select is inline, its `aria-label` is
   the sentence's subject, and no separate toggle sits above the list.
 
-Row controls share one size (`size="input-sm"` icons next to `sm` inputs), the last column is
-`auto` for the remove icon, and a column whose input is sometimes absent keeps its track so rows
-stay aligned.
+Row controls share one size (`size="input-sm"` icons next to `sm` inputs); the drag handle is the
+first column, the last column is `auto` for duplicate and remove, and a column whose input is sometimes absent keeps its track so rows
+stay aligned. That holds for a column most rows fill (the value of a condition, absent only for
+`is empty`). An input that most rows never show (a custom rate behind a `Custom` option, a note
+behind a toggle) is not a column: it renders under its trigger in the same cell, in a
+`Stack gap="xs"`, and only that row grows. A caption row never names a column that is usually
+empty.
+
+This is the layout for every list whose rows have the same fields: line items (description,
+quantity with its unit, unit price, tax rate, amount), conditions, invitees, variants. A row has
+no title of its own and no header row; `Item 3` appears only in `aria-label`s (`Item 3
+description`, `Remove item 3`). A value the row derives (the line amount) is read-only `Text` in
+its own column, vertically centered to the input height. The widest text column grows (`1fr`),
+number columns are fixed, and the whole grid is one `SimpleGrid`-free CSS grid so every row
+shares the caption's tracks. The list is a CSS container (`container-type: inline-size`) and the
+rows reflow in `@container (max-width: …)` queries, not viewport media queries: the form may sit
+in a column narrower than the screen. Two narrower states: the widest text field takes a line of
+its own and the numbers share the next line with the controls (about 880px and below), then one
+column (about 560px and below). Every input keeps its `label` and
+`withAsterisk` for screen readers and for the stacked state; the label is hidden with CSS
+(`classNames={{ label: classes.rowLabel }}`, `display: none` while the caption row is visible).
+
+Blocks with a header row (title left, remove action right, labeled inputs below, see
+[surface](surface.md)) are for rows whose fields differ by type or do not fit one line. A form
+never mixes the two for one list.

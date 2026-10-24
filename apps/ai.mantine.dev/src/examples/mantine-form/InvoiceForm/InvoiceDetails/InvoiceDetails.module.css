@@ -1,0 +1,4 @@
+.address {
+  padding-inline-start: var(--mantine-spacing-xs);
+  border-inline-start: 2px solid var(--mantine-color-default-border);
+}

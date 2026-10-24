@@ -1,0 +1,81 @@
+.row {
+  position: relative;
+  display: grid;
+  grid-template-columns: var(--line-item-columns);
+  gap: var(--mantine-spacing-xs);
+  align-items: start;
+  background-color: var(--mantine-color-body);
+
+  &[data-dragging] {
+    z-index: 1;
+  }
+}
+
+.amount {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: var(--mantine-spacing-xs);
+  min-height: 36px;
+  font-variant-numeric: tabular-nums;
+}
+
+/* Labels exist for screen readers and the narrower states; the caption row names the columns otherwise */
+.rowLabel,
+.amountLabel {
+  display: none;
+}
+
+.amountLabel {
+  font-weight: var(--mantine-font-weight-medium);
+}
+
+.handle {
+  cursor: grab;
+}
+
+/* Middle state: the description takes a line, the numbers share the next one, with labels */
+@container (max-width: 880px) {
+  .row {
+    grid-template-columns: repeat(3, minmax(0, 1fr)) auto auto;
+    padding-bottom: var(--mantine-spacing-md);
+    border-bottom: 1px solid var(--mantine-color-default-border);
+  }
+
+  .description {
+    grid-column: 1 / -1;
+  }
+
+  .rowLabel {
+    display: inline-block;
+  }
+
+  .amountLabel {
+    display: inline;
+  }
+
+  .amount,
+  .actions {
+    align-self: end;
+  }
+}
+
+/* Narrow state: one column */
+@container (max-width: 560px) {
+  .row {
+    grid-template-columns: 1fr;
+  }
+
+  .amount,
+  .actions {
+    align-self: auto;
+  }
+
+  .amount {
+    justify-content: space-between;
+  }
+
+  .actions {
+    justify-content: flex-end;
+  }
+}

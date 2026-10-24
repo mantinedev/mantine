@@ -11,6 +11,9 @@ import type { EntryValues } from './ContentEntryForm/types';
 import contentModelFormCode from './ContentModelForm/code.json';
 import { ContentModelForm } from './ContentModelForm/ContentModelForm';
 import type { ContentModelValues, ModelField } from './ContentModelForm/types';
+import invoiceFormCode from './InvoiceForm/code.json';
+import { InvoiceForm } from './InvoiceForm/InvoiceForm';
+import type { InvoiceValues } from './InvoiceForm/types';
 import jobApplicationFormCode from './JobApplicationForm/code.json';
 import { JobApplicationForm } from './JobApplicationForm/JobApplicationForm';
 import type { JobApplicationValues } from './JobApplicationForm/types';
@@ -419,6 +422,103 @@ Write tests for the component.`,
             params: { channel: 'alerts', message: 'Urgent bug reported' },
           },
         ],
+      });
+    },
+  },
+  {
+    id: 'invoice-form',
+    title: 'Invoice editor',
+    description:
+      'Sortable line items in a grid, live totals with tax per rate, linked due date and a draft path',
+    prompt: `Build a form for creating an invoice in a small-business billing app.
+
+Invoice:
+
+- client (select from a list of saved clients; picking one shows the client's billing address as read-only text under the select)
+- invoice number (required, pre-filled with the next number, e.g. INV-0042, editable)
+- issue date (required, defaults to today) and due date (required, defaults to 30 days after the issue date; changing the issue date moves the due date by the same amount unless the user has edited the due date); due date must not be before the issue date
+- currency (select: USD, EUR, GBP, JPY); all money in the form is formatted in the selected currency; JPY has no decimals
+- purchase order number (optional)
+
+Line items:
+
+- a list of 1 to 50 line items; each item has description (required), quantity (required, positive, up to 3 decimals), unit (select: hours, days, pieces, flat), unit price (required, 0 or more), tax rate (select: 0%, 7%, 19%, custom; custom reveals a number input 0 to 100 with one decimal)
+- each item shows its computed amount (quantity × unit price, before tax) as read-only text
+- items can be added, removed (the last remaining item cannot be removed) and reordered by drag and drop and by keyboard
+- "Duplicate" on an item inserts a copy right below it
+
+Adjustments:
+
+- discount: none, percentage (0 to 100) or fixed amount in the invoice currency; a discount is applied to the subtotal before tax
+- shipping (optional fixed amount, taxed at the first item's rate)
+
+Totals, updated live as the user types:
+
+- subtotal (sum of item amounts), discount, tax per rate (one line per distinct rate, e.g. "Tax 19%" and "Tax 7%"), shipping, total due
+- when the total is negative or zero, show an inline warning under the totals and still allow submit
+
+Payment:
+
+- payment terms (select: due on receipt, net 15, net 30, net 60, custom; custom reveals a number of days 1 to 180); picking a term sets the due date accordingly
+- accepted payment methods (checkboxes: bank transfer, card, PayPal; at least one)
+- notes to the client (optional, up to 500 characters with a counter) and internal memo (optional, never shown to the client)
+
+Behavior:
+
+- submit validates everything and focuses the first invalid field; on submit show a short notification (invoice number and total due) and display the invoice JSON under the form, with all money as numbers in minor units (cents, or whole yen); keep the form as is
+- "Save as draft" skips validation of line items and totals but still requires a client and an invoice number; the JSON gets status "draft" instead of "issued"
+
+Write tests for the component.
+
+Put the component and its tests in src/InvoiceForm/.`,
+    component: InvoiceForm,
+    code: invoiceFormCode as SkillExample['code'],
+    fill: async (filler) => {
+      filler.setValues<InvoiceValues>('invoice', {
+        clientId: 'acme',
+        invoiceNumber: 'INV-0042',
+        issueDate: dateInDays(0),
+        dueDate: dateInDays(30),
+        currency: 'USD',
+        purchaseOrderNumber: 'PO-7781',
+        items: [
+          {
+            id: 'audit',
+            description: 'Design system audit',
+            quantity: 12.5,
+            unit: 'hours',
+            unitPrice: 150,
+            taxRate: '19',
+            customTaxRate: '',
+          },
+          {
+            id: 'tokens',
+            description: 'Token migration workshop',
+            quantity: 2,
+            unit: 'days',
+            unitPrice: 1200,
+            taxRate: '19',
+            customTaxRate: '',
+          },
+          {
+            id: 'license',
+            description: 'Icon set license',
+            quantity: 1,
+            unit: 'flat',
+            unitPrice: 299,
+            taxRate: '7',
+            customTaxRate: '',
+          },
+        ],
+        discountEnabled: true,
+        discountType: 'percentage',
+        discountValue: 10,
+        shipping: '',
+        paymentTerms: 'net30',
+        customTermDays: '',
+        paymentMethods: ['bank_transfer', 'card'],
+        notes: 'Thank you for working with us. Payment details are on the second page.',
+        internalMemo: 'Second engagement with Acme; discount agreed by Ada.',
       });
     },
   },

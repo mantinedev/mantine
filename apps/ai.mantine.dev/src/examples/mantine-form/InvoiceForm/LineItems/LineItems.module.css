@@ -1,0 +1,35 @@
+.legend {
+  font-size: var(--mantine-font-size-md);
+  font-weight: var(--mantine-font-weight-bold);
+}
+
+.list {
+  --line-item-columns: minmax(180px, 1fr) 170px 140px 130px 110px auto;
+
+  container-type: inline-size;
+  display: flex;
+  flex-direction: column;
+  gap: var(--mantine-spacing-xs);
+}
+
+.caption {
+  display: grid;
+  grid-template-columns: var(--line-item-columns);
+  gap: var(--mantine-spacing-xs);
+}
+
+.required {
+  color: var(--mantine-color-error);
+  margin-inline-start: 4px;
+}
+
+/* The rows reflow by the width of the list, not the viewport: the form may sit in a column */
+@container (max-width: 880px) {
+  .list {
+    gap: var(--mantine-spacing-md);
+  }
+
+  .caption {
+    display: none;
+  }
+}

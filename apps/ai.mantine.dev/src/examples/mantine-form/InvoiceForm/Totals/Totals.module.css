@@ -1,0 +1,23 @@
+.root {
+  width: 100%;
+  max-width: 320px;
+  margin-inline-start: auto;
+}
+
+.line {
+  padding-block: 2px;
+}
+
+.value {
+  font-variant-numeric: tabular-nums;
+}
+
+.totalLabel {
+  font-weight: var(--mantine-font-weight-medium);
+}
+
+.totalValue {
+  color: var(--mantine-color-bright);
+  font-weight: var(--mantine-font-weight-medium);
+  font-variant-numeric: tabular-nums;
+}

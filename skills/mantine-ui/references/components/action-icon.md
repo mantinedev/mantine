@@ -12,7 +12,8 @@
 - **Drag handles** are `ActionIcon variant="default"` of the row size with `IconGripVertical`,
   `aria-label="Reorder <item>"`, `style={{ cursor: 'grab' }}` through a class, and the dnd-kit
   listeners/attributes spread on the `ActionIcon`. The handle must look exactly like the other
-  controls of the row: same size, same variant.
+  controls of the row: same size, same variant. It is always the first element of the row, in a
+  grid row and in a block header alike; duplicate and remove go last.
 - When the action sits beside an input that has a label, align it with the input, not the label:
   reserve the label height (`<Input.Label>&nbsp;</Input.Label>` above the icon) or move the
   action to the row header.

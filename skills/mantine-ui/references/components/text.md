@@ -70,3 +70,12 @@ created`), then a `List size="sm"` per group of items (conditions as bullets, or
 above the submit row, in plain `Text`, with a placeholder line while there is nothing to
 describe. A sentence that joins twelve clauses with commas and parentheses is unreadable past the
 third clause.
+
+Derived numbers (subtotal, discount, one line per tax rate, shipping, total) are label/value
+rows: `Group justify="space-between"` lines in `size="sm"`, a `Divider`, then the total line with a
+medium-weight label and the value in `var(--mantine-color-bright)`. The block is as wide as the
+amounts it sums, about 320px, never stretched across the full width with the label at one edge
+and the value at the other. It sits either aligned to the end of the form above the submit row
+(`ml="auto"`), or on the submit row itself, at the start, with the buttons at the end
+(`Group justify="space-between" align="flex-end"`: totals | ──── | Save as draft, Issue). It is plain text, no
+`Surface`; when it must be boxed it is the sunken block from [surface](surface.md).
