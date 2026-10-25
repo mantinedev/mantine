@@ -1,6 +1,23 @@
+import { isValidElement } from 'react';
 import cx from 'clsx';
 import { FOCUS_CLASS_NAMES, Title } from '@mantine/core';
 import classes from './MdxTitle.module.css';
+
+function getTextContent(node: React.ReactNode): string {
+  if (typeof node === 'string' || typeof node === 'number') {
+    return String(node);
+  }
+
+  if (Array.isArray(node)) {
+    return node.map(getTextContent).join('');
+  }
+
+  if (isValidElement<{ children?: React.ReactNode }>(node)) {
+    return getTextContent(node.props.children);
+  }
+
+  return '';
+}
 
 export function MdxTitle({
   id,
@@ -18,7 +35,12 @@ export function MdxTitle({
 
   return (
     <>
-      <div id={id} data-heading={children} data-order={order} className={classes.offset} />
+      <div
+        id={id}
+        data-heading={getTextContent(children)}
+        data-order={order}
+        className={classes.offset}
+      />
       <Title order={order} className={classes.title} {...others}>
         <a className={cx(classes.link, FOCUS_CLASS_NAMES.auto)} href={`#${id}`}>
           {children}
