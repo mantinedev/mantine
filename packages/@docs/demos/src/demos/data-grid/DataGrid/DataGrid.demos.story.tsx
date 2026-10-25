@@ -412,3 +412,8 @@ export const Demo_actionsColumn = {
   name: '⭐ Demo: actionsColumn',
   render: renderDemo(demos.actionsColumn),
 };
+
+export const Demo_footerCompact = {
+  name: '⭐ Demo: footerCompact',
+  render: renderDemo(demos.footerCompact),
+};

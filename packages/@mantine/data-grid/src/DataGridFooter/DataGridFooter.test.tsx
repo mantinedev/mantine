@@ -285,6 +285,25 @@ describe('@mantine/data-grid/DataGridFooter', () => {
     });
   });
 
+  it('marks navigation controls and renders the page label for the compact layout', () => {
+    const { container } = render(
+      <Grid
+        storeOptions={{ pageSize: 5 }}
+        footerProps={{ paginationProps: { getControlProps: () => ({ 'data-custom': 'yes' }) } }}
+      />
+    );
+    const footer = container.querySelector('.mantine-DataGrid-footer')!;
+    const previous = footer.querySelector('[data-nav="previous"]')!;
+    const next = footer.querySelector('[data-nav="next"]')!;
+    expect(previous).toHaveAttribute('aria-label');
+    expect(next).toHaveAttribute('aria-label');
+    expect(next).toHaveAttribute('data-custom', 'yes');
+    expect(footer.querySelectorAll('.mantine-Pagination-control:not([data-nav])')).toHaveLength(3);
+    expect(
+      footer.querySelector('.mantine-DataGrid-footerPagination > [data-page-label]')
+    ).toHaveTextContent('Page 1 of 3');
+  });
+
   it('replaces the default content with children', () => {
     const { container } = render(
       <Grid storeOptions={{ pageSize: 5 }} footerProps={{ children: <span>custom</span> }} />

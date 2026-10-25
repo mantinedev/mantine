@@ -163,18 +163,20 @@ export const DataGridFooter = factory<DataGridFooterFactory>((props) => {
           )}
           {resolvedPagination !== 'none' && (
             <div {...ctx.getStyles('footerPagination', { classNames, styles })}>
-              {resolvedPagination === 'arrows' && <span>{pageLabel}</span>}
+              <span data-page-label>{pageLabel}</span>
               <Pagination
                 size={store.controlSize}
                 withPages={resolvedPagination === 'pages'}
-                getControlProps={(control) =>
-                  control === 'previous'
+                {...paginationProps}
+                getControlProps={(control) => ({
+                  'data-nav': control,
+                  ...(control === 'previous'
                     ? { 'aria-label': labels.paginationPrevious }
                     : control === 'next'
                       ? { 'aria-label': labels.paginationNext }
-                      : {}
-                }
-                {...paginationProps}
+                      : {}),
+                  ...paginationProps?.getControlProps?.(control),
+                })}
                 total={pageCount}
                 value={page}
                 onChange={(value) => table.setPageIndex(value - 1)}

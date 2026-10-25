@@ -1153,20 +1153,113 @@
   white-space: nowrap;
   color: var(--mantine-color-text);
   font-weight: 400;
+  container-type: inline-size;
 }
 
 .footerStatus {
   margin-inline-end: auto;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
 
   & > span {
     font-weight: 500;
   }
 }
 
+.footerPageSize {
+  display: var(--dg-footer-page-size-display, block);
+}
+
 .footerPagination {
   display: flex;
   align-items: center;
   gap: rem(8px);
+
+  & > [data-page-label] {
+    display: var(--dg-footer-page-label-display, inline);
+  }
+
+  & :where(nav) > :where(div) {
+    flex-wrap: nowrap;
+
+    & > :not([data-nav]) {
+      display: var(--dg-footer-pages-display, flex);
+    }
+  }
+}
+
+.footer:where([data-pagination='pages']) .footerPagination > [data-page-label] {
+  display: var(--dg-footer-page-label-display, none);
+}
+
+@container (width <= 520px) {
+  .root:where([data-size='xs'], [data-size='sm'])
+    .footer:where(
+      [data-pagination='pages'][data-status-format='compact'],
+      [data-pagination='arrows']
+    )
+    > * {
+    --dg-footer-page-size-display: none;
+    --dg-footer-page-label-display: inline;
+    --dg-footer-pages-display: none;
+  }
+}
+
+@container (width <= 580px) {
+  .root:where([data-size='md'])
+    .footer:where(
+      [data-pagination='pages'][data-status-format='compact'],
+      [data-pagination='arrows']
+    )
+    > * {
+    --dg-footer-page-size-display: none;
+    --dg-footer-page-label-display: inline;
+    --dg-footer-pages-display: none;
+  }
+}
+
+@container (width <= 660px) {
+  .root:where([data-size='lg'], [data-size='xl'])
+    .footer:where(
+      [data-pagination='pages'][data-status-format='compact'],
+      [data-pagination='arrows']
+    )
+    > * {
+    --dg-footer-page-size-display: none;
+    --dg-footer-page-label-display: inline;
+    --dg-footer-pages-display: none;
+  }
+}
+
+@container (width <= 700px) {
+  .root:where([data-size='xs'], [data-size='sm'])
+    .footer:where([data-pagination='pages'][data-status-format='long'])
+    > * {
+    --dg-footer-page-size-display: none;
+    --dg-footer-page-label-display: inline;
+    --dg-footer-pages-display: none;
+  }
+}
+
+@container (width <= 760px) {
+  .root:where([data-size='md'])
+    .footer:where([data-pagination='pages'][data-status-format='long'])
+    > * {
+    --dg-footer-page-size-display: none;
+    --dg-footer-page-label-display: inline;
+    --dg-footer-pages-display: none;
+  }
+}
+
+@container (width <= 860px) {
+  .root:where([data-size='lg'], [data-size='xl'])
+    .footer:where([data-pagination='pages'][data-status-format='long'])
+    > * {
+    --dg-footer-page-size-display: none;
+    --dg-footer-page-label-display: inline;
+    --dg-footer-pages-display: none;
+  }
 }
 
 .root:where(:has(> .footer)) {

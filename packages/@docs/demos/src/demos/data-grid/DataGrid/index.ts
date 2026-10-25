@@ -63,6 +63,7 @@ export { selectionBar } from './DataGrid.demo.selectionBar';
 export { selectionBarFloating } from './DataGrid.demo.selectionBarFloating';
 export { footerStatusFormats } from './DataGrid.demo.footerStatusFormats';
 export { footerArrows } from './DataGrid.demo.footerArrows';
+export { footerCompact } from './DataGrid.demo.footerCompact';
 export { footerStatusOnly } from './DataGrid.demo.footerStatusOnly';
 export { customFooter } from './DataGrid.demo.customFooter';
 export { listView } from './DataGrid.demo.listView';
