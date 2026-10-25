@@ -63,7 +63,7 @@ function Demo() {
               <Group justify="flex-end">
                 <Button
                   size="xs"
-                  variant="subtle"
+                  variant="default"
                   disabled={activeCount === 0}
                   onClick={() => store.resetColumnFilters()}
                 >
@@ -140,7 +140,7 @@ function Demo() {
               <Group justify="flex-end">
                 <Button
                   size="xs"
-                  variant="subtle"
+                  variant="default"
                   disabled={activeCount === 0}
                   onClick={() => store.resetColumnFilters()}
                 >

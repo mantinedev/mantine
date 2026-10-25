@@ -30,19 +30,18 @@ function Demo() {
         cell: ({ row }) => (
           <Group gap={4} justify="flex-end" wrap="nowrap">
             <Tooltip label="View profile">
-              <ActionIcon variant="subtle" color="gray" size={store.getControlSize()} aria-label="View">
+              <ActionIcon variant="default" size={store.getControlSize()} aria-label="View">
                 <EyeIcon size={14} />
               </ActionIcon>
             </Tooltip>
             <Tooltip label="Edit">
-              <ActionIcon variant="subtle" color="gray" size={store.getControlSize()} aria-label="Edit">
+              <ActionIcon variant="default" size={store.getControlSize()} aria-label="Edit">
                 <PencilSimpleIcon size={14} />
               </ActionIcon>
             </Tooltip>
             <Tooltip label="Delete">
               <ActionIcon
-                variant="subtle"
-                color="red"
+                variant="default"
                 size={store.getControlSize()}
                 aria-label="Delete"
                 onClick={() => setData((prev) => prev.filter((item) => item.id !== row.id))}
@@ -85,29 +84,18 @@ function Demo() {
         cell: ({ row }) => (
           <Group gap={4} justify="flex-end" wrap="nowrap">
             <Tooltip label="View profile">
-              <ActionIcon
-                variant="subtle"
-                color="gray"
-                size={store.getControlSize()}
-                aria-label="View"
-              >
+              <ActionIcon variant="default" size={store.getControlSize()} aria-label="View">
                 <EyeIcon size={14} />
               </ActionIcon>
             </Tooltip>
             <Tooltip label="Edit">
-              <ActionIcon
-                variant="subtle"
-                color="gray"
-                size={store.getControlSize()}
-                aria-label="Edit"
-              >
+              <ActionIcon variant="default" size={store.getControlSize()} aria-label="Edit">
                 <PencilSimpleIcon size={14} />
               </ActionIcon>
             </Tooltip>
             <Tooltip label="Delete">
               <ActionIcon
-                variant="subtle"
-                color="red"
+                variant="default"
                 size={store.getControlSize()}
                 aria-label="Delete"
                 onClick={() => setData((prev) => prev.filter((item) => item.id !== row.id))}

@@ -75,7 +75,7 @@ function Demo() {
         >
           Group by Status
         </Button>
-        <Button size="xs" variant="light" color="red" onClick={() => setGrouping([])}>
+        <Button size="xs" variant="default" onClick={() => setGrouping([])}>
           Clear
         </Button>
       </Group>
@@ -146,7 +146,7 @@ function Demo() {
         >
           Group by Status
         </Button>
-        <Button size="xs" variant="light" color="red" onClick={() => setGrouping([])}>
+        <Button size="xs" variant="default" onClick={() => setGrouping([])}>
           Clear
         </Button>
       </Group>

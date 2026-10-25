@@ -66,7 +66,7 @@ function Demo() {
         </Group>
         <Button
           size={store.getControlSize()}
-          variant="subtle"
+          variant="default"
           disabled={store.getColumnFilters().length === 0}
           onClick={() => store.resetColumnFilters()}
         >
@@ -139,7 +139,7 @@ function Demo() {
         </Group>
         <Button
           size={store.getControlSize()}
-          variant="subtle"
+          variant="default"
           disabled={store.getColumnFilters().length === 0}
           onClick={() => store.resetColumnFilters()}
         >

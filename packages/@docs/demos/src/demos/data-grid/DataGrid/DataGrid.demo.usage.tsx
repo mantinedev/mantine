@@ -271,7 +271,7 @@ function FiltersPopover({ store }: { store: DataGridStore<Order> }) {
           <Group justify="flex-end">
             <Button
               size="xs"
-              variant="subtle"
+              variant="default"
               disabled={activeCount === 0}
               onClick={() => store.resetColumnFilters()}
             >
@@ -357,7 +357,7 @@ function Demo() {
         <Button size={store.getControlSize()} variant="default">
           Mark as shipped
         </Button>
-        <Button size={store.getControlSize()} variant="light" color="red">
+        <Button size={store.getControlSize()} variant="default">
           Cancel orders
         </Button>
       </DataGrid.SelectionBar>
@@ -437,7 +437,7 @@ function FiltersPopover({ store }: { store: DataGridStore<Order> }) {
           <Group justify="flex-end">
             <Button
               size="xs"
-              variant="subtle"
+              variant="default"
               disabled={activeCount === 0}
               onClick={() => store.resetColumnFilters()}
             >
@@ -523,7 +523,7 @@ function Demo() {
         <Button size={store.getControlSize()} variant="default">
           Mark as shipped
         </Button>
-        <Button size={store.getControlSize()} variant="light" color="red">
+        <Button size={store.getControlSize()} variant="default">
           Cancel orders
         </Button>
       </DataGrid.SelectionBar>

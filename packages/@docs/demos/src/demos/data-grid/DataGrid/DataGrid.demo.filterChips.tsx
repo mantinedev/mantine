@@ -71,7 +71,7 @@ function Demo() {
           ) : null;
         })}
         {store.getColumnFilters().length > 0 && (
-          <Button size={store.getControlSize()} variant="subtle" onClick={() => store.resetColumnFilters()}>
+          <Button size={store.getControlSize()} variant="default" onClick={() => store.resetColumnFilters()}>
             Clear all
           </Button>
         )}
@@ -146,7 +146,7 @@ function Demo() {
         {store.getColumnFilters().length > 0 && (
           <Button
             size={store.getControlSize()}
-            variant="subtle"
+            variant="default"
             onClick={() => store.resetColumnFilters()}
           >
             Clear all

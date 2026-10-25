@@ -29,7 +29,7 @@ function Demo() {
             {row.getIsEditing() ? (
               <>
                 <ActionIcon
-                  variant="subtle"
+                  variant="default"
                   size={store.getControlSize()}
                   aria-label="Save"
                   onClick={() => row.saveEditing()}
@@ -37,8 +37,7 @@ function Demo() {
                   <CheckIcon />
                 </ActionIcon>
                 <ActionIcon
-                  variant="subtle"
-                  color="gray"
+                  variant="default"
                   size={store.getControlSize()}
                   aria-label="Cancel"
                   onClick={() => row.cancelEditing()}
@@ -48,8 +47,7 @@ function Demo() {
               </>
             ) : (
               <ActionIcon
-                variant="subtle"
-                color="gray"
+                variant="default"
                 size={store.getControlSize()}
                 aria-label="Edit"
                 onClick={() => row.startEditing()}
@@ -90,7 +88,7 @@ function Demo() {
             {row.getIsEditing() ? (
               <>
                 <ActionIcon
-                  variant="subtle"
+                  variant="default"
                   size={store.getControlSize()}
                   aria-label="Save"
                   onClick={() => row.saveEditing()}
@@ -98,8 +96,7 @@ function Demo() {
                   <CheckIcon />
                 </ActionIcon>
                 <ActionIcon
-                  variant="subtle"
-                  color="gray"
+                  variant="default"
                   size={store.getControlSize()}
                   aria-label="Cancel"
                   onClick={() => row.cancelEditing()}
@@ -109,8 +106,7 @@ function Demo() {
               </>
             ) : (
               <ActionIcon
-                variant="subtle"
-                color="gray"
+                variant="default"
                 size={store.getControlSize()}
                 aria-label="Edit"
                 onClick={() => row.startEditing()}

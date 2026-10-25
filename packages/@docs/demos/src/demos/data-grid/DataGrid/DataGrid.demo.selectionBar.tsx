@@ -56,7 +56,7 @@ function Demo() {
         <Button size={store.getControlSize()} variant="default" onClick={deactivateSelected}>
           Deactivate
         </Button>
-        <Button size={store.getControlSize()} variant="light" color="red" onClick={deleteSelected}>
+        <Button size={store.getControlSize()} variant="default" onClick={deleteSelected}>
           Delete
         </Button>
       </DataGrid.SelectionBar>
@@ -110,7 +110,7 @@ function Demo() {
         <Button size={store.getControlSize()} variant="default" onClick={deactivateSelected}>
           Deactivate
         </Button>
-        <Button size={store.getControlSize()} variant="light" color="red" onClick={deleteSelected}>
+        <Button size={store.getControlSize()} variant="default" onClick={deleteSelected}>
           Delete
         </Button>
       </DataGrid.SelectionBar>
