@@ -1,5 +1,6 @@
-import type { EnvironmentContext, JestEnvironmentConfig } from '@jest/environment';
 import { TestEnvironment } from 'jest-environment-jsdom';
+
+type EnvironmentArgs = ConstructorParameters<typeof TestEnvironment>;
 
 /**
  * jsdom environment that runs a test file in the time zone set by its `@timezone` docblock pragma.
@@ -16,7 +17,7 @@ export default class TimezoneEnvironment extends TestEnvironment {
 
   private previousTimezone: string | undefined;
 
-  constructor(config: JestEnvironmentConfig, context: EnvironmentContext) {
+  constructor(config: EnvironmentArgs[0], context: EnvironmentArgs[1]) {
     super(config, context);
     const pragma = context.docblockPragmas.timezone;
     this.timezone = Array.isArray(pragma) ? pragma[0] : pragma;
