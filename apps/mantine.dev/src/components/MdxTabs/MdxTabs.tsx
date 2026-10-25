@@ -34,7 +34,12 @@ export function MdxTabs({ children, meta }: MdxTabsProps) {
       <Tabs
         variant="pills"
         value={activeTab}
-        classNames={{ list: classes.tabsList, tab: classes.tab, tabSection: classes.tabSection }}
+        classNames={{
+          list: classes.tabsList,
+          tab: classes.tab,
+          tabSection: classes.tabSection,
+          panel: classes.panel,
+        }}
         keepMounted={false}
         radius="md"
         onChange={(value) => {
@@ -73,7 +78,7 @@ export function MdxTabs({ children, meta }: MdxTabsProps) {
           </Tabs.List>
         </div>
 
-        <Tabs.Panel value="docs">
+        <Tabs.Panel value="docs" tabIndex={-1}>
           <div className={classes.contentWrapper}>
             <div
               className={classes.main}
@@ -92,13 +97,13 @@ export function MdxTabs({ children, meta }: MdxTabsProps) {
           </div>
         </Tabs.Panel>
 
-        <Tabs.Panel value="props">
+        <Tabs.Panel value="props" tabIndex={-1}>
           <div className={classes.tabContent}>
             <PropsTablesList components={meta.props!} componentPrefix={meta.componentPrefix} />
           </div>
         </Tabs.Panel>
 
-        <Tabs.Panel value="styles-api">
+        <Tabs.Panel value="styles-api" tabIndex={-1}>
           <div className={classes.tabContent}>
             <StylesApiTablesList components={meta.styles!} componentPrefix={meta.componentPrefix} />
           </div>

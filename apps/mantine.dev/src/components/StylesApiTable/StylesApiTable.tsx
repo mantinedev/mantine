@@ -27,11 +27,24 @@ export function StylesApiTable({ component, componentPrefix }: StylesApiTablePro
   const hasVariables = Object.keys(data.vars).length > 0;
   const hasModifiers = Array.isArray(data.modifiers) && data.modifiers.length > 0;
 
+  const title = (
+    <Title order={3} className={classes.title}>
+      {componentName} Styles API
+    </Title>
+  );
+
+  if (!hasVariables && !hasModifiers) {
+    return (
+      <>
+        {title}
+        <SelectorsTable component={component} data={data} />
+      </>
+    );
+  }
+
   return (
     <>
-      <Title order={3} className={classes.title}>
-        {componentName} Styles API
-      </Title>
+      {title}
 
       <Tabs
         value={value}

@@ -24,7 +24,7 @@
 }
 
 .section {
-  border: 1px solid light-dark(var(--mantine-color-gray-3), var(--mantine-color-dark-4));
+  border: 1px solid var(--mantine-color-border);
   border-radius: var(--mantine-radius-md);
   padding-top: var(--mantine-spacing-sm);
   overflow: clip;

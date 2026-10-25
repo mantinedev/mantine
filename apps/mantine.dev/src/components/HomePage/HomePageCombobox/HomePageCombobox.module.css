@@ -38,7 +38,7 @@
   flex-direction: column;
   justify-content: center;
   padding: var(--mantine-spacing-lg);
-  background-color: light-dark(var(--mantine-color-gray-0), var(--mantine-color-dark-8));
+  background-color: light-dark(var(--mantine-color-gray-0), var(--mantine-color-dark-9));
   border-bottom-left-radius: calc(var(--mantine-radius-lg) - 1px);
   border-bottom-right-radius: calc(var(--mantine-radius-lg) - 1px);
 }
