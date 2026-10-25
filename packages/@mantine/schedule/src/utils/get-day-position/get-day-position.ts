@@ -40,32 +40,26 @@ export function getDayPosition({
   const parsedEndTime = parseTimeString(endTime);
 
   const startOfDay = eventStart.startOf('date');
-  const boundaryStart = startOfDay
-    .hour(parsedStartTime.hours)
-    .minute(parsedStartTime.minutes)
-    .second(parsedStartTime.seconds);
-  const literalEnd = startOfDay
-    .hour(parsedEndTime.hours)
-    .minute(parsedEndTime.minutes)
-    .second(parsedEndTime.seconds);
-
-  const intervalSeconds = clampIntervalMinutes(intervalMinutes) * 60;
   const boundaryStartSeconds = toSeconds(
     parsedStartTime.hours,
     parsedStartTime.minutes,
     parsedStartTime.seconds
   );
-  const literalRangeSeconds =
-    toSeconds(parsedEndTime.hours, parsedEndTime.minutes, parsedEndTime.seconds) -
-    boundaryStartSeconds;
+  const boundaryEndSeconds = toSeconds(
+    parsedEndTime.hours,
+    parsedEndTime.minutes,
+    parsedEndTime.seconds
+  );
+
+  const intervalSeconds = clampIntervalMinutes(intervalMinutes) * 60;
+  const literalRangeSeconds = boundaryEndSeconds - boundaryStartSeconds;
   const totalSeconds = Math.ceil(literalRangeSeconds / intervalSeconds) * intervalSeconds;
 
-  const clippedEventStart = eventStart.isBefore(boundaryStart) ? boundaryStart : eventStart;
   const eventStartSeconds =
-    getWallClockSeconds(clippedEventStart, startOfDay) - boundaryStartSeconds;
-
-  const clippedEventEnd = eventEnd.isAfter(literalEnd) ? literalEnd : eventEnd;
-  const eventEndSeconds = getWallClockSeconds(clippedEventEnd, startOfDay) - boundaryStartSeconds;
+    Math.max(getWallClockSeconds(eventStart, startOfDay), boundaryStartSeconds) -
+    boundaryStartSeconds;
+  const eventEndSeconds =
+    Math.min(getWallClockSeconds(eventEnd, startOfDay), boundaryEndSeconds) - boundaryStartSeconds;
 
   const startPercent = (eventStartSeconds / totalSeconds) * 100;
   const endPercent = (eventEndSeconds / totalSeconds) * 100;

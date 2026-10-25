@@ -32,7 +32,11 @@ export default class TimezoneEnvironment extends TestEnvironment {
   }
 
   async teardown() {
-    process.env.TZ = this.previousTimezone;
+    if (this.previousTimezone === undefined) {
+      delete process.env.TZ;
+    } else {
+      process.env.TZ = this.previousTimezone;
+    }
     await super.teardown();
   }
 }
