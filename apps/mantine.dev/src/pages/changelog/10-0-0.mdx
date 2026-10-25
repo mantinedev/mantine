@@ -363,7 +363,7 @@ Override them to restyle all components at once:
     [<Code>--mantine-color-surface-panel-2</Code>, <Code>white</Code>, <Code>dark-5</Code>],
     [<Code>--mantine-color-surface-sunken</Code>, <Code>gray-1</Code>, <Code>dark-9</Code>],
     [<Code>--mantine-color-surface-muted</Code>, <Code>gray-0</Code>, <Code>dark-7</Code>],
-    [<Code>--mantine-color-surface-input</Code>, <Code>white</Code>, <Code>dark-8</Code>],
+    [<Code>--mantine-color-surface-input</Code>, <Code>white</Code>, <Code>dark-7</Code>],
     [<Code>--mantine-color-focus-ring</Code>, <Code>blue-6</Code>, <Code>blue-5</Code>],
   ]}
 />
@@ -412,11 +412,11 @@ const theme = createTheme({
 });
 ```
 
-## Inputs use the page surface in dark mode
+## Inputs share one surface token
 
 Inputs, checkboxes, radios, `Dropzone` and `RichTextEditor` now share the `--mantine-color-surface-input`
-variable, which is the page color in dark mode. Fields stay visible inside [Surface](/core/surface) cards
-and the editor matches the other inputs. Change it with the `surfaces` theme key:
+variable, which is white in light mode and `dark-7` in dark mode. The editor matches the other inputs,
+and one override restyles all of them. Change it with the `surfaces` theme key:
 
 ```tsx
 import { createTheme } from '@mantine/core';
