@@ -27,7 +27,7 @@
   padding-left: var(--mantine-spacing-sm);
   padding-right: var(--mantine-spacing-sm);
   border-radius: var(--mantine-radius-md);
-  color: var(--mantine-color-blue-text);
+  color: var(--mantine-primary-color-text);
 }
 
 .minorVersionDate {

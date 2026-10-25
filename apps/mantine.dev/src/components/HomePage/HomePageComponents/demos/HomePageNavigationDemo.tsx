@@ -76,7 +76,9 @@ function MenuDemo() {
           Saved posts
         </Menu.Item>
         <Menu.Item
-          leftSection={<ChatCircleIcon weight="fill" size={18} color={theme.colors.blue[6]} />}
+          leftSection={
+            <ChatCircleIcon weight="fill" size={18} color={theme.colors[theme.primaryColor][6]} />
+          }
         >
           Your comments
         </Menu.Item>

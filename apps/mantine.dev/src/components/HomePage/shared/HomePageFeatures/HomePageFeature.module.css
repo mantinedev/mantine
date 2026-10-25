@@ -14,7 +14,7 @@
   background: var(--hp-primary-bg);
   box-shadow: var(--hp-primary-shadow);
   border-bottom: var(--hp-primary-border);
-  color: var(--mantine-color-blue-0);
+  color: var(--mantine-primary-color-contrast);
 }
 
 .featureTitle {
