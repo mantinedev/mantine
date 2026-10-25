@@ -1,4 +1,4 @@
-import { useUncontrolled } from '@mantine/hooks';
+import { useId, useUncontrolled } from '@mantine/hooks';
 import {
   Box,
   BoxProps,
@@ -173,6 +173,7 @@ export const NavLink = polymorphicFactory<NavLinkFactory>((_props) => {
   });
 
   const withChildren = !!children;
+  const collapseId = useId();
 
   const handleClick = (event: React.MouseEvent<HTMLAnchorElement>) => {
     onClick?.(event);
@@ -200,6 +201,7 @@ export const NavLink = polymorphicFactory<NavLinkFactory>((_props) => {
         unstyled={unstyled}
         mod={[{ disabled, active, expanded: _opened }, mod]}
         aria-expanded={withChildren ? _opened : undefined}
+        aria-controls={withChildren ? collapseId : undefined}
         {...others}
       >
         {leftSection && (
@@ -234,7 +236,12 @@ export const NavLink = polymorphicFactory<NavLinkFactory>((_props) => {
         )}
       </UnstyledButton>
       {withChildren && (
-        <Collapse expanded={_opened} keepMounted={keepMounted} {...getStyles('collapse')}>
+        <Collapse
+          id={collapseId}
+          expanded={_opened}
+          keepMounted={keepMounted}
+          {...getStyles('collapse')}
+        >
           <div {...getStyles('children')}>{children}</div>
         </Collapse>
       )}
