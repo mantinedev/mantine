@@ -14,9 +14,9 @@
 }
 
 .list {
-  background-color: var(--mantine-color-body);
+  background-color: var(--mantine-color-surface-input);
   padding: var(--mantine-spacing-xs) 6px;
-  border: 1px solid light-dark(var(--mantine-color-gray-4), var(--mantine-color-dark-4));
+  border: 1px solid var(--mantine-color-border-input);
   border-top: 0;
   border-bottom-left-radius: var(--mantine-radius-md);
   border-bottom-right-radius: var(--mantine-radius-md);
@@ -40,6 +40,12 @@
 
 .control {
   color: light-dark(var(--mantine-color-gray-7), var(--mantine-color-dark-1));
+  background-color: var(--mantine-color-surface-input);
+  border-color: var(--mantine-color-border-input);
+
+  @mixin hover {
+    background-color: var(--mantine-color-neutral-2);
+  }
 
   [data-type='backward'] & {
     border-top-left-radius: var(--mantine-radius-sm);
@@ -57,4 +63,8 @@
   [data-type='backward'] & {
     transform: rotate(180deg);
   }
+}
+
+.optionLabel {
+  white-space: nowrap;
 }

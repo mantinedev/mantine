@@ -12,7 +12,7 @@
   {
     "fileName": "SelectOptionDetails.module.css",
     "language": "css",
-    "code": ".body {\n  display: flex;\n  align-items: stretch;\n}\n\n.options {\n  flex: 1;\n  min-width: 0;\n}\n\n.details {\n  width: 200px;\n  flex: 0 0 200px;\n  padding: var(--mantine-spacing-xs) var(--mantine-spacing-sm);\n  border-left: 1px solid light-dark(var(--mantine-color-gray-3), var(--mantine-color-dark-4));\n}\n"
+    "code": ".body {\n  display: flex;\n  align-items: stretch;\n}\n\n.options {\n  flex: 1;\n  min-width: 0;\n}\n\n.details {\n  width: 200px;\n  flex: 0 0 200px;\n  padding: var(--mantine-spacing-xs) var(--mantine-spacing-sm);\n  border-left: 1px solid var(--mantine-color-border);\n}\n"
   },
   {
     "fileName": "members-data.ts",

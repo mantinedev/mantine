@@ -2,7 +2,7 @@
   border-top: 0;
   border-top-right-radius: 0;
   border-top-left-radius: 0;
-  border-color: light-dark(var(--mantine-color-gray-4), var(--mantine-color-dark-4));
+  border-color: var(--mantine-color-border-input);
 }
 
 .input {

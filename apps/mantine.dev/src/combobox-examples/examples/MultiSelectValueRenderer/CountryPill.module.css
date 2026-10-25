@@ -2,8 +2,8 @@
   display: flex;
   align-items: center;
   cursor: default;
-  background-color: light-dark(var(--mantine-color-white), var(--mantine-color-dark-7));
-  border: 1px solid light-dark(var(--mantine-color-gray-4), var(--mantine-color-dark-7));
+  background-color: var(--mantine-color-default);
+  border: 1px solid var(--mantine-color-default-border);
   padding-left: var(--mantine-spacing-xs);
   border-radius: var(--mantine-radius-xl);
 }

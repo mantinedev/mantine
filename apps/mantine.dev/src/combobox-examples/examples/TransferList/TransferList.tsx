@@ -32,7 +32,7 @@ function RenderList({ options, onTransfer, type }: RenderListProps) {
         active={value.includes(item)}
         onMouseOver={() => store.resetSelectedOption()}
       >
-        <Group gap="sm">
+        <Group gap="sm" wrap="nowrap">
           <Checkbox
             checked={value.includes(item)}
             onChange={() => {}}
@@ -40,7 +40,7 @@ function RenderList({ options, onTransfer, type }: RenderListProps) {
             tabIndex={-1}
             style={{ pointerEvents: 'none' }}
           />
-          <span>{item}</span>
+          <span className={classes.optionLabel}>{item}</span>
         </Group>
       </Combobox.Option>
     ));

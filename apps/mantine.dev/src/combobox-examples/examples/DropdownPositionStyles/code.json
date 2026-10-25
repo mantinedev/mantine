@@ -7,6 +7,6 @@
   {
     "fileName": "DropdownPositionStyles.module.css",
     "language": "css",
-    "code": ".dropdown {\n  border-top: 0;\n  border-top-right-radius: 0;\n  border-top-left-radius: 0;\n  border-color: light-dark(var(--mantine-color-gray-4), var(--mantine-color-dark-4));\n}\n\n.input {\n  &[data-expanded] {\n    border-bottom-right-radius: 0;\n    border-bottom-left-radius: 0;\n  }\n}\n"
+    "code": ".dropdown {\n  border-top: 0;\n  border-top-right-radius: 0;\n  border-top-left-radius: 0;\n  border-color: var(--mantine-color-border-input);\n}\n\n.input {\n  &[data-expanded] {\n    border-bottom-right-radius: 0;\n    border-bottom-left-radius: 0;\n  }\n}\n"
   }
 ]

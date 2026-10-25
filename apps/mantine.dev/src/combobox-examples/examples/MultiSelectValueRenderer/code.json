@@ -7,7 +7,7 @@
   {
     "fileName": "CountryPill.module.css",
     "language": "css",
-    "code": ".pill {\n  display: flex;\n  align-items: center;\n  cursor: default;\n  background-color: light-dark(var(--mantine-color-white), var(--mantine-color-dark-7));\n  border: 1px solid light-dark(var(--mantine-color-gray-4), var(--mantine-color-dark-7));\n  padding-left: var(--mantine-spacing-xs);\n  border-radius: var(--mantine-radius-xl);\n}\n\n.label {\n  line-height: 1;\n  font-size: var(--mantine-font-size-xs);\n}\n\n.flag {\n  margin-right: var(--mantine-spacing-xs);\n}\n"
+    "code": ".pill {\n  display: flex;\n  align-items: center;\n  cursor: default;\n  background-color: var(--mantine-color-default);\n  border: 1px solid var(--mantine-color-default-border);\n  padding-left: var(--mantine-spacing-xs);\n  border-radius: var(--mantine-radius-xl);\n}\n\n.label {\n  line-height: 1;\n  font-size: var(--mantine-font-size-xs);\n}\n\n.flag {\n  margin-right: var(--mantine-spacing-xs);\n}\n"
   },
   {
     "fileName": "CountryPill.tsx",
