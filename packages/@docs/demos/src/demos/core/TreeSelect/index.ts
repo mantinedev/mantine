@@ -11,6 +11,7 @@ export { nothingFound } from './TreeSelect.demo.nothingFound';
 export { maxValues } from './TreeSelect.demo.maxValues';
 export { renderNode } from './TreeSelect.demo.renderNode';
 export { renderNodeExpand } from './TreeSelect.demo.renderNodeExpand';
+export { renderPill } from './TreeSelect.demo.renderPill';
 export { disabled } from './TreeSelect.demo.disabled';
 export { error } from './TreeSelect.demo.error';
 export { success } from './TreeSelect.demo.success';

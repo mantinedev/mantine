@@ -1,4 +1,4 @@
-import { autoPatchWarn, tests } from '@mantine-tests/core';
+import { tests } from '@mantine-tests/core';
 import { SunburstChart, SunburstChartProps, SunburstChartStylesNames } from './SunburstChart';
 
 const defaultProps: SunburstChartProps = {
@@ -9,8 +9,6 @@ const defaultProps: SunburstChartProps = {
 };
 
 describe('@mantine/charts/SunburstChart', () => {
-  autoPatchWarn();
-
   tests.itSupportsSystemProps<SunburstChartProps, SunburstChartStylesNames>({
     component: SunburstChart,
     props: defaultProps,

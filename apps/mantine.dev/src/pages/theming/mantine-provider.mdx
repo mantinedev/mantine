@@ -350,6 +350,7 @@ might impact tests and/or make it harder to test components:
 
 - transitions that mount/unmount a child component with delay
 - portals that render a child component in a different part of the DOM
+- `hideDetached` detection in [Popover](/core/popover) and [Tooltip](/core/tooltip) – jsdom reports zero-size elements, so without `env="test"` every target is considered detached and the dropdown or tooltip is hidden
 
 To enable the test environment, set `env` to `test`:
 
@@ -367,4 +368,4 @@ function Demo() {
 
 Note that `env="test"` is intended to be used in test environments only with [Jest](/guides/jest) or [Vitest](/guides/vitest). Do not use it in
 development or production environments. It is also not recommended to be used with
-end-to-end testing tools like [Cypress](/guides/cypress) or [Playwright](/guides/playwright).
+end-to-end testing tools like [Cypress](https://www.cypress.io/) or [Playwright](https://playwright.dev/).

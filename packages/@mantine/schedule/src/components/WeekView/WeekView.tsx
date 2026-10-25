@@ -32,19 +32,26 @@ import {
   DateStringValue,
   DateTimeStringValue,
   DayOfWeek,
+  PreventEventOverlap,
+  ScheduleCanDropEventData,
+  ScheduleCanDropExternalEventData,
+  ScheduleCanResizeEventToData,
   ScheduleEventData,
   ScheduleEventOverlapMode,
+  ScheduleEventPlacementRejectedData,
   ScheduleMode,
   ScheduleViewLevel,
 } from '../../types';
 import {
   BusinessHoursValue,
   calculateDropTime,
+  clampIntervalMinutes,
   expandRecurringEvents,
   formatDate,
-  getBusinessHoursMod,
+  getBusinessHoursState,
   getDayPosition,
   getDayTimeIntervals,
+  getSlotLabelGroups,
   getTimeAxisEventStyle,
   getWeekDays,
   getWeekNumber,
@@ -100,7 +107,12 @@ export type WeekViewStylesNames =
   | AgendaViewStylesNames;
 
 export type WeekViewCssVariables = {
-  weekView: '--week-view-radius' | '--week-view-slot-height' | '--week-view-all-day-slots-height';
+  weekView:
+    | '--week-view-radius'
+    | '--week-view-slot-height'
+    | '--week-view-all-day-slots-height'
+    | '--week-view-business-hours-bg'
+    | '--week-view-non-business-hours-bg';
 };
 
 export interface WeekViewProps
@@ -127,6 +139,9 @@ export interface WeekViewProps
 
   /** Dayjs format for slot labels or a callback function that returns formatted value @default HH:mm  */
   slotLabelFormat?: DateLabelFormat;
+
+  /** Interval between time labels in minutes. Must be a multiple of `intervalMinutes` that divides evenly into an hour (e.g. `15`, `30`) or is a whole number of hours. Values that do not satisfy these rules are rounded up to the nearest valid value, `60` is used for invalid values. @default 60 */
+  slotLabelInterval?: number;
 
   /** Number 0-6, where 0 – Sunday and 6 – Saturday. @default 1 – Monday */
   firstDayOfWeek?: DayOfWeek;
@@ -295,6 +310,21 @@ export interface WeekViewProps
   /** Function to determine if event can be resized */
   canResizeEvent?: (event: ScheduleEventData) => boolean;
 
+  /** Called while an event is dragged over a target to compute live feedback and again before the drop is committed, return `false` to reject the drop. Must be pure and cheap. */
+  canDropEvent?: (data: ScheduleCanDropEventData) => boolean;
+
+  /** Called while an external item is dragged over a target to compute live feedback and again before the drop is committed, return `false` to reject the drop. Must be pure and cheap. Only `dataTransfer.types` can be read while the drag is in progress. */
+  canDropExternalEvent?: (data: ScheduleCanDropExternalEventData) => boolean;
+
+  /** Called on every pointer move while an event is resized to compute live feedback and again before the resize is committed, return `false` to reject the new size. Must be pure and cheap. */
+  canResizeEventTo?: (data: ScheduleCanResizeEventToData) => boolean;
+
+  /** If set, drops and resizes that would make the event overlap another event are rejected. Pass a function to decide per pair of events: return `true` to forbid the overlap. The function runs while dragging and resizing to compute live feedback, it must be pure and cheap. @default false */
+  preventEventOverlap?: PreventEventOverlap;
+
+  /** Called when a drop or resize is rejected */
+  onEventPlacementRejected?: (data: ScheduleEventPlacementRejectedData) => void;
+
   /** Snap step for resizing events, in minutes. Must divide evenly into an hour (e.g. `15`, `30`) or be a whole number of hours. When not set, `intervalMinutes` is used. @default intervalMinutes */
   eventResizeInterval?: number;
 
@@ -325,6 +355,7 @@ const defaultProps = {
   startTime: '00:00:00',
   endTime: '23:59:59',
   slotLabelFormat: 'HH:mm',
+  slotLabelInterval: 60,
   intervalMinutes: 60,
   withSubHourGridLines: true,
   weekdayFormat: 'ddd',
@@ -350,6 +381,8 @@ const varsResolver = createVarsResolver<WeekViewFactory>(
       '--week-view-radius': radius !== undefined ? getRadius(radius) : undefined,
       '--week-view-all-day-slots-height': rem(allDaySlotHeight),
       '--week-view-slot-height': rem(slotHeight),
+      '--week-view-business-hours-bg': undefined,
+      '--week-view-non-business-hours-bg': undefined,
     },
   })
 );
@@ -371,6 +404,7 @@ export const WeekView = factory<WeekViewFactory>((_props) => {
     intervalMinutes,
     withSubHourGridLines,
     slotLabelFormat,
+    slotLabelInterval,
     withWeekendDays,
     eventOverlapMode,
     eventOverlapRaiseDelay,
@@ -422,6 +456,11 @@ export const WeekView = factory<WeekViewFactory>((_props) => {
     withEventResize,
     onEventResize,
     canResizeEvent,
+    canDropEvent,
+    canDropExternalEvent,
+    canResizeEventTo,
+    preventEventOverlap,
+    onEventPlacementRejected,
     eventResizeInterval,
     recurrenceExpansionLimit,
     getTimeSlotProps,
@@ -462,7 +501,28 @@ export const WeekView = factory<WeekViewFactory>((_props) => {
 
   const [scrolled, setScrolled] = useState(false);
   const ctx = useDatesContext();
-  const slots = getDayTimeIntervals({ startTime, endTime, intervalMinutes });
+  const slots = getDayTimeIntervals({
+    startTime,
+    endTime,
+    intervalMinutes,
+    labelIntervalMinutes: slotLabelInterval,
+  });
+
+  const weekdays = getWeekDays({
+    week: date,
+    withWeekendDays,
+    weekendDays: ctx.getWeekendDays(weekendDays),
+    firstDayOfWeek: ctx.getFirstDayOfWeek(firstDayOfWeek),
+  });
+
+  const expandedEvents = expandRecurringEvents({
+    events,
+    rangeStart: dayjs(weekdays[0]).startOf('day').toDate(),
+    rangeEnd: dayjs(weekdays[weekdays.length - 1])
+      .endOf('day')
+      .toDate(),
+    expansionLimit: recurrenceExpansionLimit,
+  });
   const viewportRef = useRef<HTMLDivElement>(null);
 
   useAutoScrollOnDrag({
@@ -489,20 +549,16 @@ export const WeekView = factory<WeekViewFactory>((_props) => {
     });
   };
 
-  const handleExternalDrop = useCallback(
-    (e: React.DragEvent, target: DropTargetSlot) => {
-      if (!onExternalEventDrop) {
-        return;
-      }
+  const getExternalDropDateTime = useCallback(
+    (target: DropTargetSlot) => {
       const slotDate = dayjs(target.day).format('YYYY-MM-DD');
       const slotTime = slots[target.slotIndex].startTime;
+      const slotStart = `${slotDate} ${slotTime}`;
 
       if (eventDragInterval == null) {
-        onExternalEventDrop(e.dataTransfer, `${slotDate} ${slotTime}`);
-        return;
+        return slotStart;
       }
 
-      const slotStart = `${slotDate} ${slotTime}`;
       const { start } = calculateDropTime({
         draggedEvent: { start: slotStart, end: slotStart } as ScheduleEventData,
         targetDate: target.day,
@@ -514,9 +570,25 @@ export const WeekView = factory<WeekViewFactory>((_props) => {
         startTime,
         endTime,
       });
-      onExternalEventDrop(e.dataTransfer, dayjs(start).format('YYYY-MM-DD HH:mm:ss'));
+
+      return dayjs(start).format('YYYY-MM-DD HH:mm:ss');
     },
-    [onExternalEventDrop, slots, eventDragInterval, intervalMinutes, startTime, endTime]
+    [slots, eventDragInterval, intervalMinutes, startTime, endTime]
+  );
+
+  const handleExternalDrop = useCallback(
+    (e: React.DragEvent, target: DropTargetSlot) => {
+      if (!onExternalEventDrop) {
+        return;
+      }
+      onExternalEventDrop(e.dataTransfer, getExternalDropDateTime(target));
+    },
+    [onExternalEventDrop, getExternalDropDateTime]
+  );
+
+  const getExternalAllDayDropDateTime = useCallback(
+    (day: string) => `${dayjs(day).format('YYYY-MM-DD')} 00:00:00`,
+    []
   );
 
   const handleExternalAllDayDrop = useCallback(
@@ -524,9 +596,9 @@ export const WeekView = factory<WeekViewFactory>((_props) => {
       if (!onExternalEventDrop) {
         return;
       }
-      onExternalEventDrop(e.dataTransfer, `${dayjs(day).format('YYYY-MM-DD')} 00:00:00`);
+      onExternalEventDrop(e.dataTransfer, getExternalAllDayDropDateTime(day));
     },
-    [onExternalEventDrop]
+    [onExternalEventDrop, getExternalAllDayDropDateTime]
   );
 
   const dragDrop = useDragDropHandlers<DropTargetSlot>({
@@ -538,6 +610,12 @@ export const WeekView = factory<WeekViewFactory>((_props) => {
     onEventDragEnd,
     calculateDropTarget: getDropTimeForSlot,
     onExternalDrop: onExternalEventDrop ? handleExternalDrop : undefined,
+    events: expandedEvents,
+    preventEventOverlap,
+    canDropEvent,
+    canDropExternalEvent,
+    onEventPlacementRejected,
+    getExternalDropDateTime,
   });
 
   const updateDragPreview = (target: DropTargetSlot) => {
@@ -574,6 +652,12 @@ export const WeekView = factory<WeekViewFactory>((_props) => {
       return { start: newStart.toDate(), end: newStart.add(eventDuration, 'millisecond').toDate() };
     },
     onExternalDrop: onExternalEventDrop ? handleExternalAllDayDrop : undefined,
+    events: expandedEvents,
+    preventEventOverlap,
+    canDropEvent,
+    canDropExternalEvent,
+    onEventPlacementRejected,
+    getExternalDropDateTime: getExternalAllDayDropDateTime,
   });
 
   const slotDragSelect = useSlotDragSelect({
@@ -599,6 +683,10 @@ export const WeekView = factory<WeekViewFactory>((_props) => {
     resizeIntervalMinutes: eventResizeInterval,
     onEventResize,
     canResizeEvent,
+    events: expandedEvents,
+    preventEventOverlap,
+    canResizeEventTo,
+    onEventPlacementRejected,
     withBackgroundEvents: withInteractiveBackgroundEvents,
   });
 
@@ -627,22 +715,6 @@ export const WeekView = factory<WeekViewFactory>((_props) => {
     });
   };
 
-  const weekdays = getWeekDays({
-    week: date,
-    withWeekendDays,
-    weekendDays: ctx.getWeekendDays(weekendDays),
-    firstDayOfWeek: ctx.getFirstDayOfWeek(firstDayOfWeek),
-  });
-
-  const expandedEvents = expandRecurringEvents({
-    events,
-    rangeStart: dayjs(weekdays[0]).startOf('day').toDate(),
-    rangeEnd: dayjs(weekdays[weekdays.length - 1])
-      .endOf('day')
-      .toDate(),
-    expansionLimit: recurrenceExpansionLimit,
-  });
-
   const weekEvents = getWeekViewEvents({
     date,
     events: expandedEvents,
@@ -655,37 +727,40 @@ export const WeekView = factory<WeekViewFactory>((_props) => {
     eventOverlapMode,
   });
 
-  const timeValues = slots.reduce<React.ReactNode[]>((acc, interval) => {
-    if (!interval.isHourStart) {
-      return acc;
-    }
+  const timeValues = getSlotLabelGroups(slots).map((group) => {
+    const label = group.isLabelStart
+      ? formatDate({
+          date: dayjs(`${dayjs(date).format('YYYY-MM-DD')} ${group.startTime}`),
+          locale: ctx.getLocale(locale),
+          format: slotLabelFormat,
+        })
+      : null;
 
-    const intervalTime = dayjs(`${dayjs(date).format('YYYY-MM-DD')} ${interval.startTime}`);
-    const label = formatDate({
-      date: intervalTime,
-      locale: ctx.getLocale(locale),
-      format: slotLabelFormat,
+    const labelBusinessHours = getBusinessHoursState({
+      time: group.startTime,
+      endTime: group.endTime,
+      businessHours,
+      highlightBusinessHours,
     });
 
-    acc.push(
+    return (
       <Box
         {...getStyles('weekViewSlotLabel')}
-        key={interval.startTime}
+        key={group.startTime}
         mod={{
-          'hour-start': interval.isHourStart,
-          ...getBusinessHoursMod({
-            time: interval.startTime,
-            businessHours,
-            highlightBusinessHours,
-          }),
+          'hour-start': group.isHourStart,
+          'sub-hour': !group.isHourStart,
+          ...labelBusinessHours.mod,
+        }}
+        __vars={{
+          ...labelBusinessHours.vars,
+          '--slot-label-size': `${(group.slotsCount * clampIntervalMinutes(intervalMinutes)) / 60}`,
         }}
       >
         {label}
       </Box>
     );
-
-    return acc;
-  }, []);
+  });
 
   const slotsRef: WeekViewControlsRef = useRef<HTMLButtonElement[][]>([]);
   const allDaySlotsRef = useRef<HTMLButtonElement[]>([]);
@@ -717,7 +792,12 @@ export const WeekView = factory<WeekViewFactory>((_props) => {
 
     const slotRect = targetSlot.getBoundingClientRect();
     const viewportRect = viewportRef.current.getBoundingClientRect();
-    viewportRef.current.scrollTo({ left: 0, top: slotRect.top - viewportRect.top });
+    const headerEl = viewportRef.current.querySelector(`.${classes.weekViewHeader}`);
+    const headerHeight = headerEl ? headerEl.getBoundingClientRect().height : 0;
+    viewportRef.current.scrollTo({
+      left: 0,
+      top: slotRect.top - viewportRect.top + viewportRef.current.scrollTop - headerHeight,
+    });
   }, []);
 
   const getSlotIndexFromDragPoint = useCallback((event: React.DragEvent, dayIndex: number) => {
@@ -954,7 +1034,10 @@ export const WeekView = factory<WeekViewFactory>((_props) => {
                 }
               : undefined
           }
-          mod={{ cascade: eventOverlapMode === 'cascade' }}
+          mod={{
+            cascade: eventOverlapMode === 'cascade',
+            invalid: resizePosition !== null && !eventResize.resizeValid,
+          }}
           style={{
             position: 'absolute',
             ...getTimeAxisEventStyle({
@@ -1027,6 +1110,7 @@ export const WeekView = factory<WeekViewFactory>((_props) => {
         {dayEvents}
         {dragDrop.dragPreview?.target.day === day && dragDrop.dragContextValue.draggedEvent && (
           <Box
+            mod={{ invalid: !dragDrop.dropValid }}
             {...getStyles('weekViewDragPreview', {
               style: (() => {
                 const { top, height } = getDayPosition({

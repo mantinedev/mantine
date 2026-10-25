@@ -1,0 +1,126 @@
+.root {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: var(--tour-z-index);
+}
+
+.overlay {
+  position: fixed;
+  inset: 0;
+  pointer-events: auto;
+
+  &:where([data-with-overlay-interaction]) {
+    pointer-events: none;
+  }
+}
+
+.tooltip {
+  position: absolute;
+  pointer-events: auto;
+  padding: var(--mantine-spacing-md);
+  border-radius: var(--tour-tooltip-radius, var(--mantine-radius-default));
+  box-shadow: var(--tour-tooltip-shadow, var(--mantine-shadow-md));
+  z-index: 1;
+  box-sizing: border-box;
+
+  @mixin where-light {
+    background-color: var(--mantine-color-white);
+    border: 1px solid var(--mantine-color-gray-3);
+  }
+
+  @mixin where-dark {
+    background-color: var(--mantine-color-dark-7);
+    border: 1px solid var(--mantine-color-dark-4);
+  }
+
+  &:where([data-centered]) {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    translate: -50% -50%;
+    max-width: calc(100% - 16px);
+  }
+}
+
+.title {
+  margin: 0;
+  font-weight: 600;
+  font-size: var(--mantine-font-size-md);
+  line-height: 1.4;
+  margin-bottom: var(--mantine-spacing-xs);
+}
+
+.body {
+  font-size: var(--mantine-font-size-sm);
+  line-height: 1.55;
+}
+
+.navigation {
+  margin-top: var(--mantine-spacing-md);
+}
+
+.closeButton {
+  position: absolute;
+  top: var(--mantine-spacing-xs);
+  right: var(--mantine-spacing-xs);
+
+  /* stylelint-disable-next-line selector-type-no-unknown */
+  :where([dir='rtl']) & {
+    right: auto;
+    left: var(--mantine-spacing-xs);
+  }
+}
+
+.stepCounter {
+  font-size: var(--mantine-font-size-sm);
+
+  @mixin where-light {
+    color: var(--mantine-color-gray-6);
+  }
+
+  @mixin where-dark {
+    color: var(--mantine-color-dark-2);
+  }
+}
+
+.beacon {
+  position: absolute;
+  pointer-events: auto;
+  width: var(--tour-beacon-size, 12px);
+  height: var(--tour-beacon-size, 12px);
+  border-radius: 50%;
+  background-color: var(
+    --tour-beacon-color,
+    var(--tour-color, var(--mantine-primary-color-filled))
+  );
+  border: 0;
+  padding: 0;
+  cursor: pointer;
+  z-index: 1;
+}
+
+.beaconPulse {
+  position: absolute;
+  inset: calc(var(--tour-beacon-size, 12px) * -0.35);
+  border-radius: 50%;
+  background-color: var(
+    --tour-beacon-color,
+    var(--tour-color, var(--mantine-primary-color-filled))
+  );
+  opacity: 0.3;
+  animation: tour-beacon-pulse 1.5s ease-in-out infinite;
+}
+
+@keyframes tour-beacon-pulse {
+  0%,
+  100% {
+    transform: scale(0.8);
+    opacity: 0.3;
+  }
+
+  50% {
+    transform: scale(1);
+    opacity: 0;
+  }
+}

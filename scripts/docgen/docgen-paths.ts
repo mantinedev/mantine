@@ -45,6 +45,18 @@ const FILES_PATHS = getPaths([
   'packages/@mantine/core/src/components/Tabs/TabsList/TabsList.tsx',
   'packages/@mantine/core/src/components/Tabs/TabsPanel/TabsPanel.tsx',
 
+  // Toolbar
+  'packages/@mantine/core/src/components/Toolbar/ToolbarToggle/ToolbarToggle.tsx',
+  'packages/@mantine/core/src/components/Toolbar/ToolbarToggleGroup/ToolbarToggleGroup.tsx',
+  'packages/@mantine/core/src/components/Toolbar/ToolbarToggleItem/ToolbarToggleItem.tsx',
+
+  // Tour
+  'packages/@mantine/core/src/components/Tour/TourStep/TourStep.tsx',
+  'packages/@mantine/core/src/components/Tour/TourRoot/TourRoot.tsx',
+  'packages/@mantine/core/src/components/Tour/TourTooltip/TourTooltip.tsx',
+  'packages/@mantine/core/src/components/Tour/TourOverlay/TourOverlay.tsx',
+  'packages/@mantine/core/src/components/Tour/TourBeacon/TourBeacon.tsx',
+
   // Accordion
   'packages/@mantine/core/src/components/Accordion/AccordionItem/AccordionItem.tsx',
   'packages/@mantine/core/src/components/Accordion/AccordionControl/AccordionControl.tsx',
@@ -139,6 +151,7 @@ const FILES_PATHS = getPaths([
   'packages/@mantine/code-highlight/src/CodeHighlight/CodeHighlight.tsx',
   'packages/@mantine/code-highlight/src/CodeHighlightTabs/CodeHighlightTabs.tsx',
   'packages/@mantine/code-highlight/src/CodeHighlight/InlineCodeHighlight.tsx',
+  'packages/@mantine/code-highlight/src/JsonViewer/JsonViewer.tsx',
 
   // Nprogress
   'packages/@mantine/nprogress/src/NavigationProgress.tsx',

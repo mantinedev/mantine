@@ -1,0 +1,227 @@
+import { Layout } from '@/layout';
+import { MDX_DATA } from '@/mdx';
+
+export default Layout(MDX_DATA.GettingStartedCodeHighlight);
+
+## Installation
+
+<InstallScript packages="@mantine/code-highlight" />
+
+After installation import package styles at the root of your application:
+
+```tsx
+import '@mantine/core/styles.css';
+// ‼️ import code-highlight styles after core package styles
+import '@mantine/code-highlight/styles.css';
+```
+
+## Adapters
+
+`@mantine/code-highlight` package does not depend on any specific code highlighting library.
+You can choose one of the default adapters provided by the package or create your own.
+
+Default adapters:
+
+- `createShikiAdapter` – creates [shiki](https://shiki.matsu.io/) adapter
+- `createHighlightJsAdapter` – creates [highlight.js](https://highlightjs.org/) adapter
+- `plainTextAdapter` – does not highlight code, just displays it as plain text (used by default if no adapter is provided)
+
+## Usage with shiki
+
+[Shiki](https://shiki.matsu.io/) library provides the most advanced syntax highlighting
+for TypeScript and CSS/Sass code. It uses textmate grammars to highlight code (same as in VSCode).
+The Shiki adapter is recommended if you need to highlight advanced TypeScript (generics, jsx nested in props) or CSS code (custom syntaxes, newest features).
+The Shiki adapter is used for all code highlighting in Mantine documentation.
+
+To use the shiki adapter, you need to install the `shiki` package:
+
+<InstallScript packages="shiki" />
+
+Then wrap your app with `CodeHighlightAdapterProvider` and provide `createShikiAdapter` as the `adapter` prop:
+
+```tsx
+import { MantineProvider } from '@mantine/core';
+import { CodeHighlightAdapterProvider, createShikiAdapter } from '@mantine/code-highlight';
+
+// Shiki requires async code to load the highlighter
+async function loadShiki() {
+  const { createHighlighter } = await import('shiki');
+  const shiki = await createHighlighter({
+    langs: ['tsx', 'scss', 'html', 'bash', 'json'],
+    // You can load supported themes here
+    themes: [],
+  });
+
+  return shiki;
+}
+
+const shikiAdapter = createShikiAdapter(loadShiki);
+
+function App() {
+  return (
+    <MantineProvider>
+      <CodeHighlightAdapterProvider adapter={shikiAdapter}>
+        {/* Your app here */}
+      </CodeHighlightAdapterProvider>
+    </MantineProvider>
+  );
+}
+```
+
+## Lazy languages loading
+
+By default, shiki downloads grammars of all languages given to the highlighter before
+the first code block is highlighted. To load grammars on demand, pass `resolveLanguage` option
+to `createShikiAdapter`. It is called with the language that is not loaded yet, its return value
+is passed to shiki `highlighter.loadLanguage`. Code is displayed as plain text until the grammar is loaded:
+
+```tsx
+import { createShikiAdapter } from '@mantine/code-highlight';
+
+async function loadShiki() {
+  const { createHighlighter } = await import('shiki');
+  return createHighlighter({ langs: ['tsx'], themes: [] });
+}
+
+// Bundled highlighter resolves grammars by language name on its own
+const shikiAdapter = createShikiAdapter(loadShiki, {
+  resolveLanguage: (language) => language,
+});
+```
+
+Highlighters created with `shiki/core` do not bundle grammars – return a function that imports
+the grammar of the given language instead:
+
+```tsx
+import { createShikiAdapter } from '@mantine/code-highlight';
+
+const grammars: Record<string, () => Promise<any>> = {
+  python: () => import('@shikijs/langs/python'),
+  ruby: () => import('@shikijs/langs/ruby'),
+};
+
+async function loadShiki() {
+  const { createHighlighterCore } = await import('shiki/core');
+  const { createJavaScriptRegexEngine } = await import('shiki/engine/javascript');
+
+  return createHighlighterCore({
+    langs: [],
+    themes: [],
+    engine: createJavaScriptRegexEngine(),
+  });
+}
+
+const shikiAdapter = createShikiAdapter(loadShiki, {
+  resolveLanguage: (language) => grammars[language],
+});
+```
+
+If `resolveLanguage` returns `null` or `undefined`, the language is considered unsupported and
+its code is displayed as plain text.
+
+## Unavailable languages
+
+If a code block uses a language that is not loaded in the highlighter and cannot be loaded on
+demand, its code is displayed as plain text and a warning is logged to the console in development.
+To fix it, add the language to the `langs` option of the highlighter or load it on demand
+with `resolveLanguage`.
+
+## Usage with highlight.js
+
+[Highlight.js](https://highlightjs.org/) provides less accurate highlighting compared to shiki,
+but it has a smaller bundle size and better performance. Choose the highlight.js adapter if you need
+to highlight basic JavaScript, HTML, and CSS code.
+
+To use the highlight.js adapter, you need to install the `highlight.js` package:
+
+<InstallScript packages="highlight.js" />
+
+Then wrap your app with `CodeHighlightAdapterProvider` and provide `createHighlightJsAdapter` as the `adapter` prop:
+
+```tsx
+import { MantineProvider } from '@mantine/core';
+import { CodeHighlightAdapterProvider, createHighlightJsAdapter } from '@mantine/code-highlight';
+import hljs from 'highlight.js/lib/core';
+import tsLang from 'highlight.js/lib/languages/typescript';
+
+hljs.registerLanguage('typescript', tsLang);
+
+const highlightJsAdapter = createHighlightJsAdapter(hljs);
+
+function App() {
+  return (
+    <MantineProvider>
+      <CodeHighlightAdapterProvider adapter={highlightJsAdapter}>
+        {/* Your app here */}
+      </CodeHighlightAdapterProvider>
+    </MantineProvider>
+  );
+}
+```
+
+Then you need to add styles from one of the highlight.js themes to your application.
+You can do that by importing a css file from the `highlight.js` package or adding it via
+a CDN link to the head of your application:
+
+```html
+<link
+  rel="stylesheet"
+  href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/atom-one-dark.min.css"
+/>
+```
+
+## Create custom adapter
+
+You can create a custom adapter if you want to enhance the default behavior of code highlighting
+or use a different library.
+
+Example of creating a custom shiki adapter with custom themes and logic:
+
+```tsx
+import { type CodeHighlightAdapter, stripShikiCodeBlocks } from '@mantine/code-highlight';
+
+// Shiki transformers can be used to highlight diffs and other notations
+// https://shiki.style/packages/transformers
+import { transformerNotationDiff, transformerNotationHighlight } from '@shikijs/transformers'
+
+// Shiki themes as objects, you can use any VSCode themes
+import { darkTheme, lightTheme } from './shiki-themes';
+
+async function loadShiki() {
+  const { createHighlighter } = await import('shiki');
+  const shiki = await createHighlighter({
+    langs: ['tsx', 'scss', 'html', 'bash', 'json'],
+    themes: [],
+  });
+
+  return shiki;
+}
+
+// Pass this adapter to CodeHighlightAdapterProvider component
+export const customShikiAdapter: CodeHighlightAdapter = {
+  // loadContext is called on the client side to load the shiki highlighter
+  // It is required to be used if your library requires async initialization
+  // The value returned from loadContext is passed to getHighlighter as ctx argument
+  loadContext: loadShiki,
+
+  // ctx is the value returned from loadContext
+  // or null if loadContext is not used or has not resolved yet
+  getHighlighter: (ctx) => {
+    if (!ctx) {
+      return ({ code }) => ({ highlightedCode: code, isHighlighted: false });
+    }
+
+    return ({ code, language, colorScheme }) => ({
+      isHighlighted: true,
+      // stripShikiCodeBlocks removes <pre> and <code> tags from highlighted code
+      highlightedCode: stripShikiCodeBlocks(
+        ctx.codeToHtml(code, {
+          lang: language,
+          theme: (colorScheme === 'light' ? lightTheme : darkTheme) as any,
+          transformers: [transformerNotationDiff(), transformerNotationHighlight()],
+        })
+      ),
+    });
+  },
+};
+```

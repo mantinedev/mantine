@@ -32,9 +32,12 @@ import {
 import {
   expandRecurringEvents,
   formatDate,
-  getMonthDays,
+  getHiddenWeekendColumns,
+  getVisibleWeekDays,
   getWeekdaysNames,
   getWeekNumber,
+  isAllDayEvent,
+  isMultidayEvent,
   isSameMonth,
   sortEvents,
   toDateString,
@@ -45,6 +48,7 @@ import {
 } from '../MonthView/handle-month-view-key-down';
 import { RenderEvent } from '../ScheduleEvent/ScheduleEvent';
 import { getMobileMonthViewEvents } from './get-mobile-month-view-events';
+import { getMobileMonthViewWeeks } from './get-mobile-month-view-weeks';
 import classes from './MobileMonthView.module.css';
 
 export type MobileMonthViewStylesNames =
@@ -120,6 +124,9 @@ export interface MobileMonthViewProps
   /** Indices of weekend days, 0-6, where 0 is Sunday and 6 is Saturday. The default value is defined by `DatesProvider`. */
   weekendDays?: DayOfWeek[];
 
+  /** If set, weekend days are displayed. When `false`, weekend columns are hidden and the month grid shrinks. @default true */
+  withWeekendDays?: boolean;
+
   /** Props passed down to the week number button */
   getWeekNumberProps?: (weekStartDate: DateStringValue) => Record<string, any>;
 
@@ -182,6 +189,7 @@ export type MobileMonthViewFactory = Factory<{
 const defaultProps = {
   __staticSelector: 'MobileMonthView',
   withWeekDays: true,
+  withWeekendDays: true,
   consistentWeeks: true,
   highlightToday: true,
   mode: 'default',
@@ -216,6 +224,7 @@ export const MobileMonthView = factory<MobileMonthViewFactory>((_props) => {
     firstDayOfWeek,
     weekdayFormat,
     weekendDays,
+    withWeekendDays,
     getWeekNumberProps,
     getDayProps,
     onDayClick,
@@ -262,7 +271,16 @@ export const MobileMonthView = factory<MobileMonthViewFactory>((_props) => {
   });
 
   const daysRef: MonthViewControlsRef = useRef<HTMLButtonElement[][]>([]);
-  const firstDayPosition = useRef<{ weekIndex: number; dayIndex: number } | null>(null);
+  const resolvedFirstDayOfWeek = ctx.getFirstDayOfWeek(firstDayOfWeek);
+  const resolvedWeekendDays = ctx.getWeekendDays(weekendDays);
+  const hiddenColumns = new Set(
+    getHiddenWeekendColumns({
+      weekendDays: resolvedWeekendDays,
+      firstDayOfWeek: resolvedFirstDayOfWeek,
+      withWeekendDays,
+    })
+  );
+  const columnsCount = 7 - hiddenColumns.size;
 
   const expandedEvents = expandRecurringEvents({
     events,
@@ -277,22 +295,53 @@ export const MobileMonthView = factory<MobileMonthViewFactory>((_props) => {
     ? getWeekdaysNames({
         locale: ctx.getLocale(locale),
         format: weekdayFormat,
-        firstDayOfWeek: ctx.getFirstDayOfWeek(firstDayOfWeek),
-      }).map((day, index) => (
-        <div {...getStyles('mobileMonthViewWeekday')} key={index}>
-          {day}
-        </div>
-      ))
+        firstDayOfWeek: resolvedFirstDayOfWeek,
+      })
+        .map((day, index) => ({ day, index }))
+        .filter(({ index }) => !hiddenColumns.has(index))
+        .map(({ day, index }) => (
+          <div {...getStyles('mobileMonthViewWeekday')} key={index}>
+            {day}
+          </div>
+        ))
     : null;
 
-  const weeks = getMonthDays({
-    month: dayjs(date).format('YYYY-MM-DD'),
-    firstDayOfWeek: ctx.getFirstDayOfWeek(firstDayOfWeek),
+  const monthWeeks = getMobileMonthViewWeeks({
+    month: date,
+    firstDayOfWeek: resolvedFirstDayOfWeek,
     consistentWeeks,
-  }).map((week, weekIndex) => {
-    const days = week.map((dayDate, dayIndex) => {
+    withOutsideDays,
+    weekendDays: resolvedWeekendDays,
+    withWeekendDays,
+  }).map((week) => ({
+    week,
+    visibleDays: getVisibleWeekDays({
+      week,
+      weekendDays: resolvedWeekendDays,
+      withWeekendDays,
+    }),
+  }));
+
+  const firstDayPosition = (() => {
+    for (let weekIndex = 0; weekIndex < monthWeeks.length; weekIndex++) {
+      const { visibleDays } = monthWeeks[weekIndex];
+      for (let dayIndex = 0; dayIndex < visibleDays.length; dayIndex++) {
+        if (withOutsideDays || isSameMonth(visibleDays[dayIndex], date)) {
+          return { weekIndex, dayIndex };
+        }
+      }
+    }
+    return null;
+  })();
+
+  daysRef.current.length = monthWeeks.length;
+
+  const weeks = monthWeeks.map(({ week, visibleDays }, weekIndex) => {
+    daysRef.current[weekIndex] = [];
+
+    const days = visibleDays.map((dayDate, dayIndex) => {
       const outside = !isSameMonth(dayDate, date);
-      const weekend = ctx.getWeekendDays(weekendDays).includes(dayjs(dayDate).day());
+      const weekend = resolvedWeekendDays.includes(dayjs(dayDate).day() as DayOfWeek);
       const ariaLabel = dayjs(dayDate)
         .locale(locale || ctx.locale)
         .format('MMMM D, YYYY');
@@ -303,14 +352,8 @@ export const MobileMonthView = factory<MobileMonthViewFactory>((_props) => {
       const dayEvents = groupedEvents[dayjs(dayDate).format('YYYY-MM-DD')] || [];
 
       const shouldRender = withOutsideDays || !outside;
-
-      if (shouldRender && firstDayPosition.current === null) {
-        firstDayPosition.current = { weekIndex, dayIndex };
-      }
-
       const isFirstDay =
-        firstDayPosition.current?.weekIndex === weekIndex &&
-        firstDayPosition.current?.dayIndex === dayIndex;
+        firstDayPosition?.weekIndex === weekIndex && firstDayPosition?.dayIndex === dayIndex;
 
       const indicators = dayEvents.slice(0, 3).map((event) => (
         <div
@@ -349,9 +392,6 @@ export const MobileMonthView = factory<MobileMonthViewFactory>((_props) => {
           key={dayDate}
           ref={(node) => {
             if (node) {
-              if (!daysRef.current[weekIndex]) {
-                daysRef.current[weekIndex] = [];
-              }
               daysRef.current[weekIndex][dayIndex] = node;
             }
           }}
@@ -416,7 +456,7 @@ export const MobileMonthView = factory<MobileMonthViewFactory>((_props) => {
   const eventsList = selectedDateEvents.map((event) => {
     const startTime = dayjs(event.start).format('HH:mm');
     const endTime = dayjs(event.end).format('HH:mm');
-    const isAllDay = startTime === '00:00' && endTime === '00:00';
+    const isAllDay = isMultidayEvent(event) || isAllDayEvent({ event, date: _selectedDate! });
 
     const eventChildren = (
       <Box {...getStyles('mobileMonthViewEventBody')}>
@@ -486,7 +526,13 @@ export const MobileMonthView = factory<MobileMonthViewFactory>((_props) => {
   return (
     <Box
       {...getStyles('mobileMonthView')}
-      mod={{ 'with-week-numbers': withWeekNumbers }}
+      mod={{
+        'with-week-numbers': withWeekNumbers,
+        'without-weekend-days': hiddenColumns.size > 0,
+      }}
+      __vars={
+        hiddenColumns.size > 0 ? { '--mobile-month-view-columns': `${columnsCount}` } : undefined
+      }
       {...others}
     >
       <div {...getStyles('mobileMonthViewHeader')}>

@@ -3,6 +3,7 @@ import CodeBlockLowlight from '@tiptap/extension-code-block-lowlight';
 import { Color } from '@tiptap/extension-color';
 import { Details, DetailsContent, DetailsSummary } from '@tiptap/extension-details';
 import Highlight from '@tiptap/extension-highlight';
+import TipTapImage from '@tiptap/extension-image';
 import InvisibleCharacters from '@tiptap/extension-invisible-characters';
 import Placeholder from '@tiptap/extension-placeholder';
 import SubScript from '@tiptap/extension-subscript';
@@ -23,6 +24,7 @@ import { createLowlight } from 'lowlight';
 import { AppShell } from '@mantine/core';
 import { Link } from './extensions/Link';
 import { getTaskListExtension } from './extensions/TaskList';
+import { getUploadImageExtension } from './extensions/UploadImage';
 import { RichTextEditor, RichTextEditorProps } from './RichTextEditor';
 import { RichTextEditorToolbarProps } from './RichTextEditorToolbar/RichTextEditorToolbar';
 
@@ -469,6 +471,85 @@ export function ControlStylesApi() {
           </RichTextEditor.ControlsGroup>
         </RichTextEditor.Toolbar>
 
+        <RichTextEditor.Content />
+      </RichTextEditor>
+    </div>
+  );
+}
+
+export function ImageUploadSuccess() {
+  const handleImageUpload = (file: File): Promise<string> =>
+    new Promise((resolve) => {
+      setTimeout(() => {
+        resolve(URL.createObjectURL(file));
+      }, 3000);
+    });
+
+  const editor = useEditor({
+    extensions: [
+      StarterKit,
+      getUploadImageExtension(TipTapImage, {
+        onImageUpload: handleImageUpload,
+      }),
+    ],
+    content: '<p>Click the image button or drag & drop an image here</p>',
+    shouldRerenderOnTransaction: true,
+  });
+
+  return (
+    <div style={{ padding: 40 }}>
+      <RichTextEditor editor={editor} onImageUpload={handleImageUpload}>
+        <RichTextEditor.Toolbar>
+          <RichTextEditor.ControlsGroup>
+            <RichTextEditor.Bold />
+            <RichTextEditor.Italic />
+          </RichTextEditor.ControlsGroup>
+          <RichTextEditor.ControlsGroup>
+            <RichTextEditor.ImageUpload />
+          </RichTextEditor.ControlsGroup>
+        </RichTextEditor.Toolbar>
+        <RichTextEditor.Content />
+      </RichTextEditor>
+    </div>
+  );
+}
+
+export function ImageUploadError() {
+  const handleImageUpload = (_file: File): Promise<string> =>
+    new Promise((_resolve, reject) => {
+      setTimeout(() => {
+        reject(new Error('Upload failed'));
+      }, 3000);
+    });
+
+  const editor = useEditor({
+    extensions: [
+      StarterKit,
+      getUploadImageExtension(TipTapImage, {
+        onImageUpload: handleImageUpload,
+        onImageUploadError: (_file, error) => console.error('Upload failed:', error),
+      }),
+    ],
+    content: '<p>Click the image button or drag & drop an image – upload will fail after 3s</p>',
+    shouldRerenderOnTransaction: true,
+  });
+
+  return (
+    <div style={{ padding: 40 }}>
+      <RichTextEditor
+        editor={editor}
+        onImageUpload={handleImageUpload}
+        onImageUploadError={(_file, error) => console.error('Upload failed:', error)}
+      >
+        <RichTextEditor.Toolbar>
+          <RichTextEditor.ControlsGroup>
+            <RichTextEditor.Bold />
+            <RichTextEditor.Italic />
+          </RichTextEditor.ControlsGroup>
+          <RichTextEditor.ControlsGroup>
+            <RichTextEditor.ImageUpload />
+          </RichTextEditor.ControlsGroup>
+        </RichTextEditor.Toolbar>
         <RichTextEditor.Content />
       </RichTextEditor>
     </div>

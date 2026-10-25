@@ -1,4 +1,5 @@
-import { autoPatchWarn, tests } from '@mantine-tests/core';
+import { Label } from 'recharts';
+import { render, tests } from '@mantine-tests/core';
 import { LineChart, LineChartProps, LineChartStylesNames } from './LineChart';
 
 const defaultProps: LineChartProps = {
@@ -12,13 +13,44 @@ const defaultProps: LineChartProps = {
 };
 
 describe('@mantine/charts/LineChart', () => {
-  autoPatchWarn();
-
   tests.itSupportsSystemProps<LineChartProps, LineChartStylesNames>({
     component: LineChart,
     props: defaultProps,
     varsResolver: true,
     displayName: '@mantine/charts/LineChart',
     stylesApiSelectors: ['root'],
+  });
+  it('renders yAxisProps.children and rightYAxisProps.children on their own axes', () => {
+    const rectSpy = jest.spyOn(Element.prototype, 'getBoundingClientRect').mockReturnValue({
+      width: 400,
+      height: 300,
+      top: 0,
+      left: 0,
+      right: 400,
+      bottom: 300,
+      x: 0,
+      y: 0,
+      toJSON: () => {},
+    });
+
+    const { container } = render(
+      <LineChart
+        {...defaultProps}
+        data={[
+          { date: 'Mar 22', test: 110, right: 10 },
+          { date: 'Mar 23', test: 60, right: 20 },
+        ]}
+        series={[...defaultProps.series, { name: 'right', color: 'red', yAxisId: 'right' }]}
+        withRightYAxis
+        yAxisProps={{ children: <Label value="left-label" /> }}
+        rightYAxisProps={{ children: <Label value="right-label" /> }}
+      />
+    );
+
+    rectSpy.mockRestore();
+
+    const labels = Array.from(container.querySelectorAll('text')).map((text) => text.textContent);
+    expect(labels.filter((label) => label === 'left-label')).toHaveLength(1);
+    expect(labels.filter((label) => label === 'right-label')).toHaveLength(1);
   });
 });

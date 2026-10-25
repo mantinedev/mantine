@@ -81,6 +81,23 @@ describe('@mantine/core/Select', () => {
     expect(spy).toHaveBeenCalledWith('test-2', { label: 'test-2', value: 'test-2' });
   });
 
+  it('calls onChange with null value and option when selected option is deselected', async () => {
+    const spy = jest.fn();
+    render(<Select {...defaultProps} defaultValue="test-1" onChange={spy} />);
+    await userEvent.click(screen.getByRole('combobox'));
+    await userEvent.click(screen.getByRole('option', { name: 'test-1' }));
+    expect(spy).toHaveBeenCalledWith(null, null);
+  });
+
+  it('calls onChange with null value and option when clear button is clicked', async () => {
+    const spy = jest.fn();
+    const { container } = render(
+      <Select {...defaultProps} defaultValue="test-1" clearable onChange={spy} />
+    );
+    await userEvent.click(container.querySelector('.mantine-InputClearButton-root')!);
+    expect(spy).toHaveBeenCalledWith(null, null);
+  });
+
   it('opens/closes dropdown on input click', async () => {
     render(<Select {...defaultProps} />);
     expect(screen.queryByRole('listbox')).toBe(null);
@@ -124,6 +141,21 @@ describe('@mantine/core/Select', () => {
     expect(screen.queryByRole('listbox')).toBe(null);
     await userEvent.click(screen.getByRole('combobox'));
     expect(screen.queryByRole('listbox')).toBe(null);
+  });
+
+  it('sets aria-disabled on disabled options', () => {
+    render(
+      <Select
+        {...defaultProps}
+        dropdownOpened
+        data={[
+          { value: 'test-1', label: 'test-1' },
+          { value: 'test-2', label: 'test-2', disabled: true },
+        ]}
+      />
+    );
+    expect(screen.getByRole('option', { name: 'test-1' })).not.toHaveAttribute('aria-disabled');
+    expect(screen.getByRole('option', { name: 'test-2' })).toHaveAttribute('aria-disabled', 'true');
   });
 
   it('allows searching options with searchable prop', async () => {
@@ -514,5 +546,39 @@ describe('@mantine/core/Select', () => {
       expect(screen.queryByRole('option', { name: 'Armenia' })).toBe(null);
       expect(getHiddenInput()).toHaveValue('');
     });
+  });
+
+  it('links listbox to the rendered label with aria-labelledby', () => {
+    const { rerender } = render(
+      <Select label="Test label" data={['test-1', 'test-2']} dropdownOpened />
+    );
+    expect(screen.getByRole('listbox')).toHaveAccessibleName('Test label');
+
+    rerender(
+      <>
+        <Select
+          label="Test label"
+          labelProps={{ id: 'custom-label-id' }}
+          data={['test-1', 'test-2']}
+          dropdownOpened
+        />
+      </>
+    );
+    expect(screen.getByRole('listbox')).toHaveAttribute('aria-labelledby', 'custom-label-id');
+    expect(screen.getByRole('listbox')).toHaveAccessibleName('Test label');
+  });
+
+  it('does not reference label in aria-labelledby when label is excluded from inputWrapperOrder', () => {
+    render(
+      <Select
+        label="Test label"
+        aria-label="Test aria-label"
+        inputWrapperOrder={['input']}
+        data={['test-1', 'test-2']}
+        dropdownOpened
+      />
+    );
+    expect(screen.getByRole('listbox')).not.toHaveAttribute('aria-labelledby');
+    expect(screen.getByRole('listbox')).toHaveAccessibleName('Test aria-label');
   });
 });

@@ -11,6 +11,8 @@ import { allVersions } from '@mantinex/mantine-meta';
 import { DEFAULT_THEME } from '../../packages/@mantine/core/src/core/MantineProvider/default-theme';
 import { defaultCssVariablesResolver } from '../../packages/@mantine/core/src/core/MantineProvider/MantineCssVariables/default-css-variables-resolver';
 import { extractCodeVariable, loadDemoCode } from '../utils/demo-loader';
+import { resolveImportName } from './mcp/import-name';
+import { parseMdxMetadataEntries } from './mcp/mdx-metadata';
 
 interface CompilerConfig {
   rootDir: string;
@@ -144,39 +146,9 @@ class MantineLLMCompiler {
           continue;
         }
 
-        // Extract all component entries with their metadata
-        const dataContent = exportMatch[1];
-
-        // Match component entries
-        const componentRegex = /(\w+):\s*{([^{}]*(?:{[^{}]*}[^{}]*)*)}/g;
-        let match;
-
-        while ((match = componentRegex.exec(dataContent)) !== null) {
-          const componentName = match[1];
-          const componentData = match[2];
-
-          // Extract package
-          const packageMatch = componentData.match(/package:\s*['"](@mantine\/[^'"]+)['"]/);
-          const titleMatch = componentData.match(/title:\s*['"]([^'"]+)['"]/);
-          const descriptionMatch = componentData.match(/description:\s*['"]([^'"]+)['"]/);
-
-          if (packageMatch) {
-            const metadata = {
-              package: packageMatch[1],
-              title: titleMatch ? titleMatch[1] : componentName,
-              description: descriptionMatch ? descriptionMatch[1] : '',
-            };
-
-            // Store both original case and lowercase for lookup flexibility
-            this.mdxMetadata.set(componentName, metadata);
-            this.mdxMetadata.set(componentName.toLowerCase(), metadata);
-            // Also store with kebab-case for code-highlight
-            const kebabName = componentName
-              .replace(/([A-Z])/g, '-$1')
-              .toLowerCase()
-              .replace(/^-/, '');
-            this.mdxMetadata.set(kebabName, metadata);
-          }
+        const entries = parseMdxMetadataEntries(exportMatch[1]);
+        for (const [key, metadata] of entries) {
+          this.mdxMetadata.set(key, metadata);
         }
       } catch (error) {
         // Warning: Could not parse file
@@ -410,6 +382,7 @@ class MantineLLMCompiler {
       hooks: '@mantine/hooks',
       dates: '@mantine/dates',
       charts: '@mantine/charts',
+      'code-highlight': '@mantine/code-highlight',
       x: '@mantine/x',
       form: '@mantine/form',
       schedule: '@mantine/schedule',
@@ -444,6 +417,7 @@ class MantineLLMCompiler {
       hooks: [] as string[],
       dates: [] as string[],
       charts: [] as string[],
+      'code-highlight': [] as string[],
       guides: [] as string[],
       theming: [] as string[],
       styles: [] as string[],
@@ -592,23 +566,29 @@ class MantineLLMCompiler {
       const content = await fs.readFile(filePath, 'utf-8');
       const fileName = path.basename(filePath, '.mdx');
 
-      // Try to get metadata from our loaded data
-      const metadata = this.mdxMetadata.get(fileName.toLowerCase());
-      const packageName = metadata?.package || this.inferPackageFromPath(filePath);
-
       // Extract component name from MDX file
       const componentMatch = content.match(/Layout\(MDX_DATA\.(\w+)\)/);
       const componentName = componentMatch ? componentMatch[1] : fileName;
+
+      // Try to get metadata from our loaded data
+      const metadata = this.mdxMetadata.get(componentName.toLowerCase());
+      const packageName = metadata?.package || this.inferPackageFromPath(filePath);
       const componentTitle = metadata?.title || componentName;
 
       this.output.push(`### ${componentTitle}`);
 
       if (packageName) {
         this.output.push(`Package: ${packageName}`);
-        const capitalizedComponent = componentName.charAt(0).toUpperCase() + componentName.slice(1);
-        // Use the actual component name from metadata if available
-        const importName = metadata?.title || capitalizedComponent;
-        this.output.push(`Import: import { ${importName} } from '${packageName}';`);
+
+        const importName = resolveImportName({
+          title: metadata?.title,
+          mdxKey: componentName,
+          isLandingPage: Boolean(metadata?.hideInSearch),
+        });
+
+        if (importName) {
+          this.output.push(`Import: import { ${importName} } from '${packageName}';`);
+        }
       }
 
       if (metadata?.description) {
@@ -2085,6 +2065,7 @@ Additional information about ${component} component.`;
       'dates',
       'charts',
       'schedule',
+      'code-highlight',
       'guides',
       'theming',
       'styles',

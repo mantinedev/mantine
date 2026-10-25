@@ -10,6 +10,7 @@ import {
   useProps,
   useStyles,
 } from '@mantine/core';
+import type { ImageUploadResult } from './extensions/UploadImage';
 import { DEFAULT_LABELS, RichTextEditorLabels } from './labels';
 import { RichTextEditorProvider } from './RichTextEditor.context';
 import {
@@ -26,6 +27,10 @@ import {
   RichTextEditorDetailsControl,
   type RichTextEditorDetailsControlProps,
 } from './RichTextEditorControl/RichTextEditorDetailsControl';
+import {
+  RichTextEditorImageUploadControl,
+  type RichTextEditorImageUploadControlProps,
+} from './RichTextEditorControl/RichTextEditorImageUploadControl';
 import {
   RichTextEditorInvisibleCharactersControl,
   type RichTextEditorInvisibleCharactersControlProps,
@@ -83,6 +88,12 @@ export interface RichTextEditorProps
   /** Called if `RichTextEditor.SourceCode` clicked.  */
   onSourceCodeTextSwitch?: (isSourceCodeModeActive: boolean) => void;
 
+  /** Called when an image file is picked with `RichTextEditor.ImageUpload` control, must return a promise that resolves to the uploaded image URL or to an object with `src` and optional `alt` and `title`. Takes precedence over `onImageUpload` option of the extension created with `getUploadImageExtension`. */
+  onImageUpload?: (file: File) => Promise<string | ImageUploadResult>;
+
+  /** Called when an image picked with `RichTextEditor.ImageUpload` control fails to upload. Takes precedence over `onImageUploadError` option of the extension created with `getUploadImageExtension`. */
+  onImageUploadError?: (file: File, error: unknown) => void;
+
   /** Labels that are used in controls */
   labels?: Partial<RichTextEditorLabels>;
 
@@ -135,6 +146,7 @@ export type RichTextEditorFactory = Factory<{
     TaskListSink: typeof controls.TaskListSinkControl;
     TaskListLift: typeof controls.TaskListLiftControl;
     SourceCode: typeof RichTextEditorSourceCodeControl;
+    ImageUpload: typeof RichTextEditorImageUploadControl;
     TableInsert: typeof RichTextEditorTableInsertControl;
     TableDelete: typeof controls.TableDeleteControl;
     TableColumnBefore: typeof controls.TableColumnBeforeControl;
@@ -171,6 +183,8 @@ export const RichTextEditor = factory<RichTextEditorFactory>((_props) => {
     withCodeHighlightStyles,
     withTypographyStyles,
     onSourceCodeTextSwitch,
+    onImageUpload,
+    onImageUploadError,
     labels,
     children,
     variant,
@@ -202,6 +216,8 @@ export const RichTextEditor = factory<RichTextEditorFactory>((_props) => {
         withCodeHighlightStyles,
         withTypographyStyles,
         onSourceCodeTextSwitch,
+        onImageUpload,
+        onImageUploadError,
         unstyled,
         variant,
       }}
@@ -258,6 +274,7 @@ RichTextEditor.TaskList = controls.TaskListControl;
 RichTextEditor.TaskListSink = controls.TaskListSinkControl;
 RichTextEditor.TaskListLift = controls.TaskListLiftControl;
 RichTextEditor.SourceCode = RichTextEditorSourceCodeControl;
+RichTextEditor.ImageUpload = RichTextEditorImageUploadControl;
 
 // Table controls
 RichTextEditor.TableInsert = RichTextEditorTableInsertControl;
@@ -293,6 +310,7 @@ export namespace RichTextEditor {
     export type ColorProps = RichTextEditorColorControlProps;
     export type LinkProps = RichTextEditorLinkControlProps;
     export type SourceCodeProps = RichTextEditorSourceCodeControlProps;
+    export type ImageUploadProps = RichTextEditorImageUploadControlProps;
     export type TableInsertProps = RichTextEditorTableInsertControlProps;
     export type DetailsProps = RichTextEditorDetailsControlProps;
     export type InvisibleCharactersProps = RichTextEditorInvisibleCharactersControlProps;

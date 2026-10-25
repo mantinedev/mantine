@@ -120,6 +120,30 @@ describe('@mantine/core/Menu', () => {
     expectOpened();
   });
 
+  it('closes menu when outside element stops propagation and clickOutsideCapture is set', async () => {
+    const { rerender } = render(
+      <>
+        <TestContainer defaultOpened />
+        <button type="button" onMouseDown={(event) => event.stopPropagation()}>
+          outside
+        </button>
+      </>
+    );
+    await userEvent.click(screen.getByRole('button', { name: 'outside' }));
+    expectOpened();
+
+    rerender(
+      <>
+        <TestContainer defaultOpened clickOutsideCapture />
+        <button type="button" onMouseDown={(event) => event.stopPropagation()}>
+          outside
+        </button>
+      </>
+    );
+    await userEvent.click(screen.getByRole('button', { name: 'outside' }));
+    expectClosed();
+  });
+
   it('closes menu when item is clicked', async () => {
     render(<TestContainer defaultOpened />);
     await userEvent.click(screen.getByText('test-item-1'));
@@ -1220,55 +1244,55 @@ describe('@mantine/core/Menu', () => {
       );
     }
 
-    it('opens the menu on touch long-press', () => {
+    it('opens the menu on touch long-press', async () => {
       render(<TouchContainer />);
       const area = screen.getByTestId('context-area');
 
       fireEvent.touchStart(area, { touches: [{ clientX: 30, clientY: 40 }] });
       expectClosed();
 
-      act(() => {
+      await act(async () => {
         jest.advanceTimersByTime(500);
       });
 
       expectOpened();
     });
 
-    it('does not open on a short tap', () => {
+    it('does not open on a short tap', async () => {
       render(<TouchContainer />);
       const area = screen.getByTestId('context-area');
 
       fireEvent.touchStart(area, { touches: [{ clientX: 30, clientY: 40 }] });
-      act(() => {
+      await act(async () => {
         jest.advanceTimersByTime(200);
       });
       fireEvent.touchEnd(area, { changedTouches: [{ clientX: 30, clientY: 40 }] });
-      act(() => {
+      await act(async () => {
         jest.advanceTimersByTime(500);
       });
 
       expectClosed();
     });
 
-    it('cancels the long-press when the finger moves beyond the threshold', () => {
+    it('cancels the long-press when the finger moves beyond the threshold', async () => {
       render(<TouchContainer />);
       const area = screen.getByTestId('context-area');
 
       fireEvent.touchStart(area, { touches: [{ clientX: 30, clientY: 40 }] });
       fireEvent.touchMove(area, { touches: [{ clientX: 30, clientY: 120 }] });
-      act(() => {
+      await act(async () => {
         jest.advanceTimersByTime(500);
       });
 
       expectClosed();
     });
 
-    it('prevents default on touchend after a long-press to suppress synthetic mouse events', () => {
+    it('prevents default on touchend after a long-press to suppress synthetic mouse events', async () => {
       render(<TouchContainer />);
       const area = screen.getByTestId('context-area');
 
       fireEvent.touchStart(area, { touches: [{ clientX: 30, clientY: 40 }] });
-      act(() => {
+      await act(async () => {
         jest.advanceTimersByTime(500);
       });
       expectOpened();
@@ -1281,40 +1305,40 @@ describe('@mantine/core/Menu', () => {
       expect(endEvent.defaultPrevented).toBe(true);
     });
 
-    it('does not open via touch when disabled', () => {
+    it('does not open via touch when disabled', async () => {
       render(<TouchContainer disabled />);
       const area = screen.getByTestId('context-area');
 
       fireEvent.touchStart(area, { touches: [{ clientX: 30, clientY: 40 }] });
-      act(() => {
+      await act(async () => {
         jest.advanceTimersByTime(500);
       });
 
       expectClosed();
     });
 
-    it('respects a custom longPressDelay', () => {
+    it('respects a custom longPressDelay', async () => {
       render(<TouchContainer longPressDelay={1000} />);
       const area = screen.getByTestId('context-area');
 
       fireEvent.touchStart(area, { touches: [{ clientX: 0, clientY: 0 }] });
-      act(() => {
+      await act(async () => {
         jest.advanceTimersByTime(500);
       });
       expectClosed();
 
-      act(() => {
+      await act(async () => {
         jest.advanceTimersByTime(500);
       });
       expectOpened();
     });
 
-    it('keeps the menu open when a native contextmenu follows a touch long-press', () => {
+    it('keeps the menu open when a native contextmenu follows a touch long-press', async () => {
       render(<TouchContainer />);
       const area = screen.getByTestId('context-area');
 
       fireEvent.touchStart(area, { touches: [{ clientX: 30, clientY: 40 }] });
-      act(() => {
+      await act(async () => {
         jest.advanceTimersByTime(500);
       });
       expectOpened();
@@ -1323,12 +1347,12 @@ describe('@mantine/core/Menu', () => {
       expectOpened();
     });
 
-    it('allows a mouse contextmenu to reopen after a completed touch long-press', () => {
+    it('allows a mouse contextmenu to reopen after a completed touch long-press', async () => {
       render(<TouchContainer />);
       const area = screen.getByTestId('context-area');
 
       fireEvent.touchStart(area, { touches: [{ clientX: 30, clientY: 40 }] });
-      act(() => {
+      await act(async () => {
         jest.advanceTimersByTime(500);
       });
       fireEvent.touchEnd(area, { changedTouches: [{ clientX: 30, clientY: 40 }] });
@@ -1337,16 +1361,18 @@ describe('@mantine/core/Menu', () => {
       fireEvent.click(screen.getByText('Copy'));
       expectClosed();
 
-      fireEvent.contextMenu(area, { clientX: 10, clientY: 10 });
+      await act(async () => {
+        fireEvent.contextMenu(area, { clientX: 10, clientY: 10 });
+      });
       expectOpened();
     });
 
-    it('does not prevent default on touchend when disabled', () => {
+    it('does not prevent default on touchend when disabled', async () => {
       render(<TouchContainer disabled />);
       const area = screen.getByTestId('context-area');
 
       fireEvent.touchStart(area, { touches: [{ clientX: 30, clientY: 40 }] });
-      act(() => {
+      await act(async () => {
         jest.advanceTimersByTime(500);
       });
 
@@ -1358,34 +1384,34 @@ describe('@mantine/core/Menu', () => {
       expect(endEvent.defaultPrevented).toBe(false);
     });
 
-    it('does not open if disabled becomes true during the press', () => {
+    it('does not open if disabled becomes true during the press', async () => {
       const { rerender } = render(<TouchContainer />);
       const area = screen.getByTestId('context-area');
 
       fireEvent.touchStart(area, { touches: [{ clientX: 30, clientY: 40 }] });
-      act(() => {
+      await act(async () => {
         jest.advanceTimersByTime(200);
       });
 
       rerender(<TouchContainer disabled />);
-      act(() => {
+      await act(async () => {
         jest.advanceTimersByTime(300);
       });
 
       expectClosed();
     });
 
-    it('does not open if the press started while disabled', () => {
+    it('does not open if the press started while disabled', async () => {
       const { rerender } = render(<TouchContainer disabled />);
       const area = screen.getByTestId('context-area');
 
       fireEvent.touchStart(area, { touches: [{ clientX: 30, clientY: 40 }] });
-      act(() => {
+      await act(async () => {
         jest.advanceTimersByTime(200);
       });
 
       rerender(<TouchContainer />);
-      act(() => {
+      await act(async () => {
         jest.advanceTimersByTime(300);
       });
 

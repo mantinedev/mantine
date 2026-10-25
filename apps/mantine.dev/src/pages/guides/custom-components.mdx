@@ -35,7 +35,7 @@ export type ExampleComponentCssVariables = {
 export interface ExampleComponentProps
   extends BoxProps, StylesApiProps<ExampleComponentFactory>, ElementProps<'div'> {
   /** Component border-radius */
-  radius: MantineRadius;
+  radius?: MantineRadius;
 }
 
 export type ExampleComponentFactory = Factory<{
@@ -219,7 +219,7 @@ export interface ExampleComponentProps extends ElementProps<'input', 'color' | '
 `useProps` merges props using the order:
 1. Component props – highest priority
 2. [Default props](/theming/default-props) on theme – lower priority
-3. Default props define on component level – used only if prop is not defined in previous steps
+3. Default props defined on component level – used only if prop is not defined in previous steps
 
 Example of using `useProps`:
 
@@ -274,7 +274,7 @@ const defaultProps: Partial<ExampleComponentProps> = {
 You can use [defaultProps](/theming/default-props) the following way:
 
 ```tsx
-import { MantineProvider, Button, Group, createTheme } from '@mantine/core';
+import { createTheme } from '@mantine/core';
 import { ExampleComponent } from './ExampleComponent';
 
 const theme = createTheme({
@@ -330,7 +330,7 @@ const getStyles = useStyles<ExampleComponentFactory>({
   // CSS variables resolver, defined in component file, described later
   varsResolver,
 
-  // CSS variables resolved override, defined in user application
+  // CSS variables resolver override, defined in user application
   vars,
 });
 ```
@@ -355,7 +355,7 @@ Use `varsResolver` to transform component props into CSS variables.
 Example of `varsResolver` usage in [Button](/core/button) component:
 
 ```tsx
-import { getFontSize, getSize, createVarsResolver } from '@mantine/core';
+import { getFontSize, getRadius, getSize, createVarsResolver } from '@mantine/core';
 
 const varsResolver = createVarsResolver<ButtonFactory>(
   (theme, { radius, color, gradient, variant, size, justify, autoContrast }) => {

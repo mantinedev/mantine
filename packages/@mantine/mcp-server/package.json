@@ -1,6 +1,6 @@
 {
   "name": "@mantine/mcp-server",
-  "version": "9.6.3",
+  "version": "9.7.3",
   "description": "MCP server for Mantine documentation",
   "homepage": "https://mantine.dev",
   "license": "MIT",
@@ -36,6 +36,10 @@
   },
   "engines": {
     "node": ">=22"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/server": "2.1.0",
+    "zod": "^4.6.5"
   },
   "bin": "./bin/mcp-server.cjs"
 }

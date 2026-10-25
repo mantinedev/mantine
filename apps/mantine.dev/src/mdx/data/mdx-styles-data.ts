@@ -29,6 +29,13 @@ export const MDX_STYLES_DATA: Record<string, Frontmatter> = {
     hideHeader: true,
   },
 
+  StyleX: {
+    title: 'StyleX',
+    slug: '/styles/stylex',
+    search: 'Mantine + StyleX integration',
+    hideHeader: true,
+  },
+
   UsageWithSass: {
     title: 'Usage with Sass',
     slug: '/styles/sass',

@@ -499,7 +499,7 @@ export const Cascader = factory<CascaderFactory>((_props) => {
       const opensDropdown =
         event.key === 'ArrowDown' ||
         event.key === 'ArrowUp' ||
-        event.key === 'ArrowRight' ||
+        event.key === cascader.expandKey ||
         event.key === 'Enter' ||
         (!searchable && event.key === ' ');
 

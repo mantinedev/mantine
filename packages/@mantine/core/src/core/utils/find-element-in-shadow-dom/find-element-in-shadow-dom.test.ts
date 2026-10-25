@@ -231,6 +231,31 @@ describe('@mantine/core/utils/find-element-in-shadow-dom', () => {
       const root = getRootElement(element);
       expect(root).toBe(document);
     });
+
+    it('returns the iframe document for an element inside an iframe', () => {
+      const iframe = document.createElement('iframe');
+      document.body.appendChild(iframe);
+      const iframeDocument = iframe.contentDocument!;
+      const element = iframeDocument.createElement('div');
+      iframeDocument.body.appendChild(element);
+
+      const root = getRootElement(element);
+      expect(root).toBe(iframeDocument);
+      expect(root).not.toBe(document);
+    });
+
+    it('returns the shadow root for an element in a shadow tree inside an iframe', () => {
+      const iframe = document.createElement('iframe');
+      document.body.appendChild(iframe);
+      const iframeDocument = iframe.contentDocument!;
+      const host = iframeDocument.createElement('div');
+      const shadow = host.attachShadow({ mode: 'open' });
+      const element = iframeDocument.createElement('div');
+      shadow.appendChild(element);
+      iframeDocument.body.appendChild(host);
+
+      expect(getRootElement(element)).toBe(shadow);
+    });
   });
 
   describe('integration tests', () => {

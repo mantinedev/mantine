@@ -33,7 +33,12 @@ import {
   DateTimeStringValue,
   DayOfWeek,
   DayPositionedEventData,
+  PreventEventOverlap,
+  ScheduleCanDropEventData,
+  ScheduleCanDropExternalEventData,
+  ScheduleCanResizeEventToData,
   ScheduleEventData,
+  ScheduleEventPlacementRejectedData,
   ScheduleMode,
   ScheduleResourceData,
   ScheduleResourceGroup,
@@ -41,8 +46,11 @@ import {
 } from '../../types';
 import {
   calculateDropTime,
+  expandRecurringEvents,
   formatDate,
-  getBusinessHoursMod,
+  addMinutesToTime,
+  clampIntervalMinutes,
+  getBusinessHoursState,
   getDayPosition,
   getCurrentTimePosition,
   getDayTimeIntervals,
@@ -107,7 +115,9 @@ export type ResourcesWeekViewCssVariables = {
     | '--resources-week-view-radius'
     | '--resources-week-view-slot-width'
     | '--resources-week-view-row-height'
-    | '--resources-week-view-group-label-width';
+    | '--resources-week-view-group-label-width'
+    | '--resources-week-view-business-hours-bg'
+    | '--resources-week-view-non-business-hours-bg';
 };
 
 export interface ResourcesWeekViewProps
@@ -213,6 +223,21 @@ export interface ResourcesWeekViewProps
   /** Function to determine if event can be resized */
   canResizeEvent?: (event: ScheduleEventData) => boolean;
 
+  /** Called while an event is dragged over a target to compute live feedback and again before the drop is committed, return `false` to reject the drop. Must be pure and cheap. */
+  canDropEvent?: (data: ScheduleCanDropEventData) => boolean;
+
+  /** Called while an external item is dragged over a target to compute live feedback and again before the drop is committed, return `false` to reject the drop. Must be pure and cheap. Only `dataTransfer.types` can be read while the drag is in progress. */
+  canDropExternalEvent?: (data: ScheduleCanDropExternalEventData) => boolean;
+
+  /** Called on every pointer move while an event is resized to compute live feedback and again before the resize is committed, return `false` to reject the new size. Must be pure and cheap. */
+  canResizeEventTo?: (data: ScheduleCanResizeEventToData) => boolean;
+
+  /** If set, drops and resizes that would make the event overlap another event are rejected. Pass a function to decide per pair of events: return `true` to forbid the overlap. The function runs while dragging and resizing to compute live feedback, it must be pure and cheap. @default false */
+  preventEventOverlap?: PreventEventOverlap;
+
+  /** Called when a drop or resize is rejected */
+  onEventPlacementRejected?: (data: ScheduleEventPlacementRejectedData) => void;
+
   /** Snap step for resizing events, in minutes. Must divide evenly into an hour (e.g. `15`, `30`) or be a whole number of hours. When not set, `intervalMinutes` is used. @default intervalMinutes */
   eventResizeInterval?: number;
 
@@ -268,6 +293,8 @@ const varsResolver = createVarsResolver<ResourcesWeekViewFactory>(
       '--resources-week-view-slot-width': rem(slotWidth),
       '--resources-week-view-row-height': rem(rowHeight),
       '--resources-week-view-group-label-width': rem(groupLabelWidth),
+      '--resources-week-view-business-hours-bg': undefined,
+      '--resources-week-view-non-business-hours-bg': undefined,
     },
   })
 );
@@ -327,6 +354,11 @@ export const ResourcesWeekView = factory<ResourcesWeekViewFactory>((_props) => {
     withEventResize,
     onEventResize,
     canResizeEvent,
+    canDropEvent,
+    canDropExternalEvent,
+    canResizeEventTo,
+    preventEventOverlap,
+    onEventPlacementRejected,
     eventResizeInterval,
     onTimeSlotClick,
     onEventClick,
@@ -427,51 +459,60 @@ export const ResourcesWeekView = factory<ResourcesWeekViewFactory>((_props) => {
 
   const dragOffsetRef = useRef<{ offset: number; size: number }>({ offset: 0, size: 0 });
 
+  const getExternalDropDateTime = useCallback(
+    (target: DropTargetSlot) => {
+      const dayIndex = Math.floor(target.slotIndex / totalSlotsPerDay);
+      const slotInDay = target.slotIndex % totalSlotsPerDay;
+      const slotDay = weekdays[dayIndex];
+
+      if (!slotDay) {
+        return null;
+      }
+
+      const slotDate = dayjs(slotDay).format('YYYY-MM-DD');
+      const slotTime = slots[slotInDay].startTime;
+      const dropDateTime = `${slotDate} ${slotTime}`;
+
+      if (eventDragInterval == null) {
+        return dropDateTime;
+      }
+
+      const { start } = calculateDropTime({
+        draggedEvent: { start: dropDateTime, end: dropDateTime } as ScheduleEventData,
+        targetDate: slotDate,
+        targetSlotTime: slotTime,
+        intervalMinutes,
+        dragIntervalMinutes: eventDragInterval,
+        slotOffset: dragOffsetRef.current.offset,
+        slotSize: dragOffsetRef.current.size,
+        startTime,
+        endTime,
+      });
+
+      return dayjs(start).format('YYYY-MM-DD HH:mm:ss');
+    },
+    [slots, weekdays, totalSlotsPerDay, eventDragInterval, intervalMinutes, startTime, endTime]
+  );
+
   const handleExternalDrop = useCallback(
     (e: React.DragEvent, target: DropTargetSlot) => {
       if (!onExternalEventDrop) {
         return;
       }
-      const dayIndex = Math.floor(target.slotIndex / totalSlotsPerDay);
-      const slotInDay = target.slotIndex % totalSlotsPerDay;
-      const slotDay = weekdays[dayIndex];
-      if (slotDay) {
-        const slotDate = dayjs(slotDay).format('YYYY-MM-DD');
-        const slotTime = slots[slotInDay].startTime;
-        let dropDateTime: string = `${slotDate} ${slotTime}`;
 
-        if (eventDragInterval != null) {
-          const { start } = calculateDropTime({
-            draggedEvent: { start: dropDateTime, end: dropDateTime } as ScheduleEventData,
-            targetDate: slotDate,
-            targetSlotTime: slotTime,
-            intervalMinutes,
-            dragIntervalMinutes: eventDragInterval,
-            slotOffset: dragOffsetRef.current.offset,
-            slotSize: dragOffsetRef.current.size,
-            startTime,
-            endTime,
-          });
-          dropDateTime = dayjs(start).format('YYYY-MM-DD HH:mm:ss');
-        }
+      const dropDateTime = getExternalDropDateTime(target);
 
-        onExternalEventDrop({
-          dataTransfer: e.dataTransfer,
-          dropDateTime,
-          resourceId: target.resourceId,
-        });
+      if (dropDateTime === null) {
+        return;
       }
+
+      onExternalEventDrop({
+        dataTransfer: e.dataTransfer,
+        dropDateTime,
+        resourceId: target.resourceId,
+      });
     },
-    [
-      onExternalEventDrop,
-      slots,
-      weekdays,
-      totalSlotsPerDay,
-      eventDragInterval,
-      intervalMinutes,
-      startTime,
-      endTime,
-    ]
+    [onExternalEventDrop, getExternalDropDateTime]
   );
 
   const lastDropResourceId = useRef<string | number | undefined>(undefined);
@@ -506,6 +547,19 @@ export const ResourcesWeekView = factory<ResourcesWeekViewFactory>((_props) => {
     [onEventDrop]
   );
 
+  const expandedEvents = useMemo(
+    () =>
+      expandRecurringEvents({
+        events,
+        rangeStart: dayjs(weekdays[0]).startOf('day').toDate(),
+        rangeEnd: dayjs(weekdays[weekdays.length - 1])
+          .endOf('day')
+          .toDate(),
+        expansionLimit: recurrenceExpansionLimit,
+      }),
+    [events, weekdays, recurrenceExpansionLimit]
+  );
+
   const dragDrop = useDragDropHandlers<DropTargetSlot>({
     enabled: withEventsDragAndDrop,
     mode,
@@ -518,6 +572,13 @@ export const ResourcesWeekView = factory<ResourcesWeekViewFactory>((_props) => {
       return getDropTimeForSlot(target, draggedEvent);
     },
     onExternalDrop: onExternalEventDrop ? handleExternalDrop : undefined,
+    events: expandedEvents,
+    preventEventOverlap,
+    canDropEvent,
+    canDropExternalEvent,
+    onEventPlacementRejected,
+    getExternalDropDateTime,
+    getTargetResourceId: (target) => target.resourceId,
   });
 
   const updateDragPreview = (target: DropTargetSlot) => {
@@ -574,6 +635,10 @@ export const ResourcesWeekView = factory<ResourcesWeekViewFactory>((_props) => {
     resizeIntervalMinutes: eventResizeInterval,
     onEventResize,
     canResizeEvent,
+    events: expandedEvents,
+    preventEventOverlap,
+    canResizeEventTo,
+    onEventPlacementRejected,
     withBackgroundEvents: withInteractiveBackgroundEvents,
   });
 
@@ -643,18 +708,19 @@ export const ResourcesWeekView = factory<ResourcesWeekViewFactory>((_props) => {
         format: slotLabelFormat,
       });
 
+      const labelBusinessHours = getBusinessHoursState({
+        time: interval.startTime,
+        endTime: addMinutesToTime(interval.startTime, clampIntervalMinutes(intervalMinutes)),
+        businessHours,
+        highlightBusinessHours,
+      });
+
       return (
         <Box
           {...getStyles('resourcesWeekViewTimeLabel')}
           key={`${day}-${interval.startTime}`}
-          mod={{
-            'hour-start': interval.isHourStart,
-            ...getBusinessHoursMod({
-              time: interval.startTime,
-              businessHours,
-              highlightBusinessHours,
-            }),
-          }}
+          mod={{ 'hour-start': interval.isHourStart, ...labelBusinessHours.mod }}
+          __vars={labelBusinessHours.vars}
         >
           {label}
         </Box>
@@ -698,7 +764,7 @@ export const ResourcesWeekView = factory<ResourcesWeekViewFactory>((_props) => {
     const cornerEl = viewportRef.current.querySelector(`.${classes.resourcesWeekViewCorner}`);
     const labelWidth = cornerEl ? cornerEl.getBoundingClientRect().width : 0;
     viewportRef.current.scrollTo({
-      left: slotRect.left - viewportRect.left - labelWidth,
+      left: slotRect.left - viewportRect.left + viewportRef.current.scrollLeft - labelWidth,
       top: 0,
     });
   }, []);
@@ -882,6 +948,7 @@ export const ResourcesWeekView = factory<ResourcesWeekViewFactory>((_props) => {
               nowrap
               draggable={isDraggable}
               isResizing={isThisEventResizing}
+              mod={{ invalid: isThisEventResizing && !eventResize.resizeValid }}
               renderEventBody={renderEventBody}
               renderEvent={renderEvent}
               radius={radius}
@@ -1049,6 +1116,7 @@ export const ResourcesWeekView = factory<ResourcesWeekViewFactory>((_props) => {
       <ResourcesWeekViewRow
         key={resource.id}
         resource={resource}
+        intervalMinutes={intervalMinutes}
         resourceIndex={resourceIndex}
         weekdays={weekdays}
         slots={slots}
@@ -1097,6 +1165,7 @@ export const ResourcesWeekView = factory<ResourcesWeekViewFactory>((_props) => {
         {dragDrop.dragPreview?.target.resourceId === resource.id &&
           dragDrop.dragContextValue.draggedEvent && (
             <Box
+              mod={{ invalid: !dragDrop.dropValid }}
               {...getStyles('resourcesWeekViewDragPreview', {
                 style: (() => {
                   const previewDayIndex = Math.floor(

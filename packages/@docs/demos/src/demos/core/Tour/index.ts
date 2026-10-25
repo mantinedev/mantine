@@ -1,0 +1,10 @@
+export { usage } from './Tour.demo.usage';
+export { beacon } from './Tour.demo.beacon';
+export { controlled } from './Tour.demo.controlled';
+export { overlay } from './Tour.demo.overlay';
+export { centered } from './Tour.demo.centered';
+export { compound } from './Tour.demo.compound';
+export { labels } from './Tour.demo.labels';
+export { position } from './Tour.demo.position';
+export { styles as stylesApi } from './Tour.demo.styles';
+export { complex } from './Tour.demo.complex';

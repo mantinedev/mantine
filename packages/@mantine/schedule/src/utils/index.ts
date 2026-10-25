@@ -16,6 +16,8 @@ export { toDateString } from './to-date-string/to-date-string';
 export { nextWeek } from './next-week/next-week';
 export { previousWeek } from './previous-week/previous-week';
 export { clampIntervalMinutes } from './clamp-interval-minutes/clamp-interval-minutes';
+export { clampSlotLabelInterval } from './clamp-slot-label-interval/clamp-slot-label-interval';
+export { getSlotLabelGroups } from './get-slot-label-groups/get-slot-label-groups';
 export { getCurrentTimePosition } from './get-current-time-position/get-current-time-position';
 export { isInTimeRange } from './is-in-time-range/is-in-time-range';
 export { isAllDayEvent } from './is-all-day-event/is-all-day-event';
@@ -33,9 +35,13 @@ export { getDayPosition } from './get-day-position/get-day-position';
 export { getTimeAxisEventStyle } from './get-time-axis-event-style/get-time-axis-event-style';
 export { calculateDropTime } from './calculate-drop-time/calculate-drop-time';
 export { calculateMonthDropDate } from './calculate-month-drop-date/calculate-month-drop-date';
-export { getBusinessHoursMod } from './get-business-hours-mod/get-business-hours-mod';
+export {
+  getBusinessHoursMod,
+  getBusinessHoursState,
+} from './get-business-hours-mod/get-business-hours-mod';
 export { expandRecurringEvents } from './expand-recurring-events/expand-recurring-events';
 export type { DayTimeInterval } from './get-day-time-intervals/get-day-time-intervals';
+export type { SlotLabelGroup } from './get-slot-label-groups/get-slot-label-groups';
 export type { ParsedTime } from './parse-time-string/parse-time-string';
 export type {
   CalculateDropTimeInput,
@@ -49,10 +55,13 @@ export type {
   BusinessHoursMod,
   BusinessHoursPerDay,
   BusinessHoursRange,
+  BusinessHoursState,
   BusinessHoursValue,
+  BusinessHoursVars,
   GetBusinessHoursModInput,
 } from './get-business-hours-mod/get-business-hours-mod';
 export { getOrderedResources } from './get-ordered-resources/get-ordered-resources';
+export { addMinutesToTime } from './add-minutes-to-time/add-minutes-to-time';
 export type {
   GroupRange,
   OrderedResourcesResult,
@@ -69,3 +78,12 @@ export { getDayRelativePercent } from './get-day-relative-percent/get-day-relati
 export { getOverlapClusters } from './get-overlap-clusters/get-overlap-clusters';
 export { applyCascadeLayout } from './apply-cascade-layout/apply-cascade-layout';
 export type { CascadePositionedEvent } from './apply-cascade-layout/apply-cascade-layout';
+export { isEventPlacementAllowed } from './is-event-placement-allowed/is-event-placement-allowed';
+export type {
+  IsEventPlacementAllowedInput,
+  IsEventPlacementAllowedResult,
+} from './is-event-placement-allowed/is-event-placement-allowed';
+export {
+  getHiddenWeekendColumns,
+  getVisibleWeekDays,
+} from './get-visible-week-days/get-visible-week-days';

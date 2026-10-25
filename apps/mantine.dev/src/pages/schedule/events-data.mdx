@@ -16,8 +16,6 @@ All three variants share a common set of base fields described in `ScheduleEvent
 
 ## ScheduleEventBase
 
-`ScheduleEventBase` defines the fields that every event has, regardless of its shape.
-
 ```tsx
 import type { DateTimeStringValue, EventPayload } from '@mantine/schedule';
 import type { MantineColor } from '@mantine/core';
@@ -133,10 +131,8 @@ const override: ScheduleRecurringOverrideEventData = {
 
 ## EventPayload
 
-Use the `payload` field to attach arbitrary data to events. The payload is not used
-internally by the library – it is meant for application-specific data that you can
-access in callbacks (`onEventClick`, `onEventDrop`, etc.) and in custom event renderers
-(`renderEventBody`):
+Use the `payload` field to attach your own data to events. It is not used by the library,
+you can read it in callbacks and in custom event renderers:
 
 ```tsx
 import type { ScheduleEventData } from '@mantine/schedule';
@@ -161,15 +157,14 @@ const event: ScheduleEventData<MyEventPayload> = {
 };
 ```
 
-`EventPayload` itself is just `Record<PropertyKey, any>` – you typically pass your own
-payload type as a generic argument to `ScheduleEventData<MyPayload>`.
+`EventPayload` is `Record<PropertyKey, any>`. Pass your own payload type as a generic
+argument: `ScheduleEventData<MyPayload>`.
 
 ## Recurring instance metadata
 
-When a recurring series is expanded for the visible date range, each generated event
-includes a `recurringInstance` metadata object. This object is added by the library –
-you do not set it yourself, but you can read it in callbacks and custom renderers to
-distinguish generated occurrences from regular events:
+Each event generated from a recurring series has a `recurringInstance` object. It is added
+by the library, read it in callbacks and custom renderers to distinguish generated
+occurrences from regular events:
 
 ```tsx
 interface RecurringInstanceMeta {
@@ -205,9 +200,6 @@ Example of reading the metadata in `onEventClick`:
 
 ## Callback payloads
 
-All event callbacks accept structured data describing what the user interacted with.
-The following sections document the exact payload received by each callback.
-
 ### onEventClick
 
 Called when an event is clicked in any view:
@@ -218,10 +210,6 @@ onEventClick?: (
   e: React.MouseEvent<HTMLButtonElement>
 ) => void;
 ```
-
-- `event` – the clicked event, including `recurringInstance` metadata if it is a
-  generated occurrence.
-- `e` – the native React mouse event.
 
 ### onEventDrop
 
@@ -236,12 +224,10 @@ onEventDrop?: (data: {
 }) => void;
 ```
 
-- `eventId` – id of the dropped event (same as `event.id`). For generated recurring
-  instances this is the synthesized occurrence id (`"<seriesId>::<recurrenceId>"`),
-  not the series id. Use `event.recurringInstance?.recurringEventId` to get the parent
-  series id when handling occurrences.
+- `eventId` – id of the dropped event, same as `event.id`. For generated recurring
+  occurrences it is the occurrence id (`"<seriesId>::<recurrenceId>"`), not the series id.
+  Use `event.recurringInstance?.recurringEventId` to get the series id.
 - `newStart` / `newEnd` – new datetime values in `YYYY-MM-DD HH:mm:ss` format.
-- `event` – full event data, including `recurringInstance` metadata if applicable.
 
 ### onEventResize
 
@@ -342,6 +328,32 @@ onExternalEventDrop?: (
   `onDragStart` handler. Read your custom data with `dataTransfer.getData(type)`.
 - `dropDateTime` – the drop target datetime in `YYYY-MM-DD HH:mm:ss` format.
 
+### Callbacks in resources views
+
+In `ResourcesSchedule` and `Resources*` views, `onDayClick`, `onSlotDragEnd` and `onExternalEventDrop`
+are called with a single object that includes `resourceId` of the row. `onTimeSlotClick` payload
+includes `resourceId` as well:
+
+```tsx
+onDayClick?: (data: {
+  date: DateStringValue;
+  nativeEvent: React.MouseEvent<HTMLButtonElement>;
+  resourceId?: string | number;
+}) => void;
+
+onSlotDragEnd?: (data: {
+  rangeStart: DateTimeStringValue;
+  rangeEnd: DateTimeStringValue;
+  resourceId?: string | number;
+}) => void;
+
+onExternalEventDrop?: (data: {
+  dataTransfer: DataTransfer;
+  dropDateTime: DateTimeStringValue;
+  resourceId?: string | number;
+}) => void;
+```
+
 ### canDragEvent / canResizeEvent
 
 Permission callbacks – return `false` to prevent dragging or resizing for a specific event:
@@ -350,6 +362,100 @@ Permission callbacks – return `false` to prevent dragging or resizing for a sp
 canDragEvent?: (event: ScheduleEventData) => boolean;
 canResizeEvent?: (event: ScheduleEventData) => boolean;
 ```
+
+### preventEventOverlap
+
+Rejects drops and resizes that would make the event overlap another event, see
+[drop validation](/schedule/schedule/#drop-validation) for what counts as a conflict:
+
+```tsx
+preventEventOverlap?:
+  | boolean
+  | ((stillEvent: ScheduleEventData, movingEvent: ScheduleEventData) => boolean);
+```
+
+Pass a function to decide per pair of events, return `true` to forbid the overlap.
+`movingEvent` has the new `start` and `end` and, in `Resources*` views, the target `resourceId`.
+The function is called many times while dragging and resizing, it must be pure and cheap.
+
+### canDropEvent / canResizeEventTo / canDropExternalEvent
+
+Placement callbacks – return `false` to reject a drop or resize based on where the event
+is being placed. They are called many times while dragging and again before the placement
+is committed, so they must be pure and cheap:
+
+```tsx
+canDropEvent?: (data: {
+  event: ScheduleEventData;
+  start: DateTimeStringValue;
+  end: DateTimeStringValue;
+  resourceId?: string | number;
+}) => boolean;
+
+canResizeEventTo?: (data: {
+  event: ScheduleEventData;
+  start: DateTimeStringValue;
+  end: DateTimeStringValue;
+  edge: 'start' | 'end';
+}) => boolean;
+
+canDropExternalEvent?: (data: {
+  dataTransfer: DataTransfer;
+  start: DateTimeStringValue;
+  resourceId?: string | number;
+}) => boolean;
+```
+
+- `start` / `end` – the candidate range in `YYYY-MM-DD HH:mm:ss` format. `canDropExternalEvent`
+  has no `end` – the schedule does not know the duration of an external item.
+- `resourceId` – the target resource, only in `Resources*` views.
+- `edge` – the edge of the event that is being dragged.
+- `dataTransfer` – only `dataTransfer.types` can be read while the drag is in progress.
+
+### onEventPlacementRejected
+
+Called when a drop, resize or external drop is rejected by `preventEventOverlap` or by one of
+the placement callbacks above. The payload is a discriminated union keyed on `action`:
+
+```tsx
+onEventPlacementRejected?: (
+  data:
+    | {
+        action: 'drop';
+        event: ScheduleEventData;
+        start: DateTimeStringValue;
+        end: DateTimeStringValue;
+        conflicts: ScheduleEventData[];
+        reason: 'overlap' | 'rejected';
+        resourceId?: string | number;
+      }
+    | {
+        action: 'resize';
+        event: ScheduleEventData;
+        edge: 'start' | 'end';
+        start: DateTimeStringValue;
+        end: DateTimeStringValue;
+        conflicts: ScheduleEventData[];
+        reason: 'overlap' | 'rejected';
+        resourceId?: string | number;
+      }
+    | {
+        action: 'external-drop';
+        dataTransfer: DataTransfer;
+        start: DateTimeStringValue;
+        conflicts: [];
+        reason: 'rejected';
+        resourceId?: string | number;
+      }
+) => void;
+```
+
+- `conflicts` – events the placement collided with, empty when the rejection came from a
+  callback.
+- `reason` – `'overlap'` when `preventEventOverlap` found a conflict, `'rejected'` when a
+  callback returned `false`.
+- `resourceId` – only in `Resources*` views: the target resource for `drop` and
+  `external-drop`, the event's own resource for `resize`.
 
 ## Date and time value formats
 

@@ -1,6 +1,7 @@
 import { getBreakpointValue, keys, MantineTheme, rem } from '../../../../core';
 import type { AppShellProps } from '../../AppShell';
 import { getBaseSize } from '../get-base-size/get-base-size';
+import { getResizedValue } from '../get-resized-value/get-resized-value';
 import type { CSSVariables, MediaQueryVariables } from '../get-variables/get-variables';
 import { isPrimitiveSize } from '../is-primitive-size/is-primitive-size';
 import { isResponsiveSize } from '../is-responsive-size/is-responsive-size';
@@ -12,6 +13,8 @@ interface AssignAsideVariablesInput {
   aside: AppShellProps['aside'] | undefined;
   theme: MantineTheme;
   mode: 'fixed' | 'static';
+  resizedSize?: number;
+  resizable?: boolean;
 }
 
 export function assignAsideVariables({
@@ -21,6 +24,8 @@ export function assignAsideVariables({
   aside,
   theme,
   mode,
+  resizedSize,
+  resizable,
 }: AssignAsideVariablesInput) {
   const asideWidth = aside?.width;
   const collapsedAsideTransform = 'translateX(var(--app-shell-aside-width))';
@@ -35,27 +40,39 @@ export function assignAsideVariables({
       maxMediaStyles[aside?.breakpoint]['--app-shell-aside-width'] = '0px';
       maxMediaStyles[aside?.breakpoint]['--app-shell-aside-offset'] = '0px';
     }
+    if (resizable) {
+      maxMediaStyles[aside.breakpoint]['--app-shell-aside-resize-handle-display'] = 'none';
+    }
   }
 
-  if (isPrimitiveSize(asideWidth)) {
-    const baseSize = rem(getBaseSize(asideWidth));
-    baseStyles['--app-shell-aside-width'] = baseSize;
-    baseStyles['--app-shell-aside-offset'] = baseSize;
-  }
-
-  if (isResponsiveSize(asideWidth)) {
-    if (typeof asideWidth.base !== 'undefined') {
-      baseStyles['--app-shell-aside-width'] = rem(asideWidth.base);
-      baseStyles['--app-shell-aside-offset'] = rem(asideWidth.base);
+  if (resizedSize !== undefined) {
+    const resizedValue = getResizedValue(resizedSize, 'horizontal');
+    baseStyles['--app-shell-aside-width'] = resizedValue;
+    baseStyles['--app-shell-aside-offset'] = resizedValue;
+    if (mode === 'static') {
+      baseStyles['--app-shell-aside-grid-width'] = resizedValue;
+    }
+  } else {
+    if (isPrimitiveSize(asideWidth)) {
+      const baseSize = rem(getBaseSize(asideWidth));
+      baseStyles['--app-shell-aside-width'] = baseSize;
+      baseStyles['--app-shell-aside-offset'] = baseSize;
     }
 
-    keys(asideWidth).forEach((key) => {
-      if (key !== 'base') {
-        minMediaStyles[key] = minMediaStyles[key] || {};
-        minMediaStyles[key]['--app-shell-aside-width'] = rem(asideWidth![key]);
-        minMediaStyles[key]['--app-shell-aside-offset'] = rem(asideWidth![key]);
+    if (isResponsiveSize(asideWidth)) {
+      if (typeof asideWidth.base !== 'undefined') {
+        baseStyles['--app-shell-aside-width'] = rem(asideWidth.base);
+        baseStyles['--app-shell-aside-offset'] = rem(asideWidth.base);
       }
-    });
+
+      keys(asideWidth).forEach((key) => {
+        if (key !== 'base') {
+          minMediaStyles[key] = minMediaStyles[key] || {};
+          minMediaStyles[key]['--app-shell-aside-width'] = rem(asideWidth![key]);
+          minMediaStyles[key]['--app-shell-aside-offset'] = rem(asideWidth![key]);
+        }
+      });
+    }
   }
 
   if (aside?.breakpoint !== undefined && mode === 'static') {
@@ -80,6 +97,9 @@ export function assignAsideVariables({
       minMediaStyles[breakpointValue]['--app-shell-main-column-end'] = '-1';
     }
     minMediaStyles[breakpointValue]['--app-shell-aside-scroll-locked-visibility'] = 'hidden';
+    if (resizable) {
+      minMediaStyles[breakpointValue]['--app-shell-aside-resize-handle-display'] = 'none';
+    }
   }
 
   if (aside?.collapsed?.mobile) {
@@ -94,5 +114,8 @@ export function assignAsideVariables({
     maxMediaStyles[breakpointValue]['--app-shell-aside-transform'] = collapsedAsideTransform;
     maxMediaStyles[breakpointValue]['--app-shell-aside-transform-rtl'] = collapsedAsideTransformRtl;
     maxMediaStyles[breakpointValue]['--app-shell-aside-scroll-locked-visibility'] = 'hidden';
+    if (resizable) {
+      maxMediaStyles[breakpointValue]['--app-shell-aside-resize-handle-display'] = 'none';
+    }
   }
 }

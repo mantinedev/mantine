@@ -59,6 +59,10 @@ export const WeekViewStylesApi: StylesApiData<WeekViewFactory> = {
       '--week-view-radius': 'Controls `border-radius` of the week view',
       '--week-view-slot-height': 'Controls `height` of 1-hour time slots',
       '--week-view-all-day-slots-height': 'Controls `height` of all-day slots section',
+      '--week-view-business-hours-bg':
+        'Controls `background-color` of time slots and labels inside business hours',
+      '--week-view-non-business-hours-bg':
+        'Controls `background-color` of time slots and labels outside business hours',
     },
   },
 
@@ -84,6 +88,12 @@ export const WeekViewStylesApi: StylesApiData<WeekViewFactory> = {
       modifier: 'data-non-business-hours',
       selector: 'weekViewDaySlot',
       condition: '`highlightBusinessHours` is true and slot is outside business hours',
+    },
+    {
+      modifier: 'data-partial-business-hours',
+      selector: 'weekViewDaySlot',
+      condition:
+        '`highlightBusinessHours` is true and a business hours boundary falls inside the slot',
     },
     { modifier: 'data-static', selector: 'weekView', condition: '`mode="static"` is set' },
   ],

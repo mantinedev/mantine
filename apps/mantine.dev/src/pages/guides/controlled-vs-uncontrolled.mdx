@@ -5,14 +5,13 @@ export default Layout(MDX_DATA.ControlledVsUncontrolled);
 
 # Controlled vs Uncontrolled
 
-All Mantine inputs support both controlled and uncontrolled modes. This guide will
-help you understand the difference between these two modes and when to use each of them.
+All Mantine inputs support both controlled and uncontrolled modes. This guide explains
+the difference between these two modes and when to use each of them.
 
 ## Controlled components
 
-A controlled component is a form element whose value is controlled by React state.
-The component's value is set by state, and changes are handled through event handlers that update that state.
-React becomes the single source of truth for the form data.
+A controlled component is a form element whose value is stored in React state.
+The value is passed with the `value` prop and updated in the `onChange` handler.
 
 Example of a controlled `TextInput` component:
 
@@ -33,14 +32,13 @@ function Demo() {
 }
 ```
 
-In this example, the input's value is always synchronized with the component's state.
-Every keystroke triggers a state update,which causes a re-render with the new value.
+Every keystroke triggers a state update, which causes a re-render with the new value.
 
 ## Uncontrolled components
 
-An uncontrolled component manages its own state internally through the DOM (or internal state),
-similar to traditional HTML form elements. React doesn't control the value directly.
-Instead, you use refs or DOM methods to access the current value when needed, typically on form submission.
+An uncontrolled component manages its own state through the DOM or internal state,
+similar to regular HTML form elements. Use refs or DOM methods to read the current value
+when needed, usually on form submission.
 
 Example of an uncontrolled `TextInput` component:
 
@@ -68,18 +66,12 @@ function Demo() {
 }
 ```
 
-Here, the input maintains its own state. React only reads the value when explicitly requested through the ref.
-
 ## Key differences
 
-The primary difference lies in where the state lives. Controlled components store state in React,
-while uncontrolled components store it in the DOM. This fundamental distinction affects how you interact with the component throughout its lifecycle.
-
-With controlled components, you explicitly define the value prop and handle every change.
-With uncontrolled components, you set a defaultValue and let the DOM handle updates, only accessing the value when needed.
-
-Controlled components require an onChange handler to remain interactive, whereas uncontrolled components work
-without any change handlers, just like standard HTML inputs.
+- Controlled components store state in React, uncontrolled components store it in the DOM
+- Controlled components use `value` prop, uncontrolled components use `defaultValue`
+- Controlled components require `onChange` handler to remain interactive, uncontrolled components
+  work without change handlers, like regular HTML inputs
 
 ## When to use which
 
@@ -122,9 +114,8 @@ function Demo() {
 
 ## Uncontrolled use-form
 
-[@mantine/form](/form/use-form) supports uncontrolled mode which allows building large
-forms with good performance. If you are working on complex forms with many fields, `useForm`
-hook in uncontrolled mode is a great choice.
+[@mantine/form](/form/use-form) supports uncontrolled mode. Use it to build large
+forms with many fields without re-rendering the form on every change.
 
 Example of uncontrolled mode with `useForm`:
 

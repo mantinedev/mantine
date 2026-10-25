@@ -8,7 +8,7 @@ export function clearListState<T extends Record<PropertyKey, any>>(
 
   const clone = { ...state };
   Object.keys(state).forEach((errorKey) => {
-    if (errorKey.includes(`${String(field)}.`)) {
+    if (errorKey.startsWith(`${String(field)}.`)) {
       delete clone[errorKey];
     }
   });

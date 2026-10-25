@@ -8,15 +8,12 @@ export default Layout(MDX_DATA.BulletChart);
 
 `BulletChart` is a compact KPI chart that displays an actual value against a target
 with qualitative ranges as background bands. The required props are `value` and `ranges`.
-Labels are automatically displayed at range boundaries, the target position,
-and the bar value.
 
 <Demo data={BulletChartDemos.usage} />
 
 ## Data format
 
-`BulletChart` expects `ranges` as an array of objects with `value` and `color` properties.
-Ranges are rendered back-to-front (largest first), so smaller ranges overlay larger ones.
+`BulletChart` expects `ranges` as an array of objects with `value` and `color` properties:
 
 ```tsx
 const ranges = [

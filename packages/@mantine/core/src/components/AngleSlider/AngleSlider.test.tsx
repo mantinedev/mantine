@@ -1,4 +1,4 @@
-import { render, tests } from '@mantine-tests/core';
+import { render, screen, tests } from '@mantine-tests/core';
 import { AngleSlider, AngleSliderProps, AngleSliderStylesNames } from './AngleSlider';
 
 const defaultProps: AngleSliderProps = {
@@ -22,5 +22,10 @@ describe('@mantine/core/AngleSlider', () => {
     const input = container.querySelector('input[type="hidden"]');
     expect(input).toHaveAttribute('name', 'test-name');
     expect(input).toHaveAttribute('value', '120');
+  });
+
+  it('sets aria-disabled when disabled', () => {
+    render(<AngleSlider {...defaultProps} disabled />);
+    expect(screen.getByRole('slider')).toHaveAttribute('aria-disabled', 'true');
   });
 });

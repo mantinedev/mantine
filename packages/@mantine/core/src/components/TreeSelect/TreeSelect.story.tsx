@@ -6,6 +6,7 @@ import { Combobox } from '../Combobox';
 import { useVirtualizedCombobox } from '../Combobox/use-combobox/use-virtualized-combobox';
 import { Group } from '../Group';
 import { InputBase } from '../InputBase';
+import { Pill } from '../Pill';
 import { ScrollArea } from '../ScrollArea';
 import type { TreeNodeData } from '../Tree';
 import { getTreeExpandedState, TreeExpandedState } from '../Tree/use-tree';
@@ -499,6 +500,28 @@ export function MaxDisplayedValuesCustomContent() {
         maxDisplayedValuesContent={(overflow) => `and ${overflow} others`}
         defaultValue={['react', 'python', 'docker', 'go']}
         defaultExpandAll
+      />
+    </div>
+  );
+}
+
+export function RenderPill() {
+  return (
+    <div style={{ padding: 40, maxWidth: 400 }}>
+      <TreeSelect
+        data={simpleData}
+        mode="checkbox"
+        checkedStrategy="parent"
+        label="Custom pills"
+        placeholder="Pick values"
+        defaultValue={['react', 'python']}
+        defaultExpandAll
+        renderPill={({ node, onRemove, disabled, readOnly }) => (
+          <Pill withRemoveButton={!readOnly} onRemove={onRemove} disabled={disabled}>
+            {node.children ? '📁 ' : '📄 '}
+            {node.label}
+          </Pill>
+        )}
       />
     </div>
   );

@@ -1,0 +1,77 @@
+import { CodeHighlightDemos } from '@docs/demos';
+import { Layout } from '@/layout';
+import { MDX_DATA } from '@/mdx';
+
+export default Layout(MDX_DATA.CodeHighlight);
+
+## Example
+
+`CodeHighlight` component is used to display code snippets with syntax highlighting.
+It can be used with any code highlighting library with [adapters](/code-highlight/getting-started/#adapters).
+
+Example of code highlighting with [shiki](https://shiki.matsu.io/):
+
+<Demo data={CodeHighlightDemos.usage} />
+
+## Copy button
+
+You can customize copy button labels with `copyLabel` and `copiedLabel` props.
+In case you need to remove the copy button, set `withCopyButton={false}`.
+
+<Demo data={CodeHighlightDemos.copy} />
+
+## With tabs
+
+`CodeHighlightTabs` component allows you to organize multiple code blocks into tabs:
+
+<Demo data={CodeHighlightDemos.tabs} />
+
+## Tabs with icons
+
+You can use any React node as tab icon. The example below uses TypeScript and CSS
+icons from the `@mantinex/dev-icons` package, but you can use any other icons library or custom
+icons:
+
+<Demo data={CodeHighlightDemos.tabsIcons} />
+
+## Tabs icons based on file name
+
+As an alternative to providing icons manually for each tab, you can use the `getFileIcon` prop
+to assign icons based on file name. `getFileIcon` accepts a file name and must return a React node
+or `null`.
+
+<Demo data={CodeHighlightDemos.tabsGetIcons} />
+
+## Line numbers
+
+Set `withLineNumbers` prop to display line numbers alongside the code:
+
+<Demo data={CodeHighlightDemos.lineNumbers} />
+
+## First line indentation
+
+`CodeHighlight` trims the code before rendering it, so the indentation of the first line
+is removed. Set `withFirstLineIndentation` prop to preserve it:
+
+<Demo data={CodeHighlightDemos.firstLineIndentation} />
+
+## Expandable code
+
+If the code snippet is too long, you can make it expandable with `withExpandButton`
+and `defaultExpanded={false}` props. To change the label of the expand/collapse control
+tooltip, use `expandCodeLabel` and `collapseCodeLabel`.
+
+<Demo data={CodeHighlightDemos.expand} />
+
+## Custom controls
+
+Use the `controls` prop with the `CodeHighlightControl` component to add custom controls
+to the code block:
+
+<Demo data={CodeHighlightDemos.customControl} />
+
+## Inline code
+
+`InlineCodeHighlight` component allows you to highlight inline code snippets:
+
+<Demo data={CodeHighlightDemos.inline} />

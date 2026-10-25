@@ -13,7 +13,7 @@ export default Layout(MDX_DATA.FloatingWindow);
 ## Constrain to viewport
 
 Use the `constrainToViewport` prop to restrict element movement to the viewport boundaries.
-If you do not set the `constrainToViewport` prop, the element can be dragged outside the viewport:
+Without it, the element can be dragged outside the viewport:
 
 <Demo data={FloatingWindowDemos.constrainToViewport} />
 
@@ -56,35 +56,19 @@ The `dimensions` prop on `FloatingWindow` controls the resize behavior:
 - `minWidth` / `minHeight` – minimum size the window can be resized to
 - `maxWidth` / `maxHeight` – maximum size the window can be resized to
 
-The resize handle respects `constrainToViewport` and `constrainOffset` props – the window
-cannot be resized beyond the viewport boundaries.
-
-`FloatingWindow.ResizeHandle` renders with `role="separator"` and supports keyboard interaction:
-use `Arrow Left`/`Arrow Right` keys to resize width and `Arrow Up`/`Arrow Down` keys to resize
-height in 10px steps. `Home`/`End` keys jump to the minimum/maximum size.
+The resize handle respects `constrainToViewport` and `constrainOffset` props.
+It can be used with keyboard: arrow keys resize the window in 10px steps,
+`Home` and `End` keys set the minimum and maximum size.
 
 <Demo data={FloatingWindowDemos.resizeHandle} />
 
 ## Resize callbacks
 
-`FloatingWindow` supports the following resize callbacks, which mirror `onPositionChange`,
-`onDragStart` and `onDragEnd` used for dragging:
+Resize callbacks require the `dimensions` prop and `FloatingWindow.ResizeHandle`:
 
 - `onSizeChange` – called with the `{ width, height }` of the window every time it is resized
-- `onResizeStart` – called when the resize starts
-- `onResizeEnd` – called when the resize stops
-
-Sizes passed to `onSizeChange` are measured after the new size has been applied, so they are
-already clamped by the `dimensions` and viewport constraints and always match the actual size
-of the window. Both `width` and `height` are always provided, even if only one of the axes
-is resizable.
-
-`onSizeChange` is called for both pointer and keyboard resize. `onResizeStart` and `onResizeEnd`
-are called only for pointer resize – keyboard resize applies the new size immediately and
-has no start/end phase.
-
-All resize callbacks require the `dimensions` prop and `FloatingWindow.ResizeHandle` –
-they are not called if the window is not resizable.
+- `onResizeStart` – called when the resize starts, pointer resize only
+- `onResizeEnd` – called when the resize stops, pointer resize only
 
 <Demo data={FloatingWindowDemos.resizeCallbacks} />
 

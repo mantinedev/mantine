@@ -93,11 +93,10 @@ const expanded = expandRecurringEvents({
 
 ## recurrenceExpansionLimit prop
 
-All views accept a `recurrenceExpansionLimit` prop (default `2000`) to cap the number
-of generated instances per recurring series. This prevents performance issues with
-unbounded recurrence rules (e.g., `FREQ=DAILY` without `COUNT` or `UNTIL`).
-Note that the limit applies independently to each series, so a schedule with
-multiple unbounded series may generate up to `limit × number of series` total instances.
+All views accept a `recurrenceExpansionLimit` prop (default `2000`) that limits the number
+of generated instances per recurring series. It prevents performance issues with
+rules that never end, for example `FREQ=DAILY` without `COUNT` or `UNTIL`.
+The limit applies to each series separately.
 
 ## Schedule demo
 

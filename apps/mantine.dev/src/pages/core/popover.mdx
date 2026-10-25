@@ -155,6 +155,9 @@ Set the `disabled` prop to prevent `Popover.Dropdown` from rendering:
 
 By default, `Popover` closes when you click outside of the dropdown. To disable this behavior, set `closeOnClickOutside={false}`.
 
+If an element outside of the popover stops propagation of the event, the popover does not close when that element is clicked.
+Set the `clickOutsideCapture` prop to register listeners in the capture phase and close the popover in this case as well.
+
 You can configure events that are used for click-outside detection with the `clickOutsideEvents` prop.
 By default, `Popover` listens to `mousedown` and `touchstart` events. You can change it to any other
 events, for example, `mouseup` and `touchend`:

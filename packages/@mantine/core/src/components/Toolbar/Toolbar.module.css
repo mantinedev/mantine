@@ -1,0 +1,211 @@
+.root {
+  --toolbar-toggle-size-xs: 22px;
+  --toolbar-toggle-size-sm: 26px;
+  --toolbar-toggle-size-md: 30px;
+  --toolbar-toggle-size-lg: 36px;
+  --toolbar-toggle-size-xl: 42px;
+
+  --toolbar-padding-xs: 4px;
+  --toolbar-padding-sm: 5px;
+  --toolbar-padding-md: 6px;
+  --toolbar-padding-lg: 8px;
+  --toolbar-padding-xl: 12px;
+
+  --toolbar-gap-xs: calc(var(--mantine-spacing-xs) / 2);
+  --toolbar-gap-sm: var(--mantine-spacing-xs);
+  --toolbar-gap-md: var(--mantine-spacing-sm);
+  --toolbar-gap-lg: var(--mantine-spacing-sm);
+  --toolbar-gap-xl: var(--mantine-spacing-md);
+
+  --toolbar-toggle-size: var(--toolbar-toggle-size-md);
+  --toolbar-padding: var(--toolbar-padding-md);
+  --toolbar-gap: var(--toolbar-gap-md);
+  --_tr: var(--toolbar-radius, var(--mantine-radius-default));
+  --toolbar-toggle-radius: max(calc(var(--_tr) - var(--toolbar-padding)), min(var(--_tr), 2px));
+
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: var(--toolbar-gap);
+  background-color: var(--mantine-color-body);
+  border-radius: var(--toolbar-radius, var(--mantine-radius-default));
+  padding: var(--toolbar-padding);
+
+  &:where([data-with-border]) {
+    border: 1px solid;
+
+    @mixin where-light {
+      border-color: var(--mantine-color-gray-4);
+    }
+
+    @mixin where-dark {
+      border-color: var(--mantine-color-dark-4);
+    }
+  }
+
+  &:where([data-orientation='vertical']) {
+    flex-direction: column;
+    align-items: stretch;
+    width: fit-content;
+  }
+}
+
+.group {
+  display: flex;
+  background-color: var(--mantine-color-body);
+
+  & :where([data-toolbar-toggle]) {
+    &:focus-visible {
+      position: relative;
+      z-index: 1;
+    }
+
+    &:not(:only-child):first-child {
+      border-end-end-radius: 0;
+      border-start-end-radius: 0;
+      border-inline-end-width: calc(1px / 2);
+    }
+
+    &:not(:only-child):last-child {
+      border-end-start-radius: 0;
+      border-start-start-radius: 0;
+      border-inline-start-width: calc(1px / 2);
+    }
+
+    &:not(:only-child):not(:first-child):not(:last-child) {
+      border-radius: 0;
+      border-inline-width: calc(1px / 2);
+    }
+  }
+
+  &:where([data-orientation='vertical']) {
+    flex-direction: column;
+
+    & :where([data-toolbar-toggle]) {
+      &:not(:only-child):first-child {
+        border-end-start-radius: 0;
+        border-end-end-radius: 0;
+        border-start-end-radius: var(--toolbar-toggle-radius);
+        border-inline-end-width: 1px;
+        border-bottom-width: calc(1px / 2);
+      }
+
+      &:not(:only-child):last-child {
+        border-start-start-radius: 0;
+        border-start-end-radius: 0;
+        border-end-start-radius: var(--toolbar-toggle-radius);
+        border-inline-start-width: 1px;
+        border-top-width: calc(1px / 2);
+      }
+
+      &:not(:only-child):not(:first-child):not(:last-child) {
+        border-radius: 0;
+        border-inline-width: 1px;
+        border-bottom-width: calc(1px / 2);
+        border-top-width: calc(1px / 2);
+      }
+    }
+  }
+}
+
+.toggle {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: var(--toolbar-toggle-radius);
+  cursor: pointer;
+  appearance: none;
+  text-decoration: none;
+  line-height: 1;
+  user-select: none;
+  font-size: var(--mantine-font-size-xs);
+  width: var(--toolbar-toggle-size);
+  min-width: var(--toolbar-toggle-size);
+  height: var(--toolbar-toggle-size);
+  padding: calc(var(--toolbar-toggle-size) / 5);
+  border: 1px solid;
+  font-weight: var(--mantine-font-weight-medium);
+
+  &:where([data-auto-width]) {
+    width: auto;
+    padding: 0 calc(var(--toolbar-toggle-size) / 4);
+  }
+
+  @mixin where-light {
+    background-color: var(--mantine-color-white);
+    border-color: var(--mantine-color-gray-4);
+    color: var(--mantine-color-gray-7);
+  }
+
+  @mixin where-dark {
+    background-color: var(--mantine-color-dark-6);
+    border-color: var(--mantine-color-dark-4);
+    color: var(--mantine-color-dark-1);
+  }
+
+  @mixin hover {
+    &:where(:not([data-disabled], [data-active])) {
+      @mixin where-light {
+        background-color: var(--mantine-color-gray-0);
+      }
+
+      @mixin where-dark {
+        background-color: var(--mantine-color-dark-5);
+      }
+    }
+  }
+
+  &:where([data-active]) {
+    background-color: var(--toolbar-toggle-active-bg, var(--mantine-primary-color-light));
+    color: var(--toolbar-toggle-active-color, var(--mantine-primary-color-light-color));
+    border-color: transparent;
+
+    @mixin hover {
+      &:where(:not([data-disabled])) {
+        background-color: var(
+          --toolbar-toggle-active-hover,
+          var(--mantine-primary-color-light-hover)
+        );
+      }
+    }
+  }
+
+  &:where([data-disabled]) {
+    cursor: not-allowed;
+    color: var(--mantine-color-disabled-color);
+    background-color: var(--mantine-color-disabled);
+    border-color: transparent;
+  }
+
+  &:where([data-disabled][data-active]) {
+    @mixin where-light {
+      background-color: var(--mantine-color-gray-4);
+      color: var(--mantine-color-gray-6);
+    }
+
+    @mixin where-dark {
+      background-color: var(--mantine-color-dark-4);
+      color: var(--mantine-color-dark-2);
+    }
+  }
+}
+
+.divider {
+  @mixin where-light {
+    background-color: var(--mantine-color-gray-4);
+  }
+
+  @mixin where-dark {
+    background-color: var(--mantine-color-dark-4);
+  }
+
+  &:where([data-orientation='horizontal']) {
+    width: 1px;
+    align-self: stretch;
+  }
+
+  &:where([data-orientation='vertical']) {
+    height: 1px;
+    align-self: stretch;
+  }
+}

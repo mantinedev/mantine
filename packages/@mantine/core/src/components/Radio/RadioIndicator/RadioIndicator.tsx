@@ -24,14 +24,15 @@ import { RadioIcon, RadioIconProps } from '../RadioIcon';
 import classes from './RadioIndicator.module.css';
 
 export type RadioIndicatorStylesNames = 'indicator' | 'icon';
-export type RadioIndicatorVariant = 'filled' | 'outline';
+export type RadioIndicatorVariant = 'filled' | 'outline' | 'light';
 export type RadioIndicatorCssVariables = {
   indicator:
     | '--radio-size'
     | '--radio-radius'
     | '--radio-color'
     | '--radio-icon-color'
-    | '--radio-icon-size';
+    | '--radio-icon-size'
+    | '--radio-bg';
 };
 
 export interface RadioIndicatorProps
@@ -81,20 +82,40 @@ const varsResolver = createVarsResolver<RadioIndicatorFactory>(
         ? `var(--mantine-color-${parsedColor.color}-outline)`
         : parsedColor.color;
 
+    const lightColors =
+      variant === 'light'
+        ? theme.variantColorResolver({
+            color: color || theme.primaryColor,
+            theme,
+            variant: 'light',
+            autoContrast,
+          })
+        : undefined;
+
+    const resolvedColor =
+      variant === 'outline'
+        ? outlineColor
+        : lightColors
+          ? lightColors.color
+          : getThemeColor(color, theme);
+
     return {
       indicator: {
         '--radio-size': getSize(size, 'radio-size'),
         '--radio-radius': radius === undefined ? undefined : getRadius(radius),
-        '--radio-color': variant === 'outline' ? outlineColor : getThemeColor(color, theme),
+        '--radio-color': resolvedColor,
+        '--radio-bg': lightColors?.background,
         '--radio-icon-size':
           typeof size === 'number'
             ? `calc(${getSize(size, 'radio-size')} * 0.4)`
             : getSize(size, 'radio-icon-size'),
         '--radio-icon-color': iconColor
           ? getThemeColor(iconColor, theme)
-          : getAutoContrastValue(autoContrast, theme)
-            ? getContrastColor({ color, theme, autoContrast })
-            : undefined,
+          : lightColors
+            ? lightColors.color
+            : getAutoContrastValue(autoContrast, theme)
+              ? getContrastColor({ color, theme, autoContrast })
+              : undefined,
       },
     };
   }

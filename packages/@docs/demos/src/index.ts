@@ -111,6 +111,9 @@ export * as TextInputDemos from './demos/core/TextInput';
 export * as ThemeIconDemos from './demos/core/ThemeIcon';
 export * as TimelineDemos from './demos/core/Timeline';
 export * as TitleDemos from './demos/core/Title';
+export * as ToggleDemos from './demos/core/Toggle';
+export * as ToolbarDemos from './demos/core/Toolbar';
+export * as TourDemos from './demos/core/Tour';
 export * as TooltipDemos from './demos/core/Tooltip';
 export * as TransitionDemos from './demos/core/Transition';
 export * as TypographyDemos from './demos/core/Typography';
@@ -255,9 +258,11 @@ export * as FormDemos from './demos/form';
 export * as FieldDemos from './demos/form-field';
 export * as NprogressDemos from './demos/nprogress';
 export * as CodeHighlightDemos from './demos/code-highlight';
+export * as JsonViewerDemos from './demos/json-viewer';
 export * as DropzoneDemos from './demos/dropzone';
 export * as ModalsDemos from './demos/modals';
 export * as TipTapDemos from './demos/tiptap';
 
 // Changelog demos
 export * as Changelog730Demos from './demos/changelog/7-3-0';
+export * as Changelog970Demos from './demos/changelog/9-7-0';

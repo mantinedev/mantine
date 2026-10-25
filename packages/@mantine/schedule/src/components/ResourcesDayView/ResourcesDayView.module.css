@@ -1,4 +1,5 @@
 .resourcesDayView {
+  --_business-hours-direction: to right;
   --resources-day-view-radius: var(--schedule-radius, var(--mantine-radius-default));
   --resources-day-view-resource-label-width: 120px;
   --resources-day-view-slot-width: 80px;
@@ -16,6 +17,10 @@
     --resources-day-view-border-color: var(--mantine-color-dark-4);
     --resources-day-view-business-hours-bg: var(--mantine-color-dark-7);
     --resources-day-view-non-business-hours-bg: var(--mantine-color-dark-6);
+  }
+
+  @mixin rtl {
+    --_business-hours-direction: to left;
   }
 }
 
@@ -47,7 +52,7 @@
   display: flex;
   position: sticky;
   top: 0;
-  z-index: 5;
+  z-index: 14;
   background-color: var(--mantine-color-body);
   border-bottom: 1px solid var(--resources-day-view-border-color);
   margin-bottom: -1px;
@@ -99,6 +104,16 @@
 
   &:where([data-non-business-hours]) {
     background-color: var(--resources-day-view-non-business-hours-bg);
+  }
+
+  &:where([data-partial-business-hours]) {
+    background-image: linear-gradient(
+      var(--_business-hours-direction),
+      var(--resources-day-view-non-business-hours-bg) var(--business-hours-from),
+      var(--resources-day-view-business-hours-bg) var(--business-hours-from),
+      var(--resources-day-view-business-hours-bg) var(--business-hours-to),
+      var(--resources-day-view-non-business-hours-bg) var(--business-hours-to)
+    );
   }
 }
 
@@ -192,6 +207,8 @@
   position: relative;
 
   @mixin hover {
+    background-image: none;
+
     @mixin where-light {
       background-color: var(--mantine-color-gray-1);
     }
@@ -217,7 +234,19 @@
     background-color: var(--resources-day-view-non-business-hours-bg);
   }
 
+  &:where([data-partial-business-hours]) {
+    background-image: linear-gradient(
+      var(--_business-hours-direction),
+      var(--resources-day-view-non-business-hours-bg) var(--business-hours-from),
+      var(--resources-day-view-business-hours-bg) var(--business-hours-from),
+      var(--resources-day-view-business-hours-bg) var(--business-hours-to),
+      var(--resources-day-view-non-business-hours-bg) var(--business-hours-to)
+    );
+  }
+
   &:where([data-drop-target]) {
+    background-image: none;
+
     @mixin where-light {
       background-color: var(--mantine-color-blue-1);
     }
@@ -248,6 +277,7 @@
   &:where([data-drag-selected]) {
     &,
     &:hover {
+      background-image: none;
       background-color: var(--mantine-primary-color-light);
     }
 
@@ -496,4 +526,10 @@
   border: 1px dashed var(--mantine-color-blue-filled);
   background-color: var(--mantine-color-blue-light);
   opacity: 0.6;
+
+  &:where([data-invalid]) {
+    border-color: var(--mantine-color-error);
+    background-color: transparent;
+    opacity: 0.4;
+  }
 }

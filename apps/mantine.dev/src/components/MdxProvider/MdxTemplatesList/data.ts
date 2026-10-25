@@ -2,7 +2,7 @@ export interface Template {
   name: string;
   link: string;
   description: string;
-  type: 'next' | 'gatsby' | 'vite' | 'redwood' | 'react-router';
+  type: 'next' | 'vite' | 'react-router' | 'tanstack-start';
 }
 
 export const TEMPLATES_DATA: Template[] = [
@@ -58,15 +58,9 @@ export const TEMPLATES_DATA: Template[] = [
     description: 'Vite template with Vanilla extract example',
   },
   {
-    type: 'gatsby',
-    name: 'gatsby-template',
-    link: 'https://github.com/mantinedev/gatsby-template',
-    description: 'Gatsby template with basic setup',
-  },
-  {
-    type: 'redwood',
-    name: 'redwood-template',
-    link: 'https://github.com/mantinedev/redwood-template',
-    description: 'RedwoodJS template with basic setup',
+    type: 'tanstack-start',
+    name: 'mantine-tanstack-start-template',
+    link: 'https://github.com/mantinedev/mantine-tanstack-start-template',
+    description: 'TanStack Start template with full setup: Vitest, oxfmt, Storybook, oxlint',
   },
 ];

@@ -1,5 +1,8 @@
 import { useState } from 'react';
+import { act } from '@testing-library/react';
+import { renderToString } from 'react-dom/server';
 import { render, screen, tests, userEvent } from '@mantine-tests/core';
+import { MantineProvider } from '../../core';
 import {
   SegmentedControl,
   SegmentedControlProps,
@@ -23,6 +26,20 @@ describe('@mantine/core/SegmentedControl', () => {
     varsResolver: true,
     displayName: '@mantine/core/SegmentedControl',
     stylesApiSelectors: ['root', 'label', 'input', 'control', 'indicator', 'innerLabel'],
+  });
+
+  it('does not call Math.random during server rendering', () => {
+    const spy = jest.spyOn(Math, 'random');
+    try {
+      renderToString(
+        <MantineProvider>
+          <SegmentedControl {...defaultProps} />
+        </MantineProvider>
+      );
+      expect(spy).not.toHaveBeenCalled();
+    } finally {
+      spy.mockRestore();
+    }
   });
 
   it('prevents value changes when readOnly is true', async () => {
@@ -110,5 +127,54 @@ describe('@mantine/core/SegmentedControl', () => {
     await userEvent.click(screen.getByRole('button', { name: 'remove' }));
 
     expect(document.querySelector('.mantine-SegmentedControl-indicator')).toBe(null);
+  });
+
+  it('moves the indicator with the selected item when data order changes', async () => {
+    const original = Element.prototype.getBoundingClientRect;
+    jest.spyOn(Element.prototype, 'getBoundingClientRect').mockImplementation(function (
+      this: Element
+    ) {
+      const rect = original.call(this);
+      const control = this.closest('.mantine-SegmentedControl-control');
+      if (!control || !control.parentElement) {
+        return rect;
+      }
+
+      const index = Array.from(control.parentElement.children)
+        .filter((node) => node.classList.contains('mantine-SegmentedControl-control'))
+        .indexOf(control);
+
+      return { ...rect, top: index * 40, height: 40, width: 100 };
+    });
+
+    function Wrapper() {
+      const [reversed, setReversed] = useState(false);
+      const data = reversed ? ['3', '2', '1'] : ['1', '2', '3'];
+      return (
+        <>
+          <button type="button" onClick={() => setReversed((v) => !v)}>
+            reverse
+          </button>
+          <SegmentedControl
+            transitionDuration={0}
+            orientation="vertical"
+            data={data}
+            value="1"
+            onChange={() => {}}
+          />
+        </>
+      );
+    }
+
+    render(<Wrapper />);
+    const getIndicator = () =>
+      document.querySelector<HTMLElement>('.mantine-SegmentedControl-indicator')!;
+    expect(getIndicator().style.transform).toBe('translateY(0px) translateX(0px)');
+
+    await userEvent.click(screen.getByRole('button', { name: 'reverse' }));
+    await act(async () => {});
+
+    expect(getIndicator().style.transform).toBe('translateY(80px) translateX(0px)');
+    jest.restoreAllMocks();
   });
 });

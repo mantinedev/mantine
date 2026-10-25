@@ -1,5 +1,6 @@
 import { createSafeContext, GetStylesApi } from '../../core';
 import type { AppShellFactory } from './AppShell';
+import type { AppShellResizeController, AppShellResizeSection } from './AppShell.types';
 
 export interface AppShellContextValue {
   getStyles: GetStylesApi<AppShellFactory>;
@@ -8,6 +9,9 @@ export interface AppShellContextValue {
   disabled: boolean | undefined;
   offsetScrollbars: boolean | undefined;
   mode: 'fixed' | 'static';
+  resize: AppShellResizeController | undefined;
+  rootRef: React.RefObject<HTMLDivElement | null>;
+  resizeOffsets: Partial<Record<AppShellResizeSection, boolean>>;
 }
 
 export const [AppShellProvider, useAppShellContext] = createSafeContext<AppShellContextValue>(

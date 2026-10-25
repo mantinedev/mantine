@@ -1,0 +1,110 @@
+import { ToolbarDemos } from '@docs/demos';
+import { Layout } from '@/layout';
+import { MDX_DATA } from '@/mdx';
+
+export default Layout(MDX_DATA.Toolbar);
+
+## Usage
+
+`Toolbar` is a group of toggle buttons with `role="toolbar"` and arrow keys navigation.
+`Toolbar.Toggle` is a polymorphic component, it can be rendered as any element, for example
+as a link.
+
+`Toolbar.Toggle` is stateless: pass `active` and update it in `onClick`, or use `Toolbar.ToggleGroup`
+to manage state of a set of toggles. For a toggle that manages its own state, use the standalone
+[Toggle](/core/toggle/) component.
+
+<Demo data={ToolbarDemos.usage} />
+
+## Toggle groups
+
+Use `Toolbar.ToggleGroup` with `Toolbar.ToggleItem` to create groups of toggle buttons.
+Set `type="single"` to allow one active item at a time or `type="multiple"` to allow several.
+With `type="single"`, clicking the active item deselects it and the value becomes `null`.
+
+<Demo data={ToolbarDemos.toggleGroup} />
+
+## Size, orientation, variant and color
+
+The `size` prop controls the size of all toggles, padding and gap.
+Set `orientation="vertical"` to render a vertical toolbar. `variant` and `color`
+props control the appearance of active toggles.
+
+<Demo data={ToolbarDemos.configurator} />
+
+## Auto contrast
+
+Set `autoContrast` prop to automatically adjust icon color based on the active toggle
+background color, for example with `variant="filled"` and light colors.
+
+<Demo data={ToolbarDemos.autoContrast} />
+
+## Auto width
+
+By default, `Toolbar.Toggle` and `Toolbar.ToggleItem` render as square buttons. Set `autoWidth`
+prop on either of them to allow the toggle width to adjust to its content, for example a text label.
+
+<Demo data={ToolbarDemos.autoWidth} />
+
+## Disabled state
+
+Set `disabled` prop on individual `Toolbar.ToggleItem` components, or on
+`Toolbar.ToggleGroup` to disable all items within the group.
+
+When `Toolbar.Toggle` is rendered as a non-button element (for example, `component="a"`), the `disabled` prop
+sets `aria-disabled`, removes the element from the tab order and prevents clicks.
+
+<Demo data={ToolbarDemos.disabled} />
+
+## Accessibility
+
+- `Toolbar` has `role="toolbar"` and `aria-orientation` that matches the `orientation` prop
+- `Toolbar.ToggleItem` always has `aria-pressed` attribute. `Toolbar.Toggle` has it only when the `active` prop is passed, without it `Toolbar.Toggle` is a regular button
+- Set `aria-label` on icon-only toggles
+
+## Keyboard interactions
+
+`Toolbar.Toggle` and `Toolbar.ToggleItem` components share a single tab stop, arrow keys move focus
+between them. Other interactive children (`ActionIcon`, `Button`, standalone `Toggle`) are not part
+of the arrow key navigation and remain separate tab stops.
+
+<KeyboardEventsTable
+  data={[
+    {
+      key: 'Tab',
+      description: 'Moves focus into and out of the toolbar',
+    },
+    {
+      key: 'ArrowRight',
+      description: 'Moves focus to the next item (previous item when dir="rtl")',
+      condition: 'orientation="horizontal"',
+    },
+    {
+      key: 'ArrowLeft',
+      description: 'Moves focus to the previous item (next item when dir="rtl")',
+      condition: 'orientation="horizontal"',
+    },
+    {
+      key: 'ArrowDown',
+      description: 'Moves focus to the next item',
+      condition: 'orientation="vertical"',
+    },
+    {
+      key: 'ArrowUp',
+      description: 'Moves focus to the previous item',
+      condition: 'orientation="vertical"',
+    },
+    {
+      key: 'Home',
+      description: 'Moves focus to the first item',
+    },
+    {
+      key: 'End',
+      description: 'Moves focus to the last item',
+    },
+    {
+      key: 'Space/Enter',
+      description: 'Activates the focused toggle item',
+    },
+  ]}
+/>

@@ -154,6 +154,7 @@ export const Chip = factory<ChipFactory>((_props) => {
     autoContrast,
     mod,
     attributes,
+    readOnly,
     ...others
   } = props;
 
@@ -186,6 +187,10 @@ export const Chip = factory<ChipFactory>((_props) => {
     ? {
         checked: ctx.isChipSelected(value as string),
         onChange: (event: React.ChangeEvent<HTMLInputElement>) => {
+          if (readOnly) {
+            return;
+          }
+
           ctx.onChange(event);
           onChange?.(event.currentTarget.checked);
         },
@@ -209,9 +214,10 @@ export const Chip = factory<ChipFactory>((_props) => {
         type={type}
         {...getStyles('input')}
         checked={_checked}
-        onChange={(event) => setValue(event.currentTarget.checked)}
+        onChange={(event) => !readOnly && setValue(event.currentTarget.checked)}
         id={uuid}
         disabled={disabled}
+        readOnly={readOnly}
         value={value}
         {...contextProps}
         {...rest}

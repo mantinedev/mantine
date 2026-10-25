@@ -38,21 +38,21 @@ After running the commands above, check if `codex` CLI is available (`command -v
 - The codebase prefers clean, self-documenting code for implementation
 - Type definitions and public APIs should maintain their documentation comments
 
-## Writing MDX Files
+## Writing Documentation
 
-**Markdown table syntax does not work.** The docs MDX pipeline (`apps/mantine.dev`, `apps/help.mantine.dev`) does not include `remark-gfm`, so pipe tables render as literal text on the page. Write tabular content either as a `<DataTable />` (available in every `apps/mantine.dev` mdx file without an import, see `MdxDataTable`) or as a regular list:
+Before writing or editing `.mdx` pages (`apps/mantine.dev`, `apps/help.mantine.dev`), changelog pages, migration guides or demos in `packages/@docs/demos`, invoke the `mantine-docs` skill and follow it. Before handing the work back, run its checker: `python3 ~/.claude/skills/mantine-docs/scripts/check_docs.py`.
 
-```mdx
-<DataTable
-  head={['Prop', 'Components']}
-  data={[
-    ['valueFormat', '`DateInput`, `DateTimePicker`'],
-    ['weekdayFormat', '`Calendar`, `DatePicker`'],
-  ]}
-/>
-```
+Rules that break the page when ignored, for tools that cannot load the skill:
+
+- **Text that explains a demo goes before the demo**, never after it.
+- **Markdown pipe tables do not render** (no `remark-gfm`). Use `<DataTable />` or a list.
+- **`DataTable` cells are rendered as is**: backticks inside a string are displayed literally, use `<code>` elements.
 
 ## Tests
+
+**Console output fails tests.** `jsdom.mocks.ts` turns every `console.error` and `console.warn` emitted during a test into a test failure, including React's "not wrapped in act(...)" warning. Fix the cause: wrap the update in `act` (use `renderWithAct` from `@mantine-tests/core` or `await act(async () => ...)` for floating-ui positioning and other microtask work), fix the invalid prop, or stabilize the effect. Never mock or filter the console to make the failure go away. A warning that fires between tests is reported on the next test, so read the "emitted while running" part of the message to find the test that caused it.
+
+**Jest hides console output when more than one test file runs.** Pass `--verbose` or run a single file to see it. Do not pipe jest output through `tail` or `grep "Tests:"` when checking a change; read the failures.
 
 **Verifying a new regression test:** temporarily revert the fix, confirm the test fails, then restore the fix. Do this for tests that cover async, timing or lifecycle behavior — that is where a test silently passes for the wrong reason. Skip it for straightforward assertions, where it is pure overhead.
 

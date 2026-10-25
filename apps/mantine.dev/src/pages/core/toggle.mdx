@@ -1,0 +1,60 @@
+import { ToggleDemos } from '@docs/demos';
+import { Layout } from '@/layout';
+import { MDX_DATA } from '@/mdx';
+
+export default Layout(MDX_DATA.Toggle);
+
+## Usage
+
+`Toggle` is a button that can be toggled between active and inactive states.
+It is a polymorphic component and can be rendered as any element.
+
+<Demo data={ToggleDemos.usage} />
+
+## Controlled and uncontrolled
+
+Use `defaultActive` to set the initial state of an uncontrolled `Toggle`,
+`active` and `onActiveChange` props to control it.
+
+```tsx
+import { useState } from 'react';
+import { Toggle } from '@mantine/core';
+
+// Uncontrolled
+function UncontrolledDemo() {
+  return <Toggle defaultActive />;
+}
+
+// Controlled
+function ControlledDemo() {
+  const [active, setActive] = useState(false);
+  return <Toggle active={active} onActiveChange={setActive} />;
+}
+```
+
+## Auto contrast
+
+Set `autoContrast` prop to automatically adjust icon color based on the active toggle
+background color, for example with `variant="filled"` and light colors.
+
+<Demo data={ToggleDemos.autoContrast} />
+
+## Auto width
+
+By default, `Toggle` renders as a square button. Set `autoWidth` to allow
+the width to adjust to content.
+
+<Demo data={ToggleDemos.autoWidth} />
+
+## Configurator
+
+<Demo data={ToggleDemos.configurator} />
+
+## Accessibility
+
+`Toggle` renders a `button` element with `aria-pressed` attribute that reflects the active state.
+When using icon-only toggles, provide an `aria-label` prop so that screen readers can
+announce the button purpose.
+
+When `Toggle` is rendered as a non-button element (for example, `component="a"`), the `disabled` prop
+sets `aria-disabled`, removes the element from the tab order and prevents clicks.

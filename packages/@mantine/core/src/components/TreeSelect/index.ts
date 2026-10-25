@@ -2,6 +2,7 @@ import type {
   TreeSelectFactory,
   TreeSelectMode,
   TreeSelectProps,
+  TreeSelectRenderPillPayload,
   TreeSelectStylesNames,
   TreeSelectValue,
 } from './TreeSelect';
@@ -16,6 +17,7 @@ export type {
   TreeSelectFactory,
   TreeSelectMode,
   TreeSelectValue,
+  TreeSelectRenderPillPayload,
 };
 
 export namespace TreeSelect {

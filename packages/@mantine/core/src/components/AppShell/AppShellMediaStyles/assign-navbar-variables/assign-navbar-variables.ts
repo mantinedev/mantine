@@ -1,6 +1,7 @@
 import { getBreakpointValue, keys, MantineTheme, rem } from '../../../../core';
 import type { AppShellProps } from '../../AppShell';
 import { getBaseSize } from '../get-base-size/get-base-size';
+import { getResizedValue } from '../get-resized-value/get-resized-value';
 import type { CSSVariables, MediaQueryVariables } from '../get-variables/get-variables';
 import { isPrimitiveSize } from '../is-primitive-size/is-primitive-size';
 import { isResponsiveSize } from '../is-responsive-size/is-responsive-size';
@@ -12,6 +13,8 @@ interface AssignNavbarVariablesInput {
   navbar: AppShellProps['navbar'] | undefined;
   theme: MantineTheme;
   mode: 'fixed' | 'static';
+  resizedSize?: number;
+  resizable?: boolean;
 }
 
 export function assignNavbarVariables({
@@ -21,6 +24,8 @@ export function assignNavbarVariables({
   navbar,
   theme,
   mode,
+  resizedSize,
+  resizable,
 }: AssignNavbarVariablesInput) {
   const navbarWidth = navbar?.width;
   const collapsedNavbarTransform = 'translateX(calc(var(--app-shell-navbar-width) * -1))';
@@ -33,36 +38,48 @@ export function assignNavbarVariables({
     if (mode === 'static') {
       maxMediaStyles[navbar?.breakpoint]['--app-shell-navbar-grid-width'] = '0px';
     }
-  }
-
-  if (isPrimitiveSize(navbarWidth)) {
-    const baseSize = rem(getBaseSize(navbarWidth));
-    baseStyles['--app-shell-navbar-width'] = baseSize;
-    baseStyles['--app-shell-navbar-offset'] = baseSize;
-    if (mode === 'static') {
-      baseStyles['--app-shell-navbar-grid-width'] = baseSize;
+    if (resizable) {
+      maxMediaStyles[navbar.breakpoint]['--app-shell-navbar-resize-handle-display'] = 'none';
     }
   }
 
-  if (isResponsiveSize(navbarWidth)) {
-    if (typeof navbarWidth.base !== 'undefined') {
-      baseStyles['--app-shell-navbar-width'] = rem(navbarWidth.base);
-      baseStyles['--app-shell-navbar-offset'] = rem(navbarWidth.base);
+  if (resizedSize !== undefined) {
+    const resizedValue = getResizedValue(resizedSize, 'horizontal');
+    baseStyles['--app-shell-navbar-width'] = resizedValue;
+    baseStyles['--app-shell-navbar-offset'] = resizedValue;
+    if (mode === 'static') {
+      baseStyles['--app-shell-navbar-grid-width'] = resizedValue;
+    }
+  } else {
+    if (isPrimitiveSize(navbarWidth)) {
+      const baseSize = rem(getBaseSize(navbarWidth));
+      baseStyles['--app-shell-navbar-width'] = baseSize;
+      baseStyles['--app-shell-navbar-offset'] = baseSize;
       if (mode === 'static') {
-        baseStyles['--app-shell-navbar-grid-width'] = rem(navbarWidth.base);
+        baseStyles['--app-shell-navbar-grid-width'] = baseSize;
       }
     }
 
-    keys(navbarWidth).forEach((key) => {
-      if (key !== 'base') {
-        minMediaStyles[key] = minMediaStyles[key] || {};
-        minMediaStyles[key]['--app-shell-navbar-width'] = rem(navbarWidth![key]);
-        minMediaStyles[key]['--app-shell-navbar-offset'] = rem(navbarWidth![key]);
+    if (isResponsiveSize(navbarWidth)) {
+      if (typeof navbarWidth.base !== 'undefined') {
+        baseStyles['--app-shell-navbar-width'] = rem(navbarWidth.base);
+        baseStyles['--app-shell-navbar-offset'] = rem(navbarWidth.base);
         if (mode === 'static') {
-          minMediaStyles[key]['--app-shell-navbar-grid-width'] = rem(navbarWidth![key]);
+          baseStyles['--app-shell-navbar-grid-width'] = rem(navbarWidth.base);
         }
       }
-    });
+
+      keys(navbarWidth).forEach((key) => {
+        if (key !== 'base') {
+          minMediaStyles[key] = minMediaStyles[key] || {};
+          minMediaStyles[key]['--app-shell-navbar-width'] = rem(navbarWidth![key]);
+          minMediaStyles[key]['--app-shell-navbar-offset'] = rem(navbarWidth![key]);
+          if (mode === 'static') {
+            minMediaStyles[key]['--app-shell-navbar-grid-width'] = rem(navbarWidth![key]);
+          }
+        }
+      });
+    }
   }
 
   if (navbar?.breakpoint !== undefined && mode === 'static') {
@@ -87,6 +104,9 @@ export function assignNavbarVariables({
       minMediaStyles[breakpointValue]['--app-shell-navbar-display'] = 'none';
       minMediaStyles[breakpointValue]['--app-shell-main-column-start'] = '1';
     }
+    if (resizable) {
+      minMediaStyles[breakpointValue]['--app-shell-navbar-resize-handle-display'] = 'none';
+    }
   }
 
   if (navbar?.collapsed?.mobile) {
@@ -100,5 +120,8 @@ export function assignNavbarVariables({
     maxMediaStyles[breakpointValue]['--app-shell-navbar-transform'] = collapsedNavbarTransform;
     maxMediaStyles[breakpointValue]['--app-shell-navbar-transform-rtl'] =
       collapsedNavbarTransformRtl;
+    if (resizable) {
+      maxMediaStyles[breakpointValue]['--app-shell-navbar-resize-handle-display'] = 'none';
+    }
   }
 }

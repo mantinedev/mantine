@@ -18,6 +18,11 @@ export const Demo_intervalMinutes = {
   render: renderDemo(demos.intervalMinutes),
 };
 
+export const Demo_slotLabelInterval = {
+  name: '⭐ Demo: slotLabelInterval',
+  render: renderDemo(demos.slotLabelInterval),
+};
+
 export const Demo_firstDayOfWeek = {
   name: '⭐ Demo: firstDayOfWeek',
   render: renderDemo(demos.firstDayOfWeek),
@@ -226,4 +231,19 @@ export const Demo_forceCurrentTimeIndicator = {
 export const Demo_subHourGridLines = {
   name: '⭐ Demo: subHourGridLines',
   render: renderDemo(demos.subHourGridLines),
+};
+
+export const Demo_preventEventOverlap = {
+  name: '⭐ Demo: preventEventOverlap',
+  render: renderDemo(demos.preventEventOverlap),
+};
+
+export const Demo_businessHoursMinute = {
+  name: '⭐ Demo: businessHoursMinute',
+  render: renderDemo(demos.businessHoursMinute),
+};
+
+export const Demo_businessHoursColors = {
+  name: '⭐ Demo: businessHoursColors',
+  render: renderDemo(demos.businessHoursColors),
 };

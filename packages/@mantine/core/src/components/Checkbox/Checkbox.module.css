@@ -15,6 +15,10 @@
   &:where([data-variant='outline']) {
     --checkbox-icon-color: var(--checkbox-color);
   }
+
+  &:where([data-variant='light']) {
+    --checkbox-icon-color: var(--checkbox-color);
+  }
 }
 
 .inner {
@@ -75,6 +79,24 @@
 
     & + .icon {
       color: var(--mantine-color-disabled-color);
+    }
+  }
+}
+
+.input--light {
+  & + .icon {
+    color: var(--checkbox-color);
+  }
+
+  &[data-indeterminate]:not(:disabled),
+  &:checked:not(:disabled) {
+    background-color: var(--checkbox-bg);
+    border-color: transparent;
+
+    & + .icon {
+      color: var(--checkbox-icon-color);
+      opacity: 1;
+      transform: none;
     }
   }
 }

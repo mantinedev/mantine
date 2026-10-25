@@ -14,7 +14,12 @@ import { ScheduleLabelsOverride } from '../../labels';
 import {
   DateStringValue,
   DateTimeStringValue,
+  PreventEventOverlap,
+  ScheduleCanDropEventData,
+  ScheduleCanDropExternalEventData,
+  ScheduleCanResizeEventToData,
   ScheduleEventData,
+  ScheduleEventPlacementRejectedData,
   ScheduleMode,
   ScheduleResourceData,
   ScheduleViewLevel,
@@ -72,6 +77,11 @@ type ResourcesScheduleCommonProps =
   | 'withEventResize'
   | 'onEventResize'
   | 'canResizeEvent'
+  | 'canDropEvent'
+  | 'canDropExternalEvent'
+  | 'canResizeEventTo'
+  | 'preventEventOverlap'
+  | 'onEventPlacementRejected'
   | 'recurrenceExpansionLimit'
   | 'withInteractiveBackgroundEvents';
 
@@ -193,6 +203,21 @@ export interface ResourcesScheduleProps
   /** Function to determine if event can be resized */
   canResizeEvent?: (event: ScheduleEventData) => boolean;
 
+  /** Called while an event is dragged over a target to compute live feedback and again before the drop is committed, return `false` to reject the drop. Must be pure and cheap. */
+  canDropEvent?: (data: ScheduleCanDropEventData) => boolean;
+
+  /** Called while an external item is dragged over a target to compute live feedback and again before the drop is committed, return `false` to reject the drop. Must be pure and cheap. Only `dataTransfer.types` can be read while the drag is in progress. */
+  canDropExternalEvent?: (data: ScheduleCanDropExternalEventData) => boolean;
+
+  /** Called on every pointer move while an event is resized to compute live feedback and again before the resize is committed, return `false` to reject the new size. Must be pure and cheap. */
+  canResizeEventTo?: (data: ScheduleCanResizeEventToData) => boolean;
+
+  /** If set, drops and resizes that would make the event overlap another event are rejected. Pass a function to decide per pair of events: return `true` to forbid the overlap. The function runs while dragging and resizing to compute live feedback, it must be pure and cheap. @default false */
+  preventEventOverlap?: PreventEventOverlap;
+
+  /** Called when a drop or resize is rejected */
+  onEventPlacementRejected?: (data: ScheduleEventPlacementRejectedData) => void;
+
   /** If set, background events (`display: 'background'`) can be clicked and trigger `onEventClick`. Applies to `day` and `week` views only – `ResourcesMonthView` does not render background events separately. Combined with `withEventResize`, timed background events can also be resized by dragging their edges. @default false */
   withInteractiveBackgroundEvents?: boolean;
 
@@ -256,6 +281,11 @@ export const ResourcesSchedule = factory<ResourcesScheduleFactory>((_props) => {
     withEventResize,
     onEventResize,
     canResizeEvent,
+    canDropEvent,
+    canDropExternalEvent,
+    canResizeEventTo,
+    preventEventOverlap,
+    onEventPlacementRejected,
     withInteractiveBackgroundEvents,
     recurrenceExpansionLimit,
     mode,
@@ -321,6 +351,11 @@ export const ResourcesSchedule = factory<ResourcesScheduleFactory>((_props) => {
     withDragSlotSelect,
     onSlotDragEnd,
     onExternalEventDrop,
+    canDropEvent,
+    canDropExternalEvent,
+    canResizeEventTo,
+    preventEventOverlap,
+    onEventPlacementRejected,
     recurrenceExpansionLimit,
     mode,
   };

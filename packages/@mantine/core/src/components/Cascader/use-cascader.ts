@@ -1,5 +1,6 @@
 import { useCallback, useMemo, useRef, useState } from 'react';
 import { useUncontrolled } from '@mantine/hooks';
+import { useDirection } from '../../core';
 import type { CascaderOption } from './Cascader';
 import { cascaderOptionHasChildren, getCascaderColumns } from './get-cascader-columns';
 import { getCascaderPathOptions } from './get-cascader-path-options';
@@ -42,6 +43,9 @@ export function useCascader({
   expandTrigger,
   onLeafSelect,
 }: UseCascaderInput) {
+  const { dir } = useDirection();
+  const expandKey = dir === 'rtl' ? 'ArrowLeft' : 'ArrowRight';
+  const collapseKey = dir === 'rtl' ? 'ArrowRight' : 'ArrowLeft';
   const [keyboardNav, setKeyboardNav] = useState(false);
 
   const [_value, setValue] = useUncontrolled<string[] | null>({
@@ -143,13 +147,13 @@ export function useCascader({
           }
           return true;
         }
-        case 'ArrowRight': {
+        case expandKey: {
           if (focusedOption && cascaderOptionHasChildren(focusedOption)) {
             expandOption(focusedLevel, focusedOption);
           }
           return true;
         }
-        case 'ArrowLeft': {
+        case collapseKey: {
           if (activePath.length > 1) {
             setActivePath(activePath.slice(0, -1));
           }
@@ -178,7 +182,16 @@ export function useCascader({
           return false;
       }
     },
-    [data, activePath, changeOnSelect, selectPath, expandOption, onLeafSelect]
+    [
+      data,
+      activePath,
+      changeOnSelect,
+      selectPath,
+      expandOption,
+      onLeafSelect,
+      expandKey,
+      collapseKey,
+    ]
   );
 
   const pathOptions = useMemo(() => getCascaderPathOptions(data, _value), [data, _value]);
@@ -196,5 +209,6 @@ export function useCascader({
     handleOptionMouseEnter,
     handleColumnsKeyDown,
     pathOptions,
+    expandKey,
   };
 }

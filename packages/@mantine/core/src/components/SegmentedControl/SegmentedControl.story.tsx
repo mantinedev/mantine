@@ -184,3 +184,31 @@ export function ScaledAncestor() {
     </div>
   );
 }
+
+const sortableData = [
+  { label: '1: a', value: 'a' },
+  { label: '2: b', value: 'b' },
+  { label: '3: c', value: 'c' },
+];
+
+export function SortedData() {
+  const [sortBy, setSortBy] = useState('asc');
+  const [selected, setSelected] = useState('a');
+  const sortedData = [...sortableData].sort((a, b) =>
+    sortBy === 'asc' ? a.label.localeCompare(b.label) : b.label.localeCompare(a.label)
+  );
+
+  return (
+    <div style={{ padding: 40 }}>
+      <SegmentedControl data={['asc', 'desc']} value={sortBy} onChange={setSortBy} />
+      <SegmentedControl
+        mt="md"
+        orientation="vertical"
+        data={sortedData}
+        value={selected}
+        onChange={setSelected}
+      />
+      <div>Selected: {selected}</div>
+    </div>
+  );
+}

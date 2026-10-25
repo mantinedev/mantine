@@ -1,5 +1,7 @@
 import { rem } from '../../../../core';
 import type { AppShellProps } from '../../AppShell';
+import { getResizedValue } from '../get-resized-value/get-resized-value';
+import type { CSSVariables, MediaQueryVariables } from '../get-variables/get-variables';
 import { assignHeaderVariables } from './assign-header-variables';
 
 function getTestObject(header: AppShellProps['header']) {
@@ -15,6 +17,26 @@ function getTestObject(header: AppShellProps['header']) {
   });
 
   return { baseStyles, minMediaStyles, maxMediaStyles };
+}
+
+function getResizedTestObject(
+  header: AppShellProps['header'],
+  resizedSize: number | undefined,
+  resizable = true
+) {
+  const baseStyles: CSSVariables = {};
+  const minMediaStyles: MediaQueryVariables = {};
+
+  assignHeaderVariables({
+    baseStyles,
+    minMediaStyles,
+    header,
+    mode: 'fixed',
+    resizedSize,
+    resizable,
+  });
+
+  return { baseStyles, minMediaStyles };
 }
 
 describe('@mantine/core/AppShell/assign-header-variables', () => {
@@ -85,5 +107,43 @@ describe('@mantine/core/AppShell/assign-header-variables', () => {
         },
       });
     });
+  });
+});
+
+describe('@mantine/core/AppShell/assign-header-variables resize', () => {
+  it('emits the resized size instead of the configured height', () => {
+    const { baseStyles } = getResizedTestObject({ height: 100 }, 420);
+
+    expect(baseStyles).toMatchObject({
+      '--app-shell-header-height': getResizedValue(420, 'vertical'),
+      '--app-shell-header-offset': getResizedValue(420, 'vertical'),
+    });
+  });
+
+  it('respects offset: false when resized', () => {
+    const { baseStyles } = getResizedTestObject({ height: 100, offset: false }, 420);
+
+    expect(baseStyles['--app-shell-header-height']).toBe(getResizedValue(420, 'vertical'));
+    expect(baseStyles['--app-shell-header-offset']).toBeUndefined();
+  });
+
+  it('skips responsive rules when the section is resized', () => {
+    const { minMediaStyles } = getResizedTestObject({ height: { base: 100, md: 200 } }, 420);
+
+    expect(minMediaStyles.md?.['--app-shell-header-height']).toBeUndefined();
+  });
+
+  it('hides the handle when the header is collapsed', () => {
+    const { baseStyles } = getResizedTestObject({ height: 100, collapsed: true }, undefined);
+
+    expect(baseStyles).toMatchObject({
+      '--app-shell-header-resize-handle-display': 'none',
+    });
+  });
+
+  it('emits no handle variable when the section is not resizable', () => {
+    const { baseStyles } = getResizedTestObject({ height: 100, collapsed: true }, undefined, false);
+
+    expect(baseStyles['--app-shell-header-resize-handle-display']).toBeUndefined();
   });
 });

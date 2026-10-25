@@ -94,6 +94,18 @@
   }
 }
 
+.radio--light {
+  &:checked:not(:disabled) {
+    background-color: var(--radio-bg);
+    border-color: transparent;
+
+    & + .icon {
+      --radio-icon-opacity: 1;
+      --radio-icon-transform: none;
+    }
+  }
+}
+
 .radio--outline {
   & + .icon {
     --radio-icon-color: var(--radio-color);

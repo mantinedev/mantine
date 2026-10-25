@@ -77,3 +77,13 @@ export const Demo_sourceCodeSwitcher = {
   name: '⭐ Demo: sourceCodeSwitcher',
   render: renderDemo(demos.sourceCodeSwitcher),
 };
+
+export const Demo_imageUpload = {
+  name: '⭐ Demo: imageUpload',
+  render: renderDemo(demos.imageUpload),
+};
+
+export const Demo_imageUploadError = {
+  name: '⭐ Demo: imageUploadError',
+  render: renderDemo(demos.imageUploadError),
+};

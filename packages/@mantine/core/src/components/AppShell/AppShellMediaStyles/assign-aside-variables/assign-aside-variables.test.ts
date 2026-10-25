@@ -1,5 +1,7 @@
 import { DEFAULT_THEME, px, rem } from '../../../../core';
 import { AppShellProps } from '../../AppShell';
+import { getResizedValue } from '../get-resized-value/get-resized-value';
+import type { CSSVariables, MediaQueryVariables } from '../get-variables/get-variables';
 import { assignAsideVariables } from './assign-aside-variables';
 
 function getTestObject(aside: AppShellProps['aside'], mode: 'fixed' | 'static' = 'fixed') {
@@ -14,6 +16,29 @@ function getTestObject(aside: AppShellProps['aside'], mode: 'fixed' | 'static' =
     theme: DEFAULT_THEME,
     aside,
     mode,
+  });
+
+  return { baseStyles, minMediaStyles, maxMediaStyles };
+}
+
+function getResizedTestObject(
+  aside: AppShellProps['aside'],
+  resizedSize: number | undefined,
+  resizable = true
+) {
+  const baseStyles: CSSVariables = {};
+  const minMediaStyles: MediaQueryVariables = {};
+  const maxMediaStyles: MediaQueryVariables = {};
+
+  assignAsideVariables({
+    baseStyles,
+    minMediaStyles,
+    maxMediaStyles,
+    aside,
+    theme: DEFAULT_THEME,
+    mode: 'fixed',
+    resizedSize,
+    resizable,
   });
 
   return { baseStyles, minMediaStyles, maxMediaStyles };
@@ -109,6 +134,74 @@ describe('@mantine/core/AppShell/assign-aside-variables', () => {
           '--app-shell-aside-scroll-locked-visibility': 'hidden',
         },
       });
+    });
+  });
+});
+
+describe('@mantine/core/AppShell/assign-aside-variables resize', () => {
+  it('emits the resized size instead of the configured width', () => {
+    const { baseStyles } = getResizedTestObject({ width: 300, breakpoint: 'sm' }, 420);
+
+    expect(baseStyles).toMatchObject({
+      '--app-shell-aside-width': getResizedValue(420, 'horizontal'),
+      '--app-shell-aside-offset': getResizedValue(420, 'horizontal'),
+    });
+  });
+
+  it('skips responsive rules when the section is resized', () => {
+    const { minMediaStyles } = getResizedTestObject(
+      { width: { base: 200, md: 300 }, breakpoint: 'sm' },
+      420
+    );
+
+    expect(minMediaStyles.md?.['--app-shell-aside-width']).toBeUndefined();
+  });
+
+  it('keeps the mobile full width rule and hides the handle below the breakpoint', () => {
+    const { maxMediaStyles } = getResizedTestObject({ width: 300, breakpoint: 'sm' }, 420);
+
+    expect(maxMediaStyles.sm).toMatchObject({
+      '--app-shell-aside-width': '100%',
+      '--app-shell-aside-resize-handle-display': 'none',
+    });
+  });
+
+  it('hides the handle when the aside is collapsed on desktop', () => {
+    const { minMediaStyles } = getResizedTestObject(
+      { width: 300, breakpoint: 'sm', collapsed: { desktop: true } },
+      undefined
+    );
+
+    expect(minMediaStyles.sm).toMatchObject({
+      '--app-shell-aside-resize-handle-display': 'none',
+    });
+  });
+
+  it('emits no handle variables when the section is not resizable', () => {
+    const { maxMediaStyles } = getResizedTestObject(
+      { width: 300, breakpoint: 'sm' },
+      undefined,
+      false
+    );
+
+    expect(maxMediaStyles.sm?.['--app-shell-aside-resize-handle-display']).toBeUndefined();
+  });
+
+  it('overrides the static mode grid width', () => {
+    const baseStyles = {};
+    assignAsideVariables({
+      baseStyles,
+      minMediaStyles: {},
+      maxMediaStyles: {},
+      aside: { width: 300, breakpoint: 'sm' },
+      theme: DEFAULT_THEME,
+      mode: 'static',
+      resizedSize: 420,
+      resizable: true,
+    });
+
+    expect(baseStyles).toMatchObject({
+      '--app-shell-aside-grid-width': getResizedValue(420, 'horizontal'),
     });
   });
 });

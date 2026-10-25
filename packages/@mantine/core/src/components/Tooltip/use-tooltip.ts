@@ -1,8 +1,9 @@
-import { use, useCallback, useRef, useState } from 'react';
+import { use, useCallback, useEffect, useRef, useState } from 'react';
 import {
   arrow,
   autoUpdate,
   flip,
+  hide,
   inline,
   offset,
   safePolygon,
@@ -17,6 +18,7 @@ import {
   type Middleware,
 } from '@floating-ui/react';
 import { useId, useIsomorphicEffect } from '@mantine/hooks';
+import { useMantineEnv } from '../../core';
 import { FloatingAxesOffsets, FloatingPosition, FloatingStrategy } from '../../utils/Floating';
 import { type TooltipMiddlewares } from './Tooltip.types';
 import { TooltipGroupContext } from './TooltipGroup/TooltipGroup';
@@ -28,6 +30,7 @@ interface UseTooltip {
   onPositionChange?: (position: FloatingPosition) => void;
   opened?: boolean;
   defaultOpened?: boolean;
+  disabled?: boolean;
   offset: number | FloatingAxesOffsets;
   arrowRef?: React.RefObject<HTMLDivElement | null>;
   arrowOffset?: number;
@@ -36,6 +39,7 @@ interface UseTooltip {
   inline?: boolean;
   strategy?: FloatingStrategy;
   middlewares?: TooltipMiddlewares;
+  hideDetached?: boolean;
 }
 
 function getDefaultMiddlewares(middlewares: TooltipMiddlewares | undefined): TooltipMiddlewares {
@@ -57,7 +61,7 @@ function getDefaultMiddlewares(middlewares: TooltipMiddlewares | undefined): Too
 
 function getTooltipMiddlewares(settings: UseTooltip) {
   const middlewaresOptions = getDefaultMiddlewares(settings.middlewares);
-  const middlewares: Middleware[] = [offset(settings.offset)];
+  const middlewares: Middleware[] = [offset(settings.offset), hide()];
 
   if (middlewaresOptions.shift) {
     middlewares.push(
@@ -91,9 +95,16 @@ function getTooltipMiddlewares(settings: UseTooltip) {
 export function useTooltip(settings: UseTooltip) {
   const [uncontrolledOpened, setUncontrolledOpened] = useState(settings.defaultOpened);
   const controlled = typeof settings.opened === 'boolean';
-  const opened = controlled ? settings.opened : uncontrolledOpened;
+  const opened = !settings.disabled && (controlled ? settings.opened : uncontrolledOpened);
+
+  useEffect(() => {
+    if (settings.disabled) {
+      setUncontrolledOpened(false);
+    }
+  }, [settings.disabled]);
   const withinGroup = use(TooltipGroupContext).withinGroup;
   const uid = useId();
+  const env = useMantineEnv();
 
   const onChange = useCallback(
     (_opened: boolean) => {
@@ -112,7 +123,7 @@ export function useTooltip(settings: UseTooltip) {
     context,
     refs,
     placement,
-    middlewareData: { arrow: { x: arrowX, y: arrowY } = {} },
+    middlewareData: { arrow: { x: arrowX, y: arrowY } = {}, hide: hideData },
   } = useFloating({
     strategy: settings.strategy,
     placement: settings.position,
@@ -126,12 +137,12 @@ export function useTooltip(settings: UseTooltip) {
 
   const { getReferenceProps, getFloatingProps } = useInteractions([
     useHover(context, {
-      enabled: settings.events?.hover,
+      enabled: !settings.disabled && settings.events?.hover,
       delay: withinGroup ? groupDelay : { open: settings.openDelay, close: settings.closeDelay },
       mouseOnly: !settings.events?.touch,
       handleClose: settings.interactive ? safePolygon() : null,
     }),
-    useFocus(context, { enabled: settings.events?.focus, visibleOnly: true }),
+    useFocus(context, { enabled: !settings.disabled && settings.events?.focus, visibleOnly: true }),
     useRole(context, { role: 'tooltip' }),
     // Cannot be used with controlled tooltip, page jumps
     useDismiss(context, { enabled: typeof settings.opened === 'undefined' }),
@@ -159,5 +170,6 @@ export function useTooltip(settings: UseTooltip) {
     isGroupPhase,
     opened,
     placement,
+    referenceHidden: settings.hideDetached && env !== 'test' ? hideData?.referenceHidden : false,
   };
 }
