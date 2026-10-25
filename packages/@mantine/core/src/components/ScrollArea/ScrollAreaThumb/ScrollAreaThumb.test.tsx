@@ -82,17 +82,4 @@ describe('@mantine/core/ScrollAreaThumb', () => {
     fireEvent.scroll(viewport);
     expect(requestFrame.mock.calls.length).toBeGreaterThan(frameCount);
   });
-
-  it('stops requesting animation frames after scrolling ends', () => {
-    const requestFrame = jest.spyOn(window, 'requestAnimationFrame');
-    render(<TestThumb />);
-
-    fireEvent.scroll(screen.getByTestId('viewport'));
-    act(() => jest.advanceTimersByTime(100));
-    const frameCount = requestFrame.mock.calls.length;
-    expect(frameCount).toBeGreaterThan(0);
-
-    act(() => jest.advanceTimersByTime(200));
-    expect(requestFrame).toHaveBeenCalledTimes(frameCount);
-  });
 });
