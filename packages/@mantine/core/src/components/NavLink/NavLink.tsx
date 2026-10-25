@@ -199,6 +199,7 @@ export const NavLink = polymorphicFactory<NavLinkFactory>((_props) => {
         }}
         unstyled={unstyled}
         mod={[{ disabled, active, expanded: _opened }, mod]}
+        aria-expanded={withChildren ? _opened : undefined}
         {...others}
       >
         {leftSection && (
