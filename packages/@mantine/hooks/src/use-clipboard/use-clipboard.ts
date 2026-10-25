@@ -46,7 +46,10 @@ export function useClipboard(options: UseClipboardInput = {}): UseClipboardRetur
           setError(null);
           handleCopyResult(true);
         })
-        .catch((err) => setError(err));
+        .catch((err) => {
+          setError(err);
+          setCopied(false);
+        });
     } else {
       setError(new Error('useClipboard: navigator.clipboard is not supported'));
     }
