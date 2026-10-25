@@ -428,6 +428,27 @@ describe('@mantine/core/Menu', () => {
       expect(item).toHaveAttribute('aria-checked', 'false');
     });
 
+    it('sets aria-disabled when data-disabled is set', () => {
+      render(
+        <Menu transitionProps={{ duration: 0 }} withinPortal={false} defaultOpened>
+          <Menu.Target>
+            <button type="button">test-target</button>
+          </Menu.Target>
+          <Menu.Dropdown>
+            <Menu.CheckboxItem data-disabled>Show grid</Menu.CheckboxItem>
+            <Menu.CheckboxItem>Show rulers</Menu.CheckboxItem>
+          </Menu.Dropdown>
+        </Menu>
+      );
+      expect(screen.getByRole('menuitemcheckbox', { name: 'Show grid' })).toHaveAttribute(
+        'aria-disabled',
+        'true'
+      );
+      expect(screen.getByRole('menuitemcheckbox', { name: 'Show rulers' })).not.toHaveAttribute(
+        'aria-disabled'
+      );
+    });
+
     it('toggles checked state and reports it via onChange', async () => {
       const handleChange = jest.fn();
       render(<CheckboxItemMenu onChange={handleChange} />);
@@ -619,6 +640,31 @@ describe('@mantine/core/Menu', () => {
       render(<RadioMenu />);
       expect(screen.getByRole('menuitemradio', { name: 'Ascending' })).toBeInTheDocument();
       expect(screen.getByRole('menuitemradio', { name: 'Descending' })).toBeInTheDocument();
+    });
+
+    it('sets aria-disabled when data-disabled is set', () => {
+      render(
+        <Menu transitionProps={{ duration: 0 }} withinPortal={false} defaultOpened>
+          <Menu.Target>
+            <button type="button">test-target</button>
+          </Menu.Target>
+          <Menu.Dropdown>
+            <Menu.RadioGroup>
+              <Menu.RadioItem value="ascending" data-disabled>
+                Ascending
+              </Menu.RadioItem>
+              <Menu.RadioItem value="descending">Descending</Menu.RadioItem>
+            </Menu.RadioGroup>
+          </Menu.Dropdown>
+        </Menu>
+      );
+      expect(screen.getByRole('menuitemradio', { name: 'Ascending' })).toHaveAttribute(
+        'aria-disabled',
+        'true'
+      );
+      expect(screen.getByRole('menuitemradio', { name: 'Descending' })).not.toHaveAttribute(
+        'aria-disabled'
+      );
     });
 
     it('marks the matching item as checked from group context', () => {
