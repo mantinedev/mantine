@@ -265,6 +265,7 @@ export const PickerInputBase = factory<PickerInputBaseFactory>((_props) => {
       <Button
         size={isSheet ? getSheetPickerProps(inputProps.size).size : inputProps.size}
         fullWidth
+        variant="default"
         unstyled={unstyled}
         {...submitButtonProps}
         disabled={submitDisabled || submitButtonProps?.disabled}

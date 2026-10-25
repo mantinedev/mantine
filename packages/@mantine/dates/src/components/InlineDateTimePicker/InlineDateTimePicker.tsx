@@ -457,6 +457,7 @@ export const InlineDateTimePicker = genericFactory<InlineDateTimePickerFactory>(
     <Button
       size={size}
       data-layout={dropdown.layout}
+      variant="default"
       unstyled={unstyled}
       data-mantine-stop-propagation={dropdown.stopPropagation || undefined}
       {...submitButtonProps}
