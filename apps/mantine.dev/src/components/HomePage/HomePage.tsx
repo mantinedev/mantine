@@ -3,7 +3,6 @@ import { Shell } from '../Shell';
 import { HomePageCombobox } from './HomePageCombobox/HomePageCombobox';
 import { HomePageCommunity } from './HomePageCommunity/HomePageCommunity';
 import { HomePageComponents } from './HomePageComponents/HomePageComponents';
-import { HomePageDarkColorScheme } from './HomePageDarkColorScheme/HomePageDarkColorScheme';
 import { HomePageExtensions } from './HomePageExtensions/HomePageExtensions';
 import { HomePageForm } from './HomePageForm/HomePageForm';
 import { HomePageGetStarted } from './HomePageGetStarted/HomePageGetStarted';
@@ -26,7 +25,6 @@ export function HomePage() {
         <HomePageComponents />
         <HomePageHooks />
         <HomePageStyles />
-        <HomePageDarkColorScheme />
         <HomePageCombobox />
         <HomePageExtensions />
         <HomePageForm />
