@@ -1,5 +1,6 @@
-import { ColorPicker, DEFAULT_THEME, Stack } from '@mantine/core';
+import { ColorPicker, Stack } from '@mantine/core';
 import { MantineDemo } from '@mantinex/demo';
+import { SWATCHES } from './swatches';
 
 const code = `
 import { ColorPicker } from '@mantine/core';
@@ -8,9 +9,7 @@ function Demo() {
   return (
     <ColorPicker
       format="hex"
-      swatches={[${Object.keys(DEFAULT_THEME.colors)
-        .map((color) => `'${DEFAULT_THEME.colors[color][6]}'`)
-        .join(', ')}]}
+      swatches={[${SWATCHES.map((color) => `'${color}'`).join(', ')}]}
     />
   );
 }
@@ -19,11 +18,7 @@ function Demo() {
 function Demo() {
   return (
     <Stack align="center">
-      <ColorPicker
-        format="hex"
-        defaultValue="rgba(50, 151, 194, 1)"
-        swatches={Object.keys(DEFAULT_THEME.colors).map((color) => DEFAULT_THEME.colors[color][6])}
-      />
+      <ColorPicker format="hex" defaultValue="rgba(50, 151, 194, 1)" swatches={SWATCHES} />
     </Stack>
   );
 }

@@ -1,10 +1,11 @@
 import { useState } from 'react';
-import { ColorPicker, DEFAULT_THEME, Text } from '@mantine/core';
+import { ColorPicker, Text } from '@mantine/core';
 import { MantineDemo } from '@mantinex/demo';
+import { SWATCHES_SHADES } from './swatches';
 
 const code = `
 import { useState } from 'react';
-import { DEFAULT_THEME, ColorPicker, Text } from '@mantine/core';
+import { ColorPicker, Text } from '@mantine/core';
 
 function Demo() {
   const [value, onChange] = useState('#fff');
@@ -17,11 +18,7 @@ function Demo() {
         onChange={onChange}
         withPicker={false}
         fullWidth
-        swatches={[
-          ...DEFAULT_THEME.colors.red.slice(0, 7),
-          ...DEFAULT_THEME.colors.green.slice(0, 7),
-          ...DEFAULT_THEME.colors.blue.slice(0, 7),
-        ]}
+        swatches={[${SWATCHES_SHADES.map((color) => `'${color}'`).join(', ')}]}
       />
 
       <Text>{value}</Text>
@@ -41,11 +38,7 @@ function Demo() {
         onChange={onChange}
         withPicker={false}
         fullWidth
-        swatches={[
-          ...DEFAULT_THEME.colors.red.slice(0, 7),
-          ...DEFAULT_THEME.colors.green.slice(0, 7),
-          ...DEFAULT_THEME.colors.blue.slice(0, 7),
-        ]}
+        swatches={SWATCHES_SHADES}
       />
       <Text ta="center" mt={5}>
         {value}

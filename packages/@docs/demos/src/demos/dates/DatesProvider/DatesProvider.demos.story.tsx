@@ -22,3 +22,8 @@ export const Demo_intlFormatting = {
   name: '⭐ Demo: intlFormatting',
   render: renderDemo(demos.intlFormatting),
 };
+
+export const Demo_consistentWeeksComparison = {
+  name: '⭐ Demo: consistentWeeksComparison',
+  render: renderDemo(demos.consistentWeeksComparison),
+};

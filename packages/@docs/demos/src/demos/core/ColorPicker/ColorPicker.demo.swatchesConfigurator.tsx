@@ -1,5 +1,6 @@
-import { ColorPicker, ColorPickerProps, DEFAULT_THEME } from '@mantine/core';
+import { ColorPicker, ColorPickerProps } from '@mantine/core';
 import { MantineDemo } from '@mantinex/demo';
+import { SWATCHES } from './swatches';
 
 function Wrapper(props: ColorPickerProps) {
   return (
@@ -7,7 +8,7 @@ function Wrapper(props: ColorPickerProps) {
       mx="auto"
       format="hex"
       defaultValue="rgba(50, 151, 194, 1)"
-      swatches={Object.keys(DEFAULT_THEME.colors).map((color) => DEFAULT_THEME.colors[color][6])}
+      swatches={SWATCHES}
       {...props}
     />
   );
@@ -18,9 +19,7 @@ import { ColorPicker } from '@mantine/core';
 
 function Demo() {
   return (
-    <ColorPicker{{props}} format="hex" swatches={[${Object.keys(DEFAULT_THEME.colors)
-      .map((color) => `'${DEFAULT_THEME.colors[color][6]}'`)
-      .join(', ')}]} />
+    <ColorPicker{{props}} format="hex" swatches={[${SWATCHES.map((color) => `'${color}'`).join(', ')}]} />
   );
 }
 `;
