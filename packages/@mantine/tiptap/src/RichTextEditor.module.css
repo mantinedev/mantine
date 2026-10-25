@@ -482,7 +482,7 @@
     row-gap: 0;
   }
 
-  border-color: var(--mantine-color-default-border);
+  border-color: var(--mantine-color-border-input);
 
   &:where([data-sticky]) {
     position: sticky;
