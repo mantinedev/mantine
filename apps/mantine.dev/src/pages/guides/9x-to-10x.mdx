@@ -1,129 +1,94 @@
 import { Code } from '@mantine/core';
+import {
+  BlockquoteDemos,
+  ColorPickerDemos,
+  DatePickerInputDemos,
+  DatesProviderDemos,
+  DateTimePickerDemos,
+  DrawerDemos,
+  SliderDemos,
+  SurfaceDemos,
+  ThemingDemos,
+  TipTapDemos,
+  TooltipDemos,
+} from '@docs/demos';
 import { Layout } from '@/layout';
 import { MDX_DATA } from '@/mdx';
+import packageJson from '../../../../../package.json';
 
 export default Layout(MDX_DATA.NineToTen);
 
 # 9.x → 10.x migration guide
 
+## Migrate with LLM agents
+
+LLM agents can perform the migration for you. Copy the link to the md version of this page
+and ask your AI agent to apply it: it includes all breaking changes and migration steps.
+
+<LlmButton href="/llms/guides-9x-to-10x.md" />
+
+## Release notes
+
+This guide covers only breaking changes. New features and improvements are listed in the
+10.0 changelog:
+
+<ChangelogButton href="/changelog/10-0-0/#migration-guide" label="View 10.0 release notes" />
+
+## Prerequisites
+
+Mantine 10.x requires React 19.2 or later. The new colors require Chrome and Edge 111,
+Safari 16.2 or Firefox 113 and later. To support older browsers, use the [v9 opt-out](#v9-opt-out)
+or a PostCSS plugin that converts `oklch` values.
+
 ## Update dependencies
 
-Update all `@mantine/*` packages to version 10.x.
+Update all `@mantine/*` packages to version {packageJson.version}.
 
-## Colors system changes
+## Changes to review by human
 
-10.x has a new colors system. Most applications get the new look without code changes.
-If you cannot migrate now, use the [v9 opt-out](#v9-opt-out).
+This section is meant for human review. Compare each demo with your application and decide
+whether to keep the new look or restore the previous one. Everything that can be migrated
+mechanically is in [Changes for automated migration](#changes-for-automated-migration).
 
 ### New OKLCH default palettes
 
 Default colors were regenerated in the OKLCH color space. Color names and the number of shades
 are the same, color values are different. Review custom colors that were picked to match the
-old defaults.
+old defaults. If you cannot migrate now, use the [v9 opt-out](#v9-opt-out).
 
 The default dark `primaryShade` is now `7` instead of `8`. To keep the 9.x shade, set
 `primaryShade: { light: 6, dark: 8 }` in the theme.
 
-### `--mantine-color-*` CSS variables are now OKLCH strings
+`--mantine-color-*` CSS variables now contain `oklch()` strings. Update code that parses them
+as hex or passes them to APIs without `oklch` support, for example canvas.
 
-`--mantine-color-*` variables now contain `oklch()` strings instead of hex or RGB values.
-Update code that reads these variables with `getComputedStyle` and parses them as hex.
-The same applies to code that passes them to canvas and other APIs without `oklch` support.
-
-### `autoContrast` now defaults to `true`
+### autoContrast is enabled by default
 
 Text of filled components is now black or white depending on the background color.
-Check the components below in your application, especially with light colors:
+Check buttons, badges, icons and other filled elements with light colors:
 
-<DataTable
-  head={['Component', 'Affected element']}
-  data={[
-    [<Code>Button</Code>, 'button label text'],
-    [<Code>ActionIcon</Code>, 'icon color'],
-    [<Code>ActionIconGroupSection</Code>, 'icon color'],
-    [<Code>Badge</Code>, 'badge label text (filled variant)'],
-    [<Code>ThemeIcon</Code>, 'icon color'],
-    [<Code>Alert</Code>, 'alert icon color'],
-    [<Code>Avatar</Code>, 'initials text'],
-    [<Code>Chip</Code>, 'chip label text'],
-    [<Code>NavLink</Code>, 'label/icon when active'],
-    [<Code>TableOfContents</Code>, 'active link color'],
-    [<Code>Toggle</Code>, 'toggle label'],
-    [<Code>Tooltip</Code>, 'tooltip label text'],
-    [<Code>Tabs</Code>, 'active tab indicator color'],
-    [<Code>Pagination</Code>, 'active page button text'],
-    ['Radio / RadioIndicator', 'radio icon'],
-    ['Checkbox / CheckboxIndicator', 'checkmark icon'],
-    [<Code>Indicator</Code>, 'indicator label text'],
-    [<Code>Progress</Code>, 'section label text'],
-    [<Code>Stepper</Code>, 'step icon'],
-    [<Code>SegmentedControl</Code>, 'active segment label'],
-    [<Code>Timeline</Code>, 'bullet icon'],
-    ['Toolbar / ToolbarToggle / ToolbarToggleItem', 'toolbar item icon/label'],
-  ]}
-/>
+<Demo data={ThemingDemos.autoContrastDisabled} />
 
-To restore the 9.x behavior, disable `autoContrast` in the theme:
+To restore the 9.x behavior, set `autoContrast: false` in the theme or on individual components:
 
 ```tsx
-import { createTheme, MantineProvider } from '@mantine/core';
+import { createTheme } from '@mantine/core';
 
 const theme = createTheme({
   autoContrast: false,
 });
-
-function Demo() {
-  return <MantineProvider theme={theme}>{/* Your app */}</MantineProvider>;
-}
 ```
-
-Or disable it on individual components:
-
-```tsx
-import { Button } from '@mantine/core';
-
-function Demo() {
-  return <Button autoContrast={false} color="yellow.3">Label</Button>;
-}
-```
-
-### Paper is deprecated — use Surface
-
-Replace `Paper` with [Surface](/core/surface), it supports the same props.
-`Paper` still works in 10.x and will be removed in 11.0:
-
-```tsx
-import { Paper, Surface } from '@mantine/core';
-
-// ❌ Deprecated
-function Demo() {
-  return <Paper shadow="sm" p="md">Content</Paper>;
-}
-
-// ✅ Use Surface instead
-function Demo() {
-  return <Surface shadow="sm" p="md">Content</Surface>;
-}
-```
-
-A standalone `Surface` looks the same as `Paper`. In dark color scheme nested surfaces step up
-one level per nesting; set `autoDepth={false}` on the nested `Surface` to keep the `Paper` look.
 
 ### Darker dark theme
 
-The dark color scheme is darker than in 9.x and the `dark` palette is distributed differently.
-The page is `dark-8`, panels are `dark-7`, and `dark-6` is the hover color of panels.
-If your styles use `dark-N` colors for backgrounds, use the semantic variables below or shift the
-index by one, for example `dark-7` for a page background becomes `dark-8`. Dropdowns, code elements, scrollbars,
-`SegmentedControl` and `contained` `Tabs` have new background colors as well.
+The dark color scheme is darker than in 9.x: the page is `dark-8` and panels are `dark-7`.
+If your styles use `dark-N` backgrounds, shift the index by one or use the semantic variables below.
 
-Focus rings now use the `--mantine-color-focus-ring` variable instead of the primary filled color.
+Focus rings use the `--mantine-color-focus-ring` variable instead of the primary color.
 If you override the focus ring color, override this variable.
 
 Inputs, checkboxes, radios, `Dropzone` and `RichTextEditor` use the page color as background
-in dark color scheme instead of the panel color, and their border is the new `--mantine-color-border-input` variable.
-`--mantine-color-border` and `--mantine-color-default-border` are now `dark-5` in dark color scheme, so
-containers, dividers and default variant controls have a quieter border than inputs. To keep the 9.x input background, set the `input` surface:
+instead of the panel color. To keep the 9.x input background, set the `input` surface:
 
 ```tsx
 import { createTheme } from '@mantine/core';
@@ -139,10 +104,9 @@ const theme = createTheme({
 
 ### New semantic color variables
 
-Components now use semantic variables such as `--mantine-color-border` instead of `gray-N` and
-`dark-N` shades. Overrides of palette shades keep working, the semantic variables reference them.
-To change the colors of all components at once, override the semantic variables instead,
-see the [colors guide](/theming/colors):
+Components use semantic variables such as `--mantine-color-border` instead of `gray-N` and
+`dark-N` shades. Palette overrides keep working. To change the colors of all components at
+once, override the semantic variables, see the [colors guide](/theming/colors):
 
 ```css
 [data-mantine-color-scheme='light'] {
@@ -156,27 +120,33 @@ see the [colors guide](/theming/colors):
 }
 ```
 
-## Disabled state
+### Paper is deprecated, use Surface
+
+Replace `Paper` with [Surface](/core/surface), it supports the same props. `Paper` will be
+removed in 11.0. In dark color scheme nested surfaces step up one level per nesting, set
+`autoDepth={false}` on the nested `Surface` to keep the `Paper` look:
+
+<Demo data={SurfaceDemos.autoDepth} />
+
+### Disabled state
 
 Disabled components keep their colors and are displayed with reduced opacity instead of
-turning gray. Set `theme.disabledOpacity` to change it:
+turning gray. The [v9 opt-out](#v9-opt-out) does not restore the gray styles:
+
+<Demo data={ThemingDemos.disabledOpacity} />
+
+Set `theme.disabledOpacity` to change the opacity:
 
 ```tsx
-import { createTheme, MantineProvider } from '@mantine/core';
+import { createTheme } from '@mantine/core';
 
 const theme = createTheme({
   disabledOpacity: 0.4,
 });
-
-function Demo() {
-  return <MantineProvider theme={theme}>{/* Your app */}</MantineProvider>;
-}
 ```
 
-If your styles use the `--mantine-color-disabled`, `--mantine-color-disabled-color` or
-`--mantine-color-disabled-border` variables, replace them with the opacity variable.
-The same applies to the `disabledBody`, `disabledText` and `disabledBorder` keys of `vars.colors`
-in `@mantine/vanilla-extract`:
+Replace the `--mantine-color-disabled-*` variables and the `disabledBody`, `disabledText` and
+`disabledBorder` keys of `vars.colors` in `@mantine/vanilla-extract` with the opacity variable:
 
 ```css
 .custom-control:disabled {
@@ -184,13 +154,15 @@ in `@mantine/vanilla-extract`:
 }
 ```
 
-The [v9 opt-out](#v9-opt-out) does not restore the gray disabled styles.
-
-## Blockquote changes
+### Blockquote look
 
 [Blockquote](/core/blockquote) no longer has a background and rounded corners, the icon is
-displayed above the quote and is smaller. The `radius` prop and the `--bq-bg-light`, `--bq-bg-dark`
-and `--bq-radius` variables were removed. If you used them, style the `root` element instead:
+displayed above the quote and is smaller:
+
+<Demo data={BlockquoteDemos.usage} />
+
+The `radius` prop and the `--bq-bg-light`, `--bq-bg-dark` and `--bq-radius` variables were
+removed. To restore the previous look, style the `root` element:
 
 ```tsx
 import { Blockquote } from '@mantine/core';
@@ -211,171 +183,59 @@ function Demo() {
 }
 ```
 
-## ColorPicker changes
+### Slider thumb
 
-[ColorPicker](/core/color-picker) and `ColorInput` display 10 swatches per row instead of 7.
-Set `swatchesPerRow={7}` to restore the previous layout.
-
-The picker now follows `theme.defaultRadius`. Set `radius` on `ColorPicker` to change it,
-`ColorInput` does not pass its `radius` prop to the picker.
-
-## Slider changes
-
-[Slider](/core/slider) and `RangeSlider` thumb is now white with a colored border, and its size
+[Slider](/core/slider) and `RangeSlider` thumb is white with a colored border, and its size
 depends on the `size` prop. Set `variant="filled"` to fill the thumb with the slider color and
-`thumbSize` to restore the previous size. If you changed `thumb` styles with Styles API, check
-that they still look as intended.
+`thumbSize` to restore the previous size. Check custom `thumb` styles:
 
-## Stepper.Step step, state, allowStepClick and onClick props
+<Demo data={SliderDemos.variants} />
 
-If you set `step`, `state`, `allowStepClick` or `onClick` on a `Stepper.Step` inside a
-[Stepper](/core/stepper), remove them – `Stepper` ignored them in 9.x and applies them in 10.0:
+### ColorPicker swatches
 
-```tsx
-import { Stepper } from '@mantine/core';
+`ColorPicker` and `ColorInput` display 10 swatches per row instead of 7 and follow
+`theme.defaultRadius`. Set `swatchesPerRow={7}` and `radius` to restore the previous layout:
 
-function Demo() {
-  return (
-    <Stepper active={1}>
-      {/* This step is now inactive and displays 6 as its icon */}
-      <Stepper.Step label="First" step={5} state="stepInactive" />
-      <Stepper.Step label="Second" />
-    </Stepper>
-  );
-}
-```
+<Demo data={ColorPickerDemos.swatches} />
 
-Keep them only on steps that should not follow the `active` prop of `Stepper`.
+### RichTextEditor content font size
 
-## Timeline data-opposite attribute
+`RichTextEditor` content uses `sm` font size, the same as other inputs. Set `size="md"` to
+restore the previous font size:
 
-If your styles target `[data-opposite]` on the [Timeline](/core/timeline) root element, target the
-opposite content instead – `Timeline` no longer sets the attribute:
+<Demo data={TipTapDemos.size} />
 
-```css
-/* 9.x */
-.timeline[data-opposite] {
-  /* ... */
-}
+### Calendars have 6 weeks in every month
 
-/* 10.0 */
-.timeline:has(.mantine-Timeline-itemOpposite) {
-  /* ... */
-}
-```
+Every month has 6 weeks in all calendar components, so the calendar height does not change
+between months. Set `consistentWeeks: false` in `DatesProvider` settings to restore the
+previous behavior:
 
-## Controller hook types renamed
+<Demo data={DatesProviderDemos.consistentWeeksComparison} />
 
-Rename the imported types of `useTimer`, `useEditable` and `useImageCropper` hooks.
-The `useHook.Options` and `useHook.ReturnValue` namespace types were removed as well:
+### DateTimePicker submit button
 
-<DataTable
-  head={['9.x', '10.x']}
-  data={[
-    [<Code>UseTimerOptions</Code>, <Code>TimerControllerOptions</Code>],
-    [<Code>UseTimerReturnValue</Code>, <Code>TimerController</Code>],
-    [<Code>UseEditableOptions</Code>, <Code>EditableControllerOptions</Code>],
-    [<Code>UseEditableReturnValue</Code>, <Code>EditableController</Code>],
-    [<Code>UseImageCropperOptions</Code>, <Code>ImageCropperControllerOptions</Code>],
-    [<Code>UseImageCropperReturnValue</Code>, <Code>ImageCropperController</Code>],
-  ]}
-/>
+`DateTimePicker` and `InlineDateTimePicker` submit button is a `default` variant `Button`
+with a text label instead of a filled icon button. Set `submitButtonLabel` on the component
+or in `DatesProvider` settings to change the label, and `submitButtonProps` to change the variant:
 
-The hooks themselves did not change:
+<Demo data={DateTimePickerDemos.usage} />
 
-```tsx
-// 9.x
-import type { UseTimerReturnValue } from '@mantine/core';
+### Other layout changes
 
-// 10.x
-import type { TimerController } from '@mantine/core';
-```
+- `Grid.Col` without `span` spans all `columns` of the grid instead of 12. Set `span={12}` to keep the old width in grids with a custom `columns` value.
+- `DataList` `labelWidth` sets a fixed width of the label column instead of its minimum width, so long labels wrap. If your labels now wrap, increase `labelWidth`.
 
-## Tree store prop
+### Picker inputs open in a drawer on mobile
 
-Rename the `tree` prop of `Tree` to `store`. The `tree` field of the `renderNode` payload is
-renamed to `store` as well, and the `TreeController` type is now `TreeStore`:
+Picker inputs and `DateTimePicker` open in a bottom drawer on small screens, and `onChange`
+is called only when the user presses the submit button in the drawer. The first input in the
+demo opens the drawer on every screen size:
 
-```tsx
-// 9.x
-import { Tree, useTree } from '@mantine/core';
+<Demo data={DatePickerInputDemos.dropdownType} />
 
-function Demo() {
-  const tree = useTree();
-  return (
-    <Tree
-      data={data}
-      tree={tree}
-      renderNode={({ node, tree }) => (
-        <div onClick={() => tree.toggleExpanded(node.value)}>{node.label}</div>
-      )}
-    />
-  );
-}
-
-// 10.x
-import { Tree, useTree } from '@mantine/core';
-
-function Demo() {
-  const store = useTree();
-  return (
-    <Tree
-      data={data}
-      store={store}
-      renderNode={({ node, store }) => (
-        <div onClick={() => store.toggleExpanded(node.value)}>{node.label}</div>
-      )}
-    />
-  );
-}
-```
-
-## Picker inputs calendar theme defaults
-
-If you set `defaultLevel` or `defaultDate` in theme `defaultProps` of `Calendar` or a picker
-component, they no longer apply to the dropdown of picker inputs. Set them on the input instead:
-
-```tsx
-import { createTheme } from '@mantine/core';
-import { DatePickerInput } from '@mantine/dates';
-
-const theme = createTheme({
-  components: {
-    DatePickerInput: DatePickerInput.extend({
-      defaultProps: { defaultLevel: 'year' },
-    }),
-  },
-});
-```
-
-## Picker inputs popoverProps.opened
-
-If you pass `popoverProps.opened` to a picker input or `DateTimePicker`, update it in
-`popoverProps.onChange`. It is now called on every open and close, and the input cannot open
-its dropdown without it:
-
-```tsx
-import { useState } from 'react';
-import { DatePickerInput } from '@mantine/dates';
-
-function Demo() {
-  const [opened, setOpened] = useState(false);
-  return <DatePickerInput popoverProps={{ opened, onChange: setOpened }} />;
-}
-```
-
-With the `controller` prop, pass `dropdownOpened` and `onDropdownOpenedChange` to the controller
-hook instead, `popoverProps.opened` is ignored.
-
-## Picker inputs dropdown type and submit button
-
-Picker inputs and `DateTimePicker` now open in a bottom drawer on small screens, and `onChange`
-is called only when the user presses the submit button in the drawer.
-
-- To keep the popover on all screens, set `dropdownType="popover"`
-- To call `onChange` on selection, set `applyOnSubmit={false}`
-
-Both props can be set for all components in the theme:
+Set `dropdownType="popover"` to keep the popover on all screens and `applyOnSubmit={false}`
+to call `onChange` on selection. Both props can be set for all components in the theme:
 
 ```tsx
 import { createTheme } from '@mantine/core';
@@ -393,180 +253,182 @@ const theme = createTheme({
 });
 ```
 
-## DateTimePicker and InlineDateTimePicker submit button
+### Drawer swipe to dismiss
 
-The submit button is now a `Button` with a text label instead of an `ActionIcon`.
-Remove `ActionIcon` specific props from `submitButtonProps`, for example `size="input-sm"`.
-To change the label, set `submitButtonLabel` on the component or in `DatesProvider` settings:
+[Drawer](/core/drawer#swipe-to-dismiss) is closed with a swipe gesture by default. Set the
+`data-drawer-no-swipe` attribute on draggable elements inside the drawer to keep the gesture
+away from them:
 
-```tsx
-import { DatesProvider, DateTimePicker } from '@mantine/dates';
+<Demo data={DrawerDemos.swipe} />
 
-function Demo() {
-  return (
-    <DatesProvider settings={{ submitButtonLabel: 'Apply' }}>
-      <DateTimePicker submitButtonProps={{ variant: 'light' }} />
-    </DatesProvider>
-  );
-}
-```
-
-## DatesProvider consistentWeeks default
-
-If you want months to have only as many weeks as they need, set `consistentWeeks: false` in
-`DatesProvider` – the setting is now `true` by default and every month has 6 weeks in all
-calendar components:
+To disable the gesture, set `withSwipe={false}` on `Drawer` or in the theme:
 
 ```tsx
-import { DatesProvider } from '@mantine/dates';
+import { createTheme, Drawer } from '@mantine/core';
 
-function Demo() {
-  return (
-    <DatesProvider settings={{ consistentWeeks: false }}>
-      {/* Your app here */}
-    </DatesProvider>
-  );
-}
+const theme = createTheme({
+  components: {
+    Drawer: Drawer.extend({
+      defaultProps: { withSwipe: false },
+    }),
+  },
+});
 ```
 
-If you set `consistentWeeks: true`, you can remove it.
+### Tooltip opens on focus
 
-## useMatches options argument
+`Tooltip` opens when the target receives keyboard focus, press Tab to focus the button in the
+demo. To restore the previous behavior, set `events={{ hover: true, focus: false, touch: false }}`:
 
-Remove the second argument of `useMatches`. The hook always returns the `base` value on the
-server and during hydration:
+<Demo data={TooltipDemos.usage} />
+
+### Uncontrolled form mode is the default
+
+`useForm` and `useField` are uncontrolled by default: the form component does not rerender
+when the user types. The [automated migration](#form-values-read-during-render) replaces
+`form.values`, `form.isDirty()` and `form.isTouched()` reads during render with hooks.
+To keep the 9.x behavior instead, set `mode: 'controlled'` in every `useForm` call:
 
 ```tsx
-import { useMatches } from '@mantine/core';
-
-// Before
-const value = useMatches({ base: 'a', sm: 'b' }, { getInitialValueInEffect: false });
-
-// After
-const value = useMatches({ base: 'a', sm: 'b' });
+const form = useForm({ mode: 'controlled', initialValues: { name: '' } });
 ```
 
-## Grid.Col default span
+See [form modes](/form/uncontrolled) for the differences between the two modes.
 
-`Grid.Col` without `span` now spans all `columns` of the grid. Before, it always spanned 12 columns, which was half of the row with `columns={24}`. Set `span={12}` to keep the old width in grids with a custom `columns` value.
+### MaskInput stores raw values
 
-## useScroller dragHandlers
-
-`useScroller` now tracks dragging on the document, so `dragHandlers` contains only `onMouseDown`. If you passed the handlers one by one, keep `onMouseDown` and remove `onMouseMove`, `onMouseUp` and `onMouseLeave`. Spreading `{...dragHandlers}` works as before. The hook no longer sets the cursor on the container: use the `isDragging` value to set it.
-
-## MaskInput value and onChange
-
-`MaskInput` `value`, `defaultValue` and `onChange` now work with the raw value without the mask. `onChange` receives a string instead of an event:
+`MaskInput` `value` and `onChange` work with the raw value without the mask. If your application
+stores masked values, for example `(123) 456-7890`, convert them with `unformatMask` when
+loading or migrate the stored data:
 
 ```tsx
 import { MaskInput } from '@mantine/core';
 
-// Before
+// 9.x, value is "(123) 456-7890"
 <MaskInput mask="(999) 999-9999" onChange={(event) => setValue(event.currentTarget.value)} />
 
-// After, value is "1234567890" instead of "(123) 456-7890"
+// 10.x, value is "1234567890"
 <MaskInput mask="(999) 999-9999" value={value} onChange={setValue} />
 ```
 
-Use `onChangeRaw` if you need the masked value.
+### v9 opt-out
 
-Masked strings are no longer parsed: `value`, `defaultValue` and use-form values (`initialValues`, `form.setFieldValue`, `form.reset`) must be raw. Store `1234567890`, not `(123) 456-7890`. Use `unformatMask` to convert stored masked values. `useMask` `setValue` accepts a raw value as well.
-
-## PinInput value with empty inputs
-
-If you check `value.length` to find out whether all `PinInput` inputs are filled, switch to `isComplete()` from `usePinInput` or a regex. An empty input is now a space in the value, so clearing one input no longer shifts the others:
+If your application cannot be migrated now, restore 9.x colors with `v9Theme` and
+`v9CssVariablesResolver`. Both will be removed in 11.0:
 
 ```tsx
-// Before, first input cleared: '23456'
-// After: ' 23456'
-const isFilled = /^\d{6}$/.test(value);
+import {
+  MantineProvider,
+  v9Theme,
+  v9CssVariablesResolver,
+} from '@mantine/core';
+
+function App() {
+  return (
+    <MantineProvider
+      theme={v9Theme}
+      cssVariablesResolver={v9CssVariablesResolver}
+    >
+      {/* Your app */}
+    </MantineProvider>
+  );
+}
 ```
 
-## beforeMaskedStateChange removed
+## Changes for automated migration
 
-Remove the `beforeMaskedStateChange` option from `useMask` and the prop from `MaskInput`. It was never called. The `MaskState` type is no longer exported.
+This part is written for coding agents. Each entry names the 9.x usage to search for and the
+replacement. Apply every entry that matches the codebase, run the type checker and tests
+afterwards, and report behavior changes from this list that cannot be resolved by a code change.
 
-## TimeInput data-empty attribute
+### Stepper.Step step, state, allowStepClick and onClick props
 
-If you set your own `data-empty` attribute on `TimeInput`, rename it. The component now sets
-`data-empty` on the input element while it has no value.
+Remove `step`, `state`, `allowStepClick` and `onClick` props from `Stepper.Step` elements.
+`Stepper` ignored them in 9.x and applies them in 10.x, so a step with `step={5}` displays 6
+as its icon and ignores the `active` prop. Keep them only on steps that intentionally do not
+follow the `active` prop of `Stepper`.
 
-## RichTextEditor content font size
+### Timeline data-opposite attribute
 
-`RichTextEditor` content now uses `sm` font size, the same as other inputs. Set `size="md"` to restore the previous font size. If you set `font-size` on `.ProseMirror` to match the inputs around the editor, remove it.
-
-## RollingNumber root element
-
-`RollingNumber` now renders a `span` root element, so it can be placed inside text. If you type its `ref` as `HTMLDivElement`, change it to `HTMLSpanElement`.
-
-## Cascader data-active attribute
-
-If your styles target `[data-active]` on [Cascader](/core/cascader) column options, rename it to `[data-current]`:
+`Timeline` no longer sets `data-opposite` on the root element. Replace selectors that target it:
 
 ```css
 /* 9.x */
-.option[data-active] {
+.timeline[data-opposite] {
   /* ... */
 }
 
-/* 10.0 */
-.option[data-current] {
+/* 10.x */
+.timeline:has(.mantine-Timeline-itemOpposite) {
   /* ... */
 }
 ```
 
-In tests, `aria-selected` on column options now marks the selected value, not the option
-highlighted with the keyboard. Query `[data-current]` to find the highlighted option.
+### Controller hook types renamed
 
-## DataList labelWidth
+Rename the imported types of `useTimer`, `useEditable` and `useImageCropper` hooks.
+The `useHook.Options` and `useHook.ReturnValue` namespace types were removed as well,
+replace them with the same types:
 
-`DataList` `labelWidth` now sets a fixed width of the label column instead of its minimum width. Long labels wrap instead of pushing values to the right. If your labels now wrap, increase `labelWidth`. Numbers are converted to rem, so they scale with `scale` from the theme.
+<DataTable
+  head={['9.x', '10.x']}
+  data={[
+    [<Code>UseTimerOptions</Code>, <Code>TimerControllerOptions</Code>],
+    [<Code>UseTimerReturnValue</Code>, <Code>TimerController</Code>],
+    [<Code>UseEditableOptions</Code>, <Code>EditableControllerOptions</Code>],
+    [<Code>UseEditableReturnValue</Code>, <Code>EditableController</Code>],
+    [<Code>UseImageCropperOptions</Code>, <Code>ImageCropperControllerOptions</Code>],
+    [<Code>UseImageCropperReturnValue</Code>, <Code>ImageCropperController</Code>],
+  ]}
+/>
 
-## SunburstChart endAngle
+### Controller hooks return a memoized object
 
-[SunburstChart](/charts/sunburst-chart) `endAngle` is now the angle at which the chart ends, as in `PieChart`. Before, the chart ended at `startAngle + endAngle`. If you set both props, pass the sum as `endAngle`. Setting only `startAngle` still draws a full circle:
-
-```tsx
-// 9.x
-<SunburstChart data={data} startAngle={90} endAngle={180} />
-
-// 10.0
-<SunburstChart data={data} startAngle={90} endAngle={270} />
-```
-
-Set `startAngle`, `endAngle` and `innerRadius` with the component props. `sunburstChartProps` no longer accepts them, and `textOptions` from it is ignored because labels are drawn by Mantine.
-
-## @mantine/schedule changes
-
-- `isAfterMinDate` and `isBeforeMaxDate` are no longer exported. Compare dates with `dayjs` instead.
-- `ScheduleHeader.varsResolver` and the `ScheduleHeaderCssVariables` type are removed. The header has no CSS variables.
-- The `data-all-day-dragging` attribute is removed from `WeekView`. Use `data-event-interaction` to style the view while an event is dragged.
-- `WeekView` and `ResourcesWeekView` `weekLabelFormat` defaults to `MMM D` instead of `MMM DD`. Set `weekLabelFormat="MMM DD"` to keep zero-padded days.
-- `MobileMonthView` calls `onDateChange` when a day is selected. If you pass a controlled `date`, update it in `onDateChange`.
-
-## Combobox store listId and selectedOptionIndex
-
-Replace `combobox.listId` and `combobox.selectedOptionIndex` with the `getListId()` and
-`getSelectedOptionIndex()` functions:
+`useTimer`, `useEditable`, `useImageCropper` and `usePagination` return the same object until
+the state changes. Replace `useEffect` dependencies on the returned object with the state
+values the effect reads:
 
 ```tsx
-const combobox = useCombobox();
+const controller = useTimer();
 
-// 9.x
-combobox.listId;
-combobox.selectedOptionIndex;
+// 9.x, ran on every render
+useEffect(() => {
+  /* ... */
+}, [controller]);
 
 // 10.x
-combobox.getListId();
-combobox.getSelectedOptionIndex();
+const running = controller.isRunning();
+
+useEffect(() => {
+  /* ... */
+}, [running]);
 ```
 
-`useVirtualizedCombobox` still accepts the `selectedOptionIndex` option.
+### Tree store prop
 
-## comboboxProps.store in Select, MultiSelect, TagsInput and Autocomplete
+Rename the `tree` prop of `Tree` to `store`, the `tree` field of the `renderNode` payload to
+`store`, and the `TreeController` type to `TreeStore`:
 
-`store` passed in `comboboxProps` is ignored. Create the store with the component hook, for
-example `useMultiSelect`, and pass it to the `store` prop. It includes all `useCombobox` actions:
+```tsx
+// 9.x
+const tree = useTree();
+<Tree data={data} tree={tree} renderNode={({ node, tree }) => <div onClick={() => tree.toggleExpanded(node.value)}>{node.label}</div>} />;
+
+// 10.x
+const store = useTree();
+<Tree data={data} store={store} renderNode={({ node, store }) => <div onClick={() => store.toggleExpanded(node.value)}>{node.label}</div>} />;
+```
+
+### Combobox store listId and selectedOptionIndex
+
+Replace `combobox.listId` with `combobox.getListId()` and `combobox.selectedOptionIndex` with
+`combobox.getSelectedOptionIndex()`. `useVirtualizedCombobox` still accepts the
+`selectedOptionIndex` option.
+
+### comboboxProps.store in Select, MultiSelect, TagsInput and Autocomplete
+
+`store` passed in `comboboxProps` is ignored. Create the store with the component hook and pass
+it to the `store` prop. The hook returns all `useCombobox` actions:
 
 ```tsx
 // 9.x
@@ -578,32 +440,42 @@ const store = useMultiSelect();
 <MultiSelect data={data} store={store} />;
 ```
 
-## Controller hooks return a memoized object
+### Combobox.Target role and aria-expanded
 
-`useTimer`, `useEditable`, `useImageCropper` and `usePagination` now return the same object
-until the state changes. If you use the returned object as a `useEffect` dependency, depend on
-state values instead:
+`Combobox.Target` sets `role="combobox"` and `aria-expanded` on the target element by default.
+Tests that query the target with `getByRole('textbox')` must query `getByRole('combobox')`
+instead. Set `withExpandedAttribute={false}` on `Combobox.Target` to restore the 9.x markup.
 
-```tsx
-const controller = useTimer();
+### Combobox limit counts options across groups
 
-// Ran on every render in 9.x, runs only when the timer state changes in 10.x
-useEffect(() => {
-  /* ... */
-}, [controller]);
+In `Select`, `MultiSelect`, `Autocomplete` and `TagsInput` with grouped data, `limit` now counts
+options across all groups. In 9.x, every group counted towards the limit as one item. Reduce
+`limit` if the dropdown displays more options than expected.
 
-// Use this instead
-const running = controller.isRunning();
+### Pagination root element
 
-useEffect(() => {
-  /* ... */
-}, [running]);
-```
+`Pagination` root element is a `nav` landmark. Remove `nav` wrappers around `Pagination` to
+avoid nested landmarks. Tests that query `role="navigation"` now match the pagination root.
 
-## ModalBase components removed
+### NavLink with nested links
 
-If you built a custom dialog with `ModalBase*` components, replace them with
-[Modal](/core/modal#compound-components) or `Drawer` compound components:
+`NavLink` with children and without `href` is rendered as a `button` instead of an `a` element.
+Update tests and styles that select the parent link by tag. Set `component="a"` to keep the 9.x element.
+
+### Portal shared node
+
+`Portal` ignores `className`, `style` and `id` when the shared portal node or `target` is used.
+To keep these props, set `reuseTargetNode={false}` on that `Portal`.
+
+### Modal and Drawer returnFocus without trapFocus
+
+`Modal` and `Drawer` return focus to the previously focused element on close even with
+`trapFocus={false}`. Set `returnFocus={false}` where focus must stay where it is.
+
+### ModalBase components removed
+
+Replace `ModalBase*` components with [Modal](/core/modal#compound-components) or `Drawer`
+compound components:
 
 <DataTable
   head={['9.x', '10.x']}
@@ -665,65 +537,163 @@ function Demo() {
 }
 ```
 
-## Drawer swipe to dismiss
+### Spotlight store registerAction and empty
 
-[Drawer](/core/drawer#swipe-to-dismiss) is now closed with a swipe gesture by default.
-To disable it, set `withSwipe={false}` on `Drawer` or in the theme:
+`registerAction` function and the `empty` field of the Spotlight store were removed. Remove
+calls to `registerAction` and reads of `empty`. `Spotlight` renders `Spotlight.Empty` with the
+`nothingFound` content itself when no actions match the query.
+
+### RichTextEditor edit-link event
+
+`RichTextEditor.Link` control listens to the `edit-link` event on the editor instead of
+`window`. Replace `window.dispatchEvent(new CustomEvent('edit-link'))` with
+`(editor as any).emit('edit-link')`, the event is not part of the tiptap `EditorEvents` type.
+
+### useMask and MaskInput separate option
+
+Remove the `separate` option from `useMask` and the `separate` prop from `MaskInput`, they no
+longer exist.
+
+### MaskInput value format
+
+`MaskInput` `value`, `defaultValue` and `onChange` work with the raw value without the mask,
+and `onChange` receives a string instead of an event. Replace `event.currentTarget.value` reads
+in `onChange` handlers with the string argument. Masked strings are no longer parsed: `value`,
+`defaultValue` and use-form values (`initialValues`, `form.setFieldValue`, `form.reset`) must be
+raw. Convert stored masked values with `unformatMask`. `useMask` `setValue` accepts a raw value
+as well. Use `onChangeRaw` to read the masked value.
+
+### beforeMaskedStateChange removed
+
+Remove the `beforeMaskedStateChange` option from `useMask` and the prop from `MaskInput`. It
+was never called. The `MaskState` type is no longer exported, remove its imports.
+
+### PinInput value with empty inputs
+
+An empty `PinInput` input is a space in the value, so clearing one input no longer shifts the
+others. Replace `value.length` checks that detect a complete value with `isComplete()` from
+`usePinInput` or a regex:
 
 ```tsx
-import { createTheme, Drawer } from '@mantine/core';
+// 9.x, first input cleared: '23456'
+// 10.x: ' 23456'
+const isFilled = /^\d{6}$/.test(value);
+```
+
+### TimeInput data-empty attribute
+
+`TimeInput` sets `data-empty` on the input element while it has no value. Rename a custom
+`data-empty` attribute passed to `TimeInput`.
+
+### RollingNumber root element
+
+`RollingNumber` renders a `span` root element instead of a `div`. Change `ref` types from
+`HTMLDivElement` to `HTMLSpanElement`.
+
+### Cascader data-active attribute
+
+Rename `[data-active]` selectors on `Cascader` column options to `[data-current]`. In tests,
+`aria-selected` on column options marks the selected value, not the option highlighted with
+the keyboard. Query `[data-current]` to find the highlighted option.
+
+### Picker inputs calendar theme defaults
+
+`defaultLevel` and `defaultDate` set in theme `defaultProps` of `Calendar` or a picker component
+no longer apply to the dropdown of picker inputs. Add them to the `defaultProps` of the picker
+input:
+
+```tsx
+import { createTheme } from '@mantine/core';
+import { DatePickerInput } from '@mantine/dates';
 
 const theme = createTheme({
   components: {
-    Drawer: Drawer.extend({
-      defaultProps: { withSwipe: false },
+    DatePickerInput: DatePickerInput.extend({
+      defaultProps: { defaultLevel: 'year' },
     }),
   },
 });
 ```
 
-If the drawer contains draggable elements, set the `data-drawer-no-swipe` attribute on them
-to keep the swipe gesture away from them:
+### Picker inputs popoverProps.opened
+
+`popoverProps.opened` on picker inputs and `DateTimePicker` requires `popoverProps.onChange`.
+It is called on every open and close, and the input cannot open its dropdown without it:
 
 ```tsx
-import { Drawer } from '@mantine/core';
+import { useState } from 'react';
+import { DatePickerInput } from '@mantine/dates';
 
 function Demo() {
-  return (
-    <Drawer opened onClose={() => {}}>
-      <div data-drawer-no-swipe>{/* Draggable content */}</div>
-    </Drawer>
-  );
+  const [opened, setOpened] = useState(false);
+  return <DatePickerInput popoverProps={{ opened, onChange: setOpened }} />;
 }
 ```
 
-## Uncontrolled mode is the default
+With the `controller` prop, pass `dropdownOpened` and `onDropdownOpenedChange` to the controller
+hook instead, `popoverProps.opened` is ignored.
 
-`useForm` and `useField` are now uncontrolled by default: the component does not rerender when
-the user types. If your form reads `form.values` during render, use `form.useWatchValue('path')`
-instead, or set `mode: 'controlled'` to keep the previous behavior:
+### DateTimePicker submitButtonProps
+
+The submit button of `DateTimePicker` and `InlineDateTimePicker` is a `Button` instead of an
+`ActionIcon`. Remove `ActionIcon` specific props from `submitButtonProps`, for example
+`size="input-sm"`.
+
+### DatesProvider consistentWeeks
+
+`consistentWeeks` is `true` by default. Remove `consistentWeeks: true` from `DatesProvider`
+settings.
+
+### useMatches options argument
+
+Remove the second argument of `useMatches`. The hook always returns the `base` value on the
+server and during hydration:
 
 ```tsx
 // 9.x
-const form = useForm({ initialValues: { name: '' } });
-<Text>{form.values.name}</Text>
+const value = useMatches({ base: 'a', sm: 'b' }, { getInitialValueInEffect: false });
 
 // 10.x
-const form = useForm({ mode: 'controlled', initialValues: { name: '' } });
-<Text>{form.values.name}</Text>
-
-// 10.x, uncontrolled
-const form = useForm({ initialValues: { name: '' } });
-const name = form.useWatchValue('name');
-<Text>{name}</Text>
+const value = useMatches({ base: 'a', sm: 'b' });
 ```
 
-See [form modes](/form/uncontrolled) for the differences between the two modes.
+### useScroller dragHandlers
 
-## form.key removed
+`dragHandlers` returned from `useScroller` contains only `onMouseDown`. If the handlers are
+passed one by one, keep `onMouseDown` and remove `onMouseMove`, `onMouseUp` and `onMouseLeave`.
+Spreading `{...dragHandlers}` works as before. The hook no longer sets the cursor on the
+container, use the `isDragging` value to set it.
 
-Remove `key={form.key('path')}` from inputs. In lists, use a stable key stored in the list
-item, for example a `randomId()`, not the field path:
+### SunburstChart endAngle
+
+`SunburstChart` `endAngle` is the angle at which the chart ends, as in `PieChart`. In 9.x the
+chart ended at `startAngle + endAngle`. If both props are set, pass the sum as `endAngle`.
+Setting only `startAngle` still draws a full circle:
+
+```tsx
+// 9.x
+<SunburstChart data={data} startAngle={90} endAngle={180} />
+
+// 10.x
+<SunburstChart data={data} startAngle={90} endAngle={270} />
+```
+
+Move `startAngle`, `endAngle` and `innerRadius` from `sunburstChartProps` to the component
+props. `textOptions` in `sunburstChartProps` is ignored because labels are drawn by Mantine.
+
+### @mantine/schedule changes
+
+- `isAfterMinDate` and `isBeforeMaxDate` are no longer exported. Compare dates with `dayjs` instead.
+- `ScheduleHeader.varsResolver` and the `ScheduleHeaderCssVariables` type are removed. The header has no CSS variables.
+- The `data-all-day-dragging` attribute is removed from `WeekView`. Use `data-event-interaction` to style the view while an event is dragged.
+- `WeekView` and `ResourcesWeekView` `weekLabelFormat` defaults to `MMM D` instead of `MMM DD`. Set `weekLabelFormat="MMM DD"` to keep zero-padded days.
+- `MobileMonthView` calls `onDateChange` when a day is selected. If `date` is controlled, update it in `onDateChange`.
+
+### form.key removed
+
+Remove `key={form.key('path')}` from inputs. In lists, use a stable key stored in the list item,
+for example a `randomId()`, not the field path. `useField` no longer returns `key`, remove
+`key={field.key}` the same way. The `Key` type is no longer exported, remove its imports:
 
 ```tsx
 // 9.x
@@ -733,26 +703,20 @@ item, for example a `randomId()`, not the field path:
 <TextInput {...form.getInputProps('name')} />
 ```
 
-`useField` no longer returns `key`, remove `key={field.key}` the same way. The `Key` type is no longer exported, remove its imports.
+### Form values read during render
 
-## Uncontrolled form inputs receive value
+In uncontrolled mode the component that calls `useForm` does not rerender when values change.
+Replace reads during render with hooks, calls in event handlers and `form.onSubmit` do not change:
 
-In uncontrolled mode, `getInputProps` now returns `value` and `checked` instead of
-`defaultValue` and `defaultChecked`. Change custom inputs and `enhanceGetInputProps` functions
-that read `defaultValue` to read `value`.
-
-Set an initial value for every field rendered with an input, otherwise React warns about an
-input switching from uncontrolled to controlled.
-
-If your custom input keeps state that `value` cannot express, for example a partially entered
-date, clear it with the [use-form-field](/hooks/use-form-field#onexternalwrite) hook when the
-form writes the value.
-
-## form.isDirty and form.isTouched in uncontrolled mode
-
-If you read `form.isDirty()` or `form.isTouched()` during render, for example to disable a
-submit button, replace the call with the `form.useDirty()` or `form.useTouched()` hook.
-In uncontrolled mode the form no longer rerenders when a field becomes dirty:
+<DataTable
+  head={['9.x', '10.x']}
+  data={[
+    [<Code>form.values.path</Code>, <Code>form.useWatchValue('path')</Code>],
+    [<Code>form.getValues().path</Code>, <Code>form.useWatchValue('path')</Code>],
+    [<Code>form.isDirty()</Code>, <Code>form.useDirty()</Code>],
+    [<Code>form.isTouched()</Code>, <Code>form.useTouched()</Code>],
+  ]}
+/>
 
 ```tsx
 // 9.x
@@ -763,17 +727,28 @@ const dirty = form.useDirty();
 <Button disabled={!dirty}>Save</Button>
 ```
 
-Calls in event handlers and `form.onSubmit` do not change.
+If the application keeps the 9.x behavior with `mode: 'controlled'`, skip this entry.
 
-## Form values are not cloned on every change
+### Uncontrolled form inputs receive value
 
-Do not mutate the object returned from `form.getValues()` or `form.values`, it is no longer a
-copy. Use `form.setFieldValue` or `form.setValues` instead.
+In uncontrolled mode `getInputProps` returns `value` and `checked` instead of `defaultValue`
+and `defaultChecked`. Change custom inputs and `enhanceGetInputProps` functions that read
+`defaultValue` to read `value`. Add an initial value for every field rendered with an input,
+otherwise React warns about an input switching from uncontrolled to controlled.
 
-## form.setValues clears only errors of changed fields
+If a custom input keeps state that `value` cannot express, for example a partially entered
+date, clear it with the [use-form-field](/hooks/use-form-field#onexternalwrite) hook when the
+form writes the value.
 
-If you call `form.setValues` after a failed submit and expect all errors to disappear, call
-`form.clearErrors()` before it. `form.setValues` now clears errors only of the fields it sets:
+### Form values are not cloned on every change
+
+The object returned from `form.getValues()` and `form.values` is no longer a copy. Replace
+mutations of it with `form.setFieldValue` or `form.setValues`.
+
+### form.setValues clears only errors of changed fields
+
+`form.setValues` clears errors only of the fields it sets. Where all errors must disappear,
+for example after a failed submit, call `form.clearErrors()` before it:
 
 ```tsx
 // 9.x
@@ -784,45 +759,13 @@ form.clearErrors();
 form.setValues(data);
 ```
 
-## UseFieldReturnType type parameters
+### UseFieldReturnType type parameters
 
 Remove the third type argument of `UseFieldReturnType`:
 `UseFieldReturnType<string, 'input', 'uncontrolled'>` becomes `UseFieldReturnType<string, 'input'>`.
 
-## Removed @mantine/form types
+### Removed @mantine/form types
 
-If you import `ClearFieldDirty`, `SetFieldTouched`, `SetFieldDirty` or `SetCalculatedFieldDirty`
-types, replace them with indexed form types, for example `UseFormReturnType<Values>['setTouched']`.
-
-## v9 opt-out
-
-If your application cannot be migrated now, restore 9.x colors with `v9Theme` and
-`v9CssVariablesResolver`:
-
-```tsx
-import {
-  MantineProvider,
-  v9Theme,
-  v9CssVariablesResolver,
-} from '@mantine/core';
-
-function App() {
-  return (
-    <MantineProvider
-      theme={v9Theme}
-      cssVariablesResolver={v9CssVariablesResolver}
-    >
-      {/* Your app */}
-    </MantineProvider>
-  );
-}
-```
-
-`v9Theme` contains 9.x hex colors and sets `autoContrast: false`, `v9CssVariablesResolver`
-outputs hex and RGB CSS variables. Both will be removed in 11.0.
-
-## Browser support
-
-The new colors require Chrome and Edge 111, Safari 16.2 or Firefox 113 and later.
-To support older browsers, use the [v9 opt-out](#v9-opt-out) or a PostCSS plugin that
-converts `oklch` values.
+Replace imports of `ClearFieldDirty`, `SetFieldTouched`, `SetFieldDirty` and
+`SetCalculatedFieldDirty` with indexed form types, for example
+`UseFormReturnType<Values>['setTouched']`.

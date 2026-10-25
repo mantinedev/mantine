@@ -1,5 +1,6 @@
 import { MDXProvider } from '@mdx-js/react';
 import { Demo } from '@mantinex/demo';
+import { MdxChangelogButton } from './MdxChangelogButton/MdxChangelogButton';
 import { MdxDataTable } from './MdxDataTable/MdxDataTable';
 import { MdxExamplesButton } from './MdxExamplesButton/MdxExamplesButton';
 import { MdxInfo } from './MdxInfo/MdxInfo';
@@ -70,6 +71,7 @@ export function MdxProvider({ children }: { children: React.ReactNode }) {
         ClearSectionMode: MdxClearSectionMode,
         SponsorButton: MdxSponsorButton,
         LlmButton: MdxLlmButton,
+        ChangelogButton: MdxChangelogButton,
         Video: MdxVideo,
         pre: MdxPre,
         h1: h(1),
