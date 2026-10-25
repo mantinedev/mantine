@@ -6,10 +6,11 @@ export function MantineLogoRounded({
   color,
   variant,
   inverted,
+  autoContrast,
   style,
   ...others
 }: LogoProps) {
-  const colors = useMantineLogoColors({ color, inverted });
+  const colors = useMantineLogoColors({ color, inverted, autoContrast });
 
   return (
     <svg

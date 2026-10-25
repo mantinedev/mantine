@@ -8,11 +8,12 @@ export function MantineLogoText({
   color,
   variant,
   inverted,
+  autoContrast,
   style,
   className,
   ...others
 }: LogoProps) {
-  const colors = useMantineLogoColors({ color, inverted });
+  const colors = useMantineLogoColors({ color, inverted, autoContrast });
 
   return (
     <svg

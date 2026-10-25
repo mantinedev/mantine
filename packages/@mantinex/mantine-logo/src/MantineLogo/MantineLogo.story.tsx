@@ -34,3 +34,16 @@ export function TextLogo() {
     </div>
   );
 }
+
+export function AutoContrast() {
+  return (
+    <div style={{ padding: 40 }}>
+      <MantineLogoRounded size={40} color="yellow" />
+      <MantineLogoRounded size={40} color="lime" />
+      <MantineLogoRounded size={40} color="yellow" autoContrast={false} />
+      <MantineLogoText size={30} color="yellow" />
+      <MantineLogoText size={30} color="lime" />
+      <MantineLogoText size={30} color="yellow" autoContrast={false} />
+    </div>
+  );
+}
