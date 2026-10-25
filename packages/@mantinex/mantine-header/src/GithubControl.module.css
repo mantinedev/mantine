@@ -1,0 +1,11 @@
+.github {
+  [data-mantine-color-scheme] & {
+    background-color: var(--mantine-color-white);
+    border-color: var(--mantine-color-gray-3);
+    color: var(--mantine-color-black);
+
+    @mixin hover {
+      background-color: var(--mantine-color-gray-0);
+    }
+  }
+}

@@ -16,6 +16,7 @@ interface HeaderControlsProps extends BoxProps {
   discordLink: string;
   withColorScheme?: boolean;
   withSupport?: boolean;
+  children?: React.ReactNode;
 }
 
 export function HeaderControls({
@@ -28,6 +29,7 @@ export function HeaderControls({
   withColorScheme = true,
   withSupport = true,
   discordLink,
+  children,
   ...others
 }: HeaderControlsProps) {
   return (
@@ -39,6 +41,7 @@ export function HeaderControls({
         {withGithub && <GithubControl link={githubLink!} />}
         {withDirectionToggle && <DirectionControl />}
         {withColorScheme && <ColorSchemeControl />}
+        {children}
       </Group>
     </Tooltip.Group>
   );
