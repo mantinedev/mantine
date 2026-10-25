@@ -20,7 +20,7 @@ import '@mantinex/mantine-logo/styles.css';
 import { AppProps } from 'next/app';
 import Head from 'next/head';
 import { CodeHighlightAdapterProvider, createShikiAdapter } from '@mantine/code-highlight';
-import { DirectionProvider, MantineProvider } from '@mantine/core';
+import { DirectionProvider } from '@mantine/core';
 import { MantineEmotionProvider } from '@mantine/emotion';
 import { useHotkeys, useLocalStorage } from '@mantine/hooks';
 import { Notifications } from '@mantine/notifications';
@@ -30,6 +30,7 @@ import { MdxProvider } from '@/components/MdxProvider';
 import { ModalsProviderDemo } from '@/components/ModalsProviderDemo';
 import { Search } from '@/components/Search';
 import { Shell } from '@/components/Shell';
+import { ThemeSettingsProvider } from '@/components/ThemeControl';
 import { theme } from '../../theme';
 import { emotionCache } from '../emotion';
 import '../styles/variables.css';
@@ -91,7 +92,7 @@ export default function App({ Component, pageProps, router }: AppProps) {
       <GaScript />
       <DirectionProvider initialDirection="ltr" detectDirection={false}>
         <MantineEmotionProvider cache={emotionCache}>
-          <MantineProvider theme={theme} defaultColorScheme="light">
+          <ThemeSettingsProvider theme={theme}>
             <CodeHighlightAdapterProvider adapter={shikiAdapter}>
               <Search />
               <Notifications />
@@ -108,7 +109,7 @@ export default function App({ Component, pageProps, router }: AppProps) {
                 </MdxProvider>
               </ModalsProviderDemo>
             </CodeHighlightAdapterProvider>
-          </MantineProvider>
+          </ThemeSettingsProvider>
         </MantineEmotionProvider>
       </DirectionProvider>
     </>

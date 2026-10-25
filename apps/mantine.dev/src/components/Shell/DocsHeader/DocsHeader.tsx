@@ -2,15 +2,11 @@ import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { ArrowSquareOutIcon, CaretDownIcon } from '@phosphor-icons/react';
 import { Burger, Container, Group, Menu, Text, UnstyledButton } from '@mantine/core';
-import {
-  ColorSchemeControl,
-  HeaderControls,
-  SearchMobileControl,
-  SupportControl,
-} from '@mantinex/mantine-header';
+import { HeaderControls, SearchMobileControl, SupportControl } from '@mantinex/mantine-header';
 import { MantineLogo } from '@mantinex/mantine-logo';
 import { majorVersions, meta } from '@mantinex/mantine-meta';
 import { searchHandlers } from '@/components/Search';
+import { ThemeControl } from '@/components/ThemeControl';
 import { MDX_DATA, MdxNavCategory } from '@/mdx';
 import packageJson from '../../../../../../package.json';
 import { getActiveCategory } from '../get-active-category';
@@ -20,7 +16,6 @@ import classes from './DocsHeader.module.css';
 const mainLinksData = [
   { link: 'https://ui.mantine.dev', label: 'Mantine UI' },
   { link: 'https://help.mantine.dev', label: 'FAQ' },
-  { link: '/colors-generator', label: 'Colors generator' },
 ];
 
 interface NavigationLinkData {
@@ -133,13 +128,17 @@ export function DocsHeader({ headerControlsProps, withNav, fluid }: DocsHeaderPr
               onSearch={searchHandlers.open}
               githubLink="https://github.com/mantinedev/mantine"
               discordLink={meta.discordLink}
+              withDirectionToggle={false}
+              withColorScheme={false}
               {...headerControlsProps}
-            />
+            >
+              <ThemeControl />
+            </HeaderControls>
           </div>
 
           <Group gap={5} className={classes.mobileHeaderControls}>
             <SearchMobileControl onSearch={searchHandlers.open} />
-            <ColorSchemeControl />
+            <ThemeControl />
             <SupportControl />
           </Group>
         </div>

@@ -1,0 +1,61 @@
+.dropdown {
+  @mixin smaller-than $mantine-breakpoint-sm {
+    inset: 0 !important;
+    width: 100vw !important;
+    height: 100dvh;
+    max-height: 100dvh;
+    overflow-y: auto;
+    border-radius: 0;
+    border: 0;
+    transform: none !important;
+    padding: var(--mantine-spacing-md);
+  }
+}
+
+.mobileHeader {
+  @mixin larger-than $mantine-breakpoint-sm {
+    display: none;
+  }
+}
+
+.label {
+  font-weight: var(--mantine-font-weight-medium);
+  margin-bottom: 6px;
+}
+
+.segmentLabel {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+
+  & svg {
+    flex-shrink: 0;
+  }
+}
+
+.swatches {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 4px;
+}
+
+.swatch {
+  --cs-size: 100%;
+
+  aspect-ratio: 1;
+  cursor: pointer;
+  color: var(--mantine-color-white);
+  border: 0;
+  padding: 0;
+  outline-offset: 2px;
+
+  &:focus-visible {
+    outline: 2px solid var(--mantine-primary-color-filled);
+  }
+}
+
+.swatchCheck {
+  position: relative;
+  z-index: 1;
+}
