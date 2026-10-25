@@ -49,6 +49,10 @@ const config: KnipConfig = {
       entry: ['src/app/**/*.mdx'],
       project: ['src/**/*.{ts,tsx,mdx}', 'test-utils/**/*.ts', '@types/**/*.ts'],
     },
+    'apps/themes.mantine.dev': {
+      entry: ['src/app/**/*.tsx'],
+      project: ['src/**/*.{ts,tsx}', '@types/**/*.ts'],
+    },
   },
 };
 

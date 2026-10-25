@@ -1,0 +1,11 @@
+.root {
+  height: 100%;
+}
+
+.inner {
+  padding: var(--mantine-spacing-md);
+}
+
+.title {
+  color: var(--mantine-color-bright);
+}

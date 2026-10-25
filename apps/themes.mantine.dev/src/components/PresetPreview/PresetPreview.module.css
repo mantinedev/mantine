@@ -1,0 +1,5 @@
+.root {
+  min-height: 480px;
+  border: 1px dashed var(--mantine-color-default-border);
+  border-radius: var(--mantine-radius-md);
+}

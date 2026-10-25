@@ -83,3 +83,5 @@ claude/
 
 apps/ai.mantine.dev/out
 apps/ai.mantine.dev/next-env.d.ts
+apps/themes.mantine.dev/out
+apps/themes.mantine.dev/next-env.d.ts

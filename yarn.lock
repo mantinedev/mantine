@@ -21728,6 +21728,26 @@ __metadata:
   languageName: node
   linkType: hard
 
+"themes.mantine.dev@workspace:apps/themes.mantine.dev":
+  version: 0.0.0-use.local
+  resolution: "themes.mantine.dev@workspace:apps/themes.mantine.dev"
+  dependencies:
+    "@mantine/core": "workspace:*"
+    "@mantine/hooks": "workspace:*"
+    "@mantinex/mantine-header": "workspace:*"
+    "@mantinex/mantine-logo": "workspace:*"
+    "@mantinex/mantine-meta": "workspace:*"
+    "@tabler/icons-react": "npm:^3.49.0"
+    "@types/node": "npm:^26.6.3"
+    "@types/react": "npm:19.3.0"
+    "@types/react-dom": "npm:19.3.0"
+    next: "npm:16.3.6"
+    react: "npm:19.3.0"
+    react-dom: "npm:19.3.0"
+    typescript: "npm:6.0.3"
+  languageName: unknown
+  linkType: soft
+
 "through2@npm:~0.4.1":
   version: 0.4.2
   resolution: "through2@npm:0.4.2"

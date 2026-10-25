@@ -1,0 +1,29 @@
+{
+  "name": "themes.mantine.dev",
+  "version": "1.0.0",
+  "description": "Mantine theme editor",
+  "private": true,
+  "scripts": {
+    "dev": "next dev --port 4821",
+    "build": "next build && touch out/.nojekyll && echo 'themes.mantine.dev' > out/CNAME",
+    "start": "next start",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@mantine/core": "workspace:*",
+    "@mantine/hooks": "workspace:*",
+    "@mantinex/mantine-header": "workspace:*",
+    "@mantinex/mantine-logo": "workspace:*",
+    "@mantinex/mantine-meta": "workspace:*",
+    "@tabler/icons-react": "^3.49.0",
+    "next": "16.3.6",
+    "react": "19.3.0",
+    "react-dom": "19.3.0"
+  },
+  "devDependencies": {
+    "@types/node": "^26.6.3",
+    "@types/react": "19.3.0",
+    "@types/react-dom": "19.3.0",
+    "typescript": "6.0.3"
+  }
+}
