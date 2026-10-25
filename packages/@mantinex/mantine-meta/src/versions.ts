@@ -14,7 +14,7 @@ export interface Version {
 export const allVersions = [
   {
     version: '10.0.0',
-    date: 'November 24, 2026',
+    date: 'March 2, 2027',
     github: 'https://github.com/mantinedev/mantine/releases/tag/10.0.0',
     link: 'https://mantine.dev/changelog/10-0-0',
     patches: [],
