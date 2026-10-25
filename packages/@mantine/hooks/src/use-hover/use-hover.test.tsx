@@ -54,4 +54,58 @@ describe('@mantine/hooks/use-hover', () => {
     fireEvent.mouseLeave(target);
     expect(target).toHaveTextContent('false');
   });
+
+  it('removes listeners when React detaches the ref', () => {
+    function Switch({ show }: { show: boolean }) {
+      const { ref, hovered } = useHover();
+
+      return (
+        <>
+          {show ? <div data-testid="target" ref={ref} /> : null}
+          <div data-testid="state">{hovered ? 'true' : 'false'}</div>
+        </>
+      );
+    }
+
+    const { rerender } = render(<Switch show />);
+    const target = screen.getByTestId('target');
+
+    fireEvent.mouseEnter(target);
+    expect(screen.getByTestId('state')).toHaveTextContent('true');
+
+    rerender(<Switch show={false} />);
+    expect(screen.getByTestId('state')).toHaveTextContent('false');
+
+    fireEvent.mouseEnter(target);
+    expect(screen.getByTestId('state')).toHaveTextContent('false');
+  });
+
+  it('stops updating from the previous node when the ref moves to another element', () => {
+    function Move({ which }: { which: 'a' | 'b' }) {
+      const { ref, hovered } = useHover();
+
+      return (
+        <>
+          <div data-testid="a" ref={which === 'a' ? ref : undefined} />
+          <div data-testid="b" ref={which === 'b' ? ref : undefined} />
+          <div data-testid="state">{hovered ? 'true' : 'false'}</div>
+        </>
+      );
+    }
+
+    const { rerender } = render(<Move which="a" />);
+    const first = screen.getByTestId('a');
+
+    fireEvent.mouseEnter(first);
+    expect(screen.getByTestId('state')).toHaveTextContent('true');
+
+    rerender(<Move which="b" />);
+    expect(screen.getByTestId('state')).toHaveTextContent('false');
+
+    fireEvent.mouseEnter(first);
+    expect(screen.getByTestId('state')).toHaveTextContent('false');
+
+    fireEvent.mouseEnter(screen.getByTestId('b'));
+    expect(screen.getByTestId('state')).toHaveTextContent('true');
+  });
 });
