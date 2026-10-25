@@ -117,7 +117,7 @@ function hslStringToRgba(hslaString: string): RGBA {
     r: Math.round((r + m) * 255),
     g: Math.round((g + m) * 255),
     b: Math.round((b + m) * 255),
-    a: a || 1,
+    a: a === undefined ? 1 : a,
   };
 }
 

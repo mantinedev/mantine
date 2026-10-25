@@ -28,6 +28,11 @@ describe('@mantine/core/to-rgba', () => {
     expect(toRgba('rgb(112, 72, 232 / .2)')).toStrictEqual({ r: 112, g: 72, b: 232, a: 0.2 });
   });
 
+  it('preserves zero alpha in hsla colors', () => {
+    expect(toRgba('hsla(120, 100%, 50%, 0)')).toStrictEqual({ r: 0, g: 255, b: 0, a: 0 });
+    expect(toRgba('hsla(240, 100%, 50%, 0.0)')).toStrictEqual({ r: 0, g: 0, b: 255, a: 0 });
+  });
+
   it('returns the correct rgba values when given an hsl string', () => {
     expect(toRgba('hsl(0, 0%, 0%)')).toStrictEqual({ r: 0, g: 0, b: 0, a: 1 });
     expect(toRgba('hsl(120, 100%, 50%)')).toStrictEqual({ r: 0, g: 255, b: 0, a: 1 });
