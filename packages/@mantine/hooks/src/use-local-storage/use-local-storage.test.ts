@@ -26,6 +26,21 @@ describe('@mantine/hooks/use-local-storage', () => {
     expect(result.current[0]).toBe('hello');
   });
 
+  it('resets value when key changes to a missing key', () => {
+    localStorage.setItem('test', JSON.stringify('stored'));
+
+    const { result, rerender } = renderHook(({ key }) => useLocalStorage({ key }), {
+      initialProps: { key: 'test' },
+    });
+
+    expect(result.current[0]).toBe('stored');
+
+    rerender({ key: 'missing' });
+
+    expect(result.current[0]).toBeUndefined();
+    expect(localStorage.getItem('missing')).toBeNull();
+  });
+
   it('supports functional updater', async () => {
     const { result } = renderHook(() => useLocalStorage<number>({ key: 'count', defaultValue: 1 }));
     await act(async () => result.current[1]((prev) => prev + 1));
