@@ -60,6 +60,7 @@ import {
   previousWeek,
   toDateString,
 } from '../../utils';
+import { getSlotLabelDate } from '../../utils/get-slot-label-date/get-slot-label-date';
 import { AgendaView, AgendaViewStylesNames } from '../AgendaView/AgendaView';
 import {
   CurrentTimeIndicator,
@@ -730,7 +731,7 @@ export const WeekView = factory<WeekViewFactory>((_props) => {
   const timeValues = getSlotLabelGroups(slots).map((group) => {
     const label = group.isLabelStart
       ? formatDate({
-          date: dayjs(`${dayjs(date).format('YYYY-MM-DD')} ${group.startTime}`),
+          date: getSlotLabelDate(date, group.startTime),
           locale: ctx.getLocale(locale),
           format: slotLabelFormat,
         })

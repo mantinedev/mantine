@@ -56,6 +56,7 @@ import {
   isAllDayEvent,
   toDateString,
 } from '../../utils';
+import { getSlotLabelDate } from '../../utils/get-slot-label-date/get-slot-label-date';
 import { AgendaView, AgendaViewStylesNames } from '../AgendaView/AgendaView';
 import {
   CurrentTimeIndicator,
@@ -840,7 +841,7 @@ export const DayView = factory<DayViewFactory>((_props) => {
     const label = group.isLabelStart
       ? formatDate({
           locale: ctx.getLocale(locale),
-          date: dayjs(`${dayjs(date).format('YYYY-MM-DD')} ${group.startTime}`),
+          date: getSlotLabelDate(date, group.startTime),
           format: slotLabelFormat,
         })
       : null;
