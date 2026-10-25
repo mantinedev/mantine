@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { act, cleanup, createEvent, fireEvent, waitFor } from '@testing-library/react';
 import { render, screen, tests, userEvent } from '@mantine-tests/core';
+import { DirectionProvider } from '../../core';
 import { Menu, MenuProps } from './Menu';
 import { MenuDivider } from './MenuDivider/MenuDivider';
 import { MenuDropdown } from './MenuDropdown/MenuDropdown';
@@ -1081,6 +1082,86 @@ describe('@mantine/core/Menu', () => {
       await screen.findByText('Second child');
 
       expect(screen.queryByText('First child')).not.toBeInTheDocument();
+    });
+  });
+
+  describe('Menu.Sub RTL keyboard navigation', () => {
+    function RtlSubMenu({ withSearch = false }: { withSearch?: boolean }) {
+      return (
+        <DirectionProvider initialDirection="rtl" detectDirection={false}>
+          <Menu transitionProps={{ duration: 0 }} withinPortal={false} defaultOpened>
+            <Menu.Target>
+              <button type="button">test-target</button>
+            </Menu.Target>
+            <Menu.Dropdown>
+              {withSearch && <Menu.Search aria-label="search" />}
+              <Menu.Sub transitionProps={{ duration: 0 }}>
+                <Menu.Sub.Target>
+                  <Menu.Sub.Item>More</Menu.Sub.Item>
+                </Menu.Sub.Target>
+                <Menu.Sub.Dropdown>
+                  <Menu.Item>Cherry</Menu.Item>
+                  <Menu.Sub transitionProps={{ duration: 0 }}>
+                    <Menu.Sub.Target>
+                      <Menu.Sub.Item>Nested</Menu.Sub.Item>
+                    </Menu.Sub.Target>
+                    <Menu.Sub.Dropdown>
+                      <Menu.Item>Nested child</Menu.Item>
+                    </Menu.Sub.Dropdown>
+                  </Menu.Sub>
+                </Menu.Sub.Dropdown>
+              </Menu.Sub>
+            </Menu.Dropdown>
+          </Menu>
+        </DirectionProvider>
+      );
+    }
+
+    const subTarget = () => screen.getByText('More').closest('button')!;
+
+    async function openSubMenu() {
+      subTarget().focus();
+      fireEvent.keyDown(subTarget(), { key: 'ArrowLeft' });
+      return (await screen.findByText('Cherry')).closest('button')!;
+    }
+
+    it('opens the submenu with ArrowLeft and ignores ArrowRight', async () => {
+      render(<RtlSubMenu />);
+      subTarget().focus();
+      fireEvent.keyDown(subTarget(), { key: 'ArrowRight' });
+      expect(screen.queryByText('Cherry')).not.toBeInTheDocument();
+
+      expect(await openSubMenu()).toBeInTheDocument();
+    });
+
+    it('closes the submenu with ArrowRight on an item and ignores ArrowLeft', async () => {
+      render(<RtlSubMenu />);
+      const cherry = await openSubMenu();
+      cherry.focus();
+
+      fireEvent.keyDown(cherry, { key: 'ArrowLeft' });
+      expect(screen.getByText('Cherry')).toBeInTheDocument();
+
+      fireEvent.keyDown(cherry, { key: 'ArrowRight' });
+      await waitFor(() => expect(screen.queryByText('Cherry')).not.toBeInTheDocument());
+    });
+
+    it('closes the submenu with ArrowRight on a nested submenu target', async () => {
+      render(<RtlSubMenu />);
+      await openSubMenu();
+      const nested = screen.getByText('Nested').closest('button')!;
+      nested.focus();
+
+      fireEvent.keyDown(nested, { key: 'ArrowRight' });
+      await waitFor(() => expect(screen.queryByText('Cherry')).not.toBeInTheDocument());
+    });
+
+    it('opens the submenu with Enter from Menu.Search', async () => {
+      render(<RtlSubMenu withSearch />);
+      await userEvent.click(screen.getByLabelText('search'));
+      await userEvent.keyboard('{ArrowDown}{Enter}');
+
+      expect(await screen.findByText('Cherry')).toBeInTheDocument();
     });
   });
 

@@ -72,6 +72,7 @@ export const MenuItem = polymorphicFactory<MenuItemFactory>((props) => {
   const subCtx = use(SubMenuContext);
   const theme = useMantineTheme();
   const { dir } = useDirection();
+  const closeKey = dir === 'rtl' ? 'ArrowRight' : 'ArrowLeft';
   const itemRef = useRef<HTMLButtonElement>(null);
   const _others: any = others;
 
@@ -105,7 +106,7 @@ export const MenuItem = polymorphicFactory<MenuItemFactory>((props) => {
   const parsedThemeColor = color ? parseThemeColor({ color, theme }) : null;
 
   const handleKeydown = createEventHandler<any>(_others.onKeyDown, (event) => {
-    if (event.key === 'ArrowLeft' && subCtx) {
+    if (event.key === closeKey && subCtx) {
       subCtx.close();
       subCtx.focusParentItem();
     }
