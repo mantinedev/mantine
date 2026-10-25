@@ -4,17 +4,8 @@
   padding-right: 4px;
   border-radius: var(--mantine-radius-md);
   color: var(--mantine-color-placeholder);
-  border: 1px solid;
-
-  @mixin light {
-    border-color: var(--mantine-color-gray-3);
-    background-color: var(--mantine-color-white);
-  }
-
-  @mixin dark {
-    border-color: var(--mantine-color-dark-4);
-    background-color: var(--mantine-color-dark-6);
-  }
+  border: 1px solid var(--mantine-color-border-input);
+  background-color: var(--mantine-color-surface-input);
 
   @mixin rtl {
     padding-left: 4px;

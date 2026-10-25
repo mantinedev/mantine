@@ -1,16 +1,16 @@
 .support {
   @mixin light {
-    color: var(--mantine-color-red-8);
+    color: var(--mantine-color-red-6);
   }
 
   @mixin dark {
     color: var(--mantine-color-white);
-    background-color: var(--mantine-color-red-9);
-    border-color: var(--mantine-color-red-9);
+    background-color: var(--mantine-color-red-7);
+    border-color: var(--mantine-color-red-7);
 
     @mixin hover {
-      background-color: var(--mantine-color-red-8);
-      border-color: var(--mantine-color-red-8);
+      background-color: var(--mantine-color-red-6);
+      border-color: var(--mantine-color-red-6);
     }
   }
 }
