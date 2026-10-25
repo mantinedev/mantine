@@ -248,6 +248,10 @@
     .wrapper:where(:not([data-variant='unstyled'], [data-with-right-section])) > & {
       --input-padding-inline-end: rem(3px);
     }
+
+    & .placeholder {
+      padding-inline-start: 0.8em;
+    }
   }
 
   /* Used as data attribute in JsonInput component, does not have associated prop on the Input component */
