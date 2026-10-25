@@ -287,9 +287,9 @@ describe('theme.surfaces overrides', () => {
 describe('surface-input token', () => {
   const result = defaultCssVariablesResolver(DEFAULT_THEME);
 
-  it('resolves surface-input to white in light and to the page surface in dark', () => {
+  it('resolves surface-input to white in light and to dark-7 in dark', () => {
     expect(result.light['--mantine-color-surface-input']).toBe('var(--mantine-color-white)');
-    expect(result.dark['--mantine-color-surface-input']).toBe('var(--mantine-color-surface-page)');
+    expect(result.dark['--mantine-color-surface-input']).toBe('var(--mantine-color-dark-7)');
   });
 });
 

@@ -113,7 +113,7 @@
   --mantine-color-dark-6: oklch(0.28 0 0);
   --mantine-color-dark-7: oklch(0.24 0 0);
   --mantine-color-dark-8: oklch(0.2 0 0);
-  --mantine-color-dark-9: oklch(0.16 0 0);
+  --mantine-color-dark-9: oklch(0.17 0 0);
   --mantine-color-gray-0: oklch(0.98 0.0008 260);
   --mantine-color-gray-1: oklch(0.96 0.0016 260);
   --mantine-color-gray-2: oklch(0.93 0.0031 260);
@@ -275,7 +275,7 @@
   --mantine-color-surface-panel-2: var(--mantine-color-dark-5);
   --mantine-color-surface-sunken: var(--mantine-color-dark-9);
   --mantine-color-surface-muted: var(--mantine-color-dark-7);
-  --mantine-color-surface-input: var(--mantine-color-surface-page);
+  --mantine-color-surface-input: var(--mantine-color-dark-7);
   --mantine-color-body: var(--mantine-color-surface-page);
   --mantine-color-error: var(--mantine-color-red-5);
   --mantine-color-success: var(--mantine-color-teal-5);

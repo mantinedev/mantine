@@ -113,7 +113,7 @@ export const defaultCssVariablesResolver: CSSVariablesResolver = (theme) => {
       '--mantine-color-surface-panel-2': 'var(--mantine-color-dark-5)',
       '--mantine-color-surface-sunken': 'var(--mantine-color-dark-9)',
       '--mantine-color-surface-muted': 'var(--mantine-color-dark-7)',
-      '--mantine-color-surface-input': 'var(--mantine-color-surface-page)',
+      '--mantine-color-surface-input': 'var(--mantine-color-dark-7)',
       '--mantine-color-body': 'var(--mantine-color-surface-page)',
       '--mantine-color-error': 'var(--mantine-color-red-5)',
       '--mantine-color-success': 'var(--mantine-color-teal-5)',
