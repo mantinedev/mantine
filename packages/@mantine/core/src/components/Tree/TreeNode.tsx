@@ -1,5 +1,5 @@
 import { Activity, useRef } from 'react';
-import { Box, findElementAncestor, GetStylesApi } from '../../core';
+import { Box, findElementAncestor, GetStylesApi, useDirection } from '../../core';
 import { Loader } from '../Loader';
 import type { TreeDragDropPayload } from './move-tree-node/move-tree-node';
 import type { RenderNode, TreeDragState, TreeFactory, TreeNodeData } from './Tree';
@@ -117,8 +117,12 @@ export function TreeNode({
     withDragHandle,
   });
 
+  const { dir } = useDirection();
+  const expandKey = dir === 'rtl' ? 'ArrowLeft' : 'ArrowRight';
+  const collapseKey = dir === 'rtl' ? 'ArrowRight' : 'ArrowLeft';
+
   const handleKeyDown = (event: React.KeyboardEvent) => {
-    if (event.nativeEvent.code === 'ArrowRight') {
+    if (event.nativeEvent.code === expandKey) {
       event.stopPropagation();
       event.preventDefault();
 
@@ -131,7 +135,7 @@ export function TreeNode({
       }
     }
 
-    if (event.nativeEvent.code === 'ArrowLeft') {
+    if (event.nativeEvent.code === collapseKey) {
       event.stopPropagation();
       event.preventDefault();
       if (isExpanded && hasChildren) {
