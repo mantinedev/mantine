@@ -18,6 +18,11 @@ component you are about to use, then write the UI.
 
 ## Rules that apply everywhere
 
+- **Floating elements anchored to a fixed element use the fixed strategy.** A `Popover`, `Menu`,
+  `Tooltip` or `Combobox` whose target sits inside a `position: fixed` container (a sticky header,
+  a floating action bar) gets `floatingStrategy="fixed"` (or `withinPortal={false}` so it renders
+  inside the fixed container). With the default absolute strategy the dropdown is positioned
+  against the document and drifts away from its target as the page scrolls.
 - **One primary action per view**: the default `filled` button. Every other action is
   `variant="default"`. The `light` and `subtle` variants are never used, on any component:
   not on buttons, badges, action icons or theme icons.
