@@ -43,6 +43,23 @@ Range.prototype.getClientRects = () => [] as unknown as DOMRectList;
 Range.prototype.getBoundingClientRect = () => emptyRect as DOMRect;
 Element.prototype.getClientRects = () => [] as unknown as DOMRectList;
 
+if (typeof Element.prototype.scrollTo !== 'function') {
+  Element.prototype.scrollTo = function scrollTo(
+    this: Element,
+    optionsOrX?: ScrollToOptions | number,
+    y?: number
+  ) {
+    const options = typeof optionsOrX === 'object' ? optionsOrX : { left: optionsOrX, top: y };
+    if (options.top !== undefined) {
+      this.scrollTop = options.top;
+    }
+    if (options.left !== undefined) {
+      this.scrollLeft = options.left;
+    }
+    this.dispatchEvent(new Event('scroll'));
+  } as Element['scrollTo'];
+}
+
 if (typeof globalThis.structuredClone !== 'function') {
   globalThis.structuredClone = <T>(value: T): T => JSON.parse(JSON.stringify(value));
 }

@@ -1,0 +1,16 @@
+.route {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--mantine-spacing-md);
+  align-items: start;
+
+  @media (min-width: $mantine-breakpoint-sm) {
+    grid-template-columns: 1fr 1fr;
+    gap: var(--mantine-spacing-xs);
+  }
+}
+
+.field {
+  flex: 1;
+  min-width: 0;
+}

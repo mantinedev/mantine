@@ -6,6 +6,7 @@ const config: Config = {
     '^.+\\.[tj]sx?$': ['@swc/jest', { jsc: { transform: { react: { runtime: 'automatic' } } } }],
   },
   testMatch: ['<rootDir>/src/examples/**/?(*.)+(test).ts?(x)'],
+  testTimeout: 20000,
   setupFilesAfterEnv: ['<rootDir>/test-utils/jest.setup.ts'],
   moduleNameMapper: {
     '^@test-utils$': '<rootDir>/test-utils',

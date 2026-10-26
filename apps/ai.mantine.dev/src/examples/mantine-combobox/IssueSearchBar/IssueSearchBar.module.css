@@ -1,0 +1,27 @@
+.key {
+  font-weight: var(--mantine-font-weight-medium);
+}
+
+.list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.row {
+  padding: var(--mantine-spacing-sm) var(--mantine-spacing-md);
+
+  & + & {
+    border-top: 1px solid var(--mantine-color-default-border);
+  }
+}
+
+.texts {
+  flex: 1;
+  min-width: 0;
+}
+
+.title {
+  font-weight: var(--mantine-font-weight-medium);
+  color: var(--mantine-color-bright);
+}

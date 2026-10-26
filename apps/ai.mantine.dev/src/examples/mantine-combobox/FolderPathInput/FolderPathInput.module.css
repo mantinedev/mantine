@@ -1,0 +1,50 @@
+.field {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--mantine-spacing-sm);
+}
+
+.input {
+  flex: 1;
+  min-width: 0;
+}
+
+.field > button {
+  flex-shrink: 0;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.option {
+  display: flex;
+  align-items: center;
+  gap: var(--mantine-spacing-xs);
+}
+
+.icon {
+  flex-shrink: 0;
+  color: var(--mantine-color-yellow-text);
+}
+
+.name {
+  flex: 1;
+  min-width: 0;
+}
+
+.count {
+  flex-shrink: 0;
+}
+
+.hint {
+  display: flex;
+  flex-shrink: 0;
+  width: 14px;
+}
+
+.saved {
+  margin-top: var(--mantine-spacing-md);
+}

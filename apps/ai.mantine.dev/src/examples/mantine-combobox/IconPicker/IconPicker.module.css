@@ -1,0 +1,66 @@
+.dropdown {
+  padding: 4px;
+}
+
+.styleControl {
+  margin: var(--mantine-spacing-xs) 4px 4px;
+}
+
+.grid {
+  position: relative;
+  width: 100%;
+}
+
+.row,
+.sectionLabel {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+}
+
+.row {
+  display: grid;
+  grid-template-columns: repeat(8, 40px);
+  align-content: start;
+  gap: 4px;
+  padding-inline: 4px;
+}
+
+.sectionLabel {
+  display: flex;
+  align-items: flex-end;
+  padding: 0 4px 6px;
+}
+
+.cell {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  padding: 0;
+
+  /* icon that holds the value */
+  &[data-combobox-active] {
+    background-color: var(--mantine-primary-color-light);
+    color: var(--mantine-primary-color-light-color);
+  }
+
+  /* keyboard highlight */
+  &[data-combobox-selected] {
+    background-color: var(--mantine-primary-color-filled);
+    color: var(--mantine-primary-color-contrast);
+  }
+}
+
+.empty {
+  padding-block: var(--mantine-spacing-xl);
+}
+
+.footer {
+  display: flex;
+  align-items: center;
+  gap: var(--mantine-spacing-xs);
+  min-height: 40px;
+}

@@ -8693,6 +8693,7 @@ __metadata:
     "@swc/core": "npm:^1.16.18"
     "@swc/jest": "npm:^0.2.39"
     "@tabler/icons-react": "npm:^3.49.0"
+    "@tanstack/react-virtual": "npm:^3.14.13"
     "@testing-library/jest-dom": "npm:7.0.1"
     "@testing-library/react": "npm:16.3.3"
     "@testing-library/user-event": "npm:14.6.7"

@@ -1,0 +1,22 @@
+.option {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--mantine-spacing-xs);
+
+  &[data-nested] {
+    padding-inline-start: var(--mantine-spacing-xl);
+  }
+}
+
+.icon {
+  flex-shrink: 0;
+  margin-top: 3px;
+}
+
+.texts {
+  min-width: 0;
+}
+
+.title {
+  font-weight: 500;
+}

@@ -31,6 +31,7 @@
     "@next/mdx": "16.3.6",
     "@phosphor-icons/react": "^2.1.10",
     "@tabler/icons-react": "^3.49.0",
+    "@tanstack/react-virtual": "^3.14.13",
     "@tiptap/extension-link": "^3.31.3",
     "@tiptap/extension-placeholder": "^3.31.3",
     "@tiptap/pm": "^3.31.3",

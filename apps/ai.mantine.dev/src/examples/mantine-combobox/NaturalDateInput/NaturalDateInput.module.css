@@ -1,0 +1,7 @@
+.phrase {
+  color: var(--mantine-color-bright);
+}
+
+.warning {
+  color: var(--mantine-color-orange-text);
+}
