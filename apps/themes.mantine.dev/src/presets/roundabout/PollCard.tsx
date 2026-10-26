@@ -13,7 +13,7 @@ export function PollCard({ poll, myVote, onVote }: PollCardProps) {
 
   return (
     <Card className={classes.card} padding={0} data-card>
-      <div className={classes.cardPad} style={{ paddingBottom: 12 }}>
+      <div className={classes.cardPad} style={{ paddingBottom: 'var(--mantine-spacing-sm)' }}>
         <Title order={4}>Which cabin?</Title>
         <Text size="sm" mt={2}>
           Pick one. Closes Sunday evening.

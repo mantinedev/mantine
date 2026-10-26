@@ -130,7 +130,14 @@ export const theme = createTheme({
 
   defaultRadius: 'md',
   radius: { xs: rem(6), sm: rem(8), md: rem(10), lg: rem(16), xl: rem(20) },
-  spacing: { xs: rem(6), sm: rem(10), md: rem(14), lg: rem(18), xl: rem(20) },
+  spacing: {
+    '2xs': rem(4),
+    xs: rem(6),
+    sm: rem(10),
+    md: rem(14),
+    lg: rem(18),
+    xl: rem(20),
+  },
   shadows: {
     md: '0 18px 40px -18px rgba(22, 25, 21, 0.4), 0 3px 8px rgba(22, 25, 21, 0.08)',
   },
@@ -241,7 +248,7 @@ export const theme = createTheme({
           '--alert-title-color': 'var(--mantine-color-bright)',
           '--alert-icon-color': 'var(--mantine-color-green-filled)',
           '--alert-radius': 'var(--mantine-radius-lg)',
-          '--alert-padding': `${rem(12)} ${rem(14)}`,
+          '--alert-padding': 'calc(var(--mantine-spacing-sm) * 1.2) var(--mantine-spacing-md)',
           '--alert-close-size': rem(30),
         },
       }),
@@ -253,7 +260,7 @@ export const theme = createTheme({
     }),
 
     Modal: Modal.extend({
-      defaultProps: { radius: 'xl', padding: 22, size: 420, centered: true },
+      defaultProps: { radius: 'xl', padding: 'xl', size: 420, centered: true },
       classNames: { title: classes.modalTitle, overlay: classes.modalOverlay },
     }),
 

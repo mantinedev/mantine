@@ -14,8 +14,8 @@
 .head {
   display: flex;
   align-items: center;
-  gap: 10px;
-  padding: 10px 14px;
+  gap: var(--mantine-spacing-sm);
+  padding: var(--mantine-spacing-sm) var(--mantine-spacing-md);
   border-bottom: 1px solid var(--mantine-color-border);
 }
 
@@ -54,15 +54,16 @@
 }
 
 .scrollInner {
-  padding: 18px 12px 40px 22px;
+  padding: var(--mantine-spacing-lg) var(--mantine-spacing-md) var(--mantine-spacing-3xl)
+    var(--mantine-spacing-xl);
 
   @container preset (max-width: 480px) {
-    padding-left: 10px;
+    padding-left: var(--mantine-spacing-sm);
   }
 }
 
 .sheet {
-  padding: 30px 28px 40px;
+  padding: var(--mantine-spacing-2xl) var(--mantine-spacing-2xl) var(--mantine-spacing-3xl);
   border: 1px solid var(--mantine-color-border);
   background: var(--mantine-color-surface-panel);
   box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
@@ -72,7 +73,7 @@
   color: var(--mantine-color-bright);
 
   @container preset (max-width: 480px) {
-    padding: 22px 16px 30px;
+    padding: var(--mantine-spacing-xl) var(--mantine-spacing-lg) var(--mantine-spacing-2xl);
   }
 }
 
@@ -82,7 +83,7 @@
 }
 
 .between {
-  margin: 6px 0 18px;
+  margin: var(--mantine-spacing-xs) 0 var(--mantine-spacing-lg);
   text-align: center;
   font-size: 14.5px;
   font-style: italic;
@@ -90,17 +91,17 @@
 }
 
 .clause {
-  margin-top: 16px;
+  margin-top: var(--mantine-spacing-lg);
 
   & p {
-    margin: 0 0 6px;
+    margin: 0 0 var(--mantine-spacing-xs);
     padding-left: 26px;
     text-indent: -26px;
   }
 }
 
 .clauseTitle {
-  margin: 0 0 4px;
+  margin: 0 0 var(--mantine-spacing-2xs);
   font-family: inherit;
 
   & span {
@@ -146,7 +147,7 @@
 
 .pageBreak {
   position: relative;
-  margin: 22px -28px;
+  margin: var(--mantine-spacing-xl) calc(var(--mantine-spacing-2xl) * -1);
   border: 0;
   border-top: 1px dashed var(--mantine-color-border-strong);
 
@@ -155,7 +156,7 @@
     position: absolute;
     right: 8px;
     top: -9px;
-    padding: 0 6px;
+    padding: 0 var(--mantine-spacing-xs);
     background: var(--mantine-color-surface-panel);
     font-family: var(--mantine-font-family);
     font-size: 11px;
@@ -164,7 +165,7 @@
   }
 
   @container preset (max-width: 480px) {
-    margin-inline: -16px;
+    margin-inline: calc(var(--mantine-spacing-lg) * -1);
   }
 }
 

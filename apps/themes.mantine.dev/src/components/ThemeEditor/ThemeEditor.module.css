@@ -1,5 +1,0 @@
-.content {
-  display: flex;
-  flex-direction: column;
-  height: calc(100dvh - var(--app-shell-header-offset, 0rem));
-}

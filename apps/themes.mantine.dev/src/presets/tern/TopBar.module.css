@@ -4,15 +4,15 @@
   z-index: 20;
   display: flex;
   align-items: center;
-  gap: 16px;
+  gap: var(--mantine-spacing-md);
   height: 60px;
-  padding: 0 20px;
+  padding: 0 var(--mantine-spacing-lg);
   background: var(--mantine-color-body);
   border-bottom: 1px solid var(--mantine-color-border);
 
   @container preset (max-width: 480px) {
-    gap: 8px;
-    padding: 0 12px;
+    gap: var(--mantine-spacing-xs);
+    padding: 0 var(--mantine-spacing-sm);
   }
 }
 
@@ -61,7 +61,7 @@
   display: inline-flex;
   align-items: center;
   height: 32px;
-  padding: 0 10px;
+  padding: 0 var(--mantine-spacing-xs);
   border-radius: var(--mantine-radius-md);
   text-decoration: none;
   font-size: var(--mantine-font-size-sm);

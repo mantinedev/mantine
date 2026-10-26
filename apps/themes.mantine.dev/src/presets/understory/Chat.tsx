@@ -15,6 +15,7 @@ import {
   Chip,
   Group,
   Loader,
+  ScrollArea,
   SegmentedControl,
   Slider,
   Textarea,
@@ -140,7 +141,7 @@ function AskCard({
           Soil
         </div>
         <Chip.Group value={soil} onChange={(value) => setSoil(value as string)}>
-          <Group gap={6} role="radiogroup" aria-labelledby="understory-soil">
+          <Group gap="2xs" role="radiogroup" aria-labelledby="understory-soil">
             {SOILS.map((item) => (
               <Chip key={item} value={item} type="radio">
                 {item}
@@ -260,103 +261,107 @@ export function Chat({
 
   return (
     <section className={`${classes.root} ${className ?? ''}`} aria-label="Conversation">
-      <div className={classes.thread} ref={threadRef}>
-        <div className={classes.user}>
-          Our back garden is about 6 by 4 metres, north-facing, with a 1.8 m fence on two sides.
-          Heavy clay. We’d like something green all year that the kids can’t wreck.
-        </div>
-
-        <AssistantMessage>
-          <div className={classes.prose}>
-            <p>
-              That’s a lovely size for a woodland-edge garden. Shade and clay are a good pair for
-              ferns and hellebores. A few quick answers and I’ll draw the first plan.
-            </p>
+      <ScrollArea className={classes.threadScroll} scrollbars="y" viewportRef={threadRef}>
+        <div className={classes.thread}>
+          <div className={classes.user}>
+            Our back garden is about 6 by 4 metres, north-facing, with a 1.8 m fence on two sides.
+            Heavy clay. We’d like something green all year that the kids can’t wreck.
           </div>
-          <AskCard
-            pets={pets}
-            onPetsChange={onPetsChange}
-            onApply={() =>
-              onToast(
-                pets
-                  ? 'Plants harmful to dogs are marked. Use Swap to replace them.'
-                  : 'Plan updated for your answers'
-              )
-            }
-          />
-        </AssistantMessage>
 
-        <AssistantMessage>
-          <div className={classes.prose}>
-            <p>
-              Here’s <b>plan v1</b>. Ferns and hydrangeas take the darkest corner by the fences,
-              hostas and silver-leaved brunnera brighten the edges, and hellebores flower by the
-              back door from Christmas to March.
-            </p>
-            <p>The one sunny spot, by the bench, gets about two hours of morning light.</p>
-          </div>
-          <div className={classes.tools}>
-            <ActionIcon variant="subtle" size={30} aria-label="Copy">
-              <IconCopy size={18} stroke={1.8} />
-            </ActionIcon>
-            <ActionIcon variant="subtle" size={30} aria-label="Try again">
-              <IconRotateClockwise size={18} stroke={1.8} />
-            </ActionIcon>
-          </div>
-        </AssistantMessage>
-
-        <div className={classes.user}>Can you make it more wildlife-friendly? Bees especially.</div>
-
-        <AssistantMessage>
-          <div className={classes.prose}>
-            <p>
-              Done, that’s <b>plan v2</b>. Foxgloves give bumblebees something in June, Japanese
-              anemones carry on into October, and a log pile in the corner is home for beetles and
-              frogs. I took out one hydrangea to make room.
-            </p>
-          </div>
-          <ChangeCard title="Changes from v1" changes={V2_CHANGES} onCompare={onCompare} />
-        </AssistantMessage>
-
-        {messages.map((message) =>
-          message.role === 'user' ? (
-            <div key={message.id} className={classes.user}>
-              {message.text}
+          <AssistantMessage>
+            <div className={classes.prose}>
+              <p>
+                That’s a lovely size for a woodland-edge garden. Shade and clay are a good pair for
+                ferns and hellebores. A few quick answers and I’ll draw the first plan.
+              </p>
             </div>
-          ) : (
-            <AssistantMessage key={message.id}>
-              {message.status === 'thinking' ? (
-                <div className={classes.status}>
-                  <Loader type="dots" size={18} />
-                  {message.label}
-                </div>
-              ) : (
-                <div className={classes.prose}>
-                  <p>
-                    {message.text}
-                    {message.status === 'streaming' && <span className={classes.caret} />}
-                  </p>
-                </div>
-              )}
-              {message.status === 'stopped' && (
-                <div className={classes.status} data-stopped>
-                  Stopped. The plan wasn’t changed.
-                </div>
-              )}
-              {message.changes && (
-                <ChangeCard
-                  title="Changes from v2"
-                  changes={message.changes}
-                  onCompare={onCompare}
-                />
-              )}
-            </AssistantMessage>
-          )
-        )}
-      </div>
+            <AskCard
+              pets={pets}
+              onPetsChange={onPetsChange}
+              onApply={() =>
+                onToast(
+                  pets
+                    ? 'Plants harmful to dogs are marked. Use Swap to replace them.'
+                    : 'Plan updated for your answers'
+                )
+              }
+            />
+          </AssistantMessage>
+
+          <AssistantMessage>
+            <div className={classes.prose}>
+              <p>
+                Here’s <b>plan v1</b>. Ferns and hydrangeas take the darkest corner by the fences,
+                hostas and silver-leaved brunnera brighten the edges, and hellebores flower by the
+                back door from Christmas to March.
+              </p>
+              <p>The one sunny spot, by the bench, gets about two hours of morning light.</p>
+            </div>
+            <div className={classes.tools}>
+              <ActionIcon variant="subtle" size={30} aria-label="Copy">
+                <IconCopy size={18} stroke={1.8} />
+              </ActionIcon>
+              <ActionIcon variant="subtle" size={30} aria-label="Try again">
+                <IconRotateClockwise size={18} stroke={1.8} />
+              </ActionIcon>
+            </div>
+          </AssistantMessage>
+
+          <div className={classes.user}>
+            Can you make it more wildlife-friendly? Bees especially.
+          </div>
+
+          <AssistantMessage>
+            <div className={classes.prose}>
+              <p>
+                Done, that’s <b>plan v2</b>. Foxgloves give bumblebees something in June, Japanese
+                anemones carry on into October, and a log pile in the corner is home for beetles and
+                frogs. I took out one hydrangea to make room.
+              </p>
+            </div>
+            <ChangeCard title="Changes from v1" changes={V2_CHANGES} onCompare={onCompare} />
+          </AssistantMessage>
+
+          {messages.map((message) =>
+            message.role === 'user' ? (
+              <div key={message.id} className={classes.user}>
+                {message.text}
+              </div>
+            ) : (
+              <AssistantMessage key={message.id}>
+                {message.status === 'thinking' ? (
+                  <div className={classes.status}>
+                    <Loader type="dots" size={18} />
+                    {message.label}
+                  </div>
+                ) : (
+                  <div className={classes.prose}>
+                    <p>
+                      {message.text}
+                      {message.status === 'streaming' && <span className={classes.caret} />}
+                    </p>
+                  </div>
+                )}
+                {message.status === 'stopped' && (
+                  <div className={classes.status} data-stopped>
+                    Stopped. The plan wasn’t changed.
+                  </div>
+                )}
+                {message.changes && (
+                  <ChangeCard
+                    title="Changes from v2"
+                    changes={message.changes}
+                    onCompare={onCompare}
+                  />
+                )}
+              </AssistantMessage>
+            )
+          )}
+        </div>
+      </ScrollArea>
 
       <div className={classes.composerWrap}>
-        <div className={classes.suggestions}>
+        <ScrollArea type="never" scrollbars="x" classNames={{ content: classes.suggestions }}>
           {SUGGESTIONS.map((suggestion) => (
             <Button
               key={suggestion}
@@ -373,7 +378,7 @@ export function Chat({
               {suggestion}
             </Button>
           ))}
-        </div>
+        </ScrollArea>
         <form
           onSubmit={(event) => {
             event.preventDefault();

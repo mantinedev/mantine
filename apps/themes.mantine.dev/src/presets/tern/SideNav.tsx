@@ -35,7 +35,7 @@ export function SideNav({ className }: { className?: string }) {
           component="button"
           label={group.label}
           defaultOpened={group.opened}
-          childrenOffset={8}
+          childrenOffset="xs"
           className={classes.group}
           classNames={{ collapse: classes.collapse }}
         >

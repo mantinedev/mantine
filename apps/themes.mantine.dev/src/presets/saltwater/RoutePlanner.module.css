@@ -8,8 +8,8 @@
   display: grid;
   grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr);
   align-items: start;
-  gap: 40px;
-  margin-top: 40px;
+  gap: var(--mantine-spacing-2xl);
+  margin-top: var(--mantine-spacing-2xl);
 
   @container preset (max-width: 980px) {
     grid-template-columns: minmax(0, 1fr);
@@ -17,7 +17,7 @@
 }
 
 .trip {
-  padding: 26px;
+  padding: var(--mantine-spacing-lg);
   border: 0;
   border-radius: var(--mantine-radius-xl);
   background: var(--sw-paper);
@@ -31,7 +31,7 @@
 
 .legs {
   position: relative;
-  margin: 18px 0 0;
+  margin: calc(var(--mantine-spacing-sm) * 1.5) 0 0;
   padding: 0;
   list-style: none;
 
@@ -50,8 +50,8 @@
     display: grid;
     grid-template-columns: 20px minmax(0, 1fr) auto auto;
     align-items: center;
-    gap: 12px;
-    padding: 7px 0;
+    gap: var(--mantine-spacing-sm);
+    padding: var(--mantine-spacing-xs) 0;
 
     &::before {
       content: '';
@@ -70,7 +70,7 @@
 }
 
 .gd {
-  margin-left: 6px;
+  margin-left: var(--mantine-spacing-xs);
   font-size: 12.5px;
   font-style: italic;
 }
@@ -93,8 +93,8 @@
 }
 
 .empty {
-  margin-top: 18px;
-  padding: 18px;
+  margin-top: calc(var(--mantine-spacing-sm) * 1.5);
+  padding: calc(var(--mantine-spacing-sm) * 1.5);
   border: 2px dashed var(--sw-paper-line);
   border-radius: 14px;
   font-size: 15px;
@@ -105,15 +105,15 @@
   --sc-label-color: #fff;
 
   display: flex;
-  gap: 4px;
+  gap: calc(var(--mantine-spacing-xs) / 2);
   width: fit-content;
-  margin-top: 20px;
+  margin-top: calc(var(--mantine-spacing-sm) * 1.5);
   border: 0;
   background: var(--sw-paper-well);
 
   & label {
     height: 36px;
-    padding: 0 14px;
+    padding: 0 var(--mantine-spacing-sm);
     color: var(--sw-paper-text);
   }
 
@@ -125,9 +125,9 @@
 .sum {
   display: grid;
   grid-template-columns: 1fr auto;
-  gap: 6px 12px;
-  margin-top: 18px;
-  padding-top: 16px;
+  gap: var(--mantine-spacing-xs) var(--mantine-spacing-sm);
+  margin-top: calc(var(--mantine-spacing-sm) * 1.5);
+  padding-top: calc(var(--mantine-spacing-sm) * 1.5);
   border-top: 2px dashed var(--sw-paper-rule);
   font-size: 15px;
 }
@@ -154,11 +154,11 @@
 }
 
 .buy {
-  margin-top: 18px;
+  margin-top: calc(var(--mantine-spacing-sm) * 1.5);
 }
 
 .note {
-  margin-top: 10px;
+  margin-top: var(--mantine-spacing-sm);
   font-size: 13px;
   text-align: center;
 }

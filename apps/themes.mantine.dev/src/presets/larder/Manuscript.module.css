@@ -2,19 +2,21 @@
   position: sticky;
   top: 0;
   z-index: 3;
+  padding: var(--mantine-spacing-xs) var(--mantine-spacing-lg);
+  background: var(--mantine-color-surface-panel);
+  border-bottom: 1px solid var(--mantine-color-border);
+}
+
+.toolbarRow {
   display: flex;
   align-items: center;
   gap: 2px;
-  padding: 8px 20px;
-  overflow-x: auto;
-  background: var(--mantine-color-surface-panel);
-  border-bottom: 1px solid var(--mantine-color-border);
 }
 
 .tool {
   min-width: 32px;
   width: auto;
-  padding-inline: 8px;
+  padding-inline: var(--mantine-spacing-xs);
   font-size: var(--mantine-font-size-md);
   font-weight: var(--mantine-font-weight-bold);
 
@@ -32,13 +34,13 @@
   flex: none;
   width: 1px;
   height: 20px;
-  margin: 0 6px;
+  margin: 0 var(--mantine-spacing-2xs);
   background: var(--mantine-color-border);
 }
 
 .count {
   margin-inline-start: auto;
-  padding-inline-start: 12px;
+  padding-inline-start: var(--mantine-spacing-sm);
   font-size: var(--mantine-font-size-sm);
   font-variant-numeric: tabular-nums;
   white-space: nowrap;
@@ -51,14 +53,16 @@
 .sheet {
   max-width: 680px;
   margin: 0 auto;
-  padding: 36px 40px 64px;
+  padding: calc(var(--mantine-spacing-xs) * 4.5) calc(var(--mantine-spacing-xs) * 5)
+    calc(var(--mantine-spacing-xs) * 8);
 
   @container preset (max-width: 1000px) {
-    padding: 32px 32px 56px;
+    padding: var(--mantine-spacing-xl) var(--mantine-spacing-xl) calc(var(--mantine-spacing-xs) * 7);
   }
 
   @container preset (max-width: 760px) {
-    padding: 24px 20px 48px;
+    padding: calc(var(--mantine-spacing-xs) * 3) var(--mantine-spacing-lg)
+      calc(var(--mantine-spacing-xs) * 6);
   }
 }
 
@@ -69,7 +73,7 @@
 }
 
 .titleRoot {
-  margin-top: 8px;
+  margin-top: var(--mantine-spacing-xs);
 }
 
 .titleField,
@@ -95,7 +99,7 @@
 }
 
 .standfirstRoot {
-  margin-top: 14px;
+  margin-top: var(--mantine-spacing-md);
 }
 
 .standfirst {
@@ -108,9 +112,9 @@
 .byline {
   display: flex;
   align-items: center;
-  gap: 10px;
-  margin: 20px 0 24px;
-  padding: 12px 0;
+  gap: var(--mantine-spacing-sm);
+  margin: var(--mantine-spacing-lg) 0 calc(var(--mantine-spacing-xs) * 3);
+  padding: var(--mantine-spacing-sm) 0;
   border-top: 1px solid var(--mantine-color-bright);
   border-bottom: 1px solid var(--mantine-color-border);
   font-size: var(--mantine-font-size-sm);
@@ -142,7 +146,7 @@
 
   & blockquote {
     margin: 1.2em 0;
-    padding-inline-start: 18px;
+    padding-inline-start: var(--mantine-spacing-md);
     border-inline-start: 3px solid var(--mantine-primary-color-filled);
     font-size: 21px;
     font-style: italic;
@@ -176,7 +180,7 @@
   }
 
   & figcaption {
-    margin-top: 6px;
+    margin-top: var(--mantine-spacing-2xs);
     font-family: var(--mantine-font-family);
     font-size: var(--mantine-font-size-xs);
   }

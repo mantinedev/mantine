@@ -15,7 +15,7 @@ export function CardHead({ id, title, description, children }: CardHeadProps) {
         <Title order={2} id={id}>
           {title}
         </Title>
-        <Text size="sm" mt={4}>
+        <Text size="sm" mt="3xs">
           {description}
         </Text>
       </div>

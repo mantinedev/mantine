@@ -134,7 +134,7 @@ export function Prose({ readingSize, onReadingSizeChange }: ProseProps) {
       </p>
 
       <Paper withBorder radius="md" className={classes.tableCard}>
-        <Table.ScrollContainer minWidth={520} type="native">
+        <Table.ScrollContainer minWidth={520}>
           <Table captionSide="top">
             <Table.Caption>
               Average count per pool, autumn surveys

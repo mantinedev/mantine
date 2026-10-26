@@ -52,8 +52,12 @@ export function getEditorState() {
 }
 
 function getInitialColorScheme(): PreviewColorScheme | null {
-  const value = new URLSearchParams(window.location.search).get('scheme');
-  return value === 'light' || value === 'dark' ? value : null;
+  try {
+    const value = window.parent.document.documentElement.getAttribute('data-mantine-color-scheme');
+    return value === 'light' || value === 'dark' ? value : null;
+  } catch {
+    return null;
+  }
 }
 
 export function embeddedColorSchemeManager(): MantineColorSchemeManager {

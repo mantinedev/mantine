@@ -59,7 +59,7 @@ export function MyTimetable({ day, starred, onToggleStar, onShowAll }: MyTimetab
           Open the full timetable and tap the star on any set. It shows up here with walking times
           between stages.
           <div>
-            <Button mt={14} onClick={onShowAll}>
+            <Button mt="sm" onClick={onShowAll}>
               Open the full timetable
             </Button>
           </div>
@@ -125,7 +125,7 @@ export function MyTimetable({ day, starred, onToggleStar, onShowAll }: MyTimetab
       </ol>
 
       <Paper component="aside" className={classes.side}>
-        <Title order={3} mb={10}>
+        <Title order={3} mb="xs">
           {DAY_NAMES[day]} at a glance
         </Title>
         <dl className={classes.stats}>

@@ -2,8 +2,8 @@
   display: grid;
   grid-template-columns: 200px minmax(0, 66ch);
   justify-content: center;
-  gap: 56px;
-  padding: 48px var(--mantine-spacing-xl) var(--mantine-spacing-lg);
+  gap: var(--mantine-spacing-3xl);
+  padding: var(--mantine-spacing-2xl) var(--mantine-spacing-xl) var(--mantine-spacing-lg);
 
   @container preset (max-width: 980px) {
     grid-template-columns: minmax(0, 66ch);
@@ -31,7 +31,7 @@
 }
 
 .railTitle {
-  margin: 0 0 10px;
+  margin: 0 0 var(--mantine-spacing-xs);
   font-weight: var(--mantine-font-weight-bold);
   color: var(--mantine-color-bright);
 }
@@ -39,8 +39,8 @@
 .readerTools {
   display: flex;
   flex-direction: column;
-  gap: 10px;
-  margin-top: 28px;
+  gap: var(--mantine-spacing-xs);
+  margin-top: calc(var(--mantine-spacing-lg) * 1.25);
 }
 
 .toolLabel {
@@ -55,7 +55,7 @@
 
 .share {
   display: flex;
-  gap: 6px;
+  gap: var(--mantine-spacing-2xs);
 }
 
 .prose {
@@ -125,7 +125,7 @@
     display: block;
     width: 48px;
     height: 3px;
-    margin: 0 auto 20px;
+    margin: 0 auto calc(var(--mantine-spacing-md) * 1.25);
     border-radius: 2px;
     background: var(--mantine-primary-color-filled);
   }
@@ -141,7 +141,7 @@
 
   & cite {
     display: block;
-    margin-top: 12px;
+    margin-top: var(--mantine-spacing-sm);
     font-family: var(--mantine-font-family);
     font-size: var(--mantine-font-size-sm);
     font-style: normal;
@@ -152,7 +152,7 @@
   margin: 2em 0;
 
   & figcaption {
-    margin-top: 10px;
+    margin-top: var(--mantine-spacing-xs);
     font-family: var(--mantine-font-family);
     font-size: var(--mantine-font-size-sm);
     line-height: 1.45;
@@ -205,7 +205,7 @@
   }
 
   & ul {
-    margin: 6px 0 0;
+    margin: var(--mantine-spacing-2xs) 0 0;
     padding-left: 1.1em;
   }
 
@@ -219,7 +219,7 @@
   font-size: var(--mantine-font-size-sm);
   line-height: 1.7;
   border-top: 1px solid var(--mantine-color-border);
-  padding-top: 18px;
+  padding-top: var(--mantine-spacing-md);
 
   & li::marker {
     color: var(--mantine-primary-color-filled);
@@ -235,7 +235,7 @@
   }
 
   & li + li {
-    margin-top: 6px;
+    margin-top: var(--mantine-spacing-2xs);
   }
 
   & li:target {
@@ -252,7 +252,7 @@
   --item-filled-color: transparent;
 
   display: none;
-  margin-bottom: 28px;
+  margin-bottom: calc(var(--mantine-spacing-lg) * 1.25);
   font-family: var(--mantine-font-family);
   font-size: var(--mantine-font-size-md);
   line-height: var(--mantine-line-height-md);
@@ -268,11 +268,11 @@
 
 .mobileTocList {
   margin: 0;
-  padding: 0 0 4px 18px;
+  padding: 0 0 var(--mantine-spacing-2xs) var(--mantine-spacing-md);
   font-size: var(--mantine-font-size-sm);
 
   & li + li {
-    margin-top: 6px;
+    margin-top: var(--mantine-spacing-2xs);
   }
 
   & a {
@@ -291,26 +291,26 @@
   align-items: center;
   justify-content: space-between;
   flex-wrap: wrap;
-  gap: 12px;
-  margin-inline: -18px;
-  margin-top: 14px;
-  margin-bottom: -14px;
-  padding: 12px 18px;
+  gap: var(--mantine-spacing-sm);
+  margin-inline: calc(var(--mantine-spacing-md) * -1);
+  margin-top: var(--mantine-spacing-sm);
+  margin-bottom: calc(var(--mantine-spacing-sm) * -1);
+  padding: var(--mantine-spacing-sm) var(--mantine-spacing-md);
   border-top: 1px solid var(--mantine-color-border);
   font-size: var(--mantine-font-size-xs);
   font-weight: var(--mantine-font-weight-medium);
 }
 
 .mobileTocControl {
-  padding-inline: 18px;
+  padding-inline: var(--mantine-spacing-md);
 }
 
 .mobileTocLabel {
-  padding-block: 14px;
+  padding-block: var(--mantine-spacing-sm);
   font-weight: var(--mantine-font-weight-bold);
   color: var(--mantine-color-bright);
 }
 
 .mobileTocContent {
-  padding: 0 18px 14px;
+  padding: 0 var(--mantine-spacing-md) var(--mantine-spacing-sm);
 }

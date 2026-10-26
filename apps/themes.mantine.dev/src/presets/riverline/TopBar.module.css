@@ -15,7 +15,7 @@
 .brand {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: var(--mantine-spacing-xs);
   flex: none;
 }
 
@@ -42,7 +42,7 @@
   position: relative;
   display: inline-flex;
   align-items: center;
-  gap: 8px;
+  gap: var(--mantine-spacing-xs);
   white-space: nowrap;
   text-decoration: none;
   color: var(--mantine-color-text);

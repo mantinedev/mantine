@@ -8,6 +8,7 @@ import {
   Badge,
   Button,
   Paper,
+  ScrollArea,
   Tabs,
   Textarea,
   ThemeIcon,
@@ -238,16 +239,18 @@ export function LessonTabs({ onSeek, onToast }: LessonTabsProps) {
   return (
     <Paper component="section" className={classes.card}>
       <Tabs defaultValue="notes" keepMounted={false}>
-        <Tabs.List className={classes.list} aria-label="Lesson sections">
-          <Tabs.Tab value="notes">Lesson notes</Tabs.Tab>
-          <Tabs.Tab value="transcript">Transcript</Tabs.Tab>
-          <Tabs.Tab value="resources" rightSection={<TabCount>{resources.length}</TabCount>}>
-            Resources
-          </Tabs.Tab>
-          <Tabs.Tab value="discussion" rightSection={<TabCount>{thread.length}</TabCount>}>
-            Discussion
-          </Tabs.Tab>
-        </Tabs.List>
+        <ScrollArea type="never" scrollbars="x">
+          <Tabs.List className={classes.list} aria-label="Lesson sections">
+            <Tabs.Tab value="notes">Lesson notes</Tabs.Tab>
+            <Tabs.Tab value="transcript">Transcript</Tabs.Tab>
+            <Tabs.Tab value="resources" rightSection={<TabCount>{resources.length}</TabCount>}>
+              Resources
+            </Tabs.Tab>
+            <Tabs.Tab value="discussion" rightSection={<TabCount>{thread.length}</TabCount>}>
+              Discussion
+            </Tabs.Tab>
+          </Tabs.List>
+        </ScrollArea>
 
         <Tabs.Panel value="notes" className={classes.panel}>
           <NotesPanel />

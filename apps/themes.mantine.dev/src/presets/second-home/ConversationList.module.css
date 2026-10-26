@@ -7,29 +7,31 @@
 }
 
 .title {
-  padding: 18px 18px 10px;
+  padding: var(--mantine-spacing-lg) var(--mantine-spacing-lg) var(--mantine-spacing-sm);
 }
 
 .tabs {
-  padding: 0 18px 12px;
+  padding: 0 var(--mantine-spacing-lg) calc(var(--mantine-spacing-sm) * 1.2);
+}
+
+.scroll {
+  flex: 1;
+  min-height: 0;
 }
 
 .list {
-  flex: 1;
-  min-height: 0;
   margin: 0;
-  padding: 0 8px 12px;
-  overflow-y: auto;
+  padding: 0 calc(var(--mantine-spacing-sm) * 0.8) calc(var(--mantine-spacing-sm) * 1.2);
   list-style: none;
 }
 
 .conversation {
   display: grid;
   grid-template-columns: 56px minmax(0, 1fr);
-  gap: 2px 12px;
+  gap: 2px calc(var(--mantine-spacing-sm) * 1.2);
   align-items: center;
   width: 100%;
-  padding: 10px;
+  padding: var(--mantine-spacing-sm);
   border-radius: 14px;
   font-size: var(--mantine-font-size-md);
 
@@ -68,7 +70,7 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 8px;
+  gap: calc(var(--mantine-spacing-sm) * 0.8);
   min-width: 0;
 }
 
@@ -110,7 +112,7 @@
   display: flex;
   flex: none;
   align-items: center;
-  gap: 6px;
+  gap: var(--mantine-spacing-xs);
 }
 
 .agreed {
@@ -123,8 +125,8 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 10px;
-  padding: 40px 24px;
+  gap: var(--mantine-spacing-sm);
+  padding: calc(var(--mantine-spacing-xl) * 2) calc(var(--mantine-spacing-xl) * 1.2);
   text-align: center;
 }
 

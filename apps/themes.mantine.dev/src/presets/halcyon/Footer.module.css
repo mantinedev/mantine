@@ -2,8 +2,8 @@
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
-  gap: 24px;
-  padding: 40px var(--hc-gutter);
+  gap: calc(var(--mantine-spacing-md) * 1.1);
+  padding: calc(var(--mantine-spacing-md) * 1.9) var(--hc-gutter);
   border-top: 1px solid var(--mantine-color-border);
   font-size: 14px;
 }
@@ -11,7 +11,7 @@
 .links {
   display: flex;
   flex-wrap: wrap;
-  gap: 22px;
+  gap: calc(var(--mantine-spacing-md) * 1.1);
 }
 
 .link {

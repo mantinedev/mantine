@@ -7,6 +7,7 @@
     "dev": "next dev --port 4821",
     "build": "next build && touch out/.nojekyll && echo 'themes.mantine.dev' > out/CNAME",
     "start": "next start",
+    "generate:fonts": "node scripts/generate-google-fonts.mjs",
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
@@ -23,6 +24,7 @@
     "@tabler/icons-react": "^3.49.0",
     "dayjs": "^1.11.23",
     "next": "16.3.6",
+    "nuqs": "^2.10.2",
     "react": "19.3.0",
     "react-dom": "19.3.0",
     "recharts": "^3.10.1"

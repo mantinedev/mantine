@@ -1,4 +1,4 @@
-import { UnstyledButton } from '@mantine/core';
+import { ScrollArea, UnstyledButton } from '@mantine/core';
 import { type Order, shortDate, weekday } from './data';
 import classes from './Views.module.css';
 
@@ -29,7 +29,7 @@ export function CalendarView({ orders, onOpen }: CalendarViewProps) {
   const later = active.filter((order) => order.due > 3);
 
   return (
-    <div className={classes.wrap}>
+    <ScrollArea className={classes.wrap} classNames={{ content: classes.wrapContent }}>
       <div className={classes.calendar}>
         {OFFSETS.map((offset) => {
           const items = active.filter((order) =>
@@ -66,6 +66,6 @@ export function CalendarView({ orders, onOpen }: CalendarViewProps) {
           ))}
         </div>
       </div>
-    </div>
+    </ScrollArea>
   );
 }

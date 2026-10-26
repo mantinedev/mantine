@@ -1,7 +1,7 @@
 'use client';
 
 import { useCallback, useRef, useState } from 'react';
-import { Transition } from '@mantine/core';
+import { ScrollArea, Transition } from '@mantine/core';
 import { PresetFrame } from '@/components/PresetFrame';
 import { PresetProvider } from '@/components/PresetProvider';
 import { Chat } from './Chat';
@@ -93,32 +93,38 @@ function Planner() {
         />
 
         <section className={classes.canvas} aria-label="Plan">
-          <PlanCard
-            state={state}
-            highlighted={highlighted}
-            onHighlight={setHighlighted}
-            onViewChange={setView}
-            onSeasonChange={setSeason}
-          />
-
-          <div className={classes.grid}>
-            <PlantList
+          <ScrollArea
+            className={classes.canvasScroll}
+            scrollbars="y"
+            classNames={{ content: classes.canvasContent }}
+          >
+            <PlanCard
               state={state}
               highlighted={highlighted}
               onHighlight={setHighlighted}
-              onSwap={swap}
+              onViewChange={setView}
+              onSeasonChange={setSeason}
             />
-            <ShoppingList state={state} onToast={showToast} />
-          </div>
 
-          <p className={classes.credits}>
-            Plant photos from Wikimedia Commons: hosta by Shadowmeld Photography (CC BY-SA 4.0);
-            brunnera by Didier Descouens (CC BY-SA 4.0); hellebore by Dominicus Johannes Bergsma (CC
-            BY-SA 4.0); Japanese anemone by Böhringer Friedrich (CC BY-SA 2.5); wood fern by Derek
-            Ramsey (CC BY-SA 2.5); foxglove by IES Manuel García Barros (CC BY-SA 2.0); hydrangea by
-            Ірина Бучнєва (CC0); cyclamen by hamon jp (CC BY-SA 3.0). Understory is a fictional
-            product.
-          </p>
+            <div className={classes.grid}>
+              <PlantList
+                state={state}
+                highlighted={highlighted}
+                onHighlight={setHighlighted}
+                onSwap={swap}
+              />
+              <ShoppingList state={state} onToast={showToast} />
+            </div>
+
+            <p className={classes.credits}>
+              Plant photos from Wikimedia Commons: hosta by Shadowmeld Photography (CC BY-SA 4.0);
+              brunnera by Didier Descouens (CC BY-SA 4.0); hellebore by Dominicus Johannes Bergsma
+              (CC BY-SA 4.0); Japanese anemone by Böhringer Friedrich (CC BY-SA 2.5); wood fern by
+              Derek Ramsey (CC BY-SA 2.5); foxglove by IES Manuel García Barros (CC BY-SA 2.0);
+              hydrangea by Ірина Бучнєва (CC0); cyclamen by hamon jp (CC BY-SA 3.0). Understory is a
+              fictional product.
+            </p>
+          </ScrollArea>
         </section>
       </div>
 

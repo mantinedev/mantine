@@ -31,9 +31,9 @@
 .toast {
   position: absolute;
   z-index: 50;
-  bottom: 20px;
+  bottom: var(--mantine-spacing-xl);
   left: 50%;
-  padding: 10px 18px;
+  padding: var(--mantine-spacing-sm) var(--mantine-spacing-lg);
   border-radius: 1000px;
   background: var(--mantine-color-bright);
   color: var(--mantine-color-body);
@@ -46,7 +46,7 @@
 
 .credits {
   margin: 0;
-  padding: 12px 16px;
+  padding: calc(var(--mantine-spacing-sm) * 1.2) var(--mantine-spacing-lg);
   border-top: 1px solid var(--mantine-color-border);
   background: light-dark(var(--mantine-color-gray-0), var(--mantine-color-dark-8));
   font-size: 12.5px;

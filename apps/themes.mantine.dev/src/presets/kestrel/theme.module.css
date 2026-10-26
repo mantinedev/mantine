@@ -86,15 +86,15 @@
 }
 
 .accordionLabel {
-  padding-block: 10px;
+  padding-block: calc(var(--mantine-spacing-xs) * 1.25);
   font-weight: 600;
 }
 
 .accordionChevron {
   justify-content: flex-end;
-  margin-inline-start: 8px;
+  margin-inline-start: var(--mantine-spacing-xs);
 }
 
 .accordionContent {
-  padding: 0 0 12px;
+  padding: 0 0 var(--mantine-spacing-sm);
 }

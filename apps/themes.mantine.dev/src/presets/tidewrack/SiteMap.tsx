@@ -150,7 +150,7 @@ export function SiteMap({
         <div>
           <Paper className={classes.walks} aria-live="polite">
             <Title order={3}>From the {current.name}</Title>
-            <Text size="sm" fz={13.5} mt={4} mb={10}>
+            <Text size="sm" fz={13.5} mt="2xs" mb="xs">
               Walking times at an easy pace, through the crowd.
             </Text>
             <Table>

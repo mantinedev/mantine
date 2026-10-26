@@ -1,8 +1,8 @@
 .photo {
-  margin: 28px 0 0;
+  margin: calc((var(--mantine-spacing-lg) + var(--mantine-spacing-xl)) / 2) 0 0;
 
   & figcaption {
-    margin-top: 8px;
+    margin-top: var(--mantine-spacing-xs);
     font-size: 14px;
   }
 }
@@ -14,9 +14,9 @@
 .plan {
   display: grid;
   grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr);
-  gap: 44px;
+  gap: var(--mantine-spacing-3xl);
   align-items: start;
-  margin-top: 40px;
+  margin-top: var(--mantine-spacing-2xl);
 
   @container preset (max-width: 980px) {
     grid-template-columns: minmax(0, 1fr);
@@ -25,7 +25,7 @@
 
 .phases {
   margin: 0;
-  padding-bottom: 26px;
+  padding-bottom: var(--mantine-spacing-lg);
 }
 
 .phase {
@@ -47,14 +47,14 @@
 }
 
 .status {
-  margin-top: 8px;
+  margin-top: var(--mantine-spacing-xs);
 }
 
 .map {
   position: sticky;
-  top: 16px;
+  top: var(--mantine-spacing-md);
   margin: 0;
-  padding: 16px;
+  padding: var(--mantine-spacing-md);
   border-radius: var(--mantine-radius-lg);
   background: var(--mantine-color-surface-muted);
 
@@ -86,15 +86,15 @@
 .legend {
   display: flex;
   flex-wrap: wrap;
-  gap: 18px;
-  margin-top: 10px;
-  padding: 0 4px;
+  gap: var(--mantine-spacing-md);
+  margin-top: var(--mantine-spacing-sm);
+  padding: 0 calc(var(--mantine-spacing-xs) / 2);
   font-size: 14px;
 
   & span {
     display: inline-flex;
     align-items: center;
-    gap: 8px;
+    gap: var(--mantine-spacing-xs);
   }
 
   & i {

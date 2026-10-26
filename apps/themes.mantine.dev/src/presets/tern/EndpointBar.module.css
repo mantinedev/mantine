@@ -1,11 +1,11 @@
 .root {
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: var(--mantine-spacing-sm);
   min-width: 0;
   height: 48px;
-  margin-top: 16px;
-  padding: 0 6px;
+  margin-top: var(--mantine-spacing-md);
+  padding: 0 calc(var(--mantine-spacing-sm) / 2);
   border: 1px solid var(--mantine-color-default-border);
   border-radius: var(--mantine-radius-md);
   background: var(--tern-subtle);
@@ -29,11 +29,9 @@
 .path {
   flex: 1;
   min-width: 0;
-  overflow-x: auto;
   white-space: nowrap;
   font-size: 15px;
   color: var(--mantine-color-bright);
-  scrollbar-width: none;
 }
 
 .pathRest {

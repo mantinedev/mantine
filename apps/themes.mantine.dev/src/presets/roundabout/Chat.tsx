@@ -12,7 +12,17 @@ import {
   IconSearch,
   IconSnowflake,
 } from '@tabler/icons-react';
-import { ActionIcon, Avatar, Badge, Button, Card, Image, Text, Title } from '@mantine/core';
+import {
+  ActionIcon,
+  Avatar,
+  Badge,
+  Button,
+  Card,
+  Image,
+  ScrollArea,
+  Text,
+  Title,
+} from '@mantine/core';
 import { type AttachKind, Composer } from './Composer';
 import { type Availability, PEOPLE, PHOTOS, type PollOption } from './data';
 import { DatesGrid } from './DatesGrid';
@@ -198,194 +208,196 @@ export function Chat({
         </ActionIcon>
       </header>
 
-      <div className={classes.messages} ref={messagesRef} aria-live="polite">
-        <span className={classes.day}>Friday 19 February</span>
+      <ScrollArea className={classes.messagesScroll} scrollbars="y" viewportRef={messagesRef}>
+        <div className={classes.messages} aria-live="polite">
+          <span className={classes.day}>Friday 19 February</span>
 
-        <Message from="ingrid" time="18:02">
-          <Bubble>
-            Okay, it’s happening. I booked the ferry from Bodø for all six of us. Some inspiration
-            while we sort the rest:
-          </Bubble>
-          <div className={classes.photos} style={{ marginTop: 6 }}>
-            <img
-              src={PHOTOS.reine}
-              alt="Reine at dawn, snowy peaks lit pink above red fishing cabins"
-            />
-            <img src={PHOTOS.sakrisoy} alt="Yellow cabins at Sakrisøy over clear green water" />
-            <img src={PHOTOS.aurora} alt="Northern lights over a mountain reflected in a fjord" />
-          </div>
-          <Reactions
-            initial={[
-              {
-                label: 'Heart',
-                icon: <IconHeart size={14} stroke={1.8} />,
-                count: 4,
-                pressed: true,
-              },
-              {
-                label: 'Snowflake',
-                icon: <IconSnowflake size={14} stroke={1.8} />,
-                count: 2,
-                pressed: false,
-              },
-            ]}
-          />
-        </Message>
-
-        <Message from="tomas" time="18:20">
-          <Card className={classes.card} padding={0}>
-            <Image
-              src={PHOTOS.cabin}
-              alt="Red rorbu cabins on stilts by a snowy harbour"
-              h={150}
-              radius={0}
-            />
-            <div className={classes.cardPad}>
-              <div className={classes.host}>
-                <IconLink size={14} stroke={1.8} />
-                harbourcabins.example
-              </div>
-              <Title order={4} mt={4}>
-                Rorbu on the harbour, Svolvær
-              </Title>
-              <Text size="sm" mt={2}>
-                A fisherman’s cabin on stilts with a wood sauna and a view of the boats.
-              </Text>
-              <div className={classes.chips}>
-                <Badge variant="default">4 bedrooms</Badge>
-                <Badge variant="default">Sleeps 6</Badge>
-                <Badge variant="default">NOK 2,350 a night</Badge>
-              </div>
+          <Message from="ingrid" time="18:02">
+            <Bubble>
+              Okay, it’s happening. I booked the ferry from Bodø for all six of us. Some inspiration
+              while we sort the rest:
+            </Bubble>
+            <div className={classes.photos} style={{ marginTop: 'var(--mantine-spacing-2xs)' }}>
+              <img
+                src={PHOTOS.reine}
+                alt="Reine at dawn, snowy peaks lit pink above red fishing cabins"
+              />
+              <img src={PHOTOS.sakrisoy} alt="Yellow cabins at Sakrisøy over clear green water" />
+              <img src={PHOTOS.aurora} alt="Northern lights over a mountain reflected in a fjord" />
             </div>
-          </Card>
-        </Message>
-
-        <div ref={pollRef}>
-          <Message from="mira" time="18:31">
-            <PollCard poll={poll} myVote={myVote} onVote={onVote} />
-          </Message>
-        </div>
-
-        <Message from="tomas" time="18:34">
-          <Bubble quote={{ author: 'Mira', text: 'Which cabin?' }}>
-            The Svolvær one has a sauna and it’s a short walk to the ferry. I rest my case.
-          </Bubble>
-          <Reactions
-            initial={[
-              {
-                label: 'Smile',
-                icon: <IconMoodSmile size={14} stroke={1.8} />,
-                count: 3,
-                pressed: false,
-              },
-            ]}
-          />
-        </Message>
-
-        <span className={classes.day}>Today</span>
-
-        <div ref={datesRef}>
-          <Message from="mira" time="09:12" wide>
-            <DatesGrid
-              availability={availability}
-              counts={counts}
-              run={run}
-              pillRef={pillRef}
-              onToggleDay={toggleDay}
+            <Reactions
+              initial={[
+                {
+                  label: 'Heart',
+                  icon: <IconHeart size={14} stroke={1.8} />,
+                  count: 4,
+                  pressed: true,
+                },
+                {
+                  label: 'Snowflake',
+                  icon: <IconSnowflake size={14} stroke={1.8} />,
+                  count: 2,
+                  pressed: false,
+                },
+              ]}
             />
           </Message>
-        </div>
 
-        <Message from="lars" time="09:40">
-          <VoiceNote />
-        </Message>
-
-        <Message from="ingrid" time="10:05">
-          <Card className={classes.card} padding={0}>
-            <div className={`${classes.cardPad} ${classes.expense}`}>
-              <span className={classes.expenseIcon}>
-                <IconFerry size={20} stroke={1.8} />
-              </span>
-              <Title order={4}>Ferry, Bodø to Moskenes</Title>
-              <span className={classes.amount}>
-                NOK 4,800<small>paid by Ingrid</small>
-              </span>
-              <Text size="sm">Split six ways, NOK 800 each</Text>
-            </div>
-            <div className={classes.cardFoot}>
-              <span>
-                {settledAmount === null
-                  ? 'Added to the trip split'
-                  : `You paid Ingrid NOK ${formatAmount(settledAmount)}`}
-              </span>
-              <Button
-                variant="default"
-                size="xs"
-                disabled={settledAmount !== null}
-                onClick={settle}
-              >
-                {settledAmount === null ? 'Settle my share' : 'Settled'}
-              </Button>
-            </div>
-          </Card>
-        </Message>
-
-        <Message from="lars" time="10:12">
-          <Card className={classes.card} padding={0}>
-            <HamnoyMap />
-            <div className={`${classes.cardPad} ${classes.pinLabel}`}>
-              <div>
-                <Title order={4}>Hamnøy bridge</Title>
-                <Text size="sm" mt={2}>
-                  Best photo spot for the red cabins at sunrise
-                </Text>
-              </div>
-              <Button
-                variant="default"
-                size="xs"
-                className={classes.noShrink}
-                leftSection={<IconMapPin size={17} stroke={1.8} />}
-              >
-                Directions
-              </Button>
-            </div>
-          </Card>
-        </Message>
-
-        <OwnMessage meta="10:20, seen by 5">
-          <Bubble quote={{ author: 'Lars', text: 'Hamnøy bridge' }}>
-            Adding it to the list. I’ll drive us there on the first morning if the road is clear.
-          </Bubble>
-        </OwnMessage>
-
-        {extras.map((extra) => {
-          if (extra.kind === 'system') {
-            return (
-              <div key={extra.id} className={classes.system}>
-                You updated your days. Best stretch is now <b>{extra.label}</b>
-                {extra.need === PEOPLE.length ? ', everyone free.' : `, ${extra.need} of 6 free.`}
-              </div>
-            );
-          }
-          return (
-            <OwnMessage key={extra.id} meta={`${extra.time}, sent`}>
-              {extra.kind === 'text' && <Bubble>{extra.text}</Bubble>}
-              {extra.kind === 'photo' && (
-                <div className={classes.singlePhoto}>
-                  <img src={PHOTOS.sakrisoy} alt="Yellow cabins at Sakrisøy" />
+          <Message from="tomas" time="18:20">
+            <Card className={classes.card} padding={0}>
+              <Image
+                src={PHOTOS.cabin}
+                alt="Red rorbu cabins on stilts by a snowy harbour"
+                h={150}
+                radius={0}
+              />
+              <div className={classes.cardPad}>
+                <div className={classes.host}>
+                  <IconLink size={14} stroke={1.8} />
+                  harbourcabins.example
                 </div>
-              )}
-              {extra.kind === 'place' && (
-                <Bubble>
-                  <b>Pinned: Reinebringen trailhead</b>
-                  <br />
-                  Steep stairs, 1.5 hours up. Only if it’s not icy.
-                </Bubble>
-              )}
-            </OwnMessage>
-          );
-        })}
-      </div>
+                <Title order={4} mt="3xs">
+                  Rorbu on the harbour, Svolvær
+                </Title>
+                <Text size="sm" mt={2}>
+                  A fisherman’s cabin on stilts with a wood sauna and a view of the boats.
+                </Text>
+                <div className={classes.chips}>
+                  <Badge variant="default">4 bedrooms</Badge>
+                  <Badge variant="default">Sleeps 6</Badge>
+                  <Badge variant="default">NOK 2,350 a night</Badge>
+                </div>
+              </div>
+            </Card>
+          </Message>
+
+          <div ref={pollRef}>
+            <Message from="mira" time="18:31">
+              <PollCard poll={poll} myVote={myVote} onVote={onVote} />
+            </Message>
+          </div>
+
+          <Message from="tomas" time="18:34">
+            <Bubble quote={{ author: 'Mira', text: 'Which cabin?' }}>
+              The Svolvær one has a sauna and it’s a short walk to the ferry. I rest my case.
+            </Bubble>
+            <Reactions
+              initial={[
+                {
+                  label: 'Smile',
+                  icon: <IconMoodSmile size={14} stroke={1.8} />,
+                  count: 3,
+                  pressed: false,
+                },
+              ]}
+            />
+          </Message>
+
+          <span className={classes.day}>Today</span>
+
+          <div ref={datesRef}>
+            <Message from="mira" time="09:12" wide>
+              <DatesGrid
+                availability={availability}
+                counts={counts}
+                run={run}
+                pillRef={pillRef}
+                onToggleDay={toggleDay}
+              />
+            </Message>
+          </div>
+
+          <Message from="lars" time="09:40">
+            <VoiceNote />
+          </Message>
+
+          <Message from="ingrid" time="10:05">
+            <Card className={classes.card} padding={0}>
+              <div className={`${classes.cardPad} ${classes.expense}`}>
+                <span className={classes.expenseIcon}>
+                  <IconFerry size={20} stroke={1.8} />
+                </span>
+                <Title order={4}>Ferry, Bodø to Moskenes</Title>
+                <span className={classes.amount}>
+                  NOK 4,800<small>paid by Ingrid</small>
+                </span>
+                <Text size="sm">Split six ways, NOK 800 each</Text>
+              </div>
+              <div className={classes.cardFoot}>
+                <span>
+                  {settledAmount === null
+                    ? 'Added to the trip split'
+                    : `You paid Ingrid NOK ${formatAmount(settledAmount)}`}
+                </span>
+                <Button
+                  variant="default"
+                  size="xs"
+                  disabled={settledAmount !== null}
+                  onClick={settle}
+                >
+                  {settledAmount === null ? 'Settle my share' : 'Settled'}
+                </Button>
+              </div>
+            </Card>
+          </Message>
+
+          <Message from="lars" time="10:12">
+            <Card className={classes.card} padding={0}>
+              <HamnoyMap />
+              <div className={`${classes.cardPad} ${classes.pinLabel}`}>
+                <div>
+                  <Title order={4}>Hamnøy bridge</Title>
+                  <Text size="sm" mt={2}>
+                    Best photo spot for the red cabins at sunrise
+                  </Text>
+                </div>
+                <Button
+                  variant="default"
+                  size="xs"
+                  className={classes.noShrink}
+                  leftSection={<IconMapPin size={17} stroke={1.8} />}
+                >
+                  Directions
+                </Button>
+              </div>
+            </Card>
+          </Message>
+
+          <OwnMessage meta="10:20, seen by 5">
+            <Bubble quote={{ author: 'Lars', text: 'Hamnøy bridge' }}>
+              Adding it to the list. I’ll drive us there on the first morning if the road is clear.
+            </Bubble>
+          </OwnMessage>
+
+          {extras.map((extra) => {
+            if (extra.kind === 'system') {
+              return (
+                <div key={extra.id} className={classes.system}>
+                  You updated your days. Best stretch is now <b>{extra.label}</b>
+                  {extra.need === PEOPLE.length ? ', everyone free.' : `, ${extra.need} of 6 free.`}
+                </div>
+              );
+            }
+            return (
+              <OwnMessage key={extra.id} meta={`${extra.time}, sent`}>
+                {extra.kind === 'text' && <Bubble>{extra.text}</Bubble>}
+                {extra.kind === 'photo' && (
+                  <div className={classes.singlePhoto}>
+                    <img src={PHOTOS.sakrisoy} alt="Yellow cabins at Sakrisøy" />
+                  </div>
+                )}
+                {extra.kind === 'place' && (
+                  <Bubble>
+                    <b>Pinned: Reinebringen trailhead</b>
+                    <br />
+                    Steep stairs, 1.5 hours up. Only if it’s not icy.
+                  </Bubble>
+                )}
+              </OwnMessage>
+            );
+          })}
+        </div>
+      </ScrollArea>
 
       <Composer
         onSend={(text) => addExtra({ kind: 'text', text, time: now() })}

@@ -91,7 +91,16 @@ export const theme = createTheme({
 
   defaultRadius: 'md',
   radius: { xs: rem(3), sm: rem(4), md: rem(6), lg: rem(8), xl: rem(10) },
-  spacing: { xs: rem(8), sm: rem(12), md: rem(16), lg: rem(20), xl: rem(28) },
+  spacing: {
+    '2xs': rem(4),
+    xs: rem(8),
+    sm: rem(12),
+    md: rem(16),
+    lg: rem(20),
+    xl: rem(28),
+    '2xl': rem(40),
+    '3xl': rem(48),
+  },
   shadows: {
     md: '0 16px 40px -16px rgba(14, 20, 28, 0.35), 0 2px 6px rgba(14, 20, 28, 0.08)',
   },
@@ -143,7 +152,7 @@ export const theme = createTheme({
     }),
 
     Table: Table.extend({
-      defaultProps: { horizontalSpacing: rem(14), fz: 'sm' },
+      defaultProps: { horizontalSpacing: 'sm', fz: 'sm' },
       classNames: { table: classes.table, th: classes.th, td: classes.td },
     }),
 

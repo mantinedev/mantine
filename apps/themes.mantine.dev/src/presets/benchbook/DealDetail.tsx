@@ -18,6 +18,7 @@ import {
   Button,
   Checkbox,
   Menu,
+  ScrollArea,
   Tabs,
   Textarea,
   Timeline,
@@ -222,95 +223,104 @@ export function DealDetail({
 
   return (
     <main className={classes.detail} aria-live="polite">
-      <div className={classes.detailInner}>
-        <UnstyledButton className={classes.back} onClick={onBack}>
-          <IconChevronLeft size={16} stroke={1.75} />
-          Commissions
-        </UnstyledButton>
+      <ScrollArea className={classes.detailScroll} scrollbars="y" scrollbarSize={8}>
+        <div className={classes.detailInner}>
+          <UnstyledButton className={classes.back} onClick={onBack}>
+            <IconChevronLeft size={16} stroke={1.75} />
+            Commissions
+          </UnstyledButton>
 
-        <div className={classes.recordHead}>
-          <div className={classes.recordMain}>
-            <Title order={2} className={classes.recordTitle}>
-              {deal.client}
-            </Title>
-            <div className={classes.recordSub}>
-              <span>
-                {deal.project}, {deal.place}
-              </span>
-              {deal.late && <Badge color="red">{deal.due}</Badge>}
-              {!deal.late && deal.closed && <Badge color="green">Closed</Badge>}
+          <div className={classes.recordHead}>
+            <div className={classes.recordMain}>
+              <Title order={2} className={classes.recordTitle}>
+                {deal.client}
+              </Title>
+              <div className={classes.recordSub}>
+                <span>
+                  {deal.project}, {deal.place}
+                </span>
+                {deal.late && <Badge color="red">{deal.due}</Badge>}
+                {!deal.late && deal.closed && <Badge color="green">Closed</Badge>}
+              </div>
+            </div>
+            <div className={classes.recordActions}>
+              <Button
+                variant="default"
+                className={classes.logCall}
+                leftSection={<IconPhone size={17} stroke={1.75} />}
+                onClick={onLogCall}
+              >
+                Log a call
+              </Button>
+              <Button leftSection={<IconSend size={17} stroke={1.75} />}>Email client</Button>
+              <Menu position="bottom-end">
+                <Menu.Target>
+                  <ActionIcon aria-label="More actions">
+                    <IconDots size={20} stroke={1.75} />
+                  </ActionIcon>
+                </Menu.Target>
+                <Menu.Dropdown>
+                  <Menu.Item leftSection={<IconPencil {...MENU_ICON} />}>Edit details</Menu.Item>
+                  <Menu.Item leftSection={<IconCopy {...MENU_ICON} />}>
+                    Duplicate as new quote
+                  </Menu.Item>
+                  <Menu.Divider />
+                  <Menu.Item color="red" leftSection={<IconArchive {...MENU_ICON} />}>
+                    Mark as lost
+                  </Menu.Item>
+                </Menu.Dropdown>
+              </Menu>
             </div>
           </div>
-          <div className={classes.recordActions}>
-            <Button
-              variant="default"
-              className={classes.logCall}
-              leftSection={<IconPhone size={17} stroke={1.75} />}
-              onClick={onLogCall}
-            >
-              Log a call
-            </Button>
-            <Button leftSection={<IconSend size={17} stroke={1.75} />}>Email client</Button>
-            <Menu position="bottom-end">
-              <Menu.Target>
-                <ActionIcon aria-label="More actions">
-                  <IconDots size={20} stroke={1.75} />
-                </ActionIcon>
-              </Menu.Target>
-              <Menu.Dropdown>
-                <Menu.Item leftSection={<IconPencil {...MENU_ICON} />}>Edit details</Menu.Item>
-                <Menu.Item leftSection={<IconCopy {...MENU_ICON} />}>
-                  Duplicate as new quote
-                </Menu.Item>
-                <Menu.Divider />
-                <Menu.Item color="red" leftSection={<IconArchive {...MENU_ICON} />}>
-                  Mark as lost
-                </Menu.Item>
-              </Menu.Dropdown>
-            </Menu>
+
+          <div>
+            <StageStepper stage={deal.stage} />
+            <div className={classes.stageRow}>
+              <span>
+                Owner <b>{OWNERS[deal.owner]}</b>, {STAGES[deal.stage].toLowerCase()} stage
+              </span>
+              {next && (
+                <Button variant="default" size="xs" onClick={onAdvance}>
+                  Move to {next.toLowerCase()}
+                </Button>
+              )}
+            </div>
           </div>
+
+          <Tabs
+            value={tab}
+            onChange={(value) => onTabChange(value as DetailTab)}
+            className={classes.tabsRoot}
+          >
+            <ScrollArea scrollbars="x" type="never">
+              <Tabs.List aria-label="Record sections">
+                <Tabs.Tab value="overview">Overview</Tabs.Tab>
+                <Tabs.Tab value="files" rightSection={deal.files.length}>
+                  Files
+                </Tabs.Tab>
+                <Tabs.Tab value="emails" rightSection={deal.emails.length}>
+                  Emails
+                </Tabs.Tab>
+              </Tabs.List>
+            </ScrollArea>
+
+            <Tabs.Panel value="overview" className={classes.panel}>
+              <Overview
+                key={deal.id}
+                deal={deal}
+                onAddNote={onAddNote}
+                onToggleTask={onToggleTask}
+              />
+            </Tabs.Panel>
+            <Tabs.Panel value="files">
+              <Files deal={deal} />
+            </Tabs.Panel>
+            <Tabs.Panel value="emails">
+              <Emails deal={deal} />
+            </Tabs.Panel>
+          </Tabs>
         </div>
-
-        <div>
-          <StageStepper stage={deal.stage} />
-          <div className={classes.stageRow}>
-            <span>
-              Owner <b>{OWNERS[deal.owner]}</b>, {STAGES[deal.stage].toLowerCase()} stage
-            </span>
-            {next && (
-              <Button variant="default" size="xs" onClick={onAdvance}>
-                Move to {next.toLowerCase()}
-              </Button>
-            )}
-          </div>
-        </div>
-
-        <Tabs
-          value={tab}
-          onChange={(value) => onTabChange(value as DetailTab)}
-          className={classes.tabsRoot}
-        >
-          <Tabs.List aria-label="Record sections">
-            <Tabs.Tab value="overview">Overview</Tabs.Tab>
-            <Tabs.Tab value="files" rightSection={deal.files.length}>
-              Files
-            </Tabs.Tab>
-            <Tabs.Tab value="emails" rightSection={deal.emails.length}>
-              Emails
-            </Tabs.Tab>
-          </Tabs.List>
-
-          <Tabs.Panel value="overview" className={classes.panel}>
-            <Overview key={deal.id} deal={deal} onAddNote={onAddNote} onToggleTask={onToggleTask} />
-          </Tabs.Panel>
-          <Tabs.Panel value="files">
-            <Files deal={deal} />
-          </Tabs.Panel>
-          <Tabs.Panel value="emails">
-            <Emails deal={deal} />
-          </Tabs.Panel>
-        </Tabs>
-      </div>
+      </ScrollArea>
     </main>
   );
 }

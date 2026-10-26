@@ -4,8 +4,8 @@
   z-index: 20;
   display: flex;
   flex-direction: column;
-  gap: 12px;
-  padding: 14px var(--tw-gutter);
+  gap: var(--mantine-spacing-sm);
+  padding: var(--mantine-spacing-sm) var(--tw-gutter);
   background: var(--mantine-color-body);
   border-bottom: 1px solid var(--mantine-color-border);
 }
@@ -14,7 +14,7 @@
   display: flex;
   align-items: center;
   flex-wrap: wrap;
-  gap: 12px;
+  gap: var(--mantine-spacing-sm);
 }
 
 .spacer {
@@ -24,7 +24,7 @@
 .days {
   display: flex;
   flex-wrap: nowrap;
-  gap: 6px;
+  gap: var(--mantine-spacing-2xs);
 }
 
 .day {
@@ -84,7 +84,7 @@
 .chips {
   display: flex;
   flex-wrap: wrap;
-  gap: 6px;
+  gap: var(--mantine-spacing-2xs);
 }
 
 .search {

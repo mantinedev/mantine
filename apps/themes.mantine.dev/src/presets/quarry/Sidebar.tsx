@@ -8,6 +8,7 @@ import {
   Button,
   NavLink,
   Popover,
+  ScrollArea,
   UnstyledButton,
   useMantineColorScheme,
 } from '@mantine/core';
@@ -47,7 +48,11 @@ export function Sidebar({ opened, onNewQuestion, onOpenSaved, onAskAboutTable }:
         </Button>
       </div>
 
-      <div className={classes.scroll}>
+      <ScrollArea
+        className={classes.scroll}
+        scrollbars="y"
+        classNames={{ content: classes.scrollContent }}
+      >
         <div className={classes.label}>
           Saved analyses <span>{saved.length}</span>
         </div>
@@ -105,15 +110,17 @@ export function Sidebar({ opened, onNewQuestion, onOpenSaved, onAskAboutTable }:
                       {source.rows} rows, {source.columns.length} columns
                     </span>
                   </div>
-                  <ul className={classes.columns}>
-                    {source.columns.map((column) => (
-                      <li key={column.name}>
-                        <code>{column.name}</code>
-                        {column.key && <span className={classes.key}>{column.key}</span>}
-                        <span className={classes.type}>{column.type}</span>
-                      </li>
-                    ))}
-                  </ul>
+                  <ScrollArea.Autosize mah={280} scrollbars="y">
+                    <ul className={classes.columns}>
+                      {source.columns.map((column) => (
+                        <li key={column.name}>
+                          <code>{column.name}</code>
+                          {column.key && <span className={classes.key}>{column.key}</span>}
+                          <span className={classes.type}>{column.type}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </ScrollArea.Autosize>
                   <div className={classes.schemaFoot}>
                     <Button
                       size="xs"
@@ -134,7 +141,7 @@ export function Sidebar({ opened, onNewQuestion, onOpenSaved, onAskAboutTable }:
             </li>
           ))}
         </ul>
-      </div>
+      </ScrollArea>
 
       <div className={classes.footer}>
         <Avatar>NO</Avatar>

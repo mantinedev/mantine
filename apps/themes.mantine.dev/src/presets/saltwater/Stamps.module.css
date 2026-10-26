@@ -9,8 +9,8 @@
 .grid {
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: 28px 24px;
-  margin-top: 44px;
+  gap: calc(var(--mantine-spacing-lg) * 1.25) var(--mantine-spacing-lg);
+  margin-top: var(--mantine-spacing-2xl);
 
   @container preset (max-width: 980px) {
     grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -18,7 +18,7 @@
 
   @container preset (max-width: 520px) {
     grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 20px 14px;
+    gap: calc(var(--mantine-spacing-sm) * 1.5) var(--mantine-spacing-sm);
   }
 }
 
@@ -139,8 +139,8 @@
   display: flex;
   width: fit-content;
   align-items: center;
-  gap: 6px;
-  margin-top: 10px;
+  gap: var(--mantine-spacing-xs);
+  margin-top: var(--mantine-spacing-sm);
   font-size: 14px;
   font-weight: var(--mantine-font-weight-bold);
   color: var(--mantine-color-bright);

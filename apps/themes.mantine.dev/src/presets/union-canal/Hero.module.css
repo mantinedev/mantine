@@ -1,20 +1,21 @@
 .root {
-  padding: 44px 48px 56px;
+  padding: var(--mantine-spacing-3xl) var(--mantine-spacing-3xl)
+    calc((var(--mantine-spacing-3xl) + var(--mantine-spacing-4xl)) / 2);
   background: var(--uc-ground);
   color: var(--uc-ground-ink);
 
   @container preset (max-width: 980px) {
-    padding-inline: 32px;
+    padding-inline: var(--mantine-spacing-xl);
   }
 
   @container preset (max-width: 520px) {
-    padding-inline: 16px;
+    padding-inline: var(--mantine-spacing-md);
   }
 }
 
 .photo {
-  margin: 0 0 24px;
-  padding: 6px;
+  margin: 0 0 var(--mantine-spacing-lg);
+  padding: calc(var(--mantine-spacing-xs) * 0.75);
   border: 2px solid var(--uc-chrome);
   border-radius: 4px;
 }
@@ -27,9 +28,9 @@
 
   & figcaption {
     position: absolute;
-    left: 14px;
-    bottom: 12px;
-    padding: 4px 10px;
+    left: var(--mantine-spacing-sm);
+    bottom: var(--mantine-spacing-sm);
+    padding: calc(var(--mantine-spacing-xs) / 2) var(--mantine-spacing-sm);
     border-radius: 3px;
     background: var(--uc-ground);
     color: var(--uc-ground-ink);
@@ -43,7 +44,7 @@
 
 .panel {
   position: relative;
-  padding: 6px;
+  padding: calc(var(--mantine-spacing-xs) * 0.75);
   border: 2px solid var(--uc-chrome);
   border-radius: 4px;
 
@@ -71,19 +72,19 @@
 .panelInner {
   display: grid;
   grid-template-columns: minmax(0, 1fr) minmax(0, 380px);
-  gap: 44px;
+  gap: var(--mantine-spacing-3xl);
   align-items: start;
-  padding: 40px;
+  padding: var(--mantine-spacing-2xl);
   border: 1px solid var(--uc-chrome);
   border-radius: 2px;
 
   @container preset (max-width: 980px) {
     grid-template-columns: minmax(0, 1fr);
-    padding: 32px;
+    padding: var(--mantine-spacing-xl);
   }
 
   @container preset (max-width: 520px) {
-    padding: 22px 16px;
+    padding: var(--mantine-spacing-lg) var(--mantine-spacing-md);
   }
 }
 
@@ -107,20 +108,20 @@
 
 .story {
   max-width: 31em;
-  margin: 18px 0 0;
+  margin: var(--mantine-spacing-md) 0 0;
   font-size: 19px;
   line-height: 1.55;
 }
 
 .progressBlock {
-  margin-top: 30px;
+  margin-top: var(--mantine-spacing-xl);
 }
 
 .raised {
   display: flex;
   align-items: baseline;
   flex-wrap: wrap;
-  gap: 10px;
+  gap: var(--mantine-spacing-sm);
 
   & b {
     font-family: var(--uc-font-slab);
@@ -137,7 +138,7 @@
 }
 
 .bar {
-  margin-top: 14px;
+  margin-top: var(--mantine-spacing-sm);
   background: rgba(255, 255, 255, 0.16);
 }
 
@@ -149,12 +150,12 @@
 .facts {
   display: flex;
   flex-wrap: wrap;
-  gap: 28px;
-  margin-top: 14px;
+  gap: calc((var(--mantine-spacing-lg) + var(--mantine-spacing-xl)) / 2);
+  margin-top: var(--mantine-spacing-sm);
   font-size: 16px;
 
   & b {
-    margin-right: 4px;
+    margin-right: calc(var(--mantine-spacing-xs) / 2);
     font-family: var(--uc-font-slab);
     font-size: 20px;
     font-weight: 700;
@@ -166,10 +167,10 @@
 .donate {
   display: flex;
   flex-direction: column;
-  gap: 16px;
-  padding: 24px;
+  gap: var(--mantine-spacing-md);
+  padding: var(--mantine-spacing-lg);
   color: var(--mantine-color-text);
-  scroll-margin-top: 16px;
+  scroll-margin-top: var(--mantine-spacing-md);
 
   @container preset (max-width: 980px) {
     max-width: 460px;
@@ -186,7 +187,7 @@
 .amounts {
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: 8px;
+  gap: var(--mantine-spacing-xs);
 
   @container preset (max-width: 520px) {
     grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -214,7 +215,7 @@
   grid-column: 1 / -1;
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: var(--mantine-spacing-xs);
 }
 
 .amounts .otherChip {
@@ -245,8 +246,8 @@
 .pays {
   display: flex;
   align-items: flex-start;
-  gap: 10px;
-  padding: 12px 14px;
+  gap: var(--mantine-spacing-sm);
+  padding: var(--mantine-spacing-sm) var(--mantine-spacing-sm);
   border-radius: var(--mantine-radius-md);
   background: var(--mantine-color-surface-muted);
   font-size: var(--mantine-font-size-sm);
@@ -270,14 +271,14 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 4px;
+  gap: calc(var(--mantine-spacing-xs) / 2);
 }
 
 .thanks {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  gap: 12px;
+  gap: var(--mantine-spacing-sm);
 
   & p {
     margin: 0;

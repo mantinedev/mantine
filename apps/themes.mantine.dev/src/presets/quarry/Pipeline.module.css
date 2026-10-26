@@ -1,15 +1,15 @@
 .answer {
   display: grid;
   grid-template-columns: 34px minmax(0, 1fr);
-  gap: 0 12px;
+  gap: 0 var(--mantine-spacing-sm);
 }
 
 .head {
   grid-column: 1 / -1;
   display: flex;
   align-items: center;
-  gap: 10px;
-  margin-bottom: 10px;
+  gap: var(--mantine-spacing-sm);
+  margin-bottom: var(--mantine-spacing-sm);
   line-height: 1.25;
 
   & b {
@@ -75,8 +75,8 @@
   position: relative;
   display: grid;
   grid-template-columns: 34px minmax(0, 1fr);
-  gap: 0 12px;
-  padding-bottom: 12px;
+  gap: 0 var(--mantine-spacing-sm);
+  padding-bottom: var(--mantine-spacing-sm);
 
   .answer[data-results-only] &[data-tech] {
     display: none;
@@ -127,7 +127,7 @@
 .stepHead {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: var(--mantine-spacing-xs);
   width: 100%;
   min-height: 34px;
 }
@@ -159,10 +159,10 @@
 }
 
 .stepBody {
-  padding-top: 4px;
+  padding-top: var(--mantine-spacing-3xs);
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: var(--mantine-spacing-sm);
   min-width: 0;
 
   & p {
@@ -173,7 +173,7 @@
 .chips {
   display: flex;
   flex-wrap: wrap;
-  gap: 6px;
+  gap: var(--mantine-spacing-2xs);
 }
 
 .tableChip {
@@ -189,8 +189,8 @@
 .finding {
   display: flex;
   flex-direction: column;
-  gap: 10px;
-  padding: 14px 16px;
+  gap: var(--mantine-spacing-sm);
+  padding: var(--mantine-spacing-md);
   border-radius: var(--mantine-radius-lg);
   background: var(--quarry-surface-2);
 
@@ -205,7 +205,7 @@
 .confidence {
   display: inline-flex;
   align-items: center;
-  gap: 6px;
+  gap: var(--mantine-spacing-2xs);
   width: fit-content;
   padding: 3px 9px;
   border-radius: 999px;
@@ -226,12 +226,12 @@
 
 .caveats {
   margin: 0;
-  padding-left: 18px;
+  padding-left: var(--mantine-spacing-lg);
   font-size: 13px;
   list-style-type: circle;
 
   & li + li {
-    margin-top: 4px;
+    margin-top: var(--mantine-spacing-3xs);
   }
 }
 
@@ -240,7 +240,7 @@
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  gap: 8px;
+  gap: var(--mantine-spacing-xs);
   margin-top: 2px;
 
   @container preset (max-width: 520px) {
@@ -251,7 +251,7 @@
 .stopped {
   display: inline-flex;
   align-items: center;
-  gap: 6px;
+  gap: var(--mantine-spacing-2xs);
   font-size: 13px;
   font-weight: var(--mantine-font-weight-bold);
   color: var(--quarry-warning);

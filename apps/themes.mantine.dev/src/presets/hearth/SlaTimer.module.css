@@ -2,7 +2,7 @@
 .calm {
   display: inline-flex;
   align-items: center;
-  gap: 5px;
+  gap: var(--mantine-spacing-2xs);
   font-size: var(--mantine-font-size-xs);
   font-weight: var(--mantine-font-weight-bold);
   font-variant-numeric: tabular-nums;

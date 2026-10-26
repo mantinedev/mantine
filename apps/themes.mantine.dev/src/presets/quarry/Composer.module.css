@@ -1,5 +1,5 @@
 .root {
-  padding: 12px 18px 14px;
+  padding: var(--mantine-spacing-sm) var(--mantine-spacing-lg) var(--mantine-spacing-md);
   border-top: 1px solid var(--mantine-color-border);
   background: var(--mantine-color-surface-panel);
 }
@@ -7,8 +7,8 @@
 .suggestions {
   display: flex;
   flex-wrap: wrap;
-  gap: 6px;
-  margin-bottom: 10px;
+  gap: var(--mantine-spacing-2xs);
+  margin-bottom: var(--mantine-spacing-sm);
 }
 
 .suggestion {
@@ -20,8 +20,9 @@
 .composer {
   display: flex;
   align-items: flex-end;
-  gap: 8px;
-  padding: 8px 8px 8px 14px;
+  gap: var(--mantine-spacing-xs);
+  padding: var(--mantine-spacing-xs) var(--mantine-spacing-xs) var(--mantine-spacing-xs)
+    var(--mantine-spacing-md);
   border: 1px solid var(--mantine-color-default-border);
   border-radius: 14px;
   background: var(--mantine-color-surface-panel);
@@ -48,7 +49,7 @@
   display: flex;
   justify-content: space-between;
   flex-wrap: wrap;
-  gap: 10px;
-  margin-top: 6px;
+  gap: var(--mantine-spacing-sm);
+  margin-top: var(--mantine-spacing-2xs);
   font-size: 12px;
 }

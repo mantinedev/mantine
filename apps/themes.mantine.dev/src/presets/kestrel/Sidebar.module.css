@@ -1,13 +1,13 @@
 .root {
   display: flex;
   flex-direction: column;
-  gap: 36px;
+  gap: calc(var(--mantine-spacing-md) * 2.25);
   min-width: 0;
 
   @container preset (max-width: 900px) {
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 32px;
+    gap: calc(var(--mantine-spacing-md) * 2);
   }
 
   @container preset (max-width: 760px) {
@@ -16,8 +16,8 @@
 }
 
 .root .blockTitle {
-  margin: 0 0 14px;
-  padding-bottom: 10px;
+  margin: 0 0 var(--mantine-spacing-sm);
+  padding-bottom: calc(var(--mantine-spacing-xs) * 1.25);
   border-bottom: 1px solid var(--mantine-color-bright);
   font-size: var(--mantine-font-size-md);
   font-weight: 700;
@@ -35,8 +35,8 @@
     counter-increment: rank;
     display: grid;
     grid-template-columns: 28px minmax(0, 1fr);
-    gap: 2px 8px;
-    padding: 10px 0;
+    gap: 2px var(--mantine-spacing-xs);
+    padding: calc(var(--mantine-spacing-xs) * 1.25) 0;
     border-bottom: 1px solid var(--mantine-color-border);
 
     &::before {
@@ -74,14 +74,14 @@
   padding: 0;
   display: flex;
   flex-direction: column;
-  gap: 14px;
+  gap: var(--mantine-spacing-sm);
 }
 
 .person {
   display: grid;
   grid-template-columns: auto minmax(0, 1fr) auto;
   align-items: center;
-  gap: 12px;
+  gap: var(--mantine-spacing-sm);
 
   & b {
     display: block;
@@ -97,30 +97,30 @@
 }
 
 .newsletter {
-  padding: 20px;
+  padding: calc(var(--mantine-spacing-md) * 1.25);
   background: var(--mantine-color-surface-muted);
 
   & .blockTitle {
-    margin-bottom: 6px;
+    margin-bottom: calc(var(--mantine-spacing-sm) / 2);
     padding-bottom: 0;
     border-bottom: 0;
   }
 }
 
 .newsletterText {
-  margin-bottom: 14px;
+  margin-bottom: var(--mantine-spacing-sm);
 }
 
 .form {
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: var(--mantine-spacing-xs);
 }
 
 .done {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: var(--mantine-spacing-xs);
   font-size: var(--mantine-font-size-sm);
   font-weight: 600;
   color: var(--mantine-color-bright);
@@ -130,7 +130,7 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 8px;
+  gap: var(--mantine-spacing-xs);
 
   & span {
     font-size: var(--mantine-font-size-xs);
@@ -146,7 +146,7 @@
   padding: 0;
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 4px 12px;
+  gap: var(--mantine-spacing-2xs) var(--mantine-spacing-sm);
   font-size: var(--mantine-font-size-sm);
 
   & a {

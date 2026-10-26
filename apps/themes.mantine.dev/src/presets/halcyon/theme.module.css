@@ -90,7 +90,7 @@
 }
 
 .accordionControl {
-  gap: 16px;
+  gap: calc(var(--mantine-spacing-md) * 0.8);
   padding: 0;
 
   @mixin hover {
@@ -99,7 +99,7 @@
 }
 
 .accordionLabel {
-  padding-block: 22px;
+  padding-block: calc(var(--mantine-spacing-md) * 1.1);
   font-size: 19px;
   font-weight: var(--mantine-font-weight-medium);
   line-height: 1.6;
@@ -117,7 +117,7 @@
 }
 
 .accordionContent {
-  padding: 0 40px 22px 0;
+  padding: 0 calc(var(--mantine-spacing-md) * 1.9) calc(var(--mantine-spacing-md) * 1.1) 0;
   font-size: 17px;
   line-height: 1.6;
 }
@@ -139,7 +139,7 @@
 }
 
 .drawerHeader {
-  padding: 20px 24px;
+  padding: calc(var(--mantine-spacing-md) * 1.1);
   border-bottom: 1px solid var(--mantine-color-border);
   background-color: var(--hc-surface);
 }

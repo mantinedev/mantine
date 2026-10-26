@@ -1,19 +1,19 @@
 .nav {
   display: flex;
   align-items: center;
-  gap: 36px;
+  gap: calc(var(--mantine-spacing-md) * 1.9);
   height: 76px;
   padding-inline: var(--hc-gutter);
 
   @container preset (max-width: 520px) {
-    gap: 16px;
+    gap: calc(var(--mantine-spacing-md) * 0.8);
   }
 }
 
 .logo {
   display: inline-flex;
   align-items: center;
-  gap: 10px;
+  gap: var(--mantine-spacing-sm);
   font-size: 26px;
   font-weight: 300;
   letter-spacing: 0.04em;
@@ -31,7 +31,7 @@
 
 .links {
   display: flex;
-  gap: 28px;
+  gap: var(--mantine-spacing-lg);
   font-size: 15px;
   font-weight: var(--mantine-font-weight-medium);
 
@@ -58,7 +58,7 @@
 .actions {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: var(--mantine-spacing-xs);
 }
 
 .menuButton {
@@ -84,12 +84,13 @@
 .sheet {
   display: flex;
   flex-direction: column;
-  padding: 4px var(--hc-gutter) 18px;
+  padding: calc(var(--mantine-spacing-xs) / 2) var(--hc-gutter)
+    calc(var(--mantine-spacing-md) * 0.8);
   border-bottom: 1px solid var(--mantine-color-border);
 }
 
 .sheetLink {
-  padding: 12px 0;
+  padding: var(--mantine-spacing-sm) 0;
   border-top: 1px solid var(--mantine-color-border);
   font-weight: var(--mantine-font-weight-medium);
   color: var(--mantine-color-bright);

@@ -1,9 +1,9 @@
 .hero {
   display: grid;
   grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr);
-  gap: 40px;
+  gap: var(--mantine-spacing-xl);
   align-items: end;
-  padding: 48px var(--sw-gutter) 0;
+  padding: var(--mantine-spacing-2xl) var(--sw-gutter) 0;
   background: var(--sw-marigold);
   color: var(--sw-marigold-ink);
 
@@ -13,10 +13,10 @@
 }
 
 .copy {
-  padding-bottom: 64px;
+  padding-bottom: var(--mantine-spacing-3xl);
 
   @container preset (max-width: 980px) {
-    padding-bottom: 8px;
+    padding-bottom: var(--mantine-spacing-xs);
   }
 }
 
@@ -35,7 +35,7 @@
 
 .lead {
   max-width: 32em;
-  margin-top: 20px;
+  margin-top: var(--mantine-spacing-md);
   font-size: 19px;
   line-height: 1.55;
 }
@@ -43,15 +43,15 @@
 .ctas {
   display: flex;
   flex-wrap: wrap;
-  gap: 10px;
-  margin-top: 30px;
+  gap: var(--mantine-spacing-xs);
+  margin-top: var(--mantine-spacing-lg);
 }
 
 .note {
   display: flex;
   align-items: center;
-  gap: 8px;
-  margin-top: 16px;
+  gap: var(--mantine-spacing-xs);
+  margin-top: calc(var(--mantine-spacing-xs) * 2);
   font-size: var(--mantine-font-size-sm);
 
   & svg {

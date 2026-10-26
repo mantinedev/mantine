@@ -3,9 +3,8 @@
 }
 
 .scroll {
-  overflow-x: auto;
-  padding-top: 18px;
-  padding-bottom: 28px;
+  padding-top: calc(var(--mantine-spacing-sm) * 1.5);
+  padding-bottom: calc(var(--mantine-spacing-lg) * 1.25);
 }
 
 .tt {
@@ -84,7 +83,7 @@
 
   & small {
     display: block;
-    margin-top: 4px;
+    margin-top: var(--mantine-spacing-2xs);
     font-family: var(--mantine-font-family);
     font-size: 12px;
     font-weight: var(--mantine-font-weight-medium);
@@ -321,14 +320,14 @@
 .legend {
   display: flex;
   flex-wrap: wrap;
-  gap: 16px;
-  margin-top: 14px;
+  gap: calc(var(--mantine-spacing-sm) * 1.5);
+  margin-top: var(--mantine-spacing-sm);
   font-size: 13px;
 
   & span {
     display: inline-flex;
     align-items: center;
-    gap: 8px;
+    gap: var(--mantine-spacing-xs);
   }
 
   & i {
@@ -358,7 +357,7 @@
 }
 
 .pop {
-  padding: 16px;
+  padding: calc(var(--mantine-spacing-sm) * 1.5);
 }
 
 .popClose {
@@ -382,8 +381,8 @@
 .meta {
   display: grid;
   grid-template-columns: auto 1fr;
-  gap: 3px 10px;
-  margin: 8px 0 0;
+  gap: 3px var(--mantine-spacing-xs);
+  margin: var(--mantine-spacing-xs) 0 0;
   font-size: 13px;
 
   & dt {
@@ -398,7 +397,7 @@
 }
 
 .popLabel {
-  margin-top: 12px;
+  margin-top: var(--mantine-spacing-sm);
   font-size: 12px;
   font-weight: var(--mantine-font-weight-medium);
 }
@@ -406,6 +405,6 @@
 .popButtons {
   display: flex;
   flex-wrap: wrap;
-  gap: 6px;
-  margin-top: 6px;
+  gap: var(--mantine-spacing-2xs);
+  margin-top: var(--mantine-spacing-2xs);
 }

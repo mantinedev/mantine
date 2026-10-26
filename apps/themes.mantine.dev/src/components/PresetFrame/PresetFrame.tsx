@@ -1,41 +1,32 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useRef } from 'react';
+import { isEmbedded, postToEditor } from '../PresetProvider/embedded-bridge';
 import classes from './PresetFrame.module.css';
-
-const WIDTHS = ['760', '920', '1080'];
 
 interface PresetFrameProps {
   children: React.ReactNode;
 }
 
 export function PresetFrame({ children }: PresetFrameProps) {
-  const [width, setWidth] = useState('1080');
+  const ref = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const node = ref.current;
+    if (!node || !isEmbedded()) {
+      return undefined;
+    }
+
+    const observer = new ResizeObserver(() => {
+      postToEditor({ type: 'theme-editor:resize', height: Math.ceil(node.offsetHeight) });
+    });
+    observer.observe(node);
+    return () => observer.disconnect();
+  }, []);
 
   return (
-    <div className={classes.root}>
-      <div className={classes.bar}>
-        <span>Preview pane width, as in the theme editor</span>
-        <div className={classes.widths} role="group" aria-label="Preview width">
-          {WIDTHS.map((value) => (
-            <button
-              key={value}
-              type="button"
-              className={classes.width}
-              aria-pressed={value === width}
-              onClick={() => setWidth(value)}
-            >
-              {value}px
-            </button>
-          ))}
-        </div>
-      </div>
-      <div
-        className={classes.frame}
-        style={{ '--preview-width': `${width}px` } as React.CSSProperties}
-      >
-        {children}
-      </div>
+    <div ref={ref} className={classes.root}>
+      {children}
     </div>
   );
 }

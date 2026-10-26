@@ -1,24 +1,31 @@
 .root {
   flex: none;
-  display: grid;
-  grid-template-columns: repeat(7, minmax(0, 1fr));
-  gap: 6px;
-  padding: 12px 16px 10px;
   background: var(--mantine-color-surface-panel);
   border-bottom: 1px solid var(--mantine-color-border);
+}
+
+.content {
+  display: block;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+  gap: var(--mantine-spacing-2xs);
+  min-width: min-content;
+  padding: var(--mantine-spacing-sm) var(--mantine-spacing-md) var(--mantine-spacing-xs);
 
   @container preset (max-width: 760px) {
     grid-template-columns: repeat(7, minmax(56px, 1fr));
-    overflow-x: auto;
   }
 }
 
 .day {
   display: flex;
   flex-direction: column;
-  gap: 5px;
+  gap: var(--mantine-spacing-3xs);
   min-width: 0;
-  padding: 7px 9px;
+  padding: var(--mantine-spacing-2xs) var(--mantine-spacing-xs);
   border: 1px solid var(--mantine-color-border);
   border-radius: var(--mantine-radius-md);
   background: var(--mantine-color-surface-panel);
@@ -38,7 +45,7 @@
   display: flex;
   align-items: baseline;
   justify-content: space-between;
-  gap: 6px;
+  gap: var(--mantine-spacing-2xs);
   font-size: 12.5px;
 
   & b {

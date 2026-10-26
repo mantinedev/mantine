@@ -9,8 +9,8 @@
 .head {
   display: flex;
   align-items: flex-start;
-  gap: 12px;
-  padding: 16px 18px 12px;
+  gap: var(--mantine-spacing-sm);
+  padding: var(--mantine-spacing-md) var(--mantine-spacing-md) var(--mantine-spacing-sm);
   border-bottom: 1px solid var(--mantine-color-border);
 }
 
@@ -37,15 +37,15 @@
 }
 
 .pillRow {
-  margin-top: 8px;
+  margin-top: var(--mantine-spacing-xs);
 }
 
 .pill {
   display: inline-flex;
   align-items: center;
-  gap: 5px;
+  gap: var(--mantine-spacing-3xs);
   height: 24px;
-  padding: 0 9px;
+  padding: 0 var(--mantine-spacing-xs);
   border-radius: 999px;
   font-size: var(--mantine-font-size-xs);
   font-weight: var(--mantine-font-weight-bold);
@@ -79,21 +79,24 @@
 
 .body {
   flex: 1;
+  min-height: 0;
+}
+
+.bodyInner {
   display: flex;
   flex-direction: column;
-  gap: 18px;
-  padding: 16px 18px;
-  overflow-y: auto;
+  gap: var(--mantine-spacing-md);
+  padding: var(--mantine-spacing-md);
 }
 
 .secTitle {
-  margin: 0 0 8px;
+  margin: 0 0 var(--mantine-spacing-xs);
 }
 
 .facts {
   display: grid;
   grid-template-columns: auto 1fr;
-  gap: 6px 14px;
+  gap: var(--mantine-spacing-2xs) var(--mantine-spacing-sm);
   margin: 0;
   font-size: var(--mantine-font-size-sm);
 
@@ -114,15 +117,15 @@
 .row2 {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 8px;
+  gap: var(--mantine-spacing-xs);
 }
 
 .moveRow {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  gap: 8px;
-  margin-top: 8px;
+  gap: var(--mantine-spacing-xs);
+  margin-top: var(--mantine-spacing-xs);
 }
 
 .grow {
@@ -139,8 +142,8 @@
   & li {
     display: grid;
     grid-template-columns: 74px minmax(0, 1fr);
-    gap: 10px;
-    padding: 7px 0;
+    gap: var(--mantine-spacing-xs);
+    padding: var(--mantine-spacing-2xs) 0;
     border-bottom: 1px solid var(--mantine-color-border);
     font-size: var(--mantine-font-size-sm);
 
@@ -158,8 +161,8 @@
 .foot {
   display: flex;
   flex-wrap: wrap;
-  gap: 8px;
-  padding: 12px 18px;
+  gap: var(--mantine-spacing-xs);
+  padding: var(--mantine-spacing-sm) var(--mantine-spacing-md);
   border-top: 1px solid var(--mantine-color-border);
 }
 

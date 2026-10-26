@@ -101,7 +101,17 @@ export const theme = createTheme({
 
   defaultRadius: 'sm',
   radius: { xs: rem(2), sm: rem(4), md: rem(6), lg: rem(8), xl: rem(12) },
-  spacing: { xs: rem(8), sm: rem(10), md: rem(16), lg: rem(22), xl: rem(28) },
+  spacing: {
+    '2xs': rem(6),
+    xs: rem(8),
+    sm: rem(10),
+    md: rem(16),
+    lg: rem(22),
+    xl: rem(28),
+    '2xl': rem(34),
+    '3xl': rem(40),
+    '4xl': rem(48),
+  },
   shadows: {
     lg: '0 20px 48px -20px rgba(10, 30, 34, 0.45), 0 3px 8px rgba(10, 30, 34, 0.08)',
   },
@@ -165,7 +175,7 @@ export const theme = createTheme({
     }),
 
     List: List.extend({
-      defaultProps: { spacing: 6, fz: 'md' },
+      defaultProps: { spacing: '2xs', fz: 'md' },
       classNames: { root: classes.list, item: classes.listItem },
     }),
 

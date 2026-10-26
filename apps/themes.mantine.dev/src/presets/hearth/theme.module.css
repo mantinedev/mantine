@@ -88,7 +88,7 @@
 }
 
 .dropdown {
-  padding: 5px;
+  padding: var(--mantine-spacing-2xs);
   background-color: var(--mantine-color-default);
   border-color: var(--mantine-color-default-border);
 }
@@ -96,8 +96,8 @@
 .menuItem,
 .option {
   min-height: 34px;
-  padding: 6px 9px;
-  gap: 9px;
+  padding: var(--mantine-spacing-2xs) var(--mantine-spacing-xs);
+  gap: var(--mantine-spacing-xs);
   border-radius: var(--mantine-radius-sm);
   font-size: var(--mantine-font-size-sm);
   color: var(--mantine-color-text);
@@ -127,7 +127,7 @@
 }
 
 .menuLabel {
-  padding: 6px 9px 4px;
+  padding: var(--mantine-spacing-2xs) var(--mantine-spacing-xs) var(--mantine-spacing-3xs);
   font-size: var(--mantine-font-size-xs);
   font-weight: var(--mantine-font-weight-medium);
   color: var(--mantine-color-text);
@@ -140,7 +140,7 @@
 .tab {
   &:where([data-variant='pills']) {
     height: 30px;
-    padding: 0 12px;
+    padding: 0 var(--mantine-spacing-sm);
     border-radius: var(--mantine-radius-md);
     font-size: var(--mantine-font-size-sm);
     font-weight: var(--mantine-font-weight-medium);
@@ -165,8 +165,8 @@
 }
 
 .accordionControl {
-  padding: 12px 18px;
-  gap: 8px;
+  padding: var(--mantine-spacing-sm) var(--mantine-spacing-lg);
+  gap: var(--mantine-spacing-xs);
 
   @mixin hover {
     background-color: var(--mantine-color-hover);
@@ -194,6 +194,6 @@
 .accordionContent {
   display: flex;
   flex-direction: column;
-  gap: 10px;
-  padding: 0 18px 14px;
+  gap: var(--mantine-spacing-sm);
+  padding: 0 var(--mantine-spacing-lg) var(--mantine-spacing-md);
 }

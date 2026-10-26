@@ -12,7 +12,7 @@ import {
   IconPlayerPlay,
   IconVideo,
 } from '@tabler/icons-react';
-import { Avatar, Progress } from '@mantine/core';
+import { Avatar, Progress, ScrollArea } from '@mantine/core';
 import {
   type Appointment,
   type Clashes,
@@ -125,7 +125,11 @@ export function DayGrid({
   const q = query.trim().toLowerCase();
 
   return (
-    <div className={classes.wrap} ref={scrollRef}>
+    <ScrollArea
+      className={classes.wrap}
+      classNames={{ content: classes.content }}
+      viewportRef={scrollRef}
+    >
       <div className={classes.grid} style={{ '--cols': columns.length } as React.CSSProperties}>
         <div className={classes.head}>
           <div />
@@ -269,6 +273,6 @@ export function DayGrid({
           )}
         </div>
       </div>
-    </div>
+    </ScrollArea>
   );
 }

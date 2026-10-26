@@ -1,18 +1,18 @@
 .booking {
-  padding-top: 40px;
-  padding-bottom: 88px;
+  padding-top: var(--mantine-spacing-2xl);
+  padding-bottom: var(--mantine-spacing-4xl);
 }
 
 .grid {
   display: grid;
   grid-template-columns: minmax(0, 1fr) 300px;
   align-items: start;
-  gap: 36px;
-  margin-top: 36px;
+  gap: calc(var(--mantine-spacing-lg) * 1.5);
+  margin-top: calc(var(--mantine-spacing-lg) * 1.5);
 
   @container preset (max-width: 980px) {
     grid-template-columns: minmax(0, 1fr) 260px;
-    gap: 24px;
+    gap: var(--mantine-spacing-lg);
   }
 
   @container preset (max-width: 860px) {
@@ -23,7 +23,7 @@
 .steps {
   display: flex;
   flex-direction: column;
-  gap: 40px;
+  gap: var(--mantine-spacing-2xl);
   min-width: 0;
 }
 
@@ -31,8 +31,8 @@
   display: flex;
   flex-wrap: wrap;
   align-items: baseline;
-  gap: 14px;
-  margin-bottom: 16px;
+  gap: var(--mantine-spacing-sm);
+  margin-bottom: var(--mantine-spacing-md);
 
   & h3 {
     margin: 0;
@@ -65,7 +65,7 @@
 .types {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 12px;
+  gap: var(--mantine-spacing-sm);
 
   @container preset (max-width: 760px) {
     grid-template-columns: minmax(0, 1fr);
@@ -76,8 +76,8 @@
   position: relative;
   display: grid;
   grid-template-columns: minmax(0, 1fr) auto;
-  gap: 2px 12px;
-  padding: 16px 18px;
+  gap: 2px var(--mantine-spacing-sm);
+  padding: var(--mantine-spacing-md);
   text-align: start;
   line-height: 1.55;
 
@@ -115,8 +115,8 @@
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  gap: 10px;
-  margin-bottom: 12px;
+  gap: var(--mantine-spacing-xs);
+  margin-bottom: var(--mantine-spacing-sm);
 }
 
 .range {
@@ -130,10 +130,10 @@
 }
 
 .monthDropdown {
-  padding: 14px;
+  padding: var(--mantine-spacing-sm);
 
   @container preset (max-width: 560px) {
-    width: calc(100cqw - 32px);
+    width: calc(100cqw - 2 * var(--mantine-spacing-md));
     max-width: 320px;
   }
 }
@@ -164,14 +164,14 @@
 }
 
 .calNote {
-  margin-top: 8px;
+  margin-top: var(--mantine-spacing-xs);
   font-size: 12.5px;
 }
 
 .tzRow {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: var(--mantine-spacing-xs);
   margin-inline-start: auto;
 }
 
@@ -191,11 +191,11 @@
 
 .slotGroups {
   display: grid;
-  gap: 18px;
+  gap: var(--mantine-spacing-md);
 }
 
 .slotGroupTitle {
-  margin: 0 0 8px;
+  margin: 0 0 var(--mantine-spacing-xs);
   font-size: var(--mantine-font-size-sm);
   font-weight: var(--mantine-font-weight-medium);
   color: var(--mantine-color-bright);
@@ -205,7 +205,7 @@
 .radios {
   display: flex;
   flex-wrap: wrap;
-  gap: 8px;
+  gap: var(--mantine-spacing-xs);
 }
 
 .none {
@@ -214,14 +214,14 @@
 }
 
 .tzNote {
-  margin: 12px 0 0;
+  margin: var(--mantine-spacing-sm) 0 0;
   font-size: var(--mantine-font-size-xs);
 }
 
 .formGrid {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 16px;
+  gap: var(--mantine-spacing-md);
 
   @container preset (max-width: 560px) {
     grid-template-columns: minmax(0, 1fr);
@@ -240,7 +240,7 @@
 }
 
 .legend {
-  margin-bottom: 6px;
+  margin-bottom: calc(var(--mantine-spacing-sm) / 2);
   padding: 0;
   font-size: var(--mantine-font-size-sm);
   font-weight: var(--mantine-font-weight-medium);
@@ -249,8 +249,8 @@
 
 .summary {
   position: sticky;
-  top: 16px;
-  padding: 22px;
+  top: var(--mantine-spacing-md);
+  padding: var(--mantine-spacing-lg);
 
   @container preset (max-width: 860px) {
     position: static;
@@ -259,8 +259,8 @@
 
 .summaryList {
   display: grid;
-  gap: 12px;
-  margin: 16px 0 0;
+  gap: var(--mantine-spacing-sm);
+  margin: var(--mantine-spacing-md) 0 0;
 
   & dt {
     font-size: var(--mantine-font-size-xs);
@@ -284,8 +284,8 @@
   display: flex;
   justify-content: space-between;
   align-items: baseline;
-  margin-top: 16px;
-  padding-top: 14px;
+  margin-top: var(--mantine-spacing-md);
+  padding-top: var(--mantine-spacing-sm);
   border-top: 1px solid var(--mantine-color-border);
 
   & b {
@@ -298,14 +298,14 @@
 }
 
 .policy {
-  margin: 12px 0 0;
+  margin: var(--mantine-spacing-sm) 0 0;
   font-size: var(--mantine-font-size-xs);
 }
 
 .confirm {
   display: grid;
-  gap: 16px;
-  padding: 32px;
+  gap: var(--mantine-spacing-md);
+  padding: var(--mantine-spacing-xl);
   outline: none;
 
   & p {
@@ -327,11 +327,11 @@
 .actions {
   display: flex;
   flex-wrap: wrap;
-  gap: 10px;
+  gap: var(--mantine-spacing-xs);
 }
 
 .policyBox {
-  padding-top: 14px;
+  padding-top: var(--mantine-spacing-sm);
   border-top: 1px solid var(--mantine-color-border);
   font-size: var(--mantine-font-size-sm);
 }

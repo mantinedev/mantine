@@ -5,9 +5,9 @@
 .tabs {
   display: grid;
   grid-template-columns: minmax(0, 340px) minmax(0, 1fr);
-  gap: 40px;
+  gap: var(--mantine-spacing-xl);
   align-items: start;
-  margin-top: 44px;
+  margin-top: calc(var(--mantine-spacing-xl) + var(--mantine-spacing-xs) / 2);
 
   @container preset (max-width: 980px) {
     grid-template-columns: minmax(0, 1fr);
@@ -17,7 +17,7 @@
 .list {
   flex-direction: column;
   flex-wrap: nowrap;
-  gap: 6px;
+  gap: calc(var(--mantine-spacing-sm) / 2);
 
   @container preset (max-width: 980px) {
     flex-direction: row;
@@ -28,8 +28,8 @@
 .tabs .tab {
   display: flex;
   align-items: flex-start;
-  gap: 14px;
-  padding: 16px 18px;
+  gap: var(--mantine-spacing-sm);
+  padding: calc(var(--mantine-spacing-xs) * 2) var(--mantine-spacing-md);
   border-radius: var(--mantine-radius-md);
   text-align: start;
   white-space: normal;
@@ -107,7 +107,7 @@
   display: grid;
   place-items: center;
   min-height: 380px;
-  padding: 32px;
+  padding: calc(var(--mantine-spacing-xs) * 4);
   border-radius: var(--mantine-radius-lg);
   background: var(--sw-marigold-soft);
 }
@@ -123,8 +123,8 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 10px;
-  padding: 14px 18px;
+  gap: var(--mantine-spacing-xs);
+  padding: var(--mantine-spacing-sm) var(--mantine-spacing-md);
   border-bottom: 1px solid var(--mantine-color-border);
 
   & b {
@@ -147,8 +147,8 @@
 .row {
   display: grid;
   grid-template-columns: minmax(0, 1fr) auto;
-  gap: 2px 12px;
-  padding: 12px 18px;
+  gap: 2px var(--mantine-spacing-sm);
+  padding: var(--mantine-spacing-sm) var(--mantine-spacing-md);
   border-bottom: 1px solid var(--mantine-color-border);
 
   &:last-child {
@@ -185,8 +185,8 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 10px;
-  padding: 12px 18px;
+  gap: var(--mantine-spacing-xs);
+  padding: var(--mantine-spacing-sm) var(--mantine-spacing-md);
   background: var(--mantine-color-default-hover);
   font-size: var(--mantine-font-size-xs);
 }

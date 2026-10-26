@@ -14,7 +14,7 @@
 
 .input {
   border-width: 1.5px;
-  padding-inline: 12px;
+  padding-inline: var(--mantine-spacing-sm);
 
   &:focus,
   &:focus-within {
@@ -30,14 +30,14 @@
 }
 
 .label {
-  margin-bottom: 6px;
+  margin-bottom: calc(var(--mantine-spacing-sm) / 2);
   font-size: var(--mantine-font-size-sm);
   font-weight: var(--mantine-font-weight-medium);
   color: var(--mantine-color-bright);
 }
 
 .error {
-  margin-top: 4px;
+  margin-top: calc(var(--mantine-spacing-xs) / 2);
   font-size: var(--mantine-font-size-xs);
   font-weight: var(--mantine-font-weight-medium);
 }
@@ -49,7 +49,7 @@
 
 .checkboxLabel {
   font-size: var(--mantine-font-size-sm);
-  padding-inline-start: 10px;
+  padding-inline-start: var(--mantine-spacing-xs);
 }
 
 .title {
@@ -58,7 +58,7 @@
 
 .badge {
   height: auto;
-  padding: 3px 10px;
+  padding: 3px var(--mantine-spacing-xs);
   border: 0;
 }
 
@@ -78,7 +78,7 @@
 .segmented {
   --sc-label-color: var(--mantine-color-body);
 
-  padding: 4px;
+  padding: calc(var(--mantine-spacing-xs) / 2);
   border: 1px solid var(--mantine-color-border);
   background: var(--mantine-color-default-hover);
 }
@@ -86,9 +86,9 @@
 .segmentedLabel {
   display: inline-flex;
   align-items: center;
-  gap: 8px;
+  gap: var(--mantine-spacing-xs);
   height: 36px;
-  padding: 0 16px;
+  padding: 0 calc(var(--mantine-spacing-xs) * 2);
   font-size: var(--mantine-font-size-sm);
   font-weight: var(--mantine-font-weight-bold);
   color: var(--mantine-color-text);
@@ -107,8 +107,8 @@
 }
 
 .accordionControl {
-  gap: 16px;
-  padding: 20px 0;
+  gap: calc(var(--mantine-spacing-xs) * 2);
+  padding: var(--mantine-spacing-md) 0;
 
   @mixin hover {
     background-color: transparent;
@@ -142,6 +142,6 @@
 }
 
 .accordionContent {
-  padding: 0 48px 22px 0;
+  padding: 0 var(--mantine-spacing-2xl) var(--mantine-spacing-md) 0;
   max-width: 40em;
 }

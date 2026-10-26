@@ -1,6 +1,6 @@
 .card {
   position: relative;
-  padding: 12px;
+  padding: var(--mantine-spacing-sm);
   border-radius: var(--mantine-radius-xl);
   background: var(--sw-band-2);
 }
@@ -87,14 +87,14 @@
 .legend {
   display: flex;
   flex-wrap: wrap;
-  gap: 18px;
-  padding: 8px 10px 4px;
+  gap: calc(var(--mantine-spacing-sm) * 1.5);
+  padding: var(--mantine-spacing-xs) var(--mantine-spacing-sm) calc(var(--mantine-spacing-xs) / 2);
   font-size: 13px;
 
   & span {
     display: inline-flex;
     align-items: center;
-    gap: 8px;
+    gap: var(--mantine-spacing-xs);
   }
 
   & i {

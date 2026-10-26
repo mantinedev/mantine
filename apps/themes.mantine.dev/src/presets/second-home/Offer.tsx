@@ -74,7 +74,7 @@ function CounterForm({ counter, actions }: CounterFormProps) {
         value={String(counter.value)}
         onChange={(value) => actions.onCounterChange(Number(value))}
       >
-        <Group gap={6}>
+        <Group gap="xs">
           {COUNTER_PRESETS.map((value) => (
             <Chip key={value} value={String(value)}>
               {money(value)}
@@ -87,7 +87,7 @@ function CounterForm({ counter, actions }: CounterFormProps) {
           {counter.error}
         </Input.Error>
       )}
-      <Group gap={6}>
+      <Group gap="xs">
         <Button size="xs" onClick={actions.onCounterSend}>
           Send {money(Number(counter.value))} counter
         </Button>

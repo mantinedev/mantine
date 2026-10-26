@@ -23,8 +23,8 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 6px;
-  padding: 16px 0;
+  gap: var(--mantine-spacing-2xs);
+  padding: var(--mantine-spacing-md) 0;
 }
 
 .logo {
@@ -32,7 +32,7 @@
   place-items: center;
   width: 38px;
   height: 38px;
-  margin-bottom: 14px;
+  margin-bottom: var(--mantine-spacing-sm);
   border-radius: 11px;
   background: var(--mantine-primary-color-filled);
   color: var(--mantine-primary-color-contrast);
@@ -85,7 +85,8 @@
   flex-direction: column;
   min-width: 0;
   min-height: 0;
-  padding: 20px 12px 0 4px;
+  padding: calc(var(--mantine-spacing-md) * 1.25) var(--mantine-spacing-sm) 0
+    var(--mantine-spacing-3xs);
 
   @container preset (max-width: 760px) {
     .root[data-show-detail] & {
@@ -98,8 +99,8 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 8px;
-  padding: 0 8px;
+  gap: var(--mantine-spacing-xs);
+  padding: 0 var(--mantine-spacing-xs);
 }
 
 .listTitle {
@@ -111,11 +112,11 @@
 }
 
 .search {
-  margin: 14px 8px 10px;
+  margin: var(--mantine-spacing-md) var(--mantine-spacing-xs) var(--mantine-spacing-sm);
 }
 
 .chips {
-  padding: 0 8px 12px;
+  padding: 0 var(--mantine-spacing-xs) var(--mantine-spacing-sm);
 }
 
 .chipCount {
@@ -124,24 +125,26 @@
   font-variant-numeric: tabular-nums;
 }
 
+.dealsScroll {
+  flex: 1;
+  min-height: 0;
+}
+
 .deals {
   display: flex;
-  flex: 1;
   flex-direction: column;
-  gap: 4px;
-  min-height: 0;
+  gap: var(--mantine-spacing-3xs);
   margin: 0;
-  padding: 2px 4px 16px;
-  overflow-y: auto;
+  padding: 2px var(--mantine-spacing-3xs) var(--mantine-spacing-md);
   list-style: none;
 }
 
 .deal {
   display: grid;
   grid-template-columns: minmax(0, 1fr) auto;
-  gap: 4px 12px;
+  gap: var(--mantine-spacing-3xs) var(--mantine-spacing-sm);
   width: 100%;
-  padding: 12px 14px;
+  padding: var(--mantine-spacing-sm) var(--mantine-spacing-md);
   border-radius: var(--mantine-radius-lg);
   color: var(--mantine-color-text);
 
@@ -191,13 +194,13 @@
   grid-column: 1 / -1;
   display: flex;
   align-items: center;
-  gap: 10px;
-  margin-top: 4px;
+  gap: var(--mantine-spacing-sm);
+  margin-top: var(--mantine-spacing-3xs);
   font-size: var(--mantine-font-size-xs);
 }
 
 .emptyList {
-  padding: 32px 12px;
+  padding: var(--mantine-spacing-xl) var(--mantine-spacing-sm);
   font-size: var(--mantine-font-size-sm);
   text-align: center;
 }
@@ -205,8 +208,10 @@
 .detail {
   position: relative;
   min-width: 0;
-  margin-block: 10px;
-  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  margin-block: var(--mantine-spacing-sm);
+  overflow: hidden;
   border-radius: var(--mantine-radius-lg) 0 0 var(--mantine-radius-lg);
   background: var(--mantine-color-surface-panel);
   box-shadow: var(--mantine-shadow-md);
@@ -218,22 +223,29 @@
   }
 }
 
+.detailScroll {
+  flex: 1;
+  min-height: 0;
+}
+
 .detailInner {
   display: flex;
   flex-direction: column;
-  gap: 28px;
+  gap: calc(var(--mantine-spacing-md) * 1.75);
   max-width: 760px;
-  padding: 28px 32px 40px;
+  padding: calc(var(--mantine-spacing-md) * 1.75) var(--mantine-spacing-xl)
+    calc(var(--mantine-spacing-md) * 2.5);
 
   @container preset (max-width: 980px) {
-    padding: 24px 24px 36px;
+    padding: var(--mantine-spacing-lg) var(--mantine-spacing-lg)
+      calc(var(--mantine-spacing-md) * 2.25);
   }
 }
 
 .back {
   display: none;
   align-items: center;
-  gap: 4px;
+  gap: var(--mantine-spacing-3xs);
   align-self: flex-start;
   font-size: var(--mantine-font-size-sm);
   font-weight: var(--mantine-font-weight-medium);
@@ -248,7 +260,7 @@
   flex-wrap: wrap;
   align-items: flex-start;
   justify-content: space-between;
-  gap: 16px;
+  gap: var(--mantine-spacing-md);
 }
 
 .recordMain {
@@ -264,15 +276,15 @@
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  gap: 8px;
-  margin-top: 6px;
+  gap: var(--mantine-spacing-xs);
+  margin-top: var(--mantine-spacing-2xs);
   font-size: var(--mantine-font-size-sm);
 }
 
 .recordActions {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: var(--mantine-spacing-xs);
 }
 
 .logCall {
@@ -286,8 +298,8 @@
   flex-wrap: wrap;
   align-items: center;
   justify-content: space-between;
-  gap: 12px;
-  margin-top: 14px;
+  gap: var(--mantine-spacing-sm);
+  margin-top: var(--mantine-spacing-md);
   font-size: var(--mantine-font-size-sm);
 
   & b {
@@ -300,20 +312,21 @@
 .panel {
   display: flex;
   flex-direction: column;
-  gap: 28px;
+  gap: calc(var(--mantine-spacing-md) * 1.75);
 }
 
 .tabsRoot > :first-child {
   align-self: flex-start;
+  max-width: 100%;
 }
 
 .sectionTitle {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 8px;
+  gap: var(--mantine-spacing-xs);
   min-height: 34px;
-  margin: 0 0 12px;
+  margin: 0 0 var(--mantine-spacing-sm);
   font-family: var(--mantine-font-family);
   font-size: var(--mantine-font-size-lg);
   font-weight: var(--mantine-font-weight-bold);
@@ -325,7 +338,7 @@
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
   margin: 0;
-  padding: 4px 0;
+  padding: var(--mantine-spacing-3xs) 0;
   border-radius: var(--mantine-radius-lg);
   background: var(--mantine-color-surface-muted);
 
@@ -340,7 +353,7 @@
 
 .field {
   min-width: 0;
-  padding: 12px 18px;
+  padding: var(--mantine-spacing-sm) var(--mantine-spacing-md);
 
   & dt {
     margin-bottom: 2px;
@@ -365,7 +378,7 @@
 .twoCol {
   display: grid;
   grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
-  gap: 28px;
+  gap: calc(var(--mantine-spacing-md) * 1.75);
 
   @container preset (max-width: 980px) {
     grid-template-columns: minmax(0, 1fr);
@@ -382,8 +395,8 @@
 }
 
 .task {
-  margin: 0 -10px;
-  padding: 8px 10px;
+  margin: 0 calc(var(--mantine-spacing-sm) * -1);
+  padding: var(--mantine-spacing-xs) var(--mantine-spacing-sm);
   border-radius: var(--mantine-radius-md);
   cursor: pointer;
 
@@ -393,7 +406,7 @@
 }
 
 .taskLabel {
-  padding-inline-start: 12px;
+  padding-inline-start: var(--mantine-spacing-sm);
   font-size: var(--mantine-font-size-md);
   font-weight: var(--mantine-font-weight-medium);
   line-height: 1.35;
@@ -410,7 +423,7 @@
 .taskDescription {
   margin-top: 0;
   line-height: 1.5;
-  padding-inline-start: 12px;
+  padding-inline-start: var(--mantine-spacing-sm);
 }
 
 .taskDue[data-late] {
@@ -438,7 +451,7 @@
 .composerInput {
   display: block;
   min-height: 72px;
-  padding: 12px 14px;
+  padding: var(--mantine-spacing-sm) var(--mantine-spacing-md);
   line-height: 1.5;
   resize: vertical;
 
@@ -456,14 +469,15 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 8px;
-  padding: 8px 8px 8px 14px;
+  gap: var(--mantine-spacing-xs);
+  padding: var(--mantine-spacing-xs) var(--mantine-spacing-xs) var(--mantine-spacing-xs)
+    var(--mantine-spacing-md);
   border-top: 1px solid var(--mantine-color-border);
   font-size: var(--mantine-font-size-xs);
 }
 
 .timeline {
-  margin-top: 20px;
+  margin-top: calc(var(--mantine-spacing-md) * 1.25);
 }
 
 .timeline .noteBullet {
@@ -471,7 +485,7 @@
 }
 
 .timelineBody {
-  margin-top: 4px;
+  margin-top: var(--mantine-spacing-3xs);
   font-size: var(--mantine-font-size-sm);
 }
 
@@ -483,8 +497,8 @@
   & li {
     display: flex;
     align-items: center;
-    gap: 14px;
-    padding: 12px 0;
+    gap: var(--mantine-spacing-md);
+    padding: var(--mantine-spacing-sm) 0;
     border-bottom: 1px solid var(--mantine-color-border);
 
     &:last-child {
@@ -540,7 +554,7 @@
 
 .modalInner {
   position: absolute;
-  padding: 16px;
+  padding: var(--mantine-spacing-md);
 }
 
 .modalContent {
@@ -550,7 +564,7 @@
 .formRow {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 12px;
+  gap: var(--mantine-spacing-sm);
 
   @container preset (max-width: 480px) {
     grid-template-columns: minmax(0, 1fr);
@@ -560,21 +574,22 @@
 .modalFoot {
   display: flex;
   justify-content: flex-end;
-  gap: 8px;
-  margin-top: 22px;
+  gap: var(--mantine-spacing-xs);
+  margin-top: var(--mantine-spacing-lg);
 }
 
 .toast {
   position: absolute;
   z-index: 30;
   inset-inline: 0;
-  bottom: 20px;
+  bottom: calc(var(--mantine-spacing-md) * 1.25);
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: var(--mantine-spacing-sm);
   width: fit-content;
   margin-inline: auto;
-  padding: 10px 18px 10px 12px;
+  padding: var(--mantine-spacing-sm) var(--mantine-spacing-md) var(--mantine-spacing-sm)
+    var(--mantine-spacing-sm);
   border-radius: 999px;
   background: var(--mantine-color-bright);
   color: var(--mantine-color-surface-panel);

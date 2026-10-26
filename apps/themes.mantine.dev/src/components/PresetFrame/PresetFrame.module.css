@@ -1,88 +1,9 @@
 .root {
-  --frame-bg: #e4e6e8;
-  --frame-text: #2a2d31;
-  --frame-control: #ffffff;
-  --frame-border: #c9cdd2;
-  --frame-active: #1d2024;
-  --frame-active-text: #ffffff;
-
-  min-height: 100vh;
-  padding: 0 16px 32px;
-  background: var(--frame-bg);
-  color: var(--frame-text);
-
-  @mixin dark {
-    --frame-bg: #111214;
-    --frame-text: #c9ccd1;
-    --frame-control: #1d1f22;
-    --frame-border: #34373c;
-    --frame-active: #e9ebee;
-    --frame-active-text: #111214;
-  }
-}
-
-.bar {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  flex-wrap: wrap;
-  gap: 12px;
-  padding-block: 10px;
-  font-family:
-    system-ui,
-    -apple-system,
-    'Segoe UI',
-    sans-serif;
-  font-size: 13px;
-}
-
-.widths {
-  display: inline-flex;
-  gap: 4px;
-}
-
-.width {
-  height: 28px;
-  padding: 0 10px;
-  border: 1px solid var(--frame-border);
-  border-radius: 4px;
-  background: var(--frame-control);
-  color: inherit;
-  font: inherit;
-  font-weight: 500;
-  cursor: pointer;
-
-  &[aria-pressed='true'] {
-    background: var(--frame-active);
-    border-color: var(--frame-active);
-    color: var(--frame-active-text);
-  }
-}
-
-.frame {
   container: preset / inline-size;
   position: relative;
-  width: 100%;
-  max-width: var(--preview-width);
-  margin-inline: auto;
-  border: 1px solid var(--frame-border);
-  border-radius: 10px;
   overflow: clip;
 }
 
 :global(:root[data-embedded]) {
-  & .root {
-    padding: 0;
-  }
-
-  & .bar {
-    display: none;
-  }
-
-  & .frame {
-    max-width: none;
-    min-height: 100vh;
-    border: 0;
-    border-radius: 0;
-  }
+  overflow: hidden;
 }

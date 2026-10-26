@@ -50,7 +50,7 @@ function Dashboard() {
             <Title order={1} className={classes.pageTitle}>
               Network overview
             </Title>
-            <Text size="sm" mt={6}>
+            <Text size="sm" mt="2xs">
               Tuesday, October 27. Synced 40 seconds ago.
             </Text>
           </div>

@@ -1,4 +1,5 @@
-import type { PresetThemeInfo, ThemeOverrides } from './overrides';
+import type { PresetThemeInfo } from './overrides';
+import type { ThemeOverrides } from './params';
 
 export type PreviewColorScheme = 'light' | 'dark';
 
@@ -11,7 +12,8 @@ export type EditorMessage = {
 export type PreviewMessage =
   | { type: 'theme-editor:ready'; info: PresetThemeInfo }
   | { type: 'theme-editor:applied' }
-  | { type: 'theme-editor:color-scheme'; colorScheme: PreviewColorScheme };
+  | { type: 'theme-editor:color-scheme'; colorScheme: PreviewColorScheme }
+  | { type: 'theme-editor:resize'; height: number };
 
 export function isEditorMessage(data: unknown): data is EditorMessage {
   return (
@@ -26,6 +28,7 @@ export function isPreviewMessage(data: unknown): data is PreviewMessage {
   return (
     type === 'theme-editor:ready' ||
     type === 'theme-editor:applied' ||
-    type === 'theme-editor:color-scheme'
+    type === 'theme-editor:color-scheme' ||
+    type === 'theme-editor:resize'
   );
 }

@@ -16,7 +16,7 @@
   position: absolute;
   z-index: 300;
   left: 50%;
-  bottom: 20px;
+  bottom: calc(var(--mantine-spacing-md) * 1.25);
   translate: -50% 0;
   white-space: nowrap;
 }

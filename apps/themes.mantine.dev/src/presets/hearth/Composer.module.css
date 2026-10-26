@@ -1,5 +1,5 @@
 .root {
-  margin: 0 20px 18px;
+  margin: 0 var(--mantine-spacing-lg) var(--mantine-spacing-lg);
   border: 1px solid var(--mantine-color-default-border);
   border-radius: var(--mantine-radius-lg);
   background: var(--mantine-color-default);
@@ -14,16 +14,16 @@
   }
 
   @container preset (max-width: 760px) {
-    margin: 0 12px 12px;
+    margin: 0 var(--mantine-spacing-sm) var(--mantine-spacing-sm);
   }
 }
 
 .tabs {
-  padding: 6px 6px 0;
+  padding: var(--mantine-spacing-2xs) var(--mantine-spacing-2xs) 0;
 }
 
 .to {
-  padding: 6px 14px 0;
+  padding: var(--mantine-spacing-2xs) var(--mantine-spacing-md) 0;
   font-size: var(--mantine-font-size-xs);
 }
 
@@ -31,7 +31,7 @@
   display: block;
   min-height: 76px;
   max-height: 180px;
-  padding: 8px 14px;
+  padding: var(--mantine-spacing-xs) var(--mantine-spacing-md);
   font-size: var(--mantine-font-size-md);
   line-height: 1.5;
   color: var(--mantine-color-text);
@@ -42,14 +42,14 @@
   align-items: center;
   justify-content: space-between;
   flex-wrap: wrap;
-  gap: 8px;
-  padding: 8px;
+  gap: var(--mantine-spacing-xs);
+  padding: var(--mantine-spacing-xs);
 }
 
 .tools {
   display: flex;
   align-items: center;
-  gap: 4px;
+  gap: var(--mantine-spacing-3xs);
 }
 
 .caret {

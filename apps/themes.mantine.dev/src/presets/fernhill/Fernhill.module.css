@@ -37,13 +37,13 @@
   position: absolute;
   z-index: 400;
   left: 50%;
-  bottom: 18px;
+  bottom: var(--mantine-spacing-md);
   translate: -50% 0;
   display: flex;
   align-items: center;
-  gap: 10px;
-  max-width: calc(100% - 32px);
-  padding: 10px 14px;
+  gap: var(--mantine-spacing-xs);
+  max-width: calc(100% - 2 * var(--mantine-spacing-md));
+  padding: var(--mantine-spacing-xs) var(--mantine-spacing-sm);
   border-radius: var(--mantine-radius-md);
   background: var(--mantine-color-bright);
   color: light-dark(var(--mantine-color-gray-0), var(--mantine-color-dark-8));

@@ -1,11 +1,14 @@
 .items {
   flex: 1;
-  overflow-y: auto;
-  padding: 8px 24px;
+  min-height: 0;
+}
+
+.itemsList {
+  padding: var(--mantine-spacing-xs) calc(var(--mantine-spacing-md) * 1.1);
 }
 
 .empty {
-  padding: 40px 0;
+  padding: calc(var(--mantine-spacing-md) * 1.9) 0;
   text-align: center;
 }
 
@@ -13,8 +16,8 @@
   display: grid;
   grid-template-columns: 64px minmax(0, 1fr) auto;
   align-items: center;
-  gap: 14px;
-  padding: 16px 0;
+  gap: var(--mantine-spacing-sm);
+  padding: calc(var(--mantine-spacing-md) * 0.8) 0;
   border-bottom: 1px solid var(--mantine-color-border);
 }
 
@@ -48,7 +51,7 @@
 .stepper {
   display: inline-flex;
   align-items: center;
-  margin-top: 8px;
+  margin-top: var(--mantine-spacing-xs);
   border: 1px solid var(--mantine-color-default-border);
   border-radius: 999px;
 
@@ -81,8 +84,8 @@
 }
 
 .remove {
-  margin-left: 10px;
-  padding: 4px 0;
+  margin-left: var(--mantine-spacing-sm);
+  padding: calc(var(--mantine-spacing-xs) / 2) 0;
   font-size: 13px;
   text-decoration: underline;
   text-underline-offset: 3px;
@@ -99,8 +102,8 @@
 .foot {
   display: flex;
   flex-direction: column;
-  gap: 12px;
-  padding: 20px 24px;
+  gap: var(--mantine-spacing-sm);
+  padding: calc(var(--mantine-spacing-md) * 1.1);
   border-top: 1px solid var(--mantine-color-border);
 }
 

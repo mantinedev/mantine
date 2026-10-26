@@ -7,11 +7,11 @@
   flex-wrap: wrap;
   align-items: flex-end;
   justify-content: space-between;
-  gap: 24px;
+  gap: calc(var(--mantine-spacing-sm) * 2);
 }
 
 .save {
-  padding: 2px 8px;
+  padding: 2px var(--mantine-spacing-xs);
   border-radius: 999px;
   background: var(--sw-marigold);
   color: var(--sw-marigold-ink);
@@ -22,9 +22,9 @@
 .plans {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 20px;
+  gap: var(--mantine-spacing-md);
   align-items: stretch;
-  margin-top: 40px;
+  margin-top: var(--mantine-spacing-xl);
 
   @container preset (max-width: 980px) {
     grid-template-columns: minmax(0, 1fr);
@@ -36,8 +36,8 @@
   position: relative;
   display: flex;
   flex-direction: column;
-  gap: 18px;
-  padding: 28px;
+  gap: var(--mantine-spacing-md);
+  padding: var(--mantine-spacing-lg);
   border: 1.5px solid var(--mantine-color-border);
   border-radius: var(--mantine-radius-lg);
 
@@ -49,21 +49,21 @@
 .plan .flag {
   position: absolute;
   top: -13px;
-  left: 28px;
-  padding: 4px 12px;
+  left: var(--mantine-spacing-lg);
+  padding: calc(var(--mantine-spacing-xs) / 2) var(--mantine-spacing-sm);
   background: var(--sw-marigold);
   color: var(--sw-marigold-ink);
 }
 
 .for {
-  margin-top: 4px;
+  margin-top: calc(var(--mantine-spacing-xs) / 2);
   font-size: 15px;
 }
 
 .price {
   display: flex;
   align-items: baseline;
-  gap: 6px;
+  gap: calc(var(--mantine-spacing-sm) / 2);
 
   & b {
     font-family: var(--mantine-font-family-headings);
@@ -87,7 +87,7 @@
 .perks {
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: var(--mantine-spacing-xs);
   font-size: 15px;
 }
 
@@ -100,7 +100,7 @@
   display: flex;
   align-self: flex-start;
   margin-top: 3px;
-  margin-inline-end: 10px;
+  margin-inline-end: var(--mantine-spacing-xs);
   color: var(--sw-good);
 }
 

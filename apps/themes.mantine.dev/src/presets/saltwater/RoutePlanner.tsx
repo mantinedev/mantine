@@ -41,7 +41,7 @@ export function RoutePlanner({
           <Title order={3} className={classes.tripTitle}>
             Your trip
           </Title>
-          <Text size="sm" mt={4}>
+          <Text size="sm" mt="calc(var(--mantine-spacing-xs) / 2)">
             {empty
               ? 'Starting from Oban'
               : `Starting from Oban, ${pluralize(trip.list.length, 'island', 'islands')}`}

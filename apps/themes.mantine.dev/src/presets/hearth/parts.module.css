@@ -30,7 +30,7 @@
 .priority {
   display: inline-flex;
   align-items: center;
-  gap: 6px;
+  gap: var(--mantine-spacing-2xs);
   font-size: var(--mantine-font-size-xs);
   font-weight: var(--mantine-font-weight-medium);
   white-space: nowrap;

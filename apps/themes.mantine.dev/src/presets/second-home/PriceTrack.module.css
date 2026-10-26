@@ -1,5 +1,5 @@
 .root {
-  padding: 14px 18px 16px;
+  padding: var(--mantine-spacing-md) var(--mantine-spacing-lg) var(--mantine-spacing-lg);
   border-top: 1px solid var(--mantine-color-border);
 }
 
@@ -7,7 +7,7 @@
   display: flex;
   align-items: baseline;
   justify-content: space-between;
-  gap: 10px;
+  gap: var(--mantine-spacing-sm);
   font-size: var(--mantine-font-size-sm);
 
   & b {
@@ -20,7 +20,7 @@
 .track {
   position: relative;
   height: 104px;
-  margin: 4px 14px 0;
+  margin: var(--mantine-spacing-2xs) 14px 0;
 }
 
 .rail {

@@ -40,7 +40,7 @@
 }
 
 .segmented {
-  padding: 4px;
+  padding: var(--mantine-spacing-3xs);
   gap: 2px;
   background: var(--inkwell-column);
 }
@@ -76,14 +76,14 @@
 }
 
 .menuDropdown {
-  --menu-dropdown-padding: 6px;
+  --menu-dropdown-padding: var(--mantine-spacing-2xs);
 
   border-color: var(--mantine-color-border);
 }
 
 .menuItem {
   height: 36px;
-  padding-inline: 10px;
+  padding-inline: var(--mantine-spacing-xs);
   font-size: var(--mantine-font-size-sm);
   font-weight: 500;
 
@@ -94,7 +94,7 @@
 }
 
 .menuLabel {
-  padding: 6px 10px 4px;
+  padding: var(--mantine-spacing-2xs) var(--mantine-spacing-xs) var(--mantine-spacing-3xs);
   font-size: var(--mantine-font-size-xs);
   font-weight: var(--mantine-font-weight-medium);
   color: var(--mantine-color-text);
@@ -105,7 +105,7 @@
 }
 
 .th {
-  padding: 14px 16px 10px;
+  padding: var(--mantine-spacing-sm) var(--mantine-spacing-md) var(--mantine-spacing-xs);
   font-size: var(--mantine-font-size-xs);
   font-weight: var(--mantine-font-weight-medium);
   color: var(--mantine-color-text);
@@ -113,7 +113,7 @@
 }
 
 .td {
-  padding: 12px 16px;
+  padding: var(--mantine-spacing-sm) var(--mantine-spacing-md);
   font-size: var(--mantine-font-size-sm);
 }
 
@@ -121,7 +121,8 @@
   --notification-icon-size: 22px;
 
   border-radius: 1000px;
-  padding: 10px 18px 10px 12px;
+  padding: var(--mantine-spacing-xs) var(--mantine-spacing-md) var(--mantine-spacing-xs)
+    var(--mantine-spacing-sm);
   background: var(--mantine-color-bright);
   box-shadow: var(--mantine-shadow-xl);
 }

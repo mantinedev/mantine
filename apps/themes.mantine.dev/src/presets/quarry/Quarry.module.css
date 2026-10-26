@@ -28,8 +28,8 @@
 .head {
   display: flex;
   align-items: center;
-  gap: 10px;
-  padding: 12px 18px;
+  gap: var(--mantine-spacing-sm);
+  padding: var(--mantine-spacing-sm) var(--mantine-spacing-lg);
   border-bottom: 1px solid var(--mantine-color-border);
 }
 
@@ -63,17 +63,19 @@
   }
 }
 
-.thread {
+.threadScroll {
   flex: 1;
   min-height: 0;
-  overflow-y: auto;
+}
+
+.thread {
   display: flex;
   flex-direction: column;
-  gap: 22px;
-  padding: 20px 22px 28px;
+  gap: var(--mantine-spacing-xl);
+  padding: var(--mantine-spacing-lg) var(--mantine-spacing-xl) var(--mantine-spacing-2xl);
 
   @container preset (max-width: 520px) {
-    padding: 16px 14px 24px;
+    padding: var(--mantine-spacing-md) var(--mantine-spacing-md) var(--mantine-spacing-xl);
   }
 }
 
@@ -84,7 +86,7 @@
 .question {
   align-self: flex-end;
   max-width: 78%;
-  padding: 10px 14px;
+  padding: var(--mantine-spacing-sm) var(--mantine-spacing-md);
   border: 1px solid var(--mantine-color-border);
   border-radius: 14px 14px 4px;
   background: var(--quarry-surface-2);
@@ -108,7 +110,7 @@
   left: 50%;
   bottom: 20px;
   translate: -50% 0;
-  padding: 9px 16px;
+  padding: var(--mantine-spacing-xs) var(--mantine-spacing-md);
   border-radius: 999px;
   background: var(--mantine-color-bright);
   color: light-dark(var(--mantine-color-gray-0), var(--mantine-color-dark-8));

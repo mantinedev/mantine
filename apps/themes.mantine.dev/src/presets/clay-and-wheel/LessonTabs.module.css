@@ -3,12 +3,14 @@
 }
 
 .list {
-  padding: 0 24px;
+  width: max-content;
+  min-width: 100%;
+  padding: 0 var(--mantine-spacing-lg);
   border-bottom: 1px solid var(--mantine-color-border);
 
   @container preset (max-width: 520px) {
-    gap: 20px;
-    padding: 0 16px;
+    gap: calc(var(--mantine-spacing-md) + var(--mantine-spacing-2xs));
+    padding: 0 var(--mantine-spacing-md);
   }
 }
 
@@ -27,28 +29,28 @@
 }
 
 .panel {
-  padding: 28px;
+  padding: calc(var(--mantine-spacing-lg) + var(--mantine-spacing-2xs));
 
   @container preset (max-width: 760px) {
-    padding: 22px;
+    padding: var(--mantine-spacing-lg);
   }
 }
 
 .panelTitle {
-  margin-bottom: 12px;
+  margin-bottom: var(--mantine-spacing-sm);
 }
 
 .paragraph {
   max-width: 68ch;
-  margin: 0 0 14px;
+  margin: 0 0 var(--mantine-spacing-sm);
 }
 
 .steps {
   display: flex;
   flex-direction: column;
-  gap: 18px;
+  gap: var(--mantine-spacing-md);
   max-width: 68ch;
-  margin: 20px 0 24px;
+  margin: calc(var(--mantine-spacing-md) + var(--mantine-spacing-2xs)) 0 var(--mantine-spacing-lg);
   padding: 0;
   list-style: none;
   counter-reset: step;
@@ -56,7 +58,7 @@
   & li {
     display: grid;
     grid-template-columns: 36px minmax(0, 1fr);
-    gap: 4px 16px;
+    gap: var(--mantine-spacing-2xs) var(--mantine-spacing-md);
     counter-increment: step;
 
     &::before {
@@ -87,20 +89,20 @@
 
 .callout {
   max-width: 72ch;
-  margin-bottom: 16px;
+  margin-bottom: var(--mantine-spacing-md);
 }
 
 .transcript {
   display: flex;
   flex-direction: column;
-  gap: 14px;
+  gap: var(--mantine-spacing-sm);
   max-width: 70ch;
 }
 
 .transcriptLine {
   display: grid;
   grid-template-columns: 56px minmax(0, 1fr);
-  gap: 12px;
+  gap: var(--mantine-spacing-sm);
 }
 
 .timestamp {
@@ -119,7 +121,7 @@
 .files {
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: var(--mantine-spacing-xs);
   margin: 0;
   padding: 0;
   list-style: none;
@@ -128,8 +130,8 @@
 .file {
   display: flex;
   align-items: center;
-  gap: 14px;
-  padding: 14px;
+  gap: var(--mantine-spacing-sm);
+  padding: var(--mantine-spacing-sm);
 }
 
 .fileIcon {
@@ -165,11 +167,11 @@
 .ask {
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: var(--mantine-spacing-xs);
 }
 
 .askLabel {
-  margin-bottom: 10px;
+  margin-bottom: var(--mantine-spacing-xs);
   font-size: var(--mantine-font-size-md);
   font-weight: var(--mantine-font-weight-medium);
   color: var(--mantine-color-bright);
@@ -187,15 +189,15 @@
   align-items: center;
   justify-content: space-between;
   flex-wrap: wrap;
-  gap: 10px;
+  gap: var(--mantine-spacing-xs);
   font-size: var(--mantine-font-size-xs);
 }
 
 .thread {
   display: flex;
   flex-direction: column;
-  gap: 22px;
-  margin: 20px 0 0;
+  gap: var(--mantine-spacing-lg);
+  margin: calc(var(--mantine-spacing-md) + var(--mantine-spacing-2xs)) 0 0;
   padding: 0;
   list-style: none;
 }
@@ -203,11 +205,11 @@
 .post {
   display: grid;
   grid-template-columns: auto minmax(0, 1fr);
-  gap: 2px 14px;
+  gap: 2px var(--mantine-spacing-sm);
 
   &[data-answer] {
     margin-left: 52px;
-    padding: 14px 16px;
+    padding: var(--mantine-spacing-sm) var(--mantine-spacing-md);
     border: 1px solid var(--mantine-color-border);
     border-radius: var(--mantine-radius-md);
     background: var(--cw-surface-sunk);
@@ -226,14 +228,14 @@
   font-size: var(--mantine-font-size-sm);
 
   & b {
-    margin-right: 8px;
+    margin-right: var(--mantine-spacing-xs);
     color: var(--mantine-color-bright);
     font-weight: var(--mantine-font-weight-bold);
   }
 }
 
 .instructor {
-  margin-right: 8px;
+  margin-right: var(--mantine-spacing-xs);
   vertical-align: 1px;
 }
 
@@ -243,14 +245,14 @@
 
 .postActions {
   display: flex;
-  gap: 14px;
+  gap: var(--mantine-spacing-sm);
 }
 
 .postAction {
   display: inline-flex;
   align-items: center;
-  gap: 6px;
-  padding: 4px 0;
+  gap: calc(var(--mantine-spacing-xs) * 0.75);
+  padding: var(--mantine-spacing-2xs) 0;
   font-size: var(--mantine-font-size-xs);
   font-weight: var(--mantine-font-weight-bold);
   color: var(--mantine-color-text);

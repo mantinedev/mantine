@@ -37,14 +37,14 @@
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  padding: 20px var(--tw-gutter) 22px;
+  padding: calc(var(--mantine-spacing-sm) * 1.5) var(--tw-gutter) var(--mantine-spacing-lg);
 }
 
 .top {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 12px;
+  gap: var(--mantine-spacing-sm);
 }
 
 .where {
@@ -55,7 +55,7 @@
 .actions {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: var(--mantine-spacing-xs);
 }
 
 .mast .glass {
@@ -100,7 +100,7 @@
   align-items: flex-end;
   justify-content: space-between;
   flex-wrap: wrap;
-  gap: 16px;
+  gap: calc(var(--mantine-spacing-sm) * 1.5);
 }
 
 .mast .wordmark {
@@ -131,7 +131,7 @@
 
   & span {
     display: block;
-    margin-top: 6px;
+    margin-top: var(--mantine-spacing-2xs);
     font-family: var(--mantine-font-family);
     font-size: 14px;
     font-weight: var(--mantine-font-weight-medium);

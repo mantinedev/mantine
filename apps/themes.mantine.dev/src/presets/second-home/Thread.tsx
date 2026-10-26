@@ -107,7 +107,7 @@ function ItemCard({
               <dd>{item.area}</dd>
             </div>
           </dl>
-          <Group gap={8} className={classes.itemActions}>
+          <Group gap="calc(var(--mantine-spacing-sm) * 0.8)" className={classes.itemActions}>
             {seller && !conversation.sold && (
               <Button
                 size="xs"
@@ -154,7 +154,7 @@ function PickupCard({ conversation, pickup, actions }: PickupCardProps) {
           value={pickup.day}
           onChange={(day) => actions.onPickupChange({ ...pickup, day })}
         >
-          <Group gap={6} role="radiogroup" aria-labelledby="pickup-day">
+          <Group gap="xs" role="radiogroup" aria-labelledby="pickup-day">
             {PICKUP_DAYS.map((day) => (
               <Chip key={day} value={day}>
                 {day}

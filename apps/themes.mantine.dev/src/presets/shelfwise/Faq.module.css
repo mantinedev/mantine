@@ -1,15 +1,15 @@
 .section {
   display: grid;
   grid-template-columns: minmax(0, 320px) minmax(0, 1fr);
-  gap: 56px;
+  gap: calc(var(--mantine-spacing-lg) * 2);
   padding: 0 var(--sw-gutter) var(--sw-block);
 
   @container preset (max-width: 980px) {
     grid-template-columns: minmax(0, 1fr);
-    gap: 24px;
+    gap: calc(var(--mantine-spacing-sm) * 2);
   }
 }
 
 .asideText {
-  margin: 14px 0 20px;
+  margin: var(--mantine-spacing-sm) 0 var(--mantine-spacing-md);
 }

@@ -4,8 +4,8 @@
   z-index: 20;
   display: flex;
   align-items: center;
-  gap: 14px;
-  padding: 12px 20px;
+  gap: var(--mantine-spacing-sm);
+  padding: var(--mantine-spacing-sm) calc(var(--mantine-spacing-md) * 1.1);
   border-top: 1px solid var(--mantine-color-border);
   background: var(--hc-surface);
   box-shadow: 0 -10px 30px -18px rgba(0, 0, 0, 0.3);

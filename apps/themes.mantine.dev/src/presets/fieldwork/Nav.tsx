@@ -48,7 +48,7 @@ export function Nav() {
               {link.label}
             </a>
           ))}
-          <Button component="a" href="#tickets" mt={14} onClick={closeSheet}>
+          <Button component="a" href="#tickets" mt="md" onClick={closeSheet}>
             Get tickets
           </Button>
         </div>

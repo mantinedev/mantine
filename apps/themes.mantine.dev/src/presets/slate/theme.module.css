@@ -24,11 +24,11 @@
   }
 
   &:where([data-position='left']) {
-    margin-inline-end: 6px;
+    margin-inline-end: var(--mantine-spacing-2xs);
   }
 
   &:where([data-position='right']) {
-    margin-inline-start: 6px;
+    margin-inline-start: var(--mantine-spacing-2xs);
   }
 }
 
@@ -87,10 +87,10 @@
 
 .navLink {
   --nl-fz: var(--mantine-font-size-md);
-  --nl-section-gap: 8px;
+  --nl-section-gap: var(--mantine-spacing-xs);
 
   height: 32px;
-  padding: 0 8px;
+  padding: 0 var(--mantine-spacing-xs);
   border-radius: 7px;
   line-height: 1.5;
 }
@@ -102,7 +102,7 @@
 }
 
 .dividerLabel {
-  gap: 12px;
+  gap: var(--mantine-spacing-sm);
   font-size: 12.5px;
   font-weight: var(--mantine-font-weight-semibold);
   color: var(--mantine-color-bright);
@@ -114,7 +114,7 @@
 }
 
 .dropdown {
-  padding: 6px;
+  padding: var(--mantine-spacing-2xs);
   border-color: var(--mantine-color-default-border);
   background: var(--mantine-color-surface-panel);
 }
@@ -123,9 +123,9 @@
 .option {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: var(--mantine-spacing-xs);
   height: 36px;
-  padding: 0 10px;
+  padding: 0 var(--mantine-spacing-xs);
   border-radius: 7px;
   font-size: 13.5px;
   color: var(--mantine-color-text);
@@ -148,7 +148,7 @@
 
 .menuLabel,
 .comboboxHeader {
-  padding: 6px 10px 4px;
+  padding: var(--mantine-spacing-2xs) var(--mantine-spacing-xs) var(--mantine-spacing-3xs);
   border: 0;
   margin: 0;
   font-size: 12px;
@@ -162,7 +162,7 @@
 }
 
 .th {
-  padding-block: 6px;
+  padding-block: var(--mantine-spacing-2xs);
   font-size: 11.5px;
   font-weight: var(--mantine-font-weight-medium);
   color: var(--mantine-color-text);

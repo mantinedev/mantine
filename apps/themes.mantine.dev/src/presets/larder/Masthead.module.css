@@ -1,9 +1,9 @@
 .root {
   display: flex;
   align-items: center;
-  gap: 16px;
+  gap: var(--mantine-spacing-md);
   min-width: 0;
-  padding: 0 16px 0 20px;
+  padding: 0 var(--mantine-spacing-md) 0 var(--mantine-spacing-lg);
   background: var(--mantine-color-surface-panel);
   border-bottom: 1px solid var(--mantine-color-default-border);
 }
@@ -48,7 +48,7 @@
 .saveState {
   display: inline-flex;
   align-items: center;
-  gap: 8px;
+  gap: var(--mantine-spacing-xs);
   font-size: var(--mantine-font-size-sm);
   white-space: nowrap;
 

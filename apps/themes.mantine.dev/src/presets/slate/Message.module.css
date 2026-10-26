@@ -2,8 +2,8 @@
   position: relative;
   display: grid;
   grid-template-columns: 36px minmax(0, 1fr);
-  gap: 0 12px;
-  padding: 6px var(--slate-gutter, 18px);
+  gap: 0 var(--mantine-spacing-sm);
+  padding: var(--mantine-spacing-2xs) var(--slate-gutter, var(--mantine-spacing-md));
 
   @mixin hover {
     background: var(--mantine-color-hover);
@@ -37,7 +37,7 @@
   display: flex;
   flex-wrap: wrap;
   align-items: baseline;
-  gap: 8px;
+  gap: var(--mantine-spacing-xs);
 }
 
 .name {
@@ -92,8 +92,8 @@
 .reactions {
   display: flex;
   flex-wrap: wrap;
-  gap: 4px;
-  margin-top: 6px;
+  gap: var(--mantine-spacing-3xs);
+  margin-top: var(--mantine-spacing-2xs);
 }
 
 .reaction {
@@ -154,9 +154,9 @@
 .threadLink {
   display: inline-flex;
   align-items: center;
-  gap: 8px;
-  margin-top: 6px;
-  padding: 2px 4px 2px 0;
+  gap: var(--mantine-spacing-xs);
+  margin-top: var(--mantine-spacing-2xs);
+  padding: 2px var(--mantine-spacing-3xs) 2px 0;
   font-size: var(--mantine-font-size-sm);
 
   & b {
@@ -168,7 +168,7 @@
 .hoverBar {
   position: absolute;
   top: -12px;
-  right: var(--slate-gutter, 18px);
+  right: var(--slate-gutter, var(--mantine-spacing-md));
   display: none;
   gap: 2px;
   padding: 3px;
@@ -190,10 +190,10 @@
 .file {
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: var(--mantine-spacing-sm);
   max-width: 420px;
-  margin-top: 8px;
-  padding: 10px 12px;
+  margin-top: var(--mantine-spacing-xs);
+  padding: var(--mantine-spacing-xs) var(--mantine-spacing-sm);
   border-color: var(--mantine-color-default-border);
 }
 
@@ -242,9 +242,9 @@
 .boards {
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: 8px;
+  gap: var(--mantine-spacing-xs);
   max-width: 640px;
-  margin-top: 8px;
+  margin-top: var(--mantine-spacing-xs);
 
   @container preset (max-width: 760px) {
     grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -268,8 +268,8 @@
   & figcaption {
     display: flex;
     justify-content: space-between;
-    gap: 4px;
-    padding: 4px 6px;
+    gap: var(--mantine-spacing-3xs);
+    padding: var(--mantine-spacing-3xs) var(--mantine-spacing-2xs);
     border-top: 1px solid var(--mantine-color-border);
     font-size: 11.5px;
   }
@@ -282,15 +282,15 @@
 
 .poll {
   max-width: 420px;
-  margin-top: 8px;
-  padding: 12px;
+  margin-top: var(--mantine-spacing-xs);
+  padding: var(--mantine-spacing-sm);
   border: 1px solid var(--mantine-color-default-border);
   border-radius: var(--mantine-radius-lg);
   background: var(--mantine-color-surface-panel);
 }
 
 .pollQuestion {
-  margin-bottom: 8px;
+  margin-bottom: var(--mantine-spacing-xs);
   font-weight: var(--mantine-font-weight-bold);
   color: var(--mantine-color-bright);
 }
@@ -300,11 +300,11 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 10px;
+  gap: var(--mantine-spacing-xs);
   width: 100%;
   height: 38px;
-  margin-top: 6px;
-  padding: 0 12px;
+  margin-top: var(--mantine-spacing-2xs);
+  padding: 0 var(--mantine-spacing-sm);
   overflow: hidden;
   border: 1px solid var(--mantine-color-default-border);
   border-radius: var(--mantine-radius-md);
@@ -343,7 +343,7 @@
 }
 
 .pollFoot {
-  margin-top: 8px;
+  margin-top: var(--mantine-spacing-xs);
   font-size: 12.5px;
 }
 

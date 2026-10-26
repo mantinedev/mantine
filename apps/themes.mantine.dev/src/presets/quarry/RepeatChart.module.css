@@ -7,8 +7,8 @@
   align-items: center;
   justify-content: space-between;
   flex-wrap: wrap;
-  gap: 10px;
-  padding: 12px 14px 0;
+  gap: var(--mantine-spacing-sm);
+  padding: var(--mantine-spacing-sm) var(--mantine-spacing-md) 0;
 }
 
 .title {
@@ -23,13 +23,13 @@
 
 .legend {
   display: flex;
-  gap: 14px;
+  gap: var(--mantine-spacing-md);
   font-size: 12.5px;
 
   & span {
     display: inline-flex;
     align-items: center;
-    gap: 6px;
+    gap: var(--mantine-spacing-2xs);
   }
 
   & i {
@@ -51,7 +51,7 @@
 }
 
 .chart {
-  padding: 6px 12px 10px;
+  padding: var(--mantine-spacing-2xs) var(--mantine-spacing-sm) var(--mantine-spacing-sm);
   font-variant-numeric: tabular-nums;
 }
 
@@ -69,7 +69,7 @@
 
 .tooltip {
   min-width: 150px;
-  padding: 8px 10px;
+  padding: var(--mantine-spacing-xs) var(--mantine-spacing-sm);
   font-size: 12.5px;
   font-variant-numeric: tabular-nums;
 
@@ -82,7 +82,7 @@
   & div {
     display: flex;
     align-items: center;
-    gap: 6px;
+    gap: var(--mantine-spacing-2xs);
   }
 
   & i {
@@ -93,7 +93,7 @@
 
   & em {
     margin-left: auto;
-    padding-left: 12px;
+    padding-left: var(--mantine-spacing-sm);
     font-style: normal;
     font-weight: 700;
     color: var(--mantine-color-bright);

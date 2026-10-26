@@ -17,6 +17,7 @@ import {
   Drawer,
   Paper,
   Portal,
+  ScrollArea,
   Table,
   TableOfContents,
   Text,
@@ -134,7 +135,9 @@ function Docs() {
       <TopBar navOpened={navOpened} onNavToggle={() => setNavOpened((o) => !o)} />
 
       <div className={classes.layout}>
-        <SideNav className={classes.sidenav} />
+        <ScrollArea className={classes.sidenav} scrollbarSize={6} scrollbars="y">
+          <SideNav className={classes.sidenavInner} />
+        </ScrollArea>
 
         <main className={classes.content}>
           <Breadcrumbs separator={<IconChevronRight size={14} stroke={1.75} />}>

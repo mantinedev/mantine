@@ -1,7 +1,7 @@
 .chips {
   display: flex;
   flex-wrap: wrap;
-  gap: 6px;
+  gap: var(--mantine-spacing-2xs);
 }
 
 .chipSwatch {
@@ -13,13 +13,13 @@
 .speakers {
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: 28px 20px;
+  gap: var(--mantine-spacing-xl) var(--mantine-spacing-lg);
 }
 
 .speaker {
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: var(--mantine-spacing-sm);
   text-align: left;
   color: var(--mantine-color-text);
 
@@ -93,7 +93,7 @@
 }
 
 .speakerTalk {
-  padding-top: 8px;
+  padding-top: var(--mantine-spacing-xs);
   border-top: 2px solid var(--mantine-color-bright);
   font-size: 15px;
   font-weight: var(--mantine-font-weight-medium);
@@ -104,7 +104,7 @@
 .trackTag {
   display: inline-flex;
   align-items: center;
-  gap: 6px;
+  gap: var(--mantine-spacing-2xs);
   font-size: 13px;
   font-weight: var(--mantine-font-weight-medium);
 
@@ -146,8 +146,8 @@
   display: grid;
   grid-template-columns: 84px 12px minmax(0, 1fr) 150px auto;
   align-items: center;
-  gap: 16px;
-  padding: 16px 0;
+  gap: var(--mantine-spacing-md);
+  padding: var(--mantine-spacing-md) 0;
   border-bottom: 1px solid var(--mantine-color-border-strong);
 
   &[data-break] .slotTitle {
@@ -196,11 +196,11 @@
 }
 
 .empty {
-  padding: 40px 0;
+  padding: var(--mantine-spacing-3xl) 0;
 
   & b {
     display: block;
-    margin-bottom: 4px;
+    margin-bottom: calc(var(--mantine-spacing-xs) / 2);
     font-size: 18px;
     color: var(--mantine-color-bright);
   }
@@ -210,21 +210,21 @@
   display: grid;
   grid-template-columns: minmax(0, 1fr) 320px;
   align-items: start;
-  gap: 28px;
+  gap: var(--mantine-spacing-xl);
 }
 
 .tiers {
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: var(--mantine-spacing-sm);
 }
 
 .tier {
   display: grid;
   grid-template-columns: minmax(0, 1fr) auto auto;
   align-items: center;
-  gap: 4px 20px;
-  padding: 20px 22px;
+  gap: calc(var(--mantine-spacing-xs) / 2) var(--mantine-spacing-lg);
+  padding: var(--mantine-spacing-lg) var(--mantine-spacing-lg);
   color: var(--mantine-color-text);
 }
 
@@ -286,18 +286,18 @@
 
 .summary {
   position: sticky;
-  top: 16px;
+  top: var(--mantine-spacing-md);
   display: flex;
   flex-direction: column;
-  gap: 14px;
-  padding: 22px;
+  gap: var(--mantine-spacing-md);
+  padding: var(--mantine-spacing-lg);
   color: var(--mantine-color-text);
 }
 
 .orderLines {
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: var(--mantine-spacing-xs);
   margin: 0;
   padding: 0;
   list-style: none;
@@ -306,7 +306,7 @@
   & li {
     display: flex;
     justify-content: space-between;
-    gap: 10px;
+    gap: var(--mantine-spacing-sm);
     font-variant-numeric: tabular-nums;
   }
 }
@@ -319,7 +319,7 @@
   display: flex;
   justify-content: space-between;
   align-items: baseline;
-  padding-top: 12px;
+  padding-top: var(--mantine-spacing-sm);
   border-top: 2px solid var(--mantine-color-bright);
 
   & span {
@@ -344,8 +344,8 @@
   display: grid;
   grid-template-columns: 112px minmax(0, 1fr) auto;
   align-items: start;
-  gap: 18px;
-  padding: 22px;
+  gap: var(--mantine-spacing-md);
+  padding: var(--mantine-spacing-lg);
   border-bottom: 2px solid var(--mantine-color-bright);
 }
 
@@ -366,15 +366,15 @@
 }
 
 .modalRole {
-  margin-top: 6px;
+  margin-top: var(--mantine-spacing-2xs);
   font-size: 15px;
 }
 
 .modalBody {
   display: flex;
   flex-direction: column;
-  gap: 14px;
-  padding: 22px;
+  gap: var(--mantine-spacing-md);
+  padding: var(--mantine-spacing-lg);
   font-size: 16px;
   line-height: 1.55;
   color: var(--mantine-color-text);
@@ -396,8 +396,8 @@
 .modalFoot {
   display: flex;
   flex-wrap: wrap;
-  gap: 10px;
-  padding: 0 22px 22px;
+  gap: var(--mantine-spacing-sm);
+  padding: 0 var(--mantine-spacing-lg) var(--mantine-spacing-lg);
 }
 
 @container preset (max-width: 980px) {
@@ -441,7 +441,7 @@
 @container preset (max-width: 520px) {
   .slot {
     grid-template-columns: 64px minmax(0, 1fr) auto;
-    gap: 4px 12px;
+    gap: calc(var(--mantine-spacing-xs) / 2) var(--mantine-spacing-sm);
   }
 
   .slotBar {

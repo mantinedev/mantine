@@ -36,18 +36,18 @@
   grid-template-columns: 300px minmax(0, 1fr);
   gap: var(--mantine-spacing-xl);
   align-items: center;
-  padding: 48px var(--mantine-spacing-xl) 32px;
+  padding: var(--mantine-spacing-2xl) var(--mantine-spacing-xl) calc(var(--mantine-spacing-md) * 2);
 
   @container preset (max-width: 980px) {
     grid-template-columns: 240px minmax(0, 1fr);
-    gap: 32px;
+    gap: calc(var(--mantine-spacing-md) * 2);
   }
 
   @container preset (max-width: 760px) {
     grid-template-columns: 160px minmax(0, 1fr);
     gap: var(--mantine-spacing-lg);
     align-items: start;
-    padding: 32px var(--mantine-spacing-lg);
+    padding: calc(var(--mantine-spacing-md) * 2) var(--mantine-spacing-lg);
   }
 
   @container preset (max-width: 520px) {
@@ -71,7 +71,7 @@
 .heroText {
   display: flex;
   flex-direction: column;
-  gap: 14px;
+  gap: var(--mantine-spacing-sm);
   min-width: 0;
 }
 
@@ -123,11 +123,11 @@
   grid-template-columns: minmax(0, 1fr) 320px;
   gap: var(--mantine-spacing-xl);
   align-items: start;
-  padding: var(--mantine-spacing-xl) var(--mantine-spacing-xl) 48px;
+  padding: var(--mantine-spacing-xl) var(--mantine-spacing-xl) var(--mantine-spacing-2xl);
 
   @container preset (max-width: 980px) {
     grid-template-columns: minmax(0, 1fr) 280px;
-    gap: 32px;
+    gap: calc(var(--mantine-spacing-md) * 2);
   }
 
   @container preset (max-width: 760px) {
@@ -144,13 +144,13 @@
 .side {
   display: flex;
   flex-direction: column;
-  gap: 36px;
+  gap: calc(var(--mantine-spacing-xl) - var(--mantine-spacing-2xs));
   min-width: 0;
 }
 
 .sectionTitle,
 .sectionTitleSmall {
-  margin-bottom: 14px;
+  margin-bottom: var(--mantine-spacing-sm);
 }
 
 .root .sectionTitleSmall {
@@ -172,7 +172,7 @@
   gap: var(--mantine-spacing-sm);
   align-items: center;
   width: 100%;
-  padding: 12px 14px;
+  padding: var(--mantine-spacing-sm);
   border-radius: var(--mantine-radius-md);
   font-size: var(--mantine-font-size-md);
   line-height: 1.55;
@@ -261,7 +261,7 @@
   justify-content: space-between;
   flex-wrap: wrap;
   gap: var(--mantine-spacing-sm);
-  margin-bottom: 14px;
+  margin-bottom: var(--mantine-spacing-sm);
 
   & .sectionTitle {
     margin-bottom: 0;
@@ -273,14 +273,14 @@
 }
 
 .transcriptInner {
-  padding: 8px;
+  padding: var(--mantine-spacing-xs);
 }
 
 .para {
   display: grid;
   grid-template-columns: 56px minmax(0, 1fr);
-  gap: 4px 14px;
-  padding: 14px;
+  gap: var(--mantine-spacing-2xs) var(--mantine-spacing-sm);
+  padding: var(--mantine-spacing-sm);
   border-radius: var(--mantine-radius-lg);
   cursor: pointer;
 
@@ -332,7 +332,7 @@
 .notes {
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: var(--mantine-spacing-xs);
   margin: 0;
   padding: 0;
   list-style: none;
@@ -340,20 +340,20 @@
   line-height: 1.6;
 
   & li:first-child {
-    margin-bottom: 4px;
+    margin-bottom: var(--mantine-spacing-2xs);
   }
 }
 
 .guests {
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: var(--mantine-spacing-xs);
 }
 
 .guest {
   display: grid;
   grid-template-columns: auto minmax(0, 1fr);
-  gap: 2px 14px;
+  gap: 2px var(--mantine-spacing-sm);
   padding: var(--mantine-spacing-md);
 
   & b {
@@ -379,9 +379,9 @@
 .episode {
   display: grid;
   grid-template-columns: auto minmax(0, 1fr) auto;
-  gap: 2px 14px;
+  gap: 2px var(--mantine-spacing-sm);
   align-items: center;
-  padding: 14px 0;
+  padding: var(--mantine-spacing-sm) 0;
   border-bottom: 1px solid var(--mantine-color-border);
 
   &:last-child {
@@ -426,7 +426,7 @@
   display: flex;
   flex-direction: column;
   gap: var(--mantine-spacing-sm);
-  padding: 22px;
+  padding: var(--mantine-spacing-lg);
   background: var(--mantine-color-surface-panel-2);
 }
 
@@ -462,7 +462,8 @@
   justify-content: space-between;
   flex-wrap: wrap;
   gap: var(--mantine-spacing-md);
-  padding: var(--mantine-spacing-lg) var(--mantine-spacing-xl) 28px;
+  padding: var(--mantine-spacing-lg) var(--mantine-spacing-xl)
+    calc(var(--mantine-spacing-lg) + var(--mantine-spacing-2xs));
   border-top: 1px solid var(--mantine-color-border);
 
   @container preset (max-width: 760px) {
@@ -477,7 +478,7 @@
 .footerNav {
   display: flex;
   flex-wrap: wrap;
-  gap: 18px;
+  gap: var(--mantine-spacing-md);
   font-size: var(--mantine-font-size-sm);
 
   & a {
@@ -497,9 +498,9 @@
   z-index: 25;
   display: grid;
   grid-template-columns: auto auto minmax(0, 1fr) auto;
-  gap: 14px;
+  gap: var(--mantine-spacing-sm);
   align-items: center;
-  padding: 10px 20px;
+  padding: var(--mantine-spacing-xs) calc(var(--mantine-spacing-md) + var(--mantine-spacing-2xs));
   border-top: 1px solid var(--mantine-color-border);
   background: var(--mantine-color-surface-panel-2);
   box-shadow: var(--ns-mini-shadow);
@@ -524,7 +525,7 @@
 .miniInfo {
   display: flex;
   flex-direction: column;
-  gap: 6px;
+  gap: calc(var(--mantine-spacing-xs) * 0.75);
   min-width: 0;
 
   & b {
@@ -554,7 +555,7 @@
 }
 
 .toast {
-  padding: 10px 18px;
+  padding: var(--mantine-spacing-xs) var(--mantine-spacing-md);
   border-radius: 999px;
   white-space: nowrap;
   font-size: var(--mantine-font-size-sm);

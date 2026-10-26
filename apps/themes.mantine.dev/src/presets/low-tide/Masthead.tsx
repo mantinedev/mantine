@@ -60,7 +60,7 @@ export function Masthead() {
               <IconMenu2 {...ICON_PROPS} />
             </ActionIcon>
           </Popover.Target>
-          <Popover.Dropdown p={6}>
+          <Popover.Dropdown p="2xs">
             {sections.map((section, index) => (
               <NavLink
                 key={section}

@@ -5,20 +5,20 @@
 .quote {
   display: grid;
   grid-template-columns: minmax(0, 1fr) auto;
-  gap: 40px;
+  gap: var(--mantine-spacing-xl);
   align-items: end;
-  padding: 56px;
+  padding: calc(var(--mantine-spacing-lg) * 2);
   border-radius: var(--mantine-radius-xl);
   background: var(--sw-quote-bg);
   color: var(--sw-quote-color);
 
   @container preset (max-width: 980px) {
     grid-template-columns: minmax(0, 1fr);
-    padding: 40px;
+    padding: var(--mantine-spacing-xl);
   }
 
   @container preset (max-width: 520px) {
-    padding: 28px 22px;
+    padding: var(--mantine-spacing-lg) var(--mantine-spacing-md);
     border-radius: 18px;
   }
 }
@@ -38,8 +38,8 @@
 .stats {
   display: flex;
   flex-wrap: wrap;
-  gap: 36px;
-  margin-top: 28px;
+  gap: calc(var(--mantine-spacing-sm) * 3);
+  margin-top: var(--mantine-spacing-lg);
   font-size: var(--mantine-font-size-sm);
 
   & b {
@@ -54,7 +54,7 @@
 .who {
   display: flex;
   align-items: center;
-  gap: 14px;
+  gap: var(--mantine-spacing-sm);
 
   & b {
     display: block;

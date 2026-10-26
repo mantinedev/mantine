@@ -75,7 +75,7 @@ export function SetPopover({
           <dt>Genre</dt>
           <dd>{GENRE_NAMES[set.genre]}</dd>
         </dl>
-        <Text size="sm" fz={14} mt={10}>
+        <Text size="sm" fz={14} mt="xs">
           {BLURBS[set.name]}
         </Text>
 
@@ -109,7 +109,7 @@ export function SetPopover({
 
         <Button
           fullWidth
-          mt={14}
+          mt="sm"
           data-autofocus
           variant={starred ? 'default' : 'filled'}
           color={starred ? undefined : 'peach'}

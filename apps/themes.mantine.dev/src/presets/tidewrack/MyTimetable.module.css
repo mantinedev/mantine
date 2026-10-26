@@ -1,9 +1,10 @@
 .plan {
   display: grid;
   grid-template-columns: minmax(0, 1fr) 300px;
-  gap: 28px;
+  gap: calc(var(--mantine-spacing-lg) * 1.25);
   align-items: start;
-  padding: 20px var(--tw-gutter) 32px;
+  padding: calc(var(--mantine-spacing-sm) * 1.5) var(--tw-gutter)
+    calc(var(--mantine-spacing-lg) * 1.25);
 
   @container preset (max-width: 980px) {
     grid-template-columns: minmax(0, 1fr);
@@ -19,9 +20,9 @@
 .set {
   display: grid;
   grid-template-columns: 96px minmax(0, 1fr) auto;
-  gap: 16px;
+  gap: calc(var(--mantine-spacing-sm) * 1.5);
   align-items: center;
-  padding: 14px 16px;
+  padding: var(--mantine-spacing-sm) calc(var(--mantine-spacing-sm) * 1.5);
   border-radius: var(--mantine-radius-md);
   background: var(--tw-peach);
   color: var(--tw-peach-ink);
@@ -49,7 +50,7 @@
 
   & small {
     display: block;
-    margin-top: 4px;
+    margin-top: var(--mantine-spacing-2xs);
     font-family: var(--mantine-font-family);
     font-size: 12px;
     font-weight: var(--mantine-font-weight-medium);
@@ -94,8 +95,8 @@
   position: relative;
   display: flex;
   align-items: center;
-  gap: 10px;
-  padding: 10px 0 10px 42px;
+  gap: var(--mantine-spacing-xs);
+  padding: var(--mantine-spacing-xs) 0 var(--mantine-spacing-xs) var(--mantine-spacing-2xl);
   font-size: 13.5px;
 
   &::before {
@@ -114,13 +115,13 @@
 }
 
 .empty {
-  padding: 28px;
+  padding: calc(var(--mantine-spacing-lg) * 1.25);
   border: 2px dashed var(--mantine-color-default-border);
   border-radius: var(--mantine-radius-lg);
 
   & b {
     display: block;
-    margin-bottom: 8px;
+    margin-bottom: var(--mantine-spacing-xs);
     font-family: var(--tw-font-display);
     font-size: 26px;
     font-weight: 900;
@@ -131,13 +132,13 @@
 }
 
 .side {
-  padding: 18px;
+  padding: calc(var(--mantine-spacing-sm) * 1.5);
 }
 
 .stats {
   display: grid;
   grid-template-columns: 1fr auto;
-  gap: 8px;
+  gap: var(--mantine-spacing-xs);
   margin: 0;
   font-size: 14px;
 

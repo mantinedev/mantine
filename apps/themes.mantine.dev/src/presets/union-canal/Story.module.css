@@ -1,7 +1,7 @@
 .root {
   display: grid;
   grid-template-columns: minmax(0, 400px) minmax(0, 1fr);
-  gap: 44px;
+  gap: var(--mantine-spacing-3xl);
   align-items: center;
 
   @container preset (max-width: 780px) {
@@ -20,7 +20,7 @@
   margin: 0;
 
   & figcaption {
-    margin-top: 8px;
+    margin-top: var(--mantine-spacing-xs);
     font-size: 14px;
   }
 

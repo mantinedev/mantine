@@ -2,18 +2,21 @@
   min-height: 0;
   border-left: 1px solid var(--mantine-color-border);
   background: var(--mantine-color-surface-panel);
-  overflow-y: auto;
+}
+
+.scroll {
+  height: 100%;
 }
 
 .head {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 14px 16px 8px;
+  padding: var(--mantine-spacing-md) var(--mantine-spacing-md) var(--mantine-spacing-xs);
 }
 
 .section {
-  padding: 12px 16px 16px;
+  padding: var(--mantine-spacing-sm) var(--mantine-spacing-md) var(--mantine-spacing-md);
   border-bottom: 1px solid var(--mantine-color-border);
 
   &:last-child {
@@ -25,7 +28,7 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin-bottom: 10px;
+  margin-bottom: var(--mantine-spacing-sm);
   font-family: var(--mantine-font-family);
 }
 
@@ -35,7 +38,7 @@
   flex-direction: column;
   justify-content: flex-end;
   min-height: 150px;
-  padding: 14px;
+  padding: var(--mantine-spacing-md);
   border-radius: var(--mantine-radius-lg);
   overflow: hidden;
   color: var(--mantine-color-white);
@@ -69,7 +72,7 @@
   letter-spacing: -0.02em;
 
   & small {
-    margin-left: 4px;
+    margin-left: var(--mantine-spacing-3xs);
     font-size: 16px;
     font-weight: 600;
     letter-spacing: 0;
@@ -77,19 +80,19 @@
 }
 
 .range {
-  margin-top: 4px;
+  margin-top: var(--mantine-spacing-3xs);
   font-weight: 700;
 }
 
 .facts {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 10px;
-  margin-top: 12px;
+  gap: var(--mantine-spacing-sm);
+  margin-top: var(--mantine-spacing-sm);
 }
 
 .fact {
-  padding: 10px 12px;
+  padding: var(--mantine-spacing-sm);
   border-radius: 12px;
   background: var(--mantine-color-surface-sunken);
 
@@ -119,7 +122,7 @@
 }
 
 .packItem {
-  padding: 6px 4px;
+  padding: var(--mantine-spacing-2xs) var(--mantine-spacing-3xs);
   border-radius: 8px;
 
   @mixin hover {
@@ -140,8 +143,8 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 10px;
-  padding-inline-start: 10px;
+  gap: var(--mantine-spacing-sm);
+  padding-inline-start: var(--mantine-spacing-sm);
 }
 
 .packText {
@@ -158,8 +161,8 @@
 
 .addRow {
   display: flex;
-  gap: 6px;
-  margin-top: 8px;
+  gap: var(--mantine-spacing-2xs);
+  margin-top: var(--mantine-spacing-xs);
 }
 
 .addInput {
@@ -169,7 +172,7 @@
 .spent {
   display: flex;
   justify-content: space-between;
-  margin-bottom: 10px;
+  margin-bottom: var(--mantine-spacing-sm);
   font-size: var(--mantine-font-size-sm);
 
   & b {
@@ -180,7 +183,7 @@
 .owes {
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: var(--mantine-spacing-xs);
   margin: 0;
   padding: 0;
   list-style: none;
@@ -189,7 +192,7 @@
     display: grid;
     grid-template-columns: auto auto auto minmax(0, 1fr) auto;
     align-items: center;
-    gap: 8px;
+    gap: var(--mantine-spacing-xs);
     font-size: 13.5px;
   }
 }

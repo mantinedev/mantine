@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import { IconDots, IconSortDescending } from '@tabler/icons-react';
-import { ActionIcon, Badge, Menu, UnstyledButton } from '@mantine/core';
+import { ActionIcon, Badge, Menu, ScrollArea, UnstyledButton } from '@mantine/core';
 import { type Order, STAGES, type StageId } from './data';
 import { OrderCard } from './OrderCard';
 import classes from './Board.module.css';
@@ -36,7 +36,13 @@ export function BoardView({
 
   return (
     <>
-      <div className={classes.picker} role="group" aria-label="Show column">
+      <ScrollArea
+        className={classes.picker}
+        classNames={{ content: classes.pickerContent }}
+        scrollbars="x"
+        scrollbarSize={6}
+        viewportProps={{ role: 'group', 'aria-label': 'Show column' }}
+      >
         {STAGES.map((stage) => (
           <UnstyledButton
             key={stage.id}
@@ -47,10 +53,14 @@ export function BoardView({
             {stage.name} <span>{orders.filter((order) => order.stage === stage.id).length}</span>
           </UnstyledButton>
         ))}
-      </div>
+      </ScrollArea>
 
       <div className={classes.view}>
-        <div className={classes.columns}>
+        <ScrollArea
+          className={classes.columns}
+          classNames={{ content: classes.columnsContent }}
+          scrollbars="x"
+        >
           {STAGES.map((stage) => {
             const items = orders.filter((order) => order.stage === stage.id);
             return (
@@ -122,28 +132,30 @@ export function BoardView({
                   </Menu>
                 </div>
 
-                <ul className={classes.cards}>
-                  {items.length ? (
-                    items.map((order) => (
-                      <li key={order.id}>
-                        <OrderCard
-                          order={order}
-                          dragging={dragId === order.id}
-                          onOpen={onOpen}
-                          onMove={onMove}
-                          onDragStart={setDragId}
-                          onDragEnd={endDrag}
-                        />
-                      </li>
-                    ))
-                  ) : (
-                    <li className={classes.empty}>Drop an order here</li>
-                  )}
-                </ul>
+                <ScrollArea className={classes.cardsScroll} scrollbars="y">
+                  <ul className={classes.cards}>
+                    {items.length ? (
+                      items.map((order) => (
+                        <li key={order.id}>
+                          <OrderCard
+                            order={order}
+                            dragging={dragId === order.id}
+                            onOpen={onOpen}
+                            onMove={onMove}
+                            onDragStart={setDragId}
+                            onDragEnd={endDrag}
+                          />
+                        </li>
+                      ))
+                    ) : (
+                      <li className={classes.empty}>Drop an order here</li>
+                    )}
+                  </ul>
+                </ScrollArea>
               </section>
             );
           })}
-        </div>
+        </ScrollArea>
       </div>
     </>
   );

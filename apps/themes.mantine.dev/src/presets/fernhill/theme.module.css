@@ -1,6 +1,6 @@
 .button {
   font-weight: var(--mantine-font-weight-bold);
-  gap: 7px;
+  gap: var(--mantine-spacing-2xs);
 
   &:where([data-with-left-section]) {
     padding-inline-start: var(--button-padding-x);
@@ -13,7 +13,7 @@
 
 .buttonSection {
   &:where([data-position='left']) {
-    margin-inline-end: 7px;
+    margin-inline-end: var(--mantine-spacing-2xs);
   }
 
   & svg {
@@ -36,14 +36,14 @@
 }
 
 .inputLabel {
-  margin-bottom: 5px;
+  margin-bottom: var(--mantine-spacing-3xs);
   font-size: var(--mantine-font-size-sm);
   font-weight: var(--mantine-font-weight-medium);
   color: var(--mantine-color-bright);
 }
 
 .inputDescription {
-  margin-top: 4px;
+  margin-top: var(--mantine-spacing-3xs);
   font-size: 12.5px;
   color: var(--mantine-color-text);
 }
@@ -81,7 +81,7 @@
 }
 
 .weekday {
-  padding: 4px 0;
+  padding: var(--mantine-spacing-3xs) 0;
   font-size: 11.5px;
   font-weight: var(--mantine-font-weight-medium);
   color: var(--mantine-color-dimmed);
@@ -120,7 +120,7 @@
   height: 30px;
   display: flex;
   align-items: center;
-  padding: 0 12px;
+  padding: 0 var(--mantine-spacing-sm);
   font-size: var(--mantine-font-size-sm);
   font-weight: var(--mantine-font-weight-medium);
   color: var(--mantine-color-text);
@@ -132,7 +132,7 @@
 }
 
 .switchLabel {
-  padding-inline-start: 10px;
+  padding-inline-start: var(--mantine-spacing-xs);
   font-weight: var(--mantine-font-weight-medium);
   color: var(--mantine-color-bright);
 }
@@ -160,9 +160,9 @@
 
 .badge {
   height: 20px;
-  padding: 0 7px;
+  padding: 0 var(--mantine-spacing-2xs);
   border: 0;
-  gap: 4px;
+  gap: var(--mantine-spacing-3xs);
 }
 
 .badgeLabel {
@@ -177,7 +177,7 @@
 }
 
 .alert {
-  padding: 10px 12px;
+  padding: var(--mantine-spacing-xs) var(--mantine-spacing-sm);
   border: 0;
   border-radius: var(--mantine-radius-md);
   background: var(--fh-red-tint);
@@ -209,7 +209,7 @@
 
 .modalHeader {
   min-height: 0;
-  padding: 16px 20px 8px;
+  padding: var(--mantine-spacing-md) var(--mantine-spacing-lg) var(--mantine-spacing-xs);
 }
 
 .modalTitle {

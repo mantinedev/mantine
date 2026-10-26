@@ -1,6 +1,6 @@
 .root {
-  --sw-gutter: 48px;
-  --sw-block: 88px;
+  --sw-gutter: var(--mantine-spacing-2xl);
+  --sw-block: var(--mantine-spacing-4xl);
 
   background: var(--mantine-color-body);
   color: var(--mantine-color-text);
@@ -8,15 +8,15 @@
   line-height: 1.55;
 
   @container preset (max-width: 980px) {
-    --sw-gutter: 36px;
+    --sw-gutter: calc(var(--mantine-spacing-sm) * 3);
   }
 
   @container preset (max-width: 780px) {
-    --sw-block: 64px;
+    --sw-block: var(--mantine-spacing-3xl);
   }
 
   @container preset (max-width: 520px) {
-    --sw-gutter: 16px;
+    --sw-gutter: calc(var(--mantine-spacing-xs) * 2);
   }
 }
 
@@ -29,8 +29,8 @@
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  gap: 36px;
-  padding: 40px var(--sw-gutter);
+  gap: calc(var(--mantine-spacing-sm) * 3);
+  padding: var(--mantine-spacing-xl) var(--sw-gutter);
   border-bottom: 1px solid var(--mantine-color-border);
 }
 
@@ -47,7 +47,7 @@
   display: flex;
   flex-wrap: wrap;
   align-items: baseline;
-  gap: 30px;
+  gap: var(--mantine-spacing-lg);
 }
 
 .shop {
@@ -57,7 +57,7 @@
   color: var(--mantine-color-bright);
 
   & small {
-    margin-left: 6px;
+    margin-left: calc(var(--mantine-spacing-sm) / 2);
     font-family: var(--mantine-font-family);
     font-size: var(--mantine-font-size-xs);
     color: var(--mantine-color-text);
@@ -75,6 +75,6 @@
 }
 
 .sectionDescription {
-  margin-top: 14px;
+  margin-top: var(--mantine-spacing-sm);
   font-size: 18px;
 }

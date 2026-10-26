@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState } from 'react';
 import { IconLink, IconList, IconPhoto, IconQuote } from '@tabler/icons-react';
-import { ActionIcon, Textarea } from '@mantine/core';
+import { ActionIcon, ScrollArea, Textarea } from '@mantine/core';
 import { type Article, countWords, formatWordCount, htmlToText, type Recipe } from './data';
 import { RecipeBlock } from './RecipeBlock';
 import layout from './Larder.module.css';
@@ -152,83 +152,89 @@ export function Manuscript({
 
   return (
     <main className={layout.manuscript}>
-      <div className={classes.toolbar} role="toolbar" aria-label="Formatting">
-        {TOOLS.map((tool, index) =>
-          tool === 'separator' ? (
-            <span key={index} className={classes.separator} />
-          ) : (
-            <ActionIcon
-              key={tool.command}
-              variant="subtle"
-              size={32}
-              className={classes.tool}
-              aria-label={tool.label}
-              aria-pressed={tool.toggle ? !!pressed[tool.command] : undefined}
-              onMouseDown={(event) => event.preventDefault()}
-              onClick={() => runTool(tool.command)}
-            >
-              {tool.icon}
-            </ActionIcon>
-          )
-        )}
-        <span className={classes.count}>{formatWordCount(words)}</span>
-      </div>
-
-      <article className={classes.sheet}>
-        <div className={classes.kicker}>{article.section}</div>
-        <Textarea
-          variant="unstyled"
-          autosize
-          minRows={1}
-          aria-label="Title"
-          value={article.title}
-          onChange={(event) => {
-            const title = event.currentTarget.value;
-            onArticleChange({ title });
-            recount(title);
-          }}
-          classNames={{ root: classes.titleRoot, input: classes.titleField }}
-        />
-        <Textarea
-          variant="unstyled"
-          autosize
-          minRows={1}
-          aria-label="Standfirst"
-          value={article.standfirst}
-          onChange={(event) => {
-            const standfirst = event.currentTarget.value;
-            onArticleChange({ standfirst });
-            recount(undefined, standfirst);
-          }}
-          classNames={{
-            root: classes.standfirstRoot,
-            input: classes.standfirst,
-          }}
-        />
-        <div className={classes.byline}>
-          By <b>{article.author}</b>
-          <span>Photographs by Ruth Osei</span>
+      <ScrollArea className={layout.manuscriptScroll} scrollbars="y" scrollbarSize={8}>
+        <div className={classes.toolbar} role="toolbar" aria-label="Formatting">
+          <ScrollArea scrollbars="x" type="never">
+            <div className={classes.toolbarRow}>
+              {TOOLS.map((tool, index) =>
+                tool === 'separator' ? (
+                  <span key={index} className={classes.separator} />
+                ) : (
+                  <ActionIcon
+                    key={tool.command}
+                    variant="subtle"
+                    size={32}
+                    className={classes.tool}
+                    aria-label={tool.label}
+                    aria-pressed={tool.toggle ? !!pressed[tool.command] : undefined}
+                    onMouseDown={(event) => event.preventDefault()}
+                    onClick={() => runTool(tool.command)}
+                  >
+                    {tool.icon}
+                  </ActionIcon>
+                )
+              )}
+              <span className={classes.count}>{formatWordCount(words)}</span>
+            </div>
+          </ScrollArea>
         </div>
-        <div
-          ref={proseRef}
-          className={classes.prose}
-          contentEditable
-          role="textbox"
-          aria-multiline="true"
-          aria-label="Article text"
-          tabIndex={0}
-          onInput={proseEdited}
-          dangerouslySetInnerHTML={{ __html: body }}
-        />
 
-        {article.recipe && (
-          <RecipeBlock
-            recipe={recipe}
-            onChange={onRecipeChange}
-            onRemove={() => onArticleChange({ recipe: false })}
+        <article className={classes.sheet}>
+          <div className={classes.kicker}>{article.section}</div>
+          <Textarea
+            variant="unstyled"
+            autosize
+            minRows={1}
+            aria-label="Title"
+            value={article.title}
+            onChange={(event) => {
+              const title = event.currentTarget.value;
+              onArticleChange({ title });
+              recount(title);
+            }}
+            classNames={{ root: classes.titleRoot, input: classes.titleField }}
           />
-        )}
-      </article>
+          <Textarea
+            variant="unstyled"
+            autosize
+            minRows={1}
+            aria-label="Standfirst"
+            value={article.standfirst}
+            onChange={(event) => {
+              const standfirst = event.currentTarget.value;
+              onArticleChange({ standfirst });
+              recount(undefined, standfirst);
+            }}
+            classNames={{
+              root: classes.standfirstRoot,
+              input: classes.standfirst,
+            }}
+          />
+          <div className={classes.byline}>
+            By <b>{article.author}</b>
+            <span>Photographs by Ruth Osei</span>
+          </div>
+          <div
+            ref={proseRef}
+            className={classes.prose}
+            contentEditable
+            role="textbox"
+            aria-multiline="true"
+            aria-label="Article text"
+            tabIndex={0}
+            onInput={proseEdited}
+            dangerouslySetInnerHTML={{ __html: body }}
+          />
+
+          {article.recipe && (
+            <RecipeBlock
+              recipe={recipe}
+              onChange={onRecipeChange}
+              onRemove={() => onArticleChange({ recipe: false })}
+            />
+          )}
+        </article>
+      </ScrollArea>
     </main>
   );
 }

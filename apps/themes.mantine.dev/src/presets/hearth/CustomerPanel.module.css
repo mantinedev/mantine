@@ -27,15 +27,15 @@
 .head {
   display: flex;
   flex-direction: column;
-  gap: 12px;
-  padding: 18px 18px 14px;
+  gap: var(--mantine-spacing-sm);
+  padding: var(--mantine-spacing-lg) var(--mantine-spacing-lg) var(--mantine-spacing-md);
   border-bottom: 1px solid var(--mantine-color-border);
 }
 
 .identity {
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: var(--mantine-spacing-sm);
   min-width: 0;
 }
 
@@ -67,7 +67,7 @@
 .facts {
   display: grid;
   grid-template-columns: auto minmax(0, 1fr);
-  gap: 6px 12px;
+  gap: var(--mantine-spacing-2xs) var(--mantine-spacing-sm);
   margin: 0;
   font-size: var(--mantine-font-size-sm);
 
@@ -84,7 +84,7 @@
 }
 
 .count {
-  margin-left: 6px;
+  margin-left: var(--mantine-spacing-2xs);
   font-size: var(--mantine-font-size-xs);
   font-weight: var(--mantine-font-weight-medium);
   color: var(--mantine-color-text);
@@ -95,7 +95,7 @@
 }
 
 .device {
-  padding: 10px 12px;
+  padding: var(--mantine-spacing-sm);
   background: var(--mantine-color-surface-panel);
 }
 
@@ -103,7 +103,7 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 8px;
+  gap: var(--mantine-spacing-xs);
 }
 
 .deviceName {
@@ -115,7 +115,7 @@
 .state {
   display: inline-flex;
   align-items: center;
-  gap: 5px;
+  gap: var(--mantine-spacing-2xs);
   font-size: var(--mantine-font-size-xs);
   font-weight: var(--mantine-font-weight-bold);
   white-space: nowrap;
@@ -146,7 +146,7 @@
 .warranty {
   display: flex;
   flex-direction: column;
-  gap: 6px;
+  gap: var(--mantine-spacing-2xs);
   font-size: var(--mantine-font-size-xs);
 
   & b {
@@ -159,7 +159,7 @@
 .history {
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: var(--mantine-spacing-xs);
   margin: 0;
   padding: 0;
   list-style: none;
@@ -168,7 +168,7 @@
     display: flex;
     align-items: flex-start;
     justify-content: space-between;
-    gap: 10px;
+    gap: var(--mantine-spacing-sm);
     font-size: var(--mantine-font-size-sm);
   }
 }

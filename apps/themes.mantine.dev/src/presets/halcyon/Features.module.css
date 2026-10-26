@@ -1,8 +1,8 @@
 .trio {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 24px;
-  margin-top: 48px;
+  gap: calc(var(--mantine-spacing-md) * 1.1);
+  margin-top: calc(var(--mantine-spacing-md) * 2.3);
 
   @container preset (max-width: 980px) {
     grid-template-columns: minmax(0, 1fr);
@@ -12,14 +12,14 @@
 .feature {
   display: flex;
   flex-direction: column;
-  gap: 14px;
+  gap: var(--mantine-spacing-sm);
   background: var(--hc-surface);
 
   @container preset (max-width: 980px) {
     display: grid;
     grid-template-columns: minmax(0, 220px) minmax(0, 1fr);
     align-items: center;
-    gap: 8px 24px;
+    gap: var(--mantine-spacing-xs) calc(var(--mantine-spacing-md) * 1.1);
   }
 
   @container preset (max-width: 520px) {

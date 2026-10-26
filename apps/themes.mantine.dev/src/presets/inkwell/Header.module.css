@@ -1,16 +1,16 @@
 .root {
   display: flex;
   flex-direction: column;
-  gap: 16px;
-  padding: 22px 24px 0;
+  gap: var(--mantine-spacing-md);
+  padding: var(--mantine-spacing-lg) var(--mantine-spacing-lg) 0;
 
   @container preset (max-width: 920px) {
-    padding: 18px 20px 0;
+    padding: calc(var(--mantine-spacing-md) * 1.25) calc(var(--mantine-spacing-md) * 1.25) 0;
   }
 
   @container preset (max-width: 760px) {
-    gap: 12px;
-    padding: 16px 16px 0;
+    gap: var(--mantine-spacing-sm);
+    padding: var(--mantine-spacing-md) var(--mantine-spacing-md) 0;
   }
 }
 
@@ -19,13 +19,13 @@
   align-items: center;
   justify-content: space-between;
   flex-wrap: wrap;
-  gap: 16px;
+  gap: var(--mantine-spacing-md);
 }
 
 .titleGroup {
   display: flex;
   align-items: center;
-  gap: 14px;
+  gap: var(--mantine-spacing-sm);
   min-width: 0;
 }
 
@@ -55,7 +55,7 @@
 .titleActions {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: var(--mantine-spacing-xs);
 }
 
 .moon {
@@ -91,12 +91,12 @@
   display: flex;
   align-items: center;
   flex-wrap: wrap;
-  gap: 18px;
-  padding-bottom: 16px;
+  gap: var(--mantine-spacing-md);
+  padding-bottom: var(--mantine-spacing-md);
   border-bottom: 1px solid var(--mantine-color-border);
 
   @container preset (max-width: 760px) {
-    gap: 12px;
+    gap: var(--mantine-spacing-sm);
   }
 }
 
@@ -107,11 +107,11 @@
 }
 
 .people {
-  gap: 10px;
+  gap: var(--mantine-spacing-xs);
 }
 
 .stock {
-  gap: 8px;
+  gap: var(--mantine-spacing-xs);
 }
 
 .label {

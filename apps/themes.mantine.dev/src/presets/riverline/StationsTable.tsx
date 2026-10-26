@@ -56,7 +56,7 @@ export function StationsTable() {
           <Title order={2} id="stations-title">
             Stations
           </Title>
-          <Text size="sm" mt={4}>
+          <Text size="sm" mt="3xs">
             Bikes docked right now
           </Text>
         </div>

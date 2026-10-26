@@ -10,14 +10,14 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 8px;
-  padding: 16px 16px 10px;
+  gap: var(--mantine-spacing-xs);
+  padding: var(--mantine-spacing-md) var(--mantine-spacing-md) var(--mantine-spacing-sm);
 }
 
 .brand {
   display: inline-flex;
   align-items: center;
-  gap: 9px;
+  gap: var(--mantine-spacing-sm);
   font-family: var(--mantine-font-family-headings);
   font-weight: 800;
   font-size: 20px;
@@ -38,28 +38,31 @@
 }
 
 .search {
-  padding: 0 16px 10px;
+  padding: 0 var(--mantine-spacing-md) var(--mantine-spacing-sm);
+}
+
+.scroll {
+  flex: 1;
+  min-height: 0;
 }
 
 .list {
-  flex: 1;
   margin: 0;
-  padding: 4px 8px 12px;
+  padding: var(--mantine-spacing-3xs) var(--mantine-spacing-xs) var(--mantine-spacing-sm);
   list-style: none;
-  overflow-y: auto;
 }
 
 .empty {
-  padding: 16px;
+  padding: var(--mantine-spacing-md);
 }
 
 .group {
   display: grid;
   grid-template-columns: auto minmax(0, 1fr) auto;
   align-items: center;
-  gap: 2px 12px;
+  gap: 2px var(--mantine-spacing-sm);
   width: 100%;
-  padding: 10px;
+  padding: var(--mantine-spacing-sm);
   border-radius: 14px;
 
   @mixin hover {

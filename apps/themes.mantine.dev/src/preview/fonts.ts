@@ -1,61 +1,51 @@
-export interface FontOption {
-  value: string;
-  label: string;
-  stack: string;
-  googleFamily?: string;
+export type FontCategory = 'sans-serif' | 'serif' | 'display' | 'handwriting' | 'monospace';
+
+export interface GoogleFont {
+  family: string;
+  category: FontCategory;
+  weights: string;
 }
 
-export const FONT_OPTIONS: FontOption[] = [
-  {
-    value: 'system',
-    label: 'System UI',
-    stack: "system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif",
-  },
-  { value: 'inter', label: 'Inter', stack: 'Inter, sans-serif', googleFamily: 'Inter' },
-  { value: 'manrope', label: 'Manrope', stack: 'Manrope, sans-serif', googleFamily: 'Manrope' },
-  { value: 'dm-sans', label: 'DM Sans', stack: "'DM Sans', sans-serif", googleFamily: 'DM Sans' },
-  {
-    value: 'ibm-plex-sans',
-    label: 'IBM Plex Sans',
-    stack: "'IBM Plex Sans', sans-serif",
-    googleFamily: 'IBM Plex Sans',
-  },
-  {
-    value: 'space-grotesk',
-    label: 'Space Grotesk',
-    stack: "'Space Grotesk', sans-serif",
-    googleFamily: 'Space Grotesk',
-  },
-  {
-    value: 'source-serif',
-    label: 'Source Serif 4',
-    stack: "'Source Serif 4', Georgia, serif",
-    googleFamily: 'Source Serif 4',
-  },
-  {
-    value: 'fraunces',
-    label: 'Fraunces',
-    stack: 'Fraunces, Georgia, serif',
-    googleFamily: 'Fraunces',
-  },
-  { value: 'lora', label: 'Lora', stack: 'Lora, Georgia, serif', googleFamily: 'Lora' },
-];
+export const SYSTEM_FONT = 'System UI';
 
-export function getFontOption(value: string | null) {
-  return FONT_OPTIONS.find((option) => option.value === value) ?? null;
+const SYSTEM_STACK = "system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif";
+
+const FALLBACKS: Record<FontCategory, string> = {
+  'sans-serif': 'sans-serif',
+  serif: 'Georgia, serif',
+  display: 'sans-serif',
+  handwriting: 'cursive',
+  monospace: 'ui-monospace, monospace',
+};
+
+let catalog: Promise<GoogleFont[]> | null = null;
+
+export function loadGoogleFonts() {
+  catalog ??= import('./google-fonts.json').then((module) =>
+    (module.default as [string, FontCategory, string][]).map(([family, category, weights]) => ({
+      family,
+      category,
+      weights,
+    }))
+  );
+  return catalog;
 }
 
-export function getFontsUrl(values: (string | null)[]) {
-  const families = Array.from(
-    new Set(values.map((value) => getFontOption(value)?.googleFamily).filter(Boolean))
-  ) as string[];
+export function getFontStack(family: string, font: GoogleFont | undefined) {
+  if (family === SYSTEM_FONT) {
+    return SYSTEM_STACK;
+  }
 
-  if (families.length === 0) {
+  return `'${family}', ${FALLBACKS[font?.category ?? 'sans-serif']}`;
+}
+
+export function getGoogleFontsUrl(fonts: GoogleFont[]) {
+  if (fonts.length === 0) {
     return null;
   }
 
-  const query = families
-    .map((family) => `family=${family.replace(/ /g, '+')}:wght@400;500;600;700`)
+  const query = fonts
+    .map((font) => `family=${encodeURIComponent(font.family)}:wght@${font.weights}`)
     .join('&');
 
   return `https://fonts.googleapis.com/css2?${query}&display=swap`;

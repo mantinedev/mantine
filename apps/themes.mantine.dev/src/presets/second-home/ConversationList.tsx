@@ -1,6 +1,6 @@
 'use client';
 
-import { Avatar, Badge, Tabs, Text, Title, UnstyledButton } from '@mantine/core';
+import { Avatar, Badge, ScrollArea, Tabs, Text, Title, UnstyledButton } from '@mantine/core';
 import { type Conversation, type InboxTab, lastMessageText, money, photoUrl, TABS } from './data';
 import classes from './ConversationList.module.css';
 
@@ -103,45 +103,47 @@ export function ConversationList({
         </Tabs.List>
       </Tabs>
 
-      <ul className={classes.list}>
-        {visible.length === 0 && <EmptyState archived={tab === 'archived'} />}
-        {visible.map((conversation) => (
-          <li key={conversation.id}>
-            <UnstyledButton
-              className={classes.conversation}
-              aria-current={conversation.id === activeId}
-              onClick={() => onSelect(conversation.id)}
-            >
-              <span className={classes.thumb}>
-                <img src={photoUrl(conversation.photo)} alt="" />
-                <Avatar size={24} className={classes.who}>
-                  {conversation.initials}
-                </Avatar>
-              </span>
-              <span className={classes.row}>
-                <span className={classes.name}>{conversation.name}</span>
-                <span className={classes.time}>{conversation.time}</span>
-              </span>
-              <span className={classes.item}>
-                <b>{money(conversation.item.price)}</b> {conversation.item.title}
-              </span>
-              <span className={classes.row}>
-                <span className={classes.last} data-unread={conversation.unread > 0 || undefined}>
-                  {lastMessageText(conversation)}
+      <ScrollArea className={classes.scroll} scrollbars="y">
+        <ul className={classes.list}>
+          {visible.length === 0 && <EmptyState archived={tab === 'archived'} />}
+          {visible.map((conversation) => (
+            <li key={conversation.id}>
+              <UnstyledButton
+                className={classes.conversation}
+                aria-current={conversation.id === activeId}
+                onClick={() => onSelect(conversation.id)}
+              >
+                <span className={classes.thumb}>
+                  <img src={photoUrl(conversation.photo)} alt="" />
+                  <Avatar size={24} className={classes.who}>
+                    {conversation.initials}
+                  </Avatar>
                 </span>
-                <span className={classes.meta}>
-                  <StatusBadge conversation={conversation} />
-                  {conversation.unread > 0 && (
-                    <Badge circle aria-label={`${conversation.unread} unread`}>
-                      {conversation.unread}
-                    </Badge>
-                  )}
+                <span className={classes.row}>
+                  <span className={classes.name}>{conversation.name}</span>
+                  <span className={classes.time}>{conversation.time}</span>
                 </span>
-              </span>
-            </UnstyledButton>
-          </li>
-        ))}
-      </ul>
+                <span className={classes.item}>
+                  <b>{money(conversation.item.price)}</b> {conversation.item.title}
+                </span>
+                <span className={classes.row}>
+                  <span className={classes.last} data-unread={conversation.unread > 0 || undefined}>
+                    {lastMessageText(conversation)}
+                  </span>
+                  <span className={classes.meta}>
+                    <StatusBadge conversation={conversation} />
+                    {conversation.unread > 0 && (
+                      <Badge circle aria-label={`${conversation.unread} unread`}>
+                        {conversation.unread}
+                      </Badge>
+                    )}
+                  </span>
+                </span>
+              </UnstyledButton>
+            </li>
+          ))}
+        </ul>
+      </ScrollArea>
     </aside>
   );
 }

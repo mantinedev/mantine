@@ -106,7 +106,15 @@ export const theme = createTheme({
 
   defaultRadius: 'sm',
   radius: { xs: rem(3), sm: rem(4), md: rem(8), lg: rem(12), xl: rem(16) },
-  spacing: { xs: rem(8), sm: rem(12), md: rem(20), lg: rem(24), xl: rem(32) },
+  spacing: {
+    '3xs': rem(4),
+    '2xs': rem(6),
+    xs: rem(8),
+    sm: rem(12),
+    md: rem(20),
+    lg: rem(24),
+    xl: rem(32),
+  },
   shadows: {
     md: '0 10px 28px -12px rgba(13, 20, 18, 0.28), 0 2px 6px rgba(13, 20, 18, 0.08)',
   },
@@ -170,7 +178,7 @@ export const theme = createTheme({
     Table: Table.extend({
       defaultProps: {
         horizontalSpacing: 'lg',
-        verticalSpacing: rem(16),
+        verticalSpacing: 'calc(var(--mantine-spacing-xs) * 2)',
         highlightOnHover: true,
         fz: 'md',
       },
@@ -193,7 +201,7 @@ export const theme = createTheme({
     }),
 
     Pagination: Pagination.extend({
-      defaultProps: { size: 'md', gap: 6 },
+      defaultProps: { size: 'md', gap: '2xs' },
     }),
   },
 });

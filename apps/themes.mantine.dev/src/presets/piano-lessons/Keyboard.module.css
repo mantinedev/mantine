@@ -201,14 +201,14 @@
 .legend {
   display: flex;
   flex-wrap: wrap;
-  gap: 18px;
-  margin-top: 12px;
+  gap: var(--mantine-spacing-md);
+  margin-top: var(--mantine-spacing-sm);
   font-size: var(--mantine-font-size-xs);
 
   & span {
     display: inline-flex;
     align-items: center;
-    gap: 8px;
+    gap: var(--mantine-spacing-xs);
   }
 
   & i {

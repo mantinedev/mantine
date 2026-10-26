@@ -1,5 +1,5 @@
 import { IconX } from '@tabler/icons-react';
-import { ActionIcon, Button, Drawer, UnstyledButton } from '@mantine/core';
+import { ActionIcon, Button, Drawer, ScrollArea, UnstyledButton } from '@mantine/core';
 import { type Finish, MAX_QUANTITY, PRICE } from './data';
 import { formatNumber } from './sunrise';
 import classes from './CartDrawer.module.css';
@@ -35,57 +35,61 @@ export function CartDrawer({ opened, onClose, items, onItemsChange }: CartDrawer
           </ActionIcon>
         </Drawer.Header>
         <Drawer.Body>
-          <div className={classes.items}>
-            {items.length === 0 ? (
-              <div className={classes.empty}>
-                Your cart is empty. Pick a finish and pre-order to reserve a lamp from the March
-                batch.
-              </div>
-            ) : (
-              items.map((item) => (
-                <div key={item.finish.name} className={classes.item}>
-                  <span
-                    className={classes.thumb}
-                    style={{ '--hc-body': item.finish.color } as React.CSSProperties}
-                  >
-                    <i />
-                  </span>
-                  <div>
-                    <b className={classes.itemName}>Halcyon, {item.finish.name}</b>
-                    <span className={classes.sub}>Pre-order, ships in March</span>
-                    <div>
-                      <span className={classes.stepper}>
-                        <UnstyledButton
-                          className={classes.stepperButton}
-                          aria-label="One fewer"
-                          disabled={item.quantity <= 1}
-                          onClick={() => setQuantity(item.finish.name, item.quantity - 1)}
-                        >
-                          −
-                        </UnstyledButton>
-                        <output aria-live="polite">{item.quantity}</output>
-                        <UnstyledButton
-                          className={classes.stepperButton}
-                          aria-label="One more"
-                          disabled={item.quantity >= MAX_QUANTITY}
-                          onClick={() => setQuantity(item.finish.name, item.quantity + 1)}
-                        >
-                          +
-                        </UnstyledButton>
-                      </span>
-                      <UnstyledButton
-                        className={classes.remove}
-                        onClick={() => remove(item.finish.name)}
-                      >
-                        Remove
-                      </UnstyledButton>
-                    </div>
-                  </div>
-                  <span className={classes.linePrice}>£{formatNumber(item.quantity * PRICE)}</span>
+          <ScrollArea className={classes.items} scrollbars="y">
+            <div className={classes.itemsList}>
+              {items.length === 0 ? (
+                <div className={classes.empty}>
+                  Your cart is empty. Pick a finish and pre-order to reserve a lamp from the March
+                  batch.
                 </div>
-              ))
-            )}
-          </div>
+              ) : (
+                items.map((item) => (
+                  <div key={item.finish.name} className={classes.item}>
+                    <span
+                      className={classes.thumb}
+                      style={{ '--hc-body': item.finish.color } as React.CSSProperties}
+                    >
+                      <i />
+                    </span>
+                    <div>
+                      <b className={classes.itemName}>Halcyon, {item.finish.name}</b>
+                      <span className={classes.sub}>Pre-order, ships in March</span>
+                      <div>
+                        <span className={classes.stepper}>
+                          <UnstyledButton
+                            className={classes.stepperButton}
+                            aria-label="One fewer"
+                            disabled={item.quantity <= 1}
+                            onClick={() => setQuantity(item.finish.name, item.quantity - 1)}
+                          >
+                            −
+                          </UnstyledButton>
+                          <output aria-live="polite">{item.quantity}</output>
+                          <UnstyledButton
+                            className={classes.stepperButton}
+                            aria-label="One more"
+                            disabled={item.quantity >= MAX_QUANTITY}
+                            onClick={() => setQuantity(item.finish.name, item.quantity + 1)}
+                          >
+                            +
+                          </UnstyledButton>
+                        </span>
+                        <UnstyledButton
+                          className={classes.remove}
+                          onClick={() => remove(item.finish.name)}
+                        >
+                          Remove
+                        </UnstyledButton>
+                      </div>
+                    </div>
+                    <span className={classes.linePrice}>
+                      £{formatNumber(item.quantity * PRICE)}
+                    </span>
+                  </div>
+                ))
+              )}
+            </div>
+          </ScrollArea>
 
           {items.length > 0 && (
             <div className={classes.foot}>

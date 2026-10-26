@@ -24,7 +24,7 @@
 
 .body {
   flex: 1;
-  gap: 6px;
+  gap: var(--mantine-spacing-2xs);
 }
 
 .row {
@@ -46,12 +46,12 @@
   display: flex;
   align-items: center;
   flex-wrap: wrap;
-  gap: 6px;
+  gap: var(--mantine-spacing-2xs);
 }
 
 .split {
   gap: 2px;
-  margin-block: 4px;
+  margin-block: var(--mantine-spacing-3xs);
   background: transparent;
 
   & > * {

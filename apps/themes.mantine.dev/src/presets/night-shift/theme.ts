@@ -103,7 +103,15 @@ export const theme = createTheme({
 
   defaultRadius: 'md',
   radius: { xs: rem(4), sm: rem(8), md: rem(10), lg: rem(12), xl: rem(16) },
-  spacing: { xs: rem(8), sm: rem(12), md: rem(16), lg: rem(24), xl: rem(40) },
+  spacing: {
+    '2xs': rem(4),
+    xs: rem(8),
+    sm: rem(12),
+    md: rem(16),
+    lg: rem(24),
+    xl: rem(40),
+    '2xl': rem(48),
+  },
   shadows: {
     md: '0 18px 40px -18px rgba(19, 18, 30, 0.35), 0 2px 6px rgba(19, 18, 30, 0.08)',
   },

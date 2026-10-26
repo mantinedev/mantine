@@ -6,7 +6,7 @@
 
 .inner {
   position: absolute;
-  padding: 16px;
+  padding: var(--mantine-spacing-md);
 }
 
 .content {
@@ -16,14 +16,14 @@
 .body {
   display: flex;
   flex-direction: column;
-  gap: 14px;
-  padding: 8px 20px 16px;
+  gap: var(--mantine-spacing-sm);
+  padding: var(--mantine-spacing-xs) var(--mantine-spacing-lg) var(--mantine-spacing-md);
 }
 
 .row2 {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 8px;
+  gap: var(--mantine-spacing-xs);
 }
 
 .tnum {
@@ -34,7 +34,7 @@
   display: flex;
   flex: 1;
   justify-content: space-between;
-  gap: 8px;
+  gap: var(--mantine-spacing-xs);
 
   & b {
     font-weight: var(--mantine-font-weight-bold);
@@ -49,8 +49,8 @@
 .recur {
   display: flex;
   flex-direction: column;
-  gap: 8px;
-  padding: 10px 12px;
+  gap: var(--mantine-spacing-xs);
+  padding: var(--mantine-spacing-xs) var(--mantine-spacing-sm);
   border-radius: var(--mantine-radius-md);
   background: var(--mantine-color-surface-sunken);
 }
@@ -59,7 +59,7 @@
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  gap: 10px;
+  gap: var(--mantine-spacing-xs);
   font-size: var(--mantine-font-size-sm);
 }
 
@@ -76,10 +76,10 @@
 .recurDates {
   display: flex;
   flex-wrap: wrap;
-  gap: 6px;
+  gap: var(--mantine-spacing-2xs);
 
   & span {
-    padding: 2px 8px;
+    padding: 2px var(--mantine-spacing-xs);
     border: 1px solid var(--mantine-color-border);
     border-radius: 999px;
     background: var(--mantine-color-surface-panel);
@@ -91,7 +91,7 @@
 .foot {
   display: flex;
   justify-content: flex-end;
-  gap: 8px;
-  padding: 12px 20px 18px;
+  gap: var(--mantine-spacing-xs);
+  padding: var(--mantine-spacing-sm) var(--mantine-spacing-lg) var(--mantine-spacing-md);
   border-top: 1px solid var(--mantine-color-border);
 }

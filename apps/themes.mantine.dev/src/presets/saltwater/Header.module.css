@@ -4,7 +4,7 @@
   inset: 0 0 auto;
   display: flex;
   align-items: center;
-  gap: 28px;
+  gap: calc(var(--mantine-spacing-lg) * 1.25);
   height: 76px;
   padding-inline: var(--sw-gutter);
   color: #fff;
@@ -12,7 +12,7 @@
 
 .nav {
   display: flex;
-  gap: 24px;
+  gap: var(--mantine-spacing-lg);
   font-size: 15px;
   font-weight: var(--mantine-font-weight-medium);
 
@@ -41,7 +41,7 @@
 .actions {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: var(--mantine-spacing-sm);
 }
 
 .ghost[data-variant] {
@@ -81,6 +81,6 @@
 }
 
 .sheet {
-  inset: 76px 16px auto !important;
+  inset: 76px calc(var(--mantine-spacing-sm) * 1.5) auto !important;
   width: auto !important;
 }

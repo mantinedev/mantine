@@ -102,7 +102,16 @@ export const theme = createTheme({
 
   defaultRadius: 'sm',
   radius: { xs: rem(4), sm: rem(6), md: rem(10), lg: rem(14), xl: rem(20) },
-  spacing: { xs: rem(8), sm: rem(12), md: rem(16), lg: rem(24), xl: rem(40) },
+  spacing: {
+    '2xs': rem(6),
+    xs: rem(8),
+    sm: rem(12),
+    md: rem(16),
+    lg: rem(24),
+    xl: rem(40),
+    '2xl': rem(48),
+    '3xl': rem(56),
+  },
   shadows: {
     md: '0 12px 32px -14px rgba(15, 28, 38, 0.3), 0 2px 6px rgba(15, 28, 38, 0.06)',
   },
@@ -160,9 +169,9 @@ export const theme = createTheme({
         root: {
           '--alert-bg': 'var(--mantine-color-surface-muted)',
           '--alert-bd': 'none',
-          '--alert-padding': `${rem(20)} ${rem(22)}`,
+          '--alert-padding': 'calc(var(--mantine-spacing-md) * 1.25) var(--mantine-spacing-lg)',
           '--alert-icon-size': rem(36),
-          '--alert-gap': rem(14),
+          '--alert-gap': 'var(--mantine-spacing-sm)',
           '--alert-fz': 'var(--mantine-font-size-md)',
           '--alert-lh': '1.55',
         },
@@ -188,7 +197,7 @@ export const theme = createTheme({
     Table: Table.extend({
       defaultProps: {
         horizontalSpacing: 'md',
-        verticalSpacing: rem(11),
+        verticalSpacing: 'sm',
         fz: 'sm',
       },
       classNames: { th: classes.th, caption: classes.caption, td: classes.td },

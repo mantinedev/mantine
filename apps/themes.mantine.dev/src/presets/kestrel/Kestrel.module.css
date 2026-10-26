@@ -1,5 +1,5 @@
 .root {
-  --kestrel-gutter: 40px;
+  --kestrel-gutter: var(--mantine-spacing-xl);
 
   position: relative;
   background: var(--mantine-color-body);
@@ -12,20 +12,21 @@
   }
 
   @container preset (max-width: 760px) {
-    --kestrel-gutter: 24px;
+    --kestrel-gutter: var(--mantine-spacing-lg);
   }
 
   @container preset (max-width: 480px) {
-    --kestrel-gutter: 16px;
+    --kestrel-gutter: var(--mantine-spacing-md);
   }
 }
 
 .intro {
   display: grid;
   grid-template-columns: repeat(12, minmax(0, 1fr));
-  column-gap: 24px;
-  row-gap: 12px;
-  padding: 52px var(--kestrel-gutter) 36px;
+  column-gap: var(--mantine-spacing-lg);
+  row-gap: var(--mantine-spacing-sm);
+  padding: calc(var(--mantine-spacing-2xl) + var(--mantine-spacing-2xs)) var(--kestrel-gutter)
+    calc(var(--mantine-spacing-md) * 2.25);
   border-bottom: 1px solid var(--mantine-color-border);
 }
 
@@ -61,20 +62,20 @@
   align-self: end;
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 16px;
+  gap: var(--mantine-spacing-md);
 
   @container preset (max-width: 980px) {
     grid-column: 1 / 13;
     grid-row: auto;
     grid-template-columns: repeat(2, max-content);
-    gap: 28px;
-    margin-top: 12px;
+    gap: calc(var(--mantine-spacing-md) * 1.75);
+    margin-top: var(--mantine-spacing-sm);
   }
 }
 
 .fact {
   border-left: 2px solid var(--kestrel-route);
-  padding-left: 12px;
+  padding-left: var(--mantine-spacing-sm);
 
   & b {
     display: block;
@@ -94,13 +95,13 @@
 .featured {
   display: grid;
   grid-template-columns: repeat(12, minmax(0, 1fr));
-  column-gap: 24px;
-  padding: 36px var(--kestrel-gutter);
+  column-gap: var(--mantine-spacing-lg);
+  padding: calc(var(--mantine-spacing-md) * 2.25) var(--kestrel-gutter);
   border-bottom: 1px solid var(--mantine-color-border);
   text-decoration: none;
 
   @container preset (max-width: 760px) {
-    row-gap: 20px;
+    row-gap: calc(var(--mantine-spacing-md) * 1.25);
   }
 }
 
@@ -121,9 +122,9 @@
   grid-column: 8 / 13;
   display: flex;
   flex-direction: column;
-  gap: 14px;
+  gap: var(--mantine-spacing-sm);
   min-width: 0;
-  padding-top: 4px;
+  padding-top: var(--mantine-spacing-2xs);
 
   @container preset (max-width: 980px) {
     grid-column: 7 / 13;
@@ -138,7 +139,7 @@
   display: flex;
   align-items: center;
   flex-wrap: wrap;
-  gap: 10px;
+  gap: var(--mantine-spacing-xs);
   font-size: var(--mantine-font-size-xs);
   font-weight: 600;
 }
@@ -172,7 +173,7 @@
 .authors {
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: var(--mantine-spacing-sm);
   margin-top: auto;
   font-size: var(--mantine-font-size-sm);
 
@@ -185,12 +186,12 @@
 .main {
   display: grid;
   grid-template-columns: minmax(0, 1fr) 280px;
-  gap: 48px;
-  padding: 32px var(--kestrel-gutter) 48px;
+  gap: var(--mantine-spacing-2xl);
+  padding: calc(var(--mantine-spacing-md) * 2) var(--kestrel-gutter) var(--mantine-spacing-2xl);
 
   @container preset (max-width: 900px) {
     grid-template-columns: minmax(0, 1fr);
-    gap: 40px;
+    gap: var(--mantine-spacing-xl);
   }
 }
 
@@ -198,8 +199,8 @@
   display: flex;
   justify-content: space-between;
   flex-wrap: wrap;
-  gap: 16px;
-  padding: 24px var(--kestrel-gutter);
+  gap: var(--mantine-spacing-md);
+  padding: var(--mantine-spacing-lg) var(--kestrel-gutter);
   border-top: 1px solid var(--mantine-color-border);
   font-size: var(--mantine-font-size-sm);
 
@@ -215,5 +216,5 @@
 .footerNav {
   display: flex;
   flex-wrap: wrap;
-  gap: 18px;
+  gap: var(--mantine-spacing-md);
 }

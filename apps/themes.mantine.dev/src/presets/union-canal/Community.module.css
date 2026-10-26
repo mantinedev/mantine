@@ -5,7 +5,7 @@ section.root {
 .two {
   display: grid;
   grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
-  gap: 44px;
+  gap: var(--mantine-spacing-3xl);
   align-items: start;
 
   @container preset (max-width: 980px) {
@@ -15,7 +15,7 @@ section.root {
 
 .donors {
   list-style: none;
-  margin: 20px 0 0;
+  margin: calc((var(--mantine-spacing-md) + var(--mantine-spacing-lg)) / 2) 0 0;
   padding: 0;
   border-top: 1px solid var(--mantine-color-border);
 }
@@ -23,8 +23,8 @@ section.root {
 .donor {
   display: grid;
   grid-template-columns: auto minmax(0, 1fr) auto;
-  gap: 2px 14px;
-  padding: 14px 0;
+  gap: 2px var(--mantine-spacing-sm);
+  padding: var(--mantine-spacing-sm) 0;
   border-bottom: 1px solid var(--mantine-color-border);
 }
 
@@ -60,14 +60,14 @@ section.root {
 }
 
 .more {
-  margin-top: 16px;
+  margin-top: var(--mantine-spacing-md);
 }
 
 .volunteer {
-  padding: 28px;
+  padding: calc((var(--mantine-spacing-lg) + var(--mantine-spacing-xl)) / 2);
 
   @container preset (max-width: 520px) {
-    padding: 20px;
+    padding: calc((var(--mantine-spacing-md) + var(--mantine-spacing-lg)) / 2);
   }
 }
 
@@ -77,19 +77,20 @@ section.root {
 }
 
 .lead {
-  margin: 10px 0 20px;
+  margin: var(--mantine-spacing-sm) 0
+    calc((var(--mantine-spacing-md) + var(--mantine-spacing-lg)) / 2);
 }
 
 .form {
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  gap: var(--mantine-spacing-md);
 }
 
 .formRow {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 12px;
+  gap: var(--mantine-spacing-sm);
 
   @container preset (max-width: 520px) {
     grid-template-columns: minmax(0, 1fr);
@@ -103,13 +104,13 @@ section.root {
 }
 
 .groupLabel {
-  margin-bottom: 6px;
+  margin-bottom: calc(var(--mantine-spacing-xs) * 0.75);
 }
 
 .days {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 8px;
+  gap: var(--mantine-spacing-xs);
 
   @container preset (max-width: 520px) {
     grid-template-columns: minmax(0, 1fr);
@@ -129,8 +130,8 @@ section.root {
 .done {
   display: flex;
   align-items: flex-start;
-  gap: 12px;
-  padding: 16px;
+  gap: var(--mantine-spacing-sm);
+  padding: var(--mantine-spacing-md);
   border-radius: var(--mantine-radius-md);
   background: var(--mantine-color-surface-muted);
 

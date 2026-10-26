@@ -9,8 +9,8 @@
 .top {
   display: flex;
   flex-direction: column;
-  gap: 12px;
-  padding: 14px 14px 10px;
+  gap: var(--mantine-spacing-sm);
+  padding: var(--mantine-spacing-md) var(--mantine-spacing-md) var(--mantine-spacing-sm);
   border-bottom: 1px solid var(--mantine-color-border);
 }
 
@@ -18,13 +18,13 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 8px;
+  gap: var(--mantine-spacing-xs);
 }
 
 .brand {
   display: flex;
   align-items: center;
-  gap: 9px;
+  gap: var(--mantine-spacing-xs);
   font-size: var(--mantine-font-size-lg);
   font-weight: 700;
   letter-spacing: -0.01em;
@@ -46,17 +46,17 @@
 .views {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 4px;
+  gap: var(--mantine-spacing-3xs);
 }
 
 .view {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 6px;
+  gap: var(--mantine-spacing-2xs);
   min-width: 0;
   height: 34px;
-  padding: 0 10px;
+  padding: 0 var(--mantine-spacing-xs);
   border: 1px solid transparent;
   border-radius: var(--mantine-radius-md);
   font-size: var(--mantine-font-size-sm);
@@ -105,9 +105,9 @@
   position: relative;
   display: grid;
   grid-template-columns: minmax(0, 1fr) auto;
-  gap: 2px 10px;
+  gap: 2px var(--mantine-spacing-sm);
   width: 100%;
-  padding: 12px 14px 12px 16px;
+  padding: var(--mantine-spacing-sm) var(--mantine-spacing-md);
   border-bottom: 1px solid var(--mantine-color-border);
   font-size: var(--mantine-font-size-md);
   line-height: 1.5;
@@ -133,7 +133,7 @@
 .customer {
   display: flex;
   align-items: center;
-  gap: 6px;
+  gap: var(--mantine-spacing-2xs);
   min-width: 0;
   font-weight: var(--mantine-font-weight-bold);
   color: var(--mantine-color-bright);
@@ -181,12 +181,12 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 8px;
-  margin-top: 6px;
+  gap: var(--mantine-spacing-xs);
+  margin-top: var(--mantine-spacing-2xs);
 }
 
 .empty {
-  padding: 32px 16px;
+  padding: calc(var(--mantine-spacing-md) * 2) var(--mantine-spacing-md);
   text-align: center;
   font-size: var(--mantine-font-size-sm);
 }

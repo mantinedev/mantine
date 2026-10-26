@@ -8,8 +8,9 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 18px;
-  padding: 56px var(--mantine-spacing-xl) 36px;
+  gap: var(--mantine-spacing-md);
+  padding: var(--mantine-spacing-3xl) var(--mantine-spacing-xl)
+    calc(var(--mantine-spacing-lg) * 1.5);
   text-align: center;
 
   @container preset (max-width: 780px) {
@@ -18,7 +19,8 @@
 
   @container preset (max-width: 520px) {
     align-items: flex-start;
-    padding: 32px var(--mantine-spacing-md) 36px;
+    padding: calc(var(--mantine-spacing-lg) * 1.25) var(--mantine-spacing-md)
+      calc(var(--mantine-spacing-lg) * 1.5);
     text-align: left;
   }
 }
@@ -63,8 +65,8 @@
   align-items: center;
   justify-content: center;
   flex-wrap: wrap;
-  gap: 12px;
-  margin-top: 6px;
+  gap: var(--mantine-spacing-sm);
+  margin-top: var(--mantine-spacing-2xs);
   font-size: var(--mantine-font-size-sm);
 
   & b {
@@ -122,7 +124,7 @@
 }
 
 .caption {
-  margin-top: 10px;
+  margin-top: var(--mantine-spacing-xs);
   font-size: var(--mantine-font-size-sm);
   line-height: 1.45;
 
@@ -160,8 +162,8 @@
   display: grid;
   grid-template-columns: 200px minmax(0, 66ch);
   justify-content: center;
-  gap: 56px;
-  padding: 0 var(--mantine-spacing-xl) 48px;
+  gap: var(--mantine-spacing-3xl);
+  padding: 0 var(--mantine-spacing-xl) var(--mantine-spacing-2xl);
 
   @container preset (max-width: 980px) {
     grid-template-columns: minmax(0, 66ch);
@@ -181,7 +183,7 @@
   grid-column: 2;
   display: flex;
   flex-direction: column;
-  gap: 32px;
+  gap: calc(var(--mantine-spacing-lg) * 1.25);
   min-width: 0;
 
   @container preset (max-width: 980px) {
@@ -192,12 +194,12 @@
 .tags {
   display: flex;
   flex-wrap: wrap;
-  gap: 8px;
+  gap: var(--mantine-spacing-xs);
 }
 
 .tags .tag {
   --button-height: 32px;
-  --button-padding-x: 14px;
+  --button-padding-x: var(--mantine-spacing-sm);
 
   font-weight: var(--mantine-font-weight-medium);
   color: var(--mantine-color-text);
@@ -206,8 +208,8 @@
 .authorCard {
   display: grid;
   grid-template-columns: auto minmax(0, 1fr);
-  gap: 4px 18px;
-  padding: 24px 0;
+  gap: var(--mantine-spacing-2xs) var(--mantine-spacing-md);
+  padding: var(--mantine-spacing-lg) 0;
   border-block: 1px solid var(--mantine-color-border);
 }
 
@@ -236,14 +238,14 @@
 
 .authorLinks {
   display: flex;
-  gap: 16px;
-  margin-top: 6px;
+  gap: var(--mantine-spacing-md);
+  margin-top: var(--mantine-spacing-2xs);
   font-size: var(--mantine-font-size-sm);
   font-weight: var(--mantine-font-weight-medium);
 }
 
 .related {
-  padding: 48px var(--mantine-spacing-xl);
+  padding: var(--mantine-spacing-2xl) var(--mantine-spacing-xl);
 
   @container preset (max-width: 780px) {
     padding-inline: var(--mantine-spacing-lg);
@@ -258,14 +260,14 @@
   display: flex;
   align-items: baseline;
   justify-content: space-between;
-  gap: 12px;
-  margin-bottom: 20px;
+  gap: var(--mantine-spacing-sm);
+  margin-bottom: calc(var(--mantine-spacing-md) * 1.25);
 }
 
 .cards {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 28px;
+  gap: calc(var(--mantine-spacing-lg) * 1.25);
 
   @container preset (max-width: 780px) {
     grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -287,7 +289,7 @@
 .card {
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: var(--mantine-spacing-xs);
   color: inherit;
   text-decoration: none;
 
@@ -329,15 +331,15 @@
   display: flex;
   justify-content: space-between;
   flex-wrap: wrap;
-  gap: 16px;
-  padding: 28px var(--mantine-spacing-xl);
+  gap: var(--mantine-spacing-md);
+  padding: calc(var(--mantine-spacing-lg) * 1.25) var(--mantine-spacing-xl);
   border-top: 1px solid var(--mantine-color-border);
   font-size: var(--mantine-font-size-sm);
 
   & nav {
     display: flex;
     flex-wrap: wrap;
-    gap: 18px;
+    gap: var(--mantine-spacing-md);
   }
 
   & a {
@@ -362,9 +364,9 @@
   position: fixed;
   z-index: 400;
   left: 50%;
-  bottom: calc(24px + env(safe-area-inset-bottom, 0px));
+  bottom: calc(var(--mantine-spacing-lg) + env(safe-area-inset-bottom, 0px));
   translate: -50% 0;
-  padding: 10px 18px;
+  padding: var(--mantine-spacing-xs) var(--mantine-spacing-md);
   border-radius: 999px;
   background: var(--mantine-color-bright);
   color: var(--mantine-color-body);

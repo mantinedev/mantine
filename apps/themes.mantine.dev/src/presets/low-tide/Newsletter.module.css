@@ -2,8 +2,8 @@
   display: grid;
   grid-template-columns: minmax(0, 1fr) minmax(0, 420px);
   align-items: center;
-  gap: 32px;
-  padding: 44px var(--mantine-spacing-xl);
+  gap: calc(var(--mantine-spacing-lg) * 1.25);
+  padding: calc(var(--mantine-spacing-xl) * 1.1) var(--mantine-spacing-xl);
   background: var(--mantine-primary-color-filled);
   color: var(--mantine-primary-color-contrast);
 
@@ -28,7 +28,7 @@
 
 .description {
   max-width: 34em;
-  margin: 10px 0 0;
+  margin: var(--mantine-spacing-xs) 0 0;
   font-family: var(--lt-font-read);
   font-size: 17px;
   line-height: 1.55;
@@ -37,12 +37,12 @@
 .form {
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: var(--mantine-spacing-xs);
 }
 
 .row {
   display: flex;
-  gap: 8px;
+  gap: var(--mantine-spacing-xs);
 
   @container preset (max-width: 520px) {
     flex-direction: column;
@@ -84,7 +84,7 @@
 
 .error {
   width: fit-content;
-  padding: 4px 8px;
+  padding: var(--mantine-spacing-2xs) var(--mantine-spacing-xs);
   border-radius: 4px;
   background: var(--mantine-color-body);
   color: var(--lt-critical);
@@ -99,7 +99,7 @@
 .done {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: var(--mantine-spacing-xs);
   font-weight: var(--mantine-font-weight-bold);
 }
 

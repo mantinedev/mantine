@@ -1,5 +1,5 @@
 .title {
-  margin-bottom: 14px;
+  margin-bottom: var(--mantine-spacing-sm);
   font-size: 17px;
   line-height: 1.6;
 }

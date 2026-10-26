@@ -52,7 +52,7 @@
   height: 32px;
   display: flex;
   align-items: center;
-  padding-inline: 14px;
+  padding-inline: var(--mantine-spacing-sm);
   font-weight: var(--mantine-font-weight-medium);
 
   &:where([data-active]) {
@@ -71,7 +71,7 @@
 }
 
 .tab {
-  padding: 12px 0;
+  padding: var(--mantine-spacing-sm) 0;
   font-size: var(--mantine-font-size-md);
   font-weight: var(--mantine-font-weight-medium);
   border-width: 0;

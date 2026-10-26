@@ -2,16 +2,16 @@
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  gap: 32px;
-  padding: 40px 48px;
+  gap: var(--mantine-spacing-xl);
+  padding: var(--mantine-spacing-2xl) var(--mantine-spacing-3xl);
   border-top: 1px solid var(--mantine-color-border);
 
   @container preset (max-width: 980px) {
-    padding-inline: 32px;
+    padding-inline: var(--mantine-spacing-xl);
   }
 
   @container preset (max-width: 520px) {
-    padding-inline: 16px;
+    padding-inline: var(--mantine-spacing-md);
   }
 }
 
@@ -28,13 +28,13 @@
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  gap: 22px 36px;
+  gap: var(--mantine-spacing-lg) calc((var(--mantine-spacing-xl) + var(--mantine-spacing-2xl)) / 2);
 }
 
 .logo {
   display: inline-flex;
   align-items: center;
-  gap: 10px;
+  gap: var(--mantine-spacing-sm);
   line-height: 1.1;
   color: var(--mantine-color-text);
   text-decoration: none;

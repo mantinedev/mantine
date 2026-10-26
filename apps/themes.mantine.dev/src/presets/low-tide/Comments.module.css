@@ -2,8 +2,8 @@
   display: grid;
   grid-template-columns: 200px minmax(0, 66ch);
   justify-content: center;
-  gap: 56px;
-  padding: 8px var(--mantine-spacing-xl) 56px;
+  gap: var(--mantine-spacing-3xl);
+  padding: var(--mantine-spacing-xs) var(--mantine-spacing-xl) var(--mantine-spacing-3xl);
 
   @container preset (max-width: 980px) {
     grid-template-columns: minmax(0, 66ch);
@@ -29,7 +29,7 @@
 }
 
 .title {
-  margin-bottom: 20px;
+  margin-bottom: calc(var(--mantine-spacing-md) * 1.25);
 }
 
 .count {
@@ -41,13 +41,13 @@
 .form {
   display: flex;
   flex-direction: column;
-  gap: 10px;
-  margin-bottom: 28px;
+  gap: var(--mantine-spacing-xs);
+  margin-bottom: calc(var(--mantine-spacing-lg) * 1.25);
 }
 
 .textarea {
   min-height: 96px;
-  padding: 12px 14px;
+  padding: var(--mantine-spacing-sm) var(--mantine-spacing-sm);
   font-family: var(--lt-font-read);
   font-size: 16px;
   line-height: 1.55;
@@ -58,14 +58,14 @@
   align-items: center;
   justify-content: space-between;
   flex-wrap: wrap;
-  gap: 10px;
+  gap: var(--mantine-spacing-xs);
   font-size: var(--mantine-font-size-xs);
 }
 
 .list {
   display: flex;
   flex-direction: column;
-  gap: 24px;
+  gap: var(--mantine-spacing-lg);
   margin: 0;
   padding: 0;
   list-style: none;
@@ -74,13 +74,13 @@
 .comment {
   display: grid;
   grid-template-columns: auto minmax(0, 1fr);
-  gap: 4px 14px;
+  gap: var(--mantine-spacing-2xs) var(--mantine-spacing-sm);
 
   &[data-reply] {
-    margin-left: 54px;
+    margin-left: calc(40px + var(--mantine-spacing-sm));
 
     @container preset (max-width: 520px) {
-      margin-left: 24px;
+      margin-left: var(--mantine-spacing-lg);
     }
   }
 }
@@ -93,7 +93,7 @@
   font-size: var(--mantine-font-size-sm);
 
   & b {
-    margin-right: 8px;
+    margin-right: var(--mantine-spacing-xs);
     font-weight: var(--mantine-font-weight-bold);
     color: var(--mantine-color-bright);
   }
@@ -102,9 +102,9 @@
 .authorBadge {
   --badge-height-sm: 20px;
   --badge-fz-sm: 11px;
-  --badge-padding-x-sm: 8px;
+  --badge-padding-x-sm: var(--mantine-spacing-xs);
 
-  margin-right: 8px;
+  margin-right: var(--mantine-spacing-xs);
   vertical-align: 1px;
 }
 
@@ -116,7 +116,7 @@
 
 .actions {
   display: flex;
-  gap: 14px;
+  gap: var(--mantine-spacing-sm);
   font-size: var(--mantine-font-size-xs);
   font-weight: var(--mantine-font-weight-bold);
 }
@@ -124,8 +124,8 @@
 .action {
   display: inline-flex;
   align-items: center;
-  gap: 6px;
-  padding: 4px 0;
+  gap: var(--mantine-spacing-2xs);
+  padding: var(--mantine-spacing-2xs) 0;
   font-size: var(--mantine-font-size-xs);
   color: var(--mantine-color-text);
 

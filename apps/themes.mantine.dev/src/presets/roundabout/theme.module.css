@@ -81,12 +81,12 @@
 }
 
 .menuDropdown {
-  padding: 6px;
+  padding: var(--mantine-spacing-2xs);
 }
 
 .menuItem {
-  padding: 8px;
-  gap: 10px;
+  padding: var(--mantine-spacing-xs);
+  gap: var(--mantine-spacing-sm);
   border-radius: var(--mantine-radius-md);
 }
 

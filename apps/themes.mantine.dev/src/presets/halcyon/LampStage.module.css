@@ -29,7 +29,7 @@
   flex: 1;
   display: grid;
   place-items: center;
-  padding-top: 24px;
+  padding-top: calc(var(--mantine-spacing-md) * 1.1);
 
   & svg {
     display: block;
@@ -39,7 +39,7 @@
   }
 
   @container preset (max-width: 520px) {
-    padding: 24px 0 8px;
+    padding: calc(var(--mantine-spacing-md) * 1.1) 0 var(--mantine-spacing-xs);
   }
 }
 
@@ -50,12 +50,12 @@
 
 .scrub {
   position: relative;
-  margin: 0 28px 26px;
-  padding: 16px 20px;
+  margin: 0 var(--mantine-spacing-lg) var(--mantine-spacing-lg);
+  padding: calc(var(--mantine-spacing-md) * 0.8) calc(var(--mantine-spacing-md) * 1.1);
   background: var(--hc-surface);
 
   @container preset (max-width: 520px) {
-    margin: 0 12px 12px;
+    margin: 0 var(--mantine-spacing-sm) var(--mantine-spacing-sm);
   }
 }
 
@@ -64,7 +64,7 @@
   flex-wrap: wrap;
   align-items: baseline;
   justify-content: space-between;
-  gap: 12px;
+  gap: var(--mantine-spacing-sm);
 }
 
 .scrubLabel {
@@ -84,7 +84,7 @@
 }
 
 .slider {
-  margin: 12px 0 4px;
+  margin: var(--mantine-spacing-sm) 0 calc(var(--mantine-spacing-xs) / 2);
 }
 
 .ticks {

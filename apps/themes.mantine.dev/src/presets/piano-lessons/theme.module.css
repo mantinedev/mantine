@@ -21,7 +21,7 @@
 }
 
 .inputWrapper {
-  --input-padding: 12px;
+  --input-padding: var(--mantine-spacing-sm);
 }
 
 .input {
@@ -41,14 +41,14 @@
 }
 
 .inputLabel {
-  margin-bottom: 6px;
+  margin-bottom: calc(var(--mantine-spacing-sm) / 2);
   font-size: var(--mantine-font-size-sm);
   font-weight: var(--mantine-font-weight-medium);
   color: var(--mantine-color-bright);
 }
 
 .inputError {
-  margin-top: 4px;
+  margin-top: calc(var(--mantine-spacing-xs) / 2);
   font-size: var(--mantine-font-size-xs);
 }
 
@@ -145,7 +145,7 @@
 }
 
 .switchLabel {
-  padding-inline-start: 8px;
+  padding-inline-start: var(--mantine-spacing-xs);
   font-size: var(--mantine-font-size-sm);
   cursor: pointer;
 }
@@ -156,7 +156,7 @@
 }
 
 .menuDropdown {
-  padding: 6px;
+  padding: calc(var(--mantine-spacing-sm) / 2);
   border-color: var(--mantine-color-border);
   background-color: var(--mantine-color-surface-panel);
 }
@@ -190,7 +190,7 @@
 }
 
 .accordionControl {
-  padding: 18px 0;
+  padding: var(--mantine-spacing-md) 0;
   background-color: transparent;
 
   @mixin hover {
@@ -213,7 +213,7 @@
 }
 
 .accordionContent {
-  padding: 0 40px 18px 0;
+  padding: 0 var(--mantine-spacing-2xl) var(--mantine-spacing-md) 0;
   font-size: var(--mantine-font-size-md);
 }
 

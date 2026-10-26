@@ -13,7 +13,7 @@ export const metadata: Metadata = {
   icons: { shortcut: '/favicon.svg' },
 };
 
-const EMBED_SCRIPT = `try{if(window.self!==window.top){var r=document.documentElement;r.setAttribute("data-embedded","");var s=new URLSearchParams(location.search).get("scheme");if(s==="light"||s==="dark")r.setAttribute("data-mantine-color-scheme",s);}}catch(e){}`;
+const EMBED_SCRIPT = `try{if(window.self!==window.top){var r=document.documentElement;r.setAttribute("data-embedded","");var s=window.parent.document.documentElement.getAttribute("data-mantine-color-scheme");if(s==="light"||s==="dark")r.setAttribute("data-mantine-color-scheme",s);}}catch(e){}`;
 
 interface PresetsLayoutProps {
   children: React.ReactNode;

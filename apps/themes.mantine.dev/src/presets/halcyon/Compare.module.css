@@ -1,5 +1,5 @@
 .compare {
-  margin-top: 44px;
+  margin-top: calc(var(--mantine-spacing-md) * 2.3);
   overflow: hidden;
   border: 1px solid var(--mantine-color-border);
   border-radius: var(--mantine-radius-lg);
@@ -28,7 +28,7 @@
 .mark {
   display: inline-flex;
   align-items: flex-start;
-  gap: 10px;
+  gap: var(--mantine-spacing-sm);
   color: inherit;
 
   & svg {

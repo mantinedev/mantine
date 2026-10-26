@@ -97,7 +97,7 @@ export function Venue() {
         <VenueMap />
         <div>
           <div className={classes.info}>
-            <Title order={3} mb={8}>
+            <Title order={3} mb="xs">
               Getting there
             </Title>
             <List fz={15}>
@@ -111,7 +111,7 @@ export function Venue() {
             </List>
           </div>
           <div className={classes.info}>
-            <Title order={3} mb={8}>
+            <Title order={3} mb="xs">
               Access
             </Title>
             <List fz={15}>
@@ -125,7 +125,7 @@ export function Venue() {
             component="a"
             href="#"
             variant="default"
-            mt={22}
+            mt="lg"
             onClick={(event) => event.preventDefault()}
           >
             Read the full access guide

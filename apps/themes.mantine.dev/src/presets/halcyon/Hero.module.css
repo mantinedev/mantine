@@ -1,13 +1,14 @@
 .hero {
   display: grid;
   grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr);
-  gap: 48px;
+  gap: calc(var(--mantine-spacing-md) * 2.3);
   align-items: center;
-  padding: 16px var(--hc-gutter) 88px;
+  padding: calc(var(--mantine-spacing-md) * 0.8) var(--hc-gutter)
+    calc(var(--mantine-spacing-3xl) - var(--mantine-spacing-xs));
 
   @container preset (max-width: 980px) {
     grid-template-columns: minmax(0, 1fr);
-    gap: 36px;
+    gap: calc(var(--mantine-spacing-md) * 1.9);
   }
 }
 
@@ -23,12 +24,12 @@
 
 .lead {
   max-width: 30em;
-  margin: 20px 0 0;
+  margin: calc(var(--mantine-spacing-md) * 1.1) 0 0;
   font-size: 18px;
 }
 
 .finish {
-  margin-top: 30px;
+  margin-top: var(--mantine-spacing-lg);
 }
 
 .finishLabel {
@@ -46,8 +47,8 @@
 
 .swatches {
   display: flex;
-  gap: 12px;
-  margin-top: 10px;
+  gap: var(--mantine-spacing-sm);
+  margin-top: var(--mantine-spacing-sm);
 }
 
 .swatch {
@@ -75,8 +76,8 @@
   display: flex;
   flex-wrap: wrap;
   align-items: baseline;
-  gap: 14px;
-  margin-top: 30px;
+  gap: var(--mantine-spacing-sm);
+  margin-top: var(--mantine-spacing-lg);
 }
 
 .price {
@@ -94,21 +95,21 @@
 .ctas {
   display: flex;
   flex-wrap: wrap;
-  gap: 10px;
-  margin-top: 22px;
+  gap: var(--mantine-spacing-sm);
+  margin-top: calc(var(--mantine-spacing-md) * 1.1);
 }
 
 .ships {
   display: flex;
   flex-direction: column;
-  gap: 6px;
-  margin-top: 18px;
+  gap: var(--mantine-spacing-xs);
+  margin-top: calc(var(--mantine-spacing-md) * 0.8);
   font-size: 14px;
 
   & span {
     display: inline-flex;
     align-items: center;
-    gap: 8px;
+    gap: var(--mantine-spacing-xs);
   }
 
   & svg {

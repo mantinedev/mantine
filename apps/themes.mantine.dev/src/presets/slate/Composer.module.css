@@ -1,7 +1,8 @@
 .wrap {
   position: relative;
   flex: none;
-  padding: 4px var(--slate-gutter, 18px) 16px;
+  padding: var(--mantine-spacing-3xs) var(--slate-gutter, var(--mantine-spacing-md))
+    var(--mantine-spacing-md);
 }
 
 .composer {
@@ -18,7 +19,7 @@
 .toolbar {
   display: flex;
   gap: 2px;
-  padding: 6px 8px 0;
+  padding: var(--mantine-spacing-2xs) var(--mantine-spacing-xs) 0;
 }
 
 .toolbar .tool {
@@ -50,13 +51,13 @@
 
 .separator {
   width: 1px;
-  margin: 6px 4px;
+  margin: var(--mantine-spacing-2xs) var(--mantine-spacing-3xs);
   background: var(--mantine-color-border);
 }
 
 .textarea {
   min-height: 44px;
-  padding: 8px 14px;
+  padding: var(--mantine-spacing-xs) var(--mantine-spacing-sm);
   font-size: var(--mantine-font-size-md);
   line-height: 1.5;
   color: var(--mantine-color-text);
@@ -66,8 +67,8 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 8px;
-  padding: 6px 8px 8px;
+  gap: var(--mantine-spacing-xs);
+  padding: var(--mantine-spacing-2xs) var(--mantine-spacing-xs) var(--mantine-spacing-xs);
 }
 
 .footActions {
@@ -99,6 +100,6 @@
 
 .sub {
   margin-inline-start: auto;
-  padding-inline-start: 10px;
+  padding-inline-start: var(--mantine-spacing-xs);
   font-size: var(--mantine-font-size-xs);
 }

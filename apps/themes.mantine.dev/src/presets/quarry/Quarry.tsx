@@ -3,7 +3,15 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { IconLayoutSidebarRight, IconMenu2, IconUpload } from '@tabler/icons-react';
 import { CodeHighlightAdapterProvider } from '@mantine/code-highlight';
-import { ActionIcon, Button, Overlay, SegmentedControl, Title, Transition } from '@mantine/core';
+import {
+  ActionIcon,
+  Button,
+  Overlay,
+  ScrollArea,
+  SegmentedControl,
+  Title,
+  Transition,
+} from '@mantine/core';
 import { useWindowEvent } from '@mantine/hooks';
 import { PresetFrame } from '@/components/PresetFrame';
 import { PresetProvider } from '@/components/PresetProvider';
@@ -207,40 +215,42 @@ function Workspace() {
           </ActionIcon>
         </div>
 
-        <div className={classes.thread} ref={threadRef}>
-          <div className={classes.question}>Why did repeat orders drop in September?</div>
-          <div className={classes.questionMeta}>Nadia, today at 09:14</div>
+        <ScrollArea className={classes.threadScroll} scrollbars="y" viewportRef={threadRef}>
+          <div className={classes.thread}>
+            <div className={classes.question}>Why did repeat orders drop in September?</div>
+            <div className={classes.questionMeta}>Nadia, today at 09:14</div>
 
-          <FirstAnswer
-            resultsOnly={resultsOnly}
-            compare={compare}
-            running={running}
-            duration={duration}
-            pinned={pinned}
-            onTogglePin={() => {
-              showToast(pinned ? 'Removed from the dashboard' : 'Pinned to the Growth dashboard');
-              setPinned(!pinned);
-            }}
-            onCopy={copySql}
-            onRerun={rerun}
-            onFollowUp={() => startQuestion(FOLLOW_UP)}
-          />
+            <FirstAnswer
+              resultsOnly={resultsOnly}
+              compare={compare}
+              running={running}
+              duration={duration}
+              pinned={pinned}
+              onTogglePin={() => {
+                showToast(pinned ? 'Removed from the dashboard' : 'Pinned to the Growth dashboard');
+                setPinned(!pinned);
+              }}
+              onCopy={copySql}
+              onRerun={rerun}
+              onFollowUp={() => startQuestion(FOLLOW_UP)}
+            />
 
-          {streams.map((stream) => (
-            <div key={stream.id} className={classes.exchange}>
-              <div className={classes.question}>{stream.question}</div>
-              <div className={classes.questionMeta}>Nadia, just now</div>
-              <StreamingAnswer
-                id={stream.id}
-                status={stream.status}
-                resultsOnly={resultsOnly}
-                onDone={finishStream}
-                onStop={stopWithToast}
-                onProgress={scrollToEnd}
-              />
-            </div>
-          ))}
-        </div>
+            {streams.map((stream) => (
+              <div key={stream.id} className={classes.exchange}>
+                <div className={classes.question}>{stream.question}</div>
+                <div className={classes.questionMeta}>Nadia, just now</div>
+                <StreamingAnswer
+                  id={stream.id}
+                  status={stream.status}
+                  resultsOnly={resultsOnly}
+                  onDone={finishStream}
+                  onStop={stopWithToast}
+                  onProgress={scrollToEnd}
+                />
+              </div>
+            ))}
+          </div>
+        </ScrollArea>
 
         <Composer
           value={ask}

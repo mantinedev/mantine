@@ -4,9 +4,9 @@
   flex: none;
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: var(--mantine-spacing-sm);
   height: 60px;
-  padding: 0 16px;
+  padding: 0 var(--mantine-spacing-md);
   background: var(--mantine-color-surface-panel);
   border-bottom: 1px solid var(--mantine-color-border);
 
@@ -26,7 +26,7 @@
 .brand {
   display: flex;
   align-items: center;
-  gap: 9px;
+  gap: var(--mantine-spacing-xs);
   font-size: var(--mantine-font-size-lg);
   font-weight: 700;
   white-space: nowrap;
@@ -52,9 +52,9 @@
 .dayNav {
   display: flex;
   align-items: center;
-  gap: 6px;
+  gap: var(--mantine-spacing-2xs);
   flex: none;
-  margin-left: 8px;
+  margin-left: var(--mantine-spacing-xs);
 }
 
 .today {

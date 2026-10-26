@@ -1,8 +1,8 @@
 .footer {
   display: grid;
   grid-template-columns: minmax(0, 1.4fr) repeat(3, minmax(0, 1fr));
-  gap: 32px;
-  padding: 48px var(--sw-gutter) 36px;
+  gap: calc(var(--mantine-spacing-xs) * 4);
+  padding: var(--mantine-spacing-2xl) var(--sw-gutter) calc(var(--mantine-spacing-sm) * 3);
   border-top: 1px solid var(--mantine-color-border);
   font-size: var(--mantine-font-size-sm);
 
@@ -29,7 +29,7 @@
 
   & p {
     max-width: 22em;
-    margin: 12px 0 0;
+    margin: var(--mantine-spacing-sm) 0 0;
     color: var(--mantine-color-text);
   }
 
@@ -39,7 +39,7 @@
 }
 
 .heading {
-  margin: 0 0 12px;
+  margin: 0 0 var(--mantine-spacing-sm);
   font-size: var(--mantine-font-size-sm);
   font-weight: var(--mantine-font-weight-bold);
   color: var(--mantine-color-bright);
@@ -48,7 +48,7 @@
 .links {
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: var(--mantine-spacing-xs);
   margin: 0;
   padding: 0;
   list-style: none;
@@ -59,8 +59,8 @@
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
-  gap: 12px;
-  padding-top: 20px;
+  gap: var(--mantine-spacing-sm);
+  padding-top: var(--mantine-spacing-md);
   border-top: 1px solid var(--mantine-color-border);
   font-size: var(--mantine-font-size-xs);
 }

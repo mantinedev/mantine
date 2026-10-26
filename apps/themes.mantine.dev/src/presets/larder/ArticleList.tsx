@@ -1,5 +1,5 @@
 import { IconPlus } from '@tabler/icons-react';
-import { Button, NavLink, SegmentedControl, TextInput, Title } from '@mantine/core';
+import { Button, NavLink, ScrollArea, SegmentedControl, TextInput, Title } from '@mantine/core';
 import { type Article, type ArticleStatus, STATUSES } from './data';
 import { StatusMark } from './StatusMark';
 import classes from './ArticleList.module.css';
@@ -66,37 +66,39 @@ export function ArticleList({
         />
       </div>
 
-      <ul className={classes.list}>
-        {visible.length === 0 ? (
-          <li className={classes.empty}>Nothing here. Try another status or clear the search.</li>
-        ) : (
-          visible.map((article) => (
-            <li key={article.id}>
-              <NavLink
-                component="button"
-                variant="rail"
-                active={article.id === selectedId}
-                aria-current={article.id === selectedId}
-                onClick={() => onSelect(article.id)}
-                classNames={{
-                  root: classes.article,
-                  label: classes.articleTitle,
-                  description: classes.articleMeta,
-                }}
-                label={article.title}
-                description={
-                  <>
-                    <StatusMark status={article.status} />
-                    <span>
-                      {article.section}, {article.when}
-                    </span>
-                  </>
-                }
-              />
-            </li>
-          ))
-        )}
-      </ul>
+      <ScrollArea className={classes.listScroll} scrollbars="y" scrollbarSize={8}>
+        <ul className={classes.list}>
+          {visible.length === 0 ? (
+            <li className={classes.empty}>Nothing here. Try another status or clear the search.</li>
+          ) : (
+            visible.map((article) => (
+              <li key={article.id}>
+                <NavLink
+                  component="button"
+                  variant="rail"
+                  active={article.id === selectedId}
+                  aria-current={article.id === selectedId}
+                  onClick={() => onSelect(article.id)}
+                  classNames={{
+                    root: classes.article,
+                    label: classes.articleTitle,
+                    description: classes.articleMeta,
+                  }}
+                  label={article.title}
+                  description={
+                    <>
+                      <StatusMark status={article.status} />
+                      <span>
+                        {article.section}, {article.when}
+                      </span>
+                    </>
+                  }
+                />
+              </li>
+            ))
+          )}
+        </ul>
+      </ScrollArea>
     </section>
   );
 }

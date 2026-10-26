@@ -34,9 +34,9 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 8px;
+  gap: var(--mantine-spacing-xs);
   height: 44px;
-  padding: 0 8px 0 4px;
+  padding: 0 var(--mantine-spacing-xs) 0 var(--mantine-spacing-2xs);
   background: var(--tern-code-surface);
   border-bottom: 1px solid var(--tern-code-border);
 }
@@ -44,8 +44,8 @@
 .title {
   display: flex;
   align-items: center;
-  gap: 10px;
-  padding-left: 10px;
+  gap: var(--mantine-spacing-xs);
+  padding-left: var(--mantine-spacing-sm);
   font-size: var(--mantine-font-size-sm);
   font-weight: var(--mantine-font-weight-medium);
   color: #d5dce6;

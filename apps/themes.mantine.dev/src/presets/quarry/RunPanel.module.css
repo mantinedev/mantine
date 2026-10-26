@@ -1,10 +1,7 @@
 .root {
   display: flex;
   flex-direction: column;
-  gap: 18px;
   min-height: 0;
-  padding: 16px 14px;
-  overflow-y: auto;
   border-left: 1px solid var(--mantine-color-border);
   background: light-dark(var(--mantine-color-gray-0), var(--mantine-color-dark-8));
 
@@ -25,6 +22,18 @@
   }
 }
 
+.scroll {
+  flex: 1;
+  min-height: 0;
+}
+
+.body {
+  display: flex;
+  flex-direction: column;
+  gap: var(--mantine-spacing-lg);
+  padding: var(--mantine-spacing-md);
+}
+
 .heading {
   display: flex;
   align-items: center;
@@ -41,14 +50,14 @@
 }
 
 .sectionTitle {
-  margin-bottom: 8px;
+  margin-bottom: var(--mantine-spacing-xs);
 }
 
 .warehouse {
   display: flex;
   align-items: center;
-  gap: 10px;
-  padding: 10px 12px;
+  gap: var(--mantine-spacing-sm);
+  padding: var(--mantine-spacing-sm);
 }
 
 .dot {
@@ -79,7 +88,7 @@
 .meterRow {
   display: flex;
   justify-content: space-between;
-  margin-top: 4px;
+  margin-top: var(--mantine-spacing-3xs);
   font-size: 12px;
 }
 
@@ -94,8 +103,8 @@
     display: grid;
     grid-template-columns: auto minmax(0, 1fr) auto;
     align-items: center;
-    gap: 2px 8px;
-    padding: 7px 0;
+    gap: 2px var(--mantine-spacing-xs);
+    padding: var(--mantine-spacing-xs) 0;
     border-bottom: 1px solid var(--mantine-color-border);
     font-size: 12.5px;
 

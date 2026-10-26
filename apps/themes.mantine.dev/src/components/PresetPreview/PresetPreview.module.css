@@ -1,13 +1,36 @@
 .root {
+  display: flex;
+  flex-direction: column;
+  min-height: calc(100dvh - var(--app-shell-header-offset, 0rem));
+}
+
+.toolbar {
+  position: sticky;
+  top: var(--app-shell-header-offset, 0rem);
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--mantine-spacing-sm);
+  padding: var(--mantine-spacing-sm) var(--mantine-spacing-md);
+  border-bottom: 1px solid var(--mantine-color-default-border);
+  background-color: var(--mantine-color-body);
+}
+
+.select {
+  flex: 1;
+  max-width: 360px;
+}
+
+.frame {
   position: relative;
   flex: 1;
-  min-height: 0;
 }
 
 .iframe {
   display: block;
   width: 100%;
-  height: 100%;
+  height: calc(100dvh - var(--app-shell-header-offset, 0rem) - 61px);
   border: 0;
   visibility: hidden;
 
@@ -18,7 +41,7 @@
 
 .loader {
   position: absolute;
-  top: 50%;
+  top: 120px;
   left: 50%;
-  transform: translate(-50%, -50%);
+  transform: translateX(-50%);
 }

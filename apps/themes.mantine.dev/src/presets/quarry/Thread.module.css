@@ -2,7 +2,7 @@
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  gap: 14px;
+  gap: var(--mantine-spacing-md);
   font-size: 13px;
 
   & b {
@@ -16,7 +16,7 @@
 .ok {
   display: inline-flex;
   align-items: center;
-  gap: 6px;
+  gap: var(--mantine-spacing-2xs);
   font-weight: var(--mantine-font-weight-bold);
   color: var(--quarry-good);
 }
@@ -24,7 +24,7 @@
 .running {
   display: inline-flex;
   align-items: center;
-  gap: 8px;
+  gap: var(--mantine-spacing-xs);
   font-weight: var(--mantine-font-weight-bold);
   color: var(--mantine-primary-color-filled);
 }

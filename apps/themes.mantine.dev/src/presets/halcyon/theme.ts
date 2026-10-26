@@ -97,7 +97,15 @@ export const theme = createTheme({
 
   defaultRadius: 'md',
   radius: { xs: rem(4), sm: rem(8), md: rem(14), lg: rem(20), xl: rem(32) },
-  spacing: { xs: rem(8), sm: rem(12), md: rem(20), lg: rem(28), xl: rem(48) },
+  spacing: {
+    xs: rem(8),
+    sm: rem(12),
+    md: rem(20),
+    lg: rem(28),
+    xl: rem(48),
+    '2xl': rem(56),
+    '3xl': rem(96),
+  },
   shadows: {
     xs: '0 1px 2px rgba(0, 0, 0, 0.05)',
     xl: '0 24px 60px -24px rgba(21, 20, 18, 0.35), 0 4px 12px rgba(21, 20, 18, 0.06)',
@@ -134,7 +142,7 @@ export const theme = createTheme({
     Title: Title.extend({ classNames: { root: classes.title } }),
 
     Card: Card.extend({
-      defaultProps: { radius: 'lg', withBorder: true, padding: 28 },
+      defaultProps: { radius: 'lg', withBorder: true, padding: 'lg' },
     }),
 
     Indicator: Indicator.extend({
@@ -161,7 +169,11 @@ export const theme = createTheme({
     }),
 
     Table: Table.extend({
-      defaultProps: { horizontalSpacing: 22, verticalSpacing: 18, fz: 'md' },
+      defaultProps: {
+        horizontalSpacing: 'calc(var(--mantine-spacing-md) * 1.1)',
+        verticalSpacing: 'calc(var(--mantine-spacing-md) * 0.8)',
+        fz: 'md',
+      },
       classNames: { th: classes.th, td: classes.td },
     }),
 

@@ -1,10 +1,7 @@
 .root {
   display: flex;
   flex-direction: column;
-  gap: 18px;
   min-height: 0;
-  padding: 14px;
-  overflow-y: auto;
   background: var(--mantine-color-surface-panel);
   border-right: 1px solid var(--mantine-color-border);
 
@@ -23,10 +20,22 @@
   }
 }
 
+.scroll {
+  flex: 1;
+  min-height: 0;
+}
+
+.inner {
+  display: flex;
+  flex-direction: column;
+  gap: var(--mantine-spacing-md);
+  padding: var(--mantine-spacing-sm);
+}
+
 .calendarHeader {
   height: 36px;
   max-width: none;
-  margin-bottom: 6px;
+  margin-bottom: var(--mantine-spacing-2xs);
 }
 
 .monthCell {
@@ -52,8 +61,8 @@
   display: flex;
   align-items: baseline;
   justify-content: space-between;
-  gap: 8px;
-  margin-bottom: 4px;
+  gap: var(--mantine-spacing-xs);
+  margin-bottom: var(--mantine-spacing-3xs);
 }
 
 .count {
@@ -61,14 +70,14 @@
 }
 
 .sub {
-  margin-bottom: 10px;
+  margin-bottom: var(--mantine-spacing-xs);
   font-size: 12.5px;
 }
 
 .list {
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: var(--mantine-spacing-xs);
   margin: 0;
   padding: 0;
   list-style: none;
@@ -77,8 +86,8 @@
 .card {
   display: grid;
   grid-template-columns: auto minmax(0, 1fr);
-  gap: 2px 10px;
-  padding: 10px;
+  gap: 2px var(--mantine-spacing-xs);
+  padding: var(--mantine-spacing-xs);
   border: 1px solid var(--mantine-color-border);
   border-radius: var(--mantine-radius-md);
   background: var(--mantine-color-surface-panel);
@@ -107,7 +116,7 @@
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  gap: 6px;
+  gap: var(--mantine-spacing-2xs);
   font-weight: var(--mantine-font-weight-bold);
   color: var(--mantine-color-bright);
 }
@@ -132,12 +141,12 @@
 .actions {
   grid-column: 2;
   display: flex;
-  gap: 6px;
-  margin-top: 6px;
+  gap: var(--mantine-spacing-2xs);
+  margin-top: var(--mantine-spacing-2xs);
 }
 
 .empty {
-  padding: 10px;
+  padding: var(--mantine-spacing-xs);
   border: 1px dashed var(--mantine-color-default-border);
   border-radius: var(--mantine-radius-md);
   font-size: var(--mantine-font-size-sm);

@@ -1,4 +1,4 @@
 .faq {
   max-width: 760px;
-  margin-top: 36px;
+  margin-top: calc(var(--mantine-spacing-md) * 1.9);
 }

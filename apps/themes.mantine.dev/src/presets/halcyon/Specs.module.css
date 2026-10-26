@@ -1,11 +1,11 @@
 .specs {
   display: grid;
   grid-template-columns: minmax(0, 1fr) minmax(0, 1.6fr);
-  gap: 56px;
+  gap: var(--mantine-spacing-2xl);
 
   @container preset (max-width: 980px) {
     grid-template-columns: minmax(0, 1fr);
-    gap: 28px;
+    gap: var(--mantine-spacing-lg);
   }
 }
 
@@ -18,7 +18,7 @@
   & dt,
   & dd {
     margin: 0;
-    padding: 16px 0;
+    padding: calc(var(--mantine-spacing-md) * 0.8) 0;
     border-bottom: 1px solid var(--mantine-color-border);
   }
 

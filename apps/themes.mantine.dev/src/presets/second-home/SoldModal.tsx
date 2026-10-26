@@ -41,7 +41,7 @@ export function SoldModal({ conversation, opened, onClose, onConfirm }: SoldModa
           onConfirm(buyer);
         }}
       >
-        <Stack gap={14}>
+        <Stack gap="md">
           <Text fz={14}>
             Who bought the {conversation.item.title.toLowerCase()}? Other people chatting about it
             will see that it’s gone.
@@ -51,7 +51,7 @@ export function SoldModal({ conversation, opened, onClose, onConfirm }: SoldModa
             onChange={(value) => setBuyer(value as SoldBuyer)}
             aria-label="Buyer"
           >
-            <Stack gap={8}>
+            <Stack gap="calc(var(--mantine-spacing-sm) * 0.8)">
               {options.map((option) => (
                 <Radio.Card
                   key={option.value}
@@ -64,7 +64,7 @@ export function SoldModal({ conversation, opened, onClose, onConfirm }: SoldModa
               ))}
             </Stack>
           </Radio.Group>
-          <Group justify="flex-end" gap={8}>
+          <Group justify="flex-end" gap="calc(var(--mantine-spacing-sm) * 0.8)">
             <Button variant="default" onClick={onClose}>
               Cancel
             </Button>

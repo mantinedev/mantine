@@ -1,10 +1,10 @@
 .root {
   display: flex;
   align-items: center;
-  gap: 14px;
+  gap: var(--mantine-spacing-md);
   height: 54px;
   flex: none;
-  padding: 0 16px;
+  padding: 0 var(--mantine-spacing-lg);
   background: var(--clerk-surface);
   border-bottom: 1px solid var(--mantine-color-border);
 }
@@ -20,7 +20,7 @@
 .logo {
   display: inline-flex;
   align-items: center;
-  gap: 9px;
+  gap: var(--mantine-spacing-sm);
   font-family: var(--clerk-font-doc);
   font-weight: 600;
   font-size: 22px;
@@ -42,7 +42,7 @@
 }
 
 .firm {
-  padding-left: 14px;
+  padding-left: var(--mantine-spacing-md);
   border-left: 1px solid var(--mantine-color-border);
   font-size: 13px;
 

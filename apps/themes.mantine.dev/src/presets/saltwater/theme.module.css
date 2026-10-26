@@ -54,7 +54,7 @@
 .segmentedInnerLabel {
   display: inline-flex;
   align-items: center;
-  gap: 6px;
+  gap: var(--mantine-spacing-xs);
 
   & svg {
     flex: none;
@@ -70,8 +70,8 @@
 }
 
 .accordionControl {
-  padding: 20px 0;
-  gap: 16px;
+  padding: calc(var(--mantine-spacing-sm) * 1.5) 0;
+  gap: calc(var(--mantine-spacing-sm) * 1.5);
 
   @mixin hover {
     background-color: transparent;
@@ -105,17 +105,17 @@
 }
 
 .accordionContent {
-  padding: 0 48px 22px 0;
+  padding: 0 var(--mantine-spacing-3xl) var(--mantine-spacing-lg) 0;
 }
 
 .menuDropdown {
-  padding: 8px;
+  padding: var(--mantine-spacing-xs);
   border: 0;
   background: var(--mantine-color-surface-panel);
 }
 
 .menuItem {
-  padding: 12px 14px;
+  padding: var(--mantine-spacing-sm) var(--mantine-spacing-sm);
   border-radius: var(--mantine-radius-md);
   font-size: var(--mantine-font-size-md);
   font-weight: var(--mantine-font-weight-medium);

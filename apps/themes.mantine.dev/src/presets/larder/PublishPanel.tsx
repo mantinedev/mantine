@@ -2,7 +2,16 @@
 
 import { useState } from 'react';
 import { IconCalendar, IconClock, IconEye, IconX } from '@tabler/icons-react';
-import { ActionIcon, Button, Select, TagsInput, Textarea, TextInput, Title } from '@mantine/core';
+import {
+  ActionIcon,
+  Button,
+  ScrollArea,
+  Select,
+  TagsInput,
+  Textarea,
+  TextInput,
+  Title,
+} from '@mantine/core';
 import { DatePickerInput, TimeInput } from '@mantine/dates';
 import {
   type Article,
@@ -82,7 +91,7 @@ export function PublishPanel({ article, onArticleChange, onClose, onToast }: Pub
         </ActionIcon>
       </div>
 
-      <div className={classes.scroll}>
+      <ScrollArea className={classes.scroll} scrollbars="y" scrollbarSize={8}>
         <div className={classes.group}>
           <p className={classes.groupTitle}>Status</p>
           <div className={classes.statusLine}>
@@ -214,7 +223,7 @@ export function PublishPanel({ article, onArticleChange, onClose, onToast }: Pub
             </div>
           </div>
         </div>
-      </div>
+      </ScrollArea>
 
       <div className={classes.foot}>
         <Button

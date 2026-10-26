@@ -90,14 +90,14 @@ function Footer() {
     <footer className={`${classes.footer} ${classes.wrap}`}>
       <div className={classes.footerBrand}>
         <Logo />
-        <Text size="sm" mt={12} className={classes.footerAbout}>
+        <Text size="sm" mt="sm" className={classes.footerAbout}>
           Run by a small not-for-profit in Bristol. Any money left over pays for free tickets the
           following year.
         </Text>
       </div>
       {footerColumns.map((column) => (
         <div key={column.title}>
-          <Title order={4} mb={10}>
+          <Title order={4} mb="sm">
             {column.title}
           </Title>
           <ul className={classes.footerLinks}>

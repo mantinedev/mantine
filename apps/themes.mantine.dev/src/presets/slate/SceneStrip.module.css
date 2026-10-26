@@ -2,8 +2,8 @@
   flex: none;
   display: flex;
   align-items: center;
-  gap: 14px;
-  padding: 10px var(--slate-gutter, 18px);
+  gap: var(--mantine-spacing-sm);
+  padding: var(--mantine-spacing-xs) var(--slate-gutter, var(--mantine-spacing-md));
   border-bottom: 1px solid var(--mantine-color-border);
   background: var(--mantine-color-surface-muted);
 }
@@ -28,9 +28,11 @@
 .scenes {
   flex: 1;
   min-width: 0;
+}
+
+.sceneList {
   display: flex;
-  gap: 4px;
-  overflow-x: auto;
+  gap: var(--mantine-spacing-3xs);
 }
 
 .scene {
@@ -41,7 +43,7 @@
   justify-content: center;
   min-width: 74px;
   height: 40px;
-  padding: 0 10px;
+  padding: 0 var(--mantine-spacing-xs);
   border: 1px solid var(--mantine-color-default-border);
   border-radius: var(--mantine-radius-sm);
   background: var(--mantine-color-surface-panel);

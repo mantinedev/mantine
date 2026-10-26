@@ -1,9 +1,11 @@
 .wrap {
-  position: relative;
   flex: 1;
   min-height: 0;
-  overflow: auto;
   background: var(--mantine-color-surface-panel);
+}
+
+.content {
+  display: block;
 }
 
 .grid {
@@ -32,9 +34,9 @@
 .colHead {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: var(--mantine-spacing-xs);
   min-width: 0;
-  padding: 8px 10px;
+  padding: var(--mantine-spacing-xs);
   border-left: 1px solid var(--mantine-color-border);
 }
 
@@ -61,7 +63,7 @@
 .util {
   width: 90px;
   max-width: 100%;
-  margin-top: 4px;
+  margin-top: var(--mantine-spacing-3xs);
 }
 
 .gutter {
@@ -69,7 +71,7 @@
 
   & span {
     position: absolute;
-    right: 8px;
+    right: var(--mantine-spacing-xs);
     translate: 0 -50%;
     font-size: 11.5px;
     font-variant-numeric: tabular-nums;
@@ -97,12 +99,12 @@
 .appt {
   position: absolute;
   z-index: 1;
-  left: 4px;
-  right: 4px;
+  left: var(--mantine-spacing-3xs);
+  right: var(--mantine-spacing-3xs);
   display: flex;
   flex-direction: column;
   gap: 1px;
-  padding: 4px 7px;
+  padding: var(--mantine-spacing-3xs) var(--mantine-spacing-2xs);
   overflow: hidden;
   border: 1px solid transparent;
   border-radius: var(--mantine-radius-sm);
@@ -121,7 +123,7 @@
   &[data-compact] {
     flex-direction: row;
     align-items: center;
-    gap: 6px;
+    gap: var(--mantine-spacing-2xs);
   }
 
   &[data-status='booked'] {
@@ -211,7 +213,7 @@
 .status {
   display: inline-flex;
   align-items: center;
-  gap: 4px;
+  gap: var(--mantine-spacing-3xs);
   margin-top: auto;
   font-size: 11.5px;
   font-weight: var(--mantine-font-weight-bold);
@@ -248,9 +250,9 @@
 .ghost {
   position: absolute;
   z-index: 2;
-  left: 4px;
-  right: 4px;
-  padding: 4px 6px;
+  left: var(--mantine-spacing-3xs);
+  right: var(--mantine-spacing-3xs);
+  padding: var(--mantine-spacing-3xs) var(--mantine-spacing-2xs);
   border: 2px dashed var(--mantine-primary-color-filled);
   border-radius: var(--mantine-radius-sm);
   background: color-mix(in srgb, var(--mantine-primary-color-filled) 12%, transparent);
@@ -286,7 +288,7 @@
   z-index: 3;
   left: 4px;
   translate: 0 -50%;
-  padding: 1px 4px;
+  padding: 1px var(--mantine-spacing-3xs);
   border-radius: var(--mantine-radius-xs);
   background: var(--fh-now);
   font-size: 11px;
@@ -299,7 +301,7 @@
   position: absolute;
   z-index: 2;
   inset: 60px 20% auto;
-  padding: 24px;
+  padding: calc(var(--mantine-spacing-sm) * 2);
   border: 1px dashed var(--mantine-color-default-border);
   border-radius: var(--mantine-radius-md);
   background: var(--mantine-color-surface-panel);
@@ -307,7 +309,7 @@
 
   & b {
     display: block;
-    margin-bottom: 4px;
+    margin-bottom: var(--mantine-spacing-3xs);
     font-size: var(--mantine-font-size-lg);
     color: var(--mantine-color-bright);
   }

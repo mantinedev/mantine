@@ -116,7 +116,15 @@ export const theme = createTheme({
 
   defaultRadius: 'sm',
   radius: { xs: rem(4), sm: rem(8), md: rem(10), lg: rem(14), xl: rem(20) },
-  spacing: { xs: rem(8), sm: rem(12), md: rem(16), lg: rem(24), xl: rem(32) },
+  spacing: {
+    '2xs': rem(4),
+    xs: rem(8),
+    sm: rem(12),
+    md: rem(16),
+    lg: rem(24),
+    xl: rem(32),
+    '2xl': rem(48),
+  },
   shadows: {
     md: '0 14px 36px -14px rgba(18, 22, 25, 0.3), 0 2px 6px rgba(18, 22, 25, 0.07)',
   },
@@ -212,8 +220,8 @@ export const theme = createTheme({
             ? {
                 '--alert-bg': 'var(--cw-surface-sunk)',
                 '--alert-bd': '1px solid var(--mantine-color-border)',
-                '--alert-padding': `${rem(18)} ${rem(20)}`,
-                '--alert-gap': rem(14),
+                '--alert-padding': `var(--mantine-spacing-md) calc(var(--mantine-spacing-md) + var(--mantine-spacing-2xs))`,
+                '--alert-gap': 'var(--mantine-spacing-sm)',
                 '--alert-icon-size': rem(32),
                 '--alert-fz': 'var(--mantine-font-size-md)',
                 '--alert-lh': 'var(--mantine-line-height-md)',

@@ -140,7 +140,15 @@ export const theme = createTheme({
 
   defaultRadius: 'md',
   radius: { xs: rem(6), sm: rem(10), md: rem(14), lg: rem(16), xl: rem(20) },
-  spacing: { xs: rem(8), sm: rem(12), md: rem(16), lg: rem(24), xl: rem(32) },
+  spacing: {
+    '3xs': rem(4),
+    '2xs': rem(6),
+    xs: rem(8),
+    sm: rem(12),
+    md: rem(16),
+    lg: rem(24),
+    xl: rem(32),
+  },
   shadows: {
     xs: '0 1px 0 rgba(14, 18, 34, 0.06), 0 1px 2px rgba(14, 18, 34, 0.08)',
     sm: '0 6px 14px -6px rgba(14, 18, 34, 0.22), 0 1px 2px rgba(14, 18, 34, 0.08)',
@@ -238,12 +246,12 @@ export const theme = createTheme({
     }),
 
     Drawer: Drawer.extend({
-      defaultProps: { radius: 22, offset: 10, size: 420, shadow: 'xl' },
+      defaultProps: { radius: 22, offset: 'var(--mantine-spacing-xs)', size: 420, shadow: 'xl' },
       classNames: { content: classes.drawerContent },
     }),
 
     DrawerRoot: {
-      defaultProps: { radius: 22, offset: 10, size: 420, shadow: 'xl' },
+      defaultProps: { radius: 22, offset: 'var(--mantine-spacing-xs)', size: 420, shadow: 'xl' },
     },
 
     Table: Table.extend({

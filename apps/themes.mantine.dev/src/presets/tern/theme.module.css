@@ -38,7 +38,7 @@
 }
 
 .inputLabel {
-  margin-bottom: 6px;
+  margin-bottom: calc(var(--mantine-spacing-sm) / 2);
   font-size: var(--mantine-font-size-sm);
   font-weight: var(--mantine-font-weight-medium);
   color: var(--mantine-color-bright);
@@ -105,7 +105,7 @@
 
 .breadcrumbs {
   flex-wrap: wrap;
-  row-gap: 4px;
+  row-gap: var(--mantine-spacing-2xs);
   font-size: var(--mantine-font-size-sm);
 
   & a {
@@ -125,13 +125,13 @@
 }
 
 .breadcrumbsSeparator {
-  margin-inline: 6px;
+  margin-inline: calc(var(--mantine-spacing-sm) / 2);
   color: var(--mantine-color-dimmed);
 }
 
 .navLink {
-  --nl-padding-y: 5px;
-  --nl-padding-x: 8px;
+  --nl-padding-y: var(--mantine-spacing-2xs);
+  --nl-padding-x: var(--mantine-spacing-xs);
   --nl-section-gap: 6px;
 
   border-radius: var(--mantine-radius-md);
@@ -169,7 +169,7 @@
 }
 
 .tocControl {
-  padding: 4px 0 4px 12px;
+  padding: var(--mantine-spacing-2xs) 0 var(--mantine-spacing-2xs) var(--mantine-spacing-sm);
   font-size: var(--mantine-font-size-sm);
   line-height: 1.4;
   color: var(--mantine-color-text);
@@ -198,7 +198,7 @@
 }
 
 .th {
-  padding-block: 10px;
+  padding-block: var(--mantine-spacing-xs);
   font-size: var(--mantine-font-size-xs);
   font-weight: var(--mantine-font-weight-medium);
   white-space: nowrap;
@@ -207,7 +207,7 @@
 }
 
 .td {
-  padding-block: 12px;
+  padding-block: var(--mantine-spacing-sm);
   vertical-align: top;
 
   :where(tbody tr:last-of-type) > & {
@@ -216,12 +216,12 @@
 }
 
 .alert {
-  --alert-padding: 14px 16px;
+  --alert-padding: var(--mantine-spacing-sm) var(--mantine-spacing-md);
   --alert-radius: var(--mantine-radius-md);
   --alert-fz: var(--mantine-font-size-sm);
   --alert-lh: 1.6;
   --alert-icon-size: 20px;
-  --alert-gap: 12px;
+  --alert-gap: var(--mantine-spacing-sm);
 
   border-inline-start-width: 4px;
 }
@@ -253,7 +253,7 @@
 }
 
 .codeContent {
-  padding: 16px 18px;
+  padding: var(--mantine-spacing-md) var(--mantine-spacing-lg);
   font-size: 13px;
   line-height: 1.7;
   tab-size: 2;
@@ -289,14 +289,14 @@
 
 .codeTabsList {
   height: 44px;
-  padding: 0 0 0 4px;
+  padding: 0 0 0 var(--mantine-spacing-2xs);
   gap: 0;
 }
 
 .codeTab {
   position: relative;
   height: 44px;
-  padding: 0 12px;
+  padding: 0 var(--mantine-spacing-sm);
   border: 0;
   border-radius: 0;
   opacity: 1;
@@ -336,6 +336,6 @@
 
 .codeTabsPre {
   &[data-with-offset] .codeContent.codeContent {
-    padding-top: 16px;
+    padding-top: var(--mantine-spacing-md);
   }
 }

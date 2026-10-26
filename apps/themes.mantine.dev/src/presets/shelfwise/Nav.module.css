@@ -2,7 +2,7 @@
   position: relative;
   display: flex;
   align-items: center;
-  gap: 32px;
+  gap: calc(var(--mantine-spacing-xs) * 4);
   height: 72px;
   padding-inline: var(--sw-gutter);
   background: var(--sw-marigold);
@@ -11,7 +11,7 @@
 
 .links {
   display: flex;
-  gap: 26px;
+  gap: var(--mantine-spacing-lg);
   font-weight: var(--mantine-font-weight-medium);
 
   @container preset (max-width: 780px) {
@@ -38,7 +38,7 @@
 .actions {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: var(--mantine-spacing-xs);
 }
 
 .login {
@@ -80,7 +80,7 @@
   inset-inline: 0;
   display: flex;
   flex-direction: column;
-  padding: 12px 24px 20px;
+  padding: var(--mantine-spacing-sm) calc(var(--mantine-spacing-sm) * 2) var(--mantine-spacing-md);
   border-bottom: 1px solid var(--mantine-color-border);
   background: var(--mantine-color-body);
   box-shadow: var(--mantine-shadow-md);
@@ -88,7 +88,7 @@
 }
 
 .sheetLink {
-  padding: 12px 0;
+  padding: var(--mantine-spacing-sm) 0;
   border-bottom: 1px solid var(--mantine-color-border);
   font-weight: var(--mantine-font-weight-medium);
   color: var(--mantine-color-bright);
@@ -96,5 +96,5 @@
 }
 
 .sheetButton {
-  margin-top: 14px;
+  margin-top: var(--mantine-spacing-sm);
 }

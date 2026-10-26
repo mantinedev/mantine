@@ -39,7 +39,7 @@
   z-index: 30;
   left: 0;
   right: 0;
-  bottom: 18px;
+  bottom: var(--mantine-spacing-lg);
   display: flex;
   justify-content: center;
   pointer-events: none;
@@ -48,8 +48,8 @@
 .toast {
   display: flex;
   align-items: center;
-  gap: 10px;
-  padding: 9px 14px;
+  gap: var(--mantine-spacing-sm);
+  padding: var(--mantine-spacing-xs) var(--mantine-spacing-md);
   border-radius: var(--mantine-radius-md);
   background: var(--mantine-color-bright);
   color: var(--mantine-color-surface-panel);

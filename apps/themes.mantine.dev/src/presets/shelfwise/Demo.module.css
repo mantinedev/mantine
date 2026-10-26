@@ -1,13 +1,13 @@
 .section {
-  padding: 0 var(--sw-gutter) 88px;
+  padding: 0 var(--sw-gutter) var(--mantine-spacing-4xl);
 }
 
 .demo {
   display: grid;
   grid-template-columns: minmax(0, 1fr) minmax(0, 400px);
-  gap: 40px;
+  gap: var(--mantine-spacing-xl);
   align-items: center;
-  padding: 48px;
+  padding: var(--mantine-spacing-2xl);
   border-radius: var(--mantine-radius-xl);
   background: var(--sw-marigold);
   color: var(--sw-marigold-ink);
@@ -17,7 +17,7 @@
   }
 
   @container preset (max-width: 520px) {
-    padding: 28px 22px;
+    padding: var(--mantine-spacing-lg) var(--mantine-spacing-md);
     border-radius: 18px;
   }
 }
@@ -28,15 +28,15 @@
 }
 
 .text {
-  margin-top: 12px;
+  margin-top: var(--mantine-spacing-sm);
   font-size: var(--mantine-font-size-lg);
 }
 
 .form {
   display: flex;
   flex-direction: column;
-  gap: 14px;
-  padding: 24px;
+  gap: var(--mantine-spacing-sm);
+  padding: calc(var(--mantine-spacing-sm) * 2);
   border-radius: 18px;
   background: var(--mantine-color-surface-panel);
   box-shadow: var(--mantine-shadow-md);
@@ -46,8 +46,8 @@
 .sent {
   display: flex;
   flex-direction: column;
-  gap: 6px;
-  padding: 8px 0;
+  gap: calc(var(--mantine-spacing-sm) / 2);
+  padding: var(--mantine-spacing-xs) 0;
 }
 
 .sentTitle {

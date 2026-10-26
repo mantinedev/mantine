@@ -2,7 +2,7 @@
   display: grid;
   grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
   align-items: stretch;
-  gap: 24px;
+  gap: var(--mantine-spacing-lg);
 
   @container preset (max-width: 760px) {
     grid-template-columns: minmax(0, 1fr);
@@ -12,12 +12,8 @@
 .box {
   display: flex;
   flex-direction: column;
-  gap: 12px;
-  padding: 24px;
-
-  @container preset (max-width: 760px) {
-    padding: 22px;
-  }
+  gap: var(--mantine-spacing-sm);
+  padding: var(--mantine-spacing-lg);
 }
 
 .title {
@@ -37,14 +33,14 @@
   align-items: center;
   justify-content: space-between;
   flex-wrap: wrap;
-  gap: 10px;
+  gap: var(--mantine-spacing-xs);
   font-size: var(--mantine-font-size-xs);
 }
 
 .saved {
   display: inline-flex;
   align-items: center;
-  gap: 6px;
+  gap: calc(var(--mantine-spacing-xs) * 0.75);
 }
 
 .savedIcon {
@@ -55,8 +51,8 @@
   display: grid;
   grid-template-columns: 96px minmax(0, 1fr);
   align-items: center;
-  gap: 16px;
-  padding: 12px;
+  gap: var(--mantine-spacing-md);
+  padding: var(--mantine-spacing-sm);
   border: 1px solid var(--mantine-color-border);
   border-radius: var(--mantine-radius-md);
   color: inherit;
@@ -100,6 +96,6 @@
 .completeRow {
   display: flex;
   flex-wrap: wrap;
-  gap: 10px;
+  gap: var(--mantine-spacing-xs);
   margin-top: auto;
 }

@@ -7,14 +7,14 @@
   align-items: flex-end;
   justify-content: space-between;
   flex-wrap: wrap;
-  gap: 24px;
+  gap: var(--mantine-spacing-lg);
 }
 
 .tickets {
   display: flex;
   flex-direction: column;
-  gap: 18px;
-  margin-top: 40px;
+  gap: calc(var(--mantine-spacing-sm) * 1.5);
+  margin-top: var(--mantine-spacing-2xl);
 }
 
 .ticket {
@@ -52,12 +52,12 @@
   display: grid;
   grid-template-columns: auto minmax(0, 1fr);
   align-items: center;
-  gap: 6px 28px;
-  padding: 26px 30px;
+  gap: var(--mantine-spacing-xs) calc(var(--mantine-spacing-lg) * 1.25);
+  padding: var(--mantine-spacing-lg) calc(var(--mantine-spacing-lg) * 1.25);
 
   @container preset (max-width: 520px) {
     grid-template-columns: minmax(0, 1fr);
-    padding: 22px;
+    padding: var(--mantine-spacing-lg);
   }
 }
 
@@ -72,7 +72,7 @@
 
   & small {
     display: block;
-    margin-top: 6px;
+    margin-top: var(--mantine-spacing-xs);
     font-size: 14px;
     font-weight: 700;
     letter-spacing: 0;
@@ -89,7 +89,7 @@
   display: flex;
   align-items: center;
   flex-wrap: wrap;
-  gap: 10px;
+  gap: var(--mantine-spacing-sm);
   font-size: 19px;
   font-weight: var(--mantine-font-weight-bold);
 }
@@ -111,8 +111,8 @@
   display: flex;
   flex-direction: column;
   justify-content: center;
-  gap: 10px;
-  padding: 22px 24px;
+  gap: var(--mantine-spacing-sm);
+  padding: var(--mantine-spacing-lg) var(--mantine-spacing-lg);
   border-left: 2px dashed var(--sw-paper-line);
 
   @container preset (max-width: 780px) {
@@ -133,7 +133,7 @@
   letter-spacing: -0.03em;
 
   & small {
-    margin-left: 4px;
+    margin-left: calc(var(--mantine-spacing-xs) / 2);
     font-family: var(--mantine-font-family);
     font-size: 13px;
     font-weight: 500;

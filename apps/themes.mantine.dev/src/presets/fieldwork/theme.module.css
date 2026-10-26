@@ -63,7 +63,7 @@
 
 .tab {
   display: block;
-  padding: 12px 22px 12px 0;
+  padding: var(--mantine-spacing-sm) var(--mantine-spacing-lg) var(--mantine-spacing-sm) 0;
   border-width: 0;
   text-align: left;
   line-height: var(--mantine-line-height);
@@ -72,7 +72,7 @@
     content: '';
     position: absolute;
     left: 0;
-    right: 22px;
+    right: var(--mantine-spacing-lg);
     bottom: -2px;
     height: 5px;
     background: var(--mantine-primary-color-filled);

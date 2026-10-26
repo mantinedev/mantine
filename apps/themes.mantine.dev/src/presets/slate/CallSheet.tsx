@@ -31,7 +31,7 @@ export function CallSheet({ scenes }: CallSheetProps) {
         <b>Tuesday 27 October</b>
         <span>Base: Newgale car park, SA62 6AS</span>
       </div>
-      <Table.ScrollContainer minWidth={520} type="native">
+      <Table.ScrollContainer minWidth={520}>
         <Table className={classes.sheet}>
           <Table.Thead>
             <Table.Tr>

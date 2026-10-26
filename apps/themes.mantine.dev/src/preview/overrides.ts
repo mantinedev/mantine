@@ -8,34 +8,13 @@ import {
   mergeMantineTheme,
   mergeThemeOverrides,
 } from '@mantine/core';
-import { getFontOption } from './fonts';
+import { getFontStack, type GoogleFont } from './fonts';
+import type { ThemeOverrides } from './params';
 
 export interface PrimaryShade {
   light: MantineColorShade;
   dark: MantineColorShade;
 }
-
-export interface ThemeOverrides {
-  primaryColor: string | null;
-  primaryShade: PrimaryShade | null;
-  radiusScale: number;
-  spacingScale: number;
-  fontSizeScale: number;
-  scale: number;
-  fontFamily: string | null;
-  headingsFontFamily: string | null;
-}
-
-export const DEFAULT_OVERRIDES: ThemeOverrides = {
-  primaryColor: null,
-  primaryShade: null,
-  radiusScale: 1,
-  spacingScale: 1,
-  fontSizeScale: 1,
-  scale: 1,
-  fontFamily: null,
-  headingsFontFamily: null,
-};
 
 export interface PresetColorSwatch {
   name: string;
@@ -82,15 +61,20 @@ export function getPresetThemeInfo(themeOverride: MantineThemeOverride): PresetT
   return { primaryColor: theme.primaryColor, primaryShade, swatches };
 }
 
-function scaleValues<T extends Record<string, string>>(values: T, factor: number) {
+function toShade(value: number | null, fallback: MantineColorShade) {
+  return value === null ? fallback : (Math.min(9, Math.max(0, value)) as MantineColorShade);
+}
+
+function scaleValues<T extends Record<string, string>>(values: T, percent: number) {
   return Object.fromEntries(
-    Object.entries(values).map(([key, value]) => [key, `calc(${value} * ${factor})`])
+    Object.entries(values).map(([key, value]) => [key, `calc(${value} * ${percent / 100})`])
   ) as T;
 }
 
 export function applyThemeOverrides(
   themeOverride: MantineThemeOverride,
-  overrides: ThemeOverrides
+  overrides: ThemeOverrides,
+  fonts: Map<string, GoogleFont>
 ): MantineThemeOverride {
   const theme = mergeMantineTheme(DEFAULT_THEME, themeOverride);
   const patch: MantineThemeOverride = {};
@@ -99,42 +83,43 @@ export function applyThemeOverrides(
     patch.primaryColor = overrides.primaryColor;
   }
 
-  if (overrides.primaryShade) {
-    patch.primaryShade = overrides.primaryShade;
+  if (overrides.primaryShadeLight !== null || overrides.primaryShadeDark !== null) {
+    const primaryShade = normalizePrimaryShade(theme);
+    patch.primaryShade = {
+      light: toShade(overrides.primaryShadeLight, primaryShade.light),
+      dark: toShade(overrides.primaryShadeDark, primaryShade.dark),
+    };
   }
 
-  if (overrides.radiusScale !== 1) {
-    patch.radius = scaleValues(theme.radius, overrides.radiusScale);
+  if (overrides.radius !== 100) {
+    patch.radius = scaleValues(theme.radius, overrides.radius);
   }
 
-  if (overrides.spacingScale !== 1) {
-    patch.spacing = scaleValues(theme.spacing, overrides.spacingScale);
+  if (overrides.spacing !== 100) {
+    patch.spacing = scaleValues(theme.spacing, overrides.spacing);
   }
 
-  if (overrides.fontSizeScale !== 1) {
-    patch.fontSizes = scaleValues(theme.fontSizes, overrides.fontSizeScale);
+  if (overrides.fontSize !== 100) {
+    patch.fontSizes = scaleValues(theme.fontSizes, overrides.fontSize);
     patch.headings = {
       sizes: Object.fromEntries(
         Object.entries(theme.headings.sizes).map(([key, value]) => [
           key,
-          { ...value, fontSize: `calc(${value.fontSize} * ${overrides.fontSizeScale})` },
+          { ...value, fontSize: `calc(${value.fontSize} * ${overrides.fontSize / 100})` },
         ])
       ),
     };
   }
 
-  if (overrides.scale !== 1) {
-    patch.scale = overrides.scale;
+  if (overrides.font) {
+    patch.fontFamily = getFontStack(overrides.font, fonts.get(overrides.font));
   }
 
-  const fontFamily = getFontOption(overrides.fontFamily);
-  if (fontFamily) {
-    patch.fontFamily = fontFamily.stack;
-  }
-
-  const headingsFontFamily = getFontOption(overrides.headingsFontFamily);
-  if (headingsFontFamily) {
-    patch.headings = { ...patch.headings, fontFamily: headingsFontFamily.stack };
+  if (overrides.headingsFont) {
+    patch.headings = {
+      ...patch.headings,
+      fontFamily: getFontStack(overrides.headingsFont, fonts.get(overrides.headingsFont)),
+    };
   }
 
   return mergeThemeOverrides(themeOverride, patch);

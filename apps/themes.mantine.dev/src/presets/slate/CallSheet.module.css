@@ -1,5 +1,5 @@
 .slate {
-  margin-top: 8px;
+  margin-top: var(--mantine-spacing-xs);
   max-width: 640px;
   overflow: hidden;
   border: 1.5px solid var(--mantine-color-bright);
@@ -30,7 +30,7 @@
 
 .fact {
   min-width: 0;
-  padding: 8px 12px;
+  padding: var(--mantine-spacing-xs) var(--mantine-spacing-sm);
 
   & + & {
     border-left: 1px solid var(--mantine-color-border);
@@ -68,8 +68,8 @@
   flex-wrap: wrap;
   align-items: baseline;
   justify-content: space-between;
-  gap: 10px;
-  padding: 10px 12px 6px;
+  gap: var(--mantine-spacing-xs);
+  padding: var(--mantine-spacing-xs) var(--mantine-spacing-sm) var(--mantine-spacing-2xs);
 
   & b {
     font-size: 15px;
@@ -163,8 +163,8 @@
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
-  gap: 10px;
-  padding: 8px 12px;
+  gap: var(--mantine-spacing-xs);
+  padding: var(--mantine-spacing-xs) var(--mantine-spacing-sm);
   border-top: 1px solid var(--mantine-color-border);
   background: var(--mantine-color-surface-muted);
   font-size: 12.5px;

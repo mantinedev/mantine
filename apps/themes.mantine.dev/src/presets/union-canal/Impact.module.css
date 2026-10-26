@@ -1,20 +1,20 @@
 section.root {
-  padding-block: 64px;
+  padding-block: var(--mantine-spacing-4xl);
   background: var(--mantine-color-surface-muted);
 
   @container preset (max-width: 780px) {
-    padding-block: 64px;
+    padding-block: var(--mantine-spacing-4xl);
   }
 }
 
 .grid {
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
-  margin-top: 32px;
+  margin-top: var(--mantine-spacing-xl);
 
   @container preset (max-width: 980px) {
     grid-template-columns: repeat(2, minmax(0, 1fr));
-    row-gap: 28px;
+    row-gap: calc((var(--mantine-spacing-lg) + var(--mantine-spacing-xl)) / 2);
   }
 
   @container preset (max-width: 520px) {
@@ -24,10 +24,11 @@ section.root {
 
 .stat {
   align-items: flex-start;
-  padding: 4px 24px 4px 0;
+  padding: calc(var(--mantine-spacing-xs) / 2) var(--mantine-spacing-lg)
+    calc(var(--mantine-spacing-xs) / 2) 0;
 
   & + & {
-    padding-left: 24px;
+    padding-left: var(--mantine-spacing-lg);
     border-left: 1px solid var(--mantine-color-border-strong);
   }
 
@@ -49,9 +50,9 @@ section.root {
 .photos {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 20px;
+  gap: calc((var(--mantine-spacing-md) + var(--mantine-spacing-lg)) / 2);
   align-items: start;
-  margin-top: 40px;
+  margin-top: var(--mantine-spacing-2xl);
 
   @container preset (max-width: 780px) {
     grid-template-columns: minmax(0, 1fr);
@@ -62,7 +63,7 @@ section.root {
   margin: 0;
 
   & figcaption {
-    margin-top: 8px;
+    margin-top: var(--mantine-spacing-xs);
     font-size: 14px;
   }
 }

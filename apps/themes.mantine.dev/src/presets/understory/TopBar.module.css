@@ -4,9 +4,9 @@
   flex: none;
   display: flex;
   align-items: center;
-  gap: 14px;
+  gap: var(--mantine-spacing-md);
   height: 60px;
-  padding: 0 18px;
+  padding: 0 var(--mantine-spacing-lg);
   border-bottom: 1px solid var(--mantine-color-border);
   background: var(--mantine-color-surface-panel);
 }
@@ -14,7 +14,7 @@
 .brand {
   display: inline-flex;
   align-items: center;
-  gap: 9px;
+  gap: var(--mantine-spacing-xs);
   flex: none;
   font-weight: 800;
   font-size: 17px;
@@ -30,7 +30,7 @@
 .crumb {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: var(--mantine-spacing-xs);
   min-width: 0;
   font-size: 14px;
 
@@ -74,7 +74,7 @@
 .actions {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: var(--mantine-spacing-xs);
   margin-inline-start: auto;
 
   @container preset (max-width: 800px) {

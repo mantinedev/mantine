@@ -2,8 +2,8 @@
   position: relative;
   display: grid;
   grid-template-columns: repeat(5, minmax(0, 1fr));
-  gap: 20px;
-  margin: 56px 0 0;
+  gap: calc(var(--mantine-spacing-md) * 1.1);
+  margin: var(--mantine-spacing-2xl) 0 0;
   padding: 0;
   list-style: none;
 
@@ -27,7 +27,7 @@
 
   @container preset (max-width: 980px) {
     grid-template-columns: repeat(3, minmax(0, 1fr));
-    row-gap: 36px;
+    row-gap: calc(var(--mantine-spacing-md) * 1.9);
 
     &::before {
       display: none;
@@ -43,10 +43,10 @@
 .step {
   position: relative;
   min-width: 0;
-  padding-top: 44px;
+  padding-top: calc(var(--mantine-spacing-md) * 2.3);
 
   @container preset (max-width: 780px) {
-    padding: 0 0 26px 48px;
+    padding: 0 0 var(--mantine-spacing-lg) calc(var(--mantine-spacing-md) * 2.3);
 
     &::before {
       content: '';
@@ -86,14 +86,14 @@
 
 .stepTitle {
   display: block;
-  margin-top: 4px;
+  margin-top: calc(var(--mantine-spacing-xs) / 2);
   font-size: 16px;
   font-weight: var(--mantine-font-weight-bold);
   color: var(--mantine-color-bright);
 }
 
 .body {
-  margin: 6px 0 0;
+  margin: var(--mantine-spacing-xs) 0 0;
   font-size: 15px;
   line-height: 1.55;
 }

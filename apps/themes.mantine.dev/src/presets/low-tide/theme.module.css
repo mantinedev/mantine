@@ -57,7 +57,7 @@
 }
 
 .tocControl {
-  padding: 6px 0 6px 14px;
+  padding: var(--mantine-spacing-2xs) 0 var(--mantine-spacing-2xs) var(--mantine-spacing-sm);
   line-height: 1.35;
   color: var(--mantine-color-text);
   text-decoration: none;
@@ -79,7 +79,7 @@
   font-size: var(--mantine-font-size-xs);
   font-weight: var(--mantine-font-weight-medium);
   white-space: nowrap;
-  padding-block: 10px;
+  padding-block: var(--mantine-spacing-xs);
 }
 
 .td {
@@ -89,7 +89,7 @@
 
 .caption {
   text-align: left;
-  padding: 14px var(--mantine-spacing-md) 4px;
+  padding: var(--mantine-spacing-sm) var(--mantine-spacing-md) var(--mantine-spacing-2xs);
   font-size: var(--mantine-font-size-md);
   font-weight: var(--mantine-font-weight-bold);
   color: var(--mantine-color-bright);

@@ -118,15 +118,15 @@
 }
 
 .accordionControl {
-  gap: 8px;
-  padding: 6px 10px;
+  gap: var(--mantine-spacing-sm);
+  padding: var(--mantine-spacing-xs) var(--mantine-spacing-sm);
   border-radius: var(--mantine-radius-sm);
   color: var(--mantine-color-text);
   font-size: var(--mantine-font-size-sm);
   font-weight: var(--mantine-font-weight-medium);
 
   &:where([data-chevron-position='left']) {
-    padding-inline-start: 10px;
+    padding-inline-start: var(--mantine-spacing-sm);
   }
 
   @mixin hover {
@@ -155,7 +155,7 @@
 }
 
 .accordionContent {
-  padding: 0 12px 8px;
+  padding: 0 var(--mantine-spacing-md) var(--mantine-spacing-sm);
   font-size: var(--mantine-font-size-sm);
 }
 
@@ -166,7 +166,7 @@
 
   position: relative;
   align-items: flex-start;
-  padding: 9px 10px;
+  padding: var(--mantine-spacing-sm);
   border-radius: var(--mantine-radius-sm);
 
   &:where([data-variant='rail']) {
@@ -228,14 +228,14 @@
 }
 
 .dropdown {
-  padding: 6px;
+  padding: var(--mantine-spacing-xs);
   border-color: var(--mantine-color-border);
   background: var(--mantine-color-surface-panel);
 }
 
 .menuItem {
   align-items: flex-start;
-  padding: 9px 10px;
+  padding: var(--mantine-spacing-sm);
   border-radius: var(--mantine-radius-sm);
 
   @mixin hover {
@@ -251,7 +251,7 @@
   width: 16px;
   height: 16px;
   margin-top: 2px;
-  margin-inline-end: 10px;
+  margin-inline-end: var(--mantine-spacing-sm);
   color: var(--clerk-brass);
 
   & svg {
@@ -272,7 +272,7 @@
 
 .textarea {
   &:where([data-variant='unstyled']) {
-    padding: 11px 14px 4px;
+    padding: var(--mantine-spacing-sm) var(--mantine-spacing-md) var(--mantine-spacing-2xs);
     font-size: var(--mantine-font-size-md);
     line-height: 1.5;
     color: var(--mantine-color-text);

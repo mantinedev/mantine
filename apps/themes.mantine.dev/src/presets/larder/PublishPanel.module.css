@@ -3,7 +3,7 @@
   align-items: center;
   justify-content: space-between;
   min-height: 52px;
-  padding: 10px 16px;
+  padding: var(--mantine-spacing-sm) var(--mantine-spacing-md);
   border-bottom: 1px solid var(--mantine-color-border);
 }
 
@@ -18,14 +18,13 @@
 .scroll {
   flex: 1;
   min-height: 0;
-  overflow-y: auto;
 }
 
 .group {
   display: flex;
   flex-direction: column;
-  gap: 10px;
-  padding: 14px 16px;
+  gap: var(--mantine-spacing-sm);
+  padding: var(--mantine-spacing-md);
   border-bottom: 1px solid var(--mantine-color-border);
 }
 
@@ -33,7 +32,7 @@
 .groupLabel {
   display: flex;
   justify-content: space-between;
-  gap: 8px;
+  gap: var(--mantine-spacing-xs);
   margin: 0;
   font-size: var(--mantine-font-size-sm);
   font-weight: var(--mantine-font-weight-bold);
@@ -42,7 +41,7 @@
 
 .groupLabel {
   width: 100%;
-  margin-bottom: 4px;
+  margin-bottom: var(--mantine-spacing-3xs);
 }
 
 .counter {
@@ -60,7 +59,7 @@
 .statusLine {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: var(--mantine-spacing-xs);
   font-weight: var(--mantine-font-weight-bold);
   color: var(--mantine-color-bright);
 }
@@ -68,7 +67,7 @@
 .row {
   display: grid;
   grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr);
-  gap: 8px;
+  gap: var(--mantine-spacing-xs);
 }
 
 .tags {
@@ -76,7 +75,7 @@
 }
 
 .tagsList {
-  --pg-gap: 6px;
+  --pg-gap: var(--mantine-spacing-2xs);
 }
 
 .tagsField {
@@ -108,8 +107,8 @@
   bottom: 0;
   display: flex;
   justify-content: space-between;
-  gap: 8px;
-  padding: 6px 8px;
+  gap: var(--mantine-spacing-xs);
+  padding: var(--mantine-spacing-2xs) var(--mantine-spacing-xs);
   font-size: var(--mantine-font-size-xs);
   background: var(--mantine-color-surface-panel);
   border-top: 1px solid var(--mantine-color-border);
@@ -124,7 +123,7 @@
 }
 
 .serp {
-  padding: 10px 12px;
+  padding: var(--mantine-spacing-sm);
   border: 1px dashed var(--mantine-color-default-border);
   border-radius: var(--mantine-radius-xs);
   background: var(--mantine-color-surface-panel);
@@ -151,8 +150,8 @@
 .foot {
   display: grid;
   grid-template-columns: 1fr 1.3fr;
-  gap: 8px;
-  padding: 12px 16px;
+  gap: var(--mantine-spacing-xs);
+  padding: var(--mantine-spacing-sm) var(--mantine-spacing-md);
   border-top: 1px solid var(--mantine-color-default-border);
   background: var(--mantine-color-surface-panel);
 }

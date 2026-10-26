@@ -45,7 +45,7 @@
 }
 
 .inputLabel {
-  margin-bottom: 5px;
+  margin-bottom: var(--mantine-spacing-2xs);
   font-size: 12.5px;
   font-weight: var(--mantine-font-weight-medium);
   color: var(--mantine-color-bright);
@@ -80,7 +80,7 @@
 
 .navLink {
   position: relative;
-  padding: 7px 8px;
+  padding: var(--mantine-spacing-xs);
   border-radius: var(--mantine-radius-md);
   background: transparent;
 
@@ -157,12 +157,12 @@
 }
 
 .switch {
-  padding: 4px 0;
+  padding: var(--mantine-spacing-3xs) 0;
 }
 
 .switchBody {
   justify-content: space-between;
-  gap: 10px;
+  gap: var(--mantine-spacing-sm);
 }
 
 .switchLabel {
@@ -182,7 +182,7 @@
 }
 
 .progress {
-  margin-top: 6px;
+  margin-top: var(--mantine-spacing-2xs);
   border: 1px solid var(--mantine-color-border);
   background: var(--quarry-surface-2);
   box-sizing: content-box;
@@ -190,7 +190,7 @@
 
 .stat {
   display: block;
-  padding: 9px 10px;
+  padding: var(--mantine-spacing-xs) var(--mantine-spacing-sm);
   border: 1px solid var(--mantine-color-border);
   border-radius: 10px;
   background: var(--mantine-color-surface-panel);
@@ -233,7 +233,7 @@
 }
 
 .code {
-  padding: 12px 14px;
+  padding: var(--mantine-spacing-sm) var(--mantine-spacing-md);
   font-size: 12.5px;
   line-height: 1.6;
   color: #e4e7ee;

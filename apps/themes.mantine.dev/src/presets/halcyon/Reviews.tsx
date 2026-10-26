@@ -29,7 +29,7 @@ export function Reviews() {
             <Card
               key={review.title}
               component="article"
-              padding={24}
+              padding="calc(var(--mantine-spacing-md) * 1.1)"
               className={classes.review}
               data-wide={review.wide || undefined}
             >

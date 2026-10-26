@@ -6,6 +6,7 @@ import {
   ActionIcon,
   Avatar,
   Badge,
+  ScrollArea,
   Text,
   TextInput,
   UnstyledButton,
@@ -52,43 +53,45 @@ export function GroupsSidebar({ className, onOtherGroup }: GroupsSidebarProps) {
         />
       </div>
 
-      <ul className={classes.list}>
-        {groups.length === 0 && (
-          <li className={classes.empty}>
-            <Text size="sm">No groups match. Try another name.</Text>
-          </li>
-        )}
-        {groups.map((group) => (
-          <li key={group.name}>
-            <UnstyledButton
-              className={classes.group}
-              aria-current={group.current ? 'true' : undefined}
-              onClick={() => !group.current && onOtherGroup()}
-            >
-              <Avatar
-                className={classes.groupAvatar}
-                size={44}
-                radius={14}
-                color={group.tone}
-                src={group.current ? PHOTOS.aurora : undefined}
-                alt=""
+      <ScrollArea className={classes.scroll} scrollbars="y">
+        <ul className={classes.list}>
+          {groups.length === 0 && (
+            <li className={classes.empty}>
+              <Text size="sm">No groups match. Try another name.</Text>
+            </li>
+          )}
+          {groups.map((group) => (
+            <li key={group.name}>
+              <UnstyledButton
+                className={classes.group}
+                aria-current={group.current ? 'true' : undefined}
+                onClick={() => !group.current && onOtherGroup()}
               >
-                {group.initial}
-              </Avatar>
-              <span className={classes.name}>{group.name}</span>
-              <span className={classes.time}>{group.time}</span>
-              <span className={classes.last}>{group.last}</span>
-              {group.unread ? (
-                <Badge circle size="md" className={classes.unread}>
-                  {group.unread}
-                </Badge>
-              ) : (
-                <span />
-              )}
-            </UnstyledButton>
-          </li>
-        ))}
-      </ul>
+                <Avatar
+                  className={classes.groupAvatar}
+                  size={44}
+                  radius={14}
+                  color={group.tone}
+                  src={group.current ? PHOTOS.aurora : undefined}
+                  alt=""
+                >
+                  {group.initial}
+                </Avatar>
+                <span className={classes.name}>{group.name}</span>
+                <span className={classes.time}>{group.time}</span>
+                <span className={classes.last}>{group.last}</span>
+                {group.unread ? (
+                  <Badge circle size="md" className={classes.unread}>
+                    {group.unread}
+                  </Badge>
+                ) : (
+                  <span />
+                )}
+              </UnstyledButton>
+            </li>
+          ))}
+        </ul>
+      </ScrollArea>
     </aside>
   );
 }

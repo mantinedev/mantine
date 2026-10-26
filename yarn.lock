@@ -6568,17 +6568,17 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@standard-schema/spec@npm:1.1.0, @standard-schema/spec@npm:^1.1.0":
+  version: 1.1.0
+  resolution: "@standard-schema/spec@npm:1.1.0"
+  checksum: 10c0/d90f55acde4b2deb983529c87e8025fa693de1a5e8b49ecc6eb84d1fd96328add0e03d7d551442156c7432fd78165b2c26ff561b970a9a881f046abb78d6a526
+  languageName: node
+  linkType: hard
+
 "@standard-schema/spec@npm:^1.0.0":
   version: 1.0.0
   resolution: "@standard-schema/spec@npm:1.0.0"
   checksum: 10c0/a1ab9a8bdc09b5b47aa8365d0e0ec40cc2df6437be02853696a0e377321653b0d3ac6f079a8c67d5ddbe9821025584b1fb71d9cc041a6666a96f1fadf2ece15f
-  languageName: node
-  linkType: hard
-
-"@standard-schema/spec@npm:^1.1.0":
-  version: 1.1.0
-  resolution: "@standard-schema/spec@npm:1.1.0"
-  checksum: 10c0/d90f55acde4b2deb983529c87e8025fa693de1a5e8b49ecc6eb84d1fd96328add0e03d7d551442156c7432fd78165b2c26ff561b970a9a881f046abb78d6a526
   languageName: node
   linkType: hard
 
@@ -16842,6 +16842,33 @@ __metadata:
   languageName: node
   linkType: hard
 
+"nuqs@npm:^2.10.2":
+  version: 2.10.2
+  resolution: "nuqs@npm:2.10.2"
+  dependencies:
+    "@standard-schema/spec": "npm:1.1.0"
+  peerDependencies:
+    "@remix-run/react": ">=2"
+    "@tanstack/react-router": ^1
+    next: ">=14.2.0"
+    react: ">=18.2.0 || ^19.0.0-0"
+    react-router: ^5 || ^6 || ^7 || ^8
+    react-router-dom: ^5 || ^6 || ^7
+  peerDependenciesMeta:
+    "@remix-run/react":
+      optional: true
+    "@tanstack/react-router":
+      optional: true
+    next:
+      optional: true
+    react-router:
+      optional: true
+    react-router-dom:
+      optional: true
+  checksum: 10c0/75974d7b332a7eefe45353c80de4360e608779f951fa7a71e312f32975753a6fc17524499f1e6f318f67c7232189bacf4e4075f6739f16bbfa8408b22e11dea3
+  languageName: node
+  linkType: hard
+
 "nwsapi@npm:^2.2.16":
   version: 2.2.22
   resolution: "nwsapi@npm:2.2.22"
@@ -21748,6 +21775,7 @@ __metadata:
     "@types/react-dom": "npm:19.3.0"
     dayjs: "npm:^1.11.23"
     next: "npm:16.3.6"
+    nuqs: "npm:^2.10.2"
     react: "npm:19.3.0"
     react-dom: "npm:19.3.0"
     recharts: "npm:^3.10.1"

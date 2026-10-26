@@ -29,7 +29,7 @@ export function About() {
         <List
           className={classes.aboutList}
           classNames={{ itemIcon: classes.aboutIcon, itemWrapper: classes.aboutItem }}
-          spacing={10}
+          spacing="xs"
           icon={<span aria-hidden="true">♩</span>}
         >
           {ABOUT_POINTS.map((point) => (

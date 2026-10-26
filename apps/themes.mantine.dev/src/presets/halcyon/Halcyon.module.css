@@ -1,5 +1,5 @@
 .root {
-  --hc-gutter: 56px;
+  --hc-gutter: var(--mantine-spacing-2xl);
 
   position: relative;
   background: var(--hc-page);
@@ -8,11 +8,11 @@
   line-height: 1.6;
 
   @container preset (max-width: 980px) {
-    --hc-gutter: 36px;
+    --hc-gutter: calc(var(--mantine-spacing-md) * 1.9);
   }
 
   @container preset (max-width: 520px) {
-    --hc-gutter: 16px;
+    --hc-gutter: calc(var(--mantine-spacing-md) * 0.8);
   }
 }
 
@@ -21,12 +21,12 @@
 }
 
 .section {
-  padding-block: 96px;
+  padding-block: var(--mantine-spacing-3xl);
   padding-inline: var(--hc-gutter);
   border-top: 1px solid var(--mantine-color-border);
 
   @container preset (max-width: 780px) {
-    padding-block: 72px;
+    padding-block: calc(var(--mantine-spacing-3xl) * 0.75);
   }
 }
 
@@ -41,7 +41,7 @@
 }
 
 .secLead {
-  margin: 14px 0 0;
+  margin: var(--mantine-spacing-sm) 0 0;
   font-size: 18px;
 }
 

@@ -55,7 +55,7 @@
   bottom: 66px;
   transform: translateX(-50%);
   max-width: 80%;
-  padding: 6px 12px;
+  padding: calc(var(--mantine-spacing-xs) * 0.75) var(--mantine-spacing-sm);
   border-radius: 6px;
   background: rgba(0, 0, 0, 0.72);
   color: #fff;
@@ -70,8 +70,8 @@
   bottom: 0;
   display: flex;
   align-items: center;
-  gap: 12px;
-  padding: 10px 14px 12px;
+  gap: var(--mantine-spacing-sm);
+  padding: var(--mantine-spacing-xs) var(--mantine-spacing-sm) var(--mantine-spacing-sm);
   color: #fff;
   background: linear-gradient(transparent, rgba(0, 0, 0, 0.6));
 }
@@ -100,7 +100,7 @@
 }
 
 .speed {
-  padding: 0 10px;
+  padding: 0 var(--mantine-spacing-xs);
   font-size: 13px;
   font-weight: var(--mantine-font-weight-bold);
 }

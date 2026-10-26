@@ -1,19 +1,19 @@
 .section {
-  padding: 40px var(--tw-gutter) 48px;
+  padding: var(--mantine-spacing-2xl) var(--tw-gutter) var(--mantine-spacing-3xl);
   border-top: 1px solid var(--mantine-color-border);
 }
 
 .sub {
   max-width: 40em;
-  margin-top: 8px;
+  margin-top: var(--mantine-spacing-xs);
 }
 
 .grid {
   display: grid;
   grid-template-columns: minmax(0, 1.35fr) minmax(0, 1fr);
-  gap: 24px;
+  gap: var(--mantine-spacing-lg);
   align-items: start;
-  margin-top: 22px;
+  margin-top: var(--mantine-spacing-lg);
 
   @container preset (max-width: 980px) {
     grid-template-columns: minmax(0, 1fr);
@@ -21,7 +21,7 @@
 }
 
 .mapBox {
-  padding: 8px;
+  padding: var(--mantine-spacing-xs);
 }
 
 .map {
@@ -72,7 +72,7 @@
 }
 
 .walks {
-  padding: 16px 18px;
+  padding: calc(var(--mantine-spacing-sm) * 1.5);
 }
 
 .minutes {
@@ -85,7 +85,7 @@
 .sunset {
   position: relative;
   aspect-ratio: 16 / 9;
-  margin: 16px 0 0;
+  margin: calc(var(--mantine-spacing-sm) * 1.5) 0 0;
   overflow: hidden;
   border-radius: var(--mantine-radius-lg);
   color: #fff;
@@ -102,7 +102,7 @@
     left: 0;
     right: 0;
     bottom: 0;
-    padding: 14px;
+    padding: var(--mantine-spacing-sm);
     font-size: 13px;
     background: linear-gradient(180deg, transparent, rgba(14, 11, 42, 0.85));
   }

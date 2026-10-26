@@ -1,5 +1,5 @@
 import { IconCopy } from '@tabler/icons-react';
-import { Badge, Button } from '@mantine/core';
+import { Badge, Button, ScrollArea } from '@mantine/core';
 import { ENDPOINT_HOST, ENDPOINT_PATH } from './data';
 import classes from './EndpointBar.module.css';
 
@@ -15,10 +15,10 @@ export function EndpointBar({ onCopy }: EndpointBarProps) {
       <Badge variant="filled" radius="sm" className={classes.verb}>
         GET
       </Badge>
-      <span className={classes.path}>
+      <ScrollArea className={classes.path} type="never" scrollbars="x">
         {ENDPOINT_HOST}
         <span className={classes.pathRest}>{ENDPOINT_PATH}</span>
-      </span>
+      </ScrollArea>
       <Button
         variant="default"
         size="xs"

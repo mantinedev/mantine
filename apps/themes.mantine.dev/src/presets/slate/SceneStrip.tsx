@@ -1,5 +1,5 @@
 import { IconCheck } from '@tabler/icons-react';
-import { Button } from '@mantine/core';
+import { Button, ScrollArea } from '@mantine/core';
 import { eighthsLeft, formatPages, type Scene } from './data';
 import classes from './SceneStrip.module.css';
 
@@ -21,25 +21,27 @@ export function SceneStrip({ scenes, onWrap }: SceneStripProps) {
         </b>
         <span>{left ? `${formatPages(left)} pages to go` : 'That’s a wrap on day 14'}</span>
       </div>
-      <div className={classes.scenes}>
-        {scenes.map((scene) => (
-          <div
-            key={scene.number}
-            className={classes.scene}
-            data-status={scene.status}
-            title={scene.set}
-          >
-            <span className={classes.number}>{scene.number}</span>
-            <span className={classes.state}>
-              {scene.status === 'done'
-                ? 'Wrapped'
-                : scene.status === 'now'
-                  ? 'Shooting'
-                  : scene.call}
-            </span>
-          </div>
-        ))}
-      </div>
+      <ScrollArea className={classes.scenes} scrollbars="x" type="hover">
+        <div className={classes.sceneList}>
+          {scenes.map((scene) => (
+            <div
+              key={scene.number}
+              className={classes.scene}
+              data-status={scene.status}
+              title={scene.set}
+            >
+              <span className={classes.number}>{scene.number}</span>
+              <span className={classes.state}>
+                {scene.status === 'done'
+                  ? 'Wrapped'
+                  : scene.status === 'now'
+                    ? 'Shooting'
+                    : scene.call}
+              </span>
+            </div>
+          ))}
+        </div>
+      </ScrollArea>
       <Button
         variant="default"
         leftSection={<IconCheck stroke={1.8} />}

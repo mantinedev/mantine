@@ -3,6 +3,7 @@ import '@mantinex/mantine-header/styles.css';
 import '@mantinex/mantine-logo/styles.css';
 
 import type { Metadata } from 'next';
+import { NuqsAdapter } from 'nuqs/adapters/next/app';
 import { ColorSchemeScript, MantineProvider, mantineHtmlProps } from '@mantine/core';
 import { theme } from '@/theme';
 
@@ -38,7 +39,9 @@ export default function RootLayout({ children }: RootLayoutProps) {
         <ColorSchemeScript />
       </head>
       <body>
-        <MantineProvider theme={theme}>{children}</MantineProvider>
+        <NuqsAdapter>
+          <MantineProvider theme={theme}>{children}</MantineProvider>
+        </NuqsAdapter>
       </body>
     </html>
   );

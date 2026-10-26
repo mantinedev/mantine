@@ -46,7 +46,7 @@
   z-index: 2;
   left: var(--sw-gutter);
   right: var(--sw-gutter);
-  bottom: 56px;
+  bottom: var(--mantine-spacing-4xl);
 
   @container preset (max-width: 780px) {
     bottom: 110px;
@@ -77,7 +77,7 @@
 
 .lead {
   max-width: 30em;
-  margin-top: 18px;
+  margin-top: calc(var(--mantine-spacing-sm) * 1.5);
   font-size: 19px;
   line-height: 1.5;
 
@@ -89,8 +89,8 @@
 .ctas {
   display: flex;
   flex-wrap: wrap;
-  gap: 10px;
-  margin-top: 26px;
+  gap: var(--mantine-spacing-sm);
+  margin-top: var(--mantine-spacing-lg);
 }
 
 .ghost[data-variant] {
@@ -141,7 +141,8 @@
 }
 
 .ticketMain {
-  padding: 16px 18px 16px 22px;
+  padding: calc(var(--mantine-spacing-sm) * 1.5) calc(var(--mantine-spacing-sm) * 1.5)
+    calc(var(--mantine-spacing-sm) * 1.5) var(--mantine-spacing-lg);
 }
 
 .kicker {
@@ -151,7 +152,7 @@
 }
 
 .days {
-  margin-top: 6px;
+  margin-top: var(--mantine-spacing-xs);
   font-family: var(--mantine-font-family-headings);
   font-size: 34px;
   font-weight: 800;
@@ -160,15 +161,15 @@
 }
 
 .line {
-  margin-top: 6px;
+  margin-top: var(--mantine-spacing-xs);
   font-size: 13px;
 }
 
 .route {
   display: flex;
   align-items: center;
-  gap: 6px;
-  margin-top: 10px;
+  gap: var(--mantine-spacing-xs);
+  margin-top: var(--mantine-spacing-sm);
   font-size: 14px;
   font-weight: var(--mantine-font-weight-bold);
 
@@ -184,8 +185,8 @@
   flex-direction: column;
   align-items: center;
   justify-content: space-between;
-  gap: 8px;
-  padding: 14px 12px;
+  gap: var(--mantine-spacing-xs);
+  padding: var(--mantine-spacing-sm) var(--mantine-spacing-sm);
   border-left: 2px dashed var(--sw-paper-line);
 }
 
@@ -216,8 +217,8 @@
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  gap: 6px 22px;
-  padding: 88px var(--sw-gutter) 26px;
+  gap: var(--mantine-spacing-xs) var(--mantine-spacing-lg);
+  padding: 88px var(--sw-gutter) var(--mantine-spacing-lg);
   background: var(--mantine-primary-color-filled);
   color: var(--mantine-primary-color-contrast);
   font-family: var(--mantine-font-family-headings);
@@ -228,12 +229,12 @@
   & > span {
     display: inline-flex;
     align-items: center;
-    gap: 22px;
+    gap: var(--mantine-spacing-lg);
     white-space: nowrap;
   }
 
   & small {
-    margin-left: 6px;
+    margin-left: var(--mantine-spacing-xs);
     font-family: var(--mantine-font-family);
     font-size: 13px;
     font-weight: 500;

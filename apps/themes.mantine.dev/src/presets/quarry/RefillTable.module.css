@@ -3,7 +3,7 @@
 }
 
 .title {
-  padding: 12px 14px 10px;
+  padding: var(--mantine-spacing-sm) var(--mantine-spacing-md) var(--mantine-spacing-sm);
   font-size: 14px;
   font-weight: 700;
   color: var(--mantine-color-bright);
@@ -27,9 +27,9 @@
 .sort {
   display: inline-flex;
   align-items: center;
-  gap: 4px;
+  gap: var(--mantine-spacing-3xs);
   width: 100%;
-  padding: 8px 12px;
+  padding: var(--mantine-spacing-xs) var(--mantine-spacing-sm);
   font-size: 12px;
   font-weight: var(--mantine-font-weight-bold);
   color: var(--mantine-color-text);

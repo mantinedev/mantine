@@ -92,7 +92,15 @@ export const theme = createTheme({
 
   defaultRadius: 'md',
   radius: { xs: rem(4), sm: rem(6), md: rem(8), lg: rem(12), xl: rem(16) },
-  spacing: { xs: rem(8), sm: rem(12), md: rem(18), lg: rem(24), xl: rem(32) },
+  spacing: {
+    '3xs': rem(4),
+    '2xs': rem(6),
+    xs: rem(8),
+    sm: rem(12),
+    md: rem(18),
+    lg: rem(24),
+    xl: rem(32),
+  },
   shadows: {
     xs: '0 2px 6px rgba(0, 0, 0, 0.08)',
     md: '0 16px 40px -12px rgba(18, 19, 21, 0.3), 0 2px 6px rgba(18, 19, 21, 0.08)',
@@ -178,7 +186,7 @@ export const theme = createTheme({
     ScrollArea: ScrollArea.extend({ defaultProps: { scrollbarSize: 8 } }),
 
     Table: Table.extend({
-      defaultProps: { horizontalSpacing: 12, verticalSpacing: 7, fz: 'sm' },
+      defaultProps: { horizontalSpacing: 'sm', verticalSpacing: '2xs', fz: 'sm' },
       classNames: { th: classes.th, td: classes.td },
     }),
   },

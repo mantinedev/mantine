@@ -1,8 +1,8 @@
 .top {
   display: flex;
   flex-direction: column;
-  gap: 12px;
-  padding: 16px 16px 0;
+  gap: var(--mantine-spacing-sm);
+  padding: var(--mantine-spacing-md) var(--mantine-spacing-md) 0;
 }
 
 .titleRow {
@@ -25,18 +25,21 @@
   font-variant-numeric: tabular-nums;
 }
 
-.list {
+.listScroll {
   flex: 1;
   min-height: 0;
-  margin: 12px 0 0;
-  padding: 0;
-  list-style: none;
-  overflow-y: auto;
+  margin-top: var(--mantine-spacing-sm);
   border-top: 1px solid var(--mantine-color-border);
 }
 
+.list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
 .article {
-  padding: 14px 16px;
+  padding: var(--mantine-spacing-md);
   border-bottom: 1px solid var(--mantine-color-border);
 }
 
@@ -52,8 +55,8 @@
 .articleMeta {
   display: flex;
   align-items: center;
-  gap: 8px;
-  margin-top: 6px;
+  gap: var(--mantine-spacing-xs);
+  margin-top: var(--mantine-spacing-2xs);
   font-size: var(--mantine-font-size-xs);
   line-height: 1.5;
   color: var(--mantine-color-text);
@@ -61,6 +64,6 @@
 }
 
 .empty {
-  padding: 28px 16px;
+  padding: calc(var(--mantine-spacing-xs) * 3.5) var(--mantine-spacing-md);
   font-size: var(--mantine-font-size-sm);
 }

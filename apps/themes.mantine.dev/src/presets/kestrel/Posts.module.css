@@ -14,15 +14,15 @@
   display: flex;
   align-items: center;
   flex-wrap: wrap;
-  gap: 12px;
-  padding-bottom: 20px;
+  gap: var(--mantine-spacing-sm);
+  padding-bottom: calc(var(--mantine-spacing-md) * 1.25);
   border-bottom: 1px solid var(--mantine-color-bright);
 }
 
 .chips {
   display: flex;
   flex-wrap: wrap;
-  gap: 6px;
+  gap: calc(var(--mantine-spacing-sm) / 2);
   flex: 1 1 300px;
 }
 
@@ -62,7 +62,7 @@
 }
 
 .resultLine {
-  padding-top: 12px;
+  padding-top: var(--mantine-spacing-sm);
   font-size: var(--mantine-font-size-xs);
   font-weight: var(--mantine-font-weight-medium);
 }
@@ -75,8 +75,8 @@
   &[data-view='grid'] {
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 32px 24px;
-    padding-top: 24px;
+    gap: calc(var(--mantine-spacing-md) * 2) var(--mantine-spacing-lg);
+    padding-top: var(--mantine-spacing-lg);
 
     @container preset (max-width: 760px) {
       grid-template-columns: minmax(0, 1fr);
@@ -88,20 +88,20 @@
   .posts[data-view='list'] & {
     display: grid;
     grid-template-columns: 112px minmax(0, 1fr) 120px;
-    gap: 24px;
-    padding: 22px 0;
+    gap: var(--mantine-spacing-lg);
+    padding: var(--mantine-spacing-lg) 0;
     border-bottom: 1px solid var(--mantine-color-border);
 
     @container preset (max-width: 760px) {
       grid-template-columns: minmax(0, 1fr);
-      gap: 6px;
+      gap: calc(var(--mantine-spacing-sm) / 2);
     }
   }
 
   .posts[data-view='grid'] & {
     display: flex;
     flex-direction: column;
-    gap: 10px;
+    gap: var(--mantine-spacing-xs);
   }
 }
 
@@ -110,7 +110,7 @@
 }
 
 .date {
-  padding-top: 4px;
+  padding-top: var(--mantine-spacing-2xs);
   font-size: var(--mantine-font-size-xs);
   font-weight: 600;
   color: var(--mantine-color-bright);
@@ -136,7 +136,7 @@
 }
 
 .excerpt {
-  margin-top: 6px;
+  margin-top: calc(var(--mantine-spacing-sm) / 2);
   font-size: 15px;
   line-height: 1.55;
 
@@ -151,8 +151,8 @@
 .by {
   display: flex;
   align-items: center;
-  gap: 8px;
-  margin-top: 10px;
+  gap: var(--mantine-spacing-xs);
+  margin-top: calc(var(--mantine-spacing-xs) * 1.25);
   font-size: var(--mantine-font-size-xs);
 
   & b {
@@ -173,8 +173,8 @@
   display: flex;
   flex-direction: column;
   align-items: flex-end;
-  gap: 4px;
-  padding-top: 4px;
+  gap: var(--mantine-spacing-2xs);
+  padding-top: var(--mantine-spacing-2xs);
   font-size: var(--mantine-font-size-xs);
   text-align: right;
 
@@ -182,7 +182,7 @@
     @container preset (max-width: 760px) {
       flex-direction: row;
       justify-content: flex-start;
-      gap: 12px;
+      gap: var(--mantine-spacing-sm);
       padding: 0;
       text-align: left;
       order: -1;
@@ -192,7 +192,7 @@
   .posts[data-view='grid'] & {
     flex-direction: row;
     justify-content: flex-start;
-    gap: 12px;
+    gap: var(--mantine-spacing-sm);
     padding: 0;
     text-align: left;
     order: -1;
@@ -208,8 +208,8 @@
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  gap: 12px;
-  padding: 48px 0;
+  gap: var(--mantine-spacing-sm);
+  padding: var(--mantine-spacing-2xl) 0;
 
   & b {
     font-size: 20px;
@@ -220,8 +220,8 @@
 .more {
   display: flex;
   align-items: center;
-  gap: 16px;
-  padding-top: 28px;
+  gap: var(--mantine-spacing-md);
+  padding-top: calc(var(--mantine-spacing-md) * 1.75);
   font-size: var(--mantine-font-size-xs);
   font-weight: var(--mantine-font-weight-medium);
 }

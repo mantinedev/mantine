@@ -30,7 +30,7 @@
   position: relative;
   z-index: 2;
   max-width: 640px;
-  padding: 64px var(--sw-gutter);
+  padding: calc(var(--mantine-spacing-4xl) + var(--mantine-spacing-xs)) var(--sw-gutter);
 }
 
 .title.title {
@@ -44,21 +44,21 @@
 }
 
 .lead {
-  margin-top: 16px;
+  margin-top: calc(var(--mantine-spacing-sm) * 1.5);
   font-size: 18px;
   line-height: 1.55;
 }
 
 .list {
   display: grid;
-  gap: 10px;
-  margin: 22px 0 0;
+  gap: var(--mantine-spacing-sm);
+  margin: var(--mantine-spacing-lg) 0 0;
   padding: 0;
   list-style: none;
 
   & li {
     display: flex;
-    gap: 12px;
+    gap: var(--mantine-spacing-sm);
   }
 }
 

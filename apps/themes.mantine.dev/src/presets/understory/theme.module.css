@@ -84,7 +84,7 @@
 .segmentedInnerLabel {
   display: inline-flex;
   align-items: center;
-  gap: 6px;
+  gap: var(--mantine-spacing-2xs);
 }
 
 .chipLabel {
@@ -136,18 +136,18 @@
 }
 
 .menuDropdown {
-  padding: 6px;
+  padding: var(--mantine-spacing-2xs);
 }
 
 .menuLabel {
-  padding: 6px 8px 4px;
+  padding: var(--mantine-spacing-2xs) var(--mantine-spacing-xs) var(--mantine-spacing-3xs);
   font-size: var(--mantine-font-size-xs);
   font-weight: var(--mantine-font-weight-bold);
   color: var(--mantine-color-bright);
 }
 
 .menuItem {
-  padding: 8px;
+  padding: var(--mantine-spacing-xs);
   font-size: 13.5px;
 }
 

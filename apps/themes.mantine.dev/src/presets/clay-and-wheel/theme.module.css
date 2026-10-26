@@ -37,9 +37,7 @@
 
 .tabsList {
   flex-wrap: nowrap;
-  gap: 26px;
-  overflow-x: auto;
-  scrollbar-width: none;
+  gap: var(--mantine-spacing-lg);
 
   &::before {
     display: none;
@@ -87,13 +85,13 @@
   }
 
   & + & {
-    margin-top: 10px;
+    margin-top: var(--mantine-spacing-xs);
   }
 }
 
 .accordionControl {
-  gap: 10px;
-  padding: 14px;
+  gap: var(--mantine-spacing-xs);
+  padding: var(--mantine-spacing-sm);
   text-align: left;
 
   @mixin hover {
@@ -120,14 +118,14 @@
 }
 
 .accordionContent {
-  padding: 0 6px 8px;
+  padding: 0 calc(var(--mantine-spacing-xs) * 0.75) var(--mantine-spacing-xs);
 }
 
 .navLink {
   display: grid;
   grid-template-columns: 24px minmax(0, 1fr) auto;
-  gap: 10px;
-  padding: 9px 8px;
+  gap: var(--mantine-spacing-xs);
+  padding: var(--mantine-spacing-xs);
   border-radius: var(--mantine-radius-sm);
   font-size: var(--mantine-font-size-sm);
   line-height: 1.35;
@@ -167,17 +165,17 @@
 
 .alertMessage {
   & ul {
-    margin: 4px 0 0;
+    margin: var(--mantine-spacing-2xs) 0 0;
     padding-left: 1.1em;
   }
 
   & li + li {
-    margin-top: 4px;
+    margin-top: var(--mantine-spacing-2xs);
   }
 }
 
 .radioGroupLabel {
-  margin-bottom: 10px;
+  margin-bottom: var(--mantine-spacing-xs);
   font-size: var(--mantine-font-size-md);
   font-weight: var(--mantine-font-weight-bold);
   color: var(--mantine-color-bright);
@@ -186,8 +184,8 @@
 .radioCard {
   display: flex;
   align-items: center;
-  gap: 12px;
-  padding: 11px 14px;
+  gap: var(--mantine-spacing-sm);
+  padding: var(--mantine-spacing-sm);
   border: 1px solid var(--mantine-color-default-border);
   background-color: transparent;
   text-align: left;
@@ -209,12 +207,12 @@
 }
 
 .menuDropdown {
-  padding: 6px;
+  padding: calc(var(--mantine-spacing-xs) * 0.75);
 }
 
 .menuItem {
   height: 34px;
-  padding: 0 10px;
+  padding: 0 var(--mantine-spacing-xs);
   border-radius: 6px;
   font-size: var(--mantine-font-size-sm);
 

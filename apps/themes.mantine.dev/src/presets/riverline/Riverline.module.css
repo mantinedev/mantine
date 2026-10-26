@@ -76,7 +76,7 @@
 .crew {
   display: grid;
   grid-template-columns: auto minmax(0, 1fr) auto;
-  gap: 8px 14px;
+  gap: var(--mantine-spacing-xs) var(--mantine-spacing-sm);
   padding: var(--mantine-spacing-md) var(--mantine-spacing-lg);
   border-top: 1px solid var(--mantine-color-border);
 
@@ -182,7 +182,7 @@
 }
 
 .tabCount {
-  padding: 0 7px;
+  padding: 0 var(--mantine-spacing-2xs);
   border: 1px solid var(--mantine-color-border);
   border-radius: 10px;
   background: light-dark(var(--mantine-color-gray-0), var(--mantine-color-dark-8));
@@ -206,7 +206,7 @@
 .fill {
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: var(--mantine-spacing-sm);
   min-width: 150px;
 }
 
@@ -231,7 +231,7 @@
 }
 
 .empty {
-  padding: 40px 24px;
+  padding: calc(var(--mantine-spacing-md) * 2) var(--mantine-spacing-lg);
   text-align: center;
 }
 

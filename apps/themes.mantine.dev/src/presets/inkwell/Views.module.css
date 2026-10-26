@@ -1,20 +1,14 @@
 .wrap {
   flex: 1;
   min-height: 0;
-  overflow: auto;
-  padding: 16px 24px 24px;
+}
+
+.wrap .wrapContent {
+  padding: var(--mantine-spacing-md) var(--mantine-spacing-lg) var(--mantine-spacing-lg);
 
   @container preset (max-width: 760px) {
-    padding: 12px 16px 16px;
+    padding: var(--mantine-spacing-sm) var(--mantine-spacing-md) var(--mantine-spacing-md);
   }
-}
-
-.listCard {
-  overflow-x: auto;
-}
-
-.table {
-  min-width: 660px;
 }
 
 .row {
@@ -23,6 +17,14 @@
   &:last-child td {
     border-bottom: 0;
   }
+}
+
+.listCard {
+  overflow: hidden;
+}
+
+.wrap .listContent {
+  display: block;
 }
 
 .rowCustomer {
@@ -35,23 +37,23 @@
 }
 
 .noRows {
-  padding: 32px;
+  padding: var(--mantine-spacing-xl);
   text-align: center;
 }
 
 .calendar {
   display: grid;
   grid-template-columns: repeat(6, minmax(140px, 1fr));
-  gap: 10px;
+  gap: var(--mantine-spacing-xs);
   min-width: 860px;
 }
 
 .day {
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: var(--mantine-spacing-xs);
   min-height: 300px;
-  padding: 12px 10px;
+  padding: var(--mantine-spacing-sm) var(--mantine-spacing-xs);
   border-radius: var(--mantine-radius-xl);
   background: var(--inkwell-column);
 
@@ -64,7 +66,7 @@
   display: flex;
   align-items: baseline;
   justify-content: space-between;
-  padding: 0 4px 4px;
+  padding: 0 var(--mantine-spacing-3xs) var(--mantine-spacing-3xs);
 }
 
 .dayName {
@@ -80,14 +82,14 @@
 }
 
 .nothing {
-  padding: 0 4px;
+  padding: 0 var(--mantine-spacing-3xs);
 }
 
 .calItem {
   display: flex;
   flex-direction: column;
   gap: 2px;
-  padding: 9px 10px;
+  padding: var(--mantine-spacing-xs);
   border-radius: 12px;
   background: var(--mantine-color-surface-panel);
   box-shadow: var(--mantine-shadow-xs);

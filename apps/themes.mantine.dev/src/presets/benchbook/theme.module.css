@@ -28,7 +28,7 @@
 }
 
 .inputLabel {
-  margin-bottom: 6px;
+  margin-bottom: var(--mantine-spacing-2xs);
   font-size: var(--mantine-font-size-sm);
   font-weight: var(--mantine-font-weight-medium);
   color: var(--mantine-color-bright);
@@ -85,14 +85,12 @@
 }
 
 .tabsList {
-  max-width: 100%;
   flex-wrap: nowrap;
-  overflow-x: auto;
 }
 
 .tab {
   height: 34px;
-  padding: 0 14px;
+  padding: 0 var(--mantine-spacing-md);
   font-size: var(--mantine-font-size-sm);
   font-weight: var(--mantine-font-weight-medium);
   color: var(--mantine-color-text);
@@ -115,7 +113,7 @@
   font-variant-numeric: tabular-nums;
 
   &:where([data-position='right']:not(:only-child)) {
-    margin-inline-start: 6px;
+    margin-inline-start: var(--mantine-spacing-2xs);
   }
 }
 
@@ -135,18 +133,18 @@
 }
 
 .radioLabel {
-  padding-inline-start: 10px;
+  padding-inline-start: var(--mantine-spacing-sm);
   font-size: var(--mantine-font-size-sm);
 }
 
 .timelineItem {
   &:where(:not([data-first])) {
-    margin-top: 18px;
+    margin-top: var(--mantine-spacing-md);
   }
 
   &::before {
     top: 18px;
-    bottom: -20px;
+    bottom: calc(var(--mantine-spacing-md) * -1 - 2px);
   }
 }
 
@@ -157,7 +155,7 @@
 }
 
 .timelineBody {
-  margin-inline-start: 4px;
+  margin-inline-start: var(--mantine-spacing-3xs);
 }
 
 .timelineTitle {
@@ -172,17 +170,17 @@
 }
 
 .menuDropdown {
-  padding: 6px;
+  padding: var(--mantine-spacing-2xs);
 }
 
 .menuItem {
   height: 36px;
-  padding: 0 10px;
+  padding: 0 var(--mantine-spacing-sm);
   font-size: var(--mantine-font-size-sm);
 }
 
 .tooltip {
-  padding: 4px 8px;
+  padding: var(--mantine-spacing-3xs) var(--mantine-spacing-xs);
   font-size: var(--mantine-font-size-xs);
   font-weight: var(--mantine-font-weight-medium);
   background-color: var(--mantine-color-bright);
@@ -191,7 +189,8 @@
 
 .modalHeader {
   min-height: 0;
-  padding: 20px 20px 0 24px;
+  padding: calc(var(--mantine-spacing-md) * 1.25) calc(var(--mantine-spacing-md) * 1.25) 0
+    var(--mantine-spacing-lg);
 }
 
 .modalTitle {
@@ -203,5 +202,5 @@
 }
 
 .modalBody {
-  padding: 16px 24px 22px;
+  padding: var(--mantine-spacing-md) var(--mantine-spacing-lg) var(--mantine-spacing-lg);
 }

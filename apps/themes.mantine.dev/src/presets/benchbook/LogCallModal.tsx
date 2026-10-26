@@ -64,7 +64,7 @@ export function LogCallModal({ opened, onClose, onSave }: LogCallModalProps) {
             />
           </div>
           <Radio.Group label="Outcome" value={outcome} onChange={setOutcome}>
-            <Stack gap={8}>
+            <Stack gap="xs">
               {OUTCOMES.map((item) => (
                 <Radio key={item} value={item} label={item} />
               ))}

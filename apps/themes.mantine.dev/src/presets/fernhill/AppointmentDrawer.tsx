@@ -10,7 +10,7 @@ import {
   IconClock,
   IconPlayerPlay,
 } from '@tabler/icons-react';
-import { Alert, Button, Drawer, Select, Textarea, Title } from '@mantine/core';
+import { Alert, Button, Drawer, ScrollArea, Select, Textarea, Title } from '@mantine/core';
 import { DatePickerInput } from '@mantine/dates';
 import {
   type Appointment,
@@ -93,95 +93,98 @@ function DrawerContent({ appointment: a, date, conflict, onStatus, onMove }: Con
         <Drawer.CloseButton aria-label="Close" />
       </div>
 
-      <div className={classes.body}>
-        {conflict && (
-          <Alert icon={<IconAlertTriangle size={18} stroke={1.8} />} variant="default">
-            <b>{a.room} is double-booked.</b> Move this appointment or switch it to the other room.
-          </Alert>
-        )}
+      <ScrollArea className={classes.body} scrollbars="y" scrollbarSize={8}>
+        <div className={classes.bodyInner}>
+          {conflict && (
+            <Alert icon={<IconAlertTriangle size={18} stroke={1.8} />} variant="default">
+              <b>{a.room} is double-booked.</b> Move this appointment or switch it to the other
+              room.
+            </Alert>
+          )}
 
-        <div>
-          <Title order={3} className={classes.secTitle}>
-            Appointment
-          </Title>
-          <dl className={classes.facts}>
-            <dt>With</dt>
-            <dd>{PRACS[a.prac].name}</dd>
-            <dt>Where</dt>
-            <dd>{a.room}</dd>
-            <dt>Date</dt>
-            <dd>{longDate(date)}</dd>
-            <dt>Phone</dt>
-            <dd className={classes.tnum}>07700 900{100 + ((a.patient.length * 37) % 900)}</dd>
-          </dl>
-        </div>
-
-        <div>
-          <Title order={3} className={classes.secTitle}>
-            Move to
-          </Title>
-          <div className={classes.row2}>
-            <DatePickerInput
-              value={moveDate}
-              onChange={setMoveDate}
-              valueFormat="DD/MM/YYYY"
-              aria-label="New date"
-              className={classes.tnum}
-            />
-            <Select
-              data={TIMES}
-              value={moveTime}
-              onChange={(value) => value && setMoveTime(value)}
-              aria-label="New start time"
-              className={classes.tnum}
-            />
+          <div>
+            <Title order={3} className={classes.secTitle}>
+              Appointment
+            </Title>
+            <dl className={classes.facts}>
+              <dt>With</dt>
+              <dd>{PRACS[a.prac].name}</dd>
+              <dt>Where</dt>
+              <dd>{a.room}</dd>
+              <dt>Date</dt>
+              <dd>{longDate(date)}</dd>
+              <dt>Phone</dt>
+              <dd className={classes.tnum}>07700 900{100 + ((a.patient.length * 37) % 900)}</dd>
+            </dl>
           </div>
-          <div className={classes.moveRow}>
-            <Select
-              data={ROOMS}
-              value={moveRoom}
-              onChange={(value) => value && setMoveRoom(value)}
-              aria-label="Room"
-              className={classes.grow}
-            />
-            <Button
-              variant="default"
-              onClick={() =>
-                onMove(a, moveDate ?? dayKey(date), Number(moveTime), moveRoom as RoomId)
-              }
-            >
-              Move
-            </Button>
+
+          <div>
+            <Title order={3} className={classes.secTitle}>
+              Move to
+            </Title>
+            <div className={classes.row2}>
+              <DatePickerInput
+                value={moveDate}
+                onChange={setMoveDate}
+                valueFormat="DD/MM/YYYY"
+                aria-label="New date"
+                className={classes.tnum}
+              />
+              <Select
+                data={TIMES}
+                value={moveTime}
+                onChange={(value) => value && setMoveTime(value)}
+                aria-label="New start time"
+                className={classes.tnum}
+              />
+            </div>
+            <div className={classes.moveRow}>
+              <Select
+                data={ROOMS}
+                value={moveRoom}
+                onChange={(value) => value && setMoveRoom(value)}
+                aria-label="Room"
+                className={classes.grow}
+              />
+              <Button
+                variant="default"
+                onClick={() =>
+                  onMove(a, moveDate ?? dayKey(date), Number(moveTime), moveRoom as RoomId)
+                }
+              >
+                Move
+              </Button>
+            </div>
           </div>
-        </div>
 
-        <div>
-          <Title order={3} className={classes.secTitle}>
-            Previous visits
-          </Title>
-          <ul className={classes.history}>
-            {visitHistory(a.patient).map((visit) => (
-              <li key={dayKey(visit.date)}>
-                <span className={classes.tnum}>
-                  {visit.date.getDate()} {MONTHS[visit.date.getMonth()].slice(0, 3)}
-                </span>
-                <span>
-                  <b>{visit.type}</b>
-                  <br />
-                  {visit.note}
-                </span>
-              </li>
-            ))}
-          </ul>
-        </div>
+          <div>
+            <Title order={3} className={classes.secTitle}>
+              Previous visits
+            </Title>
+            <ul className={classes.history}>
+              {visitHistory(a.patient).map((visit) => (
+                <li key={dayKey(visit.date)}>
+                  <span className={classes.tnum}>
+                    {visit.date.getDate()} {MONTHS[visit.date.getMonth()].slice(0, 3)}
+                  </span>
+                  <span>
+                    <b>{visit.type}</b>
+                    <br />
+                    {visit.note}
+                  </span>
+                </li>
+              ))}
+            </ul>
+          </div>
 
-        <Textarea
-          label="Notes for this visit"
-          placeholder="What did you work on today?"
-          minRows={3}
-          autosize
-        />
-      </div>
+          <Textarea
+            label="Notes for this visit"
+            placeholder="What did you work on today?"
+            minRows={3}
+            autosize
+          />
+        </div>
+      </ScrollArea>
 
       <div className={classes.foot}>
         {next && NextIcon && (

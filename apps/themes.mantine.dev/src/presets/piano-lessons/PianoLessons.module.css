@@ -7,21 +7,21 @@
 }
 
 .wrap {
-  padding-inline: 48px;
+  padding-inline: var(--mantine-spacing-3xl);
 
   @container preset (max-width: 980px) {
-    padding-inline: 32px;
+    padding-inline: var(--mantine-spacing-xl);
   }
 
   @container preset (max-width: 560px) {
-    padding-inline: 16px;
+    padding-inline: var(--mantine-spacing-md);
   }
 }
 
 .top {
   display: flex;
   align-items: center;
-  gap: 28px;
+  gap: calc(var(--mantine-spacing-md) * 1.75);
   height: 76px;
   border-bottom: 1px solid var(--mantine-color-border);
 }
@@ -47,7 +47,7 @@
 
 .nav {
   display: flex;
-  gap: 22px;
+  gap: var(--mantine-spacing-lg);
   font-size: 15px;
   font-weight: var(--mantine-font-weight-medium);
 
@@ -70,7 +70,7 @@
 .topActions {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: var(--mantine-spacing-xs);
   margin-inline-start: auto;
 }
 
@@ -96,14 +96,14 @@
   display: grid;
   grid-template-columns: minmax(0, 1fr) minmax(0, 1.05fr);
   align-items: center;
-  gap: 48px;
-  padding-top: 56px;
-  padding-bottom: 40px;
+  gap: var(--mantine-spacing-3xl);
+  padding-top: calc(var(--mantine-spacing-3xl) + var(--mantine-spacing-xs));
+  padding-bottom: var(--mantine-spacing-2xl);
 
   @container preset (max-width: 760px) {
     grid-template-columns: minmax(0, 1fr);
-    gap: 28px;
-    padding-top: 36px;
+    gap: calc(var(--mantine-spacing-md) * 1.75);
+    padding-top: calc(var(--mantine-spacing-lg) * 1.5);
   }
 }
 
@@ -123,7 +123,7 @@
 
 .heroText {
   max-width: 30em;
-  margin-top: 18px;
+  margin-top: var(--mantine-spacing-md);
   font-size: var(--mantine-font-size-lg);
   line-height: 1.55;
 }
@@ -131,8 +131,8 @@
 .facts {
   display: flex;
   flex-wrap: wrap;
-  gap: 28px;
-  margin-top: 28px;
+  gap: calc(var(--mantine-spacing-md) * 1.75);
+  margin-top: calc(var(--mantine-spacing-md) * 1.75);
   font-size: var(--mantine-font-size-sm);
 
   & b {
@@ -161,7 +161,7 @@
   position: absolute;
   left: 14px;
   bottom: 14px;
-  padding: 5px 12px;
+  padding: calc(var(--mantine-spacing-xs) / 2) var(--mantine-spacing-sm);
   border-radius: 999px;
   background: var(--mantine-color-surface-panel);
   color: var(--mantine-color-bright);
@@ -177,7 +177,7 @@
 
 .sectionSub {
   max-width: 36em;
-  margin-top: 10px;
+  margin-top: var(--mantine-spacing-xs);
   font-size: 17px;
   line-height: 1.55;
 }
@@ -186,14 +186,14 @@
   display: grid;
   grid-template-columns: minmax(0, 0.8fr) minmax(0, 1fr);
   align-items: center;
-  gap: 56px;
-  padding-top: 88px;
-  padding-bottom: 88px;
+  gap: calc(var(--mantine-spacing-3xl) + var(--mantine-spacing-xs));
+  padding-top: var(--mantine-spacing-4xl);
+  padding-bottom: var(--mantine-spacing-4xl);
   border-top: 1px solid var(--mantine-color-border);
 
   @container preset (max-width: 860px) {
     grid-template-columns: minmax(0, 1fr);
-    gap: 32px;
+    gap: var(--mantine-spacing-xl);
   }
 }
 
@@ -214,13 +214,13 @@
 
 .aboutText {
   max-width: 34em;
-  margin-top: 14px;
+  margin-top: var(--mantine-spacing-sm);
   font-size: 17px;
   line-height: 1.55;
 }
 
 .aboutList {
-  margin-top: 20px;
+  margin-top: calc(var(--mantine-spacing-md) * 1.25);
   font-size: var(--mantine-font-size-md);
   color: var(--mantine-color-text);
 }
@@ -230,7 +230,7 @@
 }
 
 .aboutIcon {
-  margin-inline-end: 12px;
+  margin-inline-end: var(--mantine-spacing-sm);
   font-size: 18px;
   color: var(--mantine-color-brass-text);
 }
@@ -248,27 +248,27 @@
   display: grid;
   grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
   align-items: center;
-  gap: 48px;
-  padding-top: 80px;
-  padding-bottom: 80px;
+  gap: var(--mantine-spacing-3xl);
+  padding-top: calc(var(--mantine-spacing-2xl) * 2);
+  padding-bottom: calc(var(--mantine-spacing-2xl) * 2);
 
   @container preset (max-width: 860px) {
     grid-template-columns: minmax(0, 1fr);
-    gap: 32px;
+    gap: var(--mantine-spacing-xl);
   }
 }
 
 .timeline {
   display: grid;
-  margin: 24px 0 0;
+  margin: var(--mantine-spacing-lg) 0 0;
   padding: 0;
   list-style: none;
 
   & li {
     display: grid;
     grid-template-columns: 74px minmax(0, 1fr);
-    gap: 16px;
-    padding: 14px 0;
+    gap: var(--mantine-spacing-md);
+    padding: var(--mantine-spacing-sm) 0;
     border-top: 1px solid rgba(243, 242, 238, 0.16);
   }
 
@@ -301,15 +301,15 @@
 }
 
 .reviews {
-  padding-top: 88px;
-  padding-bottom: 72px;
+  padding-top: var(--mantine-spacing-4xl);
+  padding-bottom: calc(var(--mantine-spacing-lg) * 3);
 }
 
 .reviewGrid {
   display: grid;
   grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr);
-  gap: 20px;
-  margin-top: 32px;
+  gap: calc(var(--mantine-spacing-md) * 1.25);
+  margin-top: var(--mantine-spacing-xl);
 
   @container preset (max-width: 760px) {
     grid-template-columns: minmax(0, 1fr);
@@ -319,8 +319,8 @@
 .review {
   display: flex;
   flex-direction: column;
-  gap: 14px;
-  padding: 26px;
+  gap: var(--mantine-spacing-sm);
+  padding: var(--mantine-spacing-lg);
 
   & blockquote {
     margin: 0;
@@ -353,7 +353,7 @@
   }
 
   * + & {
-    margin-top: 10px;
+    margin-top: var(--mantine-spacing-xs);
   }
 }
 
@@ -361,12 +361,12 @@
   display: grid;
   grid-template-columns: minmax(0, 320px) minmax(0, 1fr);
   align-items: start;
-  gap: 48px;
-  padding-bottom: 88px;
+  gap: var(--mantine-spacing-3xl);
+  padding-bottom: var(--mantine-spacing-4xl);
 
   @container preset (max-width: 860px) {
     grid-template-columns: minmax(0, 1fr);
-    gap: 20px;
+    gap: calc(var(--mantine-spacing-md) * 1.25);
   }
 }
 
@@ -374,9 +374,9 @@
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
-  gap: 24px;
-  padding-top: 32px;
-  padding-bottom: 28px;
+  gap: var(--mantine-spacing-lg);
+  padding-top: var(--mantine-spacing-xl);
+  padding-bottom: calc(var(--mantine-spacing-md) * 1.75);
   border-top: 1px solid var(--mantine-color-border);
   font-size: var(--mantine-font-size-sm);
 }
@@ -396,7 +396,7 @@
 }
 
 .toast {
-  padding: 10px 18px;
+  padding: var(--mantine-spacing-xs) var(--mantine-spacing-md);
   border-radius: 999px;
   background: var(--mantine-color-bright);
   color: light-dark(var(--mantine-color-gray-0), var(--mantine-color-dark-8));

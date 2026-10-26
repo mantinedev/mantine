@@ -3,16 +3,16 @@
   align-items: flex-start;
   justify-content: space-between;
   flex-wrap: wrap;
-  gap: 12px;
-  padding: 24px 28px 0;
+  gap: var(--mantine-spacing-sm);
+  padding: var(--mantine-spacing-lg) calc(var(--mantine-spacing-lg) + var(--mantine-spacing-2xs)) 0;
 
   @container preset (max-width: 760px) {
-    padding-inline: 22px;
+    padding-inline: var(--mantine-spacing-lg);
   }
 }
 
 .lead {
-  margin: 4px 0 0;
+  margin: var(--mantine-spacing-2xs) 0 0;
   font-size: var(--mantine-font-size-sm);
 }
 
@@ -36,20 +36,21 @@
 .questions {
   display: flex;
   flex-direction: column;
-  gap: 24px;
+  gap: var(--mantine-spacing-lg);
   margin: 0;
-  padding: 20px 28px 0;
+  padding: calc(var(--mantine-spacing-md) + var(--mantine-spacing-2xs))
+    calc(var(--mantine-spacing-lg) + var(--mantine-spacing-2xs)) 0;
   list-style: none;
 
   @container preset (max-width: 760px) {
-    padding-inline: 22px;
+    padding-inline: var(--mantine-spacing-lg);
   }
 }
 
 .options {
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: var(--mantine-spacing-xs);
 }
 
 .option {
@@ -83,8 +84,8 @@
 .feedback {
   display: flex;
   align-items: flex-start;
-  gap: 8px;
-  margin-top: 10px;
+  gap: var(--mantine-spacing-xs);
+  margin-top: var(--mantine-spacing-xs);
   font-size: var(--mantine-font-size-sm);
 
   & b {
@@ -102,12 +103,13 @@
   align-items: center;
   justify-content: space-between;
   flex-wrap: wrap;
-  gap: 12px;
-  padding: 20px 28px 24px;
+  gap: var(--mantine-spacing-sm);
+  padding: calc(var(--mantine-spacing-md) + var(--mantine-spacing-2xs))
+    calc(var(--mantine-spacing-lg) + var(--mantine-spacing-2xs)) var(--mantine-spacing-lg);
   font-size: var(--mantine-font-size-sm);
 
   @container preset (max-width: 760px) {
-    padding-inline: 22px;
+    padding-inline: var(--mantine-spacing-lg);
   }
 }
 
@@ -118,5 +120,5 @@
 
 .actions {
   display: flex;
-  gap: 8px;
+  gap: var(--mantine-spacing-xs);
 }

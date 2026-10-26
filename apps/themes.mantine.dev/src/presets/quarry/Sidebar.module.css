@@ -25,8 +25,8 @@
 .brand {
   display: flex;
   align-items: center;
-  gap: 10px;
-  padding: 16px 16px 12px;
+  gap: var(--mantine-spacing-sm);
+  padding: var(--mantine-spacing-md) var(--mantine-spacing-md) var(--mantine-spacing-sm);
 }
 
 .brandName {
@@ -42,21 +42,23 @@
 }
 
 .newQuestion {
-  padding: 0 14px 12px;
+  padding: 0 var(--mantine-spacing-md) var(--mantine-spacing-sm);
 }
 
 .scroll {
   flex: 1;
   min-height: 0;
-  overflow-y: auto;
-  padding: 4px 8px 12px;
+}
+
+.scrollContent {
+  padding: var(--mantine-spacing-3xs) var(--mantine-spacing-xs) var(--mantine-spacing-sm);
 }
 
 .label {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 12px 8px 6px;
+  padding: var(--mantine-spacing-sm) var(--mantine-spacing-xs) var(--mantine-spacing-2xs);
   font-size: 12px;
   font-weight: var(--mantine-font-weight-bold);
   color: var(--mantine-color-bright);
@@ -82,9 +84,9 @@
 .source {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: var(--mantine-spacing-xs);
   width: 100%;
-  padding: 6px 8px;
+  padding: var(--mantine-spacing-2xs) var(--mantine-spacing-xs);
   border-radius: var(--mantine-radius-md);
 
   & svg {
@@ -122,8 +124,8 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 8px;
-  padding: 10px 12px;
+  gap: var(--mantine-spacing-xs);
+  padding: var(--mantine-spacing-sm);
   border-bottom: 1px solid var(--mantine-color-border);
 
   & b {
@@ -138,17 +140,15 @@
 }
 
 .columns {
-  max-height: 280px;
   margin: 0;
-  padding: 6px 0;
-  overflow-y: auto;
+  padding: var(--mantine-spacing-2xs) 0;
   list-style: none;
 
   & li {
     display: flex;
     align-items: center;
-    gap: 8px;
-    padding: 5px 12px;
+    gap: var(--mantine-spacing-xs);
+    padding: var(--mantine-spacing-2xs) var(--mantine-spacing-sm);
     font-size: 12.5px;
   }
 
@@ -177,16 +177,16 @@
 
 .schemaFoot {
   display: flex;
-  gap: 6px;
-  padding: 8px 12px;
+  gap: var(--mantine-spacing-2xs);
+  padding: var(--mantine-spacing-xs) var(--mantine-spacing-sm);
   border-top: 1px solid var(--mantine-color-border);
 }
 
 .footer {
   display: flex;
   align-items: center;
-  gap: 10px;
-  padding: 10px 12px;
+  gap: var(--mantine-spacing-sm);
+  padding: var(--mantine-spacing-sm);
   border-top: 1px solid var(--mantine-color-border);
 }
 

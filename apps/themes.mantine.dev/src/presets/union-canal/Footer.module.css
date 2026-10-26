@@ -1,8 +1,8 @@
 .root {
   display: grid;
   grid-template-columns: minmax(0, 1.5fr) repeat(2, minmax(0, 1fr));
-  gap: 32px;
-  padding: 44px 48px 32px;
+  gap: var(--mantine-spacing-xl);
+  padding: var(--mantine-spacing-3xl) var(--mantine-spacing-3xl) var(--mantine-spacing-xl);
   background: var(--uc-ground);
   color: var(--uc-ground-ink);
   font-size: var(--mantine-font-size-sm);
@@ -17,7 +17,7 @@
   }
 
   @container preset (max-width: 980px) {
-    padding-inline: 32px;
+    padding-inline: var(--mantine-spacing-xl);
   }
 
   @container preset (max-width: 780px) {
@@ -25,7 +25,7 @@
   }
 
   @container preset (max-width: 520px) {
-    padding-inline: 16px;
+    padding-inline: var(--mantine-spacing-md);
   }
 }
 
@@ -36,7 +36,7 @@
 
   & p {
     max-width: 26em;
-    margin: 12px 0 0;
+    margin: var(--mantine-spacing-sm) 0 0;
   }
 }
 
@@ -48,7 +48,7 @@
 }
 
 .heading {
-  margin: 0 0 12px;
+  margin: 0 0 var(--mantine-spacing-sm);
   font-size: var(--mantine-font-size-sm);
   font-weight: 700;
   color: var(--uc-chrome);
@@ -57,7 +57,7 @@
 .links {
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: var(--mantine-spacing-xs);
   margin: 0;
   padding: 0;
   list-style: none;
@@ -74,8 +74,8 @@
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
-  gap: 12px;
-  padding-top: 18px;
+  gap: var(--mantine-spacing-sm);
+  padding-top: var(--mantine-spacing-md);
   border-top: 1px solid rgba(255, 255, 255, 0.18);
   font-size: 14px;
 }

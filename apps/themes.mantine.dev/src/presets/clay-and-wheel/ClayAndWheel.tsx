@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect, useMemo, useRef, useState } from 'react';
-import { Anchor, Avatar, Drawer, Title, Transition } from '@mantine/core';
+import { Anchor, Avatar, Drawer, ScrollArea, Title, Transition } from '@mantine/core';
 import { PresetFrame } from '@/components/PresetFrame';
 import { PresetProvider } from '@/components/PresetProvider';
 import { CourseOutline } from './CourseOutline';
@@ -80,7 +80,9 @@ function Lesson() {
 
         <div className={classes.layout}>
           <nav className={classes.outline} aria-label="Course outline">
-            {outline}
+            <ScrollArea.Autosize mah="calc(100vh - 64px)" type="hover" scrollbarSize={8}>
+              <div className={classes.outlineContent}>{outline}</div>
+            </ScrollArea.Autosize>
           </nav>
 
           <main className={classes.main}>
@@ -119,7 +121,9 @@ function Lesson() {
           classNames={{ content: classes.drawerContent, body: classes.drawerBody }}
           aria-label="Course outline"
         >
-          {outline}
+          <ScrollArea.Autosize mah="100vh" type="hover" scrollbarSize={8}>
+            <div className={classes.outlineContent}>{outline}</div>
+          </ScrollArea.Autosize>
         </Drawer>
       </div>
 

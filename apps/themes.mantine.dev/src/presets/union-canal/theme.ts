@@ -104,7 +104,16 @@ export const theme = createTheme({
 
   defaultRadius: 'md',
   radius: { xs: rem(3), sm: rem(4), md: rem(6), lg: rem(10), xl: rem(16) },
-  spacing: { xs: rem(8), sm: rem(12), md: rem(16), lg: rem(24), xl: rem(32) },
+  spacing: {
+    xs: rem(8),
+    sm: rem(12),
+    md: rem(16),
+    lg: rem(24),
+    xl: rem(32),
+    '2xl': rem(40),
+    '3xl': rem(46),
+    '4xl': rem(64),
+  },
 
   components: {
     Button: Button.extend({

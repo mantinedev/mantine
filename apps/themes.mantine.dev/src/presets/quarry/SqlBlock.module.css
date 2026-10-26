@@ -9,9 +9,10 @@
 .head {
   display: flex;
   align-items: center;
-  gap: 6px;
+  gap: var(--mantine-spacing-2xs);
   min-height: 41px;
-  padding: 7px 8px 7px 14px;
+  padding: var(--mantine-spacing-xs) var(--mantine-spacing-xs) var(--mantine-spacing-xs)
+    var(--mantine-spacing-md);
   border-bottom: 1px solid var(--quarry-code-line);
   font-size: 12px;
   color: #a9afbd;
@@ -52,7 +53,7 @@
   height: auto;
   min-height: 0;
   resize: none;
-  padding: 12px 14px;
+  padding: var(--mantine-spacing-sm) var(--mantine-spacing-md);
   font-family: var(--mantine-font-family-monospace);
   font-size: 12.5px;
   line-height: 1.6;

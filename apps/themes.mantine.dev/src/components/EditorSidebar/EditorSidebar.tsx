@@ -1,7 +1,11 @@
+'use client';
+
+import { useEffect, useMemo, useState } from 'react';
 import {
   Button,
   CheckIcon,
   ColorSwatch,
+  type MantineColorShade,
   ScrollArea,
   Select,
   SimpleGrid,
@@ -9,31 +13,17 @@ import {
   Stack,
   Text,
   Title,
-  Tooltip,
-  type MantineColorShade,
 } from '@mantine/core';
+import { useEditorParams } from '@/hooks/use-editor-params';
 import {
   DEFAULT_OVERRIDES,
-  FONT_OPTIONS,
+  type GoogleFont,
+  loadGoogleFonts,
   type PresetColorSwatch,
   type PresetThemeInfo,
-  type ThemeOverrides,
+  SYSTEM_FONT,
 } from '@/preview';
 import classes from './EditorSidebar.module.css';
-
-const PRESET_FONT = 'preset';
-
-const fontOptions = [
-  { value: PRESET_FONT, label: 'Preset font' },
-  ...FONT_OPTIONS.map((option) => ({ value: option.value, label: option.label })),
-];
-
-interface EditorSidebarProps {
-  info: PresetThemeInfo | null;
-  overrides: ThemeOverrides;
-  onChange: (values: Partial<ThemeOverrides>) => void;
-  onReset: () => void;
-}
 
 interface ControlProps {
   label: string;
@@ -59,7 +49,7 @@ function Control({ label, value, children }: ControlProps) {
   );
 }
 
-interface ScaleSliderProps {
+interface PercentSliderProps {
   label: string;
   value: number;
   min: number;
@@ -67,17 +57,16 @@ interface ScaleSliderProps {
   onChange: (value: number) => void;
 }
 
-function ScaleSlider({ label, value, min, max, onChange }: ScaleSliderProps) {
-  const percent = Math.round(value * 100);
+function PercentSlider({ label, value, min, max, onChange }: PercentSliderProps) {
   return (
-    <Control label={label} value={`${percent}%`}>
+    <Control label={label} value={`${value}%`}>
       <Slider
         thumbLabel={label}
         min={min}
         max={max}
         step={5}
-        value={percent}
-        onChange={(next) => onChange(next / 100)}
+        value={value}
+        onChange={onChange}
         label={(next) => `${next}%`}
       />
     </Control>
@@ -94,27 +83,71 @@ function Swatches({ swatches, value, onChange }: SwatchesProps) {
   return (
     <SimpleGrid cols={8} spacing={8} verticalSpacing={8}>
       {swatches.map((swatch) => (
-        <Tooltip key={swatch.name} label={swatch.name} openDelay={300}>
-          <ColorSwatch
-            component="button"
-            type="button"
-            color={swatch.value}
-            aria-label={swatch.name}
-            aria-pressed={swatch.name === value}
-            onClick={() => onChange(swatch.name)}
-            className={classes.swatch}
-          >
-            {swatch.name === value && <CheckIcon className={classes.check} />}
-          </ColorSwatch>
-        </Tooltip>
+        <ColorSwatch
+          key={swatch.name}
+          component="button"
+          type="button"
+          color={swatch.value}
+          aria-label={swatch.name}
+          aria-pressed={swatch.name === value}
+          onClick={() => onChange(swatch.name)}
+          className={classes.swatch}
+        >
+          {swatch.name === value && <CheckIcon className={classes.check} />}
+        </ColorSwatch>
       ))}
     </SimpleGrid>
   );
 }
 
-export function EditorSidebar({ info, overrides, onChange, onReset }: EditorSidebarProps) {
+function useFontOptions() {
+  const [fonts, setFonts] = useState<GoogleFont[]>([]);
+
+  useEffect(() => {
+    let active = true;
+    loadGoogleFonts().then((catalog) => active && setFonts(catalog));
+    return () => {
+      active = false;
+    };
+  }, []);
+
+  return useMemo(() => [SYSTEM_FONT, ...fonts.map((font) => font.family)], [fonts]);
+}
+
+interface FontSelectProps {
+  label: string;
+  value: string | null;
+  data: string[];
+  onChange: (value: string | null) => void;
+}
+
+function FontSelect({ label, value, data, onChange }: FontSelectProps) {
+  return (
+    <Select
+      label={label}
+      placeholder="Preset font"
+      data={value && !data.includes(value) ? [value, ...data] : data}
+      value={value}
+      onChange={onChange}
+      searchable
+      clearable
+      limit={60}
+      nothingFoundMessage="No fonts found"
+      comboboxProps={{ floatingStrategy: 'fixed' }}
+    />
+  );
+}
+
+interface EditorSidebarProps {
+  info: PresetThemeInfo | null;
+}
+
+export function EditorSidebar({ info }: EditorSidebarProps) {
+  const { overrides, setParams } = useEditorParams();
+  const fontOptions = useFontOptions();
   const primaryColor = overrides.primaryColor ?? info?.primaryColor ?? '';
-  const primaryShade = overrides.primaryShade ?? info?.primaryShade ?? { light: 6, dark: 8 };
+  const shadeLight = overrides.primaryShadeLight ?? info?.primaryShade.light ?? 6;
+  const shadeDark = overrides.primaryShadeDark ?? info?.primaryShade.dark ?? 8;
   const customSwatches = info?.swatches.filter((swatch) => swatch.custom) ?? [];
   const mantineSwatches = info?.swatches.filter((swatch) => !swatch.custom) ?? [];
   const changed = JSON.stringify(overrides) !== JSON.stringify(DEFAULT_OVERRIDES);
@@ -126,7 +159,12 @@ export function EditorSidebar({ info, overrides, onChange, onReset }: EditorSide
           <Title order={2} size="h4" className={classes.title}>
             Theme
           </Title>
-          <Button variant="default" size="xs" onClick={onReset} disabled={!changed}>
+          <Button
+            variant="default"
+            size="xs"
+            onClick={() => setParams(DEFAULT_OVERRIDES)}
+            disabled={!changed}
+          >
             Reset
           </Button>
         </div>
@@ -141,7 +179,7 @@ export function EditorSidebar({ info, overrides, onChange, onReset }: EditorSide
                 <Swatches
                   swatches={customSwatches}
                   value={primaryColor}
-                  onChange={(value) => onChange({ primaryColor: value })}
+                  onChange={(value) => setParams({ primaryColor: value })}
                 />
               </Control>
             )}
@@ -149,29 +187,25 @@ export function EditorSidebar({ info, overrides, onChange, onReset }: EditorSide
               <Swatches
                 swatches={mantineSwatches}
                 value={primaryColor}
-                onChange={(value) => onChange({ primaryColor: value })}
+                onChange={(value) => setParams({ primaryColor: value })}
               />
             </Control>
-            <Control label="Primary shade, light scheme" value={String(primaryShade.light)}>
+            <Control label="Primary shade, light scheme" value={String(shadeLight)}>
               <Slider
                 thumbLabel="Primary shade in light scheme"
                 min={0}
                 max={9}
-                value={primaryShade.light}
-                onChange={(light) =>
-                  onChange({ primaryShade: { ...primaryShade, light: light as MantineColorShade } })
-                }
+                value={shadeLight}
+                onChange={(value) => setParams({ primaryShadeLight: value as MantineColorShade })}
               />
             </Control>
-            <Control label="Primary shade, dark scheme" value={String(primaryShade.dark)}>
+            <Control label="Primary shade, dark scheme" value={String(shadeDark)}>
               <Slider
                 thumbLabel="Primary shade in dark scheme"
                 min={0}
                 max={9}
-                value={primaryShade.dark}
-                onChange={(dark) =>
-                  onChange({ primaryShade: { ...primaryShade, dark: dark as MantineColorShade } })
-                }
+                value={shadeDark}
+                onChange={(value) => setParams({ primaryShadeDark: value as MantineColorShade })}
               />
             </Control>
           </Stack>
@@ -182,61 +216,46 @@ export function EditorSidebar({ info, overrides, onChange, onReset }: EditorSide
             Typography
           </Title>
           <Stack gap="md">
-            <Select
+            <FontSelect
               label="Body font"
+              value={overrides.font}
               data={fontOptions}
-              value={overrides.fontFamily ?? PRESET_FONT}
-              onChange={(value) =>
-                onChange({ fontFamily: !value || value === PRESET_FONT ? null : value })
-              }
-              allowDeselect={false}
-              comboboxProps={{ floatingStrategy: 'fixed' }}
+              onChange={(font) => setParams({ font })}
             />
-            <Select
+            <FontSelect
               label="Headings font"
+              value={overrides.headingsFont}
               data={fontOptions}
-              value={overrides.headingsFontFamily ?? PRESET_FONT}
-              onChange={(value) =>
-                onChange({ headingsFontFamily: !value || value === PRESET_FONT ? null : value })
-              }
-              allowDeselect={false}
-              comboboxProps={{ floatingStrategy: 'fixed' }}
+              onChange={(headingsFont) => setParams({ headingsFont })}
             />
-            <ScaleSlider
+            <PercentSlider
               label="Font size"
-              value={overrides.fontSizeScale}
+              value={overrides.fontSize}
               min={80}
               max={130}
-              onChange={(fontSizeScale) => onChange({ fontSizeScale })}
+              onChange={(fontSize) => setParams({ fontSize })}
             />
           </Stack>
         </section>
 
         <section className={classes.section}>
           <Title order={3} size="h6" className={classes.sectionTitle}>
-            Shape and density
+            Shape and spacing
           </Title>
           <Stack gap="md">
-            <ScaleSlider
+            <PercentSlider
               label="Radius"
-              value={overrides.radiusScale}
+              value={overrides.radius}
               min={0}
               max={250}
-              onChange={(radiusScale) => onChange({ radiusScale })}
+              onChange={(radius) => setParams({ radius })}
             />
-            <ScaleSlider
+            <PercentSlider
               label="Spacing"
-              value={overrides.spacingScale}
+              value={overrides.spacing}
               min={50}
               max={150}
-              onChange={(spacingScale) => onChange({ spacingScale })}
-            />
-            <ScaleSlider
-              label="Scale"
-              value={overrides.scale}
-              min={80}
-              max={120}
-              onChange={(scale) => onChange({ scale })}
+              onChange={(spacing) => setParams({ spacing })}
             />
           </Stack>
         </section>

@@ -1,10 +1,10 @@
 .player {
   display: grid;
   grid-template-columns: auto minmax(0, 1fr);
-  gap: 18px 22px;
+  gap: var(--mantine-spacing-md) var(--mantine-spacing-lg);
   align-items: center;
   margin-inline: var(--mantine-spacing-xl);
-  padding: 22px var(--mantine-spacing-lg);
+  padding: var(--mantine-spacing-lg) var(--mantine-spacing-lg);
   border: 1px solid var(--mantine-color-border);
   border-radius: var(--mantine-radius-xl);
   background: var(--mantine-color-surface-panel);
@@ -17,14 +17,14 @@
   @container preset (max-width: 520px) {
     grid-template-columns: minmax(0, 1fr);
     margin-inline: var(--mantine-spacing-md);
-    padding: 18px;
+    padding: var(--mantine-spacing-md);
   }
 }
 
 .controls {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: var(--mantine-spacing-xs);
 
   @container preset (max-width: 520px) {
     justify-content: center;
@@ -48,7 +48,7 @@
 .waveCol {
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: var(--mantine-spacing-xs);
   min-width: 0;
 }
 
@@ -145,7 +145,7 @@
 .footGroup {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: var(--mantine-spacing-xs);
 }
 
 .label {

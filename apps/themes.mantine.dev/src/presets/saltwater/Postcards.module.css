@@ -5,8 +5,8 @@
 .grid {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 28px;
-  margin-top: 44px;
+  gap: calc(var(--mantine-spacing-lg) * 1.25);
+  margin-top: var(--mantine-spacing-2xl);
 
   @container preset (max-width: 980px) {
     grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -109,8 +109,8 @@
 .back {
   display: grid;
   grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr);
-  gap: 14px;
-  padding: 16px;
+  gap: var(--mantine-spacing-sm);
+  padding: calc(var(--mantine-spacing-sm) * 1.5);
   background: var(--sw-paper);
   color: #24363c;
   transform: rotateY(180deg);
@@ -118,7 +118,7 @@
 
 .message {
   overflow: hidden;
-  padding-right: 12px;
+  padding-right: var(--mantine-spacing-sm);
   border-right: 1px solid var(--sw-paper-rule);
   font-family: var(--sw-font-hand);
   font-size: 21px;
@@ -133,7 +133,7 @@
   position: relative;
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: var(--mantine-spacing-sm);
 }
 
 .miniStamp {
@@ -164,7 +164,7 @@
 
 .who {
   display: block;
-  margin-top: 12px;
+  margin-top: var(--mantine-spacing-sm);
   font-size: 14px;
 
   & b {

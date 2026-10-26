@@ -10,8 +10,8 @@
   display: flex;
   flex: none;
   align-items: center;
-  gap: 12px;
-  padding: 12px 20px;
+  gap: calc(var(--mantine-spacing-sm) * 1.2);
+  padding: calc(var(--mantine-spacing-sm) * 1.2) var(--mantine-spacing-xl);
   background: var(--mantine-color-surface-panel);
   border-bottom: 1px solid var(--mantine-color-border);
 }
@@ -48,11 +48,11 @@
 .scrollContent {
   display: flex;
   flex-direction: column;
-  gap: 14px;
-  padding: 18px 20px 12px;
+  gap: var(--mantine-spacing-md);
+  padding: var(--mantine-spacing-lg) var(--mantine-spacing-xl) calc(var(--mantine-spacing-sm) * 1.2);
 
   @container preset (max-width: 520px) {
-    padding-inline: 12px;
+    padding-inline: calc(var(--mantine-spacing-sm) * 1.2);
   }
 }
 
@@ -94,9 +94,9 @@
 
 .soldStamp {
   position: absolute;
-  top: 12px;
-  left: 12px;
-  padding: 4px 10px;
+  top: calc(var(--mantine-spacing-sm) * 1.2);
+  left: calc(var(--mantine-spacing-sm) * 1.2);
+  padding: var(--mantine-spacing-2xs) var(--mantine-spacing-sm);
   border-radius: var(--mantine-radius-xs);
   background: var(--mantine-color-bright);
   color: var(--mantine-color-body);
@@ -107,16 +107,16 @@
 .itemInfo {
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: calc(var(--mantine-spacing-sm) * 0.8);
   min-width: 0;
-  padding: 14px 18px;
+  padding: var(--mantine-spacing-md) var(--mantine-spacing-lg);
 }
 
 .itemRow {
   display: flex;
   align-items: flex-start;
   justify-content: space-between;
-  gap: 12px;
+  gap: calc(var(--mantine-spacing-sm) * 1.2);
 }
 
 .itemTitle {
@@ -137,13 +137,13 @@
 .facts {
   display: flex;
   flex-wrap: wrap;
-  gap: 4px 16px;
+  gap: var(--mantine-spacing-2xs) var(--mantine-spacing-lg);
   margin: 0;
   font-size: var(--mantine-font-size-sm);
 
   & div {
     display: flex;
-    gap: 6px;
+    gap: var(--mantine-spacing-xs);
   }
 
   & dt {
@@ -171,7 +171,7 @@
 
 .day {
   align-self: center;
-  padding: 3px 10px;
+  padding: 3px var(--mantine-spacing-sm);
   border-radius: 1000px;
   background: var(--mantine-color-hover);
   font-size: var(--mantine-font-size-xs);
@@ -181,7 +181,7 @@
 .message {
   display: flex;
   flex-direction: column;
-  gap: 4px;
+  gap: var(--mantine-spacing-2xs);
   max-width: min(72%, 460px);
 
   &[data-from='them'] {
@@ -199,7 +199,7 @@
 }
 
 .bubble {
-  padding: 10px 14px;
+  padding: var(--mantine-spacing-sm) var(--mantine-spacing-md);
   border-radius: 18px;
   line-height: 1.45;
 
@@ -233,7 +233,7 @@
   }
 
   & figcaption {
-    padding: 8px 12px;
+    padding: calc(var(--mantine-spacing-sm) * 0.8) calc(var(--mantine-spacing-sm) * 1.2);
     font-size: var(--mantine-font-size-sm);
   }
 
@@ -247,7 +247,7 @@
 .meta {
   display: inline-flex;
   align-items: center;
-  gap: 4px;
+  gap: var(--mantine-spacing-2xs);
   font-size: 11.5px;
 
   &[data-seen] svg {
@@ -259,8 +259,8 @@
   align-self: center;
   display: inline-flex;
   align-items: center;
-  gap: 8px;
-  padding: 6px 14px;
+  gap: calc(var(--mantine-spacing-sm) * 0.8);
+  padding: var(--mantine-spacing-xs) var(--mantine-spacing-md);
   border: 1px dashed var(--mantine-color-default-border);
   border-radius: 1000px;
   background: var(--mantine-color-surface-panel);
@@ -295,8 +295,8 @@
   display: flex;
   align-items: baseline;
   justify-content: space-between;
-  gap: 10px;
-  padding: 12px 14px 10px;
+  gap: var(--mantine-spacing-sm);
+  padding: calc(var(--mantine-spacing-sm) * 1.2) var(--mantine-spacing-md) var(--mantine-spacing-sm);
 
   & span {
     font-size: var(--mantine-font-size-sm);
@@ -312,7 +312,7 @@
 }
 
 .offerNote {
-  padding: 0 14px 12px;
+  padding: 0 var(--mantine-spacing-md) calc(var(--mantine-spacing-sm) * 1.2);
   font-size: 13.5px;
   color: var(--mantine-color-bright);
 }
@@ -327,12 +327,12 @@
 .offerActions {
   display: flex;
   flex-wrap: wrap;
-  gap: 6px;
-  padding: 10px 12px;
+  gap: var(--mantine-spacing-xs);
+  padding: var(--mantine-spacing-sm) calc(var(--mantine-spacing-sm) * 1.2);
 }
 
 .offerState {
-  padding: 9px 14px;
+  padding: calc(var(--mantine-spacing-sm) * 0.8) var(--mantine-spacing-md);
   font-size: var(--mantine-font-size-sm);
   font-weight: var(--mantine-font-weight-medium);
 }
@@ -340,14 +340,14 @@
 .counter {
   display: flex;
   flex-direction: column;
-  gap: 10px;
-  padding: 12px;
+  gap: var(--mantine-spacing-sm);
+  padding: calc(var(--mantine-spacing-sm) * 1.2);
 }
 
 .counterLabel,
 .fieldLabel {
   display: block;
-  margin-bottom: 6px;
+  margin-bottom: var(--mantine-spacing-xs);
   font-size: var(--mantine-font-size-sm);
   font-weight: var(--mantine-font-weight-medium);
   color: var(--mantine-color-bright);
@@ -395,22 +395,22 @@
 .pickup {
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: calc(var(--mantine-spacing-sm) * 1.2);
   align-self: center;
   width: 360px;
   max-width: 100%;
-  padding: 14px;
+  padding: var(--mantine-spacing-md);
 }
 
 .pickupTitle {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: calc(var(--mantine-spacing-sm) * 0.8);
 }
 
 .where {
   display: flex;
-  gap: 8px;
+  gap: calc(var(--mantine-spacing-sm) * 0.8);
   font-size: var(--mantine-font-size-sm);
 
   & svg {
@@ -421,8 +421,8 @@
 .typing {
   align-self: flex-start;
   display: inline-flex;
-  gap: 4px;
-  padding: 12px 14px;
+  gap: var(--mantine-spacing-2xs);
+  padding: calc(var(--mantine-spacing-sm) * 1.2) var(--mantine-spacing-md);
   border: 1px solid var(--mantine-color-border);
   border-radius: 18px;
   background: var(--mantine-color-surface-panel);
@@ -460,18 +460,18 @@
   display: flex;
   flex: none;
   flex-direction: column;
-  gap: 10px;
-  padding: 10px 20px 16px;
+  gap: var(--mantine-spacing-sm);
+  padding: var(--mantine-spacing-sm) var(--mantine-spacing-xl) var(--mantine-spacing-lg);
 
   @container preset (max-width: 520px) {
-    padding-inline: 12px;
+    padding-inline: calc(var(--mantine-spacing-sm) * 1.2);
   }
 }
 
 .quick {
   display: flex;
   flex-wrap: wrap;
-  gap: 6px;
+  gap: var(--mantine-spacing-xs);
 }
 
 .quickReply {
@@ -484,7 +484,7 @@
 .composer {
   display: flex;
   align-items: flex-end;
-  gap: 8px;
+  gap: calc(var(--mantine-spacing-sm) * 0.8);
   padding: 6px 6px 6px 8px;
   border: 1px solid var(--mantine-color-default-border);
   border-radius: 22px;
@@ -511,7 +511,7 @@
 }
 
 .blockedNote {
-  padding: 10px;
+  padding: var(--mantine-spacing-sm);
   border-radius: var(--mantine-radius-md);
   background: var(--mantine-color-hover);
   font-size: var(--mantine-font-size-sm);

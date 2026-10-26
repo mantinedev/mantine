@@ -1,6 +1,6 @@
 .root {
   flex: none;
-  padding: 10px 16px 12px;
+  padding: var(--mantine-spacing-xs) var(--mantine-spacing-md) var(--mantine-spacing-sm);
   background: var(--mantine-color-surface-panel);
   border-bottom: 1px solid var(--mantine-color-border);
 }
@@ -10,14 +10,14 @@
   flex-wrap: wrap;
   align-items: baseline;
   justify-content: space-between;
-  gap: 10px;
-  margin-bottom: 8px;
+  gap: var(--mantine-spacing-xs);
+  margin-bottom: var(--mantine-spacing-xs);
 }
 
 .stats {
   display: flex;
   flex-wrap: wrap;
-  gap: 14px;
+  gap: var(--mantine-spacing-sm);
   font-size: 12.5px;
 
   & b {
@@ -30,7 +30,7 @@
 .bad {
   display: inline-flex;
   align-items: center;
-  gap: 4px;
+  gap: var(--mantine-spacing-3xs);
   font-weight: var(--mantine-font-weight-bold);
   color: var(--fh-red);
 }
@@ -38,7 +38,7 @@
 .grid {
   display: grid;
   grid-template-columns: 62px minmax(0, 1fr);
-  gap: 5px 8px;
+  gap: var(--mantine-spacing-3xs) var(--mantine-spacing-xs);
   align-items: center;
 
   @container preset (max-width: 520px) {
@@ -152,6 +152,6 @@
 }
 
 .note {
-  margin-top: 6px;
+  margin-top: var(--mantine-spacing-2xs);
   font-size: var(--mantine-font-size-xs);
 }

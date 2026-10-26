@@ -1,7 +1,7 @@
 .root {
   display: flex;
   align-items: center;
-  gap: 28px;
+  gap: calc(var(--mantine-spacing-lg) + var(--mantine-spacing-2xs));
   height: 72px;
   padding-inline: var(--mantine-spacing-xl);
   border-bottom: 1px solid var(--mantine-color-border);
@@ -18,7 +18,7 @@
 .logo {
   display: inline-flex;
   align-items: center;
-  gap: 10px;
+  gap: var(--mantine-spacing-xs);
   text-decoration: none;
   font-family: var(--mantine-font-family-headings);
   font-weight: 800;

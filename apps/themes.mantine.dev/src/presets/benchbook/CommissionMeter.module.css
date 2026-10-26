@@ -18,13 +18,13 @@
 .stepper {
   display: grid;
   grid-template-columns: repeat(6, minmax(0, 1fr));
-  gap: 6px;
+  gap: var(--mantine-spacing-2xs);
 }
 
 .step {
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: var(--mantine-spacing-xs);
   min-width: 0;
 }
 
@@ -46,7 +46,7 @@
   white-space: nowrap;
   text-overflow: ellipsis;
 
-  margin-bottom: 6px;
+  margin-bottom: var(--mantine-spacing-2xs);
   color: var(--mantine-color-bright);
 
   .step:where([data-current]) & {

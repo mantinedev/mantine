@@ -4,22 +4,22 @@
   z-index: 10;
   display: flex;
   align-items: center;
-  gap: 20px;
+  gap: calc(var(--mantine-spacing-md) + var(--mantine-spacing-2xs));
   height: 64px;
-  padding: 0 24px;
+  padding: 0 var(--mantine-spacing-lg);
   background: var(--mantine-color-surface-panel);
   border-bottom: 1px solid var(--mantine-color-border);
 
   @container preset (max-width: 520px) {
-    gap: 12px;
-    padding: 0 16px;
+    gap: var(--mantine-spacing-sm);
+    padding: 0 var(--mantine-spacing-md);
   }
 }
 
 .brand {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: var(--mantine-spacing-xs);
   flex: none;
   text-decoration: none;
 }
@@ -47,7 +47,7 @@
 .progress {
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: var(--mantine-spacing-sm);
   flex: 1;
   min-width: 0;
   max-width: 360px;
@@ -81,7 +81,7 @@
 .actions {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: var(--mantine-spacing-xs);
   margin-inline-start: auto;
 }
 

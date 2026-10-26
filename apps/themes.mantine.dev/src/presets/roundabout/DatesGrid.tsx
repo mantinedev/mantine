@@ -2,7 +2,7 @@
 
 import { useRef } from 'react';
 import { IconCheck } from '@tabler/icons-react';
-import { Avatar, Badge, Card, Text, Title } from '@mantine/core';
+import { Avatar, Badge, Card, ScrollArea, Text, Title } from '@mantine/core';
 import { type Availability, DATES_COUNT, PEOPLE } from './data';
 import { type BestRun, formatDay, getDay, getRunHint, getRunLabel, isWeekend } from './trip';
 import classes from './DatesGrid.module.css';
@@ -49,7 +49,7 @@ export function DatesGrid({ availability, counts, run, pillRef, onToggleDay }: D
         </Text>
       </div>
 
-      <div className={classes.scroll}>
+      <ScrollArea className={classes.scroll} scrollbars="x" type="auto">
         <table className={classes.grid} ref={tableRef}>
           <colgroup>
             <col />
@@ -128,7 +128,7 @@ export function DatesGrid({ availability, counts, run, pillRef, onToggleDay }: D
             </tr>
           </tbody>
         </table>
-      </div>
+      </ScrollArea>
 
       <div className={classes.bestLine}>
         <Badge

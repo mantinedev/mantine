@@ -2,13 +2,13 @@
   display: flex;
   flex-wrap: wrap;
   gap: var(--mantine-spacing-md);
-  padding-top: 4px;
+  padding-top: var(--mantine-spacing-3xs);
   font-size: var(--mantine-font-size-sm);
 
   & span {
     display: inline-flex;
     align-items: center;
-    gap: 8px;
+    gap: var(--mantine-spacing-xs);
   }
 
   & i {
@@ -39,13 +39,13 @@
 
 .tooltip {
   min-width: 170px;
-  padding: 10px 12px;
+  padding: var(--mantine-spacing-xs) var(--mantine-spacing-sm);
   font-size: var(--mantine-font-size-sm);
   font-variant-numeric: tabular-nums;
 }
 
 .tooltipTitle {
-  margin-bottom: 4px;
+  margin-bottom: var(--mantine-spacing-3xs);
   font-weight: var(--mantine-font-weight-bold);
   color: var(--mantine-color-bright);
 }
@@ -53,11 +53,11 @@
 .tooltipRow {
   display: flex;
   align-items: center;
-  gap: 6px;
+  gap: var(--mantine-spacing-2xs);
 
   & b {
     margin-inline-start: auto;
-    padding-inline-start: 12px;
+    padding-inline-start: var(--mantine-spacing-sm);
     font-weight: var(--mantine-font-weight-bold);
     color: var(--mantine-color-bright);
   }

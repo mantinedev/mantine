@@ -83,7 +83,7 @@
   top: 0;
   right: 6px;
   width: 248px;
-  padding: 16px 18px;
+  padding: calc(var(--mantine-spacing-xs) * 2) var(--mantine-spacing-md);
   font-size: var(--mantine-font-size-sm);
   color: var(--mantine-color-text);
 
@@ -91,7 +91,7 @@
     position: relative;
     right: auto;
     width: auto;
-    margin: 0 8px 16px;
+    margin: 0 var(--mantine-spacing-xs) calc(var(--mantine-spacing-xs) * 2);
   }
 }
 
@@ -108,15 +108,15 @@
 
 .counts {
   display: grid;
-  gap: 6px;
-  margin: 12px 0 0;
+  gap: calc(var(--mantine-spacing-sm) / 2);
+  margin: var(--mantine-spacing-sm) 0 0;
 }
 
 .count {
   display: flex;
   align-items: baseline;
   justify-content: space-between;
-  gap: 14px;
+  gap: var(--mantine-spacing-sm);
 
   & dt {
     font-size: var(--mantine-font-size-xs);
@@ -135,9 +135,9 @@
 .order {
   display: flex;
   align-items: center;
-  gap: 10px;
-  margin-top: 12px;
-  padding-top: 12px;
+  gap: var(--mantine-spacing-xs);
+  margin-top: var(--mantine-spacing-sm);
+  padding-top: var(--mantine-spacing-sm);
   border-top: 1px solid var(--mantine-color-border);
   font-size: var(--mantine-font-size-xs);
 }

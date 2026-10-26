@@ -4,7 +4,7 @@
   color: var(--mantine-color-bright);
 
   &:where(:not(:first-child)) {
-    margin-top: 6px;
+    margin-top: calc(var(--mantine-spacing-sm) / 2);
   }
 }
 
@@ -14,19 +14,19 @@
 
 .sub {
   display: block;
-  padding: 5px 8px;
+  padding: var(--mantine-spacing-2xs) var(--mantine-spacing-xs);
   font-weight: var(--mantine-font-weight-medium);
   color: var(--mantine-color-bright);
 }
 
 .subList {
-  margin-left: 8px;
+  margin-left: var(--mantine-spacing-xs);
   border-left: 1px solid var(--mantine-color-border);
 }
 
 .subList .nested {
   margin-left: -1px;
-  padding-left: 12px;
+  padding-left: var(--mantine-spacing-sm);
   border-left: 2px solid transparent;
   border-radius: 0 var(--mantine-radius-md) var(--mantine-radius-md) 0;
 
