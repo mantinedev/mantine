@@ -43,6 +43,31 @@ describe('@mantine/hooks/use-hash', () => {
     expect(result.current[0]).toBe('#section');
   });
 
+  it.each([
+    ['hello world', '#hello%20world'],
+    ['café', '#caf%C3%A9'],
+    ['#hello%20world', '#hello%20world'],
+    ['', ''],
+    ['#', ''],
+  ])('setter returns the URL hash for %j', (value, expected) => {
+    const { result } = renderHook(() => useHash({ getInitialValueInEffect: false }));
+    act(() => {
+      result.current[1](value);
+    });
+    expect(result.current[0]).toBe(expected);
+    expect(window.location.hash).toBe(expected);
+  });
+
+  it('keeps the normalized value when setting an equivalent hash', () => {
+    window.history.replaceState(null, '', '#hello%20world');
+    const { result } = renderHook(() => useHash({ getInitialValueInEffect: false }));
+    act(() => {
+      result.current[1]('hello world');
+    });
+    expect(result.current[0]).toBe('#hello%20world');
+    expect(window.location.hash).toBe('#hello%20world');
+  });
+
   it('reacts to external hashchange events', () => {
     const { result } = renderHook(() => useHash({ getInitialValueInEffect: false }));
     act(() => {
