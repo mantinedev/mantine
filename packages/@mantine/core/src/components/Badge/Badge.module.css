@@ -22,7 +22,7 @@
   --badge-padding-x: var(--badge-padding-x-md);
   --badge-radius: 1000px;
   --badge-lh: calc(var(--badge-height) - rem(2px));
-  --badge-color: var(--mantine-color-white);
+  --badge-color: var(--mantine-primary-color-contrast);
   --badge-bg: var(--mantine-primary-color-filled);
   --badge-border-width: 1px;
   --badge-bd: var(--badge-border-width) solid transparent;

@@ -19,6 +19,6 @@
   min-height: var(--ti-size);
   border-radius: var(--ti-radius, var(--mantine-radius-default));
   background: var(--ti-bg, var(--mantine-primary-color-filled));
-  color: var(--ti-color, var(--mantine-color-white));
+  color: var(--ti-color, var(--mantine-primary-color-contrast));
   border: var(--ti-bd, 1px solid transparent);
 }

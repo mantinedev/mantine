@@ -98,7 +98,7 @@ const varsResolver = createVarsResolver<BadgeFactory>(
         '--badge-fz': getSize(size, 'badge-fz'),
         '--badge-radius': circle || radius === undefined ? undefined : getRadius(radius),
         '--badge-bg': color || variant ? colors.background : undefined,
-        '--badge-color': color || variant ? colors.color : undefined,
+        '--badge-color': color || variant || autoContrast !== undefined ? colors.color : undefined,
         '--badge-bd': color || variant ? colors.border : undefined,
         '--badge-dot-color': variant === 'dot' ? getThemeColor(color, theme) : undefined,
       },

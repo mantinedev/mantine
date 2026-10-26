@@ -72,4 +72,14 @@ describe('@mantine/core/Badge', () => {
       container.querySelector('.mantine-Badge-section[data-position="right"]')
     ).toHaveTextContent('test-right');
   });
+
+  it('keeps white text when autoContrast is disabled on the component', () => {
+    const { container } = render(<Badge autoContrast={false}>test</Badge>, {
+      autoContrast: true,
+      primaryColor: 'yellow',
+    });
+    expect(container.querySelector('.mantine-Badge-root')).toHaveStyle({
+      '--badge-color': 'var(--mantine-color-white)',
+    });
+  });
 });

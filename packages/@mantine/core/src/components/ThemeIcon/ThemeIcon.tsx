@@ -75,7 +75,7 @@ const varsResolver = createVarsResolver<ThemeIconFactory>(
         '--ti-size': getSize(size, 'ti-size'),
         '--ti-radius': radius === undefined ? undefined : getRadius(radius),
         '--ti-bg': color || variant ? colors.background : undefined,
-        '--ti-color': color || variant ? colors.color : undefined,
+        '--ti-color': color || variant || autoContrast !== undefined ? colors.color : undefined,
         '--ti-bd': color || variant ? colors.border : undefined,
       },
     };
