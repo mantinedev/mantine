@@ -2,8 +2,9 @@
 
 import { useRef, useState } from 'react';
 import { IconCheck } from '@tabler/icons-react';
-import { MantineProvider, ThemeIcon, Transition } from '@mantine/core';
+import { ThemeIcon, Transition } from '@mantine/core';
 import { PresetFrame } from '@/components/PresetFrame';
+import { PresetProvider } from '@/components/PresetProvider';
 import { type ActivityEntry, type Deal, type DealFilter, initialDeals, STAGES } from './data';
 import { DealDetail, type DetailTab } from './DealDetail';
 import { DealList } from './DealList';
@@ -158,11 +159,11 @@ export function Benchbook() {
   return (
     <>
       <link rel="stylesheet" href={FONTS_URL} precedence="default" />
-      <MantineProvider theme={theme} cssVariablesResolver={cssVariablesResolver}>
+      <PresetProvider theme={theme} cssVariablesResolver={cssVariablesResolver}>
         <PresetFrame>
           <App />
         </PresetFrame>
-      </MantineProvider>
+      </PresetProvider>
     </>
   );
 }

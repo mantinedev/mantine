@@ -2,8 +2,9 @@
 
 import { useEffect, useRef, useState } from 'react';
 import { IconAlertTriangle, IconBan, IconCheck, IconCircleX, IconSend } from '@tabler/icons-react';
-import { MantineProvider, Transition } from '@mantine/core';
+import { Transition } from '@mantine/core';
 import { PresetFrame } from '@/components/PresetFrame';
+import { PresetProvider } from '@/components/PresetProvider';
 import { AppointmentDrawer } from './AppointmentDrawer';
 import { type BookingRequest, BookModal } from './BookModal';
 import {
@@ -502,11 +503,11 @@ export function Fernhill() {
   return (
     <>
       <link rel="stylesheet" href={FONTS_URL} precedence="default" />
-      <MantineProvider theme={theme} cssVariablesResolver={cssVariablesResolver}>
+      <PresetProvider theme={theme} cssVariablesResolver={cssVariablesResolver}>
         <PresetFrame>
           <ClinicDay />
         </PresetFrame>
-      </MantineProvider>
+      </PresetProvider>
     </>
   );
 }

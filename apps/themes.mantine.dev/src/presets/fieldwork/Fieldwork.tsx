@@ -1,8 +1,9 @@
 'use client';
 
 import { useRef, useState } from 'react';
-import { Button, MantineProvider, Portal, Text, Title, Transition } from '@mantine/core';
+import { Button, Portal, Text, Title, Transition } from '@mantine/core';
 import { PresetFrame } from '@/components/PresetFrame';
+import { PresetProvider } from '@/components/PresetProvider';
 import { audiences, footerColumns, type Speaker, sponsorTiers, trackColor } from './data';
 import { Hero } from './Hero';
 import { Logo } from './Logo';
@@ -192,11 +193,11 @@ export function Fieldwork() {
   return (
     <>
       <link rel="stylesheet" href={FONTS_URL} precedence="default" />
-      <MantineProvider theme={theme} cssVariablesResolver={cssVariablesResolver}>
+      <PresetProvider theme={theme} cssVariablesResolver={cssVariablesResolver}>
         <PresetFrame>
           <Site />
         </PresetFrame>
-      </MantineProvider>
+      </PresetProvider>
     </>
   );
 }

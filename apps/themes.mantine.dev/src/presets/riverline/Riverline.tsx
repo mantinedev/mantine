@@ -4,7 +4,6 @@ import { useRef, useState } from 'react';
 import { IconCheck, IconUpload } from '@tabler/icons-react';
 import {
   Button,
-  MantineProvider,
   Notification,
   SegmentedControl,
   SimpleGrid,
@@ -14,6 +13,7 @@ import {
   Transition,
 } from '@mantine/core';
 import { PresetFrame } from '@/components/PresetFrame';
+import { PresetProvider } from '@/components/PresetProvider';
 import { CrewsCard } from './CrewsCard';
 import { KpiStrip } from './KpiStrip';
 import { RebalancingQueue } from './RebalancingQueue';
@@ -107,11 +107,11 @@ export function Riverline() {
   return (
     <>
       <link rel="stylesheet" href={FONTS_URL} precedence="default" />
-      <MantineProvider theme={theme} cssVariablesResolver={cssVariablesResolver}>
+      <PresetProvider theme={theme} cssVariablesResolver={cssVariablesResolver}>
         <PresetFrame>
           <Dashboard />
         </PresetFrame>
-      </MantineProvider>
+      </PresetProvider>
     </>
   );
 }

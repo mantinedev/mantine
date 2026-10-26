@@ -1,14 +1,9 @@
 'use client';
 
 import { useEffect, useRef, useState } from 'react';
-import {
-  localStorageColorSchemeManager,
-  MantineProvider,
-  Portal,
-  Text,
-  Transition,
-} from '@mantine/core';
+import { localStorageColorSchemeManager, Portal, Text, Transition } from '@mantine/core';
 import { PresetFrame } from '@/components/PresetFrame';
+import { PresetProvider } from '@/components/PresetProvider';
 import { Chapters } from './Chapters';
 import { DURATION, formatTime } from './data';
 import { Hero } from './Hero';
@@ -169,7 +164,7 @@ export function NightShift() {
   return (
     <>
       <link rel="stylesheet" href={FONTS_URL} precedence="default" />
-      <MantineProvider
+      <PresetProvider
         theme={theme}
         cssVariablesResolver={cssVariablesResolver}
         defaultColorScheme="dark"
@@ -178,7 +173,7 @@ export function NightShift() {
         <PresetFrame>
           <Episode />
         </PresetFrame>
-      </MantineProvider>
+      </PresetProvider>
     </>
   );
 }

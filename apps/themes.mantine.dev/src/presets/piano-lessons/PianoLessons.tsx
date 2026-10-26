@@ -1,8 +1,9 @@
 'use client';
 
 import { useRef, useState } from 'react';
-import { localStorageColorSchemeManager, MantineProvider, Portal, Transition } from '@mantine/core';
+import { localStorageColorSchemeManager, Portal, Transition } from '@mantine/core';
 import { PresetFrame } from '@/components/PresetFrame';
+import { PresetProvider } from '@/components/PresetProvider';
 import { About } from './About';
 import { Booking } from './Booking';
 import { Faq } from './Faq';
@@ -59,7 +60,7 @@ export function PianoLessons() {
   return (
     <>
       <link rel="stylesheet" href={FONTS_URL} precedence="default" />
-      <MantineProvider
+      <PresetProvider
         theme={theme}
         cssVariablesResolver={cssVariablesResolver}
         colorSchemeManager={colorSchemeManager}
@@ -67,7 +68,7 @@ export function PianoLessons() {
         <PresetFrame>
           <LessonsPage />
         </PresetFrame>
-      </MantineProvider>
+      </PresetProvider>
     </>
   );
 }

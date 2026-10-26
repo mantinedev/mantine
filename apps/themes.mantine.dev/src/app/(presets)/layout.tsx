@@ -13,6 +13,8 @@ export const metadata: Metadata = {
   icons: { shortcut: '/favicon.svg' },
 };
 
+const EMBED_SCRIPT = `try{if(window.self!==window.top){var r=document.documentElement;r.setAttribute("data-embedded","");var s=new URLSearchParams(location.search).get("scheme");if(s==="light"||s==="dark")r.setAttribute("data-mantine-color-scheme",s);}}catch(e){}`;
+
 interface PresetsLayoutProps {
   children: React.ReactNode;
 }
@@ -22,6 +24,7 @@ export default function PresetsLayout({ children }: PresetsLayoutProps) {
     <html lang="en" {...mantineHtmlProps}>
       <head>
         <ColorSchemeScript />
+        <script dangerouslySetInnerHTML={{ __html: EMBED_SCRIPT }} />
       </head>
       <body>{children}</body>
     </html>

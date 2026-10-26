@@ -1,8 +1,9 @@
 'use client';
 
 import { useMemo, useRef, useState } from 'react';
-import { localStorageColorSchemeManager, MantineProvider, Portal, Transition } from '@mantine/core';
+import { localStorageColorSchemeManager, Portal, Transition } from '@mantine/core';
 import { PresetFrame } from '@/components/PresetFrame';
+import { PresetProvider } from '@/components/PresetProvider';
 import { getTrip, INITIAL_TRIP, type Mode, STOPS, STOPS_BY_ID } from './data';
 import { Faq } from './Faq';
 import { Footer } from './Footer';
@@ -87,7 +88,7 @@ export function Saltwater() {
   return (
     <>
       <link rel="stylesheet" href={FONTS_URL} precedence="default" />
-      <MantineProvider
+      <PresetProvider
         theme={theme}
         cssVariablesResolver={cssVariablesResolver}
         colorSchemeManager={colorSchemeManager}
@@ -95,7 +96,7 @@ export function Saltwater() {
         <PresetFrame>
           <Landing />
         </PresetFrame>
-      </MantineProvider>
+      </PresetProvider>
     </>
   );
 }

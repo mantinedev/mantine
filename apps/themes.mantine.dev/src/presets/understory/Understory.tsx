@@ -1,8 +1,9 @@
 'use client';
 
 import { useCallback, useRef, useState } from 'react';
-import { MantineProvider, Transition } from '@mantine/core';
+import { Transition } from '@mantine/core';
 import { PresetFrame } from '@/components/PresetFrame';
+import { PresetProvider } from '@/components/PresetProvider';
 import { Chat } from './Chat';
 import { type Plant, type PlantKey, PLANTS, type Season } from './data';
 import { currentVersion, getPlant, type PlanState, type Swaps, type View } from './model';
@@ -138,11 +139,11 @@ export function Understory() {
   return (
     <>
       <link rel="stylesheet" href={FONTS_URL} precedence="default" />
-      <MantineProvider theme={theme} cssVariablesResolver={cssVariablesResolver}>
+      <PresetProvider theme={theme} cssVariablesResolver={cssVariablesResolver}>
         <PresetFrame>
           <Planner />
         </PresetFrame>
-      </MantineProvider>
+      </PresetProvider>
     </>
   );
 }

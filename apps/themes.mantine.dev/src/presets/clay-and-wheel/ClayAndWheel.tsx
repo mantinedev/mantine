@@ -1,8 +1,9 @@
 'use client';
 
 import { useEffect, useMemo, useRef, useState } from 'react';
-import { Anchor, Avatar, Drawer, MantineProvider, Title, Transition } from '@mantine/core';
+import { Anchor, Avatar, Drawer, Title, Transition } from '@mantine/core';
 import { PresetFrame } from '@/components/PresetFrame';
+import { PresetProvider } from '@/components/PresetProvider';
 import { CourseOutline } from './CourseOutline';
 import { CURRENT_LESSON, modules as initialModules } from './data';
 import { LessonPlayer } from './LessonPlayer';
@@ -139,11 +140,11 @@ export function ClayAndWheel() {
   return (
     <>
       <link rel="stylesheet" href={FONTS_URL} precedence="default" />
-      <MantineProvider theme={theme} cssVariablesResolver={cssVariablesResolver}>
+      <PresetProvider theme={theme} cssVariablesResolver={cssVariablesResolver}>
         <PresetFrame>
           <Lesson />
         </PresetFrame>
-      </MantineProvider>
+      </PresetProvider>
     </>
   );
 }

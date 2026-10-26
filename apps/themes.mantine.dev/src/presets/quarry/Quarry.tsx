@@ -3,17 +3,10 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { IconLayoutSidebarRight, IconMenu2, IconUpload } from '@tabler/icons-react';
 import { CodeHighlightAdapterProvider } from '@mantine/code-highlight';
-import {
-  ActionIcon,
-  Button,
-  MantineProvider,
-  Overlay,
-  SegmentedControl,
-  Title,
-  Transition,
-} from '@mantine/core';
+import { ActionIcon, Button, Overlay, SegmentedControl, Title, Transition } from '@mantine/core';
 import { useWindowEvent } from '@mantine/hooks';
 import { PresetFrame } from '@/components/PresetFrame';
+import { PresetProvider } from '@/components/PresetProvider';
 import { Composer } from './Composer';
 import { AUTO_QUESTION, FOLLOW_UP, type HistoryItem, initialHistory } from './data';
 import { FirstAnswer } from './FirstAnswer';
@@ -304,13 +297,13 @@ export function Quarry() {
   return (
     <>
       <link rel="stylesheet" href={FONTS_URL} precedence="default" />
-      <MantineProvider theme={theme} cssVariablesResolver={cssVariablesResolver}>
+      <PresetProvider theme={theme} cssVariablesResolver={cssVariablesResolver}>
         <CodeHighlightAdapterProvider adapter={quarryHighlightAdapter}>
           <PresetFrame>
             <Workspace />
           </PresetFrame>
         </CodeHighlightAdapterProvider>
-      </MantineProvider>
+      </PresetProvider>
     </>
   );
 }

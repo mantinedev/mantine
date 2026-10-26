@@ -2,13 +2,9 @@
 
 import { useEffect, useRef, useState } from 'react';
 import { IconCheck } from '@tabler/icons-react';
-import {
-  localStorageColorSchemeManager,
-  MantineProvider,
-  Overlay,
-  Transition,
-} from '@mantine/core';
+import { localStorageColorSchemeManager, Overlay, Transition } from '@mantine/core';
 import { PresetFrame } from '@/components/PresetFrame';
+import { PresetProvider } from '@/components/PresetProvider';
 import type { ComposerMode } from './Composer';
 import { CustomerPanel } from './CustomerPanel';
 import {
@@ -209,7 +205,7 @@ export function Hearth() {
   return (
     <>
       <link rel="stylesheet" href={FONTS_URL} precedence="default" />
-      <MantineProvider
+      <PresetProvider
         theme={theme}
         cssVariablesResolver={cssVariablesResolver}
         defaultColorScheme="dark"
@@ -218,7 +214,7 @@ export function Hearth() {
         <PresetFrame>
           <Desk />
         </PresetFrame>
-      </MantineProvider>
+      </PresetProvider>
     </>
   );
 }

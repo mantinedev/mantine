@@ -1,7 +1,7 @@
 'use client';
 
-import { MantineProvider } from '@mantine/core';
 import { PresetFrame } from '@/components/PresetFrame';
+import { PresetProvider } from '@/components/PresetProvider';
 import { shops } from './data';
 import { Demo } from './Demo';
 import { Faq } from './Faq';
@@ -51,11 +51,11 @@ export function Shelfwise() {
   return (
     <>
       <link rel="stylesheet" href={FONTS_URL} precedence="default" />
-      <MantineProvider theme={theme} cssVariablesResolver={cssVariablesResolver}>
+      <PresetProvider theme={theme} cssVariablesResolver={cssVariablesResolver}>
         <PresetFrame>
           <Landing />
         </PresetFrame>
-      </MantineProvider>
+      </PresetProvider>
     </>
   );
 }

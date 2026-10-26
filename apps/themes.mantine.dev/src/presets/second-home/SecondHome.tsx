@@ -1,8 +1,9 @@
 'use client';
 
 import { useEffect, useRef, useState } from 'react';
-import { MantineProvider, Transition } from '@mantine/core';
+import { Transition } from '@mantine/core';
 import { PresetFrame } from '@/components/PresetFrame';
+import { PresetProvider } from '@/components/PresetProvider';
 import { ConversationList } from './ConversationList';
 import {
   CONVERSATIONS,
@@ -360,12 +361,12 @@ export function SecondHome() {
   return (
     <>
       <link rel="stylesheet" href={FONTS_URL} precedence="default" />
-      <MantineProvider theme={theme} cssVariablesResolver={cssVariablesResolver}>
+      <PresetProvider theme={theme} cssVariablesResolver={cssVariablesResolver}>
         <PresetFrame>
           <Inbox />
           <p className={classes.credits}>{CREDITS}</p>
         </PresetFrame>
-      </MantineProvider>
+      </PresetProvider>
     </>
   );
 }

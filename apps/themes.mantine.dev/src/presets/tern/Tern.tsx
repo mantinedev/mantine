@@ -15,7 +15,6 @@ import {
   Breadcrumbs,
   Code,
   Drawer,
-  MantineProvider,
   Paper,
   Portal,
   Table,
@@ -25,6 +24,7 @@ import {
   Transition,
 } from '@mantine/core';
 import { PresetFrame } from '@/components/PresetFrame';
+import { PresetProvider } from '@/components/PresetProvider';
 import { ExampleRequest, ResponseSample } from './CodeSamples';
 import { plans, sections } from './data';
 import { EndpointBar } from './EndpointBar';
@@ -296,13 +296,13 @@ export function Tern() {
   return (
     <>
       <link rel="stylesheet" href={FONTS_URL} precedence="default" />
-      <MantineProvider theme={theme} cssVariablesResolver={cssVariablesResolver}>
+      <PresetProvider theme={theme} cssVariablesResolver={cssVariablesResolver}>
         <CodeHighlightAdapterProvider adapter={ternHighlightAdapter}>
           <PresetFrame>
             <Docs />
           </PresetFrame>
         </CodeHighlightAdapterProvider>
-      </MantineProvider>
+      </PresetProvider>
     </>
   );
 }

@@ -1,26 +1,62 @@
 'use client';
 
-import { useState } from 'react';
-import { SegmentedControl } from '@mantine/core';
-import { presets, type PresetId } from '@/presets';
+import { useCallback, useState } from 'react';
+import {
+  DEFAULT_OVERRIDES,
+  type PresetThemeInfo,
+  type PreviewColorScheme,
+  type ThemeOverrides,
+} from '@/preview';
 import { EditorSidebar } from '../EditorSidebar';
 import { PresetPreview } from '../PresetPreview';
+import { PreviewToolbar } from '../PreviewToolbar';
 import { Shell } from '../Shell';
 import classes from './ThemeEditor.module.css';
 
 export function ThemeEditor() {
-  const [presetId, setPresetId] = useState<PresetId>('dashboard');
-  const preset = presets.find((item) => item.id === presetId)!;
+  const [presetId, setPresetId] = useState('riverline');
+  const [colorScheme, setColorScheme] = useState<PreviewColorScheme>('light');
+  const [overrides, setOverrides] = useState<ThemeOverrides>(DEFAULT_OVERRIDES);
+  const [info, setInfo] = useState<PresetThemeInfo | null>(null);
+
+  const handleReady = useCallback((presetInfo: PresetThemeInfo) => {
+    setInfo(presetInfo);
+    setOverrides((current) =>
+      current.primaryColor &&
+      !presetInfo.swatches.some((swatch) => swatch.name === current.primaryColor)
+        ? { ...current, primaryColor: null }
+        : current
+    );
+  }, []);
+
+  const handleOverridesChange = (values: Partial<ThemeOverrides>) =>
+    setOverrides((current) => ({ ...current, ...values }));
 
   return (
-    <Shell sidebar={<EditorSidebar />}>
-      <div className={classes.content}>
-        <SegmentedControl
-          value={presetId}
-          onChange={(value) => setPresetId(value as PresetId)}
-          data={presets.map((item) => ({ value: item.id, label: item.label }))}
+    <Shell
+      sidebar={
+        <EditorSidebar
+          info={info}
+          overrides={overrides}
+          onChange={handleOverridesChange}
+          onReset={() => setOverrides(DEFAULT_OVERRIDES)}
         />
-        <PresetPreview preset={preset} />
+      }
+    >
+      <div className={classes.content}>
+        <PreviewToolbar
+          presetId={presetId}
+          onPresetChange={setPresetId}
+          colorScheme={colorScheme}
+          onColorSchemeChange={setColorScheme}
+        />
+        <PresetPreview
+          presetId={presetId}
+          overrides={overrides}
+          colorScheme={colorScheme}
+          onReady={handleReady}
+          onColorSchemeChange={setColorScheme}
+        />
       </div>
     </Shell>
   );

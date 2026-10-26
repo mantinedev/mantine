@@ -1,8 +1,9 @@
 'use client';
 
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import { Drawer, MantineProvider, Transition } from '@mantine/core';
+import { Drawer, Transition } from '@mantine/core';
 import { PresetFrame } from '@/components/PresetFrame';
+import { PresetProvider } from '@/components/PresetProvider';
 import { Chat } from './Chat';
 import { CitationsContext, getCitedRefs } from './citations';
 import { type Change, changes, fallbackAnswer, type Mode, risks, suggestions } from './data';
@@ -253,11 +254,11 @@ export function Clerk() {
   return (
     <>
       <link rel="stylesheet" href={FONTS_URL} precedence="default" />
-      <MantineProvider theme={theme} cssVariablesResolver={cssVariablesResolver}>
+      <PresetProvider theme={theme} cssVariablesResolver={cssVariablesResolver}>
         <PresetFrame>
           <Workspace />
         </PresetFrame>
-      </MantineProvider>
+      </PresetProvider>
     </>
   );
 }

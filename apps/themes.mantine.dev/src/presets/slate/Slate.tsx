@@ -6,13 +6,13 @@ import {
   ActionIcon,
   Avatar,
   Button,
-  MantineProvider,
   ScrollArea,
   ThemeIcon,
   Title,
   Transition,
 } from '@mantine/core';
 import { PresetFrame } from '@/components/PresetFrame';
+import { PresetProvider } from '@/components/PresetProvider';
 import { Composer } from './Composer';
 import {
   BETHAN_FOLLOW_UP,
@@ -517,11 +517,11 @@ export function Slate() {
   return (
     <>
       <link rel="stylesheet" href={FONTS_URL} precedence="default" />
-      <MantineProvider theme={theme} cssVariablesResolver={cssVariablesResolver}>
+      <PresetProvider theme={theme} cssVariablesResolver={cssVariablesResolver}>
         <PresetFrame>
           <Workspace />
         </PresetFrame>
-      </MantineProvider>
+      </PresetProvider>
     </>
   );
 }

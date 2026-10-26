@@ -1,17 +1,9 @@
 'use client';
 
 import { useRef, useState } from 'react';
-import {
-  Anchor,
-  Avatar,
-  Button,
-  MantineProvider,
-  Portal,
-  Text,
-  Title,
-  Transition,
-} from '@mantine/core';
+import { Anchor, Avatar, Button, Portal, Text, Title, Transition } from '@mantine/core';
 import { PresetFrame } from '@/components/PresetFrame';
+import { PresetProvider } from '@/components/PresetProvider';
 import { Comments } from './Comments';
 import { ContentsRail } from './ContentsRail';
 import { footerLinks, relatedStories, tags } from './data';
@@ -208,11 +200,11 @@ export function LowTide() {
   return (
     <>
       <link rel="stylesheet" href={FONTS_URL} precedence="default" />
-      <MantineProvider theme={theme} cssVariablesResolver={cssVariablesResolver}>
+      <PresetProvider theme={theme} cssVariablesResolver={cssVariablesResolver}>
         <PresetFrame>
           <Article />
         </PresetFrame>
-      </MantineProvider>
+      </PresetProvider>
     </>
   );
 }

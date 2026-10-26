@@ -2,8 +2,9 @@
 
 import { useRef, useState } from 'react';
 import { IconCheck } from '@tabler/icons-react';
-import { MantineProvider, Notification, Transition } from '@mantine/core';
+import { Notification, Transition } from '@mantine/core';
 import { PresetFrame } from '@/components/PresetFrame';
+import { PresetProvider } from '@/components/PresetProvider';
 import { BoardView, type SortKey } from './BoardView';
 import { CalendarView } from './CalendarView';
 import {
@@ -183,11 +184,11 @@ export function Inkwell() {
   return (
     <>
       <link rel="stylesheet" href={FONTS_URL} precedence="default" />
-      <MantineProvider theme={theme} cssVariablesResolver={cssVariablesResolver}>
+      <PresetProvider theme={theme} cssVariablesResolver={cssVariablesResolver}>
         <PresetFrame>
           <OrdersBoard />
         </PresetFrame>
-      </MantineProvider>
+      </PresetProvider>
     </>
   );
 }

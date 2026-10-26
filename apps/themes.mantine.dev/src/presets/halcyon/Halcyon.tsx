@@ -1,9 +1,10 @@
 'use client';
 
 import { useState } from 'react';
-import { localStorageColorSchemeManager, MantineProvider } from '@mantine/core';
+import { localStorageColorSchemeManager } from '@mantine/core';
 import { useIntersection } from '@mantine/hooks';
 import { PresetFrame } from '@/components/PresetFrame';
+import { PresetProvider } from '@/components/PresetProvider';
 import { BuyBar } from './BuyBar';
 import { CartDrawer, type CartItem } from './CartDrawer';
 import { Compare } from './Compare';
@@ -71,7 +72,7 @@ export function Halcyon() {
   return (
     <>
       <link rel="stylesheet" href={FONTS_URL} precedence="default" />
-      <MantineProvider
+      <PresetProvider
         theme={theme}
         cssVariablesResolver={cssVariablesResolver}
         colorSchemeManager={colorSchemeManager}
@@ -79,7 +80,7 @@ export function Halcyon() {
         <PresetFrame>
           <Launch />
         </PresetFrame>
-      </MantineProvider>
+      </PresetProvider>
     </>
   );
 }

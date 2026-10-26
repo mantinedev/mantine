@@ -3,9 +3,57 @@
 }
 
 .inner {
+  display: flex;
+  flex-direction: column;
+  gap: var(--mantine-spacing-xl);
   padding: var(--mantine-spacing-md);
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
 
 .title {
   color: var(--mantine-color-bright);
+}
+
+.section {
+  display: flex;
+  flex-direction: column;
+  gap: var(--mantine-spacing-sm);
+}
+
+.sectionTitle {
+  color: var(--mantine-color-bright);
+}
+
+.controlHead {
+  display: flex;
+  justify-content: space-between;
+  gap: var(--mantine-spacing-xs);
+  margin-bottom: 6px;
+}
+
+.label {
+  font-weight: var(--mantine-font-weight-medium);
+}
+
+.value {
+  font-variant-numeric: tabular-nums;
+}
+
+.swatch {
+  width: 100%;
+  height: auto;
+  aspect-ratio: 1;
+  cursor: pointer;
+  color: var(--mantine-color-white);
+}
+
+.check {
+  width: 12px;
+  height: 12px;
+  filter: drop-shadow(0 0 1px rgb(0 0 0 / 60%));
 }

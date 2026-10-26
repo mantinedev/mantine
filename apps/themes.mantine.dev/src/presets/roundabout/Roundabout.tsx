@@ -1,9 +1,10 @@
 'use client';
 
 import { useCallback, useRef, useState } from 'react';
-import { MantineProvider, Overlay, Transition } from '@mantine/core';
+import { Overlay, Transition } from '@mantine/core';
 import { useElementSize, useMergedRef } from '@mantine/hooks';
 import { PresetFrame } from '@/components/PresetFrame';
+import { PresetProvider } from '@/components/PresetProvider';
 import { Chat, type ChatHandle } from './Chat';
 import { AVAILABILITY, type Availability, POLL, type PollOption } from './data';
 import { GroupsSidebar } from './GroupsSidebar';
@@ -151,11 +152,11 @@ export function Roundabout() {
   return (
     <>
       <link rel="stylesheet" href={FONTS_URL} precedence="default" />
-      <MantineProvider theme={theme} cssVariablesResolver={cssVariablesResolver}>
+      <PresetProvider theme={theme} cssVariablesResolver={cssVariablesResolver}>
         <PresetFrame>
           <TripChat />
         </PresetFrame>
-      </MantineProvider>
+      </PresetProvider>
     </>
   );
 }

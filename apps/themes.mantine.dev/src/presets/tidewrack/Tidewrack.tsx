@@ -1,8 +1,9 @@
 'use client';
 
 import { useEffect, useRef, useState } from 'react';
-import { localStorageColorSchemeManager, MantineProvider, Text, Transition } from '@mantine/core';
+import { localStorageColorSchemeManager, Text, Transition } from '@mantine/core';
 import { PresetFrame } from '@/components/PresetFrame';
+import { PresetProvider } from '@/components/PresetProvider';
 import { ClashBanner } from './ClashBanner';
 import { Controls } from './Controls';
 import {
@@ -209,7 +210,7 @@ export function Tidewrack() {
   return (
     <>
       <link rel="stylesheet" href={FONTS_URL} precedence="default" />
-      <MantineProvider
+      <PresetProvider
         theme={theme}
         cssVariablesResolver={cssVariablesResolver}
         defaultColorScheme="dark"
@@ -218,7 +219,7 @@ export function Tidewrack() {
         <PresetFrame>
           <Festival />
         </PresetFrame>
-      </MantineProvider>
+      </PresetProvider>
     </>
   );
 }

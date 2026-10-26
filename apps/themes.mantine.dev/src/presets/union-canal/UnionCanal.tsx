@@ -1,8 +1,8 @@
 'use client';
 
 import { useState } from 'react';
-import { MantineProvider } from '@mantine/core';
 import { PresetFrame } from '@/components/PresetFrame';
+import { PresetProvider } from '@/components/PresetProvider';
 import { initialDonors, INITIAL_PEOPLE, INITIAL_RAISED } from './data';
 import type { Donation } from './DonateCard';
 import { Donors } from './Donors';
@@ -65,11 +65,11 @@ export function UnionCanal() {
   return (
     <>
       <link rel="stylesheet" href={FONTS_URL} precedence="default" />
-      <MantineProvider theme={theme} cssVariablesResolver={cssVariablesResolver}>
+      <PresetProvider theme={theme} cssVariablesResolver={cssVariablesResolver}>
         <PresetFrame>
           <Campaign />
         </PresetFrame>
-      </MantineProvider>
+      </PresetProvider>
     </>
   );
 }

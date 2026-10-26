@@ -1,9 +1,10 @@
 'use client';
 
 import { useMemo, useRef, useState } from 'react';
-import { MantineProvider, Overlay, Transition } from '@mantine/core';
+import { Overlay, Transition } from '@mantine/core';
 import { useWindowEvent } from '@mantine/hooks';
 import { PresetFrame } from '@/components/PresetFrame';
+import { PresetProvider } from '@/components/PresetProvider';
 import { ArticleList } from './ArticleList';
 import { type Article, type ArticleStatus, initialArticles, initialRecipe } from './data';
 import { Manuscript } from './Manuscript';
@@ -141,11 +142,11 @@ export function Larder() {
   return (
     <>
       <link rel="stylesheet" href={FONTS_URL} precedence="default" />
-      <MantineProvider theme={theme} cssVariablesResolver={cssVariablesResolver}>
+      <PresetProvider theme={theme} cssVariablesResolver={cssVariablesResolver}>
         <PresetFrame>
           <Editor />
         </PresetFrame>
-      </MantineProvider>
+      </PresetProvider>
     </>
   );
 }

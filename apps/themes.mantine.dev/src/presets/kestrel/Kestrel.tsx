@@ -1,7 +1,8 @@
 'use client';
 
-import { Avatar, Badge, MantineProvider, Text, Title } from '@mantine/core';
+import { Avatar, Badge, Text, Title } from '@mantine/core';
 import { PresetFrame } from '@/components/PresetFrame';
+import { PresetProvider } from '@/components/PresetProvider';
 import { AuthorAvatar } from './AuthorAvatar';
 import { ContourCover } from './ContourCover';
 import { FOOTER_LINKS } from './data';
@@ -105,11 +106,11 @@ export function Kestrel() {
   return (
     <>
       <link rel="stylesheet" href={FONTS_URL} precedence="default" />
-      <MantineProvider theme={theme} cssVariablesResolver={cssVariablesResolver}>
+      <PresetProvider theme={theme} cssVariablesResolver={cssVariablesResolver}>
         <PresetFrame>
           <Blog />
         </PresetFrame>
-      </MantineProvider>
+      </PresetProvider>
     </>
   );
 }
