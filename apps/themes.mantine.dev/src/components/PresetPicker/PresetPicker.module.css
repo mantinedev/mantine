@@ -1,0 +1,120 @@
+.target {
+  flex: 1;
+  max-width: 380px;
+  margin-inline-end: auto;
+}
+
+.targetInput {
+  display: flex;
+  align-items: center;
+  gap: var(--mantine-spacing-sm);
+  height: 44px;
+  padding-inline-start: 6px;
+}
+
+.targetThumbnail {
+  width: 56px;
+  flex-shrink: 0;
+}
+
+.targetText {
+  display: flex;
+  align-items: baseline;
+  gap: var(--mantine-spacing-xs);
+  min-width: 0;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.targetLabel {
+  font-weight: var(--mantine-font-weight-medium);
+  color: var(--mantine-color-bright);
+}
+
+.targetDescription {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-size: var(--mantine-font-size-sm);
+
+  @media (max-width: 520px) {
+    display: none;
+  }
+}
+
+.dropdown {
+  padding: 0;
+}
+
+.groups {
+  padding: var(--mantine-spacing-xs) var(--mantine-spacing-sm) var(--mantine-spacing-sm);
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--mantine-spacing-xs);
+  padding-bottom: var(--mantine-spacing-xs);
+
+  @media (max-width: 520px) {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+.option {
+  display: flex;
+  flex-direction: column;
+  gap: var(--mantine-spacing-xs);
+  padding: 6px;
+  border: 1px solid transparent;
+  border-radius: var(--mantine-radius-md);
+
+  &[data-combobox-active] {
+    border-color: var(--mantine-primary-color-filled);
+    background-color: transparent;
+    color: inherit;
+  }
+
+  &[data-combobox-selected] {
+    background-color: var(--mantine-color-default-hover);
+    color: inherit;
+  }
+}
+
+.optionText {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding-inline: 2px;
+}
+
+.optionLabel {
+  font-weight: var(--mantine-font-weight-medium);
+  color: var(--mantine-color-bright);
+}
+
+.thumbnail {
+  display: block;
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
+  border: 1px solid var(--mantine-color-default-border);
+  border-radius: var(--mantine-radius-sm);
+
+  & img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+}
+
+.light {
+  @mixin dark {
+    display: none !important;
+  }
+}
+
+.dark {
+  @mixin light {
+    display: none !important;
+  }
+}

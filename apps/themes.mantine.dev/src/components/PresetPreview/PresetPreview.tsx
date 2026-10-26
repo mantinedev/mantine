@@ -6,13 +6,11 @@ import {
   ActionIcon,
   Burger,
   Loader,
-  Select,
   Tooltip,
   useComputedColorScheme,
   useMantineColorScheme,
 } from '@mantine/core';
 import { useEditorParams } from '@/hooks/use-editor-params';
-import { type PresetCategory, presets } from '@/presets';
 import {
   type EditorMessage,
   getPresetUrl,
@@ -20,17 +18,9 @@ import {
   type PresetThemeInfo,
   type ThemeOverrides,
 } from '@/preview';
+import { PresetPicker } from '../PresetPicker';
 import { useShell } from '../Shell';
 import classes from './PresetPreview.module.css';
-
-const CATEGORIES: PresetCategory[] = ['Tools', 'Content', 'Marketing', 'Scheduling', 'Chat', 'AI'];
-
-const presetOptions = CATEGORIES.map((category) => ({
-  group: category,
-  items: presets
-    .filter((preset) => preset.category === category)
-    .map((preset) => ({ value: preset.id, label: `${preset.label}: ${preset.description}` })),
-}));
 
 function getFrameUrl(presetId: string, overrides: ThemeOverrides) {
   const url = getPresetUrl(presetId, overrides);
@@ -111,15 +101,9 @@ export function PresetPreview({ onReady }: PresetPreviewProps) {
           size="sm"
           aria-label="Open theme controls"
         />
-        <Select
-          aria-label="Preview page"
-          data={presetOptions}
+        <PresetPicker
           value={presetId}
-          onChange={(value) => value && setParams({ preset: value as typeof presetId })}
-          allowDeselect={false}
-          maxDropdownHeight={420}
-          comboboxProps={{ floatingStrategy: 'fixed' }}
-          className={classes.select}
+          onChange={(value) => setParams({ preset: value as typeof presetId })}
         />
         <Tooltip label="Open page in a new tab" floatingStrategy="fixed">
           <ActionIcon

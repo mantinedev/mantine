@@ -17,12 +17,6 @@
   background-color: var(--mantine-color-body);
 }
 
-.select {
-  flex: 1;
-  max-width: 360px;
-  margin-inline-end: auto;
-}
-
 .frame {
   position: relative;
   flex: 1;
