@@ -1,0 +1,105 @@
+.button {
+  font-weight: var(--mantine-font-weight-bold);
+  border-width: 2px;
+
+  &:where([data-variant='default']) {
+    border-color: var(--mantine-color-bright);
+    color: var(--mantine-color-bright);
+  }
+
+  &[data-variant='default'][aria-pressed='true'] {
+    background: var(--mantine-color-bright);
+    color: var(--mantine-color-body);
+  }
+}
+
+.actionIcon {
+  &:where([data-variant='default']) {
+    border-width: 2px;
+    border-color: var(--mantine-color-bright);
+    color: var(--mantine-color-bright);
+  }
+
+  &[data-variant='default'][aria-pressed='true'] {
+    background: var(--mantine-primary-color-filled);
+    border-color: var(--mantine-primary-color-filled);
+    color: var(--mantine-primary-color-contrast);
+  }
+}
+
+.badge {
+  --badge-height-md: 26px;
+  --badge-fz-md: 13px;
+  --badge-padding-x-md: 10px;
+}
+
+.badgeLabel {
+  text-transform: none;
+  letter-spacing: 0;
+  font-weight: var(--mantine-font-weight-bold);
+}
+
+.input {
+  border-width: 2px;
+  border-color: var(--mantine-color-border-strong);
+  color: var(--mantine-color-bright);
+}
+
+.title {
+  color: var(--mantine-color-bright);
+
+  &:where([data-order='3'], [data-order='4']) {
+    font-family: var(--mantine-font-family);
+  }
+}
+
+.tabs {
+  --tab-border-color: var(--mantine-color-bright);
+}
+
+.tabsList {
+  flex-wrap: nowrap;
+}
+
+.tab {
+  display: block;
+  padding: 12px 22px 12px 0;
+  border-width: 0;
+  text-align: left;
+  line-height: var(--mantine-line-height);
+
+  &::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 22px;
+    bottom: -2px;
+    height: 5px;
+    background: var(--mantine-primary-color-filled);
+    opacity: 0;
+  }
+
+  &:where([data-active])::after {
+    opacity: 1;
+  }
+
+  @mixin hover {
+    background-color: transparent;
+  }
+}
+
+.list {
+  padding-inline-start: 1.1em;
+}
+
+.listItem::marker {
+  color: var(--mantine-primary-color-filled);
+}
+
+.modalContent {
+  border: 2px solid var(--mantine-color-bright);
+}
+
+.modalOverlay {
+  background: var(--fw-overlay);
+}

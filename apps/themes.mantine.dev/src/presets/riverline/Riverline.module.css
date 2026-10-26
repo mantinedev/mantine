@@ -1,0 +1,245 @@
+.root {
+  position: relative;
+  background: light-dark(var(--mantine-color-gray-0), var(--mantine-color-dark-8));
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  gap: var(--mantine-spacing-lg);
+  padding: var(--mantine-spacing-xl);
+
+  @container preset (max-width: 760px) {
+    padding: var(--mantine-spacing-lg) var(--mantine-spacing-md);
+  }
+}
+
+.pageHead {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: var(--mantine-spacing-md);
+}
+
+.pageTitle {
+  @container preset (max-width: 760px) {
+    font-size: 28px;
+  }
+}
+
+.headActions {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: var(--mantine-spacing-sm);
+}
+
+.export {
+  @container preset (max-width: 460px) {
+    display: none;
+  }
+}
+
+.cardHead,
+.tableHead {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: var(--mantine-spacing-sm);
+  padding: var(--mantine-spacing-lg) var(--mantine-spacing-lg) 0;
+
+  @container preset (max-width: 460px) {
+    padding-inline: var(--mantine-spacing-md);
+  }
+}
+
+.tableHead {
+  align-items: flex-end;
+  gap: var(--mantine-spacing-md);
+}
+
+.listCard {
+  display: flex;
+  flex-direction: column;
+}
+
+.list {
+  list-style: none;
+  margin: var(--mantine-spacing-md) 0 0;
+  padding: 0;
+  flex: 1;
+}
+
+.stop,
+.crew {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  gap: 8px 14px;
+  padding: var(--mantine-spacing-md) var(--mantine-spacing-lg);
+  border-top: 1px solid var(--mantine-color-border);
+
+  @container preset (max-width: 460px) {
+    padding-inline: var(--mantine-spacing-md);
+  }
+}
+
+.stop {
+  align-items: start;
+
+  @mixin hover {
+    background: var(--mantine-color-hover);
+  }
+}
+
+.crew {
+  align-items: center;
+}
+
+.stopCheck {
+  margin-top: 3px;
+}
+
+.itemName {
+  font-weight: var(--mantine-font-weight-bold);
+  line-height: 1.3;
+  color: var(--mantine-color-bright);
+}
+
+.need {
+  text-align: right;
+  font-family: var(--mantine-font-family-headings);
+  font-weight: 600;
+  font-size: 22px;
+  line-height: 1.05;
+  color: var(--mantine-color-bright);
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+
+  & span {
+    display: block;
+    font-family: var(--mantine-font-family);
+    font-size: var(--mantine-font-size-xs);
+    font-weight: var(--mantine-font-weight-medium);
+    color: var(--mantine-color-text);
+  }
+}
+
+.itemWide,
+.route {
+  grid-column: 2 / 4;
+}
+
+.route {
+  display: flex;
+  align-items: center;
+  gap: var(--mantine-spacing-sm);
+  font-size: var(--mantine-font-size-xs);
+}
+
+.routeProgress {
+  flex: 1;
+}
+
+.routeCount {
+  white-space: nowrap;
+  font-variant-numeric: tabular-nums;
+}
+
+.cardFoot {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: var(--mantine-spacing-sm);
+  padding: var(--mantine-spacing-md) var(--mantine-spacing-lg);
+  border-top: 1px solid var(--mantine-color-border);
+  font-size: var(--mantine-font-size-sm);
+
+  @container preset (max-width: 460px) {
+    padding-inline: var(--mantine-spacing-md);
+  }
+}
+
+.filter {
+  width: 260px;
+  max-width: 100%;
+}
+
+.tabs {
+  margin-top: var(--mantine-spacing-md);
+  padding-inline: var(--mantine-spacing-lg);
+  border-bottom: 1px solid var(--mantine-color-border);
+
+  @container preset (max-width: 460px) {
+    padding-inline: var(--mantine-spacing-md);
+  }
+}
+
+.tabsList::before {
+  display: none;
+}
+
+.tabCount {
+  padding: 0 7px;
+  border: 1px solid var(--mantine-color-border);
+  border-radius: 10px;
+  background: light-dark(var(--mantine-color-gray-0), var(--mantine-color-dark-8));
+  font-size: 12px;
+  font-weight: var(--mantine-font-weight-bold);
+  line-height: 18px;
+  font-variant-numeric: tabular-nums;
+  color: var(--mantine-color-text);
+}
+
+.stationName {
+  font-weight: var(--mantine-font-weight-bold);
+  color: var(--mantine-color-bright);
+  white-space: nowrap;
+}
+
+.nowrap {
+  white-space: nowrap;
+}
+
+.fill {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-width: 150px;
+}
+
+.fillBar {
+  flex: 1;
+}
+
+.ebikes {
+  background: light-dark(var(--mantine-color-riverline-3), var(--mantine-color-riverline-7));
+}
+
+.fillCount {
+  width: 48px;
+  text-align: right;
+  white-space: nowrap;
+  font-size: var(--mantine-font-size-sm);
+  font-variant-numeric: tabular-nums;
+}
+
+.statusBadge {
+  min-width: max-content;
+}
+
+.empty {
+  padding: 40px 24px;
+  text-align: center;
+}
+
+.toast {
+  position: absolute;
+  z-index: 20;
+  right: var(--mantine-spacing-lg);
+  bottom: var(--mantine-spacing-lg);
+  max-width: 360px;
+  box-shadow: var(--mantine-shadow-md);
+}

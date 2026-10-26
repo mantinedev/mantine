@@ -1,0 +1,23 @@
+.key {
+  color: #9db8ff;
+}
+
+.string {
+  color: #f2c48d;
+}
+
+.number {
+  color: #b7a6ff;
+}
+
+.keyword {
+  color: #ff8fb8;
+}
+
+.flag {
+  color: #7fd6c2;
+}
+
+.comment {
+  color: #7d8899;
+}

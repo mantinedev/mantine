@@ -1,0 +1,222 @@
+.rail {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  padding: 14px 0;
+  background: var(--slate-rail);
+
+  @container preset (max-width: 760px) {
+    display: none;
+  }
+}
+
+.workspace {
+  position: relative;
+  display: grid;
+  place-items: center;
+  width: 38px;
+  height: 38px;
+  border-radius: 10px;
+  background: var(--slate-ws-other);
+  font-size: var(--mantine-font-size-sm);
+  font-weight: var(--mantine-font-weight-bold);
+  color: var(--mantine-color-white);
+
+  &[data-current] {
+    background: var(--mantine-primary-color-filled);
+    box-shadow:
+      0 0 0 2px var(--slate-rail),
+      0 0 0 4px var(--mantine-color-white);
+  }
+
+  &[data-add] {
+    border: 1.5px dashed var(--slate-ws-dashed);
+    background: transparent;
+    color: var(--slate-rail-muted);
+  }
+}
+
+.workspaceDot {
+  position: absolute;
+  top: -3px;
+  right: -3px;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--mantine-color-white);
+  box-shadow: 0 0 0 2px var(--slate-rail);
+}
+
+.spacer {
+  flex: 1;
+}
+
+.rail .railButton {
+  color: var(--slate-rail-muted);
+
+  @mixin hover {
+    background: var(--slate-rail-hover);
+    color: var(--mantine-color-white);
+  }
+}
+
+.moon {
+  @mixin dark {
+    display: none;
+  }
+}
+
+.sun {
+  @mixin light {
+    display: none;
+  }
+}
+
+.side {
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  background: var(--slate-side);
+  color: var(--slate-side-text);
+
+  @container preset (max-width: 760px) {
+    display: none;
+
+    &[data-opened] {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 0;
+      z-index: 30;
+      display: flex;
+      width: 260px;
+      box-shadow: var(--mantine-shadow-md);
+    }
+  }
+}
+
+.head {
+  padding: 16px 16px 12px;
+  border-bottom: 1px solid var(--slate-side-line);
+}
+
+.production {
+  font-size: 15px;
+  font-weight: var(--mantine-font-weight-bold);
+  line-height: 1.25;
+  color: var(--slate-side-bright);
+}
+
+.productionSub {
+  margin-top: 2px;
+  font-size: 12.5px;
+}
+
+.scroll {
+  flex: 1;
+  min-height: 0;
+}
+
+.groups {
+  padding: 10px 8px 16px;
+
+  & .channel {
+    color: inherit;
+
+    @mixin hover {
+      background-color: var(--slate-side-2);
+    }
+
+    &[data-unread] {
+      font-weight: var(--mantine-font-weight-semibold);
+      color: var(--slate-side-bright);
+    }
+
+    &[data-active] {
+      font-weight: var(--mantine-font-weight-semibold);
+      color: var(--mantine-color-white);
+
+      @mixin hover {
+        background-color: var(--nl-bg);
+      }
+    }
+  }
+}
+
+.groupLabel {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 8px 6px;
+  font-size: 12.5px;
+  font-weight: var(--mantine-font-weight-medium);
+
+  & button {
+    color: inherit;
+
+    @mixin hover {
+      background: var(--slate-side-2);
+      color: var(--mantine-color-white);
+    }
+
+    & svg {
+      width: 15px;
+      height: 15px;
+    }
+  }
+}
+
+.hash {
+  width: 16px;
+  text-align: center;
+  opacity: 0.6;
+
+  [data-active] & {
+    opacity: 0.9;
+  }
+}
+
+.presence {
+  display: block;
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+
+  &[data-presence='online'] {
+    background: var(--slate-online);
+  }
+
+  &[data-presence='away'] {
+    border: 2px solid var(--slate-side-text);
+  }
+
+  &[data-presence='dnd'] {
+    background: var(--mantine-primary-color-filled);
+    box-shadow: inset 0 0 0 2.5px var(--slate-side);
+    outline: 1.5px solid var(--mantine-primary-color-filled);
+  }
+}
+
+.unread {
+  [data-active] & {
+    background: var(--mantine-color-white);
+    color: var(--mantine-primary-color-filled);
+  }
+}
+
+.me {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 14px;
+  border-top: 1px solid var(--slate-side-line);
+  font-size: var(--mantine-font-size-xs);
+
+  & b {
+    display: block;
+    font-weight: var(--mantine-font-weight-semibold);
+    line-height: 1.2;
+    color: var(--mantine-color-white);
+  }
+}

@@ -1,0 +1,53 @@
+.root {
+  max-width: 100%;
+  overflow: hidden;
+  background: var(--kestrel-relief);
+}
+
+.svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.relief {
+  fill: var(--kestrel-relief);
+}
+
+.water {
+  fill: var(--kestrel-water);
+}
+
+.line,
+.indexLine {
+  fill: none;
+}
+
+.line {
+  stroke: var(--kestrel-contour);
+  stroke-width: 0.9;
+  stroke-opacity: 0.75;
+}
+
+.indexLine {
+  stroke: var(--kestrel-contour-index);
+  stroke-width: 1.6;
+}
+
+.route {
+  fill: none;
+  stroke: var(--kestrel-route);
+  stroke-width: 3;
+  stroke-dasharray: 9 6;
+  stroke-linecap: round;
+}
+
+.start {
+  fill: var(--kestrel-route);
+}
+
+.end {
+  fill: var(--mantine-color-body);
+  stroke: var(--kestrel-route);
+  stroke-width: 3;
+}

@@ -1,0 +1,110 @@
+.button {
+  font-weight: var(--mantine-font-weight-bold);
+
+  &:where([data-with-left-section]) {
+    padding-inline-start: var(--button-padding-x);
+  }
+}
+
+.actionIcon {
+  &:where([data-variant='default'], [data-variant='subtle']) {
+    @mixin hover {
+      color: var(--mantine-color-bright);
+    }
+  }
+
+  &:where([data-variant='subtle']) {
+    color: var(--mantine-color-text);
+  }
+}
+
+.input {
+  color: var(--mantine-color-bright);
+
+  &:focus,
+  &:focus-within {
+    border-color: var(--mantine-primary-color-filled);
+    box-shadow: 0 0 0 1px var(--mantine-primary-color-filled);
+  }
+
+  &[data-error],
+  &[data-error]:focus {
+    border-color: var(--mantine-color-error);
+    box-shadow: none;
+  }
+}
+
+.title {
+  color: var(--mantine-color-bright);
+}
+
+.anchor {
+  font-weight: var(--mantine-font-weight-medium);
+  text-underline-offset: 3px;
+}
+
+.badge {
+  --badge-height-lg: 28px;
+  --badge-fz-lg: var(--mantine-font-size-xs);
+  --badge-padding-x-lg: 12px;
+}
+
+.badgeLabel {
+  text-transform: none;
+  font-weight: 700;
+  letter-spacing: 0;
+}
+
+.avatarPlaceholder {
+  font-weight: 700;
+}
+
+.dropdown {
+  padding: 6px;
+  background-color: var(--mantine-color-surface-panel-2);
+  border-color: var(--mantine-color-border);
+}
+
+.menuItem {
+  height: 38px;
+  padding-inline: 10px;
+  border-radius: var(--mantine-radius-sm);
+  font-size: var(--mantine-font-size-sm);
+  color: var(--mantine-color-text);
+
+  &:where([aria-checked='true']) {
+    color: var(--mantine-color-bright);
+    font-weight: var(--mantine-font-weight-bold);
+  }
+
+  @mixin hover {
+    color: var(--mantine-color-bright);
+  }
+}
+
+.switchTrack {
+  --switch-bg: var(--mantine-color-default-border);
+
+  cursor: pointer;
+}
+
+.switchThumb {
+  --switch-thumb-bg: var(--mantine-color-bright);
+}
+
+.switchInput:checked + * .switchThumb {
+  --switch-thumb-bg: var(--mantine-primary-color-contrast);
+}
+
+.switchLabel {
+  padding-inline-start: 10px;
+  font-size: var(--mantine-font-size-sm);
+  font-weight: var(--mantine-font-weight-medium);
+  cursor: pointer;
+}
+
+.sliderThumb {
+  border-width: 3px;
+  background-color: var(--mantine-color-bright);
+  box-shadow: none;
+}

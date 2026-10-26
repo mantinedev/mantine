@@ -1,0 +1,75 @@
+.avatar {
+  --avatar-color: #1b1f24;
+  --avatar-bg: var(--mantine-color-hover);
+
+  &:where(:not([data-tone])) {
+    --avatar-color: var(--mantine-color-text);
+  }
+
+  &:where([data-tone='amber']) {
+    --avatar-bg: #f5c26b;
+  }
+
+  &:where([data-tone='sky']) {
+    --avatar-bg: #9cc8f0;
+  }
+
+  &:where([data-tone='rose']) {
+    --avatar-bg: #f0a6a0;
+  }
+
+  &:where([data-tone='sage']) {
+    --avatar-bg: #a9d4b6;
+  }
+
+  &:where([data-tone='lilac']) {
+    --avatar-bg: #c6b5ee;
+  }
+}
+
+.priority {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: var(--mantine-font-size-xs);
+  font-weight: var(--mantine-font-weight-medium);
+  white-space: nowrap;
+
+  &:where([data-urgent]) {
+    color: var(--mantine-color-red-text);
+    font-weight: var(--mantine-font-weight-bold);
+  }
+}
+
+.bars {
+  display: inline-flex;
+  align-items: flex-end;
+  gap: 2px;
+  height: 11px;
+
+  & i {
+    width: 3px;
+    border-radius: 1px;
+    background: var(--mantine-color-default-border);
+
+    &:nth-child(1) {
+      height: 5px;
+    }
+
+    &:nth-child(2) {
+      height: 8px;
+    }
+
+    &:nth-child(3) {
+      height: 11px;
+    }
+
+    &:where([data-on]) {
+      background: var(--mantine-color-bright);
+    }
+  }
+
+  .priority:where([data-urgent]) & i {
+    background: var(--mantine-color-red-text);
+  }
+}

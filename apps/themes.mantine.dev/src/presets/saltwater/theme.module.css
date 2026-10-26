@@ -1,0 +1,127 @@
+.button {
+  font-weight: var(--mantine-font-weight-bold);
+  border-width: 1.5px;
+  white-space: nowrap;
+}
+
+.actionIcon {
+  border-width: 1.5px;
+}
+
+.title {
+  color: var(--mantine-color-bright);
+  letter-spacing: -0.03em;
+
+  &:where([data-order='1']) {
+    letter-spacing: -0.035em;
+  }
+
+  &:where([data-order='3']) {
+    letter-spacing: -0.02em;
+  }
+
+  &:where([data-order='4']) {
+    font-family: var(--mantine-font-family);
+    letter-spacing: 0;
+  }
+}
+
+.segmented {
+  --sc-color: var(--mantine-color-bright);
+  --sc-label-color: var(--mantine-color-body);
+
+  border: 1px solid var(--mantine-color-border);
+}
+
+.segmentedIndicator {
+  box-shadow: none;
+}
+
+.segmentedLabel {
+  display: flex;
+  align-items: center;
+  height: 38px;
+  padding: 0 16px;
+  font-size: var(--mantine-font-size-sm);
+  font-weight: var(--mantine-font-weight-medium);
+  color: var(--mantine-color-text);
+
+  &:where([data-active]) {
+    color: var(--sc-label-color);
+  }
+}
+
+.segmentedInnerLabel {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+
+  & svg {
+    flex: none;
+  }
+}
+
+.accordionItem {
+  border-bottom: 1px solid var(--mantine-color-border);
+
+  &:first-of-type {
+    border-top: 2px solid var(--mantine-color-bright);
+  }
+}
+
+.accordionControl {
+  padding: 20px 0;
+  gap: 16px;
+
+  @mixin hover {
+    background-color: transparent;
+  }
+}
+
+.accordionLabel {
+  padding: 0;
+  font-size: 17px;
+  font-weight: var(--mantine-font-weight-bold);
+  line-height: 1.55;
+  color: var(--mantine-color-bright);
+}
+
+.accordionChevron {
+  justify-content: center;
+  height: 32px;
+  border: 1.5px solid var(--mantine-color-default-border);
+  border-radius: 50%;
+  color: var(--mantine-color-bright);
+  transition:
+    transform 160ms,
+    background-color 160ms;
+
+  &:where([data-rotate]) {
+    transform: rotate(45deg);
+    background: var(--mantine-color-bright);
+    border-color: var(--mantine-color-bright);
+    color: var(--mantine-color-body);
+  }
+}
+
+.accordionContent {
+  padding: 0 48px 22px 0;
+}
+
+.menuDropdown {
+  padding: 8px;
+  border: 0;
+  background: var(--mantine-color-surface-panel);
+}
+
+.menuItem {
+  padding: 12px 14px;
+  border-radius: var(--mantine-radius-md);
+  font-size: var(--mantine-font-size-md);
+  font-weight: var(--mantine-font-weight-medium);
+  color: var(--mantine-color-bright);
+
+  @mixin hover {
+    background: var(--mantine-color-surface-sunken);
+  }
+}

@@ -1,0 +1,219 @@
+.root {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  min-height: 0;
+  border-left: 1px solid var(--mantine-color-border);
+  background: var(--clerk-surface);
+
+  @container preset (max-width: 760px) {
+    border-left: 0;
+  }
+}
+
+.head {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 14px;
+  border-bottom: 1px solid var(--mantine-color-border);
+}
+
+.headIcon {
+  flex: none;
+}
+
+.headText {
+  flex: 1;
+  min-width: 0;
+}
+
+.title {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: 13px;
+  font-weight: var(--mantine-font-weight-bold);
+  color: var(--mantine-color-bright);
+}
+
+.sub {
+  font-size: var(--mantine-font-size-xs);
+}
+
+.body {
+  flex: 1;
+  min-height: 0;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 30px;
+}
+
+.scroll {
+  min-height: 0;
+  height: 100%;
+}
+
+.scrollInner {
+  padding: 18px 12px 40px 22px;
+
+  @container preset (max-width: 480px) {
+    padding-left: 10px;
+  }
+}
+
+.sheet {
+  padding: 30px 28px 40px;
+  border: 1px solid var(--mantine-color-border);
+  background: var(--mantine-color-surface-panel);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
+  font-family: var(--clerk-font-doc);
+  font-size: 16px;
+  line-height: 1.58;
+  color: var(--mantine-color-bright);
+
+  @container preset (max-width: 480px) {
+    padding: 22px 16px 30px;
+  }
+}
+
+.sheetTitle {
+  text-align: center;
+  letter-spacing: 0.02em;
+}
+
+.between {
+  margin: 6px 0 18px;
+  text-align: center;
+  font-size: 14.5px;
+  font-style: italic;
+  color: var(--mantine-color-text);
+}
+
+.clause {
+  margin-top: 16px;
+
+  & p {
+    margin: 0 0 6px;
+    padding-left: 26px;
+    text-indent: -26px;
+  }
+}
+
+.clauseTitle {
+  margin: 0 0 4px;
+  font-family: inherit;
+
+  & span {
+    display: inline-block;
+    min-width: 26px;
+  }
+}
+
+.number {
+  display: inline-block;
+  width: 26px;
+  text-indent: 0;
+  font-variant-numeric: tabular-nums;
+}
+
+.sentence {
+  border-radius: 2px;
+  transition:
+    background-color 160ms,
+    box-shadow 160ms;
+
+  &[data-hl] {
+    background: var(--clerk-brass-wash);
+    box-shadow: 0 2px 0 var(--clerk-brass-line);
+  }
+
+  &[data-pin] {
+    background: var(--clerk-brass-wash);
+    box-shadow: 0 2px 0 var(--clerk-brass);
+  }
+
+  & ins {
+    color: var(--clerk-ins);
+    background: var(--clerk-ins-wash);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    transition: none;
+  }
+}
+
+.pageBreak {
+  position: relative;
+  margin: 22px -28px;
+  border: 0;
+  border-top: 1px dashed var(--mantine-color-border-strong);
+
+  &::after {
+    content: attr(data-page);
+    position: absolute;
+    right: 8px;
+    top: -9px;
+    padding: 0 6px;
+    background: var(--mantine-color-surface-panel);
+    font-family: var(--mantine-font-family);
+    font-size: 11px;
+    line-height: 1.5;
+    color: var(--mantine-color-dimmed);
+  }
+
+  @container preset (max-width: 480px) {
+    margin-inline: -16px;
+  }
+}
+
+.strip {
+  position: relative;
+  border-left: 1px solid var(--mantine-color-border);
+  background: var(--clerk-surface);
+}
+
+.thumb {
+  position: absolute;
+  left: 3px;
+  right: 3px;
+  border: 1px solid var(--mantine-color-border-strong);
+  border-radius: 4px;
+  background: var(--mantine-color-hover);
+  pointer-events: none;
+}
+
+.mark {
+  position: absolute;
+  z-index: 1;
+  left: 3px;
+  right: 3px;
+  height: 18px;
+  display: grid;
+  place-items: center;
+  padding: 0;
+  border: 0;
+  border-radius: 3px;
+  transform: translateY(-50%);
+  background: var(--clerk-brass-wash);
+  box-shadow: inset 0 0 0 1px var(--clerk-brass-line);
+  color: var(--clerk-brass-ink);
+  font-family: var(--mantine-font-family);
+  font-size: 9.5px;
+  font-weight: 700;
+  line-height: 1;
+  cursor: pointer;
+
+  &[data-risk] {
+    box-shadow:
+      inset 3px 0 0 var(--clerk-high),
+      inset 0 0 0 1px var(--clerk-brass-line);
+  }
+
+  &:hover,
+  &[data-on] {
+    background: var(--clerk-brass);
+    color: #fff;
+  }
+}

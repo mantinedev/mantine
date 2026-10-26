@@ -1,0 +1,227 @@
+.button {
+  font-weight: var(--mantine-font-weight-bold);
+  gap: 7px;
+
+  &:where([data-with-left-section]) {
+    padding-inline-start: var(--button-padding-x);
+  }
+
+  &:where([data-variant='default']) {
+    color: var(--mantine-color-text);
+  }
+}
+
+.buttonSection {
+  &:where([data-position='left']) {
+    margin-inline-end: 7px;
+  }
+
+  & svg {
+    width: 16px;
+    height: 16px;
+  }
+}
+
+.input {
+  &:where([data-variant='default']) {
+    border-color: var(--mantine-color-default-border);
+  }
+
+  &:where([data-variant='default']):focus,
+  &:where([data-variant='default']):focus-within {
+    border-color: var(--mantine-primary-color-filled);
+    box-shadow: 0 0 0 1px var(--mantine-primary-color-filled);
+    outline: none;
+  }
+}
+
+.inputLabel {
+  margin-bottom: 5px;
+  font-size: var(--mantine-font-size-sm);
+  font-weight: var(--mantine-font-weight-medium);
+  color: var(--mantine-color-bright);
+}
+
+.inputDescription {
+  margin-top: 4px;
+  font-size: 12.5px;
+  color: var(--mantine-color-text);
+}
+
+.option {
+  font-size: var(--mantine-font-size-md);
+}
+
+.day {
+  position: relative;
+  font-size: var(--mantine-font-size-sm);
+  font-variant-numeric: tabular-nums;
+  color: var(--mantine-color-text);
+  border-radius: var(--mantine-radius-sm);
+
+  &:where([data-closed]) {
+    color: var(--mantine-color-dimmed);
+  }
+
+  &:where([data-outside]) {
+    color: var(--mantine-color-dimmed);
+    opacity: 0.55;
+  }
+
+  &:where([data-fh-today]:not([data-selected])) {
+    box-shadow: inset 0 0 0 1.5px var(--mantine-primary-color-filled);
+    font-weight: var(--mantine-font-weight-bold);
+  }
+
+  &:where([data-selected]) {
+    background-color: var(--mantine-primary-color-filled);
+    color: var(--mantine-primary-color-contrast);
+    font-weight: 700;
+  }
+}
+
+.weekday {
+  padding: 4px 0;
+  font-size: 11.5px;
+  font-weight: var(--mantine-font-weight-medium);
+  color: var(--mantine-color-dimmed);
+}
+
+.calendarLevel {
+  font-size: var(--mantine-font-size-md);
+  font-weight: var(--mantine-font-weight-bold);
+  color: var(--mantine-color-bright);
+}
+
+.calendarControl {
+  width: 36px;
+  height: 36px;
+  border-radius: var(--mantine-radius-sm);
+
+  & svg {
+    width: 18px !important;
+    height: 18px !important;
+  }
+}
+
+.segmented {
+  padding: 3px;
+  gap: 2px;
+}
+
+.segmentedIndicator {
+  border-radius: var(--mantine-radius-sm);
+  box-shadow:
+    0 1px 2px rgba(0, 0, 0, 0.12),
+    0 0 0 1px var(--mantine-color-border);
+}
+
+.segmentedLabel {
+  height: 30px;
+  display: flex;
+  align-items: center;
+  padding: 0 12px;
+  font-size: var(--mantine-font-size-sm);
+  font-weight: var(--mantine-font-weight-medium);
+  color: var(--mantine-color-text);
+
+  &:where([data-active]) {
+    font-weight: var(--mantine-font-weight-bold);
+    color: var(--mantine-color-bright);
+  }
+}
+
+.switchLabel {
+  padding-inline-start: 10px;
+  font-weight: var(--mantine-font-weight-medium);
+  color: var(--mantine-color-bright);
+}
+
+.switchTrack {
+  border: 0;
+  background-color: var(--mantine-color-default-border);
+
+  input:checked + & {
+    background-color: var(--mantine-primary-color-filled);
+  }
+}
+
+.avatar {
+  --avatar-bd: 1px solid var(--mantine-color-border);
+}
+
+.avatarPlaceholder {
+  --avatar-placeholder-fz: var(--fh-avatar-fz, 11.5px);
+
+  font-weight: 700;
+  color: var(--fh-avatar-color, var(--mantine-color-bright));
+  background: var(--fh-avatar-bg, var(--mantine-color-surface-sunken));
+}
+
+.badge {
+  height: 20px;
+  padding: 0 7px;
+  border: 0;
+  gap: 4px;
+}
+
+.badgeLabel {
+  font-size: 11.5px;
+  font-weight: var(--mantine-font-weight-bold);
+  text-transform: none;
+  letter-spacing: 0;
+}
+
+.progress {
+  background-color: var(--mantine-color-surface-sunken);
+}
+
+.alert {
+  padding: 10px 12px;
+  border: 0;
+  border-radius: var(--mantine-radius-md);
+  background: var(--fh-red-tint);
+}
+
+.alertBody {
+  gap: 0;
+}
+
+.alertIcon {
+  width: 18px;
+  height: 18px;
+  margin-top: 1px;
+  color: var(--fh-red);
+}
+
+.alertMessage {
+  font-size: var(--mantine-font-size-sm);
+  color: var(--mantine-color-text);
+
+  & b {
+    color: var(--mantine-color-bright);
+  }
+}
+
+.title {
+  color: var(--mantine-color-bright);
+}
+
+.modalHeader {
+  min-height: 0;
+  padding: 16px 20px 8px;
+}
+
+.modalTitle {
+  font-size: var(--mantine-font-size-xl);
+  font-weight: 700;
+  color: var(--mantine-color-bright);
+}
+
+.modalBody {
+  padding: 0;
+}
+
+.drawerContent {
+  border-radius: 0;
+}

@@ -1,0 +1,115 @@
+.root {
+  --us-warn: #9a5b00;
+  --us-warn-bg: #fdf1dc;
+  --us-add: #4c6309;
+  --us-soil: #cdbca8;
+  --us-soil-edge: #b29d86;
+  --us-lawn: #dde8cf;
+  --us-stone: #d6d1c8;
+  --us-fence: #8a6a4f;
+  --us-house: #c9cfca;
+  --us-door: var(--mantine-color-gray-0);
+  --us-shade: rgba(28, 44, 34, 0.34);
+  --us-grid: rgba(17, 26, 19, 0.08);
+
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  height: 880px;
+  background: light-dark(var(--mantine-color-gray-0), var(--mantine-color-dark-8));
+  color: var(--mantine-color-text);
+
+  @mixin dark {
+    --us-warn: #f0b04a;
+    --us-warn-bg: #3a2c12;
+    --us-add: #a3c94a;
+    --us-soil: #4a3b2f;
+    --us-soil-edge: #5d4a3b;
+    --us-lawn: #2a3a27;
+    --us-stone: #565249;
+    --us-fence: #a5825f;
+    --us-house: #39413b;
+    --us-door: var(--mantine-color-dark-8);
+    --us-shade: rgba(0, 0, 0, 0.42);
+    --us-grid: rgba(241, 245, 242, 0.07);
+  }
+}
+
+.body {
+  flex: 1;
+  min-height: 0;
+  display: grid;
+  grid-template-columns: 380px minmax(0, 1fr);
+
+  @container preset (max-width: 1000px) {
+    grid-template-columns: 340px minmax(0, 1fr);
+  }
+
+  @container preset (max-width: 800px) {
+    grid-template-columns: minmax(0, 1fr);
+
+    &[data-pane='chat'] .canvas,
+    &[data-pane='plan'] .chat {
+      display: none;
+    }
+  }
+}
+
+.chat {
+  @container preset (max-width: 800px) {
+    border-right: 0;
+  }
+}
+
+.canvas {
+  min-width: 0;
+  min-height: 0;
+  overflow-y: auto;
+  padding: 18px 20px 28px;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+
+  & > * {
+    flex-shrink: 0;
+  }
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.6fr) minmax(0, 1fr);
+  gap: 18px;
+  align-items: start;
+
+  @container preset (max-width: 1000px) {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+.credits {
+  margin: 0;
+  font-size: var(--mantine-font-size-xs);
+  line-height: 1.5;
+}
+
+.toastWrap {
+  position: absolute;
+  z-index: 30;
+  left: 0;
+  right: 0;
+  bottom: 20px;
+  display: flex;
+  justify-content: center;
+  pointer-events: none;
+}
+
+.toast {
+  padding: 9px 16px;
+  border-radius: 999px;
+  background: var(--mantine-color-bright);
+  color: light-dark(var(--mantine-color-gray-0), var(--mantine-color-dark-8));
+  font-size: 13.5px;
+  font-weight: var(--mantine-font-weight-bold);
+  box-shadow: var(--mantine-shadow-md);
+  white-space: nowrap;
+}

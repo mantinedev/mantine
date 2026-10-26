@@ -1,0 +1,155 @@
+.root {
+  --sw-gutter: 48px;
+  --sw-block: 96px;
+
+  position: relative;
+  background: var(--mantine-color-body);
+  color: var(--mantine-color-text);
+  font-size: var(--mantine-font-size-md);
+  line-height: var(--mantine-line-height);
+
+  @container preset (max-width: 980px) {
+    --sw-gutter: 32px;
+  }
+
+  @container preset (max-width: 780px) {
+    --sw-block: 72px;
+  }
+
+  @container preset (max-width: 520px) {
+    --sw-gutter: 16px;
+  }
+
+  & :focus-visible {
+    outline-color: var(--mantine-color-aqua-6);
+  }
+}
+
+.logo {
+  display: flex;
+  width: fit-content;
+  align-items: center;
+  gap: 10px;
+  color: #fff;
+  font-family: var(--mantine-font-family-headings);
+  font-size: 17px;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  text-decoration: none;
+
+  & svg {
+    width: 34px;
+    height: 34px;
+  }
+}
+
+.sectionHead {
+  max-width: 44em;
+}
+
+.sectionTitle {
+  @container preset (max-width: 780px) {
+    font-size: 34px;
+  }
+
+  .sectionHead[data-on-band] & {
+    color: #fff;
+  }
+}
+
+.sectionDescription {
+  max-width: 36em;
+  margin-top: 16px;
+  font-size: var(--mantine-font-size-lg);
+}
+
+.faq {
+  display: grid;
+  grid-template-columns: minmax(0, 360px) minmax(0, 1fr);
+  align-items: start;
+  gap: 56px;
+  padding: 0 var(--sw-gutter) var(--sw-block);
+
+  @container preset (max-width: 980px) {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 24px;
+  }
+}
+
+.footer {
+  display: grid;
+  grid-template-columns: minmax(0, 1.4fr) repeat(2, minmax(0, 1fr));
+  gap: 32px;
+  padding: 56px var(--sw-gutter) 32px;
+  background: var(--sw-band);
+  color: var(--sw-band-ink);
+  font-size: var(--mantine-font-size-sm);
+
+  & p {
+    max-width: 26em;
+    margin: 12px 0 0;
+  }
+
+  & ul {
+    display: grid;
+    gap: 8px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  & a:not(.logo) {
+    color: inherit;
+    text-decoration: none;
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+
+  @container preset (max-width: 780px) {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+.brand {
+  @container preset (max-width: 780px) {
+    grid-column: 1 / -1;
+  }
+}
+
+.footerTitle.footerTitle {
+  margin-bottom: 12px;
+  color: #fff;
+}
+
+.footer .credits {
+  grid-column: 1 / -1;
+  max-width: none;
+  margin: 12px 0 0;
+  padding-top: 18px;
+  border-top: 1px solid rgba(217, 238, 240, 0.18);
+  font-size: 12.5px;
+  line-height: 1.6;
+}
+
+.toastAnchor {
+  position: fixed;
+  z-index: 400;
+  left: 50%;
+  bottom: 24px;
+  transform: translateX(-50%);
+  pointer-events: none;
+}
+
+.toast {
+  padding: 10px 18px;
+  border-radius: 999px;
+  background: var(--mantine-color-bright);
+  color: var(--mantine-color-body);
+  box-shadow: var(--mantine-shadow-xl);
+  font-family: var(--mantine-font-family);
+  font-size: var(--mantine-font-size-sm);
+  font-weight: var(--mantine-font-weight-medium);
+  white-space: nowrap;
+}

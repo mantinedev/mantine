@@ -1,0 +1,86 @@
+.root {
+  position: absolute;
+  z-index: 5;
+  inset: 0 0 auto;
+  display: flex;
+  align-items: center;
+  gap: 28px;
+  height: 76px;
+  padding-inline: var(--sw-gutter);
+  color: #fff;
+}
+
+.nav {
+  display: flex;
+  gap: 24px;
+  font-size: 15px;
+  font-weight: var(--mantine-font-weight-medium);
+
+  & a {
+    color: inherit;
+    text-decoration: none;
+    opacity: 0.92;
+
+    &:hover {
+      opacity: 1;
+      text-decoration: underline;
+      text-underline-offset: 6px;
+      text-decoration-thickness: 2px;
+    }
+  }
+
+  @container preset (max-width: 780px) {
+    display: none;
+  }
+}
+
+.spacer {
+  flex: 1;
+}
+
+.actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.ghost[data-variant] {
+  background: transparent;
+  color: #fff;
+  border-color: rgba(255, 255, 255, 0.7);
+
+  @mixin hover {
+    background: rgba(255, 255, 255, 0.12);
+  }
+}
+
+.moon {
+  @mixin dark {
+    display: none;
+  }
+}
+
+.sun {
+  @mixin light {
+    display: none;
+  }
+}
+
+.buy {
+  @container preset (max-width: 780px) {
+    display: none;
+  }
+}
+
+.menuButton {
+  display: none;
+
+  @container preset (max-width: 780px) {
+    display: inline-flex;
+  }
+}
+
+.sheet {
+  inset: 76px 16px auto !important;
+  width: auto !important;
+}

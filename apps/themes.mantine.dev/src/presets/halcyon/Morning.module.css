@@ -1,0 +1,99 @@
+.timeline {
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 20px;
+  margin: 56px 0 0;
+  padding: 0;
+  list-style: none;
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: 13px;
+    left: 0;
+    right: 0;
+    height: 2px;
+    border-radius: 2px;
+    background: linear-gradient(
+      90deg,
+      var(--mantine-color-ember-7),
+      var(--mantine-color-ember-5),
+      var(--mantine-color-ember-2),
+      var(--mantine-color-ember-0)
+    );
+    opacity: 0.85;
+  }
+
+  @container preset (max-width: 980px) {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    row-gap: 36px;
+
+    &::before {
+      display: none;
+    }
+  }
+
+  @container preset (max-width: 780px) {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 0;
+  }
+}
+
+.step {
+  position: relative;
+  min-width: 0;
+  padding-top: 44px;
+
+  @container preset (max-width: 780px) {
+    padding: 0 0 26px 48px;
+
+    &::before {
+      content: '';
+      position: absolute;
+      top: 30px;
+      bottom: 0;
+      left: 13px;
+      width: 2px;
+      background: var(--mantine-color-border);
+    }
+
+    &:last-child::before {
+      display: none;
+    }
+  }
+}
+
+.dot {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  box-shadow:
+    0 0 0 5px var(--hc-page),
+    0 0 18px 2px var(--hc-halo, transparent);
+}
+
+.time {
+  display: block;
+  font-size: 18px;
+  font-weight: var(--mantine-font-weight-bold);
+  font-variant-numeric: tabular-nums;
+  color: var(--mantine-color-bright);
+}
+
+.stepTitle {
+  display: block;
+  margin-top: 4px;
+  font-size: 16px;
+  font-weight: var(--mantine-font-weight-bold);
+  color: var(--mantine-color-bright);
+}
+
+.body {
+  margin: 6px 0 0;
+  font-size: 15px;
+  line-height: 1.55;
+}

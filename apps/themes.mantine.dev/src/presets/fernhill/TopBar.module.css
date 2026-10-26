@@ -1,0 +1,114 @@
+.root {
+  position: relative;
+  z-index: 3;
+  flex: none;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  height: 60px;
+  padding: 0 16px;
+  background: var(--mantine-color-surface-panel);
+  border-bottom: 1px solid var(--mantine-color-border);
+
+  & > * {
+    flex-shrink: 0;
+  }
+}
+
+.railToggle {
+  display: none;
+
+  @container preset (max-width: 880px) {
+    display: inline-flex;
+  }
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  font-size: var(--mantine-font-size-lg);
+  font-weight: 700;
+  white-space: nowrap;
+  color: var(--mantine-color-bright);
+}
+
+.brandMark {
+  display: grid;
+  place-items: center;
+  width: 30px;
+  height: 30px;
+  border-radius: var(--mantine-radius-md);
+  background: var(--mantine-primary-color-filled);
+  color: var(--mantine-primary-color-contrast);
+}
+
+.brandName {
+  @container preset (max-width: 980px) {
+    display: none;
+  }
+}
+
+.dayNav {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex: none;
+  margin-left: 8px;
+}
+
+.today {
+  @container preset (max-width: 520px) {
+    display: none;
+  }
+}
+
+.dayTitle {
+  min-width: 172px;
+  font-weight: var(--mantine-font-weight-bold);
+  white-space: nowrap;
+  color: var(--mantine-color-bright);
+
+  @container preset (max-width: 760px) {
+    min-width: 0;
+    font-size: var(--mantine-font-size-sm);
+  }
+}
+
+.spacer {
+  flex: 1;
+}
+
+.views {
+  flex: none;
+
+  @container preset (max-width: 760px) {
+    display: none;
+  }
+}
+
+.search {
+  width: 210px;
+  min-width: 0;
+  flex-shrink: 1;
+
+  @container preset (max-width: 980px) {
+    width: 160px;
+  }
+
+  @container preset (max-width: 760px) {
+    display: none;
+  }
+}
+
+.moon {
+  @mixin dark {
+    display: none;
+  }
+}
+
+.sun {
+  @mixin light {
+    display: none;
+  }
+}

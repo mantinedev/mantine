@@ -1,0 +1,118 @@
+.photo {
+  margin: 28px 0 0;
+
+  & figcaption {
+    margin-top: 8px;
+    font-size: 14px;
+  }
+}
+
+.photoImage {
+  aspect-ratio: 16 / 6;
+}
+
+.plan {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr);
+  gap: 44px;
+  align-items: start;
+  margin-top: 40px;
+
+  @container preset (max-width: 980px) {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+.phases {
+  margin: 0;
+  padding-bottom: 26px;
+}
+
+.phase {
+  &[data-status='done'] .bullet {
+    background: var(--mantine-primary-color-filled);
+    border-color: var(--mantine-primary-color-filled);
+    color: var(--mantine-primary-color-contrast);
+  }
+
+  &[data-status='funded'] .bullet {
+    background: var(--uc-chrome);
+    border-color: var(--uc-chrome);
+    color: var(--uc-chrome-ink);
+  }
+}
+
+.phaseText {
+  margin: 0;
+}
+
+.status {
+  margin-top: 8px;
+}
+
+.map {
+  position: sticky;
+  top: 16px;
+  margin: 0;
+  padding: 16px;
+  border-radius: var(--mantine-radius-lg);
+  background: var(--mantine-color-surface-muted);
+
+  & svg {
+    display: block;
+    width: 100%;
+    height: auto;
+  }
+
+  & text {
+    font-family: var(--mantine-font-family);
+    font-size: 12px;
+    font-weight: 600;
+    fill: var(--mantine-color-text);
+  }
+
+  @container preset (max-width: 980px) {
+    position: static;
+    order: -1;
+  }
+}
+
+.map .place {
+  font-size: 13px;
+  font-weight: 700;
+  fill: var(--mantine-color-bright);
+}
+
+.legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 18px;
+  margin-top: 10px;
+  padding: 0 4px;
+  font-size: 14px;
+
+  & span {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  & i {
+    display: inline-block;
+    width: 22px;
+    height: 6px;
+    border-radius: 3px;
+  }
+
+  & i[data-status='done'] {
+    background: var(--mantine-primary-color-filled);
+  }
+
+  & i[data-status='funded'] {
+    background: var(--uc-funded);
+  }
+
+  & i[data-status='need'] {
+    background: repeating-linear-gradient(90deg, var(--uc-need) 0 3px, transparent 3px 8px);
+  }
+}

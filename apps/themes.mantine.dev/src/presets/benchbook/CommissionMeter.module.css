@@ -1,0 +1,64 @@
+.meter {
+  display: flex;
+  flex: none;
+  gap: 3px;
+}
+
+.pip {
+  width: 18px;
+  height: 5px;
+  border-radius: 3px;
+  background: var(--mantine-color-track);
+
+  &:where([data-on]) {
+    background: var(--mantine-primary-color-filled);
+  }
+}
+
+.stepper {
+  display: grid;
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+  gap: 6px;
+}
+
+.step {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  min-width: 0;
+}
+
+.bar {
+  height: 6px;
+  border-radius: 3px;
+  background: var(--mantine-color-track);
+
+  .step:where([data-done], [data-current]) & {
+    background: var(--mantine-primary-color-filled);
+  }
+}
+
+.label {
+  overflow: hidden;
+  font-size: var(--mantine-font-size-xs);
+  font-weight: var(--mantine-font-weight-medium);
+  line-height: 1.5;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+
+  margin-bottom: 6px;
+  color: var(--mantine-color-bright);
+
+  .step:where([data-current]) & {
+    font-weight: var(--mantine-font-weight-bold);
+  }
+
+  @container preset (max-width: 760px) {
+    display: none;
+
+    .step:where([data-current]) & {
+      display: block;
+      overflow: visible;
+    }
+  }
+}

@@ -1,0 +1,54 @@
+.root {
+  padding: 12px 18px 14px;
+  border-top: 1px solid var(--mantine-color-border);
+  background: var(--mantine-color-surface-panel);
+}
+
+.suggestions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-bottom: 10px;
+}
+
+.suggestion {
+  height: 30px;
+  font-size: 12.5px;
+  font-weight: var(--mantine-font-weight-medium);
+}
+
+.composer {
+  display: flex;
+  align-items: flex-end;
+  gap: 8px;
+  padding: 8px 8px 8px 14px;
+  border: 1px solid var(--mantine-color-default-border);
+  border-radius: 14px;
+  background: var(--mantine-color-surface-panel);
+
+  &:focus-within {
+    border-color: var(--mantine-primary-color-filled);
+    box-shadow: 0 0 0 3px var(--quarry-ring);
+  }
+}
+
+.field {
+  flex: 1;
+  align-self: center;
+}
+
+.input {
+  min-height: 22px;
+  padding: 5px 0;
+  font-size: var(--mantine-font-size-md);
+  line-height: 1.45;
+}
+
+.hint {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 6px;
+  font-size: 12px;
+}

@@ -1,0 +1,95 @@
+.root {
+  display: flex;
+  align-items: center;
+  gap: 28px;
+  height: 72px;
+  padding-inline: var(--mantine-spacing-xl);
+  border-bottom: 1px solid var(--mantine-color-border);
+
+  @container preset (max-width: 760px) {
+    padding-inline: var(--mantine-spacing-lg);
+  }
+
+  @container preset (max-width: 520px) {
+    padding-inline: var(--mantine-spacing-md);
+  }
+}
+
+.logo {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  text-decoration: none;
+  font-family: var(--mantine-font-family-headings);
+  font-weight: 800;
+  font-size: 24px;
+  letter-spacing: -0.01em;
+  white-space: nowrap;
+  color: var(--mantine-color-bright);
+}
+
+.mark {
+  display: grid;
+  place-items: center;
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  background: var(--mantine-primary-color-filled);
+  color: var(--mantine-primary-color-contrast);
+}
+
+.nav {
+  display: flex;
+  gap: var(--mantine-spacing-lg);
+  font-size: var(--mantine-font-size-sm);
+  font-weight: var(--mantine-font-weight-medium);
+
+  @container preset (max-width: 760px) {
+    display: none;
+  }
+}
+
+.link {
+  white-space: nowrap;
+  text-decoration: none;
+  color: var(--mantine-color-text);
+
+  &[aria-current='page'] {
+    color: var(--mantine-color-bright);
+    font-weight: var(--mantine-font-weight-bold);
+  }
+
+  @mixin hover {
+    color: var(--mantine-color-bright);
+  }
+}
+
+.actions {
+  display: flex;
+  align-items: center;
+  gap: var(--mantine-spacing-xs);
+  margin-inline-start: auto;
+}
+
+.sun {
+  @mixin light {
+    display: none;
+  }
+}
+
+.moon {
+  @mixin dark {
+    display: none;
+  }
+}
+
+.appDot {
+  display: grid;
+  place-items: center;
+  width: 22px;
+  height: 22px;
+  border-radius: 6px;
+  font-size: 11px;
+  font-weight: 700;
+  color: #fff;
+}

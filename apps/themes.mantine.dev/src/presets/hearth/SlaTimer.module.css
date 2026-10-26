@@ -1,0 +1,21 @@
+.running,
+.calm {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-size: var(--mantine-font-size-xs);
+  font-weight: var(--mantine-font-weight-bold);
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+  color: var(--mantine-color-hearth-text);
+}
+
+.calm {
+  font-weight: var(--mantine-font-weight-medium);
+  color: var(--mantine-color-text);
+}
+
+.breached {
+  min-width: max-content;
+  color: var(--mantine-color-white);
+}

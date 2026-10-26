@@ -1,0 +1,133 @@
+.button {
+  border-width: 1.5px;
+  font-weight: var(--mantine-font-weight-bold);
+}
+
+.actionIcon {
+  border-width: 1.5px;
+
+  &:where([data-variant='subtle']) {
+    color: var(--mantine-color-text);
+  }
+}
+
+.input {
+  border-width: 1.5px;
+  font-weight: 500;
+}
+
+.checkboxInput {
+  border-width: 1.5px;
+  cursor: pointer;
+}
+
+.checkboxLabel {
+  font-size: var(--mantine-font-size-sm);
+  font-weight: var(--mantine-font-weight-medium);
+  cursor: pointer;
+}
+
+.switchTrack {
+  --switch-track-bg: var(--mantine-color-border-input);
+
+  border: 0;
+  cursor: pointer;
+}
+
+.switchThumb {
+  border: 0;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+}
+
+.segmented {
+  padding: 4px;
+  gap: 2px;
+  background: var(--inkwell-column);
+}
+
+.segmentedLabel {
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: var(--mantine-font-weight-medium);
+  color: var(--mantine-color-text);
+
+  &:where([data-active]) {
+    color: var(--mantine-color-bright);
+  }
+
+  @mixin hover {
+    color: var(--mantine-color-bright);
+  }
+}
+
+.avatar {
+  font-weight: var(--mantine-font-weight-bold);
+}
+
+.title {
+  color: var(--mantine-color-bright);
+  letter-spacing: -0.01em;
+
+  &:where([data-order='1']) {
+    letter-spacing: -0.02em;
+  }
+}
+
+.menuDropdown {
+  --menu-dropdown-padding: 6px;
+
+  border-color: var(--mantine-color-border);
+}
+
+.menuItem {
+  height: 36px;
+  padding-inline: 10px;
+  font-size: var(--mantine-font-size-sm);
+  font-weight: 500;
+
+  &:where([aria-current='true']) {
+    font-weight: var(--mantine-font-weight-bold);
+    color: var(--mantine-color-bright);
+  }
+}
+
+.menuLabel {
+  padding: 6px 10px 4px;
+  font-size: var(--mantine-font-size-xs);
+  font-weight: var(--mantine-font-weight-medium);
+  color: var(--mantine-color-text);
+}
+
+.drawerContent {
+  background: var(--mantine-color-surface-panel);
+}
+
+.th {
+  padding: 14px 16px 10px;
+  font-size: var(--mantine-font-size-xs);
+  font-weight: var(--mantine-font-weight-medium);
+  color: var(--mantine-color-text);
+  white-space: nowrap;
+}
+
+.td {
+  padding: 12px 16px;
+  font-size: var(--mantine-font-size-sm);
+}
+
+.notification {
+  --notification-icon-size: 22px;
+
+  border-radius: 1000px;
+  padding: 10px 18px 10px 12px;
+  background: var(--mantine-color-bright);
+  box-shadow: var(--mantine-shadow-xl);
+}
+
+.notificationDescription {
+  font-size: var(--mantine-font-size-sm);
+  font-weight: var(--mantine-font-weight-medium);
+  color: var(--mantine-color-body);
+}

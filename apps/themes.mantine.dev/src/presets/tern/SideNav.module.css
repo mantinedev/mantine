@@ -1,0 +1,60 @@
+.group {
+  height: 32px;
+  font-weight: var(--mantine-font-weight-bold);
+  color: var(--mantine-color-bright);
+
+  &:where(:not(:first-child)) {
+    margin-top: 6px;
+  }
+}
+
+.collapse {
+  margin-top: 2px;
+}
+
+.sub {
+  display: block;
+  padding: 5px 8px;
+  font-weight: var(--mantine-font-weight-medium);
+  color: var(--mantine-color-bright);
+}
+
+.subList {
+  margin-left: 8px;
+  border-left: 1px solid var(--mantine-color-border);
+}
+
+.subList .nested {
+  margin-left: -1px;
+  padding-left: 12px;
+  border-left: 2px solid transparent;
+  border-radius: 0 var(--mantine-radius-md) var(--mantine-radius-md) 0;
+
+  &[data-active] {
+    border-left-color: var(--mantine-primary-color-filled);
+    box-shadow: none;
+  }
+}
+
+.method {
+  --badge-height: 18px;
+  --badge-padding-x: 5px;
+  --badge-fz: 10px;
+  --badge-radius: 3px;
+  --badge-bd: 1px solid var(--mantine-color-default-border);
+
+  font-family: var(--mantine-font-family-monospace);
+  letter-spacing: 0.02em;
+  background: transparent;
+  color: var(--mantine-color-text);
+
+  :where([data-active]) > * > & {
+    --badge-bd: 1px solid var(--mantine-primary-color-filled);
+
+    color: var(--mantine-color-anchor);
+  }
+
+  & > span {
+    font-weight: var(--mantine-font-weight-bold);
+  }
+}

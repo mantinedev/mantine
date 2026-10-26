@@ -1,0 +1,1 @@
+export { SecondHome } from './SecondHome';

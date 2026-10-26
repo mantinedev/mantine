@@ -1,0 +1,138 @@
+.root {
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  height: 60px;
+  padding: 0 20px;
+  background: var(--mantine-color-body);
+  border-bottom: 1px solid var(--mantine-color-border);
+
+  @container preset (max-width: 480px) {
+    gap: 8px;
+    padding: 0 12px;
+  }
+}
+
+.menu {
+  display: none;
+
+  @container preset (max-width: 760px) {
+    display: inline-flex;
+  }
+}
+
+.logo {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  flex: none;
+  text-decoration: none;
+  white-space: nowrap;
+  font-size: 18px;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  color: var(--mantine-color-bright);
+}
+
+.logoSub {
+  font-size: var(--mantine-font-size-sm);
+  font-weight: var(--mantine-font-weight-medium);
+  letter-spacing: 0;
+  color: var(--mantine-color-text);
+
+  @container preset (max-width: 480px) {
+    display: none;
+  }
+}
+
+.products {
+  display: flex;
+  gap: 2px;
+
+  @container preset (max-width: 980px) {
+    display: none;
+  }
+}
+
+.product {
+  display: inline-flex;
+  align-items: center;
+  height: 32px;
+  padding: 0 10px;
+  border-radius: var(--mantine-radius-md);
+  text-decoration: none;
+  font-size: var(--mantine-font-size-sm);
+  font-weight: var(--mantine-font-weight-medium);
+  color: var(--mantine-color-text);
+
+  @mixin hover {
+    background: var(--tern-subtle);
+    color: var(--mantine-color-bright);
+  }
+
+  &[aria-current='page'] {
+    font-weight: var(--mantine-font-weight-bold);
+    color: var(--mantine-color-bright);
+    background: var(--tern-subtle-strong);
+  }
+}
+
+.search {
+  flex: 0 1 240px;
+  min-width: 0;
+  margin-inline-start: auto;
+
+  @container preset (max-width: 760px) {
+    flex: 1 1 auto;
+  }
+}
+
+.kbd {
+  @container preset (max-width: 480px) {
+    display: none;
+  }
+}
+
+.version {
+  flex: none;
+  width: 108px;
+
+  & select {
+    font-weight: var(--mantine-font-weight-medium);
+  }
+
+  @container preset (max-width: 760px) {
+    display: none;
+  }
+}
+
+.moon {
+  @mixin dark {
+    display: none;
+  }
+}
+
+.sun {
+  @mixin light {
+    display: none;
+  }
+}
+
+.apiKey {
+  flex: none;
+}
+
+.apiKeyLabel {
+  @container preset (max-width: 760px) {
+    display: none;
+  }
+}
+
+.apiKeySection {
+  @container preset (max-width: 760px) {
+    margin: 0;
+  }
+}

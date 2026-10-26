@@ -1,0 +1,35 @@
+.root {
+  display: flex;
+  align-items: center;
+  gap: var(--mantine-spacing-sm);
+}
+
+.pips {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  gap: 3px;
+
+  & i {
+    flex: 1 1 0;
+    max-width: 9px;
+    min-width: 2px;
+    height: 16px;
+    border-radius: 2px;
+    background: var(--mantine-color-track);
+  }
+
+  & i[data-kind='bike'] {
+    background: var(--mantine-primary-color-filled);
+  }
+
+  & i[data-kind='ebike'] {
+    background: light-dark(var(--mantine-color-riverline-3), var(--mantine-color-riverline-7));
+  }
+}
+
+.count {
+  font-size: var(--mantine-font-size-xs);
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}

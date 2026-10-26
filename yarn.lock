@@ -21732,8 +21732,13 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "themes.mantine.dev@workspace:apps/themes.mantine.dev"
   dependencies:
+    "@mantine/charts": "workspace:*"
+    "@mantine/code-highlight": "workspace:*"
     "@mantine/core": "workspace:*"
+    "@mantine/dates": "workspace:*"
+    "@mantine/form": "workspace:*"
     "@mantine/hooks": "workspace:*"
+    "@mantine/schedule": "workspace:*"
     "@mantinex/mantine-header": "workspace:*"
     "@mantinex/mantine-logo": "workspace:*"
     "@mantinex/mantine-meta": "workspace:*"
@@ -21741,9 +21746,11 @@ __metadata:
     "@types/node": "npm:^26.6.3"
     "@types/react": "npm:19.3.0"
     "@types/react-dom": "npm:19.3.0"
+    dayjs: "npm:^1.11.23"
     next: "npm:16.3.6"
     react: "npm:19.3.0"
     react-dom: "npm:19.3.0"
+    recharts: "npm:^3.10.1"
     typescript: "npm:6.0.3"
   languageName: unknown
   linkType: soft

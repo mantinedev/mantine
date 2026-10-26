@@ -1,0 +1,110 @@
+.controls {
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 14px var(--tw-gutter);
+  background: var(--mantine-color-body);
+  border-bottom: 1px solid var(--mantine-color-border);
+}
+
+.row {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.spacer {
+  flex: 1;
+}
+
+.days {
+  display: flex;
+  flex-wrap: nowrap;
+  gap: 6px;
+}
+
+.day {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  height: 50px;
+  padding: 0 16px;
+  border: 1.5px solid var(--mantine-color-default-border);
+  border-radius: var(--mantine-radius-md);
+  background: var(--mantine-color-default);
+  color: var(--mantine-color-text);
+
+  @mixin hover {
+    background: var(--mantine-color-default-hover);
+  }
+
+  & .dayName {
+    font-family: var(--tw-font-display);
+    font-size: 30px;
+    font-weight: 900;
+    line-height: 50px;
+    color: var(--mantine-color-bright);
+  }
+
+  & .dayDate {
+    font-size: 13px;
+    font-weight: var(--mantine-font-weight-medium);
+  }
+
+  &[data-active],
+  &[data-active]:hover {
+    background: var(--mantine-primary-color-filled);
+    border-color: var(--mantine-primary-color-filled);
+    color: var(--mantine-color-white);
+
+    & .dayName {
+      color: var(--mantine-color-white);
+    }
+  }
+
+  @container preset (max-width: 520px) {
+    padding: 0 10px;
+
+    & .dayName {
+      font-size: 24px;
+    }
+  }
+}
+
+.dayLabel {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+}
+
+.chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.search {
+  width: 220px;
+  max-width: 100%;
+
+  @container preset (max-width: 780px) {
+    width: 100%;
+    order: 3;
+  }
+}
+
+.chipContent {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+}
+
+.viewLabel {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}

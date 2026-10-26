@@ -1,0 +1,98 @@
+.root {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  height: 64px;
+  padding: 0 24px;
+  background: var(--mantine-color-surface-panel);
+  border-bottom: 1px solid var(--mantine-color-border);
+
+  @container preset (max-width: 520px) {
+    gap: 12px;
+    padding: 0 16px;
+  }
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex: none;
+  text-decoration: none;
+}
+
+.brandName {
+  font-family: var(--mantine-font-family-headings);
+  font-weight: 700;
+  font-size: 18px;
+  color: var(--mantine-color-bright);
+  white-space: nowrap;
+
+  @container preset (max-width: 520px) {
+    display: none;
+  }
+}
+
+.outlineButton {
+  display: none;
+
+  @container preset (max-width: 900px) {
+    display: inline-flex;
+  }
+}
+
+.progress {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex: 1;
+  min-width: 0;
+  max-width: 360px;
+  font-size: var(--mantine-font-size-sm);
+
+  @container preset (max-width: 900px) {
+    max-width: 240px;
+  }
+}
+
+.bar {
+  flex: 1;
+  min-width: 60px;
+}
+
+.progressText {
+  white-space: nowrap;
+
+  & b {
+    color: var(--mantine-color-bright);
+    font-weight: var(--mantine-font-weight-bold);
+  }
+
+  & span {
+    @container preset (max-width: 760px) {
+      display: none;
+    }
+  }
+}
+
+.actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-inline-start: auto;
+}
+
+.moon {
+  @mixin dark {
+    display: none;
+  }
+}
+
+.sun {
+  @mixin light {
+    display: none;
+  }
+}

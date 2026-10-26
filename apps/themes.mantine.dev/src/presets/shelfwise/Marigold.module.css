@@ -1,0 +1,21 @@
+.zone {
+  & :is(a, button):not([data-variant]) {
+    background: var(--sw-marigold-ink);
+    color: var(--sw-marigold);
+
+    @mixin hover {
+      background: var(--sw-marigold-ink);
+      opacity: 0.9;
+    }
+  }
+
+  & [data-variant='default'] {
+    background: transparent;
+    border-color: var(--sw-marigold-ink);
+    color: var(--sw-marigold-ink);
+
+    @mixin hover {
+      background: rgba(43, 29, 0, 0.08);
+    }
+  }
+}

@@ -1,0 +1,50 @@
+.root {
+  --hc-gutter: 56px;
+
+  position: relative;
+  background: var(--hc-page);
+  color: var(--mantine-color-text);
+  font-size: 17px;
+  line-height: 1.6;
+
+  @container preset (max-width: 980px) {
+    --hc-gutter: 36px;
+  }
+
+  @container preset (max-width: 520px) {
+    --hc-gutter: 16px;
+  }
+}
+
+.wrap {
+  padding-inline: var(--hc-gutter);
+}
+
+.section {
+  padding-block: 96px;
+  padding-inline: var(--hc-gutter);
+  border-top: 1px solid var(--mantine-color-border);
+
+  @container preset (max-width: 780px) {
+    padding-block: 72px;
+  }
+}
+
+.secHead {
+  max-width: 36em;
+}
+
+.secTitle {
+  @container preset (max-width: 780px) {
+    font-size: 34px;
+  }
+}
+
+.secLead {
+  margin: 14px 0 0;
+  font-size: 18px;
+}
+
+.tabular {
+  font-variant-numeric: tabular-nums;
+}

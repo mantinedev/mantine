@@ -1,0 +1,109 @@
+.root {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 420px);
+  align-items: center;
+  gap: 32px;
+  padding: 44px var(--mantine-spacing-xl);
+  background: var(--mantine-primary-color-filled);
+  color: var(--mantine-primary-color-contrast);
+
+  @container preset (max-width: 980px) {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  @container preset (max-width: 780px) {
+    padding-inline: var(--mantine-spacing-lg);
+  }
+
+  @container preset (max-width: 520px) {
+    padding-inline: var(--mantine-spacing-md);
+  }
+}
+
+.root .title {
+  font-size: 34px;
+  line-height: 1.1;
+  color: inherit;
+}
+
+.description {
+  max-width: 34em;
+  margin: 10px 0 0;
+  font-family: var(--lt-font-read);
+  font-size: 17px;
+  line-height: 1.55;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.row {
+  display: flex;
+  gap: 8px;
+
+  @container preset (max-width: 520px) {
+    flex-direction: column;
+  }
+}
+
+.field {
+  flex: 1;
+  min-width: 0;
+}
+
+.input {
+  border-color: transparent;
+  background: var(--mantine-color-body);
+  color: var(--mantine-color-bright);
+
+  &:focus {
+    border-color: transparent;
+    box-shadow: none;
+    outline: 2px solid var(--mantine-primary-color-contrast);
+    outline-offset: 2px;
+  }
+
+  &[data-error] {
+    border-color: var(--lt-critical);
+    box-shadow: 0 0 0 1px var(--lt-critical);
+  }
+}
+
+.row .submit {
+  flex: none;
+  background: var(--mantine-color-bright);
+  color: var(--mantine-color-body);
+
+  @mixin hover {
+    opacity: 0.9;
+  }
+}
+
+.error {
+  width: fit-content;
+  padding: 4px 8px;
+  border-radius: 4px;
+  background: var(--mantine-color-body);
+  color: var(--lt-critical);
+  font-size: var(--mantine-font-size-sm);
+  font-weight: var(--mantine-font-weight-bold);
+}
+
+.note {
+  font-size: var(--mantine-font-size-xs);
+}
+
+.done {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-weight: var(--mantine-font-weight-bold);
+}
+
+.doneIcon {
+  --ti-bg: var(--mantine-primary-color-contrast);
+  --ti-color: var(--mantine-primary-color-filled);
+}

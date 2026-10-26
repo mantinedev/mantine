@@ -1,0 +1,58 @@
+.copy {
+  --button-height: 30px;
+  --button-padding-x: 10px;
+
+  border: 1px solid var(--tern-code-border);
+  border-radius: var(--mantine-radius-sm);
+  background: transparent;
+  color: #d5dce6;
+  font-weight: var(--mantine-font-weight-medium);
+
+  & :where([data-position='left']) {
+    margin-inline-end: 6px;
+  }
+
+  &[data-variant] {
+    color: #d5dce6;
+  }
+
+  &[data-variant]:hover {
+    background: var(--tern-code-border);
+    color: #d5dce6;
+  }
+}
+
+.card {
+  margin-top: var(--mantine-spacing-md);
+  border: 1px solid var(--tern-code-border);
+  border-radius: var(--mantine-radius-md);
+  overflow: hidden;
+  background: var(--tern-code-bg);
+}
+
+.head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  height: 44px;
+  padding: 0 8px 0 4px;
+  background: var(--tern-code-surface);
+  border-bottom: 1px solid var(--tern-code-border);
+}
+
+.title {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding-left: 10px;
+  font-size: var(--mantine-font-size-sm);
+  font-weight: var(--mantine-font-weight-medium);
+  color: #d5dce6;
+}
+
+.status {
+  font-family: var(--mantine-font-family-monospace);
+  font-size: 12px;
+  color: #7fd6a0;
+}

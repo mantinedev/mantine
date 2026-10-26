@@ -1,0 +1,95 @@
+.stage {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  max-width: 100%;
+  aspect-ratio: 1 / 1.02;
+  overflow: hidden;
+  border-radius: var(--mantine-radius-xl);
+  background: var(--hc-stage);
+
+  @container preset (max-width: 980px) {
+    aspect-ratio: 4 / 3.4;
+  }
+
+  @container preset (max-width: 520px) {
+    aspect-ratio: auto;
+    border-radius: 24px;
+  }
+}
+
+.glow {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.lamp {
+  position: relative;
+  flex: 1;
+  display: grid;
+  place-items: center;
+  padding-top: 24px;
+
+  & svg {
+    display: block;
+    width: 78%;
+    max-width: 380px;
+    height: auto;
+  }
+
+  @container preset (max-width: 520px) {
+    padding: 24px 0 8px;
+  }
+}
+
+.globeOff {
+  fill: var(--hc-globe-off);
+  stroke: var(--hc-globe-edge);
+}
+
+.scrub {
+  position: relative;
+  margin: 0 28px 26px;
+  padding: 16px 20px;
+  background: var(--hc-surface);
+
+  @container preset (max-width: 520px) {
+    margin: 0 12px 12px;
+  }
+}
+
+.scrubTop {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.scrubLabel {
+  font-size: 15px;
+  font-weight: var(--mantine-font-weight-bold);
+  color: var(--mantine-color-bright);
+}
+
+.readout {
+  font-size: 14px;
+  font-variant-numeric: tabular-nums;
+
+  & b {
+    font-weight: var(--mantine-font-weight-bold);
+    color: var(--mantine-color-bright);
+  }
+}
+
+.slider {
+  margin: 12px 0 4px;
+}
+
+.ticks {
+  display: flex;
+  justify-content: space-between;
+  font-size: 12px;
+  font-variant-numeric: tabular-nums;
+}

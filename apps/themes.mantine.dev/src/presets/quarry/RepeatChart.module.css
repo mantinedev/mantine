@@ -1,0 +1,101 @@
+.card {
+  overflow: hidden;
+}
+
+.head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 10px;
+  padding: 12px 14px 0;
+}
+
+.title {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--mantine-color-bright);
+}
+
+.sub {
+  font-size: 12.5px;
+}
+
+.legend {
+  display: flex;
+  gap: 14px;
+  font-size: 12.5px;
+
+  & span {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  & i {
+    width: 14px;
+    height: 3px;
+    border-radius: 2px;
+  }
+}
+
+.legend i,
+.tooltip i {
+  &[data-series='2026'] {
+    background: var(--quarry-series-1);
+  }
+
+  &[data-series='2025'] {
+    background: var(--quarry-series-2);
+  }
+}
+
+.chart {
+  padding: 6px 12px 10px;
+  font-variant-numeric: tabular-nums;
+}
+
+.priceLabel {
+  & rect {
+    fill: var(--mantine-color-bright);
+  }
+
+  & text {
+    font-size: 11px;
+    font-weight: var(--mantine-font-weight-bold);
+    fill: light-dark(var(--mantine-color-gray-0), var(--mantine-color-dark-8));
+  }
+}
+
+.tooltip {
+  min-width: 150px;
+  padding: 8px 10px;
+  font-size: 12.5px;
+  font-variant-numeric: tabular-nums;
+
+  & b {
+    display: block;
+    margin-bottom: 3px;
+    color: var(--mantine-color-bright);
+  }
+
+  & div {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  & i {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+  }
+
+  & em {
+    margin-left: auto;
+    padding-left: 12px;
+    font-style: normal;
+    font-weight: 700;
+    color: var(--mantine-color-bright);
+  }
+}

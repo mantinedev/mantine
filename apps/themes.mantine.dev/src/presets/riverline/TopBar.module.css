@@ -1,0 +1,115 @@
+.root {
+  display: flex;
+  align-items: center;
+  gap: var(--mantine-spacing-lg);
+  height: 64px;
+  padding-inline: var(--mantine-spacing-xl);
+  background: var(--mantine-color-surface-panel);
+  border-bottom: 1px solid var(--mantine-color-border);
+
+  @container preset (max-width: 760px) {
+    padding-inline: var(--mantine-spacing-md);
+  }
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex: none;
+}
+
+.brandName {
+  font-family: var(--mantine-font-family-headings);
+  font-weight: 700;
+  font-size: 21px;
+  letter-spacing: 0.01em;
+  color: var(--mantine-color-bright);
+}
+
+.nav {
+  display: flex;
+  align-items: stretch;
+  align-self: stretch;
+  gap: var(--mantine-spacing-md);
+
+  @container preset (max-width: 760px) {
+    display: none;
+  }
+}
+
+.link {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  white-space: nowrap;
+  text-decoration: none;
+  color: var(--mantine-color-text);
+  font-weight: var(--mantine-font-weight-medium);
+
+  &[aria-current='page'] {
+    color: var(--mantine-color-bright);
+    font-weight: var(--mantine-font-weight-bold);
+
+    &::after {
+      content: '';
+      position: absolute;
+      inset-inline: 0;
+      bottom: -1px;
+      height: 3px;
+      border-radius: 3px 3px 0 0;
+      background: var(--mantine-primary-color-filled);
+    }
+  }
+
+  @mixin hover {
+    color: var(--mantine-color-bright);
+  }
+
+  &[data-secondary] {
+    @container preset (max-width: 960px) {
+      display: none;
+    }
+  }
+}
+
+.count {
+  --badge-height-sm: 20px;
+  --badge-fz-sm: 12px;
+
+  font-variant-numeric: tabular-nums;
+}
+
+.actions {
+  display: flex;
+  align-items: center;
+  gap: var(--mantine-spacing-xs);
+  margin-inline-start: auto;
+}
+
+.moon {
+  @mixin dark {
+    display: none;
+  }
+}
+
+.sun {
+  @mixin light {
+    display: none;
+  }
+}
+
+.avatar {
+  @container preset (max-width: 760px) {
+    display: none;
+  }
+}
+
+.navToggle {
+  display: none;
+
+  @container preset (max-width: 760px) {
+    display: inline-flex;
+  }
+}

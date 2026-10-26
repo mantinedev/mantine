@@ -10,15 +10,22 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
+    "@mantine/charts": "workspace:*",
+    "@mantine/code-highlight": "workspace:*",
     "@mantine/core": "workspace:*",
+    "@mantine/dates": "workspace:*",
+    "@mantine/form": "workspace:*",
     "@mantine/hooks": "workspace:*",
+    "@mantine/schedule": "workspace:*",
     "@mantinex/mantine-header": "workspace:*",
     "@mantinex/mantine-logo": "workspace:*",
     "@mantinex/mantine-meta": "workspace:*",
     "@tabler/icons-react": "^3.49.0",
+    "dayjs": "^1.11.23",
     "next": "16.3.6",
     "react": "19.3.0",
-    "react-dom": "19.3.0"
+    "react-dom": "19.3.0",
+    "recharts": "^3.10.1"
   },
   "devDependencies": {
     "@types/node": "^26.6.3",

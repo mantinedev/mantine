@@ -1,0 +1,207 @@
+.button {
+  font-weight: var(--mantine-font-weight-bold);
+
+  &:where([data-with-left-section]) {
+    padding-inline-start: var(--button-padding-x);
+  }
+
+  &:where([data-variant='filled'], [data-variant='default']) {
+    box-shadow: var(--mantine-shadow-sm);
+  }
+}
+
+.actionIcon {
+  &:where([data-variant='default']) {
+    box-shadow: var(--mantine-shadow-sm);
+  }
+}
+
+.input {
+  &:focus,
+  &:focus-within {
+    box-shadow: 0 0 0 3px color-mix(in srgb, var(--mantine-primary-color-filled) 22%, transparent);
+  }
+}
+
+.inputSection {
+  color: var(--mantine-color-dimmed);
+}
+
+.inputLabel {
+  margin-bottom: 6px;
+  font-size: var(--mantine-font-size-sm);
+  font-weight: var(--mantine-font-weight-medium);
+  color: var(--mantine-color-bright);
+}
+
+.description {
+  font-size: var(--mantine-font-size-xs);
+  color: var(--mantine-color-text);
+}
+
+.title {
+  color: var(--mantine-color-bright);
+  letter-spacing: -0.01em;
+}
+
+.badge {
+  --badge-height-lg: 24px;
+  --badge-fz-lg: var(--mantine-font-size-xs);
+  --badge-padding-x-lg: 10px;
+}
+
+.badgeLabel {
+  text-transform: none;
+  font-weight: var(--mantine-font-weight-bold);
+  letter-spacing: 0;
+}
+
+.chipLabel {
+  font-weight: var(--mantine-font-weight-medium);
+  color: var(--mantine-color-text);
+
+  &:where([data-variant='outline']) {
+    border-color: var(--mantine-color-default-border);
+    background-color: transparent;
+
+    @mixin hover {
+      background-color: var(--mantine-color-hover);
+    }
+  }
+
+  &:where([data-checked]) {
+    border-color: var(--mantine-color-bright);
+    background-color: var(--mantine-color-bright);
+    color: var(--mantine-color-surface-panel);
+
+    @mixin hover {
+      background-color: var(--mantine-color-bright);
+    }
+  }
+}
+
+.chipIcon {
+  display: none;
+}
+
+.tabsList {
+  max-width: 100%;
+  flex-wrap: nowrap;
+  overflow-x: auto;
+}
+
+.tab {
+  height: 34px;
+  padding: 0 14px;
+  font-size: var(--mantine-font-size-sm);
+  font-weight: var(--mantine-font-weight-medium);
+  color: var(--mantine-color-text);
+  white-space: nowrap;
+
+  &:where([data-active]) {
+    color: var(--mantine-color-bright);
+    font-weight: var(--mantine-font-weight-bold);
+    box-shadow: var(--mantine-shadow-sm);
+  }
+
+  @mixin hover {
+    color: var(--mantine-color-bright);
+  }
+}
+
+.tabSection {
+  font-size: var(--mantine-font-size-xs);
+  font-weight: var(--mantine-font-weight-regular);
+  font-variant-numeric: tabular-nums;
+
+  &:where([data-position='right']:not(:only-child)) {
+    margin-inline-start: 6px;
+  }
+}
+
+.checkboxInput {
+  border-width: 1.5px;
+  border-color: var(--mantine-color-default-border);
+}
+
+.radio {
+  border-width: 1.5px;
+  border-color: var(--mantine-color-default-border);
+  background-color: var(--mantine-color-surface-panel);
+
+  &:checked {
+    background-color: var(--mantine-color-surface-panel);
+  }
+}
+
+.radioLabel {
+  padding-inline-start: 10px;
+  font-size: var(--mantine-font-size-sm);
+}
+
+.timelineItem {
+  &:where(:not([data-first])) {
+    margin-top: 18px;
+  }
+
+  &::before {
+    top: 18px;
+    bottom: -20px;
+  }
+}
+
+.timelineBullet {
+  top: 4px;
+  border-color: var(--tli-color, var(--tl-color));
+  background-color: var(--mantine-color-surface-panel);
+}
+
+.timelineBody {
+  margin-inline-start: 4px;
+}
+
+.timelineTitle {
+  margin-bottom: 0;
+  font-weight: var(--mantine-font-weight-bold);
+  line-height: 1.35;
+  color: var(--mantine-color-bright);
+}
+
+.avatarPlaceholder {
+  font-weight: var(--mantine-font-weight-bold);
+}
+
+.menuDropdown {
+  padding: 6px;
+}
+
+.menuItem {
+  height: 36px;
+  padding: 0 10px;
+  font-size: var(--mantine-font-size-sm);
+}
+
+.tooltip {
+  padding: 4px 8px;
+  font-size: var(--mantine-font-size-xs);
+  font-weight: var(--mantine-font-weight-medium);
+  background-color: var(--mantine-color-bright);
+  color: var(--mantine-color-surface-panel);
+}
+
+.modalHeader {
+  min-height: 0;
+  padding: 20px 20px 0 24px;
+}
+
+.modalTitle {
+  font-family: var(--mantine-font-family-headings);
+  font-weight: 500;
+  font-size: 24px;
+  line-height: 1.2;
+  color: var(--mantine-color-bright);
+}
+
+.modalBody {
+  padding: 16px 24px 22px;
+}

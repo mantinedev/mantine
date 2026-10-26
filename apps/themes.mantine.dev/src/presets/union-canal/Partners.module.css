@@ -1,0 +1,106 @@
+.root {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 32px;
+  padding: 40px 48px;
+  border-top: 1px solid var(--mantine-color-border);
+
+  @container preset (max-width: 980px) {
+    padding-inline: 32px;
+  }
+
+  @container preset (max-width: 520px) {
+    padding-inline: 16px;
+  }
+}
+
+.intro {
+  max-width: 12em;
+  margin: 0;
+  font-weight: var(--mantine-font-weight-medium);
+  line-height: 1.35;
+  color: var(--mantine-color-bright);
+}
+
+.list {
+  flex: 1;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 22px 36px;
+}
+
+.logo {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  line-height: 1.1;
+  color: var(--mantine-color-text);
+  text-decoration: none;
+
+  & svg {
+    width: 42px;
+    height: 42px;
+    flex: none;
+    fill: currentColor;
+  }
+
+  & b {
+    display: block;
+  }
+
+  @mixin hover {
+    color: var(--mantine-color-bright);
+  }
+}
+
+.lothian {
+  & b {
+    font-family: var(--uc-font-slab);
+    font-size: 19px;
+    font-weight: 700;
+  }
+
+  & span span {
+    display: block;
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+  }
+}
+
+.council {
+  & b {
+    font-size: 16px;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+  }
+
+  & span span {
+    display: block;
+    font-size: 13px;
+  }
+}
+
+.boatClub {
+  & span span {
+    display: block;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+  }
+
+  & b {
+    font-family: var(--mantine-font-family-headings);
+    font-size: 18px;
+    font-weight: 400;
+  }
+}
+
+.heritage {
+  font-family: var(--uc-font-slab);
+  font-size: 16px;
+  font-style: italic;
+  font-weight: 500;
+}

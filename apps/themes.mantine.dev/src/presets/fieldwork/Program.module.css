@@ -1,0 +1,476 @@
+.chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.chipSwatch {
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+}
+
+.speakers {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 28px 20px;
+}
+
+.speaker {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  text-align: left;
+  color: var(--mantine-color-text);
+
+  &:hover .art {
+    outline: 2px solid var(--mantine-color-bright);
+    outline-offset: -2px;
+  }
+}
+
+.art {
+  position: relative;
+  display: grid;
+  place-items: center;
+  aspect-ratio: 1;
+  max-width: 100%;
+  overflow: hidden;
+  border-radius: var(--mantine-radius-sm);
+  background: var(--mantine-color-neutral-2);
+}
+
+.shape {
+  position: absolute;
+  width: 72%;
+  height: 72%;
+
+  &[data-shape='circle'] {
+    border-radius: 50%;
+  }
+
+  &[data-shape='tri'] {
+    clip-path: polygon(50% 0, 100% 100%, 0 100%);
+  }
+
+  &[data-shape='half'] {
+    height: 36%;
+    bottom: 14%;
+    border-radius: 999px 999px 0 0;
+  }
+
+  &[data-shape='square'] {
+    width: 60%;
+    height: 60%;
+    transform: rotate(8deg);
+  }
+}
+
+.initials {
+  position: relative;
+  font-family: var(--mantine-font-family-headings);
+  font-size: 54px;
+  line-height: 1;
+  color: var(--mantine-color-bright);
+
+  &[data-on-dark] {
+    color: var(--mantine-color-body);
+  }
+}
+
+.speakerName {
+  display: block;
+  font-size: 17px;
+  font-weight: var(--mantine-font-weight-bold);
+  line-height: 1.25;
+  color: var(--mantine-color-bright);
+}
+
+.speakerRole {
+  display: block;
+  font-size: 14px;
+  line-height: 1.4;
+}
+
+.speakerTalk {
+  padding-top: 8px;
+  border-top: 2px solid var(--mantine-color-bright);
+  font-size: 15px;
+  font-weight: var(--mantine-font-weight-medium);
+  line-height: 1.35;
+  color: var(--mantine-color-bright);
+}
+
+.trackTag {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 13px;
+  font-weight: var(--mantine-font-weight-medium);
+
+  & i {
+    display: inline-block;
+    width: 10px;
+    height: 10px;
+  }
+}
+
+.dayName {
+  display: block;
+  font-family: var(--mantine-font-family-headings);
+  font-size: 34px;
+  font-weight: 400;
+  line-height: 1;
+  color: var(--mantine-color-bright);
+  opacity: 0.35;
+
+  [data-active] > * > & {
+    opacity: 1;
+    color: var(--mantine-primary-color-filled);
+  }
+}
+
+.dayDate {
+  font-size: 14px;
+  font-weight: var(--mantine-font-weight-medium);
+  color: var(--mantine-color-text);
+}
+
+.slots {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.slot {
+  display: grid;
+  grid-template-columns: 84px 12px minmax(0, 1fr) 150px auto;
+  align-items: center;
+  gap: 16px;
+  padding: 16px 0;
+  border-bottom: 1px solid var(--mantine-color-border-strong);
+
+  &[data-break] .slotTitle {
+    font-weight: var(--mantine-font-weight-medium);
+  }
+}
+
+.slotTime {
+  font-family: var(--mantine-font-family-headings);
+  font-size: 24px;
+  line-height: 1;
+  color: var(--mantine-color-bright);
+  font-variant-numeric: tabular-nums;
+}
+
+.slotBar {
+  align-self: stretch;
+  width: 12px;
+}
+
+.slotTitle {
+  display: block;
+  font-size: 17px;
+  font-weight: var(--mantine-font-weight-bold);
+  line-height: 1.3;
+  color: var(--mantine-color-bright);
+}
+
+.slotBy {
+  display: block;
+  font-size: 14px;
+}
+
+.slotRoom {
+  font-size: 14px;
+  font-weight: var(--mantine-font-weight-medium);
+}
+
+.slot .star {
+  border-color: var(--mantine-color-border-strong);
+  color: var(--mantine-color-text);
+
+  &:hover {
+    border-color: var(--mantine-color-bright);
+  }
+}
+
+.empty {
+  padding: 40px 0;
+
+  & b {
+    display: block;
+    margin-bottom: 4px;
+    font-size: 18px;
+    color: var(--mantine-color-bright);
+  }
+}
+
+.ticketsGrid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 320px;
+  align-items: start;
+  gap: 28px;
+}
+
+.tiers {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.tier {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto auto;
+  align-items: center;
+  gap: 4px 20px;
+  padding: 20px 22px;
+  color: var(--mantine-color-text);
+}
+
+.tierSold {
+  border: 2px dashed currentColor;
+  border-radius: var(--mantine-radius-sm);
+  color: var(--fw-teal-ink);
+}
+
+.tierName {
+  grid-column: 1;
+}
+
+.tierSold .tierName,
+.tierSold .price {
+  color: var(--fw-teal-ink);
+}
+
+.tierDescription {
+  grid-column: 1;
+  font-size: 14px;
+}
+
+.price {
+  grid-row: 1 / 3;
+  grid-column: 2;
+  font-family: var(--mantine-font-family-headings);
+  font-size: 38px;
+  line-height: 1;
+  text-align: right;
+  color: var(--mantine-color-bright);
+  font-variant-numeric: tabular-nums;
+
+  & s {
+    font-size: 24px;
+    opacity: 0.6;
+  }
+}
+
+.qty {
+  grid-row: 1 / 3;
+  grid-column: 3;
+}
+
+.quantity {
+  display: inline-flex;
+  align-items: center;
+  border: 2px solid var(--mantine-color-bright);
+  border-radius: var(--mantine-radius-sm);
+
+  & output {
+    min-width: 32px;
+    text-align: center;
+    font-weight: var(--mantine-font-weight-bold);
+    color: var(--mantine-color-bright);
+    font-variant-numeric: tabular-nums;
+  }
+}
+
+.summary {
+  position: sticky;
+  top: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  padding: 22px;
+  color: var(--mantine-color-text);
+}
+
+.orderLines {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  font-size: 15px;
+
+  & li {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+    font-variant-numeric: tabular-nums;
+  }
+}
+
+.orderNone {
+  font-size: 14px;
+}
+
+.total {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  padding-top: 12px;
+  border-top: 2px solid var(--mantine-color-bright);
+
+  & span {
+    font-weight: var(--mantine-font-weight-medium);
+  }
+
+  & b {
+    font-family: var(--mantine-font-family-headings);
+    font-size: 40px;
+    font-weight: 400;
+    line-height: 1;
+    color: var(--mantine-color-bright);
+    font-variant-numeric: tabular-nums;
+  }
+}
+
+.orderNote {
+  font-size: 13px;
+}
+
+.modalTop {
+  display: grid;
+  grid-template-columns: 112px minmax(0, 1fr) auto;
+  align-items: start;
+  gap: 18px;
+  padding: 22px;
+  border-bottom: 2px solid var(--mantine-color-bright);
+}
+
+.modalArt {
+  width: 112px;
+
+  & .initials {
+    font-size: 54px;
+  }
+}
+
+.modalName {
+  font-family: var(--mantine-font-family-headings);
+  font-size: 40px;
+  font-weight: 400;
+  line-height: 0.95;
+  color: var(--mantine-color-bright);
+}
+
+.modalRole {
+  margin-top: 6px;
+  font-size: 15px;
+}
+
+.modalBody {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  padding: 22px;
+  font-size: 16px;
+  line-height: 1.55;
+  color: var(--mantine-color-text);
+
+  & p {
+    margin: 0;
+  }
+}
+
+.modalTalk {
+  font-size: 20px;
+}
+
+.modalWhen {
+  font-size: 14px;
+  font-weight: var(--mantine-font-weight-medium);
+}
+
+.modalFoot {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  padding: 0 22px 22px;
+}
+
+@container preset (max-width: 980px) {
+  .speakers {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .ticketsGrid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .summary {
+    position: static;
+  }
+
+  .slot {
+    grid-template-columns: 76px 10px minmax(0, 1fr) auto;
+  }
+
+  .slotBar {
+    width: 10px;
+  }
+
+  .slotRoom {
+    grid-column: 3;
+    grid-row: 2;
+  }
+
+  .slot > :last-child {
+    grid-column: 4;
+    grid-row: 1 / 3;
+  }
+}
+
+@container preset (max-width: 780px) {
+  .speakers {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@container preset (max-width: 520px) {
+  .slot {
+    grid-template-columns: 64px minmax(0, 1fr) auto;
+    gap: 4px 12px;
+  }
+
+  .slotBar {
+    display: none;
+  }
+
+  .slotText,
+  .slotRoom {
+    grid-column: 2;
+  }
+
+  .slot > :last-child {
+    grid-column: 3;
+    grid-row: 1 / 3;
+  }
+
+  .tier {
+    grid-template-columns: minmax(0, 1fr) auto;
+  }
+
+  .price {
+    grid-row: auto;
+    grid-column: 1;
+    text-align: left;
+    font-size: 32px;
+  }
+
+  .qty {
+    grid-row: 1 / 4;
+    grid-column: 2;
+  }
+}

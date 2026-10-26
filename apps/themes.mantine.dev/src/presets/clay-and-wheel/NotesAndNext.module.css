@@ -1,0 +1,105 @@
+.pair {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  align-items: stretch;
+  gap: 24px;
+
+  @container preset (max-width: 760px) {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+.box {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 24px;
+
+  @container preset (max-width: 760px) {
+    padding: 22px;
+  }
+}
+
+.title {
+  font-size: 19px;
+  line-height: 1.6;
+}
+
+.textarea {
+  min-height: 96px;
+  padding: 12px 14px;
+  font-size: var(--mantine-font-size-md);
+  line-height: 1.55;
+}
+
+.rowEnd {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 10px;
+  font-size: var(--mantine-font-size-xs);
+}
+
+.saved {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.savedIcon {
+  color: var(--mantine-color-green-filled);
+}
+
+.nextCard {
+  display: grid;
+  grid-template-columns: 96px minmax(0, 1fr);
+  align-items: center;
+  gap: 16px;
+  padding: 12px;
+  border: 1px solid var(--mantine-color-border);
+  border-radius: var(--mantine-radius-md);
+  color: inherit;
+  text-decoration: none;
+
+  @mixin hover {
+    background: var(--mantine-color-hover);
+  }
+}
+
+.thumb {
+  display: block;
+  aspect-ratio: 4 / 3;
+  max-width: 100%;
+  overflow: hidden;
+  border-radius: var(--mantine-radius-sm);
+  background: var(--cw-player);
+
+  & svg {
+    display: block;
+    width: 100%;
+    height: 100%;
+  }
+}
+
+.nextText {
+  line-height: 1.4;
+}
+
+.nextKicker {
+  font-size: var(--mantine-font-size-xs);
+  font-weight: var(--mantine-font-weight-medium);
+}
+
+.nextName {
+  font-weight: var(--mantine-font-weight-bold);
+  color: var(--mantine-color-bright);
+  line-height: 1.3;
+}
+
+.completeRow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: auto;
+}

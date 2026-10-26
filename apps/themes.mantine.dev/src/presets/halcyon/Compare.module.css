@@ -1,0 +1,43 @@
+.compare {
+  margin-top: 44px;
+  overflow: hidden;
+  border: 1px solid var(--mantine-color-border);
+  border-radius: var(--mantine-radius-lg);
+}
+
+.table {
+  & thead th {
+    background: var(--hc-surface-2);
+  }
+
+  & tbody tr:last-child {
+    border-bottom: 0;
+  }
+}
+
+.compare .rowHead {
+  width: 30%;
+  font-weight: var(--mantine-font-weight-medium);
+  color: var(--mantine-color-text);
+}
+
+.ours {
+  color: var(--mantine-color-bright);
+}
+
+.mark {
+  display: inline-flex;
+  align-items: flex-start;
+  gap: 10px;
+  color: inherit;
+
+  & svg {
+    flex: none;
+    margin-top: 3px;
+    color: var(--hc-bad);
+  }
+
+  &:where([data-yes]) svg {
+    color: var(--hc-good);
+  }
+}

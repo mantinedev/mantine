@@ -1,0 +1,101 @@
+.root {
+  position: relative;
+  z-index: 3;
+  flex: none;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  height: 60px;
+  padding: 0 18px;
+  border-bottom: 1px solid var(--mantine-color-border);
+  background: var(--mantine-color-surface-panel);
+}
+
+.brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  flex: none;
+  font-weight: 800;
+  font-size: 17px;
+  letter-spacing: -0.02em;
+  color: var(--mantine-color-bright);
+}
+
+.logo {
+  width: 28px;
+  height: 28px;
+}
+
+.crumb {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 0;
+  font-size: 14px;
+
+  & b {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    font-weight: var(--mantine-font-weight-bold);
+    color: var(--mantine-color-bright);
+  }
+
+  @container preset (max-width: 800px) {
+    display: none;
+  }
+}
+
+.separator {
+  flex: none;
+  width: 1px;
+  height: 20px;
+  background: var(--mantine-color-default-border);
+}
+
+.crumbSub {
+  white-space: nowrap;
+
+  @container preset (max-width: 1000px) {
+    display: none;
+  }
+}
+
+.paneSwitch {
+  display: none;
+  margin-inline-start: auto;
+
+  @container preset (max-width: 800px) {
+    display: inline-flex;
+  }
+}
+
+.actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-inline-start: auto;
+
+  @container preset (max-width: 800px) {
+    margin-inline-start: 0;
+  }
+}
+
+.share {
+  @container preset (max-width: 520px) {
+    display: none;
+  }
+}
+
+.moon {
+  @mixin dark {
+    display: none;
+  }
+}
+
+.sun {
+  @mixin light {
+    display: none;
+  }
+}

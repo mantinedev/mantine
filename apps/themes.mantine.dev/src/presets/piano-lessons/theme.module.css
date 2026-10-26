@@ -1,0 +1,247 @@
+.button {
+  font-weight: var(--mantine-font-weight-bold);
+
+  &:where([data-with-left-section]) {
+    padding-inline-start: var(--button-padding-x);
+  }
+}
+
+.actionIcon {
+  &:where([data-variant='default']) {
+    color: var(--mantine-color-bright);
+  }
+}
+
+.title {
+  color: var(--mantine-color-bright);
+
+  &:where(h1) {
+    letter-spacing: -0.01em;
+  }
+}
+
+.inputWrapper {
+  --input-padding: 12px;
+}
+
+.input {
+  &:focus,
+  &:focus-within {
+    box-shadow: 0 0 0 1px var(--mantine-color-focus-ring);
+  }
+
+  &[data-error] {
+    box-shadow: 0 0 0 1px var(--mantine-color-error);
+  }
+
+  &:where(textarea) {
+    padding-block: 10px;
+    line-height: 1.5;
+  }
+}
+
+.inputLabel {
+  margin-bottom: 6px;
+  font-size: var(--mantine-font-size-sm);
+  font-weight: var(--mantine-font-weight-medium);
+  color: var(--mantine-color-bright);
+}
+
+.inputError {
+  margin-top: 4px;
+  font-size: var(--mantine-font-size-xs);
+}
+
+.radioCard {
+  border-color: var(--mantine-color-default-border);
+  background-color: var(--mantine-color-default);
+  transition: border-color 100ms ease;
+
+  @mixin hover {
+    &:where(:not([data-checked], :disabled)) {
+      border-color: var(--mantine-color-bright);
+    }
+  }
+
+  &:where([data-checked]) {
+    border-color: var(--mantine-primary-color-filled);
+    box-shadow: inset 0 0 0 1px var(--mantine-primary-color-filled);
+  }
+}
+
+.radioIndicator {
+  background-color: transparent;
+  border-color: var(--mantine-color-default-border);
+
+  &:where([data-checked]) {
+    background-color: var(--mantine-primary-color-filled);
+    border-color: var(--mantine-primary-color-filled);
+  }
+}
+
+.chip {
+  --chip-fz: var(--mantine-font-size-sm);
+  --chip-size: 38px;
+  --chip-padding: 14px;
+  --chip-checked-padding: 14px;
+
+  &:where([data-variant='filled']) {
+    --chip-fz: var(--mantine-font-size-md);
+    --chip-size: 40px;
+  }
+}
+
+.chipInput:focus-visible + .chipLabel {
+  outline: 2px solid var(--mantine-color-focus-ring);
+  outline-offset: 2px;
+}
+
+.chipLabel {
+  justify-content: center;
+  border: 1px solid var(--mantine-color-default-border);
+  background-color: var(--mantine-color-default);
+  font-weight: var(--mantine-font-weight-medium);
+  color: var(--mantine-color-text);
+  transition: border-color 100ms ease;
+
+  &:where([data-checked]) {
+    border-color: var(--mantine-primary-color-filled);
+    box-shadow: inset 0 0 0 1px var(--mantine-primary-color-filled);
+    font-weight: var(--mantine-font-weight-bold);
+    color: var(--mantine-color-bright);
+  }
+
+  @mixin hover {
+    &:where(:not([data-disabled])) {
+      background-color: var(--mantine-color-default);
+    }
+  }
+
+  .chip:where([data-variant='filled']) & {
+    min-width: 84px;
+    font-weight: var(--mantine-font-weight-bold);
+    font-variant-numeric: tabular-nums;
+    color: var(--mantine-color-bright);
+
+    @mixin hover {
+      &:where(:not([data-disabled], [data-checked])) {
+        border-color: var(--mantine-color-bright);
+      }
+    }
+
+    &:where([data-checked]) {
+      background-color: var(--mantine-primary-color-filled);
+      box-shadow: none;
+      color: var(--mantine-primary-color-contrast);
+    }
+
+    &:where([data-disabled]) {
+      opacity: 1;
+      background-color: transparent;
+      color: var(--mantine-color-default-border);
+      text-decoration: line-through;
+    }
+  }
+}
+
+.switchLabel {
+  padding-inline-start: 8px;
+  font-size: var(--mantine-font-size-sm);
+  cursor: pointer;
+}
+
+.dropdown {
+  border-color: var(--mantine-color-border);
+  background-color: var(--mantine-color-surface-panel);
+}
+
+.menuDropdown {
+  padding: 6px;
+  border-color: var(--mantine-color-border);
+  background-color: var(--mantine-color-surface-panel);
+}
+
+.menuItem {
+  min-height: 38px;
+  font-size: var(--mantine-font-size-sm);
+}
+
+.badge {
+  --badge-height-md: 24px;
+  --badge-fz-md: 12px;
+  --badge-padding-x-md: 10px;
+
+  border-color: var(--mantine-color-default-border);
+  background-color: transparent;
+}
+
+.badgeLabel {
+  text-transform: none;
+  font-weight: var(--mantine-font-weight-medium);
+  color: var(--mantine-color-text);
+}
+
+.accordionItem {
+  border-bottom: 1px solid var(--mantine-color-border);
+
+  &:first-of-type {
+    border-top: 1px solid var(--mantine-color-bright);
+  }
+}
+
+.accordionControl {
+  padding: 18px 0;
+  background-color: transparent;
+
+  @mixin hover {
+    background-color: transparent;
+  }
+}
+
+.accordionLabel {
+  padding: 0;
+  font-weight: var(--mantine-font-weight-bold);
+  color: var(--mantine-color-bright);
+}
+
+.accordionChevron {
+  color: var(--mantine-color-bright);
+
+  &:where([data-rotate]) {
+    transform: rotate(45deg);
+  }
+}
+
+.accordionContent {
+  padding: 0 40px 18px 0;
+  font-size: var(--mantine-font-size-md);
+}
+
+.day {
+  width: 100%;
+  font-size: var(--mantine-font-size-sm);
+  font-variant-numeric: tabular-nums;
+  color: var(--mantine-color-bright);
+
+  &:where(:disabled, [data-disabled]) {
+    opacity: 1;
+    color: var(--mantine-color-default-border);
+  }
+
+  &:where([data-selected]) {
+    background-color: var(--mantine-primary-color-filled);
+    color: var(--mantine-primary-color-contrast);
+  }
+}
+
+.weekday {
+  font-size: 12px;
+  font-weight: var(--mantine-font-weight-medium);
+  color: var(--mantine-color-text);
+}
+
+.calendarHeaderLevel {
+  font-size: var(--mantine-font-size-md);
+  font-weight: var(--mantine-font-weight-bold);
+  color: var(--mantine-color-bright);
+}

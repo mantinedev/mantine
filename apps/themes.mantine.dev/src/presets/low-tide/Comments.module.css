@@ -1,0 +1,139 @@
+.root {
+  display: grid;
+  grid-template-columns: 200px minmax(0, 66ch);
+  justify-content: center;
+  gap: 56px;
+  padding: 8px var(--mantine-spacing-xl) 56px;
+
+  @container preset (max-width: 980px) {
+    grid-template-columns: minmax(0, 66ch);
+    gap: 0;
+  }
+
+  @container preset (max-width: 780px) {
+    padding-inline: var(--mantine-spacing-lg);
+  }
+
+  @container preset (max-width: 520px) {
+    padding-inline: var(--mantine-spacing-md);
+  }
+}
+
+.main {
+  grid-column: 2;
+  min-width: 0;
+
+  @container preset (max-width: 980px) {
+    grid-column: 1;
+  }
+}
+
+.title {
+  margin-bottom: 20px;
+}
+
+.count {
+  font-family: var(--mantine-font-family);
+  font-size: 18px;
+  font-weight: var(--mantine-font-weight-medium);
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 28px;
+}
+
+.textarea {
+  min-height: 96px;
+  padding: 12px 14px;
+  font-family: var(--lt-font-read);
+  font-size: 16px;
+  line-height: 1.55;
+}
+
+.formRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 10px;
+  font-size: var(--mantine-font-size-xs);
+}
+
+.list {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.comment {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: 4px 14px;
+
+  &[data-reply] {
+    margin-left: 54px;
+
+    @container preset (max-width: 520px) {
+      margin-left: 24px;
+    }
+  }
+}
+
+.avatar {
+  grid-row: 1 / 4;
+}
+
+.head {
+  font-size: var(--mantine-font-size-sm);
+
+  & b {
+    margin-right: 8px;
+    font-weight: var(--mantine-font-weight-bold);
+    color: var(--mantine-color-bright);
+  }
+}
+
+.authorBadge {
+  --badge-height-sm: 20px;
+  --badge-fz-sm: 11px;
+  --badge-padding-x-sm: 8px;
+
+  margin-right: 8px;
+  vertical-align: 1px;
+}
+
+.body {
+  font-family: var(--lt-font-read);
+  font-size: 16px;
+  line-height: 1.6;
+}
+
+.actions {
+  display: flex;
+  gap: 14px;
+  font-size: var(--mantine-font-size-xs);
+  font-weight: var(--mantine-font-weight-bold);
+}
+
+.action {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 0;
+  font-size: var(--mantine-font-size-xs);
+  color: var(--mantine-color-text);
+
+  @mixin hover {
+    color: var(--mantine-color-anchor);
+  }
+
+  &[aria-pressed='true'] {
+    color: var(--mantine-color-anchor);
+  }
+}

@@ -1,0 +1,30 @@
+.runline {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 14px;
+  font-size: 13px;
+
+  & b {
+    font-family: var(--mantine-font-family-monospace);
+    font-size: 12.5px;
+    font-weight: var(--mantine-font-weight-bold);
+    color: var(--mantine-color-bright);
+  }
+}
+
+.ok {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-weight: var(--mantine-font-weight-bold);
+  color: var(--quarry-good);
+}
+
+.running {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: var(--mantine-font-weight-bold);
+  color: var(--mantine-primary-color-filled);
+}

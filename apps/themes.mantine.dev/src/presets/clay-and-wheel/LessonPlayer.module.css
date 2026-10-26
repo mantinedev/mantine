@@ -1,0 +1,131 @@
+.root {
+  position: relative;
+  aspect-ratio: 16 / 9;
+  max-width: 100%;
+  overflow: hidden;
+  border-radius: var(--mantine-radius-md);
+  background: var(--cw-player);
+}
+
+.scene {
+  position: absolute;
+  inset: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.rings {
+  transform-origin: 480px 270px;
+
+  .root[data-playing] & {
+    animation: wheel-spin 1.2s linear infinite;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    animation: none !important;
+  }
+}
+
+@keyframes wheel-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.bigPlay {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
+
+  & svg {
+    margin-left: 4px;
+  }
+
+  &:active {
+    transform: translate(-50%, -50%) translateY(1px);
+  }
+}
+
+.caption {
+  position: absolute;
+  left: 50%;
+  bottom: 66px;
+  transform: translateX(-50%);
+  max-width: 80%;
+  padding: 6px 12px;
+  border-radius: 6px;
+  background: rgba(0, 0, 0, 0.72);
+  color: #fff;
+  font-size: 15px;
+  line-height: 1.4;
+  text-align: center;
+}
+
+.controls {
+  position: absolute;
+  inset-inline: 0;
+  bottom: 0;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 14px 12px;
+  color: #fff;
+  background: linear-gradient(transparent, rgba(0, 0, 0, 0.6));
+}
+
+.control,
+.speed {
+  flex: none;
+  height: 36px;
+  min-height: 36px;
+  border-radius: var(--mantine-radius-sm);
+  color: #fff;
+
+  @mixin hover {
+    background: rgba(255, 255, 255, 0.16);
+    color: #fff;
+  }
+
+  &[aria-pressed='true'] {
+    background: rgba(255, 255, 255, 0.24);
+  }
+}
+
+.control {
+  width: 36px;
+  min-width: 36px;
+}
+
+.speed {
+  padding: 0 10px;
+  font-size: 13px;
+  font-weight: var(--mantine-font-weight-bold);
+}
+
+.speedCheck {
+  color: var(--mantine-primary-color-filled);
+}
+
+.seek {
+  --slider-track-bg: rgba(255, 255, 255, 0.28);
+
+  flex: 1;
+}
+
+.seekThumb {
+  border: 0;
+  background-color: #fff;
+}
+
+.time {
+  font-size: 13px;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+
+  @container preset (max-width: 520px) {
+    display: none;
+  }
+}

@@ -1,0 +1,183 @@
+.toolbar {
+  position: sticky;
+  top: 0;
+  z-index: 3;
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  padding: 8px 20px;
+  overflow-x: auto;
+  background: var(--mantine-color-surface-panel);
+  border-bottom: 1px solid var(--mantine-color-border);
+}
+
+.tool {
+  min-width: 32px;
+  width: auto;
+  padding-inline: 8px;
+  font-size: var(--mantine-font-size-md);
+  font-weight: var(--mantine-font-weight-bold);
+
+  &[aria-pressed='true'] {
+    background-color: var(--larder-ink);
+    color: var(--larder-ink-contrast);
+  }
+}
+
+.italic {
+  font-family: var(--larder-font-serif);
+}
+
+.separator {
+  flex: none;
+  width: 1px;
+  height: 20px;
+  margin: 0 6px;
+  background: var(--mantine-color-border);
+}
+
+.count {
+  margin-inline-start: auto;
+  padding-inline-start: 12px;
+  font-size: var(--mantine-font-size-sm);
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+
+  @container preset (max-width: 520px) {
+    display: none;
+  }
+}
+
+.sheet {
+  max-width: 680px;
+  margin: 0 auto;
+  padding: 36px 40px 64px;
+
+  @container preset (max-width: 1000px) {
+    padding: 32px 32px 56px;
+  }
+
+  @container preset (max-width: 760px) {
+    padding: 24px 20px 48px;
+  }
+}
+
+.kicker {
+  font-size: var(--mantine-font-size-sm);
+  font-weight: var(--mantine-font-weight-bold);
+  color: var(--mantine-primary-color-text);
+}
+
+.titleRoot {
+  margin-top: 8px;
+}
+
+.titleField,
+.standfirst {
+  --input-height: auto;
+  --input-line-height: inherit;
+
+  padding: 0;
+  overflow: hidden;
+  font-family: var(--larder-font-serif);
+}
+
+.titleField {
+  font-size: 38px;
+  font-weight: 700;
+  line-height: 1.08;
+  letter-spacing: -0.015em;
+  color: var(--mantine-color-bright);
+
+  @container preset (max-width: 760px) {
+    font-size: 32px;
+  }
+}
+
+.standfirstRoot {
+  margin-top: 14px;
+}
+
+.standfirst {
+  font-size: 20px;
+  font-style: italic;
+  line-height: 1.45;
+  color: var(--mantine-color-text);
+}
+
+.byline {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 20px 0 24px;
+  padding: 12px 0;
+  border-top: 1px solid var(--mantine-color-bright);
+  border-bottom: 1px solid var(--mantine-color-border);
+  font-size: var(--mantine-font-size-sm);
+
+  & b {
+    font-weight: var(--mantine-font-weight-bold);
+    color: var(--mantine-color-bright);
+  }
+}
+
+.prose {
+  font-family: var(--larder-font-serif);
+  font-size: var(--mantine-font-size-xl);
+  line-height: 1.68;
+  color: var(--mantine-color-text);
+  outline: none;
+
+  & p {
+    margin: 0 0 1em;
+  }
+
+  & h2 {
+    margin: 1.4em 0 0.5em;
+    font-family: var(--larder-font-serif);
+    font-size: 24px;
+    line-height: 1.2;
+    color: var(--mantine-color-bright);
+  }
+
+  & blockquote {
+    margin: 1.2em 0;
+    padding-inline-start: 18px;
+    border-inline-start: 3px solid var(--mantine-primary-color-filled);
+    font-size: 21px;
+    font-style: italic;
+    line-height: 1.45;
+    color: var(--mantine-color-bright);
+  }
+
+  & a {
+    color: var(--mantine-color-bright);
+    text-decoration-color: var(--mantine-primary-color-filled);
+    text-decoration-thickness: 2px;
+    text-underline-offset: 3px;
+  }
+
+  & ul {
+    padding-inline-start: 1.2em;
+  }
+
+  & figure {
+    margin: 1.4em 0;
+  }
+
+  & figure > div {
+    display: grid;
+    place-items: center;
+    max-width: 100%;
+    aspect-ratio: 3 / 2;
+    background: var(--larder-placeholder);
+    font-family: var(--mantine-font-family);
+    font-size: var(--mantine-font-size-sm);
+  }
+
+  & figcaption {
+    margin-top: 6px;
+    font-family: var(--mantine-font-family);
+    font-size: var(--mantine-font-size-xs);
+  }
+}

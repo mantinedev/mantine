@@ -1,0 +1,30 @@
+.logo {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-family: var(--mantine-font-family-headings);
+  font-size: 24px;
+  line-height: 1.55;
+  text-decoration: none;
+  color: inherit;
+}
+
+.mark {
+  display: flex;
+  align-items: flex-end;
+  gap: 2px;
+  width: 30px;
+  height: 30px;
+
+  & i {
+    display: block;
+    width: 6px;
+    border-radius: 1.5px;
+    background: currentColor;
+  }
+
+  & i[data-tilted] {
+    transform: rotate(-12deg);
+    transform-origin: bottom;
+  }
+}

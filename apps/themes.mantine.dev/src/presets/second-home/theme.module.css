@@ -1,0 +1,158 @@
+.button {
+  font-weight: var(--mantine-font-weight-medium);
+
+  &:where([data-variant='default']) {
+    color: var(--mantine-color-bright);
+  }
+}
+
+.actionIcon {
+  &:where([data-variant='default']) {
+    color: var(--mantine-color-bright);
+  }
+}
+
+.input {
+  &:where(:not([data-variant='unstyled'])):focus,
+  &:where(:not([data-variant='unstyled'])):focus-within {
+    border-color: var(--mantine-primary-color-filled);
+    box-shadow: 0 0 0 1px var(--mantine-primary-color-filled);
+  }
+}
+
+.title {
+  color: var(--mantine-color-bright);
+  letter-spacing: -0.02em;
+}
+
+.tabsList {
+  gap: 6px;
+}
+
+.tab {
+  height: 32px;
+  padding: 0 12px;
+  border: 1px solid var(--mantine-color-default-border);
+  font-size: var(--mantine-font-size-sm);
+  font-weight: var(--mantine-font-weight-medium);
+
+  &:where([data-active]) {
+    border-color: var(--mantine-color-bright);
+  }
+}
+
+.chipLabel {
+  font-weight: var(--mantine-font-weight-medium);
+  color: var(--mantine-color-bright);
+
+  &:where(:not([data-checked])) {
+    border-color: var(--mantine-color-default-border);
+    background-color: var(--mantine-color-surface-panel);
+
+    @mixin hover {
+      border-color: var(--mantine-color-bright);
+      background-color: var(--mantine-color-surface-panel);
+    }
+  }
+
+  &[data-checked] {
+    color: var(--chip-color);
+    background-color: var(--chip-bg);
+  }
+}
+
+.chipIcon {
+  display: none;
+}
+
+.badge {
+  font-weight: var(--mantine-font-weight-bold);
+  text-transform: none;
+  letter-spacing: 0;
+
+  &:where([data-variant='dot']) {
+    --badge-height: 22px;
+    --badge-fz: 11.5px;
+    --badge-padding-x: 8px;
+    --badge-dot-size: 6px;
+    --badge-bd: 1px solid var(--mantine-color-default-border);
+
+    gap: 5px;
+    color: var(--mantine-color-bright);
+    background: var(--mantine-color-surface-panel);
+  }
+
+  &:where([data-circle]) {
+    --badge-height: 20px;
+    --badge-fz: 11px;
+  }
+}
+
+.badgeLabel {
+  text-transform: none;
+}
+
+.avatar {
+  font-weight: var(--mantine-font-weight-bold);
+}
+
+.alertMessage {
+  color: var(--mantine-color-text);
+}
+
+.alertClose {
+  color: var(--mantine-color-green-filled);
+
+  @mixin hover {
+    color: var(--mantine-color-green-filled);
+    background-color: color-mix(in srgb, var(--mantine-color-bright) 8%, transparent);
+  }
+}
+
+.menuDropdown {
+  padding: 6px;
+  border-radius: 14px;
+  background: var(--mantine-color-surface-panel);
+}
+
+.menuItem {
+  height: 38px;
+  padding-inline: 10px;
+  border-radius: var(--mantine-radius-sm);
+  font-size: 14px;
+
+  &:where(:not([data-with-color])) {
+    color: var(--mantine-color-bright);
+  }
+}
+
+.modalTitle {
+  font-size: var(--mantine-h2-font-size);
+  font-weight: var(--mantine-font-weight-bold);
+  color: var(--mantine-color-bright);
+}
+
+.modalOverlay {
+  background: light-dark(rgba(22, 25, 21, 0.42), rgba(0, 0, 0, 0.6));
+}
+
+.radioCard {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 12px;
+  border: 1px solid var(--mantine-color-default-border);
+  font-size: 14px;
+  color: var(--mantine-color-bright);
+
+  &:where([data-checked]) {
+    border-color: var(--mantine-primary-color-filled);
+    box-shadow: 0 0 0 1px var(--mantine-primary-color-filled);
+  }
+}
+
+.radioIndicator {
+  border-width: 1.5px;
+  border-color: var(--mantine-color-default-border);
+  background: transparent;
+}

@@ -1,0 +1,119 @@
+.app {
+  position: relative;
+  display: grid;
+  grid-template-columns: 236px minmax(0, 1fr) 270px;
+  height: 880px;
+  overflow: hidden;
+  background: light-dark(var(--mantine-color-gray-0), var(--mantine-color-dark-8));
+  color: var(--mantine-color-text);
+  font-size: var(--mantine-font-size-md);
+
+  @container preset (max-width: 1000px) {
+    grid-template-columns: 220px minmax(0, 1fr);
+  }
+
+  @container preset (max-width: 760px) {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+.main {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  min-height: 0;
+  background: var(--mantine-color-surface-panel);
+}
+
+.head {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 18px;
+  border-bottom: 1px solid var(--mantine-color-border);
+}
+
+.title {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.sideToggle {
+  display: none;
+
+  @container preset (max-width: 760px) {
+    display: inline-flex;
+  }
+}
+
+.runToggle {
+  display: none;
+
+  @container preset (max-width: 1000px) {
+    display: inline-flex;
+  }
+}
+
+.share {
+  @container preset (max-width: 760px) {
+    display: none;
+  }
+}
+
+.thread {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+  padding: 20px 22px 28px;
+
+  @container preset (max-width: 520px) {
+    padding: 16px 14px 24px;
+  }
+}
+
+.exchange {
+  display: contents;
+}
+
+.question {
+  align-self: flex-end;
+  max-width: 78%;
+  padding: 10px 14px;
+  border: 1px solid var(--mantine-color-border);
+  border-radius: 14px 14px 4px;
+  background: var(--quarry-surface-2);
+  font-weight: var(--mantine-font-weight-medium);
+  color: var(--mantine-color-bright);
+
+  @container preset (max-width: 760px) {
+    max-width: 92%;
+  }
+}
+
+.questionMeta {
+  align-self: flex-end;
+  margin-top: -16px;
+  font-size: 12px;
+}
+
+.toast {
+  position: absolute;
+  z-index: 40;
+  left: 50%;
+  bottom: 20px;
+  translate: -50% 0;
+  padding: 9px 16px;
+  border-radius: 999px;
+  background: var(--mantine-color-bright);
+  color: light-dark(var(--mantine-color-gray-0), var(--mantine-color-dark-8));
+  font-size: 13px;
+  font-weight: var(--mantine-font-weight-bold);
+  white-space: nowrap;
+  box-shadow: var(--mantine-shadow-md);
+}

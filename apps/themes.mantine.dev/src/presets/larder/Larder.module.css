@@ -1,0 +1,121 @@
+.root {
+  position: relative;
+  display: grid;
+  grid-template-rows: 56px minmax(0, 1fr);
+  height: 840px;
+  background: light-dark(var(--mantine-color-gray-0), var(--mantine-color-dark-8));
+}
+
+.body {
+  display: grid;
+  grid-template-columns: 252px minmax(0, 1fr) 296px;
+  min-height: 0;
+
+  @container preset (max-width: 1000px) {
+    grid-template-columns: 240px minmax(0, 1fr);
+  }
+
+  @container preset (max-width: 760px) {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+.listPane,
+.publish {
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  background: light-dark(var(--mantine-color-gray-0), var(--mantine-color-dark-8));
+}
+
+.listPane {
+  border-inline-end: 1px solid var(--mantine-color-border);
+
+  @container preset (max-width: 760px) {
+    position: absolute;
+    z-index: 10;
+    top: 56px;
+    left: 0;
+    bottom: 0;
+    width: min(300px, 100%);
+    box-shadow: var(--mantine-shadow-md);
+    transform: translateX(-105%);
+    visibility: hidden;
+    transition:
+      transform 180ms ease,
+      visibility 180ms;
+
+    .root[data-panel='list'] & {
+      transform: none;
+      visibility: visible;
+    }
+  }
+}
+
+.manuscript {
+  min-width: 0;
+  overflow-y: auto;
+  background: var(--mantine-color-surface-panel);
+}
+
+.publish {
+  border-inline-start: 1px solid var(--mantine-color-border);
+
+  @container preset (max-width: 1000px) {
+    position: absolute;
+    z-index: 10;
+    top: 56px;
+    right: 0;
+    bottom: 0;
+    width: min(320px, 100%);
+    box-shadow: var(--mantine-shadow-md);
+    transform: translateX(105%);
+    visibility: hidden;
+    transition:
+      transform 180ms ease,
+      visibility 180ms;
+
+    .root[data-panel='publish'] & {
+      transform: none;
+      visibility: visible;
+    }
+  }
+}
+
+.scrim {
+  top: 56px;
+}
+
+.toast {
+  position: absolute;
+  z-index: 30;
+  inset-inline: 0;
+  bottom: 20px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: max-content;
+  max-width: calc(100% - 32px);
+  margin-inline: auto;
+  padding: 10px 16px;
+  border-radius: var(--mantine-radius-xs);
+  background: var(--larder-ink);
+  box-shadow: var(--mantine-shadow-md);
+  font-size: var(--mantine-font-size-sm);
+  font-weight: var(--mantine-font-weight-medium);
+  color: var(--larder-ink-contrast);
+}
+
+.toastMark {
+  flex: none;
+  width: 8px;
+  height: 8px;
+  background: var(--mantine-primary-color-filled);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .listPane,
+  .publish {
+    transition: none;
+  }
+}

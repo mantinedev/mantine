@@ -1,0 +1,58 @@
+.root {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-width: 0;
+  height: 48px;
+  margin-top: 16px;
+  padding: 0 6px;
+  border: 1px solid var(--mantine-color-default-border);
+  border-radius: var(--mantine-radius-md);
+  background: var(--tern-subtle);
+  font-family: var(--mantine-font-family-monospace);
+}
+
+.verb {
+  --badge-height: 34px;
+  --badge-padding-x: 12px;
+  --badge-fz: 13px;
+
+  flex: none;
+  font-family: var(--mantine-font-family-monospace);
+
+  & > span {
+    font-weight: var(--mantine-font-weight-bold);
+    letter-spacing: 0.03em;
+  }
+}
+
+.path {
+  flex: 1;
+  min-width: 0;
+  overflow-x: auto;
+  white-space: nowrap;
+  font-size: 15px;
+  color: var(--mantine-color-bright);
+  scrollbar-width: none;
+}
+
+.pathRest {
+  color: var(--mantine-color-dimmed);
+}
+
+.copy {
+  flex: none;
+  font-family: var(--mantine-font-family);
+}
+
+.copyLabel {
+  @container preset (max-width: 480px) {
+    display: none;
+  }
+}
+
+.copySection {
+  @container preset (max-width: 480px) {
+    margin: 0;
+  }
+}

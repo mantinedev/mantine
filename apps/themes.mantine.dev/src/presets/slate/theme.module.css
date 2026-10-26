@@ -1,0 +1,174 @@
+.button {
+  font-weight: var(--mantine-font-weight-semibold);
+
+  &:where([data-with-left-section]) {
+    padding-inline-start: var(--button-padding-x);
+  }
+
+  &:where([data-variant='default']) {
+    @mixin hover {
+      background-color: var(--mantine-color-default-hover);
+    }
+  }
+
+  &:where([aria-pressed='true']) {
+    border-color: var(--mantine-primary-color-filled);
+    box-shadow: inset 0 0 0 1px var(--mantine-primary-color-filled);
+  }
+}
+
+.buttonSection {
+  & svg {
+    width: 16px;
+    height: 16px;
+  }
+
+  &:where([data-position='left']) {
+    margin-inline-end: 6px;
+  }
+
+  &:where([data-position='right']) {
+    margin-inline-start: 6px;
+  }
+}
+
+.actionIcon {
+  &:where([data-variant='default']) {
+    color: var(--mantine-color-text);
+  }
+
+  &:where([data-variant='subtle']) {
+    color: var(--mantine-color-text);
+
+    @mixin hover {
+      background-color: var(--mantine-color-hover);
+    }
+  }
+
+  &[aria-pressed='true'] {
+    background-color: var(--mantine-color-bright);
+    border-color: var(--mantine-color-bright);
+    color: var(--mantine-color-body);
+  }
+
+  & svg {
+    width: 18px;
+    height: 18px;
+  }
+}
+
+.input {
+  &::placeholder {
+    color: var(--mantine-color-placeholder);
+  }
+}
+
+.title {
+  color: var(--mantine-color-bright);
+}
+
+.badge {
+  --badge-height-sm: 18px;
+  --badge-fz-sm: 11px;
+  --badge-padding-x-sm: 6px;
+
+  min-width: 20px;
+}
+
+.badgeLabel {
+  text-transform: none;
+  font-weight: var(--mantine-font-weight-bold);
+}
+
+.avatarPlaceholder {
+  font-size: calc(var(--avatar-size) / 4 + 4px);
+  font-weight: var(--mantine-font-weight-bold);
+}
+
+.navLink {
+  --nl-fz: var(--mantine-font-size-md);
+  --nl-section-gap: 8px;
+
+  height: 32px;
+  padding: 0 8px;
+  border-radius: 7px;
+  line-height: 1.5;
+}
+
+.navLinkSection {
+  &:where([data-position='left']) {
+    width: 16px;
+  }
+}
+
+.dividerLabel {
+  gap: 12px;
+  font-size: 12.5px;
+  font-weight: var(--mantine-font-weight-semibold);
+  color: var(--mantine-color-bright);
+
+  &::before,
+  &::after {
+    margin: 0;
+  }
+}
+
+.dropdown {
+  padding: 6px;
+  border-color: var(--mantine-color-default-border);
+  background: var(--mantine-color-surface-panel);
+}
+
+.menuItem,
+.option {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  height: 36px;
+  padding: 0 10px;
+  border-radius: 7px;
+  font-size: 13.5px;
+  color: var(--mantine-color-text);
+}
+
+.option {
+  &:where([data-combobox-selected]),
+  &:where(:hover) {
+    background-color: var(--mantine-color-hover);
+    color: var(--mantine-color-text);
+  }
+}
+
+.menuItemSection {
+  & svg {
+    width: 18px;
+    height: 18px;
+  }
+}
+
+.menuLabel,
+.comboboxHeader {
+  padding: 6px 10px 4px;
+  border: 0;
+  margin: 0;
+  font-size: 12px;
+  font-weight: var(--mantine-font-weight-semibold);
+  color: var(--mantine-color-bright);
+}
+
+.tooltip {
+  background: var(--mantine-color-bright);
+  color: var(--mantine-color-body);
+}
+
+.th {
+  padding-block: 6px;
+  font-size: 11.5px;
+  font-weight: var(--mantine-font-weight-medium);
+  color: var(--mantine-color-text);
+  white-space: nowrap;
+}
+
+.td {
+  white-space: nowrap;
+}

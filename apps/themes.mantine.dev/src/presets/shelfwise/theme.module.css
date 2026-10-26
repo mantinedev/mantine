@@ -1,0 +1,147 @@
+.button {
+  font-weight: var(--mantine-font-weight-bold);
+  border-width: 1.5px;
+
+  &:where([data-with-left-section]) {
+    padding-inline-start: var(--button-padding-x);
+  }
+}
+
+.actionIcon {
+  border-width: 1.5px;
+  color: var(--mantine-color-bright);
+}
+
+.input {
+  border-width: 1.5px;
+  padding-inline: 12px;
+
+  &:focus,
+  &:focus-within {
+    outline: none;
+    border-color: var(--mantine-color-bright);
+    box-shadow: 0 0 0 3px var(--sw-marigold-soft);
+  }
+
+  &[data-error] {
+    border-color: var(--mantine-color-error);
+    color: var(--mantine-color-text);
+  }
+}
+
+.label {
+  margin-bottom: 6px;
+  font-size: var(--mantine-font-size-sm);
+  font-weight: var(--mantine-font-weight-medium);
+  color: var(--mantine-color-bright);
+}
+
+.error {
+  margin-top: 4px;
+  font-size: var(--mantine-font-size-xs);
+  font-weight: var(--mantine-font-weight-medium);
+}
+
+.checkboxInput {
+  border-width: 1.5px;
+  border-color: var(--mantine-color-default-border);
+}
+
+.checkboxLabel {
+  font-size: var(--mantine-font-size-sm);
+  padding-inline-start: 10px;
+}
+
+.title {
+  color: var(--mantine-color-bright);
+}
+
+.badge {
+  height: auto;
+  padding: 3px 10px;
+  border: 0;
+}
+
+.badgeLabel {
+  font-size: 12px;
+  font-weight: var(--mantine-font-weight-bold);
+  line-height: 1.5;
+  text-transform: none;
+  letter-spacing: 0;
+}
+
+.avatarPlaceholder {
+  font-family: var(--mantine-font-family-headings);
+  font-weight: 400;
+}
+
+.segmented {
+  --sc-label-color: var(--mantine-color-body);
+
+  padding: 4px;
+  border: 1px solid var(--mantine-color-border);
+  background: var(--mantine-color-default-hover);
+}
+
+.segmentedLabel {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  height: 36px;
+  padding: 0 16px;
+  font-size: var(--mantine-font-size-sm);
+  font-weight: var(--mantine-font-weight-bold);
+  color: var(--mantine-color-text);
+
+  &[data-active] {
+    color: var(--mantine-color-body);
+  }
+}
+
+.accordion {
+  border-top: 1.5px solid var(--mantine-color-bright);
+}
+
+.accordionItem {
+  border-bottom: 1px solid var(--mantine-color-border);
+}
+
+.accordionControl {
+  gap: 16px;
+  padding: 20px 0;
+
+  @mixin hover {
+    background-color: transparent;
+  }
+}
+
+.accordionLabel {
+  padding: 0;
+  font-size: var(--mantine-font-size-lg);
+  font-weight: var(--mantine-font-weight-bold);
+  color: var(--mantine-color-bright);
+  white-space: normal;
+}
+
+.accordionChevron {
+  display: grid;
+  place-content: center;
+  height: 32px;
+  border: 1.5px solid var(--mantine-color-default-border);
+  border-radius: 50%;
+  transition:
+    transform 160ms,
+    background-color 160ms;
+
+  &:where([data-rotate]) {
+    transform: rotate(45deg);
+    color: var(--mantine-color-body);
+    background: var(--mantine-color-bright);
+    border-color: var(--mantine-color-bright);
+  }
+}
+
+.accordionContent {
+  padding: 0 48px 22px 0;
+  max-width: 40em;
+}

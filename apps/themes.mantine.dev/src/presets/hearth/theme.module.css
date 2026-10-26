@@ -1,0 +1,199 @@
+.button {
+  font-weight: var(--mantine-font-weight-bold);
+}
+
+.actionIcon {
+  &:where([data-variant='default']) {
+    @mixin hover {
+      color: var(--mantine-color-bright);
+    }
+  }
+
+  &:where([data-variant='subtle']) {
+    color: var(--mantine-color-text);
+
+    @mixin hover {
+      background-color: var(--mantine-color-hover);
+      color: var(--mantine-color-bright);
+    }
+  }
+}
+
+.input {
+  &::placeholder {
+    color: var(--mantine-color-placeholder);
+  }
+
+  &:where(:not([data-variant='unstyled'])):focus {
+    border-color: var(--mantine-primary-color-filled);
+  }
+}
+
+.title {
+  color: var(--mantine-color-bright);
+  letter-spacing: -0.01em;
+}
+
+.badge {
+  --badge-height-sm: 20px;
+  --badge-height-md: 20px;
+  --badge-fz-sm: 11px;
+  --badge-fz-md: var(--mantine-font-size-xs);
+  --badge-padding-x-sm: 7px;
+  --badge-padding-x-md: 7px;
+
+  &:where([data-variant='default']) {
+    color: var(--mantine-color-bright);
+    background: transparent;
+  }
+}
+
+.badgeLabel {
+  text-transform: none;
+  font-weight: var(--mantine-font-weight-bold);
+  letter-spacing: 0;
+  font-variant-numeric: tabular-nums;
+}
+
+.pill {
+  --pill-height: 24px;
+  --pill-fz: var(--mantine-font-size-xs);
+  --pill-radius: var(--mantine-radius-sm);
+
+  padding-inline-start: 9px;
+  gap: 4px;
+  font-weight: var(--mantine-font-weight-medium);
+  color: var(--mantine-color-bright);
+  background-color: var(--mantine-color-surface-panel);
+  border: 1px solid var(--mantine-color-default-border);
+}
+
+.pillRemove {
+  min-width: 18px;
+  width: 18px;
+  height: 18px;
+  margin-inline-end: 3px;
+  padding: 0;
+  border-radius: var(--mantine-radius-xs);
+  color: var(--mantine-color-dimmed);
+
+  @mixin hover {
+    background-color: var(--mantine-color-hover);
+    color: var(--mantine-color-bright);
+  }
+}
+
+.avatarPlaceholder {
+  font-weight: 700;
+}
+
+.dropdown {
+  padding: 5px;
+  background-color: var(--mantine-color-default);
+  border-color: var(--mantine-color-default-border);
+}
+
+.menuItem,
+.option {
+  min-height: 34px;
+  padding: 6px 9px;
+  gap: 9px;
+  border-radius: var(--mantine-radius-sm);
+  font-size: var(--mantine-font-size-sm);
+  color: var(--mantine-color-text);
+
+  @mixin hover {
+    background-color: var(--mantine-color-hover);
+    color: var(--mantine-color-bright);
+  }
+}
+
+.menuItem:where(:focus, [data-menu-active]) {
+  color: var(--mantine-color-bright);
+}
+
+.option {
+  justify-content: space-between;
+
+  & svg {
+    opacity: 1;
+    color: var(--mantine-color-hearth-text);
+  }
+}
+
+.option:where([data-combobox-selected]) {
+  background-color: var(--mantine-color-hover);
+  color: var(--mantine-color-bright);
+}
+
+.menuLabel {
+  padding: 6px 9px 4px;
+  font-size: var(--mantine-font-size-xs);
+  font-weight: var(--mantine-font-weight-medium);
+  color: var(--mantine-color-text);
+}
+
+.tabsList {
+  gap: 2px;
+}
+
+.tab {
+  &:where([data-variant='pills']) {
+    height: 30px;
+    padding: 0 12px;
+    border-radius: var(--mantine-radius-md);
+    font-size: var(--mantine-font-size-sm);
+    font-weight: var(--mantine-font-weight-medium);
+    color: var(--mantine-color-text);
+
+    @mixin hover {
+      background-color: transparent;
+      color: var(--mantine-color-bright);
+    }
+
+    &:where([data-active]) {
+      background-color: var(--mantine-color-surface-panel);
+      color: var(--mantine-color-bright);
+      font-weight: var(--mantine-font-weight-bold);
+      box-shadow: inset 0 0 0 1px var(--mantine-color-default-border);
+    }
+  }
+}
+
+.accordionItem {
+  border-bottom: 1px solid var(--mantine-color-border);
+}
+
+.accordionControl {
+  padding: 12px 18px;
+  gap: 8px;
+
+  @mixin hover {
+    background-color: var(--mantine-color-hover);
+  }
+}
+
+.accordionLabel {
+  padding: 0;
+  font-size: var(--mantine-font-size-sm);
+  font-weight: var(--mantine-font-weight-bold);
+  color: var(--mantine-color-bright);
+}
+
+.accordionChevron {
+  justify-content: center;
+  color: var(--mantine-color-dimmed);
+  transform: rotate(-90deg);
+  transition-duration: 120ms;
+
+  &:where([data-rotate]) {
+    transform: rotate(0deg);
+  }
+}
+
+.accordionContent {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 0 18px 14px;
+}

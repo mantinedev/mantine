@@ -1,0 +1,141 @@
+section.root {
+  padding-top: 0;
+}
+
+.two {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: 44px;
+  align-items: start;
+
+  @container preset (max-width: 980px) {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+.donors {
+  list-style: none;
+  margin: 20px 0 0;
+  padding: 0;
+  border-top: 1px solid var(--mantine-color-border);
+}
+
+.donor {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  gap: 2px 14px;
+  padding: 14px 0;
+  border-bottom: 1px solid var(--mantine-color-border);
+}
+
+.donorAvatar {
+  grid-row: 1 / 3;
+}
+
+.donorName {
+  font-weight: var(--mantine-font-weight-medium);
+  color: var(--mantine-color-bright);
+}
+
+.amount {
+  font-family: var(--uc-font-slab);
+  font-weight: 700;
+  text-align: right;
+  color: var(--mantine-color-bright);
+  font-variant-numeric: tabular-nums;
+}
+
+.message {
+  grid-column: 2 / 4;
+  font-size: var(--mantine-font-size-sm);
+}
+
+.when {
+  font-size: var(--mantine-font-size-xs);
+  text-align: right;
+
+  &[data-with-message] {
+    grid-column: 2;
+  }
+}
+
+.more {
+  margin-top: 16px;
+}
+
+.volunteer {
+  padding: 28px;
+
+  @container preset (max-width: 520px) {
+    padding: 20px;
+  }
+}
+
+.volunteerTitle {
+  font-size: 32px;
+  line-height: 1.1;
+}
+
+.lead {
+  margin: 10px 0 20px;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.formRow {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+
+  @container preset (max-width: 520px) {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+.error {
+  font-size: 14px;
+  font-weight: var(--mantine-font-weight-medium);
+  color: var(--mantine-color-error);
+}
+
+.groupLabel {
+  margin-bottom: 6px;
+}
+
+.days {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 8px;
+
+  @container preset (max-width: 520px) {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+.dayName {
+  display: block;
+  color: var(--mantine-color-bright);
+}
+
+.dayHours {
+  display: block;
+  font-size: var(--mantine-font-size-xs);
+}
+
+.done {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 16px;
+  border-radius: var(--mantine-radius-md);
+  background: var(--mantine-color-surface-muted);
+
+  & b {
+    display: block;
+    color: var(--mantine-color-bright);
+  }
+}

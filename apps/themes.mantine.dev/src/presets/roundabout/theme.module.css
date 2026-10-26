@@ -1,0 +1,113 @@
+.button {
+  font-weight: var(--mantine-font-weight-bold);
+
+  &:where([data-with-left-section]) {
+    padding-inline-start: var(--button-padding-x);
+  }
+
+  &:where([data-variant='default'][aria-pressed='true']) {
+    border-color: var(--roundabout-coral);
+    box-shadow: inset 0 0 0 1px var(--roundabout-coral);
+    color: var(--roundabout-coral);
+  }
+}
+
+.actionIcon {
+  &:where([data-variant='default'][aria-pressed='true']) {
+    background: var(--mantine-color-hover-strong);
+  }
+}
+
+.inputWrapper {
+  &[data-variant='filled'] {
+    --input-bg: var(--mantine-color-surface-sunken);
+    --input-bd: transparent;
+  }
+}
+
+.card {
+  overflow: hidden;
+}
+
+.title {
+  color: var(--mantine-color-bright);
+}
+
+.text {
+  &:where([data-size='sm']) {
+    line-height: 1.45;
+  }
+}
+
+.badge {
+  --badge-height-lg: 24px;
+  --badge-fz-lg: var(--mantine-font-size-xs);
+  --badge-padding-x-lg: 9px;
+
+  &:where([data-variant='default']) {
+    background: var(--mantine-color-surface-muted);
+    border-color: var(--mantine-color-border);
+    color: var(--mantine-color-bright);
+  }
+}
+
+.badgeLabel {
+  text-transform: none;
+  font-weight: var(--mantine-font-weight-medium);
+  letter-spacing: 0;
+}
+
+.avatar {
+  --avatar-size-xs: 18px;
+  --avatar-size-sm: 22px;
+  --avatar-size-md: 34px;
+
+  &:where([data-within-group]) {
+    border: 0;
+    box-shadow: 0 0 0 2px var(--mantine-color-surface-panel);
+  }
+}
+
+.avatarPlaceholder {
+  font-family: var(--mantine-font-family-headings);
+  font-weight: 700;
+  font-size: clamp(9px, calc((var(--avatar-size) - 18px) * 0.25 + 9px), 13px);
+  letter-spacing: 0;
+}
+
+.checkboxInput {
+  border-width: 1.5px;
+  border-color: var(--mantine-color-default-border);
+}
+
+.menuDropdown {
+  padding: 6px;
+}
+
+.menuItem {
+  padding: 8px;
+  gap: 10px;
+  border-radius: var(--mantine-radius-md);
+}
+
+.menuItemSection {
+  width: 34px;
+  height: 34px;
+  border-radius: var(--mantine-radius-md);
+  display: grid;
+  place-items: center;
+  background: var(--mantine-color-hover-strong);
+  color: var(--mantine-primary-color-filled);
+}
+
+.menuItemLabel {
+  font-size: 14px;
+  font-weight: var(--mantine-font-weight-bold);
+  color: var(--mantine-color-bright);
+  line-height: 1.35;
+}
+
+.menuItemDescription {
+  font-size: var(--mantine-font-size-xs);
+  color: var(--mantine-color-text);
+}

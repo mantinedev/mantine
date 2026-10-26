@@ -1,0 +1,233 @@
+.button {
+  font-weight: var(--mantine-font-weight-bold);
+}
+
+.input {
+  &:focus,
+  &:focus-within {
+    border-color: var(--mantine-primary-color-filled);
+    box-shadow: 0 0 0 1px var(--mantine-primary-color-filled);
+  }
+}
+
+.title {
+  color: var(--mantine-color-bright);
+}
+
+.avatarPlaceholder {
+  font-size: var(--mantine-font-size-xs);
+  font-weight: var(--mantine-font-weight-bold);
+}
+
+.badge {
+  --badge-height-sm: 20px;
+  --badge-fz-sm: 11px;
+  --badge-padding-x-sm: 8px;
+}
+
+.badgeLabel {
+  text-transform: none;
+  font-weight: 700;
+  letter-spacing: 0;
+}
+
+.progress {
+  background-color: var(--mantine-color-hover);
+}
+
+.tabsList {
+  flex-wrap: nowrap;
+  gap: 26px;
+  overflow-x: auto;
+  scrollbar-width: none;
+
+  &::before {
+    display: none;
+  }
+}
+
+.tab {
+  height: 52px;
+  padding: 0;
+  border-width: 0;
+  font-size: var(--mantine-font-size-md);
+  font-weight: var(--mantine-font-weight-medium);
+  white-space: nowrap;
+  color: var(--mantine-color-text);
+
+  &:where([data-active]) {
+    color: var(--mantine-color-bright);
+    font-weight: var(--mantine-font-weight-bold);
+
+    &::after {
+      content: '';
+      position: absolute;
+      inset-inline: 0;
+      bottom: 0;
+      height: 3px;
+      border-radius: 3px 3px 0 0;
+      background: var(--tabs-color);
+    }
+  }
+
+  @mixin hover {
+    background-color: transparent;
+    color: var(--mantine-color-bright);
+  }
+}
+
+.accordionItem {
+  background-color: var(--mantine-color-surface-panel);
+  border: 1px solid var(--mantine-color-border);
+  overflow: hidden;
+
+  &[data-active] {
+    border-color: var(--mantine-color-border);
+    background-color: var(--mantine-color-surface-panel);
+  }
+
+  & + & {
+    margin-top: 10px;
+  }
+}
+
+.accordionControl {
+  gap: 10px;
+  padding: 14px;
+  text-align: left;
+
+  @mixin hover {
+    background-color: var(--mantine-color-hover);
+  }
+}
+
+.accordionLabel {
+  padding: 0;
+  color: var(--mantine-color-text);
+}
+
+.accordionChevron {
+  --accordion-transition-duration: 150ms;
+
+  justify-content: center;
+  margin: 0;
+  color: var(--mantine-color-text);
+  transform: rotate(-90deg);
+
+  &:where([data-rotate]) {
+    transform: rotate(0deg);
+  }
+}
+
+.accordionContent {
+  padding: 0 6px 8px;
+}
+
+.navLink {
+  display: grid;
+  grid-template-columns: 24px minmax(0, 1fr) auto;
+  gap: 10px;
+  padding: 9px 8px;
+  border-radius: var(--mantine-radius-sm);
+  font-size: var(--mantine-font-size-sm);
+  line-height: 1.35;
+  color: var(--mantine-color-text);
+
+  &:where([data-variant='rail']) {
+    --nl-bg: var(--cw-surface-sunk);
+    --nl-hover: var(--mantine-color-hover);
+    --nl-color: var(--mantine-color-bright);
+
+    border-radius: var(--mantine-radius-sm);
+
+    &:where([data-active], [aria-current='page']) {
+      box-shadow: inset 3px 0 0 var(--nl-rail-color);
+      font-weight: var(--mantine-font-weight-bold);
+    }
+  }
+}
+
+.navLinkLabel {
+  font-size: var(--mantine-font-size-sm);
+  line-height: 1.35;
+  white-space: normal;
+}
+
+.navLinkSection {
+  margin: 0;
+}
+
+.alert {
+  box-shadow: inset 4px 0 0 var(--alert-icon-color);
+}
+
+.alertTitle {
+  font-weight: var(--mantine-font-weight-bold);
+}
+
+.alertMessage {
+  & ul {
+    margin: 4px 0 0;
+    padding-left: 1.1em;
+  }
+
+  & li + li {
+    margin-top: 4px;
+  }
+}
+
+.radioGroupLabel {
+  margin-bottom: 10px;
+  font-size: var(--mantine-font-size-md);
+  font-weight: var(--mantine-font-weight-bold);
+  color: var(--mantine-color-bright);
+}
+
+.radioCard {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 11px 14px;
+  border: 1px solid var(--mantine-color-default-border);
+  background-color: transparent;
+  text-align: left;
+  font-size: var(--mantine-font-size-md);
+  line-height: 1.6;
+
+  @mixin hover {
+    background-color: var(--mantine-color-hover);
+  }
+
+  &:where([data-checked]) {
+    border-color: var(--mantine-primary-color-filled);
+    box-shadow: inset 0 0 0 1px var(--mantine-primary-color-filled);
+  }
+}
+
+.radioIndicator {
+  border-width: 1.5px;
+}
+
+.menuDropdown {
+  padding: 6px;
+}
+
+.menuItem {
+  height: 34px;
+  padding: 0 10px;
+  border-radius: 6px;
+  font-size: var(--mantine-font-size-sm);
+
+  &:where([aria-checked='true']) {
+    color: var(--mantine-color-bright);
+    font-weight: var(--mantine-font-weight-bold);
+  }
+}
+
+.drawerContent {
+  background-color: light-dark(var(--mantine-color-gray-0), var(--mantine-color-dark-8));
+}
+
+.drawerOverlay {
+  --overlay-bg: rgba(18, 22, 25, 0.45);
+}

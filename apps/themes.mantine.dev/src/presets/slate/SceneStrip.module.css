@@ -1,0 +1,104 @@
+.strip {
+  flex: none;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 10px var(--slate-gutter, 18px);
+  border-bottom: 1px solid var(--mantine-color-border);
+  background: var(--mantine-color-surface-muted);
+}
+
+.label {
+  font-size: 12.5px;
+  font-weight: var(--mantine-font-weight-medium);
+  white-space: nowrap;
+
+  & b {
+    display: block;
+    font-size: var(--mantine-font-size-sm);
+    font-weight: var(--mantine-font-weight-semibold);
+    color: var(--mantine-color-bright);
+  }
+
+  @container preset (max-width: 760px) {
+    display: none;
+  }
+}
+
+.scenes {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  gap: 4px;
+  overflow-x: auto;
+}
+
+.scene {
+  position: relative;
+  flex: 1 0 auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  min-width: 74px;
+  height: 40px;
+  padding: 0 10px;
+  border: 1px solid var(--mantine-color-default-border);
+  border-radius: var(--mantine-radius-sm);
+  background: var(--mantine-color-surface-panel);
+
+  &[data-status='done'] {
+    border-style: dashed;
+    background: transparent;
+
+    & .number {
+      color: var(--slate-done);
+      text-decoration: line-through;
+      text-decoration-thickness: 2px;
+    }
+  }
+
+  &[data-status='now'] {
+    border: 2px solid var(--mantine-color-bright);
+
+    &::after {
+      content: '';
+      position: absolute;
+      top: 6px;
+      right: 6px;
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: var(--mantine-primary-color-filled);
+      animation: blink 1.2s infinite;
+    }
+  }
+}
+
+.number {
+  font-family: var(--mantine-font-family-monospace);
+  font-size: var(--mantine-font-size-sm);
+  font-weight: var(--mantine-font-weight-semibold);
+  line-height: 1.1;
+  color: var(--mantine-color-bright);
+}
+
+.state {
+  font-size: 11px;
+  white-space: nowrap;
+}
+
+.wrap {
+  flex: none;
+}
+
+@keyframes blink {
+  50% {
+    opacity: 0.2;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .scene[data-status='now']::after {
+    animation: none;
+  }
+}

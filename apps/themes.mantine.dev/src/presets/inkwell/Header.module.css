@@ -1,0 +1,162 @@
+.root {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: 22px 24px 0;
+
+  @container preset (max-width: 920px) {
+    padding: 18px 20px 0;
+  }
+
+  @container preset (max-width: 760px) {
+    gap: 12px;
+    padding: 16px 16px 0;
+  }
+}
+
+.titleRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+.titleGroup {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  min-width: 0;
+}
+
+.shop {
+  font-size: var(--mantine-font-size-sm);
+  font-weight: 500;
+  line-height: 1.2;
+
+  @container preset (max-width: 480px) {
+    display: none;
+  }
+}
+
+.title {
+  @container preset (max-width: 760px) {
+    font-size: 26px;
+  }
+}
+
+.views {
+  @container preset (max-width: 760px) {
+    order: 3;
+    width: 100%;
+  }
+}
+
+.titleActions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.moon {
+  @mixin dark {
+    display: none;
+  }
+}
+
+.sun {
+  @mixin light {
+    display: none;
+  }
+}
+
+.newOrder {
+  @container preset (max-width: 480px) {
+    width: 40px;
+    padding: 0;
+
+    & [data-position='left'] {
+      margin: 0;
+    }
+  }
+}
+
+.newOrderLabel {
+  @container preset (max-width: 480px) {
+    display: none;
+  }
+}
+
+.toolbar {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 18px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid var(--mantine-color-border);
+
+  @container preset (max-width: 760px) {
+    gap: 12px;
+  }
+}
+
+.people,
+.stock {
+  display: flex;
+  align-items: center;
+}
+
+.people {
+  gap: 10px;
+}
+
+.stock {
+  gap: 8px;
+}
+
+.label {
+  font-size: var(--mantine-font-size-sm);
+  font-weight: var(--mantine-font-weight-medium);
+}
+
+.people .label {
+  @container preset (max-width: 480px) {
+    display: none;
+  }
+}
+
+.peopleList {
+  display: flex;
+}
+
+.person {
+  position: relative;
+  margin-left: -6px;
+  border: 2px solid var(--inkwell-page);
+  border-radius: 50%;
+
+  &:first-child {
+    margin-left: 0;
+  }
+
+  &[aria-pressed='true'] {
+    z-index: 1;
+    box-shadow: 0 0 0 2px var(--mantine-primary-color-filled);
+  }
+}
+
+.stockSelect {
+  width: 158px;
+}
+
+.spacer {
+  flex: 1;
+}
+
+.result {
+  font-size: var(--mantine-font-size-sm);
+
+  @container preset (max-width: 760px) {
+    display: none;
+  }
+}

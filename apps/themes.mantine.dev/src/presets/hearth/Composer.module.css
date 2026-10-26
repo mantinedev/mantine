@@ -1,0 +1,85 @@
+.root {
+  margin: 0 20px 18px;
+  border: 1px solid var(--mantine-color-default-border);
+  border-radius: var(--mantine-radius-lg);
+  background: var(--mantine-color-default);
+
+  &:where([data-note]) {
+    border-color: light-dark(var(--mantine-color-hearth-2), var(--mantine-color-hearth-8));
+    background: light-dark(var(--mantine-color-hearth-0), var(--mantine-color-hearth-9));
+  }
+
+  &:focus-within {
+    border-color: var(--mantine-primary-color-filled);
+  }
+
+  @container preset (max-width: 760px) {
+    margin: 0 12px 12px;
+  }
+}
+
+.tabs {
+  padding: 6px 6px 0;
+}
+
+.to {
+  padding: 6px 14px 0;
+  font-size: var(--mantine-font-size-xs);
+}
+
+.textarea {
+  display: block;
+  min-height: 76px;
+  max-height: 180px;
+  padding: 8px 14px;
+  font-size: var(--mantine-font-size-md);
+  line-height: 1.5;
+  color: var(--mantine-color-text);
+}
+
+.foot {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 8px;
+  padding: 8px;
+}
+
+.tools {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.caret {
+  padding-inline: 8px;
+  box-shadow: inset 1px 0 0
+    color-mix(in srgb, var(--mantine-primary-color-contrast) 25%, transparent);
+}
+
+.shortLabel {
+  display: none;
+
+  @container preset (max-width: 480px) {
+    display: inline;
+  }
+}
+
+.mainLabel {
+  @container preset (max-width: 480px) {
+    display: none;
+  }
+}
+
+.replyTitle {
+  display: block;
+  font-weight: var(--mantine-font-weight-bold);
+  color: var(--mantine-color-bright);
+}
+
+.replyText {
+  display: block;
+  font-size: var(--mantine-font-size-xs);
+  color: var(--mantine-color-text);
+}

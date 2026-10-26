@@ -1,0 +1,15 @@
+.section {
+  display: grid;
+  grid-template-columns: minmax(0, 320px) minmax(0, 1fr);
+  gap: 56px;
+  padding: 0 var(--sw-gutter) var(--sw-block);
+
+  @container preset (max-width: 980px) {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 24px;
+  }
+}
+
+.asideText {
+  margin: 14px 0 20px;
+}

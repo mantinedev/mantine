@@ -1,0 +1,35 @@
+.keyword {
+  color: #f0a3f7;
+}
+
+.string {
+  color: #9be0a8;
+}
+
+.number {
+  color: #ffc27a;
+}
+
+.fn {
+  color: #8cc4ff;
+}
+
+.comment {
+  color: #8a91a3;
+  font-style: italic;
+}
+
+.caret {
+  display: inline-block;
+  width: 7px;
+  height: 14px;
+  vertical-align: -2px;
+  background: var(--mantine-primary-color-filled);
+  animation: blink 1s steps(1) infinite;
+}
+
+@keyframes blink {
+  50% {
+    opacity: 0;
+  }
+}

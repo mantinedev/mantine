@@ -1,0 +1,64 @@
+.root {
+  position: relative;
+  height: 820px;
+  overflow: hidden;
+  background: var(--mantine-color-surface-page);
+  font-size: var(--mantine-font-size-md);
+  line-height: 1.5;
+  color: var(--mantine-color-text);
+}
+
+.desk {
+  display: grid;
+  grid-template-columns: 300px minmax(0, 1fr) 280px;
+  height: 100%;
+
+  @container preset (max-width: 1000px) {
+    grid-template-columns: 280px minmax(0, 1fr);
+  }
+
+  @container preset (max-width: 760px) {
+    grid-template-columns: minmax(0, 1fr);
+
+    &[data-show-thread] > :first-child {
+      display: none;
+    }
+
+    &:not([data-show-thread]) > main {
+      display: none;
+    }
+  }
+}
+
+.scrim {
+  --overlay-bg: light-dark(rgba(14, 18, 22, 0.35), rgba(0, 0, 0, 0.55));
+}
+
+.toastWrap {
+  position: absolute;
+  z-index: 30;
+  left: 0;
+  right: 0;
+  bottom: 18px;
+  display: flex;
+  justify-content: center;
+  pointer-events: none;
+}
+
+.toast {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 9px 14px;
+  border-radius: var(--mantine-radius-md);
+  background: var(--mantine-color-bright);
+  color: var(--mantine-color-surface-panel);
+  font-size: var(--mantine-font-size-sm);
+  font-weight: var(--mantine-font-weight-medium);
+  white-space: nowrap;
+  box-shadow: var(--mantine-shadow-md);
+
+  & svg {
+    color: var(--mantine-color-green-text);
+  }
+}

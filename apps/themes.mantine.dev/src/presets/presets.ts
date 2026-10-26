@@ -1,4 +1,4 @@
-export type PresetId = 'dashboard' | 'blog' | 'marketing' | 'landing';
+export type PresetId = 'dashboard' | 'blog' | 'marketing';
 
 export interface Preset {
   id: PresetId;
@@ -9,5 +9,4 @@ export const presets: Preset[] = [
   { id: 'dashboard', label: 'Dashboard' },
   { id: 'blog', label: 'Blog' },
   { id: 'marketing', label: 'Marketing' },
-  { id: 'landing', label: 'Landing' },
 ];

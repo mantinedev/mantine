@@ -1,0 +1,120 @@
+.button {
+  font-weight: var(--mantine-font-weight-bold);
+}
+
+.title {
+  color: var(--mantine-color-bright);
+}
+
+.badge {
+  --badge-height-lg: 26px;
+  --badge-fz-lg: var(--mantine-font-size-xs);
+  --badge-padding-x-lg: 10px;
+
+  &:where([data-variant='dot']) {
+    --badge-dot-size: 8px;
+    --badge-bd: 1px solid var(--mantine-color-default-border);
+
+    color: var(--mantine-color-bright);
+    background: var(--mantine-color-surface-panel);
+  }
+}
+
+.badgeLabel {
+  text-transform: none;
+  font-weight: var(--mantine-font-weight-bold);
+}
+
+.avatar {
+  font-size: var(--mantine-font-size-sm);
+  font-weight: var(--mantine-font-weight-bold);
+}
+
+.statLabel {
+  font-size: var(--mantine-font-size-sm);
+  font-weight: var(--mantine-font-weight-medium);
+  color: var(--mantine-color-text);
+}
+
+.statValue {
+  font-family: var(--mantine-font-family-headings);
+  font-size: 36px;
+  font-weight: 600;
+  line-height: 1.05;
+}
+
+.segmented {
+  border: 1px solid var(--mantine-color-border);
+  background: light-dark(var(--mantine-color-gray-0), var(--mantine-color-dark-8));
+}
+
+.segmentedLabel {
+  height: 32px;
+  display: flex;
+  align-items: center;
+  padding-inline: 14px;
+  font-weight: var(--mantine-font-weight-medium);
+
+  &:where([data-active]) {
+    font-weight: var(--mantine-font-weight-bold);
+    color: var(--mantine-color-bright);
+  }
+}
+
+.tabsList {
+  gap: var(--mantine-spacing-lg);
+
+  &::before {
+    border-width: 0 0 1px;
+    border-color: var(--mantine-color-border);
+  }
+}
+
+.tab {
+  padding: 12px 0;
+  font-size: var(--mantine-font-size-md);
+  font-weight: var(--mantine-font-weight-medium);
+  border-width: 0;
+
+  &:where([data-active]) {
+    color: var(--mantine-color-bright);
+    font-weight: var(--mantine-font-weight-bold);
+
+    &::after {
+      content: '';
+      position: absolute;
+      inset-inline: 0;
+      bottom: 0;
+      height: 3px;
+      border-radius: 3px 3px 0 0;
+      background: var(--tabs-color);
+    }
+  }
+
+  @mixin hover {
+    background-color: transparent;
+    color: var(--mantine-color-bright);
+  }
+}
+
+.th {
+  font-size: var(--mantine-font-size-sm);
+  font-weight: var(--mantine-font-weight-medium);
+  color: var(--mantine-color-dimmed);
+  white-space: nowrap;
+}
+
+.menuItem {
+  min-height: 38px;
+  font-size: var(--mantine-font-size-sm);
+}
+
+.notificationTitle {
+  font-weight: var(--mantine-font-weight-bold);
+  color: var(--mantine-color-bright);
+}
+
+.notificationDescription {
+  font-size: var(--mantine-font-size-sm);
+  color: var(--mantine-color-text);
+}

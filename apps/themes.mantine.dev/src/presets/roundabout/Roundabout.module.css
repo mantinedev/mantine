@@ -1,0 +1,92 @@
+.root {
+  position: relative;
+  contain: layout;
+  display: grid;
+  grid-template-columns: 272px minmax(0, 1fr) 316px;
+  height: 858px;
+  background: var(--mantine-color-surface-panel);
+  color: var(--mantine-color-text);
+
+  &[data-panel-closed] {
+    grid-template-columns: 272px minmax(0, 1fr) 0;
+  }
+
+  &[data-panel-closed] .trip {
+    display: none;
+  }
+
+  @container preset (max-width: 1040px) {
+    &,
+    &[data-panel-closed] {
+      grid-template-columns: 260px minmax(0, 1fr);
+    }
+  }
+
+  @container preset (max-width: 820px) {
+    &,
+    &[data-panel-closed] {
+      grid-template-columns: minmax(0, 1fr);
+    }
+  }
+}
+
+.groups {
+  @container preset (max-width: 820px) {
+    display: none;
+    position: absolute;
+    z-index: 30;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    width: 280px;
+    box-shadow: var(--mantine-shadow-md);
+
+    .root[data-groups-open] & {
+      display: flex;
+    }
+  }
+}
+
+.chat {
+  min-width: 0;
+}
+
+.trip {
+  @container preset (max-width: 1040px) {
+    display: none;
+    position: absolute;
+    z-index: 30;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    width: 316px;
+    box-shadow: var(--mantine-shadow-md);
+
+    .root[data-panel-open] & {
+      display: block;
+    }
+  }
+
+  @container preset (max-width: 520px) {
+    width: 100%;
+  }
+}
+
+.toastAnchor {
+  position: absolute;
+  z-index: 40;
+  left: 50%;
+  bottom: 90px;
+  translate: -50% 0;
+}
+
+.toast {
+  padding: 9px 16px;
+  border-radius: 999px;
+  background: var(--mantine-color-bright);
+  color: light-dark(var(--mantine-color-white), var(--mantine-color-dark-9));
+  font-size: 13.5px;
+  font-weight: var(--mantine-font-weight-medium);
+  white-space: nowrap;
+  box-shadow: var(--mantine-shadow-md);
+}

@@ -1,0 +1,1 @@
+export { Slate } from './Slate';

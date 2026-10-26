@@ -1,0 +1,27 @@
+.root[data-tone] {
+  --avatar-bd: 1px solid transparent;
+
+  &[data-tone='0'] {
+    --fh-avatar-bg: #e4dcfa;
+    --fh-avatar-color: #3d2b7a;
+  }
+
+  &[data-tone='1'] {
+    --fh-avatar-bg: #d9ecf8;
+    --fh-avatar-color: #164b6d;
+  }
+
+  &[data-tone='2'] {
+    --fh-avatar-bg: #f8e2d9;
+    --fh-avatar-color: #6d2f16;
+  }
+
+  &[data-tone='3'] {
+    --fh-avatar-bg: #dcefe1;
+    --fh-avatar-color: #1d5232;
+  }
+
+  @mixin dark {
+    filter: saturate(0.8) brightness(0.92);
+  }
+}

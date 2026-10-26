@@ -1,0 +1,55 @@
+.section {
+  padding: 0 var(--sw-gutter) 88px;
+}
+
+.demo {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 400px);
+  gap: 40px;
+  align-items: center;
+  padding: 48px;
+  border-radius: var(--mantine-radius-xl);
+  background: var(--sw-marigold);
+  color: var(--sw-marigold-ink);
+
+  @container preset (max-width: 980px) {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  @container preset (max-width: 520px) {
+    padding: 28px 22px;
+    border-radius: 18px;
+  }
+}
+
+.demo .title {
+  font-size: 38px;
+  color: inherit;
+}
+
+.text {
+  margin-top: 12px;
+  font-size: var(--mantine-font-size-lg);
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  padding: 24px;
+  border-radius: 18px;
+  background: var(--mantine-color-surface-panel);
+  box-shadow: var(--mantine-shadow-md);
+  color: var(--mantine-color-text);
+}
+
+.sent {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 8px 0;
+}
+
+.sentTitle {
+  font-size: 24px;
+}

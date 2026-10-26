@@ -1,0 +1,122 @@
+.head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 12px;
+  padding: 24px 28px 0;
+
+  @container preset (max-width: 760px) {
+    padding-inline: 22px;
+  }
+}
+
+.lead {
+  margin: 4px 0 0;
+  font-size: var(--mantine-font-size-sm);
+}
+
+.score {
+  font-family: var(--mantine-font-family-headings);
+  font-weight: 700;
+  font-size: 22px;
+  color: var(--mantine-color-bright);
+  white-space: nowrap;
+
+  & small {
+    display: block;
+    font-family: var(--mantine-font-family);
+    font-weight: var(--mantine-font-weight-medium);
+    font-size: var(--mantine-font-size-xs);
+    color: var(--mantine-color-text);
+    text-align: right;
+  }
+}
+
+.questions {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  margin: 0;
+  padding: 20px 28px 0;
+  list-style: none;
+
+  @container preset (max-width: 760px) {
+    padding-inline: 22px;
+  }
+}
+
+.options {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.option {
+  &[data-disabled] {
+    opacity: 1;
+    cursor: default;
+
+    @mixin hover {
+      background-color: transparent;
+    }
+  }
+
+  &[data-result='right'] {
+    border-color: var(--mantine-color-green-filled);
+    box-shadow: inset 0 0 0 1px var(--mantine-color-green-filled);
+  }
+
+  &[data-result='wrong'] {
+    border-color: var(--mantine-color-red-filled);
+    box-shadow: inset 0 0 0 1px var(--mantine-color-red-filled);
+  }
+}
+
+.indicator {
+  &[data-disabled] {
+    opacity: 1;
+    cursor: default;
+  }
+}
+
+.feedback {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  margin-top: 10px;
+  font-size: var(--mantine-font-size-sm);
+
+  & b {
+    font-weight: var(--mantine-font-weight-bold);
+    color: var(--mantine-color-red-filled);
+  }
+
+  &[data-ok] b {
+    color: var(--mantine-color-green-filled);
+  }
+}
+
+.foot {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 12px;
+  padding: 20px 28px 24px;
+  font-size: var(--mantine-font-size-sm);
+
+  @container preset (max-width: 760px) {
+    padding-inline: 22px;
+  }
+}
+
+.hint[data-error] {
+  color: var(--mantine-color-red-filled);
+  font-weight: var(--mantine-font-weight-bold);
+}
+
+.actions {
+  display: flex;
+  gap: 8px;
+}

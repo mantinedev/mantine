@@ -1,0 +1,121 @@
+.button {
+  font-weight: var(--mantine-font-weight-bold);
+  border-width: 1.5px;
+
+  &:where([data-variant='default']) {
+    color: var(--mantine-color-bright);
+  }
+
+  &:where([data-with-left-section]) {
+    padding-inline-start: var(--button-padding-x);
+  }
+}
+
+.actionIcon {
+  border-width: 1.5px;
+
+  &:where([data-variant='default']) {
+    color: var(--mantine-color-bright);
+  }
+}
+
+.input {
+  border-width: 1.5px;
+  color: var(--mantine-color-bright);
+
+  &:focus,
+  &:focus-within {
+    border-color: var(--mantine-primary-color-filled);
+  }
+}
+
+.inputSection {
+  color: var(--tw-muted);
+}
+
+.title {
+  color: var(--mantine-color-bright);
+  text-transform: uppercase;
+  letter-spacing: 0.01em;
+}
+
+.badge {
+  --badge-height-md: 22px;
+  --badge-padding-x-md: 6px;
+  --badge-fz-md: var(--mantine-font-size-xs);
+
+  min-width: 22px;
+}
+
+.badgeLabel {
+  text-transform: none;
+  font-weight: var(--mantine-font-weight-bold);
+  letter-spacing: 0;
+  font-variant-numeric: tabular-nums;
+}
+
+.chipLabel {
+  font-weight: var(--mantine-font-weight-medium);
+  border-width: 1.5px;
+
+  &:where([data-variant='outline']) {
+    border-color: var(--mantine-color-default-border);
+    background-color: transparent;
+  }
+
+  &:where([data-checked]) {
+    color: var(--chip-color);
+    background-color: var(--chip-bg);
+  }
+}
+
+.chipIcon {
+  display: none;
+}
+
+.segmented {
+  padding: 3px;
+  border: 1px solid var(--mantine-color-border);
+  border-radius: calc(var(--mantine-radius-md) + 3px);
+}
+
+.segmentedControl {
+  flex: 0 0 auto;
+}
+
+.segmentedLabel {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  height: 36px;
+  padding: 0 14px;
+  font-size: 14px;
+  font-weight: var(--mantine-font-weight-bold);
+  color: var(--mantine-color-text);
+  border-radius: var(--mantine-radius-md);
+
+  &:where([data-active]) {
+    color: var(--mantine-color-bright);
+  }
+}
+
+.segmentedIndicator {
+  border-radius: var(--mantine-radius-md);
+  background-color: var(--tw-surface-3);
+  box-shadow: none;
+}
+
+.switchLabel {
+  font-size: 14px;
+  font-weight: var(--mantine-font-weight-bold);
+  padding-inline-start: 10px;
+}
+
+.dropdown {
+  background-color: var(--mantine-color-surface-panel);
+  border: 1px solid var(--mantine-color-default-border);
+}
+
+.td {
+  border-top: 1px solid var(--mantine-color-border);
+}

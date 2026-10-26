@@ -1,0 +1,136 @@
+.root {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 28px;
+  height: 74px;
+  padding-inline: 48px;
+  background: var(--uc-ground);
+  color: var(--uc-ground-ink);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+
+  @container preset (max-width: 980px) {
+    padding-inline: 32px;
+  }
+
+  @container preset (max-width: 520px) {
+    padding-inline: 16px;
+  }
+}
+
+.logo {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  line-height: 1.05;
+  color: inherit;
+  text-decoration: none;
+
+  & b {
+    display: block;
+    font-family: var(--uc-font-slab);
+    font-size: 18px;
+    font-weight: 700;
+  }
+
+  & span span {
+    font-size: 13px;
+  }
+}
+
+.logoMark {
+  width: 38px;
+  height: 38px;
+  flex: none;
+}
+
+.links {
+  display: flex;
+  gap: 24px;
+  font-size: 16px;
+  font-weight: var(--mantine-font-weight-medium);
+
+  & a {
+    color: inherit;
+    text-decoration: none;
+
+    @mixin hover {
+      color: var(--uc-chrome);
+    }
+  }
+
+  @container preset (max-width: 780px) {
+    display: none;
+  }
+}
+
+.actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-inline-start: auto;
+}
+
+.root .iconButton {
+  border: 1.5px solid currentColor;
+  background: transparent;
+  color: inherit;
+
+  @mixin hover {
+    background: rgba(255, 255, 255, 0.08);
+  }
+}
+
+.root .menuButton {
+  display: none;
+
+  @container preset (max-width: 780px) {
+    display: inline-flex;
+  }
+}
+
+.root .donate {
+  color: var(--uc-chrome-ink);
+
+  @mixin hover {
+    background: var(--uc-chrome);
+    filter: brightness(1.06);
+  }
+
+  @container preset (max-width: 520px) {
+    display: none;
+  }
+}
+
+.moon {
+  @mixin dark {
+    display: none;
+  }
+}
+
+.sun {
+  @mixin light {
+    display: none;
+  }
+}
+
+.sheet {
+  position: absolute;
+  z-index: 15;
+  top: 100%;
+  inset-inline: 0;
+  display: flex;
+  flex-direction: column;
+  padding: 8px 24px 20px;
+  background: var(--mantine-color-surface-panel);
+  border-bottom: 1px solid var(--mantine-color-border);
+  box-shadow: var(--mantine-shadow-lg);
+
+  & a {
+    padding: 12px 0;
+    border-bottom: 1px solid var(--mantine-color-border);
+    font-weight: var(--mantine-font-weight-medium);
+    color: var(--mantine-color-bright);
+    text-decoration: none;
+  }
+}

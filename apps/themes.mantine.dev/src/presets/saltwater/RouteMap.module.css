@@ -1,0 +1,118 @@
+.card {
+  position: relative;
+  padding: 12px;
+  border-radius: var(--mantine-radius-xl);
+  background: var(--sw-band-2);
+}
+
+.map {
+  display: block;
+  width: 100%;
+  height: auto;
+  font-family: var(--mantine-font-family);
+}
+
+.land {
+  fill: var(--sw-land);
+  stroke: var(--sw-land-edge);
+  stroke-width: 1.5;
+}
+
+.leg {
+  fill: none;
+  stroke: var(--sw-route-idle);
+  stroke-width: 3;
+  stroke-linecap: round;
+
+  &[data-on] {
+    stroke: var(--sw-route-on);
+    stroke-width: 5;
+  }
+}
+
+.port {
+  fill: var(--sw-band);
+  stroke: var(--sw-band-ink);
+  stroke-width: 2.5;
+}
+
+.portLabel {
+  font-size: 12px;
+  font-weight: 500;
+  fill: rgba(217, 238, 240, 0.7);
+}
+
+.stop {
+  cursor: pointer;
+
+  &:focus {
+    outline: none;
+  }
+}
+
+.ring {
+  fill: var(--sw-band);
+  stroke: var(--sw-band-ink);
+  stroke-width: 2.5;
+
+  .stop[data-on] & {
+    fill: var(--sw-route-on);
+    stroke: #fff;
+    stroke-width: 3;
+  }
+
+  .stop:focus-visible & {
+    stroke: #fff;
+    stroke-width: 3;
+  }
+}
+
+.name {
+  font-size: 13px;
+  font-weight: 600;
+  fill: var(--sw-band-ink);
+
+  .stop[data-on] & {
+    fill: #fff;
+  }
+}
+
+.gd {
+  font-size: 10.5px;
+  font-weight: 500;
+  font-style: italic;
+  fill: rgba(217, 238, 240, 0.62);
+}
+
+.legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 18px;
+  padding: 8px 10px 4px;
+  font-size: 13px;
+
+  & span {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  & i {
+    display: inline-block;
+    width: 22px;
+    height: 4px;
+    border-radius: 2px;
+  }
+}
+
+.legendOn {
+  background: var(--sw-route-on);
+}
+
+.legendIdle {
+  background: var(--sw-route-idle);
+}
+
+.legendRoad {
+  background: repeating-linear-gradient(90deg, var(--sw-route-on) 0 5px, transparent 5px 8px);
+}

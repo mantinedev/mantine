@@ -1,0 +1,66 @@
+.top {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 16px 16px 0;
+}
+
+.titleRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.status {
+  --larder-sc-padding-x: 3px;
+
+  @container preset (max-width: 1000px) {
+    --sc-font-size: var(--mantine-font-size-xs);
+  }
+}
+
+.count {
+  margin-inline-start: 3px;
+  font-size: var(--mantine-font-size-xs);
+  font-variant-numeric: tabular-nums;
+}
+
+.list {
+  flex: 1;
+  min-height: 0;
+  margin: 12px 0 0;
+  padding: 0;
+  list-style: none;
+  overflow-y: auto;
+  border-top: 1px solid var(--mantine-color-border);
+}
+
+.article {
+  padding: 14px 16px;
+  border-bottom: 1px solid var(--mantine-color-border);
+}
+
+.articleTitle {
+  font-family: var(--larder-font-serif);
+  font-size: var(--mantine-font-size-lg);
+  font-weight: 600;
+  line-height: 1.3;
+  white-space: normal;
+  color: var(--mantine-color-bright);
+}
+
+.articleMeta {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 6px;
+  font-size: var(--mantine-font-size-xs);
+  line-height: 1.5;
+  color: var(--mantine-color-text);
+  white-space: normal;
+}
+
+.empty {
+  padding: 28px 16px;
+  font-size: var(--mantine-font-size-sm);
+}

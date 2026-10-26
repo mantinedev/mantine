@@ -1,0 +1,15 @@
+.mark {
+  flex: none;
+  width: 9px;
+  height: 9px;
+  border: 1.5px solid var(--mantine-color-bright);
+
+  &[data-status='scheduled'] {
+    border-color: var(--mantine-primary-color-filled);
+    background: var(--mantine-primary-color-filled);
+  }
+
+  &[data-status='published'] {
+    background: var(--mantine-color-bright);
+  }
+}

@@ -1,0 +1,314 @@
+.wrap {
+  position: relative;
+  flex: 1;
+  min-height: 0;
+  overflow: auto;
+  background: var(--mantine-color-surface-panel);
+}
+
+.grid {
+  position: relative;
+  min-width: 640px;
+}
+
+.body {
+  position: relative;
+}
+
+.head,
+.body {
+  display: grid;
+  grid-template-columns: 56px repeat(var(--cols), minmax(0, 1fr));
+}
+
+.head {
+  position: sticky;
+  z-index: 4;
+  top: 0;
+  background: var(--mantine-color-surface-panel);
+  border-bottom: 1px solid var(--mantine-color-border);
+}
+
+.colHead {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 0;
+  padding: 8px 10px;
+  border-left: 1px solid var(--mantine-color-border);
+}
+
+.who {
+  min-width: 0;
+  font-size: var(--mantine-font-size-xs);
+  line-height: 1.25;
+
+  & b {
+    display: block;
+    overflow: hidden;
+    font-weight: var(--mantine-font-weight-bold);
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    color: var(--mantine-color-bright);
+  }
+
+  & > span {
+    display: block;
+    white-space: nowrap;
+  }
+}
+
+.util {
+  width: 90px;
+  max-width: 100%;
+  margin-top: 4px;
+}
+
+.gutter {
+  position: relative;
+
+  & span {
+    position: absolute;
+    right: 8px;
+    translate: 0 -50%;
+    font-size: 11.5px;
+    font-variant-numeric: tabular-nums;
+    color: var(--mantine-color-dimmed);
+  }
+}
+
+.col {
+  position: relative;
+  border-left: 1px solid var(--mantine-color-border);
+  background:
+    repeating-linear-gradient(180deg, var(--mantine-color-border) 0 1px, transparent 1px 52px),
+    repeating-linear-gradient(
+      180deg,
+      transparent 0 26px,
+      color-mix(in srgb, var(--mantine-color-border) 45%, transparent) 26px 27px,
+      transparent 27px 52px
+    );
+
+  &[data-drop] {
+    background-color: var(--fh-primary-tint);
+  }
+}
+
+.appt {
+  position: absolute;
+  z-index: 1;
+  left: 4px;
+  right: 4px;
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  padding: 4px 7px;
+  overflow: hidden;
+  border: 1px solid transparent;
+  border-radius: var(--mantine-radius-sm);
+  font: inherit;
+  font-size: var(--mantine-font-size-xs);
+  line-height: 1.3;
+  text-align: left;
+  color: var(--mantine-color-text);
+  cursor: pointer;
+
+  &:hover {
+    z-index: 2;
+    box-shadow: var(--mantine-shadow-md);
+  }
+
+  &[data-compact] {
+    flex-direction: row;
+    align-items: center;
+    gap: 6px;
+  }
+
+  &[data-status='booked'] {
+    border-color: var(--fh-primary-line);
+    background: var(--fh-primary-tint);
+    --fh-status: var(--mantine-primary-color-filled);
+  }
+
+  &[data-status='arrived'] {
+    border-color: color-mix(in srgb, var(--fh-mint) 40%, transparent);
+    background: var(--fh-mint-tint);
+    --fh-status: var(--fh-mint);
+  }
+
+  &[data-status='treatment'] {
+    border-color: color-mix(in srgb, var(--fh-sky) 45%, transparent);
+    background: var(--fh-sky-tint);
+    --fh-status: var(--fh-sky);
+  }
+
+  &[data-status='done'] {
+    border-color: var(--mantine-color-border);
+    background: var(--fh-grey-tint);
+    --fh-status: var(--mantine-color-dimmed);
+    --fh-patient: var(--mantine-color-text);
+  }
+
+  &[data-status='noshow'] {
+    border: 1px dashed var(--fh-red);
+    background: var(--fh-red-tint);
+    --fh-status: var(--fh-red);
+  }
+
+  &[data-status='cancelled'] {
+    border: 1px dashed var(--mantine-color-default-border);
+    background: repeating-linear-gradient(
+      135deg,
+      var(--mantine-color-surface-sunken) 0 6px,
+      transparent 6px 12px
+    );
+    --fh-status: var(--mantine-color-dimmed);
+    --fh-patient: var(--mantine-color-dimmed);
+  }
+
+  &[data-conflict] {
+    box-shadow: inset 0 0 0 2px var(--fh-red);
+  }
+
+  &[data-hl] {
+    z-index: 3;
+    box-shadow:
+      0 0 0 2px var(--mantine-primary-color-filled),
+      0 6px 16px -6px rgba(0, 0, 0, 0.3);
+  }
+
+  &[data-dim] {
+    opacity: 0.28;
+  }
+
+  &[data-selected] {
+    z-index: 3;
+    box-shadow: 0 0 0 2px var(--mantine-color-bright);
+  }
+}
+
+.time {
+  font-size: 11.5px;
+  font-variant-numeric: tabular-nums;
+}
+
+.patient,
+.kind {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.patient {
+  font-weight: var(--mantine-font-weight-bold);
+  color: var(--fh-patient, var(--mantine-color-bright));
+
+  [data-status='cancelled'] > & {
+    text-decoration: line-through;
+  }
+}
+
+.status {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  margin-top: auto;
+  font-size: 11.5px;
+  font-weight: var(--mantine-font-weight-bold);
+  color: var(--fh-status);
+
+  & svg {
+    flex: none;
+  }
+
+  [data-compact] > & {
+    margin-top: 0;
+    margin-inline-start: auto;
+  }
+}
+
+.clash {
+  position: absolute;
+  top: 3px;
+  right: 4px;
+  display: grid;
+  place-items: center;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: var(--mantine-color-surface-panel);
+  color: var(--fh-red);
+
+  [data-compact] > & {
+    position: static;
+    flex: none;
+  }
+}
+
+.ghost {
+  position: absolute;
+  z-index: 2;
+  left: 4px;
+  right: 4px;
+  padding: 4px 6px;
+  border: 2px dashed var(--mantine-primary-color-filled);
+  border-radius: var(--mantine-radius-sm);
+  background: color-mix(in srgb, var(--mantine-primary-color-filled) 12%, transparent);
+  font-size: var(--mantine-font-size-xs);
+  font-weight: var(--mantine-font-weight-bold);
+  color: var(--mantine-color-bright);
+  pointer-events: none;
+}
+
+.nowLine {
+  position: absolute;
+  z-index: 3;
+  left: 56px;
+  right: 0;
+  height: 2px;
+  background: var(--fh-now);
+  pointer-events: none;
+
+  &::before {
+    content: '';
+    position: absolute;
+    left: -5px;
+    top: -4px;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: var(--fh-now);
+  }
+}
+
+.nowTag {
+  position: absolute;
+  z-index: 3;
+  left: 4px;
+  translate: 0 -50%;
+  padding: 1px 4px;
+  border-radius: var(--mantine-radius-xs);
+  background: var(--fh-now);
+  font-size: 11px;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  color: #fff;
+}
+
+.closed {
+  position: absolute;
+  z-index: 2;
+  inset: 60px 20% auto;
+  padding: 24px;
+  border: 1px dashed var(--mantine-color-default-border);
+  border-radius: var(--mantine-radius-md);
+  background: var(--mantine-color-surface-panel);
+  text-align: center;
+
+  & b {
+    display: block;
+    margin-bottom: 4px;
+    font-size: var(--mantine-font-size-lg);
+    color: var(--mantine-color-bright);
+  }
+}

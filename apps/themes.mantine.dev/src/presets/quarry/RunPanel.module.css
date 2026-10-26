@@ -1,0 +1,134 @@
+.root {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  min-height: 0;
+  padding: 16px 14px;
+  overflow-y: auto;
+  border-left: 1px solid var(--mantine-color-border);
+  background: light-dark(var(--mantine-color-gray-0), var(--mantine-color-dark-8));
+
+  @container preset (max-width: 1000px) {
+    position: absolute;
+    z-index: 26;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    width: 300px;
+    box-shadow: var(--mantine-shadow-md);
+    transform: translateX(105%);
+    transition: transform 200ms ease;
+
+    &[data-opened] {
+      transform: none;
+    }
+  }
+}
+
+.heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  min-height: 22px;
+}
+
+.close {
+  display: none;
+
+  @container preset (max-width: 1000px) {
+    display: inline-flex;
+  }
+}
+
+.sectionTitle {
+  margin-bottom: 8px;
+}
+
+.warehouse {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 12px;
+}
+
+.dot {
+  flex: none;
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: var(--quarry-good);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--quarry-good) 22%, transparent);
+}
+
+.warehouseText {
+  flex: 1;
+  min-width: 0;
+  line-height: 1.5;
+
+  & b {
+    display: block;
+    font-size: 13px;
+    color: var(--mantine-color-bright);
+  }
+
+  & span {
+    font-size: 12px;
+  }
+}
+
+.meterRow {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 4px;
+  font-size: 12px;
+}
+
+.history {
+  display: flex;
+  flex-direction: column;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+
+  & li {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr) auto;
+    align-items: center;
+    gap: 2px 8px;
+    padding: 7px 0;
+    border-bottom: 1px solid var(--mantine-color-border);
+    font-size: 12.5px;
+
+    &:last-child {
+      border-bottom: 0;
+    }
+  }
+}
+
+.status {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--quarry-good);
+
+  &[data-status='fail'] {
+    background: var(--quarry-critical);
+  }
+
+  &[data-status='stop'] {
+    background: var(--quarry-warning);
+  }
+}
+
+.query {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  font-weight: var(--mantine-font-weight-medium);
+  color: var(--mantine-color-bright);
+}
+
+.time {
+  font-family: var(--mantine-font-family-monospace);
+  font-size: 11.5px;
+}

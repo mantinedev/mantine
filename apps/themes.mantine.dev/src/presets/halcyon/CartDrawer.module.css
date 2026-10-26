@@ -1,0 +1,118 @@
+.items {
+  flex: 1;
+  overflow-y: auto;
+  padding: 8px 24px;
+}
+
+.empty {
+  padding: 40px 0;
+  text-align: center;
+}
+
+.item {
+  display: grid;
+  grid-template-columns: 64px minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 14px;
+  padding: 16px 0;
+  border-bottom: 1px solid var(--mantine-color-border);
+}
+
+.thumb {
+  display: grid;
+  place-items: center;
+  width: 64px;
+  height: 64px;
+  border-radius: 14px;
+  background: var(--hc-stage);
+
+  & i {
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    background: radial-gradient(circle, var(--mantine-color-ember-1), var(--hc-glow-edge));
+    box-shadow: 0 10px 0 -4px var(--hc-body);
+  }
+}
+
+.itemName {
+  display: block;
+  font-weight: var(--mantine-font-weight-bold);
+  color: var(--mantine-color-bright);
+}
+
+.sub {
+  font-size: 14px;
+}
+
+.stepper {
+  display: inline-flex;
+  align-items: center;
+  margin-top: 8px;
+  border: 1px solid var(--mantine-color-default-border);
+  border-radius: 999px;
+
+  & output {
+    min-width: 26px;
+    text-align: center;
+    font-weight: var(--mantine-font-weight-bold);
+    font-variant-numeric: tabular-nums;
+    color: var(--mantine-color-bright);
+  }
+}
+
+.stepperButton {
+  width: 34px;
+  height: 32px;
+  border-radius: 999px;
+  font-size: 18px;
+  line-height: 1;
+  text-align: center;
+  color: var(--mantine-color-bright);
+
+  @mixin hover {
+    background: var(--hc-surface-2);
+  }
+
+  &:disabled {
+    opacity: 0.35;
+    cursor: not-allowed;
+  }
+}
+
+.remove {
+  margin-left: 10px;
+  padding: 4px 0;
+  font-size: 13px;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  color: var(--mantine-color-text);
+}
+
+.linePrice {
+  align-self: start;
+  font-weight: var(--mantine-font-weight-bold);
+  font-variant-numeric: tabular-nums;
+  color: var(--mantine-color-bright);
+}
+
+.foot {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 20px 24px;
+  border-top: 1px solid var(--mantine-color-border);
+}
+
+.total {
+  display: flex;
+  justify-content: space-between;
+  font-size: 18px;
+  font-weight: var(--mantine-font-weight-bold);
+  font-variant-numeric: tabular-nums;
+  color: var(--mantine-color-bright);
+}
+
+.note {
+  font-size: 14px;
+}

@@ -1,0 +1,71 @@
+.footer {
+  display: grid;
+  grid-template-columns: minmax(0, 1.4fr) repeat(3, minmax(0, 1fr));
+  gap: 32px;
+  padding: 48px var(--sw-gutter) 36px;
+  border-top: 1px solid var(--mantine-color-border);
+  font-size: var(--mantine-font-size-sm);
+
+  & a {
+    color: inherit;
+    text-decoration: none;
+
+    @mixin hover {
+      text-decoration: underline;
+    }
+  }
+
+  @container preset (max-width: 980px) {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  @container preset (max-width: 520px) {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+.brand {
+  color: var(--mantine-color-bright);
+
+  & p {
+    max-width: 22em;
+    margin: 12px 0 0;
+    color: var(--mantine-color-text);
+  }
+
+  @container preset (max-width: 980px) {
+    grid-column: 1 / -1;
+  }
+}
+
+.heading {
+  margin: 0 0 12px;
+  font-size: var(--mantine-font-size-sm);
+  font-weight: var(--mantine-font-weight-bold);
+  color: var(--mantine-color-bright);
+}
+
+.links {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.legal {
+  grid-column: 1 / -1;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 12px;
+  padding-top: 20px;
+  border-top: 1px solid var(--mantine-color-border);
+  font-size: var(--mantine-font-size-xs);
+}
+
+.legalLinks {
+  display: inline-flex;
+  gap: 0.6em;
+}

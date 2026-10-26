@@ -1,0 +1,97 @@
+.overlay {
+  --overlay-bg: var(--fh-overlay);
+
+  position: absolute;
+}
+
+.inner {
+  position: absolute;
+  padding: 16px;
+}
+
+.content {
+  max-height: 100%;
+}
+
+.body {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  padding: 8px 20px 16px;
+}
+
+.row2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+}
+
+.tnum {
+  font-variant-numeric: tabular-nums;
+}
+
+.patientOption {
+  display: flex;
+  flex: 1;
+  justify-content: space-between;
+  gap: 8px;
+
+  & b {
+    font-weight: var(--mantine-font-weight-bold);
+    color: var(--mantine-color-bright);
+  }
+
+  & span {
+    font-size: var(--mantine-font-size-xs);
+  }
+}
+
+.recur {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 10px 12px;
+  border-radius: var(--mantine-radius-md);
+  background: var(--mantine-color-surface-sunken);
+}
+
+.recurRow {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px;
+  font-size: var(--mantine-font-size-sm);
+}
+
+.stepperValue {
+  min-width: 30px;
+  height: 32px;
+  padding: 0;
+  justify-content: center;
+  font-weight: var(--mantine-font-weight-bold);
+  font-variant-numeric: tabular-nums;
+  color: var(--mantine-color-bright);
+}
+
+.recurDates {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+
+  & span {
+    padding: 2px 8px;
+    border: 1px solid var(--mantine-color-border);
+    border-radius: 999px;
+    background: var(--mantine-color-surface-panel);
+    font-size: var(--mantine-font-size-xs);
+    font-variant-numeric: tabular-nums;
+  }
+}
+
+.foot {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+  padding: 12px 20px 18px;
+  border-top: 1px solid var(--mantine-color-border);
+}

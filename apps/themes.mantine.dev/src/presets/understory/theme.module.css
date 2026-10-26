@@ -1,0 +1,163 @@
+.button {
+  font-weight: var(--mantine-font-weight-bold);
+}
+
+.buttonSection {
+  & svg {
+    width: 16px;
+    height: 16px;
+  }
+}
+
+.actionIcon {
+  color: var(--mantine-color-bright);
+
+  &:where([data-variant='subtle']) {
+    color: var(--mantine-color-text);
+
+    @mixin hover {
+      background-color: var(--mantine-color-default-hover);
+      color: var(--mantine-color-bright);
+    }
+  }
+}
+
+.input {
+  &:focus,
+  &:focus-within {
+    border-color: var(--mantine-primary-color-filled);
+  }
+}
+
+.title {
+  color: var(--mantine-color-bright);
+  letter-spacing: -0.02em;
+}
+
+.avatar {
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.segmented {
+  padding: 3px;
+  gap: 2px;
+  border: 1px solid var(--mantine-color-border);
+  background: light-dark(var(--mantine-color-gray-1), var(--mantine-color-dark-6));
+}
+
+.segmentedIndicator {
+  border-radius: 7px;
+  background: var(--mantine-color-surface-panel);
+  box-shadow:
+    0 1px 2px rgba(0, 0, 0, 0.12),
+    0 0 0 1px var(--mantine-color-border);
+
+  @mixin where-dark {
+    box-shadow:
+      0 1px 2px rgba(0, 0, 0, 0.12),
+      0 0 0 1px var(--mantine-color-border);
+  }
+}
+
+.segmentedLabel {
+  display: flex;
+  align-items: center;
+  height: 30px;
+  padding: 0 12px;
+  border-radius: 7px;
+  font-size: var(--mantine-font-size-sm);
+  font-weight: var(--mantine-font-weight-bold);
+  color: var(--mantine-color-text);
+
+  &:where([data-active]) {
+    color: var(--mantine-color-bright);
+  }
+
+  @mixin hover {
+    &:where(:not([data-active])) {
+      color: var(--mantine-color-bright);
+    }
+  }
+}
+
+.segmentedInnerLabel {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.chipLabel {
+  height: 30px;
+  padding-inline: 12px;
+  font-size: var(--mantine-font-size-sm);
+  font-weight: var(--mantine-font-weight-medium);
+  border-color: var(--mantine-color-default-border);
+  background-color: var(--mantine-color-surface-panel);
+
+  &:where([data-checked]) {
+    padding-inline: 12px;
+    border-color: var(--mantine-color-bright);
+    background-color: var(--mantine-color-bright);
+    color: var(--mantine-color-body);
+
+    @mixin hover {
+      background-color: var(--mantine-color-bright);
+    }
+  }
+}
+
+.checkboxInput {
+  border-width: 1.5px;
+  border-color: var(--mantine-color-default-border);
+  background-color: var(--mantine-color-surface-panel);
+}
+
+.checkboxLabel {
+  padding-inline-start: 10px;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.sliderThumb {
+  border-width: 2px;
+}
+
+.badge {
+  height: 26px;
+  padding-inline: 10px;
+  text-transform: none;
+}
+
+.badgeLabel {
+  font-size: 12.5px;
+  font-weight: var(--mantine-font-weight-medium);
+  letter-spacing: 0;
+}
+
+.menuDropdown {
+  padding: 6px;
+}
+
+.menuLabel {
+  padding: 6px 8px 4px;
+  font-size: var(--mantine-font-size-xs);
+  font-weight: var(--mantine-font-weight-bold);
+  color: var(--mantine-color-bright);
+}
+
+.menuItem {
+  padding: 8px;
+  font-size: 13.5px;
+}
+
+.menuItemDescription {
+  font-family: var(--understory-font-read);
+  font-style: italic;
+  font-size: var(--mantine-font-size-xs);
+  color: var(--mantine-color-text);
+}
+
+.td {
+  border-bottom: 1px dashed var(--mantine-color-border);
+}

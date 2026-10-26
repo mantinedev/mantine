@@ -1,0 +1,118 @@
+.section {
+  padding: 40px var(--tw-gutter) 48px;
+  border-top: 1px solid var(--mantine-color-border);
+}
+
+.sub {
+  max-width: 40em;
+  margin-top: 8px;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.35fr) minmax(0, 1fr);
+  gap: 24px;
+  align-items: start;
+  margin-top: 22px;
+
+  @container preset (max-width: 980px) {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+.mapBox {
+  padding: 8px;
+}
+
+.map {
+  display: block;
+  width: 100%;
+  height: auto;
+
+  & text {
+    font-family: var(--mantine-font-family);
+    font-size: 12px;
+    font-weight: 700;
+    fill: var(--mantine-color-bright);
+  }
+
+  & .small {
+    font-size: 11px;
+    font-weight: 500;
+    fill: var(--mantine-color-text);
+  }
+
+  & .label {
+    fill: var(--mantine-color-bright);
+  }
+
+  & .number {
+    font-family: var(--tw-font-display);
+    font-size: 19px;
+    font-weight: 900;
+    fill: var(--tw-peach-ink);
+  }
+}
+
+.marker {
+  cursor: pointer;
+  outline: none;
+}
+
+.ring {
+  fill: var(--tw-peach);
+  stroke: var(--mantine-color-body);
+  stroke-width: 3;
+
+  .marker:focus-visible &,
+  .marker[data-on] & {
+    stroke: var(--tw-peach);
+    stroke-width: 4;
+  }
+}
+
+.walks {
+  padding: 16px 18px;
+}
+
+.minutes {
+  text-align: right;
+  font-weight: var(--mantine-font-weight-bold);
+  color: var(--mantine-color-bright);
+  font-variant-numeric: tabular-nums;
+}
+
+.sunset {
+  position: relative;
+  aspect-ratio: 16 / 9;
+  margin: 16px 0 0;
+  overflow: hidden;
+  border-radius: var(--mantine-radius-lg);
+  color: #fff;
+
+  & img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  & figcaption {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    padding: 14px;
+    font-size: 13px;
+    background: linear-gradient(180deg, transparent, rgba(14, 11, 42, 0.85));
+  }
+
+  & b {
+    display: block;
+    font-family: var(--tw-font-display);
+    font-size: 26px;
+    font-weight: 900;
+    line-height: 1;
+    text-transform: uppercase;
+  }
+}

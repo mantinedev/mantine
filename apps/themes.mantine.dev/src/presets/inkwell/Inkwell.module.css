@@ -1,0 +1,22 @@
+.root {
+  --inkwell-page: light-dark(var(--mantine-color-gray-1), var(--mantine-color-dark-8));
+  --inkwell-column: light-dark(var(--mantine-color-gray-2), #1b1e28);
+  --inkwell-column-drop: light-dark(#d6dcf6, #262c4d);
+
+  position: relative;
+  contain: layout;
+  display: flex;
+  flex-direction: column;
+  height: 820px;
+  overflow: hidden;
+  background: var(--inkwell-page);
+}
+
+.toast {
+  position: absolute;
+  z-index: 300;
+  left: 50%;
+  bottom: 20px;
+  translate: -50% 0;
+  white-space: nowrap;
+}

@@ -1,0 +1,104 @@
+.wrap {
+  position: relative;
+  flex: none;
+  padding: 4px var(--slate-gutter, 18px) 16px;
+}
+
+.composer {
+  border: 1px solid var(--mantine-color-default-border);
+  border-radius: var(--mantine-radius-lg);
+  background: var(--mantine-color-surface-panel);
+
+  &:focus-within {
+    border-color: var(--mantine-color-bright);
+    box-shadow: 0 0 0 1px var(--mantine-color-bright);
+  }
+}
+
+.toolbar {
+  display: flex;
+  gap: 2px;
+  padding: 6px 8px 0;
+}
+
+.toolbar .tool {
+  color: var(--mantine-color-dimmed);
+  font-weight: var(--mantine-font-weight-bold);
+
+  @mixin hover {
+    color: var(--mantine-color-bright);
+  }
+
+  & svg {
+    width: 16px;
+    height: 16px;
+  }
+}
+
+.bold {
+  font-size: var(--mantine-font-size-md);
+}
+
+.italic {
+  font-size: var(--mantine-font-size-md);
+  font-style: italic;
+
+  .toolbar & {
+    font-weight: var(--mantine-font-weight-semibold);
+  }
+}
+
+.separator {
+  width: 1px;
+  margin: 6px 4px;
+  background: var(--mantine-color-border);
+}
+
+.textarea {
+  min-height: 44px;
+  padding: 8px 14px;
+  font-size: var(--mantine-font-size-md);
+  line-height: 1.5;
+  color: var(--mantine-color-text);
+}
+
+.foot {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 6px 8px 8px;
+}
+
+.footActions {
+  display: flex;
+  gap: 2px;
+}
+
+.hint {
+  font-size: var(--mantine-font-size-xs);
+
+  @container preset (max-width: 760px) {
+    display: none;
+  }
+}
+
+.caret {
+  padding-inline: 8px;
+  box-shadow: inset 1px 0 0 rgba(255, 255, 255, 0.35);
+}
+
+.menuTime {
+  font-family: var(--mantine-font-family-monospace);
+  font-size: var(--mantine-font-size-xs);
+}
+
+.suggestions {
+  min-width: 220px;
+}
+
+.sub {
+  margin-inline-start: auto;
+  padding-inline-start: 10px;
+  font-size: var(--mantine-font-size-xs);
+}

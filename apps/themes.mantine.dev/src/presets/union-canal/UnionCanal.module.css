@@ -1,0 +1,5 @@
+.root {
+  position: relative;
+  background: var(--mantine-color-body);
+  color: var(--mantine-color-text);
+}

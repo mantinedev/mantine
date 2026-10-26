@@ -1,0 +1,105 @@
+.root {
+  margin-top: 36px;
+  border: 1px solid var(--mantine-color-bright);
+  border-radius: var(--mantine-radius-xs);
+}
+
+.head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 12px 16px;
+  border-bottom: 1px solid var(--mantine-color-bright);
+}
+
+.title {
+  font-family: var(--larder-font-serif);
+  font-size: 20px;
+  line-height: 1.2;
+}
+
+.stats {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  border-bottom: 1px solid var(--mantine-color-border);
+
+  @container preset (max-width: 520px) {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+.stat {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  padding: 10px 16px;
+
+  & + & {
+    border-inline-start: 1px solid var(--mantine-color-border);
+
+    @container preset (max-width: 520px) {
+      border-inline-start: 0;
+      border-top: 1px solid var(--mantine-color-border);
+    }
+  }
+}
+
+.statInput,
+.ingredientInput {
+  --input-height: auto;
+  --input-size: auto;
+  --input-line-height: 1.5;
+
+  padding-block: 2px;
+  border-width: 0 0 1px;
+  border-radius: 0;
+  border-bottom-color: var(--mantine-color-default-border);
+  font-family: var(--larder-font-serif);
+  font-size: var(--mantine-font-size-xl);
+  color: var(--mantine-color-bright);
+
+  &:focus {
+    border-bottom-color: var(--mantine-primary-color-filled);
+  }
+}
+
+.ingredients {
+  margin: 0;
+  padding: 4px 16px 0;
+  list-style: none;
+}
+
+.ingredient {
+  display: grid;
+  grid-template-columns: 110px minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 12px;
+  padding: 6px 0;
+  border-bottom: 1px solid var(--mantine-color-border);
+
+  @container preset (max-width: 520px) {
+    grid-template-columns: 90px minmax(0, 1fr) auto;
+  }
+}
+
+.ingredientInput {
+  font-size: var(--mantine-font-size-lg);
+  border-bottom-color: transparent;
+}
+
+.qty {
+  font-family: var(--mantine-font-family);
+  font-weight: var(--mantine-font-weight-bold);
+  font-variant-numeric: tabular-nums;
+}
+
+.foot {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 12px 16px;
+  font-size: var(--mantine-font-size-sm);
+}

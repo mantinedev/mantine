@@ -1,0 +1,164 @@
+.root {
+  padding: 14px 18px 16px;
+  border-top: 1px solid var(--mantine-color-border);
+}
+
+.head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 10px;
+  font-size: var(--mantine-font-size-sm);
+
+  & b {
+    font-size: 14px;
+    font-weight: var(--mantine-font-weight-bold);
+    color: var(--mantine-color-bright);
+  }
+}
+
+.track {
+  position: relative;
+  height: 104px;
+  margin: 4px 14px 0;
+}
+
+.rail {
+  position: absolute;
+  inset-inline: 0;
+  top: 52px;
+  height: 4px;
+  border-radius: 2px;
+  background: light-dark(var(--mantine-color-gray-3), var(--mantine-color-dark-5));
+}
+
+.tick {
+  position: absolute;
+  top: 46px;
+  width: 1px;
+  height: 16px;
+  background: var(--mantine-color-default-border);
+
+  & span {
+    position: absolute;
+    top: 18px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 11px;
+    white-space: nowrap;
+  }
+}
+
+.gap {
+  position: absolute;
+  top: 49px;
+  height: 10px;
+  border-radius: 5px;
+  background: repeating-linear-gradient(
+    135deg,
+    color-mix(in srgb, var(--mantine-primary-color-filled) 40%, transparent) 0 4px,
+    transparent 4px 8px
+  );
+  transition:
+    left 300ms,
+    width 300ms;
+
+  &[data-hidden] {
+    display: none;
+  }
+}
+
+.gapLabel {
+  position: absolute;
+  top: 64px;
+  transform: translateX(-50%);
+  font-size: var(--mantine-font-size-xs);
+  font-weight: var(--mantine-font-weight-bold);
+  color: var(--mantine-primary-color-filled);
+  white-space: nowrap;
+  transition: left 300ms;
+}
+
+.pin {
+  --pin-color: var(--mantine-primary-color-filled);
+
+  position: absolute;
+  top: 6px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  transform: translateX(-50%);
+  transition:
+    left 300ms,
+    opacity 200ms;
+
+  &[data-kind='bid'],
+  &[data-kind='deal'] {
+    top: 45px;
+    flex-direction: column-reverse;
+  }
+
+  &[data-kind='bid'] {
+    --pin-color: var(--mantine-color-bright);
+  }
+
+  &[data-kind='deal'] {
+    --pin-color: var(--mantine-color-green-filled);
+  }
+
+  &[data-old] {
+    opacity: 0.45;
+  }
+}
+
+.tag {
+  padding: 3px 9px;
+  border-radius: 1000px;
+  font-size: var(--mantine-font-size-xs);
+  font-weight: var(--mantine-font-weight-bold);
+  line-height: 1.35;
+  white-space: nowrap;
+  background: var(--pin-color);
+  color: var(--mantine-primary-color-contrast);
+}
+
+.pin[data-kind='bid'] .tag {
+  border: 1.5px solid var(--pin-color);
+  background: var(--mantine-color-surface-panel);
+  color: var(--mantine-color-bright);
+}
+
+.pin[data-kind='deal'] .tag {
+  color: var(--mantine-color-green-contrast);
+}
+
+.pin[data-old] .tag {
+  text-decoration: line-through;
+}
+
+.tag[data-hidden] {
+  visibility: hidden;
+}
+
+.stem {
+  width: 2px;
+  height: 10px;
+  background: var(--pin-color);
+}
+
+.dot {
+  width: 14px;
+  height: 14px;
+  border: 3px solid var(--mantine-color-surface-panel);
+  border-radius: 50%;
+  background: var(--pin-color);
+  box-shadow: 0 0 0 1px var(--mantine-color-default-border);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .gap,
+  .gapLabel,
+  .pin {
+    transition: none;
+  }
+}

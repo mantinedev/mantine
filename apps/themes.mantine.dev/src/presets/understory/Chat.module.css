@@ -1,0 +1,238 @@
+.root {
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  border-right: 1px solid var(--mantine-color-border);
+  background: var(--mantine-color-surface-panel);
+}
+
+.thread {
+  flex: 1;
+  min-height: 0;
+  overflow-x: hidden;
+  overflow-y: auto;
+  padding: 20px 18px 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+
+  & > * {
+    flex-shrink: 0;
+  }
+}
+
+.user {
+  align-self: flex-end;
+  max-width: 88%;
+  padding: 10px 14px;
+  border-radius: 14px 14px 4px;
+  background: var(--understory-ink);
+  color: var(--understory-ink-contrast);
+  font-size: 14.5px;
+}
+
+.assistant {
+  display: grid;
+  grid-template-columns: 28px minmax(0, 1fr);
+  gap: 10px;
+}
+
+.assistantBody {
+  min-width: 0;
+}
+
+.assistantName {
+  margin-bottom: 2px;
+  font-size: 12.5px;
+  font-weight: var(--mantine-font-weight-bold);
+  color: var(--mantine-color-bright);
+}
+
+.prose {
+  font-family: var(--understory-font-read);
+  font-size: 15.5px;
+  line-height: 1.6;
+
+  & p {
+    margin: 0 0 8px;
+  }
+
+  & p:last-child {
+    margin-bottom: 0;
+  }
+
+  & b {
+    font-weight: 500;
+    color: var(--mantine-color-bright);
+  }
+}
+
+.caret {
+  display: inline-block;
+  width: 8px;
+  height: 1.05em;
+  margin-left: 2px;
+  vertical-align: -0.15em;
+  background: var(--mantine-primary-color-filled);
+  animation: understory-blink 1s steps(1) infinite;
+}
+
+@keyframes understory-blink {
+  50% {
+    opacity: 0;
+  }
+}
+
+.tools {
+  display: flex;
+  gap: 2px;
+  margin-top: 6px;
+}
+
+.askCard {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  margin-top: 10px;
+  padding: 14px;
+  border: 1px solid var(--mantine-color-border);
+  border-radius: var(--mantine-radius-lg);
+  background: light-dark(var(--mantine-color-gray-0), var(--mantine-color-dark-8));
+}
+
+.askLabel {
+  display: flex;
+  justify-content: space-between;
+  gap: 8px;
+  margin-bottom: 6px;
+  font-size: var(--mantine-font-size-sm);
+  font-weight: var(--mantine-font-weight-bold);
+  color: var(--mantine-color-bright);
+
+  & span {
+    font-weight: var(--mantine-font-weight-medium);
+    color: var(--mantine-color-text);
+    text-align: right;
+  }
+}
+
+.care {
+  flex-wrap: wrap;
+  max-width: 100%;
+}
+
+.changeCard {
+  margin-top: 10px;
+  overflow: hidden;
+  border: 1px solid var(--mantine-color-border);
+  border-radius: var(--mantine-radius-lg);
+}
+
+.changeHead {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 10px 12px;
+  background: light-dark(var(--mantine-color-gray-0), var(--mantine-color-dark-8));
+  font-size: var(--mantine-font-size-sm);
+  font-weight: var(--mantine-font-weight-bold);
+  color: var(--mantine-color-bright);
+}
+
+.changeList {
+  display: grid;
+  gap: 4px;
+  margin: 0;
+  padding: 6px 12px 10px;
+  list-style: none;
+  font-size: 13.5px;
+
+  & li {
+    display: flex;
+    align-items: baseline;
+    gap: 8px;
+  }
+
+  & b {
+    flex: none;
+    width: 18px;
+    font-weight: 700;
+  }
+
+  & li[data-sign='add'] b {
+    color: var(--us-add);
+  }
+
+  & li[data-sign='remove'] b {
+    color: var(--us-warn);
+  }
+}
+
+.status {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: var(--mantine-font-size-sm);
+  font-weight: var(--mantine-font-weight-medium);
+  color: var(--mantine-color-bright);
+
+  &[data-stopped] {
+    margin-top: 6px;
+  }
+}
+
+.composerWrap {
+  flex: none;
+  padding: 10px 14px 14px;
+  border-top: 1px solid var(--mantine-color-border);
+}
+
+.suggestions {
+  display: flex;
+  gap: 6px;
+  padding-bottom: 8px;
+  overflow-x: auto;
+  scrollbar-width: none;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+.suggestion {
+  flex: none;
+  height: 30px;
+  padding-inline: 12px;
+}
+
+.composer {
+  &[data-with-bottom-section] {
+    --input-bottom-section-height: 48px;
+  }
+
+  &:has(textarea:focus)::after {
+    box-shadow: 0 0 0 1px var(--mantine-primary-color-filled);
+  }
+}
+
+.composerInput {
+  min-height: 46px;
+  padding: 10px 12px 4px;
+  font-size: 14.5px;
+  border-color: var(--mantine-color-default-border);
+}
+
+.composerFoot {
+  justify-content: space-between;
+  gap: 8px;
+  padding: 0 8px 8px 12px;
+  align-items: center;
+  font-size: 12.5px;
+  line-height: 1.5;
+  color: var(--mantine-color-text);
+
+  & > button {
+    flex: none;
+  }
+}

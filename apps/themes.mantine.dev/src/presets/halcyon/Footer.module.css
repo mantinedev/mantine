@@ -1,0 +1,24 @@
+.footer {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 24px;
+  padding: 40px var(--hc-gutter);
+  border-top: 1px solid var(--mantine-color-border);
+  font-size: 14px;
+}
+
+.links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 22px;
+}
+
+.link {
+  color: inherit;
+  text-decoration: none;
+
+  @mixin hover {
+    text-decoration: underline;
+  }
+}

@@ -1,0 +1,76 @@
+.root {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  height: 54px;
+  flex: none;
+  padding: 0 16px;
+  background: var(--clerk-surface);
+  border-bottom: 1px solid var(--mantine-color-border);
+}
+
+.mattersButton {
+  display: none;
+
+  @container preset (max-width: 980px) {
+    display: inline-flex;
+  }
+}
+
+.logo {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  font-family: var(--clerk-font-doc);
+  font-weight: 600;
+  font-size: 22px;
+  line-height: 1.5;
+  letter-spacing: 0.01em;
+  color: var(--mantine-color-bright);
+}
+
+.logoMark {
+  width: 26px;
+  height: 26px;
+  display: grid;
+  place-items: center;
+  border: 1.6px solid var(--mantine-color-bright);
+  border-radius: 50%;
+  font-style: italic;
+  font-size: 16px;
+  line-height: 1;
+}
+
+.firm {
+  padding-left: 14px;
+  border-left: 1px solid var(--mantine-color-border);
+  font-size: 13px;
+
+  @container preset (max-width: 980px) {
+    display: none;
+  }
+}
+
+.spacer {
+  flex: 1;
+}
+
+.paneTabs {
+  display: none;
+
+  @container preset (max-width: 760px) {
+    display: flex;
+  }
+}
+
+.moon {
+  @mixin dark {
+    display: none;
+  }
+}
+
+.sun {
+  @mixin light {
+    display: none;
+  }
+}

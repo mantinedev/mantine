@@ -1,0 +1,137 @@
+.root {
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  background: var(--mantine-color-surface-panel);
+  border-right: 1px solid var(--mantine-color-border);
+}
+
+.title {
+  padding: 18px 18px 10px;
+}
+
+.tabs {
+  padding: 0 18px 12px;
+}
+
+.list {
+  flex: 1;
+  min-height: 0;
+  margin: 0;
+  padding: 0 8px 12px;
+  overflow-y: auto;
+  list-style: none;
+}
+
+.conversation {
+  display: grid;
+  grid-template-columns: 56px minmax(0, 1fr);
+  gap: 2px 12px;
+  align-items: center;
+  width: 100%;
+  padding: 10px;
+  border-radius: 14px;
+  font-size: var(--mantine-font-size-md);
+
+  @mixin hover {
+    background: var(--mantine-color-hover);
+  }
+
+  &[aria-current='true'] {
+    background: light-dark(var(--mantine-color-gray-3), var(--mantine-color-dark-5));
+  }
+}
+
+.thumb {
+  position: relative;
+  grid-row: 1 / 4;
+  width: 56px;
+  height: 56px;
+
+  & img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    border-radius: 12px;
+    object-fit: cover;
+  }
+}
+
+.who {
+  position: absolute;
+  right: -2px;
+  bottom: -2px;
+  border: 2px solid var(--mantine-color-surface-panel);
+}
+
+.row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  min-width: 0;
+}
+
+.name {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-weight: var(--mantine-font-weight-bold);
+  color: var(--mantine-color-bright);
+}
+
+.time {
+  flex: none;
+  font-size: var(--mantine-font-size-xs);
+  white-space: nowrap;
+}
+
+.item,
+.last {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: var(--mantine-font-size-sm);
+}
+
+.item b {
+  font-weight: var(--mantine-font-weight-bold);
+  color: var(--mantine-color-bright);
+}
+
+.last[data-unread] {
+  font-weight: var(--mantine-font-weight-medium);
+  color: var(--mantine-color-bright);
+}
+
+.meta {
+  display: flex;
+  flex: none;
+  align-items: center;
+  gap: 6px;
+}
+
+.agreed {
+  --badge-bd: 1px solid var(--mantine-color-green-filled);
+
+  color: var(--mantine-color-green-filled);
+}
+
+.empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  padding: 40px 24px;
+  text-align: center;
+}
+
+.emptySeat {
+  fill: light-dark(var(--mantine-color-gray-3), var(--mantine-color-dark-5));
+}
+
+.emptyTitle {
+  color: var(--mantine-color-bright);
+}

@@ -1,0 +1,117 @@
+.root {
+  display: flex;
+  align-items: center;
+  gap: 32px;
+  height: 64px;
+  padding-inline: var(--kestrel-gutter);
+  border-bottom: 1px solid var(--mantine-color-border);
+}
+
+.logo {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  text-decoration: none;
+  color: var(--mantine-color-bright);
+  font-weight: 800;
+  font-size: 19px;
+  letter-spacing: -0.01em;
+  white-space: nowrap;
+
+  & span {
+    font-weight: var(--mantine-font-weight-medium);
+  }
+}
+
+.mark {
+  width: 28px;
+  height: 28px;
+}
+
+.markBg {
+  fill: var(--mantine-color-bright);
+}
+
+.markBird {
+  fill: var(--kestrel-route);
+}
+
+.nav {
+  display: flex;
+  gap: 24px;
+  font-size: var(--mantine-font-size-sm);
+  font-weight: var(--mantine-font-weight-medium);
+
+  @container preset (max-width: 760px) {
+    display: none;
+  }
+}
+
+.link {
+  color: inherit;
+  text-decoration: none;
+  white-space: nowrap;
+
+  @mixin hover {
+    color: var(--mantine-color-bright);
+    text-decoration: underline;
+    text-underline-offset: 5px;
+  }
+
+  &[aria-current='page'] {
+    color: var(--mantine-color-bright);
+    font-weight: 700;
+  }
+}
+
+.actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-inline-start: auto;
+}
+
+.rss {
+  @container preset (max-width: 760px) {
+    display: none;
+  }
+}
+
+.moon {
+  @mixin dark {
+    display: none;
+  }
+}
+
+.sun {
+  @mixin light {
+    display: none;
+  }
+}
+
+.menuButton {
+  display: none;
+
+  @container preset (max-width: 760px) {
+    display: inline-flex;
+  }
+}
+
+.sheet {
+  display: flex;
+  flex-direction: column;
+  padding: 6px;
+}
+
+.sheetLink {
+  height: 42px;
+  display: flex;
+  align-items: center;
+  padding: 0 12px;
+  border-radius: var(--mantine-radius-sm);
+  font-weight: var(--mantine-font-weight-medium);
+
+  @mixin hover {
+    background: var(--mantine-color-hover);
+  }
+}

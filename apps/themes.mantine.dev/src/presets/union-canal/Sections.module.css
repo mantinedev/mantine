@@ -1,0 +1,30 @@
+.block {
+  padding: 84px 48px;
+
+  @container preset (max-width: 980px) {
+    padding-inline: 32px;
+  }
+
+  @container preset (max-width: 780px) {
+    padding-block: 64px;
+  }
+
+  @container preset (max-width: 520px) {
+    padding-inline: 16px;
+  }
+}
+
+.head {
+  max-width: 40em;
+
+  & h2 {
+    @container preset (max-width: 780px) {
+      font-size: 34px;
+    }
+  }
+
+  & p {
+    margin: 12px 0 0;
+    font-size: 18px;
+  }
+}

@@ -1,0 +1,38 @@
+.root {
+  display: grid;
+  grid-template-columns: minmax(0, 400px) minmax(0, 1fr);
+  gap: 44px;
+  align-items: center;
+
+  @container preset (max-width: 780px) {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  & blockquote {
+    @container preset (max-width: 520px) {
+      font-size: 22px;
+    }
+  }
+}
+
+.boat {
+  max-width: 100%;
+  margin: 0;
+
+  & figcaption {
+    margin-top: 8px;
+    font-size: 14px;
+  }
+
+  @container preset (max-width: 780px) {
+    max-width: 320px;
+  }
+}
+
+.boatImage {
+  aspect-ratio: 4 / 3;
+}
+
+.name {
+  color: var(--mantine-color-bright);
+}

@@ -1,0 +1,138 @@
+.head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 12px;
+  padding: 14px 16px 0;
+
+  &[data-seasons] {
+    padding-top: 10px;
+  }
+}
+
+.seasonDot {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  display: inline-block;
+}
+
+.wrap {
+  position: relative;
+  padding: 8px 12px 6px;
+}
+
+.svg {
+  display: block;
+  width: 100%;
+  height: auto;
+
+  & text {
+    font-family: var(--mantine-font-family);
+  }
+}
+
+.axis {
+  font-size: 11px;
+  fill: var(--mantine-color-dimmed);
+}
+
+.label {
+  font-size: 12px;
+  font-weight: 600;
+  fill: var(--mantine-color-bright);
+}
+
+.svg .note {
+  font-family: var(--understory-font-read);
+  font-size: 11.5px;
+  font-style: italic;
+  fill: var(--mantine-color-text);
+}
+
+.plant {
+  cursor: pointer;
+  transition: opacity 160ms;
+  outline: none;
+
+  .svg[data-dim] &:not([data-highlighted]) {
+    opacity: 0.22;
+  }
+}
+
+.badge text {
+  font-size: 11px;
+  font-weight: 700;
+  fill: #111a13;
+}
+
+.toxic {
+  font-size: 11px;
+  font-weight: 800;
+  fill: #fff;
+}
+
+.seasonLine {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+  padding: 4px 16px 14px;
+  font-size: var(--mantine-font-size-sm);
+
+  & b {
+    font-weight: var(--mantine-font-weight-bold);
+    color: var(--mantine-color-bright);
+  }
+}
+
+.bloom {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  height: 26px;
+  padding: 0 10px;
+  border: 1px solid var(--mantine-color-border);
+  border-radius: 999px;
+  background: light-dark(var(--mantine-color-gray-0), var(--mantine-color-dark-8));
+  font-size: 12.5px;
+  font-weight: var(--mantine-font-weight-medium);
+  color: var(--mantine-color-bright);
+
+  & i {
+    width: 9px;
+    height: 9px;
+    border-radius: 50%;
+    box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.15);
+  }
+}
+
+.legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+  padding: 0 16px 14px;
+  font-size: var(--mantine-font-size-sm);
+
+  & span {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  & i {
+    display: inline-block;
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+  }
+
+  & i[data-kind='added'] {
+    box-shadow: inset 0 0 0 3px #6f8f12;
+  }
+
+  & i[data-kind='removed'] {
+    border: 2px dashed var(--us-warn);
+  }
+}

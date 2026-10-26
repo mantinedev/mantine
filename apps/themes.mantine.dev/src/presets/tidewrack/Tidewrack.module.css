@@ -1,0 +1,87 @@
+.root {
+  --tw-gutter: 32px;
+
+  position: relative;
+  background-color: var(--mantine-color-body);
+  background-image: radial-gradient(var(--tw-halftone) 1px, transparent 1.4px);
+  background-size: 7px 7px;
+  color: var(--mantine-color-text);
+  font-size: var(--mantine-font-size-md);
+  line-height: 1.5;
+
+  @container preset (max-width: 780px) {
+    --tw-gutter: 20px;
+  }
+
+  @container preset (max-width: 520px) {
+    --tw-gutter: 16px;
+  }
+}
+
+.bright {
+  color: var(--mantine-color-bright);
+}
+
+.clashes {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 16px var(--tw-gutter) 0;
+
+  &:empty {
+    display: none;
+  }
+}
+
+.clashMessage {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  gap: 12px;
+  align-items: center;
+  padding: 12px 14px;
+  border: 1.5px solid var(--tw-clash);
+  border-radius: var(--mantine-radius-md);
+  background: var(--mantine-color-surface-panel);
+}
+
+.clashIcon {
+  display: grid;
+  place-items: center;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background: var(--tw-clash);
+  color: #fff;
+}
+
+.footer {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 22px var(--tw-gutter) 26px;
+  border-top: 1px solid var(--mantine-color-border);
+
+  & b {
+    color: var(--mantine-color-bright);
+  }
+}
+
+.toastAnchor {
+  position: fixed;
+  z-index: 400;
+  left: 50%;
+  bottom: 20px;
+  transform: translateX(-50%);
+  pointer-events: none;
+}
+
+.toast {
+  padding: 10px 18px;
+  border-radius: 999px;
+  white-space: nowrap;
+  font-size: 14px;
+  font-weight: var(--mantine-font-weight-bold);
+  color: var(--mantine-color-body);
+  background: var(--mantine-color-bright);
+  box-shadow: var(--mantine-shadow-md);
+}

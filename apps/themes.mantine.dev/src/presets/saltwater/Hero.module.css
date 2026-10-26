@@ -1,0 +1,252 @@
+.hero {
+  position: relative;
+  height: 640px;
+  color: #fff;
+
+  &::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      180deg,
+      rgba(4, 22, 27, 0.55) 0%,
+      rgba(4, 22, 27, 0) 26%,
+      rgba(4, 22, 27, 0) 46%,
+      rgba(4, 22, 27, 0.78) 100%
+    );
+  }
+
+  @container preset (max-width: 780px) {
+    height: 600px;
+  }
+}
+
+.image {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: 50% 62%;
+}
+
+.photoTag {
+  position: absolute;
+  z-index: 2;
+  right: 16px;
+  top: 88px;
+  padding: 4px 10px;
+  border-radius: 999px;
+  background: rgba(4, 22, 27, 0.55);
+  font-size: 12px;
+}
+
+.copy {
+  position: absolute;
+  z-index: 2;
+  left: var(--sw-gutter);
+  right: var(--sw-gutter);
+  bottom: 56px;
+
+  @container preset (max-width: 780px) {
+    bottom: 110px;
+  }
+}
+
+.title.title {
+  max-width: 9.5em;
+  color: #fff;
+
+  & em {
+    font-style: normal;
+    color: var(--sw-route-on);
+  }
+
+  @container preset (max-width: 980px) {
+    font-size: 64px;
+  }
+
+  @container preset (max-width: 780px) {
+    font-size: 52px;
+  }
+
+  @container preset (max-width: 520px) {
+    font-size: 40px;
+  }
+}
+
+.lead {
+  max-width: 30em;
+  margin-top: 18px;
+  font-size: 19px;
+  line-height: 1.5;
+
+  @container preset (max-width: 520px) {
+    font-size: 17px;
+  }
+}
+
+.ctas {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 26px;
+}
+
+.ghost[data-variant] {
+  background: transparent;
+  color: #fff;
+  border-color: rgba(255, 255, 255, 0.7);
+
+  @mixin hover {
+    background: rgba(255, 255, 255, 0.12);
+  }
+}
+
+.ticketWrap {
+  position: absolute;
+  z-index: 4;
+  right: var(--sw-gutter);
+  bottom: -64px;
+  width: 300px;
+  transform: rotate(-4deg);
+  filter: drop-shadow(0 18px 24px rgba(4, 22, 27, 0.4));
+
+  @container preset (max-width: 980px) {
+    width: 270px;
+  }
+
+  @container preset (max-width: 780px) {
+    left: var(--sw-gutter);
+    right: auto;
+    bottom: -86px;
+    transform: rotate(-3deg);
+  }
+
+  @container preset (max-width: 520px) {
+    width: calc(100% - 32px);
+    max-width: 300px;
+  }
+}
+
+.ticket {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 74px;
+  border-radius: 14px;
+  background: var(--sw-paper);
+  color: var(--sw-paper-ink);
+  mask:
+    radial-gradient(circle 11px at 100% 50%, #0000 98%, #000) right / 51% 100% no-repeat,
+    radial-gradient(circle 11px at 0 50%, #0000 98%, #000) left / 51% 100% no-repeat;
+}
+
+.ticketMain {
+  padding: 16px 18px 16px 22px;
+}
+
+.kicker {
+  font-size: 12px;
+  font-weight: var(--mantine-font-weight-bold);
+  color: var(--sw-paper-accent);
+}
+
+.days {
+  margin-top: 6px;
+  font-family: var(--mantine-font-family-headings);
+  font-size: 34px;
+  font-weight: 800;
+  line-height: 1;
+  letter-spacing: -0.03em;
+}
+
+.line {
+  margin-top: 6px;
+  font-size: 13px;
+}
+
+.route {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 10px;
+  font-size: 14px;
+  font-weight: var(--mantine-font-weight-bold);
+
+  & i {
+    flex: 1;
+    height: 2px;
+    background: repeating-linear-gradient(90deg, #2bb8aa 0 6px, transparent 6px 10px);
+  }
+}
+
+.stub {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 14px 12px;
+  border-left: 2px dashed var(--sw-paper-line);
+}
+
+.punch {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: var(--sw-band);
+  box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.4);
+}
+
+.barcode {
+  flex: 1;
+  width: 40px;
+  min-height: 70px;
+  background: repeating-linear-gradient(
+    0deg,
+    #0b2730 0 2px,
+    transparent 2px 4px,
+    #0b2730 4px 5px,
+    transparent 5px 8px,
+    #0b2730 8px 11px,
+    transparent 11px 13px
+  );
+}
+
+.names {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px 22px;
+  padding: 88px var(--sw-gutter) 26px;
+  background: var(--mantine-primary-color-filled);
+  color: var(--mantine-primary-color-contrast);
+  font-family: var(--mantine-font-family-headings);
+  font-size: 18px;
+  font-weight: 500;
+  letter-spacing: -0.01em;
+
+  & > span {
+    display: inline-flex;
+    align-items: center;
+    gap: 22px;
+    white-space: nowrap;
+  }
+
+  & small {
+    margin-left: 6px;
+    font-family: var(--mantine-font-family);
+    font-size: 13px;
+    font-weight: 500;
+    letter-spacing: 0;
+    opacity: 0.8;
+  }
+
+  @container preset (max-width: 780px) {
+    padding-top: 120px;
+  }
+}
+
+.wave {
+  width: 26px;
+  height: 10px;
+}
