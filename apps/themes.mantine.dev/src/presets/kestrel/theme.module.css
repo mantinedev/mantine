@@ -29,8 +29,13 @@
   }
 
   &:where([data-error]) {
-    border-color: var(--kestrel-route);
-    box-shadow: 0 0 0 1px var(--kestrel-route);
+    --kestrel-error-border: light-dark(
+      var(--mantine-color-kestrel-6),
+      var(--mantine-color-kestrel-5)
+    );
+
+    border-color: var(--kestrel-error-border);
+    box-shadow: 0 0 0 1px var(--kestrel-error-border);
   }
 }
 

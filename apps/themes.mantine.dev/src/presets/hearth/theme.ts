@@ -11,6 +11,7 @@ import {
   Input,
   Menu,
   Paper,
+  parseThemeColor,
   Pill,
   rem,
   Select,
@@ -249,7 +250,6 @@ export const cssVariablesResolver: CSSVariablesResolver = (theme) => {
       '--mantine-color-hearth-text': 'var(--mantine-color-hearth-7)',
       '--mantine-color-red-text': 'var(--mantine-color-red-6)',
       '--mantine-color-green-text': 'var(--mantine-color-green-6)',
-      '--mantine-primary-color-contrast': 'var(--mantine-color-white)',
     },
     dark: {
       ...defaults.dark,
@@ -263,7 +263,13 @@ export const cssVariablesResolver: CSSVariablesResolver = (theme) => {
       '--mantine-color-hearth-filled-hover': 'var(--mantine-color-hearth-3)',
       '--mantine-color-red-text': 'var(--mantine-color-red-5)',
       '--mantine-color-green-text': 'var(--mantine-color-green-5)',
-      '--mantine-primary-color-contrast': '#1c1305',
+      '--mantine-primary-color-contrast': parseThemeColor({
+        color: theme.primaryColor,
+        theme,
+        colorScheme: 'dark',
+      }).isLight
+        ? '#1c1305'
+        : defaults.dark['--mantine-primary-color-contrast'],
       '--mantine-shadow-md': '0 16px 40px -12px rgba(0, 0, 0, 0.7), 0 2px 6px rgba(0, 0, 0, 0.4)',
     },
   };

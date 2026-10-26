@@ -192,11 +192,12 @@ export const theme = createTheme({
 
 export const cssVariablesResolver: CSSVariablesResolver = (theme) => {
   const defaults = defaultCssVariablesResolver(theme);
+  const brandPrimary = theme.primaryColor === 'pink';
   return {
     variables: defaults.variables,
     light: {
       ...defaults.light,
-      '--mantine-primary-color-contrast': '#ffffff',
+      ...(brandPrimary && { '--mantine-primary-color-contrast': '#ffffff' }),
       '--mantine-color-text': 'var(--mantine-color-gray-8)',
       '--mantine-color-border': 'var(--mantine-color-gray-2)',
       '--mantine-color-border-strong': 'var(--mantine-color-gray-3)',
@@ -208,15 +209,15 @@ export const cssVariablesResolver: CSSVariablesResolver = (theme) => {
     },
     dark: {
       ...defaults.dark,
-      '--mantine-primary-color-contrast': '#2a0612',
+      ...(brandPrimary && { '--mantine-primary-color-contrast': '#2a0612' }),
       '--mantine-color-bright': '#f2f8f8',
       '--mantine-color-default-color': 'var(--mantine-color-bright)',
       '--mantine-color-border': 'var(--mantine-color-dark-5)',
       '--mantine-color-border-strong': 'var(--mantine-color-dark-4)',
       '--mantine-color-default-border': 'var(--mantine-color-dark-4)',
-      '--mantine-color-focus-ring': 'var(--mantine-color-pink-4)',
+      '--mantine-color-focus-ring': 'var(--mantine-primary-color-4)',
       '--mantine-color-pink-filled-hover': 'var(--mantine-color-pink-3)',
-      '--mantine-color-anchor': 'var(--mantine-color-pink-4)',
+      '--mantine-color-anchor': 'var(--mantine-primary-color-4)',
       '--mantine-shadow-lg': '0 20px 48px -20px rgba(0, 0, 0, 0.8), 0 3px 8px rgba(0, 0, 0, 0.4)',
       '--fw-teal-ink': '#062226',
       '--fw-teal-soft': '#123f47',

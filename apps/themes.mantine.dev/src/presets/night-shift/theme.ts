@@ -210,6 +210,7 @@ export const theme = createTheme({
 
 export const cssVariablesResolver: CSSVariablesResolver = (theme) => {
   const defaults = defaultCssVariablesResolver(theme);
+  const brandPrimary = theme.primaryColor === 'ember';
   return {
     variables: defaults.variables,
     light: {
@@ -226,7 +227,7 @@ export const cssVariablesResolver: CSSVariablesResolver = (theme) => {
       '--mantine-shadow-md':
         '0 18px 40px -18px rgba(19, 18, 30, 0.35), 0 2px 6px rgba(19, 18, 30, 0.08)',
       '--ns-wave': '#d3d0de',
-      '--ns-glow': 'rgba(196, 82, 26, 0.1)',
+      '--ns-glow': 'color-mix(in srgb, var(--mantine-primary-color-filled) 10%, transparent)',
       '--ns-sky': '#23294a',
       '--ns-sky-2': '#2f3760',
       '--ns-brick': '#3b4266',
@@ -238,10 +239,10 @@ export const cssVariablesResolver: CSSVariablesResolver = (theme) => {
       ...defaults.dark,
       '--mantine-color-bright': '#f3f4fa',
       '--mantine-color-default-color': 'var(--mantine-color-text)',
-      '--mantine-primary-color-contrast': '#1b0e04',
+      ...(brandPrimary && { '--mantine-primary-color-contrast': '#1b0e04' }),
       '--mantine-color-ember-filled-hover': 'var(--mantine-color-ember-4)',
       '--mantine-color-ember-outline': 'var(--mantine-color-ember-5)',
-      '--mantine-primary-color-filled-hover': 'var(--mantine-color-ember-4)',
+      '--mantine-primary-color-filled-hover': 'var(--mantine-primary-color-4)',
       '--mantine-color-placeholder': 'var(--mantine-color-dark-2)',
       '--mantine-color-hover': 'var(--mantine-color-dark-6)',
       '--mantine-color-default-hover': 'var(--mantine-color-dark-6)',
@@ -251,7 +252,7 @@ export const cssVariablesResolver: CSSVariablesResolver = (theme) => {
       '--mantine-color-error': '#ff7b72',
       '--mantine-shadow-md': '0 18px 40px -16px rgba(0, 0, 0, 0.75), 0 2px 6px rgba(0, 0, 0, 0.35)',
       '--ns-wave': '#39425f',
-      '--ns-glow': 'rgba(255, 138, 61, 0.16)',
+      '--ns-glow': 'color-mix(in srgb, var(--mantine-primary-color-filled) 16%, transparent)',
       '--ns-sky': '#10162a',
       '--ns-sky-2': '#1a2240',
       '--ns-brick': '#2a2f47',

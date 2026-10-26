@@ -25,6 +25,7 @@
 
   &[data-current] {
     background: var(--mantine-primary-color-filled);
+    color: var(--slate-on-primary);
     box-shadow:
       0 0 0 2px var(--slate-rail),
       0 0 0 4px var(--mantine-color-white);
@@ -135,7 +136,7 @@
 
     &[data-active] {
       font-weight: var(--mantine-font-weight-semibold);
-      color: var(--mantine-color-white);
+      color: var(--slate-on-primary);
 
       @mixin hover {
         background-color: var(--nl-bg);
@@ -200,7 +201,7 @@
 
 .unread {
   [data-active] & {
-    background: var(--mantine-color-white);
+    background: var(--slate-on-primary);
     color: var(--mantine-primary-color-filled);
   }
 }

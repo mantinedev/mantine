@@ -192,7 +192,7 @@ export const stationStatus: Record<StationStatus, { label: string; color: string
 };
 
 export const crewStatus: Record<CrewStatus, { label: string; color: string }> = {
-  route: { label: 'On route', color: 'riverline' },
+  route: { label: 'On route', color: 'var(--mantine-primary-color-filled)' },
   done: { label: 'Route done', color: 'green' },
   break: { label: 'On break', color: 'orange' },
 };

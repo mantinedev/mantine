@@ -176,7 +176,11 @@
   & i {
     flex: 1;
     height: 2px;
-    background: repeating-linear-gradient(90deg, #2bb8aa 0 6px, transparent 6px 10px);
+    background: repeating-linear-gradient(
+      90deg,
+      var(--mantine-primary-color-5) 0 6px,
+      transparent 6px 10px
+    );
   }
 }
 

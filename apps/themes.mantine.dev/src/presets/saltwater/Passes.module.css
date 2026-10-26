@@ -98,7 +98,7 @@
   padding: 3px 10px;
   border-radius: 999px;
   background: var(--sw-paper-accent);
-  color: #fff;
+  color: var(--sw-paper-accent-ink);
   font-size: 12px;
   font-weight: var(--mantine-font-weight-bold);
 }

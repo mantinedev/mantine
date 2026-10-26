@@ -232,8 +232,13 @@ export const theme = createTheme({
 
 export const cssVariablesResolver: CSSVariablesResolver = (resolvedTheme) => {
   const defaults = defaultCssVariablesResolver(resolvedTheme);
+  const brandPrimary = resolvedTheme.primaryColor === 'quarry';
   return {
-    variables: defaults.variables,
+    variables: {
+      ...defaults.variables,
+      '--quarry-avatar-bg': brandPrimary ? '#f5d0fa' : 'var(--mantine-primary-color-2)',
+      '--quarry-avatar-color': brandPrimary ? '#6b0f78' : 'var(--mantine-primary-color-9)',
+    },
     light: {
       ...defaults.light,
       '--mantine-color-text': 'var(--mantine-color-gray-8)',
@@ -246,7 +251,7 @@ export const cssVariablesResolver: CSSVariablesResolver = (resolvedTheme) => {
       '--mantine-color-dimmed': 'var(--mantine-color-gray-6)',
       '--mantine-color-track': 'var(--mantine-color-gray-4)',
       '--quarry-surface-2': 'var(--mantine-color-gray-1)',
-      '--quarry-ring': 'rgba(192, 38, 211, 0.28)',
+      '--quarry-ring': 'color-mix(in srgb, var(--mantine-primary-color-filled) 28%, transparent)',
       '--quarry-code-bg': '#14161d',
       '--quarry-code-line': '#262a35',
       '--quarry-series-1': '#2a78d6',
@@ -271,11 +276,14 @@ export const cssVariablesResolver: CSSVariablesResolver = (resolvedTheme) => {
       '--mantine-color-track': 'var(--mantine-color-dark-3)',
       '--mantine-color-quarry-filled': '#c832dc',
       '--mantine-color-quarry-filled-hover': '#d653e7',
-      '--mantine-primary-color-filled': '#c832dc',
-      '--mantine-primary-color-filled-hover': '#d653e7',
+      ...(brandPrimary && {
+        '--mantine-primary-color-filled': '#c832dc',
+        '--mantine-primary-color-filled-hover': '#d653e7',
+      }),
       '--mantine-shadow-md': '0 16px 36px -14px rgba(0, 0, 0, 0.75), 0 3px 8px rgba(0, 0, 0, 0.4)',
       '--quarry-surface-2': 'var(--mantine-color-dark-6)',
-      '--quarry-ring': 'rgba(214, 83, 231, 0.32)',
+      '--quarry-ring':
+        'color-mix(in srgb, var(--mantine-primary-color-filled-hover) 32%, transparent)',
       '--quarry-code-bg': 'var(--mantine-color-dark-9)',
       '--quarry-code-line': '#1e222c',
       '--quarry-series-1': '#3987e5',

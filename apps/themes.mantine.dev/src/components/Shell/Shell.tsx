@@ -1,11 +1,11 @@
 'use client';
 
 import cx from 'clsx';
-import { AppShell, Burger, Group, RemoveScroll, useMantineColorScheme } from '@mantine/core';
+import { AppShell, Burger, useMantineColorScheme } from '@mantine/core';
 import { useDisclosure, useHotkeys } from '@mantine/hooks';
-import { ColorSchemeControl, HeaderControls } from '@mantinex/mantine-header';
+import { ColorSchemeControl } from '@mantinex/mantine-header';
 import { MantineLogo } from '@mantinex/mantine-logo';
-import { meta } from '@mantinex/mantine-meta';
+import { ShellContext } from './Shell.context';
 import classes from './Shell.module.css';
 
 interface ShellProps {
@@ -14,40 +14,33 @@ interface ShellProps {
 }
 
 export function Shell({ sidebar, children }: ShellProps) {
-  const [opened, { toggle }] = useDisclosure();
+  const [navbarOpened, { toggle: toggleNavbar }] = useDisclosure();
   const { toggleColorScheme } = useMantineColorScheme();
   useHotkeys([['mod + J', toggleColorScheme]]);
 
   return (
-    <AppShell
-      header={{ height: 60 }}
-      navbar={{ width: 360, breakpoint: 'md', collapsed: { mobile: !opened } }}
-    >
-      <AppShell.Header className={cx(RemoveScroll.classNames.zeroRight, classes.header)}>
-        <div className={classes.inner}>
-          <Group gap="sm">
-            <Burger opened={opened} onClick={toggle} hiddenFrom="md" size="sm" />
+    <ShellContext value={{ navbarOpened, toggleNavbar }}>
+      <AppShell navbar={{ width: 360, breakpoint: 'md', collapsed: { mobile: !navbarOpened } }}>
+        <AppShell.Navbar className={classes.navbar}>
+          <div className={classes.navbarHeader}>
             <a href="https://mantine.dev" className={cx('mantine-focus-auto', classes.logo)}>
-              <MantineLogo size={30} />
+              <MantineLogo size={28} />
             </a>
-          </Group>
-
-          <HeaderControls
-            visibleFrom="sm"
-            githubLink="https://github.com/mantinedev/mantine"
-            withDirectionToggle={false}
-            withSearch={false}
-            discordLink={meta.discordLink}
-          />
-
-          <Group hiddenFrom="sm">
-            <ColorSchemeControl />
-          </Group>
-        </div>
-      </AppShell.Header>
-
-      <AppShell.Navbar>{sidebar}</AppShell.Navbar>
-      <AppShell.Main>{children}</AppShell.Main>
-    </AppShell>
+            <div className={classes.navbarControls}>
+              <ColorSchemeControl />
+              <Burger
+                opened={navbarOpened}
+                onClick={toggleNavbar}
+                hiddenFrom="md"
+                size="sm"
+                aria-label="Close theme controls"
+              />
+            </div>
+          </div>
+          <div className={classes.navbarBody}>{sidebar}</div>
+        </AppShell.Navbar>
+        <AppShell.Main>{children}</AppShell.Main>
+      </AppShell>
+    </ShellContext>
   );
 }

@@ -1,4 +1,4 @@
-import { Button } from '@mantine/core';
+import { Button, useMantineTheme } from '@mantine/core';
 import { MODE_LABELS, type Mode, PASSES, PRICES } from './data';
 import { ModeControl } from './ModeControl';
 import { SectionHead } from './SectionHead';
@@ -12,6 +12,8 @@ interface PassesProps {
 }
 
 export function Passes({ mode, recommended, onModeChange, onBuy }: PassesProps) {
+  const theme = useMantineTheme();
+
   return (
     <section className={classes.root} id="passes" aria-labelledby="saltwater-passes-title">
       <div className={classes.head}>
@@ -44,7 +46,11 @@ export function Passes({ mode, recommended, onModeChange, onBuy }: PassesProps) 
                   £{PRICES[mode][index]}
                   <small>{MODE_LABELS[mode]}</small>
                 </div>
-                <Button size="sm" color="saltwater.7" onClick={() => onBuy(pass.days)}>
+                <Button
+                  size="sm"
+                  color={`${theme.primaryColor}.7`}
+                  onClick={() => onBuy(pass.days)}
+                >
                   Buy {pass.days} days
                 </Button>
               </div>

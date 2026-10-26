@@ -169,17 +169,17 @@
   & .bubble {
     border-color: transparent;
     border-radius: 18px 4px 18px 18px;
-    background: light-dark(var(--mantine-primary-color-filled), #1f6fd1);
-    color: var(--mantine-color-white);
+    background: var(--roundabout-bubble);
+    color: var(--roundabout-bubble-color);
   }
 
   & .quote {
-    border-left-color: var(--mantine-color-white);
-    background: rgba(255, 255, 255, 0.16);
-    color: var(--mantine-color-white);
+    border-left-color: var(--roundabout-bubble-color);
+    background: color-mix(in srgb, var(--roundabout-bubble-color) 16%, transparent);
+    color: var(--roundabout-bubble-color);
 
     & b {
-      color: var(--mantine-color-white);
+      color: var(--roundabout-bubble-color);
     }
   }
 }

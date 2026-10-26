@@ -103,7 +103,7 @@
   .step[data-state='done'] & {
     border-color: var(--mantine-primary-color-filled);
     background: var(--mantine-primary-color-filled);
-    color: var(--mantine-color-white);
+    color: var(--mantine-primary-color-contrast);
   }
 
   .step[data-state='active'] & {

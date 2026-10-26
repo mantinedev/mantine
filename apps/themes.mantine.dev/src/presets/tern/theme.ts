@@ -15,6 +15,7 @@ import {
   Kbd,
   NavLink,
   Paper,
+  parseThemeColor,
   rem,
   Table,
   TableOfContents,
@@ -211,7 +212,7 @@ export const cssVariablesResolver: CSSVariablesResolver = (theme) => {
       '--mantine-color-border-input': 'var(--mantine-color-gray-3)',
       '--mantine-color-hover': 'var(--mantine-color-gray-0)',
       '--mantine-color-default-hover': 'var(--mantine-color-gray-0)',
-      '--mantine-color-anchor': 'var(--mantine-color-tern-6)',
+      '--mantine-color-anchor': 'var(--mantine-primary-color-6)',
       '--tern-subtle': 'var(--mantine-color-gray-0)',
       '--tern-subtle-strong': 'var(--mantine-color-gray-1)',
       '--tern-code-bg': '#0f141d',
@@ -229,10 +230,14 @@ export const cssVariablesResolver: CSSVariablesResolver = (theme) => {
       '--mantine-color-default-border': 'var(--mantine-color-dark-4)',
       '--mantine-color-hover': '#151c26',
       '--mantine-color-default-hover': '#151c26',
-      '--mantine-color-anchor': 'var(--mantine-color-tern-4)',
+      '--mantine-color-anchor': 'var(--mantine-primary-color-4)',
       '--mantine-color-tern-filled-hover': 'var(--mantine-color-tern-3)',
-      '--mantine-primary-color-filled-hover': 'var(--mantine-color-tern-3)',
-      '--mantine-primary-color-contrast': '#0d0a1f',
+      '--mantine-primary-color-filled-hover': 'var(--mantine-primary-color-3)',
+      '--mantine-primary-color-contrast':
+        theme.autoContrast &&
+        parseThemeColor({ color: theme.primaryColor, theme, colorScheme: 'dark' }).isLight
+          ? '#0d0a1f'
+          : defaults.dark['--mantine-primary-color-contrast'],
       '--tern-subtle': '#151c26',
       '--tern-subtle-strong': 'var(--mantine-color-dark-6)',
       '--tern-code-bg': '#080b10',

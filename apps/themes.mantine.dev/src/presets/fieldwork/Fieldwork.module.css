@@ -31,7 +31,7 @@
     content: '';
     position: absolute;
     inset: 0 8px 8px 0;
-    background: var(--mantine-color-pink-filled);
+    background: var(--mantine-primary-color-filled);
   }
 
   &::after {
@@ -331,7 +331,7 @@
 }
 
 .map .mapAccent {
-  fill: var(--mantine-color-pink-filled);
+  fill: var(--mantine-primary-color-filled);
 }
 
 .info + .info {

@@ -278,7 +278,7 @@ export const cssVariablesResolver: CSSVariablesResolver = (theme) => {
       '--mantine-color-focus-ring': 'var(--tw-peach)',
       '--mantine-color-track': 'var(--mantine-color-dark-4)',
       '--mantine-color-tide-filled-hover': 'var(--mantine-color-tide-5)',
-      '--mantine-primary-color-filled-hover': 'var(--mantine-color-tide-5)',
+      '--mantine-primary-color-filled-hover': 'var(--mantine-primary-color-5)',
       '--mantine-shadow-md': '0 24px 50px -20px rgba(0, 0, 0, 0.8), 0 4px 12px rgba(0, 0, 0, 0.4)',
       '--tw-surface-3': '#312b74',
       '--tw-muted': 'var(--mantine-color-dark-2)',

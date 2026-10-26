@@ -86,7 +86,7 @@
   font-variant-numeric: tabular-nums;
 
   .view[aria-pressed='true'] & {
-    color: var(--mantine-color-hearth-text);
+    color: var(--mantine-primary-color-text);
   }
 }
 

@@ -225,8 +225,8 @@ export const theme = createTheme({
 
 const STATUS_COLORS = {
   light: {
-    '--fh-primary-tint': '#ece6fb',
-    '--fh-primary-line': '#c9b9f2',
+    '--fh-primary-tint': 'var(--mantine-primary-color-1)',
+    '--fh-primary-line': 'var(--mantine-primary-color-3)',
     '--fh-mint': '#23875f',
     '--fh-mint-tint': '#dcf3e9',
     '--fh-sky': '#24709f',
@@ -240,8 +240,6 @@ const STATUS_COLORS = {
     '--fh-overlay': 'rgba(23, 20, 31, 0.36)',
   },
   dark: {
-    '--fh-primary-tint': '#2e2746',
-    '--fh-primary-line': '#5a4a92',
     '--fh-mint': '#4cc795',
     '--fh-mint-tint': '#1b3229',
     '--fh-sky': '#62aee6',
@@ -258,6 +256,7 @@ const STATUS_COLORS = {
 
 export const cssVariablesResolver: CSSVariablesResolver = (resolvedTheme) => {
   const defaults = defaultCssVariablesResolver(resolvedTheme);
+  const brandPrimary = resolvedTheme.primaryColor === 'fernhill';
   return {
     variables: defaults.variables,
     light: {
@@ -269,7 +268,7 @@ export const cssVariablesResolver: CSSVariablesResolver = (resolvedTheme) => {
       '--mantine-color-border-strong': 'var(--mantine-color-gray-4)',
       '--mantine-color-default-hover': 'var(--mantine-color-gray-1)',
       '--mantine-color-hover': 'var(--mantine-color-gray-1)',
-      '--mantine-primary-color-contrast': '#ffffff',
+      ...(brandPrimary && { '--mantine-primary-color-contrast': '#ffffff' }),
       '--mantine-shadow-lg':
         '0 18px 40px -16px rgba(23, 20, 31, 0.32), 0 3px 8px rgba(23, 20, 31, 0.08)',
     },
@@ -281,9 +280,20 @@ export const cssVariablesResolver: CSSVariablesResolver = (resolvedTheme) => {
       '--mantine-color-border-strong': 'var(--mantine-color-dark-4)',
       '--mantine-color-default-hover': 'var(--mantine-color-dark-6)',
       '--mantine-color-hover': 'var(--mantine-color-dark-6)',
-      '--mantine-primary-color-contrast': '#150f26',
       '--mantine-color-fernhill-filled-hover': 'var(--mantine-color-fernhill-4)',
-      '--mantine-primary-color-filled-hover': 'var(--mantine-color-fernhill-4)',
+      ...(brandPrimary
+        ? {
+            '--fh-primary-tint': '#2e2746',
+            '--fh-primary-line': '#5a4a92',
+            '--mantine-primary-color-contrast': '#150f26',
+            '--mantine-primary-color-filled-hover': 'var(--mantine-color-fernhill-4)',
+          }
+        : {
+            '--fh-primary-tint':
+              'color-mix(in srgb, var(--mantine-primary-color-filled) 22%, var(--mantine-color-body))',
+            '--fh-primary-line':
+              'color-mix(in srgb, var(--mantine-primary-color-filled) 55%, var(--mantine-color-body))',
+          }),
       '--mantine-shadow-md': '0 4px 12px -4px rgba(0, 0, 0, 0.5)',
       '--mantine-shadow-lg': '0 18px 40px -16px rgba(0, 0, 0, 0.7), 0 3px 8px rgba(0, 0, 0, 0.35)',
     },

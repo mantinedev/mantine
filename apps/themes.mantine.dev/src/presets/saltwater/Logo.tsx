@@ -14,7 +14,7 @@ export function Logo({ withDivider }: LogoProps) {
         <path
           d="M8 18c2.5-3 5-3 7.5 0s5 3 7.5 0 3.5-2 4-1.5"
           fill="none"
-          stroke="#0b4a5a"
+          stroke="var(--sw-paper-accent)"
           strokeWidth="2.4"
           strokeLinecap="round"
         />

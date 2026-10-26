@@ -220,6 +220,7 @@ export const theme = createTheme({
 
 export const cssVariablesResolver: CSSVariablesResolver = (resolvedTheme) => {
   const defaults = defaultCssVariablesResolver(resolvedTheme);
+  const brandPrimary = resolvedTheme.primaryColor === 'canal';
   return {
     variables: {
       ...defaults.variables,
@@ -256,7 +257,7 @@ export const cssVariablesResolver: CSSVariablesResolver = (resolvedTheme) => {
       '--mantine-color-error': '#ec6b5f',
       '--mantine-color-canal-filled-hover': '#f1e66a',
       '--mantine-color-canal-contrast': 'var(--uc-chrome-ink)',
-      '--mantine-primary-color-contrast': 'var(--uc-chrome-ink)',
+      ...(brandPrimary && { '--mantine-primary-color-contrast': 'var(--uc-chrome-ink)' }),
       '--mantine-shadow-lg': '0 18px 44px -18px rgba(0, 0, 0, 0.8), 0 3px 8px rgba(0, 0, 0, 0.4)',
       '--uc-ground': '#12302a',
       '--uc-ground-ink': '#eef3f0',

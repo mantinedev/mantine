@@ -2,35 +2,25 @@
   height: 100%;
 }
 
-.inner {
-  display: flex;
-  flex-direction: column;
-  gap: var(--mantine-spacing-xl);
-  padding: var(--mantine-spacing-md);
-}
-
 .header {
   display: flex;
   align-items: center;
   justify-content: space-between;
+  padding: var(--mantine-spacing-md);
 }
 
 .title {
   color: var(--mantine-color-bright);
 }
 
-.section {
-  display: flex;
-  flex-direction: column;
-  gap: var(--mantine-spacing-sm);
-}
-
-.sectionTitle {
+.panelControl {
+  font-weight: var(--mantine-font-weight-medium);
   color: var(--mantine-color-bright);
 }
 
 .controlHead {
   display: flex;
+  align-items: center;
   justify-content: space-between;
   gap: var(--mantine-spacing-xs);
   margin-bottom: 6px;
@@ -41,6 +31,16 @@
 }
 
 .value {
+  font-variant-numeric: tabular-nums;
+}
+
+.scale {
+  display: flex;
+  flex-direction: column;
+  gap: var(--mantine-spacing-xs);
+}
+
+.scaleValues {
   font-variant-numeric: tabular-nums;
 }
 

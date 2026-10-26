@@ -74,8 +74,8 @@
 .avatarPlaceholder {
   font-size: 11.5px;
   font-weight: 700;
-  background: #f5d0fa;
-  color: #6b0f78;
+  background: var(--quarry-avatar-bg);
+  color: var(--quarry-avatar-color);
 }
 
 .navLink {

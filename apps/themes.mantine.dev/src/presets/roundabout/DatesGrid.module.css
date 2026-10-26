@@ -72,7 +72,7 @@
   background: var(--cell-off);
 
   &[data-on] {
-    background: var(--mantine-color-sky-6);
+    background: var(--mantine-primary-color-6);
   }
 
   tr[data-me] & {
@@ -186,7 +186,7 @@
 }
 
 .legendFree {
-  background: var(--mantine-color-sky-6);
+  background: var(--mantine-primary-color-6);
 }
 
 .legendBusy {

@@ -6,6 +6,7 @@ import {
   type CSSVariablesResolver,
   defaultCssVariablesResolver,
   defaultVariantColorsResolver,
+  getContrastColor,
   Menu,
   rem,
   SegmentedControl,
@@ -188,6 +189,7 @@ export const theme = createTheme({
 
 export const cssVariablesResolver: CSSVariablesResolver = (theme) => {
   const defaults = defaultCssVariablesResolver(theme);
+  const brandPrimary = theme.primaryColor === 'saltwater';
   return {
     variables: {
       ...defaults.variables,
@@ -200,15 +202,16 @@ export const cssVariablesResolver: CSSVariablesResolver = (theme) => {
       '--sw-paper-line': '#b5c7ca',
       '--sw-paper-rule': '#d5e1e3',
       '--sw-paper-well': '#eef4f5',
-      '--sw-paper-accent': '#0b4a5a',
-      '--sw-paper-accent-hover': '#083c49',
+      '--sw-paper-accent': 'var(--mantine-primary-color-7)',
+      '--sw-paper-accent-hover': 'var(--mantine-primary-color-8)',
+      '--sw-paper-accent-ink': getContrastColor({ color: `${theme.primaryColor}.7`, theme }),
     },
     light: {
       ...defaults.light,
       '--mantine-color-text': 'var(--mantine-color-gray-8)',
       '--mantine-color-default-border': 'var(--mantine-color-gray-4)',
       '--mantine-color-surface-sunken': 'var(--mantine-color-gray-0)',
-      '--mantine-primary-color-contrast': 'var(--mantine-color-white)',
+      ...(brandPrimary && { '--mantine-primary-color-contrast': 'var(--mantine-color-white)' }),
       '--sw-band': '#0b3a46',
       '--sw-band-2': '#0f4655',
       '--sw-land': '#17566a',
@@ -227,7 +230,7 @@ export const cssVariablesResolver: CSSVariablesResolver = (theme) => {
       '--mantine-color-surface-panel': 'var(--mantine-color-dark-7)',
       '--mantine-color-surface-sunken': '#0c242c',
       '--mantine-color-default-hover': '#0c242c',
-      '--mantine-primary-color-contrast': 'var(--mantine-color-aqua-9)',
+      ...(brandPrimary && { '--mantine-primary-color-contrast': 'var(--mantine-color-aqua-9)' }),
       '--mantine-color-saltwater-filled-hover': 'var(--mantine-color-saltwater-3)',
       '--mantine-shadow-xl': '0 22px 44px -22px rgba(0, 0, 0, 0.85), 0 4px 10px rgba(0, 0, 0, 0.4)',
       '--sw-band': '#04161b',

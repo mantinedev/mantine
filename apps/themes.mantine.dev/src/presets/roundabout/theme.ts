@@ -254,6 +254,7 @@ export const theme = createTheme({
 
 export const cssVariablesResolver: CSSVariablesResolver = (theme) => {
   const defaults = defaultCssVariablesResolver(theme);
+  const brandPrimary = theme.primaryColor === 'sky';
   return {
     variables: {
       ...defaults.variables,
@@ -262,7 +263,9 @@ export const cssVariablesResolver: CSSVariablesResolver = (theme) => {
     },
     light: {
       ...defaults.light,
-      '--mantine-primary-color-contrast': '#ffffff',
+      ...(brandPrimary && { '--mantine-primary-color-contrast': '#ffffff' }),
+      '--roundabout-bubble': 'var(--mantine-primary-color-filled)',
+      '--roundabout-bubble-color': 'var(--mantine-primary-color-contrast)',
       '--mantine-color-text': 'var(--mantine-color-gray-8)',
       '--mantine-color-default-border': 'var(--mantine-color-gray-4)',
       '--mantine-color-border-strong': 'var(--mantine-color-gray-4)',
@@ -273,9 +276,13 @@ export const cssVariablesResolver: CSSVariablesResolver = (theme) => {
     },
     dark: {
       ...defaults.dark,
-      '--mantine-primary-color-contrast': '#04121f',
+      ...(brandPrimary && { '--mantine-primary-color-contrast': '#04121f' }),
+      '--roundabout-bubble': brandPrimary ? '#1f6fd1' : 'var(--mantine-primary-color-filled)',
+      '--roundabout-bubble-color': brandPrimary
+        ? 'var(--mantine-color-white)'
+        : 'var(--mantine-primary-color-contrast)',
       '--mantine-color-sky-filled-hover': 'var(--mantine-color-sky-4)',
-      '--mantine-primary-color-filled-hover': 'var(--mantine-color-sky-4)',
+      '--mantine-primary-color-filled-hover': 'var(--mantine-primary-color-4)',
       '--mantine-color-bright': '#f1f6fb',
       '--mantine-color-default-color': '#f1f6fb',
       '--mantine-color-text': 'var(--mantine-color-dark-0)',

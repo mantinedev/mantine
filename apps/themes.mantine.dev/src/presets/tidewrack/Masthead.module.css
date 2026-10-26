@@ -75,11 +75,11 @@
 }
 
 .mast .tickets {
-  background: #5b4bff;
-  color: #fff;
+  background: var(--mantine-primary-color-6);
+  color: var(--mantine-primary-color-contrast);
 
   @mixin hover {
-    background: #6e5fff;
+    background: var(--mantine-primary-color-5);
   }
 }
 

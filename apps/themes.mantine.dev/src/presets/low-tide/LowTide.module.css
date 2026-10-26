@@ -115,7 +115,7 @@
   }
 
   & .heroOnSea {
-    fill: var(--mantine-primary-color-contrast);
+    fill: light-dark(var(--mantine-color-white), var(--mantine-color-black));
   }
 
   @container preset (max-width: 520px) {
@@ -155,6 +155,13 @@
   & .chartStrong {
     font-weight: var(--mantine-font-weight-bold);
     fill: var(--mantine-color-bright);
+  }
+
+  & .surveyBand {
+    fill: light-dark(
+      var(--mantine-primary-color-1),
+      color-mix(in srgb, var(--mantine-primary-color-6) 23%, var(--mantine-color-dark-7))
+    );
   }
 }
 

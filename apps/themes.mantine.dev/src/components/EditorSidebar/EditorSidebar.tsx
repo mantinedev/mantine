@@ -1,141 +1,61 @@
 'use client';
 
-import { useEffect, useMemo, useState } from 'react';
+import { useState } from 'react';
 import {
+  Accordion,
   Button,
-  CheckIcon,
-  ColorSwatch,
   type MantineColorShade,
   ScrollArea,
+  SegmentedControl,
   Select,
-  SimpleGrid,
-  Slider,
   Stack,
-  Text,
+  Switch,
   Title,
 } from '@mantine/core';
 import { useEditorParams } from '@/hooks/use-editor-params';
 import {
+  CURSOR_TYPES,
+  DARK_PALETTES,
   DEFAULT_OVERRIDES,
-  type GoogleFont,
-  loadGoogleFonts,
-  type PresetColorSwatch,
+  FOCUS_RINGS,
+  HEADING_WRAPS,
   type PresetThemeInfo,
-  SYSTEM_FONT,
+  type ScaleGroup,
+  SHADOW_PRESETS,
+  SURFACE_KEYS,
+  type SurfaceKey,
+  type ThemeOverrides,
 } from '@/preview';
+import { FontPicker } from '../FontPicker';
+import { Control, HexColorInput, ScaleControl, Swatches, ValueSlider } from './controls';
 import classes from './EditorSidebar.module.css';
 
-interface ControlProps {
-  label: string;
-  value?: string;
-  children: React.ReactNode;
+const PRESET = 'preset';
+
+const WEIGHTS = ['100', '200', '300', '400', '500', '600', '700', '800', '900'];
+
+const SURFACE_LABELS: Record<SurfaceKey, string> = {
+  page: 'Page',
+  panel: 'Panel',
+  panel2: 'Raised panel',
+  sunken: 'Sunken',
+  muted: 'Muted',
+  input: 'Input',
+};
+
+function capitalize(value: string) {
+  return value.charAt(0).toUpperCase() + value.slice(1);
 }
 
-function Control({ label, value, children }: ControlProps) {
-  return (
-    <div>
-      <div className={classes.controlHead}>
-        <Text size="sm" className={classes.label}>
-          {label}
-        </Text>
-        {value && (
-          <Text size="sm" className={classes.value}>
-            {value}
-          </Text>
-        )}
-      </div>
-      {children}
-    </div>
-  );
+function withPreset<T extends string>(values: readonly T[]) {
+  return [
+    { value: PRESET, label: 'Preset' },
+    ...values.map((value) => ({ value, label: capitalize(value) })),
+  ];
 }
 
-interface PercentSliderProps {
-  label: string;
-  value: number;
-  min: number;
-  max: number;
-  onChange: (value: number) => void;
-}
-
-function PercentSlider({ label, value, min, max, onChange }: PercentSliderProps) {
-  return (
-    <Control label={label} value={`${value}%`}>
-      <Slider
-        thumbLabel={label}
-        min={min}
-        max={max}
-        step={5}
-        value={value}
-        onChange={onChange}
-        label={(next) => `${next}%`}
-      />
-    </Control>
-  );
-}
-
-interface SwatchesProps {
-  swatches: PresetColorSwatch[];
-  value: string;
-  onChange: (value: string) => void;
-}
-
-function Swatches({ swatches, value, onChange }: SwatchesProps) {
-  return (
-    <SimpleGrid cols={8} spacing={8} verticalSpacing={8}>
-      {swatches.map((swatch) => (
-        <ColorSwatch
-          key={swatch.name}
-          component="button"
-          type="button"
-          color={swatch.value}
-          aria-label={swatch.name}
-          aria-pressed={swatch.name === value}
-          onClick={() => onChange(swatch.name)}
-          className={classes.swatch}
-        >
-          {swatch.name === value && <CheckIcon className={classes.check} />}
-        </ColorSwatch>
-      ))}
-    </SimpleGrid>
-  );
-}
-
-function useFontOptions() {
-  const [fonts, setFonts] = useState<GoogleFont[]>([]);
-
-  useEffect(() => {
-    let active = true;
-    loadGoogleFonts().then((catalog) => active && setFonts(catalog));
-    return () => {
-      active = false;
-    };
-  }, []);
-
-  return useMemo(() => [SYSTEM_FONT, ...fonts.map((font) => font.family)], [fonts]);
-}
-
-interface FontSelectProps {
-  label: string;
-  value: string | null;
-  data: string[];
-  onChange: (value: string | null) => void;
-}
-
-function FontSelect({ label, value, data, onChange }: FontSelectProps) {
-  return (
-    <Select
-      label={label}
-      placeholder="Preset font"
-      data={value && !data.includes(value) ? [value, ...data] : data}
-      value={value}
-      onChange={onChange}
-      searchable
-      clearable
-      limit={60}
-      nothingFoundMessage="No fonts found"
-      comboboxProps={{ floatingStrategy: 'fixed' }}
-    />
-  );
+function fromPreset<T extends string>(value: string | null) {
+  return value === null || value === PRESET ? null : (value as T);
 }
 
 interface EditorSidebarProps {
@@ -144,122 +64,324 @@ interface EditorSidebarProps {
 
 export function EditorSidebar({ info }: EditorSidebarProps) {
   const { overrides, setParams } = useEditorParams();
-  const fontOptions = useFontOptions();
+  const [surfaceScheme, setSurfaceScheme] = useState<'light' | 'dark'>('light');
+  const changed = JSON.stringify(overrides) !== JSON.stringify(DEFAULT_OVERRIDES);
+
   const primaryColor = overrides.primaryColor ?? info?.primaryColor ?? '';
   const shadeLight = overrides.primaryShadeLight ?? info?.primaryShade.light ?? 6;
   const shadeDark = overrides.primaryShadeDark ?? info?.primaryShade.dark ?? 8;
-  const customSwatches = info?.swatches.filter((swatch) => swatch.custom) ?? [];
-  const mantineSwatches = info?.swatches.filter((swatch) => !swatch.custom) ?? [];
-  const changed = JSON.stringify(overrides) !== JSON.stringify(DEFAULT_OVERRIDES);
+  const autoContrast = overrides.autoContrast ?? info?.autoContrast ?? false;
+  const colorOptions = info?.swatches.map((swatch) => swatch.name) ?? [];
+  const surfaceKey = surfaceScheme === 'light' ? 'surfacesLight' : 'surfacesDark';
+  const surfaces = overrides[surfaceKey];
+
+  const scale = (group: ScaleGroup, label?: string) => (
+    <ScaleControl
+      group={group}
+      label={label}
+      base={info?.scales[group] ?? []}
+      percent={overrides[group]}
+      values={overrides[`${group}Values`]}
+      onChange={({ percent, values }) =>
+        setParams({ [group]: percent, [`${group}Values`]: values } as Partial<ThemeOverrides>)
+      }
+    />
+  );
+
+  const weightSelect = (
+    label: string,
+    key: 'fontWeightRegular' | 'fontWeightMedium' | 'fontWeightBold' | 'headingsWeight',
+    fallback: number | undefined
+  ) => (
+    <Select
+      label={label}
+      data={WEIGHTS}
+      value={String(overrides[key] ?? fallback ?? '')}
+      onChange={(value) => setParams({ [key]: value ? Number(value) : null })}
+      allowDeselect={false}
+      comboboxProps={{ floatingStrategy: 'fixed' }}
+    />
+  );
 
   return (
     <ScrollArea className={classes.root}>
-      <div className={classes.inner}>
-        <div className={classes.header}>
-          <Title order={2} size="h4" className={classes.title}>
-            Theme
-          </Title>
-          <Button
-            variant="default"
-            size="xs"
-            onClick={() => setParams(DEFAULT_OVERRIDES)}
-            disabled={!changed}
-          >
-            Reset
-          </Button>
-        </div>
+      <div className={classes.header}>
+        <Title order={2} size="h4" className={classes.title}>
+          Theme
+        </Title>
+        <Button
+          variant="default"
+          size="xs"
+          onClick={() => setParams(DEFAULT_OVERRIDES)}
+          disabled={!changed}
+        >
+          Reset
+        </Button>
+      </div>
 
-        <section className={classes.section}>
-          <Title order={3} size="h6" className={classes.sectionTitle}>
-            Colors
-          </Title>
-          <Stack gap="md">
-            {customSwatches.length > 0 && (
-              <Control label="Preset colors">
+      <Accordion multiple defaultValue={['colors']} classNames={{ control: classes.panelControl }}>
+        <Accordion.Item value="colors">
+          <Accordion.Control>Colors</Accordion.Control>
+          <Accordion.Panel>
+            <Stack gap="md">
+              {info?.swatches.some((swatch) => swatch.custom) && (
+                <Control label="Preset colors">
+                  <Swatches
+                    swatches={info.swatches.filter((swatch) => swatch.custom)}
+                    value={primaryColor}
+                    onChange={(value) => setParams({ primaryColor: value })}
+                  />
+                </Control>
+              )}
+              <Control label="Mantine colors">
                 <Swatches
-                  swatches={customSwatches}
+                  swatches={info?.swatches.filter((swatch) => !swatch.custom) ?? []}
                   value={primaryColor}
                   onChange={(value) => setParams({ primaryColor: value })}
                 />
               </Control>
-            )}
-            <Control label="Mantine colors">
-              <Swatches
-                swatches={mantineSwatches}
-                value={primaryColor}
-                onChange={(value) => setParams({ primaryColor: value })}
-              />
-            </Control>
-            <Control label="Primary shade, light scheme" value={String(shadeLight)}>
-              <Slider
-                thumbLabel="Primary shade in light scheme"
+              <ValueSlider
+                label="Primary shade, light scheme"
+                value={shadeLight}
                 min={0}
                 max={9}
-                value={shadeLight}
                 onChange={(value) => setParams({ primaryShadeLight: value as MantineColorShade })}
               />
-            </Control>
-            <Control label="Primary shade, dark scheme" value={String(shadeDark)}>
-              <Slider
-                thumbLabel="Primary shade in dark scheme"
+              <ValueSlider
+                label="Primary shade, dark scheme"
+                value={shadeDark}
                 min={0}
                 max={9}
-                value={shadeDark}
                 onChange={(value) => setParams({ primaryShadeDark: value as MantineColorShade })}
               />
-            </Control>
-          </Stack>
-        </section>
+              <Switch
+                label="Auto contrast"
+                description="Pick black or white text on filled backgrounds by color lightness"
+                checked={autoContrast}
+                onChange={(event) => setParams({ autoContrast: event.currentTarget.checked })}
+              />
+              {autoContrast && (
+                <ValueSlider
+                  label="Luminance threshold"
+                  value={overrides.luminanceThreshold ?? info?.luminanceThreshold ?? 0.3}
+                  min={0}
+                  max={1}
+                  step={0.05}
+                  format={(value) => value.toFixed(2)}
+                  onChange={(luminanceThreshold) => setParams({ luminanceThreshold })}
+                />
+              )}
+              <Select
+                label="Dark palette"
+                data={withPreset(DARK_PALETTES)}
+                value={overrides.darkPalette ?? PRESET}
+                onChange={(value) => setParams({ darkPalette: fromPreset(value) })}
+                allowDeselect={false}
+                comboboxProps={{ floatingStrategy: 'fixed' }}
+              />
+              <HexColorInput
+                label="White"
+                value={overrides.white}
+                placeholder={info?.white}
+                onChange={(white) => setParams({ white })}
+              />
+              <HexColorInput
+                label="Black"
+                value={overrides.black}
+                placeholder={info?.black}
+                onChange={(black) => setParams({ black })}
+              />
+              <Select
+                label="Gradient start"
+                data={colorOptions}
+                value={overrides.gradientFrom ?? info?.defaultGradient.from ?? null}
+                onChange={(gradientFrom) => setParams({ gradientFrom })}
+                allowDeselect={false}
+                comboboxProps={{ floatingStrategy: 'fixed' }}
+              />
+              <Select
+                label="Gradient end"
+                data={colorOptions}
+                value={overrides.gradientTo ?? info?.defaultGradient.to ?? null}
+                onChange={(gradientTo) => setParams({ gradientTo })}
+                allowDeselect={false}
+                comboboxProps={{ floatingStrategy: 'fixed' }}
+              />
+              <ValueSlider
+                label="Gradient angle"
+                value={overrides.gradientDeg ?? info?.defaultGradient.deg ?? 45}
+                min={0}
+                max={360}
+                step={5}
+                format={(value) => `${value}°`}
+                onChange={(gradientDeg) => setParams({ gradientDeg })}
+              />
+            </Stack>
+          </Accordion.Panel>
+        </Accordion.Item>
 
-        <section className={classes.section}>
-          <Title order={3} size="h6" className={classes.sectionTitle}>
-            Typography
-          </Title>
-          <Stack gap="md">
-            <FontSelect
-              label="Body font"
-              value={overrides.font}
-              data={fontOptions}
-              onChange={(font) => setParams({ font })}
-            />
-            <FontSelect
-              label="Headings font"
-              value={overrides.headingsFont}
-              data={fontOptions}
-              onChange={(headingsFont) => setParams({ headingsFont })}
-            />
-            <PercentSlider
-              label="Font size"
-              value={overrides.fontSize}
-              min={80}
-              max={130}
-              onChange={(fontSize) => setParams({ fontSize })}
-            />
-          </Stack>
-        </section>
+        <Accordion.Item value="surfaces">
+          <Accordion.Control>Surfaces</Accordion.Control>
+          <Accordion.Panel>
+            <Stack gap="md">
+              <SegmentedControl
+                fullWidth
+                value={surfaceScheme}
+                onChange={(value) => setSurfaceScheme(value as 'light' | 'dark')}
+                data={[
+                  { value: 'light', label: 'Light scheme' },
+                  { value: 'dark', label: 'Dark scheme' },
+                ]}
+              />
+              {SURFACE_KEYS.map((key) => (
+                <HexColorInput
+                  key={`${surfaceScheme}-${key}`}
+                  label={SURFACE_LABELS[key]}
+                  value={surfaces?.[key] ?? null}
+                  placeholder="Preset"
+                  onChange={(value) => {
+                    const next = { ...surfaces };
+                    if (value) {
+                      next[key] = value;
+                    } else {
+                      delete next[key];
+                    }
+                    setParams({ [surfaceKey]: Object.keys(next).length > 0 ? next : null });
+                  }}
+                />
+              ))}
+            </Stack>
+          </Accordion.Panel>
+        </Accordion.Item>
 
-        <section className={classes.section}>
-          <Title order={3} size="h6" className={classes.sectionTitle}>
-            Shape and spacing
-          </Title>
-          <Stack gap="md">
-            <PercentSlider
-              label="Radius"
-              value={overrides.radius}
-              min={0}
-              max={250}
-              onChange={(radius) => setParams({ radius })}
+        <Accordion.Item value="typography">
+          <Accordion.Control>Typography</Accordion.Control>
+          <Accordion.Panel>
+            <Stack gap="md">
+              <FontPicker
+                label="Body font"
+                value={overrides.font}
+                onChange={(font) => setParams({ font })}
+              />
+              <FontPicker
+                label="Monospace font"
+                value={overrides.monoFont}
+                onChange={(monoFont) => setParams({ monoFont })}
+              />
+              <Switch
+                label="Font smoothing"
+                checked={overrides.fontSmoothing ?? info?.fontSmoothing ?? true}
+                onChange={(event) => setParams({ fontSmoothing: event.currentTarget.checked })}
+              />
+              {scale('fontSizes')}
+              {scale('lineHeights')}
+              {weightSelect('Regular weight', 'fontWeightRegular', info?.fontWeights.regular)}
+              {weightSelect('Medium weight', 'fontWeightMedium', info?.fontWeights.medium)}
+              {weightSelect('Bold weight', 'fontWeightBold', info?.fontWeights.bold)}
+            </Stack>
+          </Accordion.Panel>
+        </Accordion.Item>
+
+        <Accordion.Item value="headings">
+          <Accordion.Control>Headings</Accordion.Control>
+          <Accordion.Panel>
+            <Stack gap="md">
+              <FontPicker
+                label="Headings font"
+                value={overrides.headingsFont}
+                onChange={(headingsFont) => setParams({ headingsFont })}
+              />
+              {weightSelect('Headings weight', 'headingsWeight', info?.headingsWeight)}
+              <Select
+                label="Text wrap"
+                data={HEADING_WRAPS.map((value) => ({ value, label: capitalize(value) }))}
+                value={overrides.headingsWrap ?? info?.headingsWrap ?? 'wrap'}
+                onChange={(value) =>
+                  setParams({ headingsWrap: value as ThemeOverrides['headingsWrap'] })
+                }
+                allowDeselect={false}
+                comboboxProps={{ floatingStrategy: 'fixed' }}
+              />
+              {scale('headingSizes')}
+              {scale('headingLineHeights')}
+            </Stack>
+          </Accordion.Panel>
+        </Accordion.Item>
+
+        <Accordion.Item value="spacing">
+          <Accordion.Control>Spacing</Accordion.Control>
+          <Accordion.Panel>{scale('spacing', 'All sizes')}</Accordion.Panel>
+        </Accordion.Item>
+
+        <Accordion.Item value="radius">
+          <Accordion.Control>Radius</Accordion.Control>
+          <Accordion.Panel>
+            <Stack gap="md">
+              {scale('radius', 'All sizes')}
+              <Select
+                label="Default radius"
+                data={info?.scales.radius.map((item) => item.key) ?? []}
+                value={overrides.defaultRadius ?? (info?.defaultRadius || null)}
+                onChange={(defaultRadius) => setParams({ defaultRadius })}
+                allowDeselect={false}
+                comboboxProps={{ floatingStrategy: 'fixed' }}
+              />
+            </Stack>
+          </Accordion.Panel>
+        </Accordion.Item>
+
+        <Accordion.Item value="shadows">
+          <Accordion.Control>Shadows</Accordion.Control>
+          <Accordion.Panel>
+            <SegmentedControl
+              fullWidth
+              aria-label="Shadows"
+              value={overrides.shadows ?? PRESET}
+              onChange={(value) => setParams({ shadows: fromPreset(value) })}
+              data={withPreset(SHADOW_PRESETS)}
             />
-            <PercentSlider
-              label="Spacing"
-              value={overrides.spacing}
-              min={50}
-              max={150}
-              onChange={(spacing) => setParams({ spacing })}
-            />
-          </Stack>
-        </section>
-      </div>
+          </Accordion.Panel>
+        </Accordion.Item>
+
+        <Accordion.Item value="interaction">
+          <Accordion.Control>Interaction</Accordion.Control>
+          <Accordion.Panel>
+            <Stack gap="md">
+              <Control label="Focus ring">
+                <SegmentedControl
+                  fullWidth
+                  aria-label="Focus ring"
+                  value={overrides.focusRing ?? info?.focusRing ?? 'auto'}
+                  onChange={(value) =>
+                    setParams({ focusRing: value as ThemeOverrides['focusRing'] })
+                  }
+                  data={FOCUS_RINGS.map((value) => ({ value, label: capitalize(value) }))}
+                />
+              </Control>
+              <Control label="Cursor on buttons and checkboxes">
+                <SegmentedControl
+                  fullWidth
+                  aria-label="Cursor type"
+                  value={overrides.cursorType ?? info?.cursorType ?? 'default'}
+                  onChange={(value) =>
+                    setParams({ cursorType: value as ThemeOverrides['cursorType'] })
+                  }
+                  data={CURSOR_TYPES.map((value) => ({ value, label: capitalize(value) }))}
+                />
+              </Control>
+              <ValueSlider
+                label="Disabled opacity"
+                value={overrides.disabledOpacity ?? info?.disabledOpacity ?? 0.6}
+                min={0.2}
+                max={1}
+                step={0.05}
+                format={(value) => value.toFixed(2)}
+                onChange={(disabledOpacity) => setParams({ disabledOpacity })}
+              />
+            </Stack>
+          </Accordion.Panel>
+        </Accordion.Item>
+      </Accordion>
     </ScrollArea>
   );
 }

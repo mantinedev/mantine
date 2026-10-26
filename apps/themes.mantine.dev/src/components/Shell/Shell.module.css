@@ -1,14 +1,26 @@
-.header {
-  background-color: alpha(var(--mantine-color-body), 0.85);
-  backdrop-filter: blur(5px);
+.navbar {
+  display: flex;
+  flex-direction: column;
 }
 
-.inner {
+.navbarHeader {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  height: 100%;
+  height: 60px;
   padding-inline: var(--mantine-spacing-md);
+  border-bottom: 1px solid var(--mantine-color-default-border);
+}
+
+.navbarControls {
+  display: flex;
+  align-items: center;
+  gap: var(--mantine-spacing-xs);
+}
+
+.navbarBody {
+  flex: 1;
+  min-height: 0;
 }
 
 .logo {

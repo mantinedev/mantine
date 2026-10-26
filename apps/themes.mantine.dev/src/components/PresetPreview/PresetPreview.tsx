@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from 'react';
 import { IconExternalLink } from '@tabler/icons-react';
 import {
   ActionIcon,
+  Burger,
   Loader,
   Select,
   Tooltip,
@@ -19,6 +20,7 @@ import {
   type PresetThemeInfo,
   type ThemeOverrides,
 } from '@/preview';
+import { useShell } from '../Shell';
 import classes from './PresetPreview.module.css';
 
 const CATEGORIES: PresetCategory[] = ['Tools', 'Content', 'Marketing', 'Scheduling', 'Chat', 'AI'];
@@ -41,7 +43,8 @@ interface PresetPreviewProps {
 
 export function PresetPreview({ onReady }: PresetPreviewProps) {
   const { presetId, overrides, setParams } = useEditorParams();
-  const { setColorScheme } = useMantineColorScheme();
+  const { setColorScheme, toggleColorScheme } = useMantineColorScheme();
+  const { navbarOpened, toggleNavbar } = useShell();
   const colorScheme = useComputedColorScheme('light');
   const iframeRef = useRef<HTMLIFrameElement>(null);
   const [frame, setFrame] = useState(() => ({
@@ -86,6 +89,8 @@ export function PresetPreview({ onReady }: PresetPreviewProps) {
         setApplied(true);
       } else if (message.type === 'theme-editor:resize') {
         setHeight(message.height);
+      } else if (message.type === 'theme-editor:toggle-color-scheme') {
+        toggleColorScheme();
       } else {
         setColorScheme(message.colorScheme);
       }
@@ -94,11 +99,18 @@ export function PresetPreview({ onReady }: PresetPreviewProps) {
     postState();
     window.addEventListener('message', handleMessage);
     return () => window.removeEventListener('message', handleMessage);
-  }, [overrides, colorScheme, onReady, setParams, setColorScheme]);
+  }, [overrides, colorScheme, onReady, setParams, setColorScheme, toggleColorScheme]);
 
   return (
     <div className={classes.root}>
       <div className={classes.toolbar}>
+        <Burger
+          opened={navbarOpened}
+          onClick={toggleNavbar}
+          hiddenFrom="md"
+          size="sm"
+          aria-label="Open theme controls"
+        />
         <Select
           aria-label="Preview page"
           data={presetOptions}

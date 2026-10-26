@@ -194,6 +194,7 @@ export const theme = createTheme({
 
 export const cssVariablesResolver: CSSVariablesResolver = (theme) => {
   const defaults = defaultCssVariablesResolver(theme);
+  const brandPrimary = theme.primaryColor === 'clapper';
   return {
     variables: {
       ...defaults.variables,
@@ -218,7 +219,8 @@ export const cssVariablesResolver: CSSVariablesResolver = (theme) => {
       '--mantine-color-default-border': 'var(--mantine-color-gray-4)',
       '--mantine-color-default-hover': 'var(--mantine-color-gray-1)',
       '--mantine-color-hover': 'var(--mantine-color-gray-1)',
-      '--slate-mention-bg': 'var(--mantine-color-clapper-0)',
+      '--slate-mention-bg': 'var(--mantine-primary-color-0)',
+      '--slate-on-primary': 'var(--mantine-primary-color-contrast)',
       '--slate-hold-bg': '#fff7dc',
       '--slate-hold-ink': '#3d2f00',
       '--slate-done': '#8b8c90',
@@ -234,10 +236,15 @@ export const cssVariablesResolver: CSSVariablesResolver = (theme) => {
       '--mantine-color-default-border': 'var(--mantine-color-dark-4)',
       '--mantine-color-hover': 'var(--mantine-color-dark-6)',
       '--mantine-color-clapper-filled-hover': 'var(--mantine-color-clapper-4)',
-      '--mantine-primary-color-filled-hover': 'var(--mantine-color-clapper-4)',
+      '--mantine-primary-color-filled-hover': 'var(--mantine-primary-color-4)',
       '--mantine-shadow-xs': '0 2px 6px rgba(0, 0, 0, 0.3)',
       '--mantine-shadow-md': '0 16px 40px -12px rgba(0, 0, 0, 0.75), 0 2px 6px rgba(0, 0, 0, 0.4)',
-      '--slate-mention-bg': '#2c1f1f',
+      '--slate-on-primary': brandPrimary
+        ? 'var(--mantine-color-white)'
+        : 'var(--mantine-primary-color-contrast)',
+      '--slate-mention-bg': brandPrimary
+        ? '#2c1f1f'
+        : 'color-mix(in srgb, var(--mantine-primary-color-filled) 14%, var(--mantine-color-body))',
       '--slate-hold-bg': '#2e2810',
       '--slate-hold-ink': '#f6e3a8',
       '--slate-done': '#7d7e83',

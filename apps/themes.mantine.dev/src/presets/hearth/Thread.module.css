@@ -111,7 +111,7 @@
 }
 
 .tick {
-  color: var(--mantine-color-hearth-text);
+  color: var(--mantine-primary-color-text);
 }
 
 .tags {
@@ -198,7 +198,7 @@
 
 .noteLabel {
   font-weight: var(--mantine-font-weight-bold);
-  color: var(--mantine-color-hearth-text);
+  color: var(--mantine-primary-color-text);
 }
 
 .bubble {
@@ -223,8 +223,8 @@
 
   .message[data-who='note'] & {
     border-style: dashed;
-    border-color: light-dark(var(--mantine-color-hearth-2), var(--mantine-color-hearth-8));
-    background: light-dark(var(--mantine-color-hearth-0), var(--mantine-color-hearth-9));
+    border-color: light-dark(var(--mantine-primary-color-2), var(--mantine-primary-color-8));
+    background: light-dark(var(--mantine-primary-color-0), var(--mantine-primary-color-9));
   }
 }
 

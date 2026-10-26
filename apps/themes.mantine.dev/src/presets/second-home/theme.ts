@@ -278,11 +278,12 @@ export const theme = createTheme({
 
 export const cssVariablesResolver: CSSVariablesResolver = (theme) => {
   const defaults = defaultCssVariablesResolver(theme);
+  const brandPrimary = theme.primaryColor === 'clay';
   return {
     variables: defaults.variables,
     light: {
       ...defaults.light,
-      '--mantine-primary-color-contrast': '#ffffff',
+      ...(brandPrimary && { '--mantine-primary-color-contrast': '#ffffff' }),
       '--mantine-color-green-contrast': '#ffffff',
       '--mantine-color-text': 'var(--mantine-color-gray-8)',
       '--mantine-color-border': 'var(--mantine-color-gray-2)',
@@ -292,7 +293,7 @@ export const cssVariablesResolver: CSSVariablesResolver = (theme) => {
     },
     dark: {
       ...defaults.dark,
-      '--mantine-primary-color-contrast': '#1e0f06',
+      ...(brandPrimary && { '--mantine-primary-color-contrast': '#1e0f06' }),
       '--mantine-color-green-contrast': '#08210f',
       '--mantine-color-bright': '#f4f6f2',
       '--mantine-color-default-color': 'var(--mantine-color-bright)',

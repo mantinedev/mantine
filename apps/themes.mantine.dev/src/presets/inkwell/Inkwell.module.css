@@ -1,7 +1,10 @@
 .root {
   --inkwell-page: light-dark(var(--mantine-color-gray-1), var(--mantine-color-dark-8));
   --inkwell-column: light-dark(var(--mantine-color-gray-2), #1b1e28);
-  --inkwell-column-drop: light-dark(#d6dcf6, #262c4d);
+  --inkwell-column-drop: light-dark(
+    color-mix(in srgb, var(--mantine-primary-color-6) 18%, white),
+    color-mix(in srgb, var(--mantine-primary-color-5) 18%, #1b1e28)
+  );
 
   position: relative;
   contain: layout;

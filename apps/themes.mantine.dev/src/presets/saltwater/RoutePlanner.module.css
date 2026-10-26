@@ -42,7 +42,11 @@
     top: 12px;
     bottom: 12px;
     width: 2px;
-    background: repeating-linear-gradient(180deg, #2bb8aa 0 6px, transparent 6px 10px);
+    background: repeating-linear-gradient(
+      180deg,
+      var(--mantine-primary-color-5) 0 6px,
+      transparent 6px 10px
+    );
   }
 
   & li {
@@ -102,7 +106,7 @@
 
 .mode.mode {
   --sc-color: var(--sw-paper-accent);
-  --sc-label-color: #fff;
+  --sc-label-color: var(--sw-paper-accent-ink);
 
   display: flex;
   gap: calc(var(--mantine-spacing-xs) / 2);
@@ -118,7 +122,7 @@
   }
 
   & label[data-active] {
-    color: #fff;
+    color: var(--sw-paper-accent-ink);
   }
 }
 

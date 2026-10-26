@@ -24,7 +24,7 @@
   }
 
   & i[data-kind='ebike'] {
-    background: light-dark(var(--mantine-color-riverline-3), var(--mantine-color-riverline-7));
+    background: light-dark(var(--mantine-primary-color-3), var(--mantine-primary-color-7));
   }
 }
 

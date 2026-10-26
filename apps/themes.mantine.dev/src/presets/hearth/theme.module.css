@@ -117,7 +117,7 @@
 
   & svg {
     opacity: 1;
-    color: var(--mantine-color-hearth-text);
+    color: var(--mantine-primary-color-text);
   }
 }
 

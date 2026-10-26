@@ -1,5 +1,5 @@
 import { IconX } from '@tabler/icons-react';
-import { ActionIcon, Button, Paper, Text, Title } from '@mantine/core';
+import { ActionIcon, Button, Paper, Text, Title, useMantineTheme } from '@mantine/core';
 import { MODE_LABELS, type Mode, PASSES, pluralize, type Trip } from './data';
 import { ModeControl } from './ModeControl';
 import { RouteMap } from './RouteMap';
@@ -23,6 +23,7 @@ export function RoutePlanner({
   onToggle,
   onBuy,
 }: RoutePlannerProps) {
+  const theme = useMantineTheme();
   const pass = PASSES[trip.passIndex];
   const empty = trip.list.length === 0;
 
@@ -92,7 +93,7 @@ export function RoutePlanner({
 
           <Button
             fullWidth
-            color="saltwater.7"
+            color={`${theme.primaryColor}.7`}
             className={classes.buy}
             aria-disabled={empty}
             onClick={() => !empty && onBuy(pass.days)}

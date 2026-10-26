@@ -165,12 +165,17 @@ export const theme = createTheme({
     Anchor: Anchor.extend({ defaultProps: { underline: 'hover' } }),
 
     Avatar: Avatar.extend({
-      defaultProps: { variant: 'default', radius: 'xl', color: 'oxblood' },
+      defaultProps: { variant: 'default', radius: 'xl' },
       classNames: { placeholder: classes.avatarPlaceholder },
       vars: (_, props) => ({
         root:
           props.variant === 'filled'
-            ? {}
+            ? props.color
+              ? {}
+              : {
+                  '--avatar-bg': 'var(--mantine-primary-color-filled)',
+                  '--avatar-color': 'var(--mantine-primary-color-contrast)',
+                }
             : {
                 '--avatar-bg': 'var(--mantine-color-hover)',
                 '--avatar-color': 'var(--mantine-color-bright)',
@@ -287,7 +292,7 @@ export const cssVariablesResolver: CSSVariablesResolver = (theme) => {
       '--mantine-color-default-hover': 'var(--mantine-color-dark-6)',
       '--mantine-color-default-border': 'var(--mantine-color-dark-4)',
       '--mantine-color-oxblood-filled-hover': 'var(--mantine-color-oxblood-4)',
-      '--mantine-primary-color-filled-hover': 'var(--mantine-color-oxblood-4)',
+      '--mantine-primary-color-filled-hover': 'var(--mantine-primary-color-4)',
       '--mantine-shadow-md': '0 14px 36px -14px rgba(0, 0, 0, 0.7), 0 2px 6px rgba(0, 0, 0, 0.35)',
       '--cw-surface-sunk': '#1a1d20',
       '--cw-player': '#0e1113',

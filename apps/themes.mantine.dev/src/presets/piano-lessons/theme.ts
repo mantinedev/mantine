@@ -255,6 +255,7 @@ export const theme = createTheme({
 
 export const cssVariablesResolver: CSSVariablesResolver = (theme) => {
   const defaults = defaultCssVariablesResolver(theme);
+  const brandPrimary = theme.primaryColor === 'olive';
   return {
     variables: {
       ...defaults.variables,
@@ -262,7 +263,7 @@ export const cssVariablesResolver: CSSVariablesResolver = (theme) => {
     },
     light: {
       ...defaults.light,
-      '--mantine-primary-color-contrast': 'var(--mantine-color-white)',
+      ...(brandPrimary && { '--mantine-primary-color-contrast': 'var(--mantine-color-white)' }),
       '--mantine-color-text': 'var(--mantine-color-gray-8)',
       '--mantine-color-default-border': 'var(--mantine-color-gray-4)',
       '--mantine-color-border-strong': 'var(--mantine-color-gray-4)',
@@ -278,15 +279,17 @@ export const cssVariablesResolver: CSSVariablesResolver = (theme) => {
     },
     dark: {
       ...defaults.dark,
-      '--mantine-primary-color-contrast': '#141609',
+      ...(brandPrimary && {
+        '--mantine-primary-color-contrast': '#141609',
+        '--mantine-primary-color-filled-hover': '#b3c45e',
+      }),
       '--mantine-color-bright': '#f6f4ed',
       '--mantine-color-default-color': 'var(--mantine-color-bright)',
       '--mantine-color-default-border': 'var(--mantine-color-dark-4)',
       '--mantine-color-border-strong': 'var(--mantine-color-dark-4)',
       '--mantine-color-olive-filled-hover': '#b3c45e',
-      '--mantine-primary-color-filled-hover': '#b3c45e',
       '--mantine-color-error': '#ec6b5f',
-      '--mantine-color-focus-ring': 'var(--mantine-color-olive-4)',
+      '--mantine-color-focus-ring': 'var(--mantine-primary-color-4)',
       '--mantine-color-track': 'var(--mantine-color-dark-4)',
       '--mantine-color-brass-text': 'var(--mantine-color-brass-4)',
       '--mantine-shadow-md': '0 18px 40px -20px rgba(0, 0, 0, 0.8), 0 3px 8px rgba(0, 0, 0, 0.4)',

@@ -76,7 +76,13 @@ export function TideChart() {
         Tide height at Wembury on 17 October 2026: low water 0.6 metres at 07:48, high water 4.9
         metres at 14:02, low water 0.8 metres at 20:15
       </title>
-      <rect x={x(7.33)} y={PAD.t} width={x(8.33) - x(7.33)} height={IH} fill="var(--lt-sea-1)" />
+      <rect
+        x={x(7.33)}
+        y={PAD.t}
+        width={x(8.33) - x(7.33)}
+        height={IH}
+        className={classes.surveyBand}
+      />
       <text x={x(7.83)} y={PAD.t - 8} textAnchor="middle" className={classes.chartStrong}>
         Survey
       </text>

@@ -5,8 +5,8 @@
   background: var(--mantine-color-default);
 
   &:where([data-note]) {
-    border-color: light-dark(var(--mantine-color-hearth-2), var(--mantine-color-hearth-8));
-    background: light-dark(var(--mantine-color-hearth-0), var(--mantine-color-hearth-9));
+    border-color: light-dark(var(--mantine-primary-color-2), var(--mantine-primary-color-8));
+    background: light-dark(var(--mantine-primary-color-0), var(--mantine-primary-color-9));
   }
 
   &:focus-within {

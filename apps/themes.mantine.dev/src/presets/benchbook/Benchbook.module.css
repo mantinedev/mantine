@@ -75,8 +75,12 @@
 
 .railAvatar {
   @mixin light {
-    --avatar-bg: #e7d6e2;
-    --avatar-color: #4f2343;
+    --avatar-bg: color-mix(in srgb, var(--mantine-primary-color-6) 19%, var(--mantine-color-white));
+    --avatar-color: color-mix(
+      in srgb,
+      var(--mantine-primary-color-8) 60%,
+      var(--mantine-primary-color-9)
+    );
   }
 }
 

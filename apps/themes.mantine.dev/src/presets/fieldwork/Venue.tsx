@@ -47,7 +47,7 @@ function VenueMap() {
         <text x="340" y="276" transform="rotate(-4 340 276)">
           Railway
         </text>
-        <rect x="166" y="198" width="54" height="44" fill="var(--mantine-color-pink-filled)" />
+        <rect x="166" y="198" width="54" height="44" fill="var(--mantine-primary-color-filled)" />
         <text x="138" y="190" fontWeight="700">
           Tobacco Factory
         </text>
@@ -57,7 +57,7 @@ function VenueMap() {
         </text>
         <path
           d="M220 230 C 290 250 360 270 412 288"
-          stroke="var(--mantine-color-pink-filled)"
+          stroke="var(--mantine-primary-color-filled)"
           strokeWidth="3"
           fill="none"
           strokeDasharray="2 7"
