@@ -769,6 +769,20 @@ describe('@mantine/hooks/use-mask', () => {
       const result = generatePattern('full-inexact', { mask: '99' });
       expect(result).not.toContain('(');
     });
+
+    it.each(['full', 'full-inexact'] as const)(
+      'generates %s pattern for sign token that is valid in pattern attribute',
+      (mode) => {
+        const pattern = generatePattern(mode, { mask: '#999' });
+        const toRegExp = () => new RegExp(`^(?:${pattern})$`, 'v');
+
+        expect(toRegExp).not.toThrow();
+        expect(toRegExp().test('-123')).toBe(true);
+        expect(toRegExp().test('+123')).toBe(true);
+        expect(toRegExp().test('1234')).toBe(true);
+        expect(toRegExp().test('a123')).toBe(false);
+      }
+    );
   });
 
   describe('mask parsing', () => {

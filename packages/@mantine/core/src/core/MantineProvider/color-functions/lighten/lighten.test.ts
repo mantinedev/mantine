@@ -23,6 +23,10 @@ describe('@mantine/core/lighten', () => {
     expect(lighten(RGBA, 1)).toBe('rgba(255, 255, 255, 0.6)');
   });
 
+  it('preserves zero alpha in hsla colors', () => {
+    expect(lighten('hsla(120, 100%, 50%, 0)', 0.5)).toBe('rgba(128, 255, 128, 0)');
+  });
+
   it('supports css variables', () => {
     expect(lighten('var(--color-primary)', 0.1)).toBe(
       'color-mix(in srgb, var(--color-primary), white 10%)'

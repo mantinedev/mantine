@@ -320,6 +320,28 @@ describe('@mantine/core/Menubar', () => {
     expectAllClosed();
   });
 
+  it('sets aria-disabled on a data-disabled target', () => {
+    render(
+      <Menubar>
+        <Menubar.Menu withinPortal={false}>
+          <Menubar.Target data-disabled>File</Menubar.Target>
+          <Menubar.Dropdown>
+            <Menu.Item>New file</Menu.Item>
+          </Menubar.Dropdown>
+        </Menubar.Menu>
+        <Menubar.Menu withinPortal={false}>
+          <Menubar.Target>Edit</Menubar.Target>
+          <Menubar.Dropdown>
+            <Menu.Item>Undo</Menu.Item>
+          </Menubar.Dropdown>
+        </Menubar.Menu>
+      </Menubar>
+    );
+
+    expect(getTarget('File')).toHaveAttribute('aria-disabled', 'true');
+    expect(getTarget('Edit')).not.toHaveAttribute('aria-disabled');
+  });
+
   it('keeps menu indexes in DOM order when menus are added dynamically', async () => {
     function Dynamic() {
       const [withExtra, setWithExtra] = useState(false);

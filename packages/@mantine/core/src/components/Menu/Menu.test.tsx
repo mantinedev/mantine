@@ -1,6 +1,7 @@
 import { useState } from 'react';
-import { act, cleanup, createEvent, fireEvent } from '@testing-library/react';
+import { act, cleanup, createEvent, fireEvent, waitFor } from '@testing-library/react';
 import { render, screen, tests, userEvent } from '@mantine-tests/core';
+import { DirectionProvider } from '../../core';
 import { Menu, MenuProps } from './Menu';
 import { MenuDivider } from './MenuDivider/MenuDivider';
 import { MenuDropdown } from './MenuDropdown/MenuDropdown';
@@ -428,6 +429,27 @@ describe('@mantine/core/Menu', () => {
       expect(item).toHaveAttribute('aria-checked', 'false');
     });
 
+    it('sets aria-disabled when data-disabled is set', () => {
+      render(
+        <Menu transitionProps={{ duration: 0 }} withinPortal={false} defaultOpened>
+          <Menu.Target>
+            <button type="button">test-target</button>
+          </Menu.Target>
+          <Menu.Dropdown>
+            <Menu.CheckboxItem data-disabled>Show grid</Menu.CheckboxItem>
+            <Menu.CheckboxItem>Show rulers</Menu.CheckboxItem>
+          </Menu.Dropdown>
+        </Menu>
+      );
+      expect(screen.getByRole('menuitemcheckbox', { name: 'Show grid' })).toHaveAttribute(
+        'aria-disabled',
+        'true'
+      );
+      expect(screen.getByRole('menuitemcheckbox', { name: 'Show rulers' })).not.toHaveAttribute(
+        'aria-disabled'
+      );
+    });
+
     it('toggles checked state and reports it via onChange', async () => {
       const handleChange = jest.fn();
       render(<CheckboxItemMenu onChange={handleChange} />);
@@ -619,6 +641,31 @@ describe('@mantine/core/Menu', () => {
       render(<RadioMenu />);
       expect(screen.getByRole('menuitemradio', { name: 'Ascending' })).toBeInTheDocument();
       expect(screen.getByRole('menuitemradio', { name: 'Descending' })).toBeInTheDocument();
+    });
+
+    it('sets aria-disabled when data-disabled is set', () => {
+      render(
+        <Menu transitionProps={{ duration: 0 }} withinPortal={false} defaultOpened>
+          <Menu.Target>
+            <button type="button">test-target</button>
+          </Menu.Target>
+          <Menu.Dropdown>
+            <Menu.RadioGroup>
+              <Menu.RadioItem value="ascending" data-disabled>
+                Ascending
+              </Menu.RadioItem>
+              <Menu.RadioItem value="descending">Descending</Menu.RadioItem>
+            </Menu.RadioGroup>
+          </Menu.Dropdown>
+        </Menu>
+      );
+      expect(screen.getByRole('menuitemradio', { name: 'Ascending' })).toHaveAttribute(
+        'aria-disabled',
+        'true'
+      );
+      expect(screen.getByRole('menuitemradio', { name: 'Descending' })).not.toHaveAttribute(
+        'aria-disabled'
+      );
     });
 
     it('marks the matching item as checked from group context', () => {
@@ -954,6 +1001,20 @@ describe('@mantine/core/Menu', () => {
       expect(onChange).toHaveBeenLastCalledWith(false);
     });
 
+    it('returns focus to the submenu target when the submenu is closed via keyboard', async () => {
+      render(SubMenuContainer());
+
+      const subTarget = screen.getByText('More').closest('button')!;
+      subTarget.focus();
+      fireEvent.keyDown(subTarget, { key: 'ArrowRight' });
+
+      const childItem = (await screen.findByText('Cherry')).closest('button')!;
+      childItem.focus();
+      fireEvent.keyDown(childItem, { key: 'ArrowLeft' });
+
+      await waitFor(() => expect(subTarget).toHaveFocus());
+    });
+
     it('calls onChange with false when the open submenu is dismissed with Escape', async () => {
       const onChange = jest.fn();
       render(SubMenuContainer({ onChange }));
@@ -1067,6 +1128,86 @@ describe('@mantine/core/Menu', () => {
       await screen.findByText('Second child');
 
       expect(screen.queryByText('First child')).not.toBeInTheDocument();
+    });
+  });
+
+  describe('Menu.Sub RTL keyboard navigation', () => {
+    function RtlSubMenu({ withSearch = false }: { withSearch?: boolean }) {
+      return (
+        <DirectionProvider initialDirection="rtl" detectDirection={false}>
+          <Menu transitionProps={{ duration: 0 }} withinPortal={false} defaultOpened>
+            <Menu.Target>
+              <button type="button">test-target</button>
+            </Menu.Target>
+            <Menu.Dropdown>
+              {withSearch && <Menu.Search aria-label="search" />}
+              <Menu.Sub transitionProps={{ duration: 0 }}>
+                <Menu.Sub.Target>
+                  <Menu.Sub.Item>More</Menu.Sub.Item>
+                </Menu.Sub.Target>
+                <Menu.Sub.Dropdown>
+                  <Menu.Item>Cherry</Menu.Item>
+                  <Menu.Sub transitionProps={{ duration: 0 }}>
+                    <Menu.Sub.Target>
+                      <Menu.Sub.Item>Nested</Menu.Sub.Item>
+                    </Menu.Sub.Target>
+                    <Menu.Sub.Dropdown>
+                      <Menu.Item>Nested child</Menu.Item>
+                    </Menu.Sub.Dropdown>
+                  </Menu.Sub>
+                </Menu.Sub.Dropdown>
+              </Menu.Sub>
+            </Menu.Dropdown>
+          </Menu>
+        </DirectionProvider>
+      );
+    }
+
+    const subTarget = () => screen.getByText('More').closest('button')!;
+
+    async function openSubMenu() {
+      subTarget().focus();
+      fireEvent.keyDown(subTarget(), { key: 'ArrowLeft' });
+      return (await screen.findByText('Cherry')).closest('button')!;
+    }
+
+    it('opens the submenu with ArrowLeft and ignores ArrowRight', async () => {
+      render(<RtlSubMenu />);
+      subTarget().focus();
+      fireEvent.keyDown(subTarget(), { key: 'ArrowRight' });
+      expect(screen.queryByText('Cherry')).not.toBeInTheDocument();
+
+      expect(await openSubMenu()).toBeInTheDocument();
+    });
+
+    it('closes the submenu with ArrowRight on an item and ignores ArrowLeft', async () => {
+      render(<RtlSubMenu />);
+      const cherry = await openSubMenu();
+      cherry.focus();
+
+      fireEvent.keyDown(cherry, { key: 'ArrowLeft' });
+      expect(screen.getByText('Cherry')).toBeInTheDocument();
+
+      fireEvent.keyDown(cherry, { key: 'ArrowRight' });
+      await waitFor(() => expect(screen.queryByText('Cherry')).not.toBeInTheDocument());
+    });
+
+    it('closes the submenu with ArrowRight on a nested submenu target', async () => {
+      render(<RtlSubMenu />);
+      await openSubMenu();
+      const nested = screen.getByText('Nested').closest('button')!;
+      nested.focus();
+
+      fireEvent.keyDown(nested, { key: 'ArrowRight' });
+      await waitFor(() => expect(screen.queryByText('Cherry')).not.toBeInTheDocument());
+    });
+
+    it('opens the submenu with Enter from Menu.Search', async () => {
+      render(<RtlSubMenu withSearch />);
+      await userEvent.click(screen.getByLabelText('search'));
+      await userEvent.keyboard('{ArrowDown}{Enter}');
+
+      expect(await screen.findByText('Cherry')).toBeInTheDocument();
     });
   });
 

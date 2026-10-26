@@ -73,6 +73,8 @@ export const MenuSubItem = polymorphicFactory<MenuSubItemFactory>((props) => {
   const subCtx = use(SubMenuContext);
   const theme = useMantineTheme();
   const { dir } = useDirection();
+  const openKey = dir === 'rtl' ? 'ArrowLeft' : 'ArrowRight';
+  const closeKey = dir === 'rtl' ? 'ArrowRight' : 'ArrowLeft';
   const itemRef = useRef<HTMLButtonElement>(null);
   const _others: any = others;
 
@@ -80,12 +82,12 @@ export const MenuSubItem = polymorphicFactory<MenuSubItemFactory>((props) => {
   const parsedThemeColor = color ? parseThemeColor({ color, theme }) : null;
 
   const handleKeydown = createEventHandler<any>(_others.onKeyDown, (event) => {
-    if (event.key === 'ArrowRight') {
+    if (event.key === openKey) {
       subCtx?.open();
       subCtx?.focusFirstItem();
     }
 
-    if (event.key === 'ArrowLeft' && subCtx?.parentContext) {
+    if (event.key === closeKey && subCtx?.parentContext) {
       subCtx.parentContext.close();
       subCtx.parentContext.focusParentItem();
     }
@@ -130,6 +132,7 @@ export const MenuSubItem = polymorphicFactory<MenuSubItemFactory>((props) => {
       ref={useMergedRef(itemRef, ref, subCtx?.setReference)}
       role="menuitem"
       disabled={disabled}
+      aria-disabled={disabled || dataDisabled || undefined}
       data-menu-item
       data-sub-menu-item
       data-disabled={disabled || dataDisabled || undefined}

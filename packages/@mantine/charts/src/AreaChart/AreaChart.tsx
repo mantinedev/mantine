@@ -39,6 +39,7 @@ import type {
   GridChartBaseProps,
   MantineChartDotProps,
 } from '../types';
+import { getLegendPosition } from '../utils';
 import { AreaGradient } from './AreaGradient';
 import { AreaSplit } from './AreaSplit';
 import { getDefaultSplitOffset } from './get-split-offset';
@@ -438,7 +439,7 @@ export const AreaChart = factory<AreaChartFactory>((_props) => {
                 <ChartLegend
                   payload={payload.payload}
                   onHighlight={setHighlightedArea}
-                  legendPosition={legendProps?.verticalAlign || 'top'}
+                  legendPosition={getLegendPosition(legendProps, 'top')}
                   classNames={resolvedClassNames}
                   styles={resolvedStyles}
                   series={series}

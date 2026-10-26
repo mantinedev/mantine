@@ -1,4 +1,4 @@
-import { useRef } from 'react';
+import { useMemo, useRef } from 'react';
 import { useId, useMergedRef } from '@mantine/hooks';
 import {
   Box,
@@ -171,6 +171,7 @@ export const AppShell = factory<AppShellFactory>((_props) => {
     attributes,
     vars,
     varsResolver,
+    stable: true,
   });
 
   const resizeKey = resize
@@ -192,27 +193,36 @@ export const AppShell = factory<AppShellFactory>((_props) => {
       }
     : undefined;
 
-  const resizeOffsets = {
-    navbar: true,
-    aside: true,
-    header: mode === 'static' ? true : (header?.offset ?? true),
-    footer: mode === 'static' ? true : (footer?.offset ?? true),
-  };
+  const headerOffset = mode === 'static' ? true : (header?.offset ?? true);
+  const footerOffset = mode === 'static' ? true : (footer?.offset ?? true);
+
+  const contextValue = useMemo(
+    () => ({
+      getStyles,
+      withBorder,
+      zIndex,
+      disabled,
+      offsetScrollbars,
+      mode,
+      resize,
+      rootRef,
+      resizeOffsets: { navbar: true, aside: true, header: headerOffset, footer: footerOffset },
+    }),
+    [
+      getStyles,
+      withBorder,
+      zIndex,
+      disabled,
+      offsetScrollbars,
+      mode,
+      resize,
+      headerOffset,
+      footerOffset,
+    ]
+  );
 
   return (
-    <AppShellProvider
-      value={{
-        getStyles,
-        withBorder,
-        zIndex,
-        disabled,
-        offsetScrollbars,
-        mode,
-        resize,
-        rootRef,
-        resizeOffsets,
-      }}
-    >
+    <AppShellProvider value={contextValue}>
       <AppShellMediaStyles
         navbar={navbar}
         header={header}
