@@ -152,16 +152,16 @@ function focusOnNextFocusableControl({
   }
 }
 
-function getDirection(key: KeyboardEvent['key']): Direction {
+function getDirection(key: KeyboardEvent['key'], dir: 'ltr' | 'rtl'): Direction {
   switch (key) {
     case 'ArrowDown':
       return 'down';
     case 'ArrowUp':
       return 'up';
     case 'ArrowRight':
-      return 'right';
+      return dir === 'rtl' ? 'left' : 'right';
     case 'ArrowLeft':
-      return 'left';
+      return dir === 'rtl' ? 'right' : 'left';
     default:
       return null!;
   }
@@ -177,6 +177,9 @@ interface HandleControlKeyDownInput {
   rowIndex: number;
   cellIndex: number;
   event: React.KeyboardEvent<HTMLButtonElement>;
+
+  /** Text direction, `ArrowLeft` and `ArrowRight` are mirrored in `rtl`, `'ltr'` by default */
+  dir?: 'ltr' | 'rtl';
 }
 
 export function handleControlKeyDown({
@@ -185,8 +188,9 @@ export function handleControlKeyDown({
   rowIndex,
   cellIndex,
   event,
+  dir = 'ltr',
 }: HandleControlKeyDownInput) {
-  const direction = getDirection(event.key);
+  const direction = getDirection(event.key, dir);
 
   if (direction) {
     event.preventDefault();
