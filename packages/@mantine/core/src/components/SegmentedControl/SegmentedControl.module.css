@@ -212,4 +212,11 @@
 .innerLabel {
   position: relative;
   z-index: 2;
+
+  &:where(:has(> *)) {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    column-gap: 0.3em;
+  }
 }
