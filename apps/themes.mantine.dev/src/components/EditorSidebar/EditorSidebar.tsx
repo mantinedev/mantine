@@ -17,6 +17,7 @@ import {
   DEFAULT_OVERRIDES,
   FOCUS_RINGS,
   HEADING_WRAPS,
+  type PresetSurfaces,
   type PresetThemeInfo,
   type ScaleGroup,
   SHADOW_PRESETS,
@@ -59,9 +60,10 @@ function fromPreset<T extends string>(value: string | null) {
 
 interface EditorSidebarProps {
   info: PresetThemeInfo | null;
+  surfaces: PresetSurfaces | null;
 }
 
-export function EditorSidebar({ info }: EditorSidebarProps) {
+export function EditorSidebar({ info, surfaces: currentSurfaces }: EditorSidebarProps) {
   const { overrides, setParams } = useEditorParams();
   const [surfaceScheme, setSurfaceScheme] = useState<'light' | 'dark'>('light');
   const changed = JSON.stringify(overrides) !== JSON.stringify(DEFAULT_OVERRIDES);
@@ -138,8 +140,12 @@ export function EditorSidebar({ info }: EditorSidebarProps) {
                 <HexColorInput
                   key={`${surfaceScheme}-${key}`}
                   label={SURFACE_LABELS[key]}
-                  value={surfaces?.[key] ?? null}
-                  placeholder="Preset"
+                  value={
+                    surfaces?.[key] ??
+                    (currentSurfaces?.[surfaceScheme][key] ||
+                      info?.surfaces[surfaceScheme][key] ||
+                      null)
+                  }
                   onChange={(value) => {
                     const next = { ...surfaces };
                     if (value) {

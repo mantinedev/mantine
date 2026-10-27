@@ -21776,6 +21776,7 @@ __metadata:
     "@types/node": "npm:^26.6.3"
     "@types/react": "npm:19.3.0"
     "@types/react-dom": "npm:19.3.0"
+    culori: "npm:^4.0.2"
     dayjs: "npm:^1.11.23"
     next: "npm:16.3.6"
     nuqs: "npm:^2.10.2"

@@ -62,7 +62,36 @@ const parseAsHexColor = createParser<string>({
   serialize: (value) => value,
 });
 
-export const DARK_PALETTES = ['neutral', 'cold', 'warm', 'tinted'] as const;
+const COLOR_NAME_PATTERN = /^[a-z][a-z0-9-]{0,31}$/;
+
+export function isColorName(value: string) {
+  return COLOR_NAME_PATTERN.test(value);
+}
+
+export interface CustomColor {
+  name: string;
+  value: string;
+}
+
+const parseAsCustomColors = createParser<CustomColor[]>({
+  parse: (query) => {
+    const names = new Set<string>();
+    const colors = query.split(',').flatMap((item) => {
+      const separator = item.indexOf(':');
+      const name = item.slice(0, separator);
+      const value = item.slice(separator + 1);
+      if (separator === -1 || !isColorName(name) || !isBaseColor(value) || names.has(name)) {
+        return [];
+      }
+      names.add(name);
+      return [{ name, value }];
+    });
+    return colors.length > 0 ? colors : null;
+  },
+  serialize: (value) => value.map((color) => `${color.name}:${color.value}`).join(','),
+  eq: (a, b) => JSON.stringify(a) === JSON.stringify(b),
+});
+
 export const SHADOW_PRESETS = ['none', 'subtle', 'mantine', 'strong'] as const;
 export const HEADING_WRAPS = ['wrap', 'nowrap', 'balance', 'pretty', 'stable'] as const;
 export const FOCUS_RINGS = ['auto', 'always', 'never'] as const;
@@ -70,17 +99,13 @@ export const CURSOR_TYPES = ['default', 'pointer'] as const;
 
 export const themeParsers = {
   primaryColor: parseAsString,
-  customColor: parseAsBaseColor,
+  customColors: parseAsCustomColors,
+  grayColor: parseAsBaseColor,
+  darkColor: parseAsBaseColor,
   primaryShadeLight: parseAsInteger,
   primaryShadeDark: parseAsInteger,
-  autoContrast: parseAsBoolean,
-  luminanceThreshold: parseAsFloat,
   white: parseAsHexColor,
   black: parseAsHexColor,
-  darkPalette: parseAsStringLiteral(DARK_PALETTES),
-  gradientFrom: parseAsString,
-  gradientTo: parseAsString,
-  gradientDeg: parseAsInteger,
   surfacesLight: parseAsColorRecord,
   surfacesDark: parseAsColorRecord,
 
@@ -116,17 +141,13 @@ export const themeParsers = {
 
 export const themeUrlKeys = {
   primaryColor: 'primary',
-  customColor: 'custom-color',
+  customColors: 'colors',
+  grayColor: 'gray',
+  darkColor: 'dark',
   primaryShadeLight: 'shade-light',
   primaryShadeDark: 'shade-dark',
-  autoContrast: 'auto-contrast',
-  luminanceThreshold: 'luminance',
   white: 'white',
   black: 'black',
-  darkPalette: 'dark-palette',
-  gradientFrom: 'gradient-from',
-  gradientTo: 'gradient-to',
-  gradientDeg: 'gradient-deg',
   surfacesLight: 'surfaces-light',
   surfacesDark: 'surfaces-dark',
   font: 'font',

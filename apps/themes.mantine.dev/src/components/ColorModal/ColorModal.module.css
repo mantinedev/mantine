@@ -1,0 +1,24 @@
+.label {
+  margin-bottom: 6px;
+  font-weight: var(--mantine-font-weight-medium);
+}
+
+.shades {
+  display: grid;
+  grid-template-columns: repeat(10, minmax(0, 1fr));
+  gap: 4px;
+}
+
+.shade {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  font-variant-numeric: tabular-nums;
+}
+
+.swatch {
+  width: 100%;
+  height: auto;
+  aspect-ratio: 1;
+}

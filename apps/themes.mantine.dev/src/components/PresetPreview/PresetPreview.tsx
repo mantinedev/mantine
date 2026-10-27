@@ -15,6 +15,7 @@ import {
   type EditorMessage,
   getPresetUrl,
   isPreviewMessage,
+  type PresetSurfaces,
   type PresetThemeInfo,
   type ThemeOverrides,
 } from '@/preview';
@@ -29,9 +30,10 @@ function getFrameUrl(presetId: string, overrides: ThemeOverrides) {
 
 interface PresetPreviewProps {
   onReady: (info: PresetThemeInfo) => void;
+  onSurfacesChange: (surfaces: PresetSurfaces) => void;
 }
 
-export function PresetPreview({ onReady }: PresetPreviewProps) {
+export function PresetPreview({ onReady, onSurfacesChange }: PresetPreviewProps) {
   const { presetId, overrides, setParams } = useEditorParams();
   const { setColorScheme, toggleColorScheme } = useMantineColorScheme();
   const { navbarOpened, toggleNavbar } = useShell();
@@ -79,6 +81,8 @@ export function PresetPreview({ onReady }: PresetPreviewProps) {
         setApplied(true);
       } else if (message.type === 'theme-editor:resize') {
         setHeight(message.height);
+      } else if (message.type === 'theme-editor:surfaces') {
+        onSurfacesChange(message.surfaces);
       } else if (message.type === 'theme-editor:toggle-color-scheme') {
         toggleColorScheme();
       } else {
@@ -89,7 +93,15 @@ export function PresetPreview({ onReady }: PresetPreviewProps) {
     postState();
     window.addEventListener('message', handleMessage);
     return () => window.removeEventListener('message', handleMessage);
-  }, [overrides, colorScheme, onReady, setParams, setColorScheme, toggleColorScheme]);
+  }, [
+    overrides,
+    colorScheme,
+    onReady,
+    onSurfacesChange,
+    setParams,
+    setColorScheme,
+    toggleColorScheme,
+  ]);
 
   return (
     <div className={classes.root}>

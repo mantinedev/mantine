@@ -15,6 +15,7 @@ import {
   getOverrideShadows,
   getOverrideSurfaces,
   getPresetThemeInfo,
+  getThemeSurfaces,
   type GoogleFont,
   loadGoogleFonts,
   loadThemeParams,
@@ -179,14 +180,24 @@ export function PresetProvider({
   const connected = useSyncExternalStore(subscribeToEditor, isConnected, getServerSnapshot);
 
   useEffect(() => {
-    postToEditor({ type: 'theme-editor:ready', info: getPresetThemeInfo(theme, measure) });
-  }, [theme, connected]);
+    postToEditor({
+      type: 'theme-editor:ready',
+      info: getPresetThemeInfo(theme, measure, cssVariablesResolver),
+    });
+  }, [theme, connected, cssVariablesResolver]);
 
   useEffect(() => {
     if (overrides) {
       postToEditor({ type: 'theme-editor:applied' });
     }
   }, [overrides]);
+
+  useEffect(() => {
+    postToEditor({
+      type: 'theme-editor:surfaces',
+      surfaces: getThemeSurfaces(resolvedTheme, resolver),
+    });
+  }, [resolvedTheme, resolver, connected]);
 
   return (
     <>

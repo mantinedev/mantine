@@ -1,41 +1,46 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useCallback, useMemo, useState } from 'react';
+import { IconPencil, IconPlus, IconTrash } from '@tabler/icons-react';
 import {
-  ColorPicker,
+  ActionIcon,
+  Button,
   ColorSwatch,
+  Group,
   type MantineColorShade,
-  Select,
   Stack,
-  Switch,
   Text,
-  TextInput,
 } from '@mantine/core';
 import {
-  CUSTOM_COLOR,
-  DARK_PALETTES,
-  getCustomPalette,
-  isBaseColor,
-  isHexColor,
+  type CustomColor,
+  generateNeutralPalette,
+  generatePalette,
+  type PresetColorSwatch,
   type PresetThemeInfo,
   type ThemeOverrides,
+  toHexColor,
 } from '@/preview';
+import { ColorModal, type ColorModalResult } from '../ColorModal';
 import { Control, HexColorInput, Swatches, ValueSlider } from './controls';
 import classes from './EditorSidebar.module.css';
 
-const PRESET = 'preset';
+const RESERVED_NAMES = ['gray', 'dark', 'white', 'black'];
 
-function capitalize(value: string) {
-  return value.charAt(0).toUpperCase() + value.slice(1);
-}
+type ModalState =
+  | { type: 'add' }
+  | { type: 'edit'; color: CustomColor }
+  | { type: 'gray' }
+  | { type: 'dark' }
+  | null;
 
 interface ShadesProps {
   shades: string[];
-  light: number;
-  dark: number;
+  light?: number;
+  dark?: number;
 }
 
 function Shades({ shades, light, dark }: ShadesProps) {
+  const withMarkers = light !== undefined || dark !== undefined;
   return (
     <div className={classes.shades}>
       {shades.map((shade, index) => (
@@ -44,60 +49,45 @@ function Shades({ shades, light, dark }: ShadesProps) {
           <Text size="xs" className={classes.shadeIndex}>
             {index}
           </Text>
-          <Text size="xs" className={classes.shadeMarker}>
-            {[index === light && 'L', index === dark && 'D'].filter(Boolean).join(' ')}
-          </Text>
+          {withMarkers && (
+            <Text size="xs" className={classes.shadeMarker}>
+              {[index === light && 'L', index === dark && 'D'].filter(Boolean).join(' ')}
+            </Text>
+          )}
         </div>
       ))}
     </div>
   );
 }
 
-interface BaseColorInputProps {
-  value: string | null;
-  onChange: (value: string | null) => void;
+interface NeutralColorProps {
+  label: string;
+  shades: string[];
+  customized: boolean;
+  onEdit: () => void;
+  onReset: () => void;
 }
 
-function BaseColorInput({ value, onChange }: BaseColorInputProps) {
-  const [draft, setDraft] = useState(value ?? '');
-
-  useEffect(() => {
-    setDraft(value ?? '');
-  }, [value]);
-
-  const invalid = draft !== '' && !isBaseColor(draft);
-
+function NeutralColor({ label, shades, customized, onEdit, onReset }: NeutralColorProps) {
   return (
-    <Stack gap="xs">
-      <TextInput
-        label="Custom color"
-        description="Hex or oklch base color, 10 shades are generated from it"
-        placeholder="#5474b4 or oklch(0.56 0.106 263)"
-        value={draft}
-        error={invalid ? 'Enter a hex or oklch color' : undefined}
-        leftSection={value ? <ColorSwatch color={value} size={18} /> : undefined}
-        onChange={(event) => {
-          const next = event.currentTarget.value.trim();
-          setDraft(event.currentTarget.value);
-          if (next === '') {
-            onChange(null);
-          } else if (isBaseColor(next)) {
-            onChange(next);
-          }
-        }}
-      />
-      {(draft === '' || isHexColor(draft)) && (
-        <ColorPicker
-          fullWidth
-          format="hex"
-          value={isHexColor(draft) ? draft : '#5474b4'}
-          onChange={(next) => {
-            setDraft(next);
-            onChange(next);
-          }}
-        />
-      )}
-    </Stack>
+    <div>
+      <div className={classes.controlHead}>
+        <Text size="sm" className={classes.label}>
+          {label}
+        </Text>
+        <Group gap={6}>
+          {customized && (
+            <Button variant="default" size="compact-xs" onClick={onReset}>
+              Reset
+            </Button>
+          )}
+          <Button variant="default" size="compact-xs" onClick={onEdit}>
+            Change
+          </Button>
+        </Group>
+      </div>
+      <Shades shades={shades} />
+    </div>
   );
 }
 
@@ -108,63 +98,159 @@ interface ColorsPanelProps {
 }
 
 export function ColorsPanel({ info, overrides, setParams }: ColorsPanelProps) {
-  const customPalette = getCustomPalette(overrides.customColor);
-  const primaryColor = customPalette
-    ? CUSTOM_COLOR
+  const [modal, setModal] = useState<ModalState>(null);
+  const customColors = useMemo(() => overrides.customColors ?? [], [overrides.customColors]);
+
+  const customPalettes = useMemo(
+    () =>
+      customColors.flatMap((color) => {
+        const palette = generatePalette(color.value);
+        return palette ? [{ ...color, ...palette }] : [];
+      }),
+    [customColors]
+  );
+
+  const customSwatches: PresetColorSwatch[] = customPalettes.map((palette) => ({
+    name: palette.name,
+    value: palette.shades[palette.baseColorIndex],
+    shades: palette.shades,
+    custom: true,
+  }));
+
+  const presetSwatches =
+    info?.swatches.filter(
+      (swatch) => swatch.custom && !customColors.some((color) => color.name === swatch.name)
+    ) ?? [];
+  const librarySwatches = info?.swatches.filter((swatch) => !swatch.custom) ?? [];
+
+  const customPrimary = customPalettes.find((palette) => palette.name === overrides.primaryColor);
+  const primaryColor = customPrimary
+    ? customPrimary.name
     : (overrides.primaryColor ?? info?.primaryColor ?? '');
   const shadeLight =
-    overrides.primaryShadeLight ?? customPalette?.baseColorIndex ?? info?.primaryShade.light ?? 6;
+    overrides.primaryShadeLight ?? customPrimary?.baseColorIndex ?? info?.primaryShade.light ?? 6;
   const shadeDark =
-    overrides.primaryShadeDark ?? customPalette?.baseColorIndex ?? info?.primaryShade.dark ?? 8;
-  const autoContrast = overrides.autoContrast ?? info?.autoContrast ?? false;
-  const shades =
-    customPalette?.shades ??
+    overrides.primaryShadeDark ?? customPrimary?.baseColorIndex ?? info?.primaryShade.dark ?? 8;
+  const primaryShades =
+    customPrimary?.shades ??
     info?.swatches.find((swatch) => swatch.name === primaryColor)?.shades ??
     [];
-  const colorOptions = info?.swatches.map((swatch) => swatch.name) ?? [];
 
-  const selectPalette = (name: string) =>
+  const grayShades =
+    (info && generateNeutralPalette(overrides.grayColor, info.gray)) ?? info?.gray ?? [];
+  const darkShades =
+    (info && generateNeutralPalette(overrides.darkColor, info.dark)) ?? info?.dark ?? [];
+
+  const takenNames = useMemo(() => {
+    const editing = modal?.type === 'edit' ? modal.color.name : null;
+    return new Set([
+      ...RESERVED_NAMES,
+      ...(info?.swatches.map((swatch) => swatch.name) ?? []),
+      ...customColors.map((color) => color.name).filter((name) => name !== editing),
+    ]);
+  }, [customColors, info, modal]);
+
+  const selectPrimary = (name: string) =>
+    setParams({ primaryColor: name, primaryShadeLight: null, primaryShadeDark: null });
+
+  const getPalette = useCallback((value: string) => generatePalette(value)?.shades ?? null, []);
+  const getGray = useCallback(
+    (value: string) => (info ? generateNeutralPalette(value, info.gray) : null),
+    [info]
+  );
+  const getDark = useCallback(
+    (value: string) => (info ? generateNeutralPalette(value, info.dark) : null),
+    [info]
+  );
+
+  const submitColor = ({ name, value }: ColorModalResult) => {
+    if (modal?.type === 'edit') {
+      const previous = modal.color.name;
+      setParams({
+        customColors: customColors.map((color) =>
+          color.name === previous ? { name, value } : color
+        ),
+        ...(overrides.primaryColor === previous && {
+          primaryColor: name,
+          primaryShadeLight: null,
+          primaryShadeDark: null,
+        }),
+      });
+    } else {
+      setParams({
+        customColors: [...customColors, { name, value }],
+        primaryColor: name,
+        primaryShadeLight: null,
+        primaryShadeDark: null,
+      });
+    }
+    setModal(null);
+  };
+
+  const removeColor = (name: string) =>
     setParams({
-      primaryColor: name,
-      customColor: null,
-      primaryShadeLight: null,
-      primaryShadeDark: null,
+      customColors: customColors.length > 1 ? customColors.filter((c) => c.name !== name) : null,
+      ...(overrides.primaryColor === name && {
+        primaryColor: null,
+        primaryShadeLight: null,
+        primaryShadeDark: null,
+      }),
     });
 
   return (
     <Stack gap="md">
-      {info?.swatches.some((swatch) => swatch.custom) && (
-        <Control label="Preset colors">
-          <Swatches
-            swatches={info.swatches.filter((swatch) => swatch.custom)}
-            value={primaryColor}
-            onChange={selectPalette}
-          />
-        </Control>
-      )}
       <Control label="Mantine colors">
-        <Swatches
-          swatches={info?.swatches.filter((swatch) => !swatch.custom) ?? []}
-          value={primaryColor}
-          onChange={selectPalette}
-        />
+        <Swatches swatches={librarySwatches} value={primaryColor} onChange={selectPrimary} />
       </Control>
 
-      <BaseColorInput
-        value={overrides.customColor}
-        onChange={(customColor) =>
-          setParams({
-            customColor,
-            primaryColor: null,
-            primaryShadeLight: null,
-            primaryShadeDark: null,
-          })
-        }
-      />
+      {presetSwatches.length > 0 && (
+        <Control label="Preset colors">
+          <Swatches swatches={presetSwatches} value={primaryColor} onChange={selectPrimary} />
+        </Control>
+      )}
 
-      {shades.length > 0 && (
-        <Control label={`Primary palette: ${primaryColor}`}>
-          <Shades shades={shades} light={shadeLight} dark={shadeDark} />
+      <Control label="Custom colors">
+        <Stack gap="xs">
+          {customSwatches.length > 0 && (
+            <Swatches swatches={customSwatches} value={primaryColor} onChange={selectPrimary} />
+          )}
+          {customColors.map((color) => (
+            <div key={color.name} className={classes.customColor}>
+              <ColorSwatch color={toHexColor(color.value) || color.value} size={18} />
+              <Text size="sm" className={classes.customColorName}>
+                {color.name}
+              </Text>
+              <ActionIcon
+                variant="default"
+                size="sm"
+                aria-label={`Edit ${color.name}`}
+                onClick={() => setModal({ type: 'edit', color })}
+              >
+                <IconPencil size={14} />
+              </ActionIcon>
+              <ActionIcon
+                variant="default"
+                size="sm"
+                aria-label={`Remove ${color.name}`}
+                onClick={() => removeColor(color.name)}
+              >
+                <IconTrash size={14} />
+              </ActionIcon>
+            </div>
+          ))}
+          <Button
+            variant="default"
+            leftSection={<IconPlus size={16} />}
+            onClick={() => setModal({ type: 'add' })}
+          >
+            Add color
+          </Button>
+        </Stack>
+      </Control>
+
+      {primaryShades.length > 0 && (
+        <Control label={`Primary color: ${primaryColor}`}>
+          <Shades shades={primaryShades} light={shadeLight} dark={shadeDark} />
         </Control>
       )}
 
@@ -183,75 +269,62 @@ export function ColorsPanel({ info, overrides, setParams }: ColorsPanelProps) {
         onChange={(value) => setParams({ primaryShadeDark: value as MantineColorShade })}
       />
 
-      <Switch
-        label="Auto contrast"
-        description="Pick black or white text on filled backgrounds by color lightness"
-        checked={autoContrast}
-        onChange={(event) => setParams({ autoContrast: event.currentTarget.checked })}
+      <NeutralColor
+        label="Gray, light scheme neutrals"
+        shades={grayShades}
+        customized={overrides.grayColor !== null}
+        onEdit={() => setModal({ type: 'gray' })}
+        onReset={() => setParams({ grayColor: null })}
       />
-      {autoContrast && (
-        <ValueSlider
-          label="Luminance threshold"
-          value={overrides.luminanceThreshold ?? info?.luminanceThreshold ?? 0.3}
-          min={0}
-          max={1}
-          step={0.05}
-          format={(value) => value.toFixed(2)}
-          onChange={(luminanceThreshold) => setParams({ luminanceThreshold })}
-        />
-      )}
-      <Select
-        label="Dark palette"
-        data={[
-          { value: PRESET, label: 'Preset' },
-          ...DARK_PALETTES.map((value) => ({ value, label: capitalize(value) })),
-        ]}
-        value={overrides.darkPalette ?? PRESET}
-        onChange={(value) =>
-          setParams({
-            darkPalette:
-              !value || value === PRESET ? null : (value as ThemeOverrides['darkPalette']),
-          })
-        }
-        allowDeselect={false}
-        comboboxProps={{ floatingStrategy: 'fixed' }}
+      <NeutralColor
+        label="Dark, dark scheme neutrals"
+        shades={darkShades}
+        customized={overrides.darkColor !== null}
+        onEdit={() => setModal({ type: 'dark' })}
+        onReset={() => setParams({ darkColor: null })}
       />
+
       <HexColorInput
         label="White"
-        value={overrides.white}
-        placeholder={info?.white}
+        value={overrides.white ?? info?.white ?? null}
         onChange={(white) => setParams({ white })}
       />
       <HexColorInput
         label="Black"
-        value={overrides.black}
-        placeholder={info?.black}
+        value={overrides.black ?? info?.black ?? null}
         onChange={(black) => setParams({ black })}
       />
-      <Select
-        label="Gradient start"
-        data={colorOptions}
-        value={overrides.gradientFrom ?? info?.defaultGradient.from ?? null}
-        onChange={(gradientFrom) => setParams({ gradientFrom })}
-        allowDeselect={false}
-        comboboxProps={{ floatingStrategy: 'fixed' }}
+
+      <ColorModal
+        opened={modal?.type === 'add' || modal?.type === 'edit'}
+        title={modal?.type === 'edit' ? `Edit ${modal.color.name}` : 'Add color'}
+        submitLabel={modal?.type === 'edit' ? 'Save color' : 'Add color'}
+        initialValue={modal?.type === 'edit' ? modal.color.value : '#5474b4'}
+        initialName={modal?.type === 'edit' ? modal.color.name : undefined}
+        withName
+        takenNames={takenNames}
+        getShades={getPalette}
+        onSubmit={submitColor}
+        onClose={() => setModal(null)}
       />
-      <Select
-        label="Gradient end"
-        data={colorOptions}
-        value={overrides.gradientTo ?? info?.defaultGradient.to ?? null}
-        onChange={(gradientTo) => setParams({ gradientTo })}
-        allowDeselect={false}
-        comboboxProps={{ floatingStrategy: 'fixed' }}
-      />
-      <ValueSlider
-        label="Gradient angle"
-        value={overrides.gradientDeg ?? info?.defaultGradient.deg ?? 45}
-        min={0}
-        max={360}
-        step={5}
-        format={(value) => `${value}°`}
-        onChange={(gradientDeg) => setParams({ gradientDeg })}
+
+      <ColorModal
+        opened={modal?.type === 'gray' || modal?.type === 'dark'}
+        title={modal?.type === 'dark' ? 'Dark color' : 'Gray color'}
+        submitLabel="Apply"
+        initialValue={
+          modal?.type === 'dark'
+            ? (overrides.darkColor ?? (toHexColor(info?.dark[7]) || '#2e2e2e'))
+            : (overrides.grayColor ?? (toHexColor(info?.gray[6]) || '#868e96'))
+        }
+        withName={false}
+        takenNames={takenNames}
+        getShades={modal?.type === 'dark' ? getDark : getGray}
+        onSubmit={({ value }) => {
+          setParams(modal?.type === 'dark' ? { darkColor: value } : { grayColor: value });
+          setModal(null);
+        }}
+        onClose={() => setModal(null)}
       />
     </Stack>
   );

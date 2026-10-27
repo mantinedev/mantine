@@ -7,6 +7,7 @@
     "dev": "next dev --port 4821",
     "build": "next build && touch out/.nojekyll && echo 'themes.mantine.dev' > out/CNAME",
     "start": "next start",
+    "generate:color-names": "node scripts/generate-color-names.mjs",
     "generate:fonts": "node scripts/generate-google-fonts.mjs",
     "generate:previews": "node scripts/generate-previews.mjs",
     "typecheck": "tsc --noEmit"
@@ -25,6 +26,7 @@
     "@mantinex/mantine-meta": "workspace:*",
     "@tabler/icons-react": "^3.49.0",
     "@tanstack/react-virtual": "^3.14.13",
+    "culori": "^4.0.2",
     "dayjs": "^1.11.23",
     "next": "16.3.6",
     "nuqs": "^2.10.2",
