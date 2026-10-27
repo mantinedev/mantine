@@ -1,3 +1,4 @@
+import { generateColorFormats } from '@mantine/colors-generator';
 import {
   darkColdColors,
   darkColors,
@@ -33,7 +34,28 @@ export interface PrimaryShade {
 export interface PresetColorSwatch {
   name: string;
   value: string;
+  shades: string[];
   custom: boolean;
+}
+
+export const CUSTOM_COLOR = 'custom';
+
+export interface CustomPalette {
+  shades: string[];
+  baseColorIndex: MantineColorShade;
+}
+
+export function getCustomPalette(value: string | null): CustomPalette | null {
+  if (!value) {
+    return null;
+  }
+
+  try {
+    const { colors, baseColorIndex } = generateColorFormats(value);
+    return { shades: [...colors], baseColorIndex: baseColorIndex as MantineColorShade };
+  } catch {
+    return null;
+  }
 }
 
 export interface PresetThemeInfo {
@@ -163,6 +185,7 @@ export function getPresetThemeInfo(
     .map((name) => ({
       name,
       value: resolveTuple(theme, name)[primaryShade.light],
+      shades: [...resolveTuple(theme, name)],
       custom: !(name in DEFAULT_THEME.colors),
     }))
     .sort((a, b) => Number(b.custom) - Number(a.custom));
@@ -286,6 +309,26 @@ export function applyThemeOverrides(
     };
   }
 
+  const customPalette = getCustomPalette(overrides.customColor);
+  if (customPalette) {
+    const primaryShade = patch.primaryShade as PrimaryShade | undefined;
+    patch.colors = {
+      ...patch.colors,
+      [CUSTOM_COLOR]: customPalette.shades as unknown as MantineColorsTuple,
+    };
+    patch.primaryColor = CUSTOM_COLOR;
+    patch.primaryShade = {
+      light:
+        overrides.primaryShadeLight === null
+          ? customPalette.baseColorIndex
+          : (primaryShade?.light ?? customPalette.baseColorIndex),
+      dark:
+        overrides.primaryShadeDark === null
+          ? customPalette.baseColorIndex
+          : (primaryShade?.dark ?? customPalette.baseColorIndex),
+    };
+  }
+
   if (overrides.autoContrast !== null) {
     patch.autoContrast = overrides.autoContrast;
   }
@@ -303,7 +346,7 @@ export function applyThemeOverrides(
   }
 
   if (overrides.darkPalette) {
-    patch.colors = { dark: DARK_PALETTE_COLORS[overrides.darkPalette] };
+    patch.colors = { ...patch.colors, dark: DARK_PALETTE_COLORS[overrides.darkPalette] };
   }
 
   if (overrides.gradientFrom || overrides.gradientTo || overrides.gradientDeg !== null) {

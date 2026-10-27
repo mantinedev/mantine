@@ -3,7 +3,7 @@
 import cx from 'clsx';
 import { AppShell, Burger, useMantineColorScheme } from '@mantine/core';
 import { useDisclosure, useHotkeys } from '@mantine/hooks';
-import { ColorSchemeControl } from '@mantinex/mantine-header';
+import { ColorSchemeControl, GithubControl } from '@mantinex/mantine-header';
 import { MantineLogo } from '@mantinex/mantine-logo';
 import { ShellContext } from './Shell.context';
 import classes from './Shell.module.css';
@@ -27,6 +27,7 @@ export function Shell({ sidebar, children }: ShellProps) {
               <MantineLogo size={28} />
             </a>
             <div className={classes.navbarControls}>
+              <GithubControl link="https://github.com/mantinedev/mantine" />
               <ColorSchemeControl />
               <Burger
                 opened={navbarOpened}

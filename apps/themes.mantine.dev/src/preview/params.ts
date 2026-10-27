@@ -17,6 +17,17 @@ export function isHexColor(value: string) {
   return COLOR_PATTERN.test(value);
 }
 
+const OKLCH_PATTERN = /^oklch\(\s*(?:0|1|0?\.\d+|1\.0+)\s+(?:0|0?\.\d+)\s+\d{1,3}(?:\.\d+)?\s*\)$/i;
+
+export function isBaseColor(value: string) {
+  return isHexColor(value) || OKLCH_PATTERN.test(value);
+}
+
+const parseAsBaseColor = createParser<string>({
+  parse: (query) => (isBaseColor(query) ? query : null),
+  serialize: (value) => value,
+});
+
 const parseAsNumberRecord = createParser<Record<string, number>>({
   parse: (query) => {
     const entries = query.split(',').flatMap((item) => {
@@ -59,6 +70,7 @@ export const CURSOR_TYPES = ['default', 'pointer'] as const;
 
 export const themeParsers = {
   primaryColor: parseAsString,
+  customColor: parseAsBaseColor,
   primaryShadeLight: parseAsInteger,
   primaryShadeDark: parseAsInteger,
   autoContrast: parseAsBoolean,
@@ -104,6 +116,7 @@ export const themeParsers = {
 
 export const themeUrlKeys = {
   primaryColor: 'primary',
+  customColor: 'custom-color',
   primaryShadeLight: 'shade-light',
   primaryShadeDark: 'shade-dark',
   autoContrast: 'auto-contrast',

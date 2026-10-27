@@ -4,7 +4,6 @@ import { useState } from 'react';
 import {
   Accordion,
   Button,
-  type MantineColorShade,
   ScrollArea,
   SegmentedControl,
   Select,
@@ -15,7 +14,6 @@ import {
 import { useEditorParams } from '@/hooks/use-editor-params';
 import {
   CURSOR_TYPES,
-  DARK_PALETTES,
   DEFAULT_OVERRIDES,
   FOCUS_RINGS,
   HEADING_WRAPS,
@@ -27,7 +25,8 @@ import {
   type ThemeOverrides,
 } from '@/preview';
 import { FontPicker } from '../FontPicker';
-import { Control, HexColorInput, ScaleControl, Swatches, ValueSlider } from './controls';
+import { ColorsPanel } from './ColorsPanel';
+import { Control, HexColorInput, ScaleControl, ValueSlider } from './controls';
 import classes from './EditorSidebar.module.css';
 
 const PRESET = 'preset';
@@ -67,11 +66,6 @@ export function EditorSidebar({ info }: EditorSidebarProps) {
   const [surfaceScheme, setSurfaceScheme] = useState<'light' | 'dark'>('light');
   const changed = JSON.stringify(overrides) !== JSON.stringify(DEFAULT_OVERRIDES);
 
-  const primaryColor = overrides.primaryColor ?? info?.primaryColor ?? '';
-  const shadeLight = overrides.primaryShadeLight ?? info?.primaryShade.light ?? 6;
-  const shadeDark = overrides.primaryShadeDark ?? info?.primaryShade.dark ?? 8;
-  const autoContrast = overrides.autoContrast ?? info?.autoContrast ?? false;
-  const colorOptions = info?.swatches.map((swatch) => swatch.name) ?? [];
   const surfaceKey = surfaceScheme === 'light' ? 'surfacesLight' : 'surfacesDark';
   const surfaces = overrides[surfaceKey];
 
@@ -123,100 +117,7 @@ export function EditorSidebar({ info }: EditorSidebarProps) {
         <Accordion.Item value="colors">
           <Accordion.Control>Colors</Accordion.Control>
           <Accordion.Panel>
-            <Stack gap="md">
-              {info?.swatches.some((swatch) => swatch.custom) && (
-                <Control label="Preset colors">
-                  <Swatches
-                    swatches={info.swatches.filter((swatch) => swatch.custom)}
-                    value={primaryColor}
-                    onChange={(value) => setParams({ primaryColor: value })}
-                  />
-                </Control>
-              )}
-              <Control label="Mantine colors">
-                <Swatches
-                  swatches={info?.swatches.filter((swatch) => !swatch.custom) ?? []}
-                  value={primaryColor}
-                  onChange={(value) => setParams({ primaryColor: value })}
-                />
-              </Control>
-              <ValueSlider
-                label="Primary shade, light scheme"
-                value={shadeLight}
-                min={0}
-                max={9}
-                onChange={(value) => setParams({ primaryShadeLight: value as MantineColorShade })}
-              />
-              <ValueSlider
-                label="Primary shade, dark scheme"
-                value={shadeDark}
-                min={0}
-                max={9}
-                onChange={(value) => setParams({ primaryShadeDark: value as MantineColorShade })}
-              />
-              <Switch
-                label="Auto contrast"
-                description="Pick black or white text on filled backgrounds by color lightness"
-                checked={autoContrast}
-                onChange={(event) => setParams({ autoContrast: event.currentTarget.checked })}
-              />
-              {autoContrast && (
-                <ValueSlider
-                  label="Luminance threshold"
-                  value={overrides.luminanceThreshold ?? info?.luminanceThreshold ?? 0.3}
-                  min={0}
-                  max={1}
-                  step={0.05}
-                  format={(value) => value.toFixed(2)}
-                  onChange={(luminanceThreshold) => setParams({ luminanceThreshold })}
-                />
-              )}
-              <Select
-                label="Dark palette"
-                data={withPreset(DARK_PALETTES)}
-                value={overrides.darkPalette ?? PRESET}
-                onChange={(value) => setParams({ darkPalette: fromPreset(value) })}
-                allowDeselect={false}
-                comboboxProps={{ floatingStrategy: 'fixed' }}
-              />
-              <HexColorInput
-                label="White"
-                value={overrides.white}
-                placeholder={info?.white}
-                onChange={(white) => setParams({ white })}
-              />
-              <HexColorInput
-                label="Black"
-                value={overrides.black}
-                placeholder={info?.black}
-                onChange={(black) => setParams({ black })}
-              />
-              <Select
-                label="Gradient start"
-                data={colorOptions}
-                value={overrides.gradientFrom ?? info?.defaultGradient.from ?? null}
-                onChange={(gradientFrom) => setParams({ gradientFrom })}
-                allowDeselect={false}
-                comboboxProps={{ floatingStrategy: 'fixed' }}
-              />
-              <Select
-                label="Gradient end"
-                data={colorOptions}
-                value={overrides.gradientTo ?? info?.defaultGradient.to ?? null}
-                onChange={(gradientTo) => setParams({ gradientTo })}
-                allowDeselect={false}
-                comboboxProps={{ floatingStrategy: 'fixed' }}
-              />
-              <ValueSlider
-                label="Gradient angle"
-                value={overrides.gradientDeg ?? info?.defaultGradient.deg ?? 45}
-                min={0}
-                max={360}
-                step={5}
-                format={(value) => `${value}°`}
-                onChange={(gradientDeg) => setParams({ gradientDeg })}
-              />
-            </Stack>
+            <ColorsPanel info={info} overrides={overrides} setParams={setParams} />
           </Accordion.Panel>
         </Accordion.Item>
 
