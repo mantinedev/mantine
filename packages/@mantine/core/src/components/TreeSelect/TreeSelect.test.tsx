@@ -8,6 +8,7 @@ import {
   tests,
   userEvent,
 } from '@mantine-tests/core';
+import { DirectionProvider } from '../../core';
 import type { TreeNodeData } from '../Tree';
 import {
   TreeSelect,
@@ -652,6 +653,44 @@ describe('@mantine/core/TreeSelect', () => {
       await userEvent.keyboard('{ArrowLeft}');
 
       expect(screen.queryByRole('option', { name: 'Apple' })).toBe(null);
+    });
+
+    it('mirrors ArrowLeft and ArrowRight in rtl direction', async () => {
+      render(
+        <DirectionProvider initialDirection="rtl" detectDirection={false}>
+          <TreeSelect {...defaultProps} />
+        </DirectionProvider>
+      );
+      await userEvent.click(screen.getByRole('textbox'));
+      await userEvent.keyboard('{ArrowDown}');
+
+      await userEvent.keyboard('{ArrowRight}');
+      expect(screen.queryByRole('option', { name: 'Apple' })).toBe(null);
+
+      await userEvent.keyboard('{ArrowLeft}');
+      expect(screen.getByRole('option', { name: 'Apple' })).toBeVisible();
+
+      await userEvent.keyboard('{ArrowRight}');
+      expect(screen.queryByRole('option', { name: 'Apple' })).toBe(null);
+    });
+
+    it('moves to the parent node on ArrowRight in rtl direction', async () => {
+      render(
+        <DirectionProvider initialDirection="rtl" detectDirection={false}>
+          <TreeSelect {...defaultProps} defaultExpandedValues={['fruits']} />
+        </DirectionProvider>
+      );
+      await userEvent.click(screen.getByRole('textbox'));
+      await userEvent.keyboard('{ArrowDown}{ArrowDown}');
+      expect(screen.getByRole('option', { name: 'Apple' })).toHaveAttribute(
+        'data-combobox-selected'
+      );
+
+      await userEvent.keyboard('{ArrowRight}');
+      expect(screen.getByRole('option', { name: 'Fruits' })).toHaveAttribute(
+        'data-combobox-selected'
+      );
+      expect(screen.getByRole('option', { name: 'Apple' })).toBeVisible();
     });
   });
 
