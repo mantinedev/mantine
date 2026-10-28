@@ -610,7 +610,13 @@ export const TreeSelect = genericFactory<TreeSelectFactory>((_props) => {
       combobox.toggleDropdown();
     }
 
-    if (event.key === 'Backspace' && _searchValue.length === 0 && isMulti && !readOnly) {
+    if (
+      event.key === 'Backspace' &&
+      _searchValue.length === 0 &&
+      isMulti &&
+      !event.nativeEvent.isComposing &&
+      !readOnly
+    ) {
       const arr = (_value as string[]) || [];
       if (arr.length > 0) {
         const removed = arr[arr.length - 1];
