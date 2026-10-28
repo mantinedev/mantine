@@ -486,6 +486,11 @@ export const Cascader = factory<CascaderFactory>((_props) => {
   const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
     onKeyDown?.(event);
 
+    // Ignore during composition in IME
+    if (event.nativeEvent.isComposing) {
+      return;
+    }
+
     if (event.key === 'Escape') {
       combobox.closeDropdown();
       return;

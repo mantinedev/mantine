@@ -393,6 +393,23 @@ describe('@mantine/core/Cascader', () => {
     expect(spy).toHaveBeenCalledWith(null, []);
   });
 
+  it('ignores keyboard navigation during IME composition', () => {
+    const spy = jest.fn();
+    render(
+      <Cascader
+        {...defaultProps}
+        defaultValue={['asia', 'jp', 'tokyo']}
+        searchable
+        dropdownOpened
+        onChange={spy}
+      />
+    );
+    const input = screen.getByRole('textbox');
+    input.focus();
+    fireEvent.keyDown(input, { key: 'Enter', isComposing: true });
+    expect(spy).not.toHaveBeenCalled();
+  });
+
   it('deselects the current value in flat list mode', async () => {
     const spy = jest.fn();
     render(
