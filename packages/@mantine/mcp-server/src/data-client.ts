@@ -12,6 +12,28 @@ function normalize(value: string): string {
   return value.trim().toLowerCase();
 }
 
+/** Lowercase alphanumeric form, so `useDirection`, `use-direction` and `use direction` compare equal */
+function compact(value: string): string {
+  return value.toLowerCase().replace(/[^a-z0-9]/g, '');
+}
+
+/** Whether one of the item's comma-separated search tags names the symbol exactly */
+function hasSearchTag(item: IndexItem, symbol: string): boolean {
+  const requested = compact(symbol);
+  return (
+    !!requested && (item.searchTags || '').split(',').some((tag) => compact(tag) === requested)
+  );
+}
+
+/** The section whose heading names the symbol, e.g. "useDirection hook" for `useDirection` */
+function findSymbolSection(sections: DocData['sections'], symbol: string) {
+  const requested = compact(symbol);
+  return (
+    sections.find((s) => compact(s.heading).startsWith(requested)) ||
+    sections.find((s) => compact(s.heading).includes(requested))
+  );
+}
+
 function clampLimit(limit: number | undefined, fallback: number, max: number): number {
   if (typeof limit !== 'number' || Number.isNaN(limit)) {
     return fallback;
@@ -321,10 +343,11 @@ export class MantineMcpDataClient {
       (item) => item.hasSignature || item.propsCount > 0 || item.kind === 'hook'
     );
 
-    const match =
+    const directMatch =
       candidates.find(
         (item) => normalize(item.name).replace(/-/g, '') === requested.replace(/-/g, '')
       ) || candidates.find((item) => item.searchText.includes(requested));
+    const match = directMatch || index.find((item) => hasSearchTag(item, symbol));
 
     if (!match) {
       return null;
@@ -334,7 +357,9 @@ export class MantineMcpDataClient {
     const hasExportedTypeNames = !!data.exportedTypeNames && data.exportedTypeNames.length > 0;
 
     if (!data.signature && !hasExportedTypeNames) {
-      const apiSection = this.findApiSection(data.sections);
+      const apiSection =
+        (!directMatch && findSymbolSection(data.sections, symbol)) ||
+        this.findApiSection(data.sections);
 
       return {
         item: match,
