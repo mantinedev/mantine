@@ -22,8 +22,8 @@ export function useTimeout(
     (...args: any[]) => {
       if (!timeoutRef.current) {
         timeoutRef.current = window.setTimeout(() => {
-          handleCallback(...args);
           timeoutRef.current = null;
+          handleCallback(...args);
         }, delay);
       }
     },
