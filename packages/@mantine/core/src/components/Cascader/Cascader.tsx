@@ -486,8 +486,7 @@ export const Cascader = factory<CascaderFactory>((_props) => {
   const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
     onKeyDown?.(event);
 
-    // Ignore during composition in IME
-    if (event.nativeEvent.isComposing) {
+    if (event.nativeEvent.isComposing || event.nativeEvent.keyCode === 229) {
       return;
     }
 

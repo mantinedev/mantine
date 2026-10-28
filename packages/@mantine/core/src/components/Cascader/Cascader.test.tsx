@@ -407,6 +407,7 @@ describe('@mantine/core/Cascader', () => {
     const input = screen.getByRole('textbox');
     input.focus();
     fireEvent.keyDown(input, { key: 'Enter', isComposing: true });
+    fireEvent.keyDown(input, { key: 'Enter', keyCode: 229 });
     expect(spy).not.toHaveBeenCalled();
   });
 
