@@ -163,6 +163,9 @@ attendees) shows what was collected inside the input, as compactly as the input 
   render `Pill.Group mt="xs"` under the picker instead.)
 - Several keys, tags or entries picked elsewhere: a `PillsInput`-based input, see
   [custom inputs](#custom-inputs-that-open-a-picker).
+- A `PillsInput` has no `leftSection` icon (no search icon in front of the pills): the pills
+  start at the input's edge. Backspace in the empty text part removes the last pill whole, like
+  `MultiSelect`; it never turns the pill back into editable text.
 - Never a stack of bordered `Surface` rows with a trash `ActionIcon` for values that have no
   fields of their own: such rows are taller than the input above them, and five skipped dates
   become a card taller than the rest of the form. Bordered rows are for items with several fields
@@ -196,7 +199,7 @@ stack in one wrapper:
   placeholder="Pick a member"
   data={MEMBERS}
   inputContainer={(children) => (
-    <Group align="flex-start" wrap="nowrap">
+    <Group align="flex-end" wrap="nowrap">
       <div className={classes.field}>{children}</div>
       <Button type="submit" variant="default">Transfer ownership</Button>
     </Group>
@@ -211,6 +214,11 @@ stack in one wrapper:
   min-width: 0;
 }
 ```
+
+`inputContainer` wraps only the input; label, description and error stay outside it, so the
+row inside aligns to the end (`align="flex-end"`): an input with a `description` gets a small top
+margin (`data-offset-top`) that the button does not have, and `flex-start` leaves the button a few
+pixels above the input.
 
 The same holds for every row of inputs: the grid aligns to the top (`align-items: start`), and an
 error grows only its own cell.

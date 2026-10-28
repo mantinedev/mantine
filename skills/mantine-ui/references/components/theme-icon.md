@@ -8,7 +8,8 @@ status. It is not a button; put actions in `ActionIcon`.
   kept in the category definition next to its icon and label, so the list, the picker and the
   summaries agree.
 - Pick colors from the theme palette tokens (`--mantine-color-<name>-text`: blue, teal, grape,
-  orange, yellow, red, green, violet, cyan). Do not invent hex values.
+  orange, red, green, violet, cyan). Do not invent hex values. No yellow or lime: they are
+  barely visible as icon or text color on a light background.
 - Size matches the row: `size="lg"` with `lg` action icons and drag handles, `size="md"` in
   dense tables.
 - `radius="md"` is the default, leave it out. `light` and `filled` tiles are not used for

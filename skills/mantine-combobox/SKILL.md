@@ -177,6 +177,76 @@ Two words that are easy to mix up:
 - **active** option: the one that holds the current value, marked with the `active` prop
   (`data-combobox-active`). It has no styles by default: render a check icon.
 
+## Rules for custom comboboxes
+
+Load the `mantine-ui` skill together with this one (and `mantine-testing` when you write tests):
+colors, sizes and the input + button row come from there.
+
+- **A pick that leaves the user in the field keeps the dropdown open.** When an option continues
+  the input instead of finishing it (a filter key that now needs a value, a token after which the
+  next one is typed, a folder whose subfolders come next, any multi-value input), the dropdown
+  stays open with the next list, for keyboard and mouse picks alike, and the first option of the
+  new list is highlighted, so Enter, Tab or ArrowRight continue without an extra ArrowDown. The
+  new options exist only after the next render: highlight them in an effect keyed on what the
+  list shows (`useEffect(() => { if (combobox.dropdownOpened) combobox.selectFirstOption(); },
+  [listKey])`), not right after `setState`. Only a pick that completes the value closes it.
+- **Backspace in an empty text part removes the last pill or token whole**, like `MultiSelect`
+  and `TagsInput`. It never turns the token back into editable text.
+- **Options keep their own labels.** An option shows the label defined for it, with the same
+  casing in the filtered list as in the unfiltered one (`Tomorrow`, `Next week`), never the typed
+  query echoed back or re-cased. Options generated from phrases (`tomorrow at 5pm`, `next monday`)
+  are displayed in sentence case with proper names capitalized (`Tomorrow at 5pm`,
+  `Next Monday`), even when they are matched and stored in lowercase.
+- **Everything inside the highlighted option is readable.** `[data-combobox-selected]` paints the
+  option with the filled primary color and white text. Text and icons inside it that set their
+  own color (a bright title, a `-text` colored icon, a secondary line, a counter) keep that color
+  and become unreadable: reset them under the highlight.
+
+  ```css
+  .option[data-combobox-selected] :is(.title, .icon, .meta) {
+    color: inherit;
+  }
+  ```
+- **The current value is marked without tints.** The `active` option gets a check icon in a list
+  and a `1px solid var(--mantine-primary-color-filled)` outline in a grid; never a `-light`
+  background (`--mantine-primary-color-light` is the banned `light` variant in CSS form).
+- **Header and footer line up with the options.** `Combobox.Header` and `Combobox.Footer` span
+  the whole dropdown (negative margins over the 4px dropdown padding) while options sit inside
+  it, so header text starts 4px left of option text. Add the dropdown padding to their inline
+  padding (`padding-inline: calc(10px + var(--combobox-padding))` for the default `sm` size) and
+  give their icons the size the option icons have.
+- **Controls in the dropdown keep focus in the search field when clicked.**
+  `onMouseDown={(event) => event.preventDefault()}` is enough for buttons, not for controls built
+  on labels and inputs (`SegmentedControl`, `Chip`, `Checkbox`): clicking a label focuses its
+  input anyway. Also call `combobox.focusSearchInput()` in their `onChange`.
+- **A dropdown with controls besides the options traps focus.** When the keyboard user must reach
+  something other than the search field and the options (a style switch, tabs, filters), Tab
+  would otherwise move focus out of the dropdown and leave it open behind the page. Wrap the
+  dropdown content in `FocusTrap`: Tab cycles search → controls → search, Escape closes the
+  dropdown from any of them, and `onDropdownClose: () => combobox.focusTarget()` returns focus.
+  A dropdown with only a search field and options needs no trap: Tab moves on and closes it
+  (`closeDropdown()` in the search field's `onBlur`).
+
+  ```tsx
+  <Combobox.Dropdown>
+    <FocusTrap active={combobox.dropdownOpened}>
+      <div>
+        <Combobox.Search />
+        <SegmentedControl data={STYLES} onChange={(next) => { setStyle(next); combobox.focusSearchInput(); }} />
+        <Combobox.Options>{/* … */}</Combobox.Options>
+      </div>
+    </FocusTrap>
+  </Combobox.Dropdown>
+  ```
+- **Large option data is loaded when it is needed.** A whole icon set, emoji list or a dataset of
+  thousands of records imported at the top of the module ends up in the bundle of every page that
+  imports the input (all of `@tabler/icons-react` is several megabytes). Load it with `import()`
+  the first time the dropdown opens (show a `Loader` in the dropdown meanwhile), and render the
+  displayed value from the same loaded module, with its name as a fallback until it arrives.
+  The search field and the other controls render right away; only the options area shows the
+  `Loader`. A dropdown that holds nothing but a loader on the first open leaves `FocusTrap` and
+  `data-autofocus` without a target, and the search field never gets focus once it appears.
+
 ## Coming from 9.x
 
 - `combobox.selectedOptionIndex` and `combobox.listId` no longer exist: call

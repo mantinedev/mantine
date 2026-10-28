@@ -6,6 +6,10 @@ It is not a way to mark a field as required, important or selected.
 - Variants: `variant="default"` for neutral statuses, `variant="filled"` with a theme color for
   a status that must stand out (`color="green"` for `Active`). Never `light`, never `dot` for
   plain labels, never `outline`.
+- Items that carry their own color (labels, tags, projects) are not filled badges in that
+  color: ten colored badges in a list read loud and the colors stop meaning anything. Render
+  them `variant="default"` with the color as a small dot in the `leftSection`
+  (`<ColorSwatch color={...} size={8} withShadow={false} />`).
 - Size `sm` in list rows and tables, `md` in headers next to a title.
 - Text is one or two words in sentence case: `Required` is not a badge, see
   [text](text.md#required-marker).

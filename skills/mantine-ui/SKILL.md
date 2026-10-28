@@ -25,7 +25,10 @@ component you are about to use, then write the UI.
   against the document and drifts away from its target as the page scrolls.
 - **One primary action per view**: the default `filled` button. Every other action is
   `variant="default"`. The `light` and `subtle` variants are never used, on any component:
-  not on buttons, badges, action icons or theme icons.
+  not on buttons, badges, action icons or theme icons, and not through their CSS variables
+  either (`--mantine-primary-color-light`, `--mantine-color-<name>-light`, `-light-color`,
+  `-light-hover`) in a CSS module: a selected or current item is marked with a check icon, a
+  border or the filled color, never a light tint.
 - **Icon-only actions** are `ActionIcon variant="default"`. In a row they take the row's size
   (the same `size` as the tile or input next to them), grouped with `gap={6}`. A destructive
   icon action keeps the default variant and colors only the icon:
@@ -60,7 +63,8 @@ component you are about to use, then write the UI.
   are scanned, not searched. See [select](references/components/select.md).
 - **Collected values are pills inside the input.** Several dates are
   `DatePickerInput type="multiple" valueDisplay="pills"`; keys and tags picked elsewhere live in
-  a `PillsInput`-based input; never bordered rows with trash icons. See [inputs](references/components/inputs.md#values-collected-one-at-a-time).
+  a `PillsInput`-based input (no `leftSection` icon in front of the pills; Backspace removes
+  the last pill whole); never bordered rows with trash icons. See [inputs](references/components/inputs.md#values-collected-one-at-a-time).
 - **Dates are typed first.** `MaskedDateInput` for a single date and `MaskedDateInput withTime`
   for a moment; `DatePickerInput` only for dates found by browsing a calendar and for ranges
   (`numberOfColumns={2}`); never a date input next to a `TimeInput`, never day / month / year
@@ -90,7 +94,8 @@ component you are about to use, then write the UI.
   use a titled `Surface` instead. See [fieldset](references/components/fieldset.md).
 - **A field and its action share a line** on desktop: the field grows, the button keeps its
   width and is rendered through the input's `inputContainer`, so an error under the field never
-  pushes the button. See [inputs](references/components/inputs.md#a-field-and-its-action).
+  pushes the button; the row inside `inputContainer` aligns to the end, so an input with a
+  description (which gets a small top margin) and the button line up. See [inputs](references/components/inputs.md#a-field-and-its-action).
 - **Errors never move neighbors.** Rows of inputs align to the top (`align-items: start` on the
   grid, never `align="flex-end"` on a `Group`): an error message grows its own cell downward and
   the inputs beside it stay where they were. The alignment problem and its fixes are described
@@ -179,6 +184,15 @@ component you are about to use, then write the UI.
   or summary block) are never raised `Surface`s: plain text, or the default border with the
   sunken background when the block needs an edge. See
   [surface](references/components/surface.md).
+- **Color carries meaning, so use little of it.** One view shows the primary color plus color
+  only where it tells the user something they must tell apart (a status, an error, a category
+  icon); everything else is neutral. A list where every item has its own colored badge (labels,
+  people, projects) reads aggressive and the colors stop meaning anything: show an item's color
+  as a small dot next to neutral text, see [badge](references/components/badge.md).
+- **No yellow text or icons in light mode.** Yellow and lime are barely visible on a light
+  background, even as `-text` tokens: pick orange, or
+  `light-dark(var(--mantine-color-orange-text), var(--mantine-color-yellow-text))` when the
+  dark scheme should stay yellow. Yellow backgrounds with dark text are fine.
 - **Category icons** (field types, statuses, kinds) are `ThemeIcon variant="default"` with the
   icon colored by a theme color per category, see [theme-icon](references/components/theme-icon.md).
 - **Icons** come from the icon library already in the project (`@tabler/icons-react` or
