@@ -22,3 +22,7 @@
 .category {
   flex-shrink: 0;
 }
+
+.filters {
+  padding: var(--mantine-spacing-xs) var(--mantine-spacing-xs) 0;
+}

@@ -4,9 +4,9 @@ import { useEffect, useId, useMemo, useState } from 'react';
 import { useVirtualizer } from '@tanstack/react-virtual';
 import {
   Combobox,
-  Input,
   InputBase,
   ScrollArea,
+  SegmentedControl,
   Text,
   useVirtualizedCombobox,
 } from '@mantine/core';
@@ -20,6 +20,37 @@ import {
 import classes from './FontPicker.module.css';
 
 const ITEM_HEIGHT = 36;
+
+type FontFilter = 'all' | 'sans' | 'serif' | 'mono' | 'other';
+
+const FILTERS: { value: FontFilter; label: string }[] = [
+  { value: 'all', label: 'All' },
+  { value: 'sans', label: 'Sans' },
+  { value: 'serif', label: 'Serif' },
+  { value: 'mono', label: 'Mono' },
+  { value: 'other', label: 'Other' },
+];
+
+function matchesFilter(option: FontOption, filter: FontFilter) {
+  if (filter === 'all' || option.value === PRESET_OPTION) {
+    return true;
+  }
+
+  if (!option.font) {
+    return filter === 'sans';
+  }
+
+  switch (filter) {
+    case 'sans':
+      return option.font.category === 'sans-serif';
+    case 'serif':
+      return option.font.category === 'serif';
+    case 'mono':
+      return option.font.category === 'monospace';
+    case 'other':
+      return option.font.category === 'display' || option.font.category === 'handwriting';
+  }
+}
 const PRESET_OPTION = '';
 
 interface FontOption {
@@ -45,11 +76,11 @@ function getPreviewUrl(font: GoogleFont) {
 }
 
 function getOptionFamily(option: FontOption | undefined) {
-  if (!option || option.value === PRESET_OPTION) {
+  if (!option || (option.value === PRESET_OPTION && !option.font)) {
     return undefined;
   }
 
-  return getFontStack(option.value, option.font);
+  return getFontStack(option.font?.family ?? option.value, option.font);
 }
 
 function useFontCatalog() {
@@ -70,34 +101,39 @@ interface FontPickerProps {
   label: string;
   value: string | null;
   onChange: (value: string | null) => void;
-  placeholder?: string;
+  defaultFamily: string;
 }
 
-export function FontPicker({
-  label,
-  value,
-  onChange,
-  placeholder = 'Preset font',
-}: FontPickerProps) {
+export function FontPicker({ label, value, onChange, defaultFamily }: FontPickerProps) {
   const id = useId();
   const fonts = useFontCatalog();
   const [search, setSearch] = useState('');
+  const [filter, setFilter] = useState<FontFilter>('all');
   const [selectedOptionIndex, setSelectedOptionIndex] = useState(-1);
   const [scrollParent, setScrollParent] = useState<HTMLDivElement | null>(null);
 
   const options = useMemo<FontOption[]>(
     () => [
-      { value: PRESET_OPTION, label: placeholder },
-      { value: SYSTEM_FONT, label: SYSTEM_FONT },
-      ...fonts.map((font) => ({ value: font.family, label: font.family, font })),
+      {
+        value: PRESET_OPTION,
+        label: defaultFamily,
+        font: fonts.find((font) => font.family === defaultFamily),
+      },
+      ...(defaultFamily === SYSTEM_FONT ? [] : [{ value: SYSTEM_FONT, label: SYSTEM_FONT }]),
+      ...fonts
+        .filter((font) => font.family !== defaultFamily)
+        .map((font) => ({ value: font.family, label: font.family, font })),
     ],
-    [fonts, placeholder]
+    [fonts, defaultFamily]
   );
 
   const filtered = useMemo(() => {
     const query = search.trim().toLowerCase();
-    return query ? options.filter((option) => option.label.toLowerCase().includes(query)) : options;
-  }, [options, search]);
+    return options.filter(
+      (option) =>
+        matchesFilter(option, filter) && (!query || option.label.toLowerCase().includes(query))
+    );
+  }, [filter, options, search]);
 
   const currentValue = value ?? PRESET_OPTION;
   const activeIndex = filtered.findIndex((option) => option.value === currentValue);
@@ -164,7 +200,7 @@ export function FontPicker({
 
   return (
     <>
-      <Combobox store={store} resetSelectionOnOptionHover={false} floatingStrategy="fixed">
+      <Combobox store={store} resetSelectionOnOptionHover={false} withinPortal={false}>
         <Combobox.Target targetType="button">
           <InputBase
             label={label}
@@ -175,11 +211,9 @@ export function FontPicker({
             rightSectionPointerEvents="none"
             onClick={() => store.toggleDropdown()}
           >
-            {value ? (
-              <span style={{ fontFamily: getOptionFamily(currentOption) }}>{value}</span>
-            ) : (
-              <Input.Placeholder>{placeholder}</Input.Placeholder>
-            )}
+            <span style={{ fontFamily: getOptionFamily(currentOption) }}>
+              {currentOption?.label ?? value ?? defaultFamily}
+            </span>
           </InputBase>
         </Combobox.Target>
 
@@ -194,6 +228,21 @@ export function FontPicker({
             placeholder="Search fonts"
             aria-label={`Search ${label.toLowerCase()}`}
           />
+          <div className={classes.filters}>
+            <SegmentedControl
+              fullWidth
+              size="xs"
+              aria-label="Font type"
+              value={filter}
+              onChange={(value) => {
+                setFilter(value as FontFilter);
+                setSelectedOptionIndex(0);
+                virtualizer.scrollToIndex(0);
+                store.searchRef.current?.focus();
+              }}
+              data={FILTERS}
+            />
+          </div>
           <Combobox.Options>
             {filtered.length === 0 ? (
               <Combobox.Empty>No fonts found</Combobox.Empty>

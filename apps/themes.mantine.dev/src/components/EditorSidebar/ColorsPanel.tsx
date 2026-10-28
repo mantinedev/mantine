@@ -4,16 +4,17 @@ import { useCallback, useMemo, useState } from 'react';
 import { IconPencil, IconPlus, IconTrash } from '@tabler/icons-react';
 import {
   ActionIcon,
-  Button,
   ColorSwatch,
-  Group,
+  Divider,
   type MantineColorShade,
+  SimpleGrid,
   Stack,
   Text,
 } from '@mantine/core';
 import {
   type CustomColor,
-  generateNeutralPalette,
+  getCustomNeutralKey,
+  type Neutral,
   generatePalette,
   type PresetColorSwatch,
   type PresetThemeInfo,
@@ -21,17 +22,14 @@ import {
   toHexColor,
 } from '@/preview';
 import { ColorModal, type ColorModalResult } from '../ColorModal';
+import { NeutralModal } from '../NeutralModal';
 import { Control, HexColorInput, Swatches, ValueSlider } from './controls';
+import { NeutralSwatches } from './NeutralSwatches';
 import classes from './EditorSidebar.module.css';
 
 const RESERVED_NAMES = ['gray', 'dark', 'white', 'black'];
 
-type ModalState =
-  | { type: 'add' }
-  | { type: 'edit'; color: CustomColor }
-  | { type: 'gray' }
-  | { type: 'dark' }
-  | null;
+type ModalState = { type: 'add' } | { type: 'edit'; color: CustomColor } | null;
 
 interface ShadesProps {
   shades: string[];
@@ -60,37 +58,6 @@ function Shades({ shades, light, dark }: ShadesProps) {
   );
 }
 
-interface NeutralColorProps {
-  label: string;
-  shades: string[];
-  customized: boolean;
-  onEdit: () => void;
-  onReset: () => void;
-}
-
-function NeutralColor({ label, shades, customized, onEdit, onReset }: NeutralColorProps) {
-  return (
-    <div>
-      <div className={classes.controlHead}>
-        <Text size="sm" className={classes.label}>
-          {label}
-        </Text>
-        <Group gap={6}>
-          {customized && (
-            <Button variant="default" size="compact-xs" onClick={onReset}>
-              Reset
-            </Button>
-          )}
-          <Button variant="default" size="compact-xs" onClick={onEdit}>
-            Change
-          </Button>
-        </Group>
-      </div>
-      <Shades shades={shades} />
-    </div>
-  );
-}
-
 interface ColorsPanelProps {
   info: PresetThemeInfo | null;
   overrides: ThemeOverrides;
@@ -99,6 +66,34 @@ interface ColorsPanelProps {
 
 export function ColorsPanel({ info, overrides, setParams }: ColorsPanelProps) {
   const [modal, setModal] = useState<ModalState>(null);
+  const [modalOpened, setModalOpened] = useState(false);
+  const openModal = (state: NonNullable<ModalState>) => {
+    setModal(state);
+    setModalOpened(true);
+  };
+  const closeModal = () => setModalOpened(false);
+  const [neutralModal, setNeutralModal] = useState<{
+    neutral: Neutral;
+    editIndex: number | null;
+  }>({ neutral: 'gray', editIndex: null });
+  const [neutralModalOpened, setNeutralModalOpened] = useState(false);
+  const openNeutralModal = (neutral: Neutral, editIndex: number | null = null) => {
+    setNeutralModal({ neutral, editIndex });
+    setNeutralModalOpened(true);
+  };
+  const customNeutralsByKind = overrides[`${neutralModal.neutral}Custom`];
+  const neutralCustoms = useMemo(() => customNeutralsByKind ?? [], [customNeutralsByKind]);
+  const neutralInitial =
+    neutralModal.editIndex === null ? null : (neutralCustoms[neutralModal.editIndex] ?? null);
+  const neutralTakenNames = useMemo(
+    () =>
+      new Set(
+        neutralCustoms
+          .filter((_, index) => index !== neutralModal.editIndex)
+          .map((item) => item.name)
+      ),
+    [neutralCustoms, neutralModal.editIndex]
+  );
   const customColors = useMemo(() => overrides.customColors ?? [], [overrides.customColors]);
 
   const customPalettes = useMemo(
@@ -136,11 +131,6 @@ export function ColorsPanel({ info, overrides, setParams }: ColorsPanelProps) {
     info?.swatches.find((swatch) => swatch.name === primaryColor)?.shades ??
     [];
 
-  const grayShades =
-    (info && generateNeutralPalette(overrides.grayColor, info.gray)) ?? info?.gray ?? [];
-  const darkShades =
-    (info && generateNeutralPalette(overrides.darkColor, info.dark)) ?? info?.dark ?? [];
-
   const takenNames = useMemo(() => {
     const editing = modal?.type === 'edit' ? modal.color.name : null;
     return new Set([
@@ -154,14 +144,6 @@ export function ColorsPanel({ info, overrides, setParams }: ColorsPanelProps) {
     setParams({ primaryColor: name, primaryShadeLight: null, primaryShadeDark: null });
 
   const getPalette = useCallback((value: string) => generatePalette(value)?.shades ?? null, []);
-  const getGray = useCallback(
-    (value: string) => (info ? generateNeutralPalette(value, info.gray) : null),
-    [info]
-  );
-  const getDark = useCallback(
-    (value: string) => (info ? generateNeutralPalette(value, info.dark) : null),
-    [info]
-  );
 
   const submitColor = ({ name, value }: ColorModalResult) => {
     if (modal?.type === 'edit') {
@@ -184,7 +166,7 @@ export function ColorsPanel({ info, overrides, setParams }: ColorsPanelProps) {
         primaryShadeDark: null,
       });
     }
-    setModal(null);
+    closeModal();
   };
 
   const removeColor = (name: string) =>
@@ -211,9 +193,17 @@ export function ColorsPanel({ info, overrides, setParams }: ColorsPanelProps) {
 
       <Control label="Custom colors">
         <Stack gap="xs">
-          {customSwatches.length > 0 && (
-            <Swatches swatches={customSwatches} value={primaryColor} onChange={selectPrimary} />
-          )}
+          <Swatches swatches={customSwatches} value={primaryColor} onChange={selectPrimary}>
+            <ActionIcon
+              variant="default"
+              radius="xl"
+              aria-label="Add color"
+              onClick={() => openModal({ type: 'add' })}
+              className={classes.addColor}
+            >
+              <IconPlus size={14} />
+            </ActionIcon>
+          </Swatches>
           {customColors.map((color) => (
             <div key={color.name} className={classes.customColor}>
               <ColorSwatch color={toHexColor(color.value) || color.value} size={18} />
@@ -224,7 +214,7 @@ export function ColorsPanel({ info, overrides, setParams }: ColorsPanelProps) {
                 variant="default"
                 size="sm"
                 aria-label={`Edit ${color.name}`}
-                onClick={() => setModal({ type: 'edit', color })}
+                onClick={() => openModal({ type: 'edit', color })}
               >
                 <IconPencil size={14} />
               </ActionIcon>
@@ -238,13 +228,6 @@ export function ColorsPanel({ info, overrides, setParams }: ColorsPanelProps) {
               </ActionIcon>
             </div>
           ))}
-          <Button
-            variant="default"
-            leftSection={<IconPlus size={16} />}
-            onClick={() => setModal({ type: 'add' })}
-          >
-            Add color
-          </Button>
         </Stack>
       </Control>
 
@@ -254,49 +237,76 @@ export function ColorsPanel({ info, overrides, setParams }: ColorsPanelProps) {
         </Control>
       )}
 
-      <ValueSlider
-        label="Primary shade, light scheme"
-        value={shadeLight}
-        min={0}
-        max={9}
-        onChange={(value) => setParams({ primaryShadeLight: value as MantineColorShade })}
-      />
-      <ValueSlider
-        label="Primary shade, dark scheme"
-        value={shadeDark}
-        min={0}
-        max={9}
-        onChange={(value) => setParams({ primaryShadeDark: value as MantineColorShade })}
+      <SimpleGrid cols={2} spacing="md">
+        <ValueSlider
+          label="Light shade"
+          value={shadeLight}
+          min={0}
+          max={9}
+          onChange={(value) => setParams({ primaryShadeLight: value as MantineColorShade })}
+        />
+        <ValueSlider
+          label="Dark shade"
+          value={shadeDark}
+          min={0}
+          max={9}
+          onChange={(value) => setParams({ primaryShadeDark: value as MantineColorShade })}
+        />
+      </SimpleGrid>
+
+      <Divider />
+
+      <Text size="sm" className={classes.sectionLabel}>
+        Neutral colors
+      </Text>
+
+      <NeutralSwatches
+        neutral="gray"
+        label="Gray"
+        themeRamp={info?.gray ?? []}
+        overrides={overrides}
+        setParams={setParams}
+        onAdd={() => openNeutralModal('gray')}
+        onEdit={(index) => openNeutralModal('gray', index)}
       />
 
-      <NeutralColor
-        label="Gray, light scheme neutrals"
-        shades={grayShades}
-        customized={overrides.grayColor !== null}
-        onEdit={() => setModal({ type: 'gray' })}
-        onReset={() => setParams({ grayColor: null })}
-      />
-      <NeutralColor
-        label="Dark, dark scheme neutrals"
-        shades={darkShades}
-        customized={overrides.darkColor !== null}
-        onEdit={() => setModal({ type: 'dark' })}
-        onReset={() => setParams({ darkColor: null })}
+      <NeutralSwatches
+        neutral="dark"
+        label="Dark"
+        themeRamp={info?.dark ?? []}
+        overrides={overrides}
+        setParams={setParams}
+        onAdd={() => openNeutralModal('dark')}
+        onEdit={(index) => openNeutralModal('dark', index)}
       />
 
-      <HexColorInput
-        label="White"
-        value={overrides.white ?? info?.white ?? null}
-        onChange={(white) => setParams({ white })}
-      />
-      <HexColorInput
-        label="Black"
-        value={overrides.black ?? info?.black ?? null}
-        onChange={(black) => setParams({ black })}
+      <Divider />
+
+      <SimpleGrid cols={2} spacing="xs">
+        <HexColorInput
+          label="White"
+          value={overrides.white ?? info?.white ?? null}
+          onChange={(white) => setParams({ white })}
+        />
+        <HexColorInput
+          label="Black"
+          value={overrides.black ?? info?.black ?? null}
+          onChange={(black) => setParams({ black })}
+        />
+      </SimpleGrid>
+
+      <ValueSlider
+        label="Disabled opacity"
+        value={overrides.disabledOpacity ?? info?.disabledOpacity ?? 0.6}
+        min={0.2}
+        max={1}
+        step={0.05}
+        format={(value) => value.toFixed(2)}
+        onChange={(disabledOpacity) => setParams({ disabledOpacity })}
       />
 
       <ColorModal
-        opened={modal?.type === 'add' || modal?.type === 'edit'}
+        opened={modalOpened}
         title={modal?.type === 'edit' ? `Edit ${modal.color.name}` : 'Add color'}
         submitLabel={modal?.type === 'edit' ? 'Save color' : 'Add color'}
         initialValue={modal?.type === 'edit' ? modal.color.value : '#5474b4'}
@@ -305,26 +315,33 @@ export function ColorsPanel({ info, overrides, setParams }: ColorsPanelProps) {
         takenNames={takenNames}
         getShades={getPalette}
         onSubmit={submitColor}
-        onClose={() => setModal(null)}
+        onClose={closeModal}
+        onExitTransitionEnd={() => setModal(null)}
       />
 
-      <ColorModal
-        opened={modal?.type === 'gray' || modal?.type === 'dark'}
-        title={modal?.type === 'dark' ? 'Dark color' : 'Gray color'}
-        submitLabel="Apply"
-        initialValue={
-          modal?.type === 'dark'
-            ? (overrides.darkColor ?? (toHexColor(info?.dark[7]) || '#2e2e2e'))
-            : (overrides.grayColor ?? (toHexColor(info?.gray[6]) || '#868e96'))
-        }
-        withName={false}
-        takenNames={takenNames}
-        getShades={modal?.type === 'dark' ? getDark : getGray}
-        onSubmit={({ value }) => {
-          setParams(modal?.type === 'dark' ? { darkColor: value } : { grayColor: value });
-          setModal(null);
+      <NeutralModal
+        opened={neutralModalOpened}
+        neutral={neutralModal.neutral}
+        themeRamp={info?.[neutralModal.neutral] ?? []}
+        primaryTint={primaryShades[6]}
+        initial={neutralInitial}
+        takenNames={neutralTakenNames}
+        onClose={() => setNeutralModalOpened(false)}
+        onExitTransitionEnd={() => setNeutralModal({ neutral: 'gray', editIndex: null })}
+        onSubmit={(value) => {
+          const { neutral, editIndex } = neutralModal;
+          const customKey = `${neutral}Custom` as const;
+          const current = overrides[customKey] ?? [];
+          const ramps =
+            editIndex === null
+              ? [...current, value]
+              : current.map((item, index) => (index === editIndex ? value : item));
+          setParams({
+            [customKey]: ramps,
+            [`${neutral}Neutral`]: getCustomNeutralKey(editIndex ?? ramps.length - 1),
+          } as Partial<ThemeOverrides>);
+          setNeutralModalOpened(false);
         }}
-        onClose={() => setModal(null)}
       />
     </Stack>
   );

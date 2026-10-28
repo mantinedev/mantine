@@ -1,14 +1,14 @@
 'use client';
 
-import { useState } from 'react';
 import {
   Accordion,
   Button,
+  Divider,
   ScrollArea,
   SegmentedControl,
   Select,
+  SimpleGrid,
   Stack,
-  Switch,
   Title,
 } from '@mantine/core';
 import { useEditorParams } from '@/hooks/use-editor-params';
@@ -17,31 +17,21 @@ import {
   DEFAULT_OVERRIDES,
   FOCUS_RINGS,
   HEADING_WRAPS,
-  type PresetSurfaces,
   type PresetThemeInfo,
   type ScaleGroup,
   SHADOW_PRESETS,
-  SURFACE_KEYS,
-  type SurfaceKey,
   type ThemeOverrides,
 } from '@/preview';
 import { FontPicker } from '../FontPicker';
 import { ColorsPanel } from './ColorsPanel';
-import { Control, HexColorInput, ScaleControl, ValueSlider } from './controls';
+import { Control, ScaleControl } from './controls';
 import classes from './EditorSidebar.module.css';
 
 const PRESET = 'preset';
 
-const WEIGHTS = ['100', '200', '300', '400', '500', '600', '700', '800', '900'];
+const PANELS = ['colors', 'typography', 'headings', 'spacing', 'radius', 'shadows', 'interaction'];
 
-const SURFACE_LABELS: Record<SurfaceKey, string> = {
-  page: 'Page',
-  panel: 'Panel',
-  panel2: 'Raised panel',
-  sunken: 'Sunken',
-  muted: 'Muted',
-  input: 'Input',
-};
+const WEIGHTS = ['100', '200', '300', '400', '500', '600', '700', '800', '900'];
 
 function capitalize(value: string) {
   return value.charAt(0).toUpperCase() + value.slice(1);
@@ -60,16 +50,11 @@ function fromPreset<T extends string>(value: string | null) {
 
 interface EditorSidebarProps {
   info: PresetThemeInfo | null;
-  surfaces: PresetSurfaces | null;
 }
 
-export function EditorSidebar({ info, surfaces: currentSurfaces }: EditorSidebarProps) {
+export function EditorSidebar({ info }: EditorSidebarProps) {
   const { overrides, setParams } = useEditorParams();
-  const [surfaceScheme, setSurfaceScheme] = useState<'light' | 'dark'>('light');
   const changed = JSON.stringify(overrides) !== JSON.stringify(DEFAULT_OVERRIDES);
-
-  const surfaceKey = surfaceScheme === 'light' ? 'surfacesLight' : 'surfacesDark';
-  const surfaces = overrides[surfaceKey];
 
   const scale = (group: ScaleGroup, label?: string) => (
     <ScaleControl
@@ -95,12 +80,12 @@ export function EditorSidebar({ info, surfaces: currentSurfaces }: EditorSidebar
       value={String(overrides[key] ?? fallback ?? '')}
       onChange={(value) => setParams({ [key]: value ? Number(value) : null })}
       allowDeselect={false}
-      comboboxProps={{ floatingStrategy: 'fixed' }}
+      comboboxProps={{ withinPortal: false }}
     />
   );
 
   return (
-    <ScrollArea className={classes.root}>
+    <ScrollArea className={classes.root} scrollbarSize={4} offsetScrollbars="y">
       <div className={classes.header}>
         <Title order={2} size="h4" className={classes.title}>
           Theme
@@ -115,49 +100,21 @@ export function EditorSidebar({ info, surfaces: currentSurfaces }: EditorSidebar
         </Button>
       </div>
 
-      <Accordion multiple defaultValue={['colors']} classNames={{ control: classes.panelControl }}>
+      <Accordion
+        multiple
+        defaultValue={PANELS}
+        chevronPosition="right"
+        classNames={{
+          item: classes.panel,
+          control: classes.panelControl,
+          label: classes.panelLabel,
+          content: classes.panelContent,
+        }}
+      >
         <Accordion.Item value="colors">
           <Accordion.Control>Colors</Accordion.Control>
           <Accordion.Panel>
             <ColorsPanel info={info} overrides={overrides} setParams={setParams} />
-          </Accordion.Panel>
-        </Accordion.Item>
-
-        <Accordion.Item value="surfaces">
-          <Accordion.Control>Surfaces</Accordion.Control>
-          <Accordion.Panel>
-            <Stack gap="md">
-              <SegmentedControl
-                fullWidth
-                value={surfaceScheme}
-                onChange={(value) => setSurfaceScheme(value as 'light' | 'dark')}
-                data={[
-                  { value: 'light', label: 'Light scheme' },
-                  { value: 'dark', label: 'Dark scheme' },
-                ]}
-              />
-              {SURFACE_KEYS.map((key) => (
-                <HexColorInput
-                  key={`${surfaceScheme}-${key}`}
-                  label={SURFACE_LABELS[key]}
-                  value={
-                    surfaces?.[key] ??
-                    (currentSurfaces?.[surfaceScheme][key] ||
-                      info?.surfaces[surfaceScheme][key] ||
-                      null)
-                  }
-                  onChange={(value) => {
-                    const next = { ...surfaces };
-                    if (value) {
-                      next[key] = value;
-                    } else {
-                      delete next[key];
-                    }
-                    setParams({ [surfaceKey]: Object.keys(next).length > 0 ? next : null });
-                  }}
-                />
-              ))}
-            </Stack>
           </Accordion.Panel>
         </Accordion.Item>
 
@@ -167,24 +124,26 @@ export function EditorSidebar({ info, surfaces: currentSurfaces }: EditorSidebar
             <Stack gap="md">
               <FontPicker
                 label="Body font"
+                defaultFamily={info?.fonts.body ?? ''}
                 value={overrides.font}
                 onChange={(font) => setParams({ font })}
               />
               <FontPicker
                 label="Monospace font"
+                defaultFamily={info?.fonts.mono ?? ''}
                 value={overrides.monoFont}
                 onChange={(monoFont) => setParams({ monoFont })}
               />
-              <Switch
-                label="Font smoothing"
-                checked={overrides.fontSmoothing ?? info?.fontSmoothing ?? true}
-                onChange={(event) => setParams({ fontSmoothing: event.currentTarget.checked })}
-              />
+              <Divider />
               {scale('fontSizes')}
+              <Divider />
               {scale('lineHeights')}
-              {weightSelect('Regular weight', 'fontWeightRegular', info?.fontWeights.regular)}
-              {weightSelect('Medium weight', 'fontWeightMedium', info?.fontWeights.medium)}
-              {weightSelect('Bold weight', 'fontWeightBold', info?.fontWeights.bold)}
+              <Divider />
+              <SimpleGrid cols={3} spacing="xs">
+                {weightSelect('Regular', 'fontWeightRegular', info?.fontWeights.regular)}
+                {weightSelect('Medium', 'fontWeightMedium', info?.fontWeights.medium)}
+                {weightSelect('Bold', 'fontWeightBold', info?.fontWeights.bold)}
+              </SimpleGrid>
             </Stack>
           </Accordion.Panel>
         </Accordion.Item>
@@ -195,6 +154,7 @@ export function EditorSidebar({ info, surfaces: currentSurfaces }: EditorSidebar
             <Stack gap="md">
               <FontPicker
                 label="Headings font"
+                defaultFamily={info?.fonts.headings ?? ''}
                 value={overrides.headingsFont}
                 onChange={(headingsFont) => setParams({ headingsFont })}
               />
@@ -207,7 +167,7 @@ export function EditorSidebar({ info, surfaces: currentSurfaces }: EditorSidebar
                   setParams({ headingsWrap: value as ThemeOverrides['headingsWrap'] })
                 }
                 allowDeselect={false}
-                comboboxProps={{ floatingStrategy: 'fixed' }}
+                comboboxProps={{ withinPortal: false }}
               />
               {scale('headingSizes')}
               {scale('headingLineHeights')}
@@ -231,7 +191,7 @@ export function EditorSidebar({ info, surfaces: currentSurfaces }: EditorSidebar
                 value={overrides.defaultRadius ?? (info?.defaultRadius || null)}
                 onChange={(defaultRadius) => setParams({ defaultRadius })}
                 allowDeselect={false}
-                comboboxProps={{ floatingStrategy: 'fixed' }}
+                comboboxProps={{ withinPortal: false }}
               />
             </Stack>
           </Accordion.Panel>
@@ -276,15 +236,6 @@ export function EditorSidebar({ info, surfaces: currentSurfaces }: EditorSidebar
                   data={CURSOR_TYPES.map((value) => ({ value, label: capitalize(value) }))}
                 />
               </Control>
-              <ValueSlider
-                label="Disabled opacity"
-                value={overrides.disabledOpacity ?? info?.disabledOpacity ?? 0.6}
-                min={0.2}
-                max={1}
-                step={0.05}
-                format={(value) => value.toFixed(2)}
-                onChange={(disabledOpacity) => setParams({ disabledOpacity })}
-              />
             </Stack>
           </Accordion.Panel>
         </Accordion.Item>

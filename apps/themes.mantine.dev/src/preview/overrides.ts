@@ -1,19 +1,17 @@
 import {
-  type CSSVariablesResolver,
-  defaultCssVariablesResolver,
   DEFAULT_THEME,
   isVirtualColor,
   type MantineColorShade,
   type MantineColorsTuple,
   type MantineTheme,
   type MantineThemeOverride,
-  type MantineThemeSurfaceValues,
   mergeMantineTheme,
   mergeThemeOverrides,
   rem,
 } from '@mantine/core';
-import { generateNeutralPalette, generatePalette, toHexColor } from './colors';
+import { generatePalette, toHexColor } from './colors';
 import { getFontStack, type GoogleFont, SYSTEM_FONT } from './fonts';
+import { NEUTRALS, resolveNeutral } from './neutrals';
 import {
   type CURSOR_TYPES,
   type FOCUS_RINGS,
@@ -35,24 +33,12 @@ export interface PresetColorSwatch {
   custom: boolean;
 }
 
-export const SURFACE_KEYS = ['page', 'panel', 'panel2', 'sunken', 'muted', 'input'] as const;
-
-export type SurfaceKey = (typeof SURFACE_KEYS)[number];
-
-export type SchemeSurfaces = Record<SurfaceKey, string>;
-
-export interface PresetSurfaces {
-  light: SchemeSurfaces;
-  dark: SchemeSurfaces;
-}
-
 export interface PresetThemeInfo {
   primaryColor: string;
   primaryShade: PrimaryShade;
   swatches: PresetColorSwatch[];
   gray: string[];
   dark: string[];
-  surfaces: { light: SchemeSurfaces; dark: SchemeSurfaces };
   scales: PresetScales;
   white: string;
   black: string;
@@ -60,22 +46,13 @@ export interface PresetThemeInfo {
   headingsWeight: number;
   headingsWrap: (typeof HEADING_WRAPS)[number];
   defaultRadius: string;
-  fontSmoothing: boolean;
+  fonts: { body: string; headings: string; mono: string };
   focusRing: (typeof FOCUS_RINGS)[number];
   cursorType: (typeof CURSOR_TYPES)[number];
   disabledOpacity: number;
 }
 
 const NEUTRAL_COLORS = ['gray', 'dark'];
-
-const SURFACE_VARIABLES: Record<SurfaceKey, string> = {
-  page: '--mantine-color-surface-page',
-  panel: '--mantine-color-surface-panel',
-  panel2: '--mantine-color-surface-panel-2',
-  sunken: '--mantine-color-surface-sunken',
-  muted: '--mantine-color-surface-muted',
-  input: '--mantine-color-surface-input',
-};
 
 function createShadows(alpha: number, size: number) {
   const steps = { xs: [1, 3], sm: [2, 6], md: [4, 12], lg: [8, 24], xl: [16, 40] };
@@ -106,6 +83,10 @@ function toWeight(value: number) {
   return String(clamp(Math.round(value / 100) * 100, 100, 900));
 }
 
+function getFirstFamily(stack: string) {
+  return (stack.split(',')[0] ?? '').trim().replace(/^['"]|['"]$/g, '');
+}
+
 function normalizePrimaryShade(theme: MantineTheme): PrimaryShade {
   return typeof theme.primaryShade === 'number'
     ? { light: theme.primaryShade, dark: theme.primaryShade }
@@ -119,36 +100,6 @@ function resolveTuple(theme: MantineTheme, name: string): MantineColorsTuple {
     return theme.colors[light] ?? tuple;
   }
   return tuple;
-}
-
-function resolveSurfaces(theme: MantineTheme, resolver: CSSVariablesResolver | undefined) {
-  const base = defaultCssVariablesResolver(theme);
-  const custom = resolver?.(theme);
-  const variables = { ...base.variables, ...custom?.variables };
-
-  const resolveScheme = (scheme: 'light' | 'dark'): SchemeSurfaces => {
-    const values: Record<string, string> = {
-      ...variables,
-      ...base[scheme],
-      ...custom?.[scheme],
-    };
-
-    const resolve = (value: string, depth = 0): string =>
-      depth > 12
-        ? value
-        : value.replace(/var\((--[a-z0-9-]+)(?:,[^)]*)?\)/gi, (match, name: string) =>
-            values[name] !== undefined ? resolve(values[name], depth + 1) : match
-          );
-
-    return Object.fromEntries(
-      Object.entries(SURFACE_VARIABLES).map(([key, variable]) => [
-        key,
-        toHexColor(resolve(values[variable] ?? '')),
-      ])
-    ) as SchemeSurfaces;
-  };
-
-  return { light: resolveScheme('light'), dark: resolveScheme('dark') };
 }
 
 function getScaleSource(theme: MantineTheme, group: ScaleGroup): Record<string, string> {
@@ -232,8 +183,7 @@ function getFont(family: string | null, fonts: Map<string, GoogleFont>) {
 
 export function getPresetThemeInfo(
   themeOverride: MantineThemeOverride,
-  measure: (value: string) => number,
-  resolver?: CSSVariablesResolver
+  measure: (value: string) => number
 ): PresetThemeInfo {
   const theme = mergeMantineTheme(DEFAULT_THEME, themeOverride);
   const primaryShade = normalizePrimaryShade(theme);
@@ -261,7 +211,6 @@ export function getPresetThemeInfo(
     swatches,
     gray: [...theme.colors.gray],
     dark: [...theme.colors.dark],
-    surfaces: resolveSurfaces(theme, resolver),
     scales,
     white: toHexColor(theme.white) || theme.white,
     black: toHexColor(theme.black) || theme.black,
@@ -273,34 +222,15 @@ export function getPresetThemeInfo(
     headingsWeight: toNumber(theme.headings.fontWeight, 700),
     headingsWrap: theme.headings.textWrap,
     defaultRadius: typeof theme.defaultRadius === 'string' ? theme.defaultRadius : '',
-    fontSmoothing: theme.fontSmoothing,
+    fonts: {
+      body: getFirstFamily(theme.fontFamily),
+      headings: getFirstFamily(theme.headings.fontFamily ?? theme.fontFamily),
+      mono: getFirstFamily(theme.fontFamilyMonospace),
+    },
     focusRing: theme.focusRing,
     cursorType: theme.cursorType,
     disabledOpacity: theme.disabledOpacity,
   };
-}
-
-export function getThemeSurfaces(
-  themeOverride: MantineThemeOverride,
-  resolver?: CSSVariablesResolver
-) {
-  return resolveSurfaces(mergeMantineTheme(DEFAULT_THEME, themeOverride), resolver);
-}
-
-function getSurfaces(values: Record<string, string> | null): MantineThemeSurfaceValues | undefined {
-  if (!values) {
-    return undefined;
-  }
-
-  return Object.fromEntries(
-    SURFACE_KEYS.filter((key) => hasKey(values, key)).map((key) => [key, values[key]])
-  );
-}
-
-export function getOverrideSurfaces(
-  overrides: Pick<ThemeOverrides, 'surfacesLight' | 'surfacesDark'>
-) {
-  return { light: getSurfaces(overrides.surfacesLight), dark: getSurfaces(overrides.surfacesDark) };
 }
 
 export function getOverrideShadows(shadows: ThemeOverrides['shadows']) {
@@ -331,21 +261,23 @@ export function applyThemeOverrides(
     colors[palette.name] = palette.shades as unknown as MantineColorsTuple;
   });
 
-  const gray = generateNeutralPalette(overrides.grayColor, theme.colors.gray);
-  if (gray) {
-    colors.gray = gray as unknown as MantineColorsTuple;
-  }
+  const customPrimary = customPalettes.find((palette) => palette.name === overrides.primaryColor);
 
-  const dark = generateNeutralPalette(overrides.darkColor, theme.colors.dark);
-  if (dark) {
-    colors.dark = dark as unknown as MantineColorsTuple;
-  }
+  NEUTRALS.forEach((neutral) => {
+    const ramp = resolveNeutral(
+      neutral,
+      overrides[`${neutral}Neutral`],
+      overrides[`${neutral}Custom`]
+    );
+    if (ramp) {
+      colors[neutral] = ramp as unknown as MantineColorsTuple;
+    }
+  });
 
   if (Object.keys(colors).length > 0) {
     patch.colors = colors;
   }
 
-  const customPrimary = customPalettes.find((palette) => palette.name === overrides.primaryColor);
   if (customPrimary || hasKey(theme.colors, overrides.primaryColor)) {
     patch.primaryColor = overrides.primaryColor!;
   }
@@ -372,14 +304,6 @@ export function applyThemeOverrides(
     patch.black = overrides.black;
   }
 
-  const surfaces = getOverrideSurfaces(overrides);
-  if (surfaces.light || surfaces.dark) {
-    patch.surfaces = {
-      ...(surfaces.light && { light: surfaces.light }),
-      ...(surfaces.dark && { dark: surfaces.dark }),
-    };
-  }
-
   const fontFamily = getFont(overrides.font, fonts);
   if (fontFamily) {
     patch.fontFamily = fontFamily;
@@ -388,10 +312,6 @@ export function applyThemeOverrides(
   const monoFont = getFont(overrides.monoFont, fonts);
   if (monoFont) {
     patch.fontFamilyMonospace = monoFont;
-  }
-
-  if (overrides.fontSmoothing !== null) {
-    patch.fontSmoothing = overrides.fontSmoothing;
   }
 
   const fontWeights = {

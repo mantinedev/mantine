@@ -3,7 +3,6 @@ import {
   createParser,
   createSerializer,
   type inferParserType,
-  parseAsBoolean,
   parseAsFloat,
   parseAsInteger,
   parseAsString,
@@ -19,14 +18,11 @@ export function isHexColor(value: string) {
 
 const OKLCH_PATTERN = /^oklch\(\s*(?:0|1|0?\.\d+|1\.0+)\s+(?:0|0?\.\d+)\s+\d{1,3}(?:\.\d+)?\s*\)$/i;
 
-export function isBaseColor(value: string) {
-  return isHexColor(value) || OKLCH_PATTERN.test(value);
-}
+const OPAQUE_HEX_PATTERN = /^#(?:[0-9a-f]{3}|[0-9a-f]{6})$/i;
 
-const parseAsBaseColor = createParser<string>({
-  parse: (query) => (isBaseColor(query) ? query : null),
-  serialize: (value) => value,
-});
+export function isBaseColor(value: string) {
+  return OPAQUE_HEX_PATTERN.test(value) || OKLCH_PATTERN.test(value);
+}
 
 const parseAsNumberRecord = createParser<Record<string, number>>({
   parse: (query) => {
@@ -40,20 +36,6 @@ const parseAsNumberRecord = createParser<Record<string, number>>({
   serialize: (value) =>
     Object.entries(value)
       .map(([key, item]) => `${key}:${Math.round(item * 100) / 100}`)
-      .join(','),
-});
-
-const parseAsColorRecord = createParser<Record<string, string>>({
-  parse: (query) => {
-    const entries = query.split(',').flatMap((item) => {
-      const [key, value] = item.split(':');
-      return KEY_PATTERN.test(key ?? '') && isHexColor(value ?? '') ? [[key, value] as const] : [];
-    });
-    return entries.length > 0 ? Object.fromEntries(entries) : null;
-  },
-  serialize: (value) =>
-    Object.entries(value)
-      .map(([key, item]) => `${key}:${item}`)
       .join(','),
 });
 
@@ -92,6 +74,29 @@ const parseAsCustomColors = createParser<CustomColor[]>({
   eq: (a, b) => JSON.stringify(a) === JSON.stringify(b),
 });
 
+export interface CustomNeutral {
+  name: string;
+  shades: string[];
+}
+
+const parseAsRampList = createParser<CustomNeutral[]>({
+  parse: (query) => {
+    const ramps = query.split('~').map((item) => {
+      const separator = item.indexOf(':');
+      return { name: item.slice(0, separator), shades: item.slice(separator + 1).split(',') };
+    });
+    return ramps.length > 0 &&
+      ramps.every(
+        (ramp) =>
+          isColorName(ramp.name) && ramp.shades.length === 10 && ramp.shades.every(isHexColor)
+      )
+      ? ramps
+      : null;
+  },
+  serialize: (value) => value.map((ramp) => `${ramp.name}:${ramp.shades.join(',')}`).join('~'),
+  eq: (a, b) => JSON.stringify(a) === JSON.stringify(b),
+});
+
 export const SHADOW_PRESETS = ['none', 'subtle', 'mantine', 'strong'] as const;
 export const HEADING_WRAPS = ['wrap', 'nowrap', 'balance', 'pretty', 'stable'] as const;
 export const FOCUS_RINGS = ['auto', 'always', 'never'] as const;
@@ -100,18 +105,17 @@ export const CURSOR_TYPES = ['default', 'pointer'] as const;
 export const themeParsers = {
   primaryColor: parseAsString,
   customColors: parseAsCustomColors,
-  grayColor: parseAsBaseColor,
-  darkColor: parseAsBaseColor,
+  grayNeutral: parseAsString,
+  grayCustom: parseAsRampList,
+  darkNeutral: parseAsString,
+  darkCustom: parseAsRampList,
   primaryShadeLight: parseAsInteger,
   primaryShadeDark: parseAsInteger,
   white: parseAsHexColor,
   black: parseAsHexColor,
-  surfacesLight: parseAsColorRecord,
-  surfacesDark: parseAsColorRecord,
 
   font: parseAsString,
   monoFont: parseAsString,
-  fontSmoothing: parseAsBoolean,
   fontWeightRegular: parseAsInteger,
   fontWeightMedium: parseAsInteger,
   fontWeightBold: parseAsInteger,
@@ -142,17 +146,16 @@ export const themeParsers = {
 export const themeUrlKeys = {
   primaryColor: 'primary',
   customColors: 'colors',
-  grayColor: 'gray',
-  darkColor: 'dark',
+  grayNeutral: 'gray',
+  grayCustom: 'gray-custom',
+  darkNeutral: 'dark',
+  darkCustom: 'dark-custom',
   primaryShadeLight: 'shade-light',
   primaryShadeDark: 'shade-dark',
   white: 'white',
   black: 'black',
-  surfacesLight: 'surfaces-light',
-  surfacesDark: 'surfaces-dark',
   font: 'font',
   monoFont: 'mono-font',
-  fontSmoothing: 'font-smoothing',
   fontWeightRegular: 'weight-regular',
   fontWeightMedium: 'weight-medium',
   fontWeightBold: 'weight-bold',

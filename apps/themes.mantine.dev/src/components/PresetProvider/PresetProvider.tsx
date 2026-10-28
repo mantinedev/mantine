@@ -5,7 +5,6 @@ import {
   type CSSVariablesResolver,
   MantineProvider,
   type MantineProviderProps,
-  type MantineThemeSurfaceValues,
   useMantineColorScheme,
 } from '@mantine/core';
 import { useHotkeys } from '@mantine/hooks';
@@ -13,9 +12,7 @@ import {
   applyThemeOverrides,
   getGoogleFontsUrl,
   getOverrideShadows,
-  getOverrideSurfaces,
   getPresetThemeInfo,
-  getThemeSurfaces,
   type GoogleFont,
   loadGoogleFonts,
   loadThemeParams,
@@ -32,15 +29,6 @@ import {
 } from './embedded-bridge';
 
 const EMPTY_FONTS = new Map<string, GoogleFont>();
-
-const SURFACE_VARIABLES = {
-  page: '--mantine-color-surface-page',
-  panel: '--mantine-color-surface-panel',
-  panel2: '--mantine-color-surface-panel-2',
-  sunken: '--mantine-color-surface-sunken',
-  muted: '--mantine-color-surface-muted',
-  input: '--mantine-color-surface-input',
-};
 
 const getServerSnapshot = () => null;
 const getSearch = () => window.location.search;
@@ -100,46 +88,26 @@ function useOverridesResolver(
   resolver: CSSVariablesResolver | undefined,
   overrides: ThemeOverrides | null
 ) {
-  const surfacesKey = JSON.stringify([
-    overrides?.surfacesLight ?? null,
-    overrides?.surfacesDark ?? null,
-  ]);
-  const surfaces = useMemo(() => {
-    const [surfacesLight, surfacesDark] = JSON.parse(surfacesKey) as [
-      ThemeOverrides['surfacesLight'],
-      ThemeOverrides['surfacesDark'],
-    ];
-    return getOverrideSurfaces({ surfacesLight, surfacesDark });
-  }, [surfacesKey]);
-
   const shadows = getOverrideShadows(overrides?.shadows ?? null);
 
   return useMemo<CSSVariablesResolver | undefined>(() => {
-    if (!shadows && !surfaces.light && !surfaces.dark) {
+    if (!shadows) {
       return resolver;
     }
 
     const shadowVariables = Object.fromEntries(
-      Object.entries(shadows ?? {}).map(([key, value]) => [`--mantine-shadow-${key}`, value])
+      Object.entries(shadows).map(([key, value]) => [`--mantine-shadow-${key}`, value])
     );
 
     return (theme) => {
       const result = resolver?.(theme) ?? { variables: {}, light: {}, dark: {} };
-      const toVariables = (values: MantineThemeSurfaceValues | undefined) =>
-        Object.fromEntries(
-          Object.entries(values ?? {}).map(([key, value]) => [
-            SURFACE_VARIABLES[key as keyof typeof SURFACE_VARIABLES],
-            value ?? '',
-          ])
-        );
-
       return {
         variables: result.variables,
-        light: { ...result.light, ...shadowVariables, ...toVariables(surfaces.light) },
-        dark: { ...result.dark, ...shadowVariables, ...toVariables(surfaces.dark) },
+        light: { ...result.light, ...shadowVariables },
+        dark: { ...result.dark, ...shadowVariables },
       };
     };
-  }, [resolver, surfaces, shadows]);
+  }, [resolver, shadows]);
 }
 
 function PresetHotkeys() {
@@ -182,22 +150,15 @@ export function PresetProvider({
   useEffect(() => {
     postToEditor({
       type: 'theme-editor:ready',
-      info: getPresetThemeInfo(theme, measure, cssVariablesResolver),
+      info: getPresetThemeInfo(theme, measure),
     });
-  }, [theme, connected, cssVariablesResolver]);
+  }, [theme, connected]);
 
   useEffect(() => {
     if (overrides) {
       postToEditor({ type: 'theme-editor:applied' });
     }
   }, [overrides]);
-
-  useEffect(() => {
-    postToEditor({
-      type: 'theme-editor:surfaces',
-      surfaces: getThemeSurfaces(resolvedTheme, resolver),
-    });
-  }, [resolvedTheme, resolver, connected]);
 
   return (
     <>

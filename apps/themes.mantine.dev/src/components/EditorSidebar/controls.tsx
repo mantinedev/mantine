@@ -82,11 +82,12 @@ interface SwatchesProps {
   swatches: PresetColorSwatch[];
   value: string;
   onChange: (value: string) => void;
+  children?: React.ReactNode;
 }
 
-export function Swatches({ swatches, value, onChange }: SwatchesProps) {
+export function Swatches({ swatches, value, onChange, children }: SwatchesProps) {
   return (
-    <SimpleGrid cols={8} spacing={8} verticalSpacing={8}>
+    <div className={classes.swatches}>
       {swatches.map((swatch) => (
         <ColorSwatch
           key={swatch.name}
@@ -101,7 +102,8 @@ export function Swatches({ swatches, value, onChange }: SwatchesProps) {
           {swatch.name === value && <CheckIcon className={classes.check} />}
         </ColorSwatch>
       ))}
-    </SimpleGrid>
+      {children}
+    </div>
   );
 }
 
@@ -133,7 +135,7 @@ export function HexColorInput({ label, value, placeholder, onChange }: HexColorI
           onChange(next);
         }
       }}
-      popoverProps={{ floatingStrategy: 'fixed' }}
+      popoverProps={{ withinPortal: false }}
     />
   );
 }

@@ -147,12 +147,25 @@ interface ColorModalProps extends Omit<ColorModalContentProps, 'onClose'> {
   opened: boolean;
   title: string;
   onClose: () => void;
+  onExitTransitionEnd: () => void;
 }
 
-export function ColorModal({ opened, title, onClose, ...others }: ColorModalProps) {
+export function ColorModal({
+  opened,
+  title,
+  onClose,
+  onExitTransitionEnd,
+  ...others
+}: ColorModalProps) {
   return (
-    <Modal opened={opened} onClose={onClose} title={title} size="md">
-      {opened && <ColorModalContent {...others} onClose={onClose} />}
+    <Modal
+      opened={opened}
+      onClose={onClose}
+      onExitTransitionEnd={onExitTransitionEnd}
+      title={title}
+      size="md"
+    >
+      <ColorModalContent {...others} onClose={onClose} />
     </Modal>
   );
 }

@@ -1,4 +1,4 @@
-import type { PresetThemeInfo, SchemeSurfaces } from './overrides';
+import type { PresetThemeInfo } from './overrides';
 import type { ThemeOverrides } from './params';
 
 export type PreviewColorScheme = 'light' | 'dark';
@@ -14,8 +14,7 @@ export type PreviewMessage =
   | { type: 'theme-editor:applied' }
   | { type: 'theme-editor:color-scheme'; colorScheme: PreviewColorScheme }
   | { type: 'theme-editor:resize'; height: number }
-  | { type: 'theme-editor:toggle-color-scheme' }
-  | { type: 'theme-editor:surfaces'; surfaces: { light: SchemeSurfaces; dark: SchemeSurfaces } };
+  | { type: 'theme-editor:toggle-color-scheme' };
 
 export function isEditorMessage(data: unknown): data is EditorMessage {
   return (
@@ -32,7 +31,6 @@ export function isPreviewMessage(data: unknown): data is PreviewMessage {
     type === 'theme-editor:applied' ||
     type === 'theme-editor:color-scheme' ||
     type === 'theme-editor:resize' ||
-    type === 'theme-editor:toggle-color-scheme' ||
-    type === 'theme-editor:surfaces'
+    type === 'theme-editor:toggle-color-scheme'
   );
 }

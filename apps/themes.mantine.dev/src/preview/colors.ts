@@ -1,8 +1,21 @@
-import { converter, differenceEuclidean, formatCss, formatHex, parse } from 'culori';
+import { converter, differenceEuclidean, formatHex, parse } from 'culori';
 import { generateColorFormats } from '@mantine/colors-generator';
 import type { MantineColorShade } from '@mantine/core';
 
 const toOklch = converter('oklch');
+
+function round(value: number | undefined, digits: number) {
+  return Number((value ?? 0).toFixed(digits));
+}
+
+function formatOklch(color: { l: number; c?: number; h?: number }) {
+  return `oklch(${round(color.l, 4)} ${round(color.c, 4)} ${round(color.h, 2)})`;
+}
+
+function normalizeColor(value: string) {
+  const color = toOklch(parse(value));
+  return color ? formatOklch(color) : value;
+}
 const distance = differenceEuclidean('oklab');
 
 export interface GeneratedPalette {
@@ -17,7 +30,10 @@ export function generatePalette(value: string | null): GeneratedPalette | null {
 
   try {
     const { colors, baseColorIndex } = generateColorFormats(value);
-    return { shades: [...colors], baseColorIndex: baseColorIndex as MantineColorShade };
+    return {
+      shades: colors.map(normalizeColor),
+      baseColorIndex: baseColorIndex as MantineColorShade,
+    };
   } catch {
     return null;
   }
@@ -38,9 +54,8 @@ export function generateNeutralPalette(value: string | null, ramp: readonly stri
 
   return lightness.map((l, index) =>
     index === baseIndex
-      ? formatCss(base)
-      : formatCss({
-          mode: 'oklch',
+      ? formatOklch(base)
+      : formatOklch({
           l,
           c: (base.c ?? 0) * Math.min(1, 4 * l * (1 - l)),
           h: base.h ?? 0,
