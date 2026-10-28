@@ -12,12 +12,10 @@ function normalize(value: string): string {
   return value.trim().toLowerCase();
 }
 
-/** Lowercase alphanumeric form, so `useDirection`, `use-direction` and `use direction` compare equal */
 function compact(value: string): string {
   return value.toLowerCase().replace(/[^a-z0-9]/g, '');
 }
 
-/** Whether one of the item's comma-separated search tags names the symbol exactly */
 function hasSearchTag(item: IndexItem, symbol: string): boolean {
   const requested = compact(symbol);
   return (
@@ -25,7 +23,6 @@ function hasSearchTag(item: IndexItem, symbol: string): boolean {
   );
 }
 
-/** The section whose heading names the symbol, e.g. "useDirection hook" for `useDirection` */
 function findSymbolSection(sections: DocData['sections'], symbol: string) {
   const requested = compact(symbol);
   return (
