@@ -246,6 +246,7 @@ export const MobileMonthView = factory<MobileMonthViewFactory>((_props) => {
   } = props;
 
   const ctx = useDatesContext();
+  const { dir } = useDirection();
   const theme = useMantineTheme();
   const today = dayjs();
 
@@ -377,6 +378,7 @@ export const MobileMonthView = factory<MobileMonthViewFactory>((_props) => {
           weekIndex,
           dayIndex,
           event,
+          dir,
         });
       };
 
@@ -500,8 +502,6 @@ export const MobileMonthView = factory<MobileMonthViewFactory>((_props) => {
         format: eventsHeaderFormat,
       })
     : '';
-
-  const { dir } = useDirection();
 
   const headerLabel = formatDate({ locale: ctx.getLocale(locale), date, format: 'MMMM YYYY' });
 

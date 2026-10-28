@@ -1,6 +1,7 @@
 import dayjs from 'dayjs';
 import 'dayjs/locale/ru';
 import React from 'react';
+import { DirectionProvider } from '@mantine/core';
 import { DatesProvider } from '@mantine/dates';
 import { render, screen, tests, userEvent } from '@mantine-tests/core';
 import { ScheduleEventData } from '../../types';
@@ -785,6 +786,21 @@ describe('@mantine/schedule/MobileMonthView', () => {
         'tabIndex',
         '-1'
       );
+    });
+
+    it('mirrors ArrowLeft and ArrowRight in rtl direction', async () => {
+      render(
+        <DirectionProvider initialDirection="rtl" detectDirection={false}>
+          <MobileMonthView {...defaultProps} />
+        </DirectionProvider>
+      );
+
+      screen.getByRole('button', { name: 'November 1, 2025' }).focus();
+      await userEvent.keyboard('{ArrowLeft}');
+      expect(screen.getByRole('button', { name: 'November 2, 2025' })).toHaveFocus();
+
+      await userEvent.keyboard('{ArrowRight}');
+      expect(screen.getByRole('button', { name: 'November 1, 2025' })).toHaveFocus();
     });
 
     it('supports arrow keys to navigate between days', async () => {
