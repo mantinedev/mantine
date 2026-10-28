@@ -17,7 +17,7 @@ import {
   useProps,
   useStyles,
 } from '../../core';
-import { Loader } from '../Loader/Loader';
+import { Loader, LoaderProps } from '../Loader/Loader';
 import { InputContext } from './Input.context';
 import {
   InputClearButton,
@@ -164,6 +164,9 @@ export interface __InputProps {
   /** Position of the loading indicator @default 'right' */
   loadingPosition?: 'left' | 'right';
 
+  /** Props passed down to the `Loader` component displayed when `loading` prop is set */
+  loaderProps?: LoaderProps;
+
   /** Content section displayed at the bottom of the input, inside the border */
   __bottomSection?: React.ReactNode;
 
@@ -289,6 +292,7 @@ export const Input = polymorphicFactory<InputFactory>((_props) => {
     __defaultRightSection,
     loading,
     loadingPosition,
+    loaderProps,
     __bottomSection,
     __bottomSectionProps,
     rootRef,
@@ -333,6 +337,7 @@ export const Input = polymorphicFactory<InputFactory>((_props) => {
           ? 'calc(var(--input-left-section-size) / 2)'
           : 'calc(var(--input-right-section-size) / 2)'
       }
+      {...loaderProps}
     />
   ) : null;
 

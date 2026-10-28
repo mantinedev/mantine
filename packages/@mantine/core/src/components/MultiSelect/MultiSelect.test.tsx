@@ -645,4 +645,11 @@ describe('@mantine/core/MultiSelect', () => {
     expect(screen.getByRole('listbox')).not.toHaveAttribute('aria-labelledby');
     expect(screen.getByRole('listbox')).toHaveAccessibleName('Test aria-label');
   });
+
+  it('passes loaderProps to the Loader component', () => {
+    const { container } = render(
+      <MultiSelect data={['test-1']} loading loaderProps={{ className: 'test-loader' }} />
+    );
+    expect(container.querySelector('.test-loader')).toBeInTheDocument();
+  });
 });

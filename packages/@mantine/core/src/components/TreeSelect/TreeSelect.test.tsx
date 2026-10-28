@@ -933,4 +933,23 @@ describe('@mantine/core/TreeSelect', () => {
       expect(screen.queryByRole('option', { name: 'Apple' })).toBe(null);
     });
   });
+
+  it('passes loaderProps to the Loader component in single and multiple modes', () => {
+    const { container, rerender } = render(
+      <TreeSelect data={treeData} loading loaderProps={{ className: 'test-loader' }} />
+    );
+    expect(container.querySelector('.test-loader')).toBeInTheDocument();
+
+    rerender(
+      <>
+        <TreeSelect
+          data={treeData}
+          mode="multiple"
+          loading
+          loaderProps={{ className: 'test-loader' }}
+        />
+      </>
+    );
+    expect(container.querySelector('.test-loader')).toBeInTheDocument();
+  });
 });
