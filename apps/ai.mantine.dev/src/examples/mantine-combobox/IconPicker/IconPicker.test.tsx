@@ -1,55 +1,53 @@
+import { icons, type Icon } from '@tabler/icons-react';
 import { render, screen, userEvent, waitFor, within } from '@test-utils';
-import { COLUMNS, GRID_HEIGHT, PAGE_ROWS } from './grid-model';
-import { getIcons } from './icon-index';
-import { IconPicker, type IconPickerProps } from './IconPicker';
-import { IconPickerDemo } from './IconPickerDemo';
+import { buildIconSet, type IconValue } from './icon-data';
+import { IconPicker } from './IconPicker';
+import { ProjectIconSettings } from './ProjectIconSettings';
+
+const COLUMNS = 8;
+// The grid viewport is 7 rows tall (44px each)
+const VIEWPORT_HEIGHT = 308;
+const PAGE_ROWS = 7;
+const { outline } = buildIconSet(icons as Record<string, Icon>);
+const ROCKET: IconValue = { name: 'Rocket', style: 'outline' };
+
+function renderPicker(props: { defaultValue?: IconValue | null } = {}) {
+  const onChange = jest.fn();
+  render(<IconPicker label="Project icon" onChange={onChange} {...props} />);
+  return { onChange, trigger: screen.getByRole('textbox', { name: 'Project icon' }) };
+}
 
 type User = ReturnType<typeof userEvent.setup>;
 
-const outline = getIcons('outline');
-
-function renderPicker(props: Partial<IconPickerProps> = {}) {
-  const onChange = jest.fn();
-  render(<IconPicker onChange={onChange} {...props} />);
-  return { onChange };
+async function openPicker(user: User) {
+  await user.click(screen.getByRole('textbox', { name: 'Project icon' }));
+  return screen.findByRole('combobox', { name: 'Search icons' });
 }
 
-const trigger = () => screen.getByRole('button', { name: 'Project icon' });
-const searchInput = () => screen.getByRole('textbox', { name: 'Search icons' });
-const optionNames = () =>
-  screen.getAllByRole('option').map((option) => option.getAttribute('aria-label'));
-
-/** Name of the highlighted cell, or the id when the cell is not rendered */
-function highlighted() {
-  const id = searchInput().getAttribute('aria-activedescendant');
-  if (!id) {
-    return null;
-  }
-  return document.getElementById(id)?.getAttribute('aria-label') ?? `not rendered: ${id}`;
+function highlightedOption() {
+  const search = screen.getByRole('combobox', { name: 'Search icons' });
+  const id = search.getAttribute('aria-activedescendant');
+  return id ? document.getElementById(id) : null;
 }
 
-async function open(user: User) {
-  await user.click(trigger());
-  await waitFor(() => expect(searchInput()).toHaveFocus());
+function recentOptions() {
+  return within(screen.getByRole('group', { name: 'Recent' })).getAllByRole('option');
 }
 
-async function search(user: User, query: string) {
-  await user.type(searchInput(), query);
+/** Picks the icon whose name is the query, e.g. `rocket` */
+async function pickBySearch(user: User, query: string) {
+  const search = await openPicker(user);
+  await user.type(search, query);
+  await waitFor(() => {
+    expect(highlightedOption()?.getAttribute('aria-label')?.toLowerCase()).toBe(query);
+  });
+  await user.keyboard('{Enter}');
 }
 
-async function pickByName(user: User, name: string) {
-  await open(user);
-  await search(user, name);
-  await user.click(screen.getAllByRole('option', { name })[0]);
-}
-
+// jsdom has no layout: give the grid viewport a size and room to scroll
 beforeEach(() => {
-  window.localStorage.clear();
-  // jsdom has no layout: give the grid viewport its real height so the virtualizer renders rows,
-  // and a scroll height so it can scroll
-  jest.spyOn(HTMLElement.prototype, 'offsetHeight', 'get').mockReturnValue(GRID_HEIGHT);
-  jest.spyOn(HTMLElement.prototype, 'offsetWidth', 'get').mockReturnValue(400);
-  jest.spyOn(Element.prototype, 'clientHeight', 'get').mockReturnValue(GRID_HEIGHT);
+  jest.spyOn(HTMLElement.prototype, 'offsetHeight', 'get').mockReturnValue(VIEWPORT_HEIGHT);
+  jest.spyOn(HTMLElement.prototype, 'offsetWidth', 'get').mockReturnValue(360);
   jest.spyOn(Element.prototype, 'scrollHeight', 'get').mockReturnValue(1_000_000);
 });
 
@@ -59,303 +57,323 @@ afterEach(() => {
 });
 
 describe('trigger', () => {
-  it('shows "Pick an icon" when no icon is selected', () => {
-    renderPicker();
-    expect(trigger()).toHaveTextContent('Pick an icon');
+  it('shows a placeholder when no icon is selected', () => {
+    const { trigger } = renderPicker();
+    expect(trigger).toHaveValue('');
+    expect(trigger).toHaveAttribute('placeholder', 'Pick an icon');
   });
 
   it('shows the name of the selected icon', () => {
-    renderPicker({ defaultValue: { name: 'Rocket', style: 'outline' } });
-    expect(trigger()).toHaveTextContent('Rocket');
+    const { trigger } = renderPicker({ defaultValue: ROCKET });
+    expect(trigger).toHaveValue('Rocket');
+  });
+
+  it('shows the name of a multi-word icon as words', () => {
+    const { trigger } = renderPicker({ defaultValue: { name: 'ArrowBigLeft', style: 'filled' } });
+    expect(trigger).toHaveValue('Arrow big left');
   });
 
   it('clears the selected icon with the clear button', async () => {
     const user = userEvent.setup();
-    const { onChange } = renderPicker({ defaultValue: { name: 'Rocket', style: 'outline' } });
+    const { trigger, onChange } = renderPicker({ defaultValue: ROCKET });
 
     await user.click(screen.getByRole('button', { name: 'Clear icon' }));
 
     expect(onChange).toHaveBeenLastCalledWith(null);
-    expect(trigger()).toHaveTextContent('Pick an icon');
+    expect(trigger).toHaveValue('');
+  });
+
+  it('opens the dropdown with the keyboard', async () => {
+    renderPicker();
+    const user = userEvent.setup();
+
+    await user.tab();
+    await user.keyboard('{ArrowDown}');
+
+    expect(await screen.findByRole('combobox', { name: 'Search icons' })).toBeInTheDocument();
   });
 });
 
-describe('search', () => {
-  it('matches every word of the query against the words of the icon name', async () => {
-    const user = userEvent.setup();
+describe('dropdown', () => {
+  it('focuses the search field when opened', async () => {
     renderPicker();
-    await open(user);
-
-    await search(user, 'arrow left');
-
-    expect(optionNames()).toEqual(expect.arrayContaining(['ArrowLeft', 'ArrowBigLeft']));
-    expect(optionNames()).not.toContain('ArrowRight');
+    const search = await openPicker(userEvent.setup());
+    await waitFor(() => expect(search).toHaveFocus());
   });
 
-  it('ignores the case of the query', async () => {
-    const user = userEvent.setup();
+  it('finds icons by the words of their names', async () => {
     renderPicker();
-    await open(user);
+    const user = userEvent.setup();
 
-    await search(user, 'ROCKET');
+    await user.type(await openPicker(user), 'arrow left');
 
-    expect(screen.getByRole('option', { name: 'Rocket' })).toBeInTheDocument();
+    const grid = screen.getByRole('listbox', { name: 'Icons' });
+    expect(within(grid).getByRole('option', { name: 'Arrow left' })).toBeInTheDocument();
+    expect(within(grid).getByRole('option', { name: 'Arrow big left' })).toBeInTheDocument();
   });
 
   it('lists names that start with the query first', async () => {
-    const user = userEvent.setup();
     renderPicker();
-    await open(user);
+    const user = userEvent.setup();
 
-    await search(user, 'home');
+    await user.type(await openPicker(user), 'Arrow Left');
 
-    const names = optionNames() as string[];
-    const firstOther = names.findIndex((name) => !name.toLowerCase().startsWith('home'));
-    expect(names[0]).toBe('Home');
-    expect(firstOther).toBeGreaterThan(0);
-    expect(names.slice(firstOther).every((name) => !name.toLowerCase().startsWith('home'))).toBe(
-      true
-    );
+    const options = within(screen.getByRole('listbox', { name: 'Icons' })).getAllByRole('option');
+    expect(options[0]).toHaveAccessibleName('Arrow left');
   });
 
-  it('shows "Nothing found" with the query when no icon matches', async () => {
-    const user = userEvent.setup();
+  it('shows only icons that have a filled version in the filled set', async () => {
     renderPicker();
-    await open(user);
+    const user = userEvent.setup();
+    const search = await openPicker(user);
 
-    await search(user, 'qqzzx');
+    await user.click(screen.getByRole('radio', { name: 'Filled' }));
+    await user.type(search, 'arrow left');
 
-    expect(screen.getByText('Nothing found for "qqzzx"')).toBeInTheDocument();
+    const grid = screen.getByRole('listbox', { name: 'Icons' });
+    expect(within(grid).getByRole('option', { name: 'Arrow big left' })).toBeInTheDocument();
+    expect(within(grid).queryByRole('option', { name: 'Arrow left' })).not.toBeInTheDocument();
+  });
+
+  it('returns focus to the search field after switching the style', async () => {
+    renderPicker();
+    const user = userEvent.setup();
+    const search = await openPicker(user);
+
+    await user.click(screen.getByRole('radio', { name: 'Filled' }));
+
+    expect(search).toHaveFocus();
+  });
+
+  it('shows the query when nothing is found', async () => {
+    renderPicker();
+    const user = userEvent.setup();
+
+    await user.type(await openPicker(user), 'qwertyzz');
+
+    expect(screen.getByText('Nothing found for "qwertyzz"')).toBeInTheDocument();
+  });
+
+  it('renders only the visible rows of the grid', async () => {
+    renderPicker();
+    await openPicker(userEvent.setup());
+
+    const options = within(screen.getByRole('listbox', { name: 'Icons' })).getAllByRole('option');
+    expect(options.length).toBeGreaterThan(0);
+    expect(options.length).toBeLessThan(COLUMNS * 20);
+  });
+
+  it('shows the name of the hovered icon', async () => {
+    renderPicker();
+    const user = userEvent.setup();
+
+    await user.type(await openPicker(user), 'rocket');
+    await user.hover(screen.getByRole('option', { name: 'Rocket off' }));
+
+    expect(screen.getByText('Rocket off')).toBeInTheDocument();
+  });
+
+  it('shows the name of the highlighted icon', async () => {
+    renderPicker();
+    const user = userEvent.setup();
+
+    await user.type(await openPicker(user), 'rocket');
+    await user.keyboard('{ArrowRight}');
+
+    expect(screen.getByText('Rocket off')).toBeInTheDocument();
   });
 });
 
-describe('icon style', () => {
-  it('shows only icons that have a filled version in the filled set', async () => {
-    const user = userEvent.setup();
+describe('recent icons', () => {
+  it('shows the last picked icons above the grid, most recent first', async () => {
     renderPicker();
-    await open(user);
-    await search(user, 'abacus');
+    const user = userEvent.setup();
 
-    await user.click(screen.getByRole('radio', { name: 'Filled' }));
+    await pickBySearch(user, 'rocket');
+    await pickBySearch(user, 'anchor');
+    // Opening scrolls to the selected icon, Home scrolls back to the top
+    await openPicker(user);
+    await user.keyboard('{Home}');
 
-    expect(screen.getByText('Nothing found for "abacus"')).toBeInTheDocument();
+    await screen.findByRole('group', { name: 'Recent' });
+    const labels = recentOptions().map((option) => option.getAttribute('aria-label'));
+    expect(labels).toEqual(['Anchor', 'Rocket']);
   });
 
-  it('picks the filled version from the filled set', async () => {
+  it('keeps at most 8 recent icons', async () => {
+    const picked = outline.slice(1, 10).map((entry) => ({ name: entry.name, style: 'outline' }));
+    window.localStorage.setItem('icon-picker-recent', JSON.stringify(picked));
+    renderPicker();
     const user = userEvent.setup();
+
+    await pickBySearch(user, outline[0].label.toLowerCase());
+    await openPicker(user);
+
+    expect(recentOptions()).toHaveLength(8);
+  });
+
+  it('hides the recent icons while searching', async () => {
+    renderPicker();
+    const user = userEvent.setup();
+
+    await pickBySearch(user, 'rocket');
+    await user.type(await openPicker(user), 'anchor');
+
+    expect(screen.queryByRole('group', { name: 'Recent' })).not.toBeInTheDocument();
+  });
+
+  it('starts keyboard navigation in the recent row', async () => {
+    renderPicker();
+    const user = userEvent.setup();
+
+    await pickBySearch(user, 'rocket');
+    await openPicker(user);
+    await user.keyboard('{Home}');
+
+    expect(highlightedOption()).toBe(recentOptions()[0]);
+  });
+});
+
+describe('keyboard', () => {
+  it('keeps focus in the search field while the arrows move the highlight', async () => {
+    renderPicker();
+    const user = userEvent.setup();
+    const search = await openPicker(user);
+
+    await user.keyboard('{ArrowDown}{ArrowRight}');
+
+    expect(search).toHaveFocus();
+  });
+
+  it('highlights the first icon when opened without a value', async () => {
+    renderPicker();
+    await openPicker(userEvent.setup());
+
+    await waitFor(() => expect(highlightedOption()).toHaveAccessibleName(outline[0].label));
+  });
+
+  it('moves the highlight by one cell with the left and right arrows', async () => {
+    renderPicker();
+    const user = userEvent.setup();
+    await openPicker(user);
+
+    await user.keyboard('{ArrowRight}{ArrowRight}{ArrowLeft}');
+
+    expect(highlightedOption()).toHaveAccessibleName(outline[1].label);
+  });
+
+  it('moves by one row and keeps the column with the up and down arrows', async () => {
+    renderPicker();
+    const user = userEvent.setup();
+    await openPicker(user);
+
+    await user.keyboard('{ArrowRight}{ArrowRight}{ArrowDown}{ArrowDown}');
+    expect(highlightedOption()).toHaveAccessibleName(outline[2 * COLUMNS + 2].label);
+
+    await user.keyboard('{ArrowUp}');
+    expect(highlightedOption()).toHaveAccessibleName(outline[COLUMNS + 2].label);
+  });
+
+  it('moves by one visible page with Page Down and Page Up', async () => {
+    renderPicker();
+    const user = userEvent.setup();
+    await openPicker(user);
+
+    await user.keyboard('{ArrowRight}{PageDown}');
+    expect(highlightedOption()).toHaveAccessibleName(outline[PAGE_ROWS * COLUMNS + 1].label);
+
+    await user.keyboard('{PageUp}');
+    expect(highlightedOption()).toHaveAccessibleName(outline[1].label);
+  });
+
+  it('jumps to the last icon with End and scrolls it into view', async () => {
+    renderPicker();
+    const user = userEvent.setup();
+    await openPicker(user);
+
+    await user.keyboard('{End}');
+
+    const last = outline[outline.length - 1];
+    await waitFor(() => expect(highlightedOption()).toHaveAccessibleName(last.label));
+  });
+
+  it('jumps to the first icon with Home', async () => {
+    renderPicker();
+    const user = userEvent.setup();
+    await openPicker(user);
+
+    await user.keyboard('{ArrowDown}{ArrowDown}{Home}');
+
+    expect(highlightedOption()).toHaveAccessibleName(outline[0].label);
+  });
+
+  it('picks the highlighted icon with Enter', async () => {
     const { onChange } = renderPicker();
-    await open(user);
-    await user.click(screen.getByRole('radio', { name: 'Filled' }));
-    await search(user, 'alarm');
+    const user = userEvent.setup();
 
-    await user.click(screen.getByRole('option', { name: 'Alarm' }));
+    await user.type(await openPicker(user), 'rocket');
+    await user.keyboard('{ArrowRight}{Enter}');
 
-    expect(onChange).toHaveBeenLastCalledWith({ name: 'Alarm', style: 'filled' });
+    expect(onChange).toHaveBeenLastCalledWith({ name: 'RocketOff', style: 'outline' });
   });
 
-  it('opens on the filled set when the selected icon is filled', async () => {
+  it('closes the dropdown after a pick', async () => {
+    renderPicker();
     const user = userEvent.setup();
-    renderPicker({ defaultValue: { name: 'Alarm', style: 'filled' } });
 
-    await open(user);
+    await pickBySearch(user, 'rocket');
+
+    expect(screen.queryByRole('combobox', { name: 'Search icons' })).not.toBeInTheDocument();
+  });
+
+  it('closes the dropdown with Escape without changing the value', async () => {
+    const { onChange, trigger } = renderPicker({ defaultValue: ROCKET });
+    const user = userEvent.setup();
+
+    await user.type(await openPicker(user), 'anchor');
+    await user.keyboard('{Escape}');
+
+    expect(screen.queryByRole('combobox', { name: 'Search icons' })).not.toBeInTheDocument();
+    expect(onChange).not.toHaveBeenCalled();
+    expect(trigger).toHaveValue('Rocket');
+  });
+
+  it('highlights the selected icon when opened', async () => {
+    const last = outline[outline.length - 1];
+    renderPicker({ defaultValue: { name: last.name, style: 'outline' } });
+
+    await openPicker(userEvent.setup());
+
+    await waitFor(() => expect(highlightedOption()).toHaveAccessibleName(last.label));
+  });
+
+  it('switches to the style of the selected icon when opened', async () => {
+    renderPicker({ defaultValue: { name: 'ArrowBigLeft', style: 'filled' } });
+
+    await openPicker(userEvent.setup());
 
     expect(screen.getByRole('radio', { name: 'Filled' })).toBeChecked();
   });
 });
 
-describe('grid', () => {
-  it('renders only the visible rows', async () => {
-    const user = userEvent.setup();
-    renderPicker();
-
-    await open(user);
-
-    expect(outline.length).toBeGreaterThan(4000);
-    expect(screen.getAllByRole('option').length).toBeLessThan(20 * COLUMNS);
+describe('project icon setting', () => {
+  it('shows null as the value when no icon is selected', () => {
+    render(<ProjectIconSettings />);
+    expect(screen.getByLabelText('Project icon value')).toHaveTextContent('null');
   });
 
-  it('shows the name of the hovered icon', async () => {
+  it('shows the picked icon with its style as JSON', async () => {
+    render(<ProjectIconSettings />);
     const user = userEvent.setup();
-    renderPicker();
-    await open(user);
-    await search(user, 'rocket');
 
-    await user.hover(screen.getByRole('option', { name: 'RocketOff' }));
-
-    expect(screen.getByRole('status')).toHaveTextContent('RocketOff');
-  });
-
-  it('shows the name of the highlighted icon', async () => {
-    const user = userEvent.setup();
-    renderPicker();
-    await open(user);
-
-    await user.keyboard('{ArrowRight}');
-
-    expect(screen.getByRole('status')).toHaveTextContent(outline[1].name);
-  });
-});
-
-describe('recent icons', () => {
-  it('shows the last picked icons in a Recent row', async () => {
-    const user = userEvent.setup();
-    renderPicker();
-    await pickByName(user, 'Rocket');
-    await pickByName(user, 'Anchor');
-    await open(user);
-
-    await user.keyboard('{Home}');
-
-    await waitFor(() => expect(screen.getByText('Recent')).toBeInTheDocument());
-    expect(optionNames().slice(0, 2)).toEqual(['Anchor', 'Rocket']);
-  });
-
-  it('keeps only the last 8 picked icons', async () => {
-    const user = userEvent.setup();
-    renderPicker();
-    const picked = ['Rocket', 'Anchor', 'Bell', 'Book', 'Bolt', 'Camera', 'Cloud', 'Heart', 'Star'];
-    for (const name of picked) {
-      await pickByName(user, name);
-    }
-    await open(user);
-
-    await user.keyboard('{Home}');
-
-    await waitFor(() => expect(screen.getByText('Recent')).toBeInTheDocument());
-    const recentRow = optionNames().slice(0, COLUMNS);
-    expect(recentRow).toEqual([...picked].reverse().slice(0, 8));
-    expect(optionNames()[COLUMNS]).toBe(outline[0].name);
-  });
-
-  it('hides the Recent row while searching', async () => {
-    const user = userEvent.setup();
-    renderPicker();
-    await pickByName(user, 'Rocket');
-    await open(user);
-
-    await search(user, 'bell');
-
-    expect(screen.queryByText('Recent')).not.toBeInTheDocument();
-  });
-});
-
-describe('keyboard', () => {
-  it('keeps focus in the search field while arrows move the highlight', async () => {
-    const user = userEvent.setup();
-    renderPicker();
-    await open(user);
-
-    await user.keyboard('{ArrowDown}{ArrowRight}');
-
-    expect(searchInput()).toHaveFocus();
-    expect(highlighted()).toBe(outline[COLUMNS + 1].name);
-  });
-
-  it('moves by one cell with the left and right arrows', async () => {
-    const user = userEvent.setup();
-    renderPicker();
-    await open(user);
-
-    await user.keyboard('{ArrowRight}{ArrowRight}{ArrowLeft}');
-
-    expect(highlighted()).toBe(outline[1].name);
-  });
-
-  it('moves by one row and keeps the column with the up and down arrows', async () => {
-    const user = userEvent.setup();
-    renderPicker();
-    await open(user);
-
-    await user.keyboard('{ArrowRight}{ArrowRight}{ArrowDown}{ArrowDown}{ArrowUp}');
-
-    expect(highlighted()).toBe(outline[COLUMNS + 2].name);
-  });
-
-  it('scrolls the grid to keep the highlighted icon visible', async () => {
-    const user = userEvent.setup();
-    renderPicker();
-    await open(user);
-
-    for (let row = 0; row < 12; row += 1) {
-      await user.keyboard('{ArrowDown}');
-    }
-
-    await waitFor(() => expect(highlighted()).toBe(outline[12 * COLUMNS].name));
-  });
-
-  it('jumps to the last and first icon with End and Home', async () => {
-    const user = userEvent.setup();
-    renderPicker();
-    await open(user);
-
-    await user.keyboard('{End}');
-    await waitFor(() => expect(highlighted()).toBe(outline[outline.length - 1].name));
-
-    await user.keyboard('{Home}');
-    await waitFor(() => expect(highlighted()).toBe(outline[0].name));
-  });
-
-  it('moves by one visible page with Page Down and Page Up', async () => {
-    const user = userEvent.setup();
-    renderPicker();
-    await open(user);
-
-    await user.keyboard('{ArrowRight}{PageDown}{PageDown}');
-    await waitFor(() => expect(highlighted()).toBe(outline[2 * PAGE_ROWS * COLUMNS + 1].name));
-
-    await user.keyboard('{PageUp}');
-    await waitFor(() => expect(highlighted()).toBe(outline[PAGE_ROWS * COLUMNS + 1].name));
-  });
-
-  it('picks the highlighted icon with Enter and closes the dropdown', async () => {
-    const user = userEvent.setup();
-    const { onChange } = renderPicker();
-    await open(user);
-    await search(user, 'rocket');
-
+    const search = await openPicker(user);
+    await user.click(screen.getByRole('radio', { name: 'Filled' }));
+    await user.type(search, 'arrow big left');
     await user.keyboard('{Enter}');
 
-    expect(onChange).toHaveBeenLastCalledWith({ name: 'Rocket', style: 'outline' });
-    await waitFor(() => expect(screen.queryByRole('listbox')).not.toBeInTheDocument());
-  });
-
-  it('closes with Escape without changing the value', async () => {
-    const user = userEvent.setup();
-    const { onChange } = renderPicker({ defaultValue: { name: 'Rocket', style: 'outline' } });
-    await open(user);
-    await user.keyboard('{ArrowRight}');
-
-    await user.keyboard('{Escape}');
-
-    await waitFor(() => expect(screen.queryByRole('listbox')).not.toBeInTheDocument());
-    expect(onChange).not.toHaveBeenCalled();
-    expect(trigger()).toHaveTextContent('Rocket');
-  });
-
-  it('highlights the selected icon and scrolls to it when the dropdown opens', async () => {
-    const user = userEvent.setup();
-    renderPicker({ defaultValue: { name: 'Rocket', style: 'outline' } });
-
-    await open(user);
-
-    await waitFor(() => expect(highlighted()).toBe('Rocket'));
-    expect(screen.getByRole('option', { name: 'Rocket' })).toHaveAttribute('aria-selected', 'true');
-  });
-});
-
-describe('value', () => {
-  it('shows the value as JSON under the picker', async () => {
-    const user = userEvent.setup();
-    render(<IconPickerDemo />);
-
-    await pickByName(user, 'Rocket');
-
-    const json = screen.getByLabelText('Value');
-    expect(JSON.parse(json.textContent ?? '')).toEqual({ name: 'Rocket', style: 'outline' });
-  });
-
-  it('shows null when no icon is selected', () => {
-    render(<IconPickerDemo />);
-    expect(within(screen.getByLabelText('Value')).getByText('null')).toBeInTheDocument();
+    expect(JSON.parse(screen.getByLabelText('Project icon value').textContent!)).toEqual({
+      name: 'ArrowBigLeft',
+      style: 'filled',
+    });
   });
 });

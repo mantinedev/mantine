@@ -19,11 +19,11 @@ export interface SkillExample {
   /** Prompt that was given to the agent, paragraphs separated by blank lines, `- ` starts a list item */
   prompt: string;
 
-  /** Component produced by the agent */
-  component: React.FC;
+  /** Component produced by the agent, loaded with `next/dynamic` so that only its own page downloads it */
+  component: React.ComponentType;
 
-  /** Generated code.json contents */
-  code: SkillExampleCode[];
+  /** Loads the generated code.json, only the page of the example downloads it */
+  loadCode: () => Promise<{ default: unknown }>;
 
   /** Fills the visible inputs with sample values, triggered with mod+shift+E on the site, not part of the example code */
   fill?: (filler: Filler) => Promise<void>;

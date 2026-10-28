@@ -5,269 +5,227 @@ import {
   Button,
   Code,
   Combobox,
-  Input,
-  ScrollArea,
+  Group,
+  Stack,
   Text,
   TextInput,
   useCombobox,
 } from '@mantine/core';
 import { notifications } from '@mantine/notifications';
 import {
+  addFolder,
+  canonicalizePath,
   filterFolders,
-  findMissingSegment,
-  FOLDER_NAME_PATTERN,
-  FolderNode,
+  findFolder,
   formatPath,
-  getChildren,
-  insertFolder,
-  splitPath,
-  WORKSPACE_TREE,
-} from './folderTree';
+  isValidName,
+  NAME_ERROR,
+  parsePath,
+  resolvePath,
+} from './path';
+import { WORKSPACE, type Folder } from './workspace';
 import classes from './FolderPathInput.module.css';
 
-const CREATE_OPTION = '$create';
-const INITIAL_PATH = 'documents/drafts';
-const NAME_ERROR = 'Folder names may contain only letters, numbers, spaces, - and _';
+const CREATE_VALUE = '$create';
 
 interface SavedLocation {
   path: string;
   createdFolders: string[];
 }
 
-/** Segments of a complete path: `projects/web/` and `projects/web` are the same folder */
-function pathSegments(value: string) {
-  const trimmed = value.endsWith('/') ? value.slice(0, -1) : value;
-  return trimmed === '' ? [] : splitPath(trimmed);
+export interface FolderPathInputProps {
+  initialPath?: string;
 }
 
-function getPathError(tree: FolderNode[], value: string) {
-  const segments = pathSegments(value);
-  if (segments.length === 0) {
-    return 'Enter a folder path';
-  }
-  const missing = findMissingSegment(tree, segments);
-  if (missing === -1) {
-    return null;
-  }
-  return `Folder “${segments[missing]}” does not exist in ${formatPath(segments.slice(0, missing))}`;
-}
-
-function countLabel(count: number) {
-  return count === 1 ? '1 document' : `${count} documents`;
-}
-
-function isCaretAtEnd(input: HTMLInputElement) {
-  return input.selectionStart === input.value.length && input.selectionEnd === input.value.length;
-}
-
-export function FolderPathInput() {
-  const [tree, setTree] = useState(WORKSPACE_TREE);
-  const [value, setValue] = useState(INITIAL_PATH);
-  const [blurError, setBlurError] = useState<string | null>(null);
+export function FolderPathInput({ initialPath = 'documents/drafts' }: FolderPathInputProps) {
+  const [tree, setTree] = useState<Folder[]>(WORKSPACE);
+  const [value, setValue] = useState(initialPath);
+  const [blurred, setBlurred] = useState(false);
   const [createdFolders, setCreatedFolders] = useState<string[]>([]);
   const [saved, setSaved] = useState<SavedLocation | null>(null);
 
   const combobox = useCombobox({
+    onDropdownOpen: () => combobox.selectFirstOption(),
     onDropdownClose: () => combobox.resetSelectedOption(),
   });
 
-  // The text after the last `/` is the segment being typed, everything before it is the folder being listed
-  const segments = splitPath(value);
-  const query = segments[segments.length - 1];
-  const parent = segments.slice(0, -1);
-  const children = getChildren(tree, parent);
-  const folders = children ? filterFolders(children, query) : [];
-  const newName = query.trim();
+  const { parents, segment } = parsePath(value);
+  const listed = findFolder(tree, parents);
+  const matches = listed ? filterFolders(listed.children, segment) : [];
+  const newName = segment.trim();
+  const validNames = parents.every(isValidName) && isValidName(segment);
+  const canCreate = listed !== null && matches.length === 0 && newName !== '' && validNames;
+  const optionsCount = matches.length + (canCreate ? 1 : 0);
 
-  const nameError = segments.some((segment) => segment !== '' && !FOLDER_NAME_PATTERN.test(segment))
-    ? NAME_ERROR
-    : null;
-  const canCreate =
-    children !== null && folders.length === 0 && newName !== '' && nameError === null;
-  const isValid = getPathError(tree, value) === null && nameError === null;
+  const resolved = resolvePath(tree, value);
+  const pathError =
+    value.trim() === ''
+      ? 'Enter the folder to save the document to'
+      : `Folder “${formatPath(parents.concat(segment).filter(Boolean))}” does not exist`;
+  const error = !validNames ? NAME_ERROR : blurred && resolved === null ? pathError : null;
 
-  // Highlight the best match while a segment is typed, so Tab completes it like in a shell
+  // A completed or removed segment changes the list: highlight its first folder after it renders
   useEffect(() => {
     if (!combobox.dropdownOpened) {
       return;
     }
-    if (query.trim() !== '' && folders.length > 0) {
+    if (optionsCount > 0) {
       combobox.selectFirstOption();
     } else {
       combobox.resetSelectedOption();
     }
-  }, [value, tree, combobox.dropdownOpened]);
+  }, [combobox, parents.join('/'), segment, optionsCount]);
 
   const changeValue = (next: string) => {
     setValue(next);
-    setBlurError(null);
+    setBlurred(false);
     combobox.openDropdown();
   };
 
-  const enterFolder = (path: string[]) => changeValue(`${path.join('/')}/`);
-
-  const handleOptionSubmit = (option: string) => {
-    if (option === CREATE_OPTION) {
-      const path = [...parent, newName];
-      setTree((current) => insertFolder(current, parent, newName));
-      setCreatedFolders((current) => [...current, path.join('/')]);
-      enterFolder(path);
-      return;
+  const handleOptionSubmit = (optionValue: string) => {
+    if (optionValue === CREATE_VALUE) {
+      const createdPath = [...parents, newName].join('/');
+      setTree((current) =>
+        addFolder(current, parents, { name: newName, documents: 0, children: [], isNew: true })
+      );
+      setCreatedFolders((current) => [...current, createdPath]);
+      changeValue(`${createdPath}/`);
+    } else {
+      changeValue(`${[...parents, optionValue].join('/')}/`);
     }
-    enterFolder([...parent, option]);
   };
 
   const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
     const input = event.currentTarget;
-    const hasHighlight = combobox.dropdownOpened && combobox.getSelectedOptionIndex() !== -1;
+    const caretAtEnd = input.selectionStart === value.length && input.selectionEnd === value.length;
+    const highlighted = combobox.dropdownOpened && combobox.getSelectedOptionIndex() !== -1;
 
-    if (event.key === 'Tab' && hasHighlight) {
+    if (
+      (event.key === 'Tab' && !event.shiftKey && highlighted) ||
+      (event.key === 'ArrowRight' && caretAtEnd && highlighted)
+    ) {
       event.preventDefault();
       combobox.clickSelectedOption();
-      return;
     }
 
-    if (!isCaretAtEnd(input)) {
-      return;
-    }
-
-    if (event.key === 'ArrowRight' && hasHighlight) {
+    if (event.key === 'Backspace' && caretAtEnd && value.endsWith('/')) {
       event.preventDefault();
-      combobox.clickSelectedOption();
-    } else if (event.key === '/') {
-      // No empty segments; the exact name of a folder moves into it
-      const match = children?.find((item) => item.name.toLowerCase() === query.toLowerCase());
-      if (query === '' || match) {
-        event.preventDefault();
-      }
-      if (match) {
-        enterFolder([...parent, match.name]);
-      }
-    } else if (event.key === 'Backspace' && value.endsWith('/')) {
-      event.preventDefault();
-      const up = parent.slice(0, -1);
-      changeValue(up.length === 0 ? '' : `${up.join('/')}/`);
+      const withoutSlash = value.slice(0, -1);
+      changeValue(withoutSlash.slice(0, withoutSlash.lastIndexOf('/') + 1));
     }
   };
 
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = (event: React.SubmitEvent<HTMLFormElement>) => {
     event.preventDefault();
-    if (!isValid) {
+    if (resolved === null) {
       return;
     }
-    const path = pathSegments(value);
-    setSaved({ path: path.join('/'), createdFolders });
+    const path = resolved.join('/');
+    setValue(path);
+    setSaved({ path, createdFolders });
     combobox.closeDropdown();
-    notifications.show({ title: 'Document saved', message: `Saved to ${formatPath(path)}` });
+    notifications.show({ title: 'Document saved', message: `Saved to ${formatPath(resolved)}` });
   };
 
-  const options = folders.map((item) => {
-    const hasSubfolders = item.children.length > 0;
-    const label = [
-      item.name,
-      countLabel(item.documents),
-      item.isNew && 'new',
-      hasSubfolders && 'has subfolders',
-    ]
-      .filter(Boolean)
-      .join(', ');
+  const options = matches.map((item) => (
+    <Combobox.Option value={item.name} key={item.name} className={classes.option}>
+      <Group gap="xs" wrap="nowrap">
+        <IconFolder size={16} className={classes.icon} aria-hidden />
+        <Text size="sm" className={classes.name}>
+          {item.name}
+        </Text>
+        {item.isNew && (
+          <Badge variant="default" size="sm">
+            New
+          </Badge>
+        )}
+        <Text size="xs" className={classes.meta}>
+          {item.documents === 1 ? '1 doc' : `${item.documents} docs`}
+        </Text>
+        {item.children.length > 0 ? (
+          <IconChevronRight
+            size={16}
+            className={classes.meta}
+            role="img"
+            aria-label="Has subfolders"
+          />
+        ) : (
+          <span className={classes.hintSpace} />
+        )}
+      </Group>
+    </Combobox.Option>
+  ));
 
-    return (
-      <Combobox.Option value={item.name} key={item.name} aria-label={label}>
-        <div className={classes.option}>
-          <IconFolder size={16} className={classes.icon} aria-hidden />
-          <Text size="sm" className={classes.name} truncate>
-            {item.name}
-          </Text>
-          {item.isNew && (
-            <Badge variant="default" size="xs">
-              New
-            </Badge>
-          )}
-          <Text size="xs" className={classes.count}>
-            {countLabel(item.documents)}
-          </Text>
-          <span className={classes.hint}>
-            {hasSubfolders && <IconChevronRight size={14} aria-hidden />}
-          </span>
-        </div>
-      </Combobox.Option>
-    );
-  });
-
-  const listedFolder = formatPath(parent);
+  const emptyMessage =
+    listed === null
+      ? 'This folder does not exist'
+      : !validNames
+        ? 'No folders match'
+        : 'No subfolders, type a name to create one';
 
   return (
-    <form onSubmit={handleSubmit} noValidate>
-      <Combobox store={combobox} onOptionSubmit={handleOptionSubmit}>
-        <Combobox.Target withExpandedAttribute>
-          <TextInput
-            label="Save to"
-            description="Tab completes a folder, / opens it, Backspace after / goes up"
-            placeholder="projects/web/forms"
-            leftSection={<IconFolder size={16} />}
-            value={value}
-            error={nameError ?? blurError}
-            onChange={(event) => changeValue(event.currentTarget.value)}
-            onKeyDown={handleKeyDown}
-            onClick={() => combobox.openDropdown()}
-            onFocus={() => combobox.openDropdown()}
-            onBlur={() => {
-              combobox.closeDropdown();
-              setBlurError(getPathError(tree, value));
-            }}
-            spellCheck={false}
-            autoComplete="off"
-            inputContainer={(input) => (
-              <div className={classes.field}>
-                <div className={classes.input}>{input}</div>
-                <Button type="submit" disabled={!isValid}>
-                  Save
-                </Button>
-              </div>
-            )}
-          />
-        </Combobox.Target>
+    <Stack gap="md">
+      <form onSubmit={handleSubmit}>
+        <Combobox store={combobox} onOptionSubmit={handleOptionSubmit}>
+          <Combobox.Target>
+            <TextInput
+              label="Save to"
+              placeholder="projects/web/forms"
+              value={value}
+              error={error}
+              leftSection={<IconFolder size={16} />}
+              onChange={(event) => changeValue(canonicalizePath(tree, event.currentTarget.value))}
+              onKeyDown={handleKeyDown}
+              onClick={() => combobox.openDropdown()}
+              onFocus={() => combobox.openDropdown()}
+              onBlur={() => {
+                combobox.closeDropdown();
+                setBlurred(true);
+              }}
+              inputContainer={(children) => (
+                <Group align="flex-end" wrap="nowrap">
+                  <div className={classes.field}>{children}</div>
+                  <Button type="submit" disabled={resolved === null}>
+                    Save
+                  </Button>
+                </Group>
+              )}
+            />
+          </Combobox.Target>
 
-        <Combobox.Dropdown hidden={nameError !== null}>
-          <Combobox.Header className={classes.header}>
-            <IconFolderOpen size={14} aria-hidden />
-            <Text size="xs" truncate>
-              {listedFolder}
-            </Text>
-          </Combobox.Header>
-          <Combobox.Options aria-label={`Subfolders of ${listedFolder}`}>
-            <ScrollArea.Autosize mah={280} type="scroll">
-              {options}
-              {canCreate && (
-                <Combobox.Option value={CREATE_OPTION}>
-                  <div className={classes.option}>
-                    <IconFolderPlus size={16} className={classes.icon} aria-hidden />
-                    <Text size="sm" className={classes.name}>
-                      Create folder “{newName}” in {listedFolder}
-                    </Text>
-                  </div>
-                </Combobox.Option>
-              )}
-              {children === null && (
-                <Combobox.Empty>{getPathError(tree, parent.join('/'))}</Combobox.Empty>
-              )}
-              {children !== null && children.length === 0 && query === '' && (
-                <Combobox.Empty>No subfolders</Combobox.Empty>
-              )}
-            </ScrollArea.Autosize>
-          </Combobox.Options>
-        </Combobox.Dropdown>
-      </Combobox>
+          <Combobox.Dropdown>
+            <Combobox.Header className={classes.header}>
+              <Group gap="xs" wrap="nowrap">
+                <IconFolderOpen size={16} aria-hidden />
+                <Text size="xs">{formatPath(parents)}</Text>
+              </Group>
+            </Combobox.Header>
+            <Combobox.ScrollArea mah={260} viewportProps={{ tabIndex: -1 }}>
+              <Combobox.Options aria-label={`Subfolders of ${formatPath(parents)}`}>
+                {options}
+                {canCreate && (
+                  <Combobox.Option value={CREATE_VALUE} className={classes.option}>
+                    <Group gap="xs" wrap="nowrap">
+                      <IconFolderPlus size={16} className={classes.icon} aria-hidden />
+                      <Text size="sm" className={classes.name}>
+                        Create folder “{newName}” in {formatPath(parents)}
+                      </Text>
+                    </Group>
+                  </Combobox.Option>
+                )}
+                {optionsCount === 0 && <Combobox.Empty>{emptyMessage}</Combobox.Empty>}
+              </Combobox.Options>
+            </Combobox.ScrollArea>
+          </Combobox.Dropdown>
+        </Combobox>
+      </form>
 
       {saved && (
-        <div className={classes.saved}>
-          <Input.Label labelElement="div">Saved location</Input.Label>
-          <Code block aria-label="Saved location">
-            {JSON.stringify(saved, null, 2)}
-          </Code>
-        </div>
+        <Stack gap="xs">
+          <Text size="sm">Saved location</Text>
+          <Code block>{JSON.stringify(saved, null, 2)}</Code>
+        </Stack>
       )}
-    </form>
+    </Stack>
   );
 }

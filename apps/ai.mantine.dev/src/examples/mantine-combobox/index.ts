@@ -1,14 +1,5 @@
+import dynamic from 'next/dynamic';
 import type { SkillExample } from '../types';
-import flightRoutePickerCode from './FlightRoutePicker/code.json';
-import { FlightRoutePicker } from './FlightRoutePicker/FlightRoutePicker';
-import folderPathInputCode from './FolderPathInput/code.json';
-import { FolderPathInput } from './FolderPathInput/FolderPathInput';
-import iconPickerCode from './IconPicker/code.json';
-import { IconPickerDemo } from './IconPicker/IconPickerDemo';
-import issueSearchBarCode from './IssueSearchBar/code.json';
-import { IssueSearchBar } from './IssueSearchBar/IssueSearchBar';
-import naturalDateInputCode from './NaturalDateInput/code.json';
-import { NaturalDateInputDemo } from './NaturalDateInput/NaturalDateInputDemo';
 
 export const COMBOBOX_EXAMPLES: SkillExample[] = [
   {
@@ -36,19 +27,21 @@ Suggestions:
 
 Editing:
 
-- Backspace at the start of the text turns the last token back into editable text (\`label:bug\`) instead of deleting it
+- Backspace at the start of the text removes the last token
 - each token can be removed with its own remove button, and a clear button removes the whole query
 - Enter runs the search when no suggestion is active; Escape closes the dropdown and keeps the text
 - every search that runs is saved to recent searches (5 at most, newest first, no duplicates); picking a recent search restores its tokens and text
 
 Results:
 
-- under the bar show the issues that match the query from a hard-coded list of 30 issues (number, title, status, author, assignees, labels, priority, due date) with the count of matches
+- under the bar show the issues that match the query from a hard-coded list of 30 issues (number, title, status, author, assignees, labels, priority, due date) with the count of matches; list at most 10 of them; the list updates as the query changes, a \`key:value\` that is still being typed is ignored
 - tokens with the same key are OR (\`label:bug label:ui\`), different keys are AND; \`due:\` filters are relative to today
 
 Write tests for the component.`,
-    component: IssueSearchBar,
-    code: issueSearchBarCode as SkillExample['code'],
+    component: dynamic(() =>
+      import('./IssueSearchBar/IssueSearchBar').then((module) => module.IssueSearchBar)
+    ),
+    loadCode: () => import('./IssueSearchBar/code.json'),
   },
   {
     id: 'icon-picker',
@@ -82,8 +75,10 @@ Value:
 - the value is the icon name with its style (\`{ name: 'Rocket', style: 'outline' }\`) or null; show the value as JSON under the picker
 
 Write tests for the component.`,
-    component: IconPickerDemo,
-    code: iconPickerCode as SkillExample['code'],
+    component: dynamic(() =>
+      import('./IconPicker/ProjectIconSettings').then((module) => module.ProjectIconSettings)
+    ),
+    loadCode: () => import('./IconPicker/code.json'),
   },
   {
     id: 'natural-date-input',
@@ -118,8 +113,12 @@ Value:
 - the component takes \`value\`, \`onChange\` (\`Date | null\`) and \`label\`; render it with the label "Due date" and show the selected value as an ISO string under it
 
 Write tests for the component and for the parser.`,
-    component: NaturalDateInputDemo,
-    code: naturalDateInputCode as SkillExample['code'],
+    component: dynamic(() =>
+      import('./NaturalDateInput/NaturalDateInputDemo').then(
+        (module) => module.NaturalDateInputDemo
+      )
+    ),
+    loadCode: () => import('./NaturalDateInput/code.json'),
   },
   {
     id: 'flight-route-picker',
@@ -148,8 +147,10 @@ Rules:
 - "Search flights" requires both fields; on submit show a short notification with the route and display the search as JSON (from and to as arrays of codes) under the fields
 
 Write tests for the component.`,
-    component: FlightRoutePicker,
-    code: flightRoutePickerCode as SkillExample['code'],
+    component: dynamic(() =>
+      import('./FlightRoutePicker/FlightRoutePicker').then((module) => module.FlightRoutePicker)
+    ),
+    loadCode: () => import('./FlightRoutePicker/code.json'),
   },
   {
     id: 'folder-path-input',
@@ -179,7 +180,9 @@ Value:
 - the input starts with the path of the last saved location (\`documents/drafts\`)
 
 Write tests for the component.`,
-    component: FolderPathInput,
-    code: folderPathInputCode as SkillExample['code'],
+    component: dynamic(() =>
+      import('./FolderPathInput/FolderPathInput').then((module) => module.FolderPathInput)
+    ),
+    loadCode: () => import('./FolderPathInput/code.json'),
   },
 ];

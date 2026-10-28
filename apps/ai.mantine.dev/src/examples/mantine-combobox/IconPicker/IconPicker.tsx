@@ -1,309 +1,404 @@
-import { useDeferredValue, useId, useMemo, useState, type KeyboardEvent } from 'react';
+import { useCallback, useDeferredValue, useEffect, useMemo, useRef, useState } from 'react';
+import { IconSearch } from '@tabler/icons-react';
+import { useVirtualizer } from '@tanstack/react-virtual';
 import {
   Combobox,
+  FocusTrap,
   Input,
   InputBase,
+  Loader,
+  ScrollArea,
   SegmentedControl,
   Text,
-  useVirtualizedCombobox,
-  type InputBaseProps,
+  TextInput,
+  useCombobox,
 } from '@mantine/core';
-import { useLocalStorage, useUncontrolled } from '@mantine/hooks';
+import { useId, useLocalStorage, useUncontrolled } from '@mantine/hooks';
 import {
-  buildGridModel,
-  COLUMNS,
-  DROPDOWN_WIDTH,
-  moveByRows,
-  PAGE_ROWS,
-  type GridModel,
-} from './grid-model';
-import {
-  getIconComponent,
-  getIcons,
+  getIconLabel,
+  getLoadedIconSet,
+  loadIconSet,
   searchIcons,
-  type IconPickerValue,
+  type IconEntry,
+  type IconSet,
   type IconStyle,
-} from './icon-index';
-import { IconByName } from './IconByName';
-import { IconGrid } from './IconGrid';
+  type IconValue,
+} from './icon-data';
+import { buildIconGrid, moveInGrid, type GridMove, type IconGrid } from './icon-grid';
 import classes from './IconPicker.module.css';
 
-export type { IconPickerValue, IconStyle } from './icon-index';
-
-const RECENT_LIMIT = COLUMNS;
+const COLUMNS = 8;
+const ROW_HEIGHT = 44;
+const HEADER_HEIGHT = 28;
+const GRID_MAX_HEIGHT = ROW_HEIGHT * 7;
+const DROPDOWN_WIDTH = 376;
+const RECENT_LIMIT = 8;
 
 const STYLE_OPTIONS = [
-  { value: 'outline', label: 'Outline' },
-  { value: 'filled', label: 'Filled' },
+  { label: 'Outline', value: 'outline' },
+  { label: 'Filled', value: 'filled' },
 ];
 
-export interface IconPickerProps extends Omit<
-  InputBaseProps,
-  'value' | 'defaultValue' | 'onChange'
-> {
-  value?: IconPickerValue | null;
-  defaultValue?: IconPickerValue | null;
-  onChange?: (value: IconPickerValue | null) => void;
+const KEY_MOVES: Record<string, GridMove> = {
+  ArrowLeft: 'left',
+  ArrowRight: 'right',
+  ArrowUp: 'up',
+  ArrowDown: 'down',
+  PageUp: 'pageUp',
+  PageDown: 'pageDown',
+  Home: 'first',
+  End: 'last',
+};
+
+const EMPTY_GRID: IconGrid = { cells: [], rows: [], cellRows: [], resultsStart: 0 };
+
+export interface IconPickerProps {
+  label?: React.ReactNode;
+  description?: React.ReactNode;
+  error?: React.ReactNode;
   placeholder?: string;
-  /** localStorage key of the recently picked icons */
+  value?: IconValue | null;
+  defaultValue?: IconValue | null;
+  onChange?: (value: IconValue | null) => void;
+  /** Local storage key of the recently picked icons */
   recentStorageKey?: string;
 }
 
-function isKnownIcon(item: IconPickerValue) {
-  return getIconComponent(item.name, item.style) !== undefined;
-}
-
-function createModel(style: IconStyle, query: string, recent: IconPickerValue[]) {
-  const entries = searchIcons(getIcons(style), query);
-  return buildGridModel(entries, style, query.trim() === '' ? recent : []);
-}
-
-function findInGrid(model: GridModel, name: string | undefined) {
-  if (name === undefined) {
-    return -1;
-  }
-  return model.cells.findIndex((cell, index) => index >= model.gridStart && cell.name === name);
-}
-
 export function IconPicker({
+  label,
+  description,
+  error,
+  placeholder = 'Pick an icon',
   value,
   defaultValue,
   onChange,
-  label = 'Project icon',
-  placeholder = 'Pick an icon',
   recentStorageKey = 'icon-picker-recent',
-  ...others
 }: IconPickerProps) {
-  const [current, setCurrent] = useUncontrolled<IconPickerValue | null>({
+  const [current, setCurrent] = useUncontrolled<IconValue | null>({
     value,
     defaultValue,
     finalValue: null,
     onChange,
   });
-  const [storedRecent, setRecent] = useLocalStorage<IconPickerValue[]>({
+  const [iconSet, setIconSet] = useState<IconSet | null>(getLoadedIconSet);
+  const [search, setSearch] = useState('');
+  const query = useDeferredValue(search);
+  const [style, setStyle] = useState<IconStyle>(current?.style ?? 'outline');
+  const [highlighted, setHighlighted] = useState(-1);
+  const [hovered, setHovered] = useState(-1);
+  const [viewport, setViewport] = useState<HTMLDivElement | null>(null);
+  const [recentValues, setRecentValues] = useLocalStorage<IconValue[]>({
     key: recentStorageKey,
     defaultValue: [],
-    getInitialValueInEffect: false,
   });
-  const recent = useMemo(() => storedRecent.filter(isKnownIcon), [storedRecent]);
+  const searchRef = useRef<HTMLInputElement>(null);
+  const highlightValueOnOpen = useRef(false);
+  const listId = useId();
 
-  const [search, setSearch] = useState('');
-  const [style, setStyle] = useState<IconStyle>('outline');
-  const [highlightedIndex, setHighlightedIndex] = useState(-1);
-  const [hoveredIndex, setHoveredIndex] = useState(-1);
+  const combobox = useCombobox({
+    onDropdownClose: () => {
+      setSearch('');
+      setHighlighted(-1);
+      setHovered(-1);
+      combobox.focusTarget();
+    },
+  });
+  const opened = combobox.dropdownOpened;
 
-  // Filtering thousands of icons and rebuilding the grid waits until typing pauses
-  const query = useDeferredValue(search);
-  const model = useMemo(() => createModel(style, query, recent), [style, query, recent]);
+  useEffect(() => {
+    if (!iconSet && (opened || current !== null)) {
+      void loadIconSet().then(setIconSet);
+    }
+  }, [iconSet, opened, current]);
 
-  const uid = useId();
-  const getOptionId = (index: number) => `${uid}-${model.cells[index]?.key}`;
+  const grid = useMemo(() => {
+    if (!iconSet) {
+      return EMPTY_GRID;
+    }
 
-  const pick = (index: number) => {
-    const cell = model.cells[index];
-    if (!cell) {
+    const results = searchIcons(style === 'filled' ? iconSet.filled : iconSet.outline, query);
+    const recent =
+      query.trim() === ''
+        ? recentValues.map(iconSet.find).filter((entry): entry is IconEntry => entry !== undefined)
+        : [];
+
+    return buildIconGrid(results, recent, COLUMNS);
+  }, [iconSet, style, query, recentValues]);
+
+  // Row sizes depend on the row kind: a new key function makes the virtualizer measure the new list
+  const getItemKey = useCallback((index: number) => `${grid.rows[index].kind}-${index}`, [grid]);
+  const virtualizer = useVirtualizer({
+    count: grid.rows.length,
+    getScrollElement: () => viewport,
+    estimateSize: (index) => (grid.rows[index].kind === 'header' ? HEADER_HEIGHT : ROW_HEIGHT),
+    getItemKey,
+    overscan: 4,
+  });
+
+  const scrollToCell = (index: number) => {
+    const rowIndex = grid.cellRows[index];
+    // The first row of a section scrolls together with its header
+    const target = grid.rows[rowIndex - 1]?.kind === 'header' ? rowIndex - 1 : rowIndex;
+    virtualizer.scrollToIndex(target, { align: 'auto' });
+  };
+
+  const highlight = (index: number) => {
+    setHighlighted(index);
+    if (index !== -1) {
+      scrollToCell(index);
+    }
+  };
+
+  // The search field appears after the icons load, later than the focus trap activates
+  useEffect(() => {
+    if (opened && iconSet) {
+      searchRef.current?.focus();
+    }
+  }, [opened, iconSet]);
+
+  // A new list highlights its first cell; opening the dropdown highlights the current value
+  useEffect(() => {
+    if (!opened || !iconSet) {
       return;
     }
-    const next = { name: cell.name, style: cell.style };
+
+    if (highlightValueOnOpen.current) {
+      highlightValueOnOpen.current = false;
+      // The value is highlighted in the full grid, not in the recent row
+      const isValueCell = (entry: IconEntry, index: number) =>
+        index >= grid.resultsStart && entry.name === current?.name;
+      const valueIndex = current?.style === style ? grid.cells.findIndex(isValueCell) : -1;
+      const index = valueIndex !== -1 ? valueIndex : grid.cells.length > 0 ? 0 : -1;
+      setHighlighted(index);
+      if (index !== -1) {
+        requestAnimationFrame(() => scrollToCell(index));
+      }
+      return;
+    }
+
+    setHighlighted(grid.cells.length > 0 ? 0 : -1);
+    virtualizer.scrollToOffset(0);
+  }, [grid, opened]);
+
+  const openDropdown = () => {
+    if (current) {
+      setStyle(current.style);
+    }
+    highlightValueOnOpen.current = true;
+    combobox.openDropdown();
+  };
+
+  const pick = (entry: IconEntry) => {
+    const next: IconValue = { name: entry.name, style: entry.style };
+    const isNext = (item: IconValue) => item.name === next.name && item.style === next.style;
     setCurrent(next);
-    setRecent((items) =>
-      [next, ...items.filter((item) => item.name !== next.name || item.style !== next.style)].slice(
-        0,
-        RECENT_LIMIT
-      )
+    setRecentValues((previous) =>
+      [next, ...previous.filter((item) => !isNext(item))].slice(0, RECENT_LIMIT)
     );
     combobox.closeDropdown();
   };
 
-  const combobox = useVirtualizedCombobox({
-    totalOptionsCount: model.cells.length,
-    getOptionId,
-    selectedOptionIndex: highlightedIndex,
-    setSelectedOptionIndex: setHighlightedIndex,
-    onSelectedOptionSubmit: pick,
-    onDropdownOpen: () => {
-      const openStyle = current?.style ?? 'outline';
-      const openModel = createModel(openStyle, '', recent);
-      const selected = findInGrid(openModel, current?.name);
-      setStyle(openStyle);
-      setSearch('');
-      setHighlightedIndex(selected !== -1 ? selected : openModel.cells.length > 0 ? 0 : -1);
-      combobox.focusSearchInput();
-    },
-    onDropdownClose: () => {
-      setHoveredIndex(-1);
-      combobox.focusTarget();
-    },
-  });
-
-  const handleSearchChange = (nextSearch: string) => {
-    setSearch(nextSearch);
-    setHoveredIndex(-1);
-    setHighlightedIndex(0);
-  };
-
-  const handleStyleChange = (nextStyle: IconStyle) => {
-    // Keep the highlighted icon when it exists in the other style
-    const name = model.cells[highlightedIndex]?.name;
-    const nextModel = createModel(nextStyle, query, recent);
-    const index = findInGrid(nextModel, name);
-    setStyle(nextStyle);
-    setHoveredIndex(-1);
-    setHighlightedIndex(index !== -1 ? index : nextModel.cells.length > 0 ? 0 : -1);
-  };
-
-  const handleSearchKeyDown = (event: KeyboardEvent<HTMLInputElement>) => {
-    const last = model.cells.length - 1;
-    const from = highlightedIndex;
-    const move = (getIndex: () => number) => {
+  const handleTargetKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
+    if (!opened && ['Enter', ' ', 'ArrowDown'].includes(event.key)) {
       event.preventDefault();
-      if (last >= 0) {
-        setHighlightedIndex(from === -1 ? 0 : getIndex());
-      }
-    };
-
-    switch (event.key) {
-      case 'ArrowRight':
-        move(() => Math.min(from + 1, last));
-        break;
-      case 'ArrowLeft':
-        move(() => Math.max(from - 1, 0));
-        break;
-      case 'ArrowDown':
-        move(() => moveByRows(model, from, 1));
-        break;
-      case 'ArrowUp':
-        move(() => moveByRows(model, from, -1));
-        break;
-      case 'PageDown':
-        move(() => moveByRows(model, from, PAGE_ROWS));
-        break;
-      case 'PageUp':
-        move(() => moveByRows(model, from, -PAGE_ROWS));
-        break;
-      case 'Home':
-        move(() => 0);
-        break;
-      case 'End':
-        move(() => last);
-        break;
-      case 'Enter':
-        if (!event.nativeEvent.isComposing) {
-          event.preventDefault();
-          combobox.clickSelectedOption();
-        }
-        break;
-      case 'Escape':
-        combobox.closeDropdown();
-        break;
-    }
-  };
-
-  const handleTargetKeyDown = (event: KeyboardEvent<HTMLButtonElement>) => {
-    if (event.key === 'ArrowDown' || event.key === 'ArrowUp') {
-      event.preventDefault();
-      combobox.openDropdown('keyboard');
-    }
-    if ((event.key === 'Backspace' || event.key === 'Delete') && current) {
+      openDropdown();
+    } else if (current && (event.key === 'Backspace' || event.key === 'Delete')) {
       event.preventDefault();
       setCurrent(null);
     }
   };
 
-  const previewCell = model.cells[hoveredIndex !== -1 ? hoveredIndex : highlightedIndex];
+  const handleSearchKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
+    const move = KEY_MOVES[event.key];
+
+    if (move) {
+      event.preventDefault();
+      const viewportHeight = virtualizer.scrollRect?.height || GRID_MAX_HEIGHT;
+      const pageRows = Math.max(1, Math.floor(viewportHeight / ROW_HEIGHT));
+      highlight(moveInGrid(grid, highlighted, move, pageRows));
+    } else if (event.key === 'Enter') {
+      event.preventDefault();
+      if (highlighted !== -1) {
+        pick(grid.cells[highlighted]);
+      }
+    }
+  };
+
+  const handleDropdownKeyDown = (event: React.KeyboardEvent<HTMLDivElement>) => {
+    if (event.key === 'Escape') {
+      event.preventDefault();
+      combobox.closeDropdown();
+    }
+  };
+
+  const cellId = (index: number) => `${listId}-cell-${index}`;
+  const currentEntry = current && iconSet ? iconSet.find(current) : undefined;
+  const CurrentIcon = currentEntry?.Component;
+  const footerEntry = grid.cells[hovered] ?? grid.cells[highlighted];
+
+  const renderRow = (rowIndex: number) => {
+    const row = grid.rows[rowIndex];
+
+    if (row.kind === 'header') {
+      return (
+        <Text size="xs" className={classes.sectionLabel} aria-hidden>
+          {row.label}
+        </Text>
+      );
+    }
+
+    const cells = grid.cells.slice(row.start, row.start + row.count).map((entry, offset) => {
+      const index = row.start + offset;
+      const isActive =
+        index >= grid.resultsStart && current?.name === entry.name && current.style === entry.style;
+
+      return (
+        // oxlint-disable-next-line jsx-a11y/click-events-have-key-events -- the search field handles the keyboard
+        <div
+          key={index}
+          id={cellId(index)}
+          role="option"
+          tabIndex={-1}
+          aria-label={entry.label}
+          aria-selected={index === highlighted}
+          className={classes.cell}
+          data-highlighted={index === highlighted || undefined}
+          data-active={isActive || undefined}
+          onMouseDown={(event) => event.preventDefault()}
+          onMouseEnter={() => setHovered(index)}
+          onClick={() => pick(entry)}
+        >
+          <entry.Component size={20} stroke={1.5} />
+        </div>
+      );
+    });
+
+    return row.group === 'recent' ? (
+      <div role="group" aria-label="Recent" className={classes.row}>
+        {cells}
+      </div>
+    ) : (
+      <div role="presentation" className={classes.row}>
+        {cells}
+      </div>
+    );
+  };
+
+  const renderOptions = () => {
+    if (!iconSet) {
+      return (
+        <div className={classes.loader}>
+          <Loader size="sm" aria-label="Loading icons" />
+        </div>
+      );
+    }
+
+    if (grid.cells.length === 0) {
+      return <Combobox.Empty className={classes.empty}>Nothing found for "{query}"</Combobox.Empty>;
+    }
+
+    return (
+      <ScrollArea.Autosize
+        mah={GRID_MAX_HEIGHT}
+        type="auto"
+        viewportRef={setViewport}
+        viewportProps={{ tabIndex: -1 }}
+      >
+        <div
+          id={listId}
+          role="listbox"
+          tabIndex={-1}
+          aria-label="Icons"
+          className={classes.grid}
+          style={{ height: virtualizer.getTotalSize() }}
+          onMouseLeave={() => setHovered(-1)}
+        >
+          {virtualizer.getVirtualItems().map((item) => (
+            <div
+              key={item.key}
+              role="presentation"
+              className={classes.virtualRow}
+              style={{ height: item.size, transform: `translateY(${item.start}px)` }}
+            >
+              {renderRow(item.index)}
+            </div>
+          ))}
+        </div>
+      </ScrollArea.Autosize>
+    );
+  };
+
+  const renderDropdownContent = () => (
+    <>
+      <div className={classes.controls}>
+        <TextInput
+          ref={searchRef}
+          data-autofocus
+          placeholder="Search icons"
+          aria-label="Search icons"
+          leftSection={<IconSearch size={16} />}
+          value={search}
+          onChange={(event) => setSearch(event.currentTarget.value)}
+          onKeyDown={handleSearchKeyDown}
+          role="combobox"
+          aria-expanded={opened}
+          aria-controls={listId}
+          aria-autocomplete="list"
+          aria-activedescendant={highlighted !== -1 ? cellId(highlighted) : undefined}
+        />
+        <SegmentedControl
+          fullWidth
+          aria-label="Icon style"
+          data={STYLE_OPTIONS}
+          value={style}
+          onChange={(next) => {
+            setStyle(next as IconStyle);
+            searchRef.current?.focus();
+          }}
+        />
+      </div>
+
+      {renderOptions()}
+
+      <Combobox.Footer className={classes.footer}>
+        <Text size="xs" truncate>
+          {footerEntry ? footerEntry.label : ' '}
+        </Text>
+      </Combobox.Footer>
+    </>
+  );
 
   return (
-    <Combobox
-      store={combobox}
-      width={DROPDOWN_WIDTH}
-      position="bottom-start"
-      classNames={{ dropdown: classes.dropdown }}
-    >
-      <Combobox.Target withAriaAttributes={false}>
+    <Combobox store={combobox} width={DROPDOWN_WIDTH} position="bottom-start">
+      <Combobox.Target withAriaAttributes={false} withKeyboardNavigation={false}>
         <InputBase
-          component="button"
-          type="button"
+          readOnly
           pointer
           label={label}
-          aria-haspopup="listbox"
-          aria-expanded={combobox.dropdownOpened}
-          leftSection={
-            current ? (
-              <IconByName name={current.name} iconStyle={current.style} size={18} stroke={1.5} />
-            ) : undefined
-          }
+          description={description}
+          error={error}
+          placeholder={placeholder}
+          value={currentEntry?.label ?? (current ? getIconLabel(current.name) : '')}
+          leftSection={CurrentIcon ? <CurrentIcon size={16} /> : null}
           rightSection={
             current ? (
               <Input.ClearButton aria-label="Clear icon" onClick={() => setCurrent(null)} />
             ) : (
-              <Combobox.Chevron />
+              <Combobox.Chevron error={error} />
             )
           }
           rightSectionPointerEvents={current ? 'all' : 'none'}
-          onClick={() => combobox.toggleDropdown()}
+          aria-haspopup="listbox"
+          aria-expanded={opened}
+          onClick={() => (opened ? combobox.closeDropdown() : openDropdown())}
           onKeyDown={handleTargetKeyDown}
-          {...others}
-        >
-          {current ? current.name : <Input.Placeholder>{placeholder}</Input.Placeholder>}
-        </InputBase>
+        />
       </Combobox.Target>
 
-      <Combobox.Dropdown>
-        <Combobox.Search
-          aria-label="Search icons"
-          placeholder="Search icons"
-          value={search}
-          withKeyboardNavigation={false}
-          onChange={(event) => handleSearchChange(event.currentTarget.value)}
-          onKeyDown={handleSearchKeyDown}
-        />
-
-        <SegmentedControl
-          fullWidth
-          size="xs"
-          className={classes.styleControl}
-          aria-label="Icon style"
-          data={STYLE_OPTIONS}
-          value={style}
-          onChange={(next) => handleStyleChange(next as IconStyle)}
-          // Keep focus in the search field
-          onMouseDown={(event) => event.preventDefault()}
-        />
-
-        <Combobox.Options aria-label="Icons">
-          {model.cells.length === 0 ? (
-            <Combobox.Empty className={classes.empty}>
-              Nothing found for "{query.trim()}"
-            </Combobox.Empty>
-          ) : (
-            <IconGrid
-              key={`${style}:${query}`}
-              opened={combobox.dropdownOpened}
-              model={model}
-              value={current}
-              highlightedIndex={highlightedIndex}
-              getOptionId={getOptionId}
-              onPick={pick}
-              onHover={setHoveredIndex}
-            />
-          )}
-        </Combobox.Options>
-
-        <Combobox.Footer className={classes.footer} role="status">
-          {previewCell ? (
-            <>
-              <IconByName
-                name={previewCell.name}
-                iconStyle={previewCell.style}
-                size={20}
-                stroke={1.5}
-              />
-              <Text size="sm">{previewCell.name}</Text>
-            </>
-          ) : (
-            <Text size="xs">Arrow keys to move, Enter to pick</Text>
-          )}
-        </Combobox.Footer>
+      <Combobox.Dropdown onKeyDown={handleDropdownKeyDown}>
+        <FocusTrap active={opened}>
+          <div>{renderDropdownContent()}</div>
+        </FocusTrap>
       </Combobox.Dropdown>
     </Combobox>
   );

@@ -1,19 +1,19 @@
 import dayjs from 'dayjs';
-import { ISSUES, LABELS, MEMBERS, type Issue } from './data';
+import { Issue, LABELS, MEMBERS } from './data';
 
 export type FilterKey = 'status' | 'author' | 'assignee' | 'label' | 'priority' | 'due';
 
 export interface FilterValue {
   value: string;
   label: string;
-  /** Extra words the value is found by in suggestions (member name and username) */
-  search: string[];
+  /** Texts the typed query is matched against */
+  terms: string[];
 }
 
 export interface FilterDefinition {
   key: FilterKey;
   description: string;
-  /** Several tokens of this key are allowed and combined with OR */
+  /** Repeatable keys accept several tokens (OR), the others keep one token */
   repeatable: boolean;
   values: FilterValue[];
 }
@@ -28,14 +28,14 @@ export interface SearchQuery {
   text: string;
 }
 
+const simpleValues = (values: [string, string][]): FilterValue[] =>
+  values.map(([value, label]) => ({ value, label, terms: [value, label.toLowerCase()] }));
+
 const memberValues: FilterValue[] = MEMBERS.map((member) => ({
   value: member.username,
   label: member.name,
-  search: [member.name, member.username],
+  terms: [member.username, member.name.toLowerCase()],
 }));
-
-const simpleValues = (items: [string, string][]): FilterValue[] =>
-  items.map(([value, label]) => ({ value, label, search: [value, label] }));
 
 export const FILTERS: FilterDefinition[] = [
   {
@@ -50,24 +50,24 @@ export const FILTERS: FilterDefinition[] = [
   },
   {
     key: 'author',
-    description: 'Who created the issue',
+    description: 'Team member who opened the issue',
     repeatable: false,
     values: memberValues,
   },
   {
     key: 'assignee',
-    description: 'Who works on the issue',
+    description: 'Team member working on the issue',
     repeatable: true,
     values: [
-      { value: 'none', label: 'No assignee', search: ['none', 'No assignee'] },
+      { value: 'none', label: 'No assignee', terms: ['none', 'no assignee'] },
       ...memberValues,
     ],
   },
   {
     key: 'label',
-    description: 'Issue labels',
+    description: 'Issue label',
     repeatable: true,
-    values: LABELS.map((label) => ({ value: label.name, label: label.name, search: [label.name] })),
+    values: LABELS.map((label) => ({ value: label.name, label: label.name, terms: [label.name] })),
   },
   {
     key: 'priority',
@@ -94,77 +94,87 @@ export const FILTERS: FilterDefinition[] = [
   },
 ];
 
-export const getFilter = (key: string) =>
-  FILTERS.find((filter) => filter.key === key.toLowerCase());
+export function getFilter(key: string) {
+  return FILTERS.find((filter) => filter.key === key.toLowerCase());
+}
 
-const slug = (value: string) => value.trim().toLowerCase().replace(/\s+/g, '-');
+export function getFilterValue(key: FilterKey, value: string) {
+  return getFilter(key)?.values.find((item) => item.value === value);
+}
 
-/** Canonical value for a typed `key:value`, or null when the key or the value is unknown */
-export function resolveToken(word: string): Token | null {
-  const colon = word.indexOf(':');
-  if (colon <= 0) {
-    return null;
+/** Values of a key whose value or label contains the typed text */
+export function matchValues(filter: FilterDefinition, query: string) {
+  const search = query.trim().toLowerCase();
+  if (search === '') {
+    return filter.values;
   }
-
-  const filter = getFilter(word.slice(0, colon));
-  const raw = slug(word.slice(colon + 1));
-  if (!filter || raw === '') {
-    return null;
-  }
-
-  const exact = filter.values.find((item) => item.value === raw || slug(item.label) === raw);
-  if (exact) {
-    return { key: filter.key, value: exact.value };
-  }
-
-  if (filter.key !== 'author' && filter.key !== 'assignee') {
-    return null;
-  }
-
-  // Members are also found by their first or last name when it is unique
-  const byNamePart = MEMBERS.filter((member) =>
-    member.name.toLowerCase().split(/\s+/).includes(raw)
+  const dashed = search.replace(/\s+/g, '-');
+  return filter.values.filter((item) =>
+    item.terms.some((term) => term.includes(search) || term.includes(dashed))
   );
-  return byNamePart.length === 1 ? { key: filter.key, value: byNamePart[0].username } : null;
 }
 
-export const tokenText = (token: Token) => `${token.key}:${token.value}`;
-
-/** Adds a token: replaces the token of a single-value key, ignores a repeated value */
-export function addToken(tokens: Token[], token: Token): Token[] {
-  const filter = getFilter(token.key)!;
-  if (!filter.repeatable) {
-    return [...tokens.filter((item) => item.key !== token.key), token];
+/** Splits `key:value` into its parts, or returns null when the word has no colon */
+export function splitWord(word: string) {
+  const index = word.indexOf(':');
+  if (index === -1) {
+    return null;
   }
-  return tokens.some((item) => item.key === token.key && item.value === token.value)
-    ? tokens
-    : [...tokens, token];
+  return { key: word.slice(0, index), value: word.slice(index + 1) };
 }
 
-/** Turns every valid `key:value` word of the text into a token, the rest stays text */
-export function extractTokens(query: SearchQuery): SearchQuery {
+/** Returns the token for a complete `key:value` word with a known key and value */
+export function parseToken(word: string): Token | null {
+  const parts = splitWord(word);
+  const filter = parts && getFilter(parts.key);
+  if (!parts || !filter) {
+    return null;
+  }
+  const value = filter.values.find((item) => item.value === parts.value.toLowerCase());
+  return value ? { key: filter.key, value: value.value } : null;
+}
+
+/** Adds a token: replaces the token of a single-value key, skips a repeated value */
+export function withToken(tokens: Token[], token: Token): Token[] {
+  const filter = getFilter(token.key)!;
+  if (filter.repeatable) {
+    const exists = tokens.some((item) => item.key === token.key && item.value === token.value);
+    return exists ? tokens : [...tokens, token];
+  }
+  const index = tokens.findIndex((item) => item.key === token.key);
+  if (index === -1) {
+    return [...tokens, token];
+  }
+  return tokens.map((item, i) => (i === index ? token : item));
+}
+
+/** Moves every valid `key:value` word of the text into tokens */
+export function normalizeQuery(query: SearchQuery): SearchQuery {
   let tokens = query.tokens;
   const words: string[] = [];
-
   query.text
     .split(/\s+/)
     .filter(Boolean)
     .forEach((word) => {
-      const token = resolveToken(word);
+      const token = parseToken(word);
       if (token) {
-        tokens = addToken(tokens, token);
+        tokens = withToken(tokens, token);
       } else {
         words.push(word);
       }
     });
-
   return { tokens, text: words.join(' ') };
 }
 
-export const serializeQuery = (query: SearchQuery) =>
-  [...query.tokens.map(tokenText), query.text.trim()].filter(Boolean).join(' ');
+export function formatQuery(query: SearchQuery) {
+  return [...query.tokens.map((token) => `${token.key}:${token.value}`), query.text.trim()]
+    .filter(Boolean)
+    .join(' ');
+}
 
-const weekStart = (date: dayjs.Dayjs) => date.subtract((date.day() + 6) % 7, 'day').startOf('day');
+export function isEmptyQuery(query: SearchQuery) {
+  return query.tokens.length === 0 && query.text.trim() === '';
+}
 
 function matchesDue(issue: Issue, value: string, today: dayjs.Dayjs) {
   if (value === 'none') {
@@ -173,17 +183,17 @@ function matchesDue(issue: Issue, value: string, today: dayjs.Dayjs) {
   if (issue.due === null) {
     return false;
   }
-
   const due = dayjs(issue.due);
-  const monday = weekStart(today);
-
+  // Weeks start on Monday
+  const weekStart = today.subtract((today.day() + 6) % 7, 'day');
+  const daysFromWeekStart = due.diff(weekStart, 'day');
   switch (value) {
     case 'today':
       return due.isSame(today, 'day');
     case 'this-week':
-      return !due.isBefore(monday) && due.isBefore(monday.add(7, 'day'));
+      return daysFromWeekStart >= 0 && daysFromWeekStart < 7;
     case 'next-week':
-      return !due.isBefore(monday.add(7, 'day')) && due.isBefore(monday.add(14, 'day'));
+      return daysFromWeekStart >= 7 && daysFromWeekStart < 14;
     case 'overdue':
       return issue.status !== 'closed' && due.isBefore(today, 'day');
     default:
@@ -210,20 +220,21 @@ function matchesToken(issue: Issue, token: Token, today: dayjs.Dayjs) {
   }
 }
 
-/** Tokens of one key are OR, different keys are AND, every free text word must be in the title */
-export function filterIssues(query: SearchQuery, issues: Issue[] = ISSUES, now: Date = new Date()) {
+/** Tokens of one key are OR, different keys are AND, every text word must be in the title */
+export function filterIssues(issues: Issue[], query: SearchQuery, now = new Date()) {
   const today = dayjs(now).startOf('day');
   const words = query.text.toLowerCase().split(/\s+/).filter(Boolean);
+  const keys = [...new Set(query.tokens.map((token) => token.key))];
 
   return issues.filter((issue) => {
     const title = issue.title.toLowerCase();
-    if (!words.every((word) => title.includes(word))) {
-      return false;
-    }
-
-    return FILTERS.every((filter) => {
-      const tokens = query.tokens.filter((token) => token.key === filter.key);
-      return tokens.length === 0 || tokens.some((token) => matchesToken(issue, token, today));
-    });
+    return (
+      words.every((word) => title.includes(word)) &&
+      keys.every((key) =>
+        query.tokens
+          .filter((token) => token.key === key)
+          .some((token) => matchesToken(issue, token, today))
+      )
+    );
   });
 }

@@ -1,7 +1,10 @@
-.phrase {
-  color: var(--mantine-color-bright);
+.option {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
 }
 
 .warning {
+  margin-top: calc(var(--mantine-spacing-xs) / 2);
   color: var(--mantine-color-orange-text);
 }

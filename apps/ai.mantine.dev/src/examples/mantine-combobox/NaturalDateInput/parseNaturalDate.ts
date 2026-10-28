@@ -1,8 +1,10 @@
 export interface ParsedDate {
+  /** Resolved moment; a date without a time is due at the end of that day */
   date: Date;
-  /** false when the phrase has no time: the date is due at the end of the day */
   hasTime: boolean;
 }
+
+const DAY_MS = 24 * 60 * 60 * 1000;
 
 export const WEEKDAYS = [
   'monday',
@@ -12,7 +14,20 @@ export const WEEKDAYS = [
   'friday',
   'saturday',
   'sunday',
-];
+] as const;
+
+const WEEKDAY_ALIASES: Record<string, number> = {
+  mon: 0,
+  tue: 1,
+  tues: 1,
+  wed: 2,
+  thu: 3,
+  thur: 3,
+  thurs: 3,
+  fri: 4,
+  sat: 5,
+  sun: 6,
+};
 
 export const MONTHS = [
   'january',
@@ -27,48 +42,280 @@ export const MONTHS = [
   'october',
   'november',
   'december',
-];
+] as const;
 
-const UNITS = ['day', 'week', 'month'] as const;
-type Unit = (typeof UNITS)[number];
+const NUMBER_WORDS: Record<string, number> = { a: 1, an: 1, one: 1, two: 2, three: 3 };
 
-const TIME_PATTERN = String.raw`(noon|midnight|\d{1,2}(?::\d{2})?\s*(?:am|pm)|\d{1,2}:\d{2})`;
-const TIME_AT_END = new RegExp(String.raw`^(.*?)\s*(?:\bat\s+)?${TIME_PATTERN}$`);
-const TIME_AT_START = new RegExp(String.raw`^(?:at\s+)?${TIME_PATTERN}(?:\s+(.*))?$`);
-
-export function normalizePhrase(text: string) {
-  return text.toLowerCase().replace(/,/g, ' ').replace(/\s+/g, ' ').trim();
+/** Lowercases, drops commas and joins "3 pm" into "3pm" */
+export function normalizePhrase(input: string) {
+  return input
+    .toLowerCase()
+    .replace(/[,]/g, ' ')
+    .replace(/\s+/g, ' ')
+    .trim()
+    .replace(/(\d)\s+(am|pm|a\.m\.|p\.m\.)(?=\s|$)/g, '$1$2');
 }
 
 export function startOfDay(date: Date) {
   return new Date(date.getFullYear(), date.getMonth(), date.getDate());
 }
 
-export function addDays(date: Date, days: number) {
+function addDays(date: Date, days: number) {
   return new Date(date.getFullYear(), date.getMonth(), date.getDate() + days);
 }
 
 function addMonths(date: Date, months: number) {
-  const first = new Date(date.getFullYear(), date.getMonth() + months, 1);
-  return new Date(
-    first.getFullYear(),
-    first.getMonth(),
-    Math.min(date.getDate(), daysInMonth(first))
-  );
+  const target = new Date(date.getFullYear(), date.getMonth() + months, 1);
+  const lastDay = new Date(target.getFullYear(), target.getMonth() + 1, 0).getDate();
+  return new Date(target.getFullYear(), target.getMonth(), Math.min(date.getDate(), lastDay));
 }
 
-function daysInMonth(date: Date) {
-  return new Date(date.getFullYear(), date.getMonth() + 1, 0).getDate();
+/** 0 = Monday … 6 = Sunday */
+function weekdayIndex(date: Date) {
+  return (date.getDay() + 6) % 7;
 }
 
-/** Monday of the week that contains the date */
 function startOfWeek(date: Date) {
-  return addDays(startOfDay(date), -((date.getDay() + 6) % 7));
+  return addDays(date, -weekdayIndex(date));
 }
 
-/** Last moment of the day: the due time of a date without a time */
-export function endOfDay(date: Date) {
-  return new Date(date.getFullYear(), date.getMonth(), date.getDate(), 23, 59, 59, 999);
+function parseWeekday(token: string): number | null {
+  const full = WEEKDAYS.indexOf(token as (typeof WEEKDAYS)[number]);
+  if (full !== -1) {
+    return full;
+  }
+  return token in WEEKDAY_ALIASES ? WEEKDAY_ALIASES[token] : null;
+}
+
+function parseMonth(token: string): number | null {
+  if (token.length < 3) {
+    return null;
+  }
+  if (token === 'sept') {
+    return 8;
+  }
+  const index = MONTHS.findIndex((month) => month.startsWith(token));
+  return index === -1 ? null : index;
+}
+
+function parseCount(token: string): number | null {
+  if (/^\d{1,4}$/.test(token)) {
+    return Number(token);
+  }
+  return token in NUMBER_WORDS ? NUMBER_WORDS[token] : null;
+}
+
+function addUnit(date: Date, count: number, unit: string) {
+  if (unit.startsWith('day')) {
+    return addDays(date, count);
+  }
+  if (unit.startsWith('week')) {
+    return addDays(date, count * 7);
+  }
+  if (unit.startsWith('month')) {
+    return addMonths(date, count);
+  }
+  return addMonths(date, count * 12);
+}
+
+/** Builds a valid calendar date or null for overflowing days (Feb 30) */
+function calendarDate(year: number, month: number, day: number) {
+  const date = new Date(year, month, day);
+  if (date.getMonth() !== month || date.getDate() !== day) {
+    return null;
+  }
+  if (year < 100) {
+    date.setFullYear(year);
+  }
+  return date;
+}
+
+/** A date without a year is the next such date, today included */
+function nextCalendarDate(month: number, day: number, today: Date) {
+  // Feb 29 may only exist in one of the next few years
+  for (let year = today.getFullYear(); year <= today.getFullYear() + 8; year += 1) {
+    const date = calendarDate(year, month, day);
+    if (date && date >= today) {
+      return date;
+    }
+  }
+  return null;
+}
+
+function explicitDate(month: number, day: number, year: string | undefined, today: Date) {
+  if (year === undefined) {
+    return nextCalendarDate(month, day, today);
+  }
+  const fullYear = year.length === 2 ? 2000 + Number(year) : Number(year);
+  return calendarDate(fullYear, month, day);
+}
+
+const UNIT = '(days?|weeks?|months?|years?)';
+const ORDINAL = '(\\d{1,2})(?:st|nd|rd|th)?';
+
+/** Parses the date part of a phrase into the start of that day */
+export function parseDatePart(phrase: string, now: Date): Date | null {
+  const today = startOfDay(now);
+  let match: RegExpMatchArray | null;
+
+  if (phrase === 'today') {
+    return today;
+  }
+  if (phrase === 'tomorrow') {
+    return addDays(today, 1);
+  }
+  if (phrase === 'yesterday') {
+    return addDays(today, -1);
+  }
+  if (phrase === 'next week') {
+    return addDays(startOfWeek(today), 7);
+  }
+  if (phrase === 'next month') {
+    return new Date(today.getFullYear(), today.getMonth() + 1, 1);
+  }
+  if (/^end of (the )?week$/.test(phrase)) {
+    return addDays(startOfWeek(today), 6);
+  }
+  if (/^end of (the )?month$/.test(phrase)) {
+    return new Date(today.getFullYear(), today.getMonth() + 1, 0);
+  }
+
+  if ((match = phrase.match(/^(?:(next|this) )?([a-z]+)$/))) {
+    const weekday = parseWeekday(match[2]);
+    if (weekday !== null) {
+      if (match[1] === 'next') {
+        return addDays(startOfWeek(today), 7 + weekday);
+      }
+      if (match[1] === 'this') {
+        return addDays(startOfWeek(today), weekday);
+      }
+      return addDays(today, (weekday - weekdayIndex(today) + 7) % 7 || 7);
+    }
+  }
+
+  if ((match = phrase.match(new RegExp(`^in ([a-z]+|\\d{1,4}) ${UNIT}$`)))) {
+    const count = parseCount(match[1]);
+    return count === null ? null : addUnit(today, count, match[2]);
+  }
+  if ((match = phrase.match(new RegExp(`^([a-z]+|\\d{1,4}) ${UNIT} from (now|today)$`)))) {
+    const count = parseCount(match[1]);
+    return count === null ? null : addUnit(today, count, match[2]);
+  }
+
+  if ((match = phrase.match(/^(\d{4})-(\d{1,2})-(\d{1,2})$/))) {
+    return calendarDate(Number(match[1]), Number(match[2]) - 1, Number(match[3]));
+  }
+  if ((match = phrase.match(/^(\d{1,2})\/(\d{1,2})(?:\/(\d{4}|\d{2}))?$/))) {
+    return explicitDate(Number(match[1]) - 1, Number(match[2]), match[3], today);
+  }
+
+  // A weekday in front of an explicit date is accepted and ignored ("fri oct 30")
+  const withoutWeekday = phrase.replace(/^([a-z]+) (?=\S+ \S+)/, (whole, word: string) =>
+    parseWeekday(word) === null ? whole : ''
+  );
+
+  if ((match = withoutWeekday.match(new RegExp(`^([a-z]+)\\.? ${ORDINAL}(?: (\\d{4}))?$`)))) {
+    const month = parseMonth(match[1]);
+    return month === null ? null : explicitDate(month, Number(match[2]), match[3], today);
+  }
+  if (
+    (match = withoutWeekday.match(new RegExp(`^${ORDINAL} (?:of )?([a-z]+)\\.?(?: (\\d{4}))?$`)))
+  ) {
+    const month = parseMonth(match[2]);
+    return month === null ? null : explicitDate(month, Number(match[1]), match[3], today);
+  }
+
+  return null;
+}
+
+interface Time {
+  hours: number;
+  minutes: number;
+}
+
+/** Parses "3pm", "3:30pm", "15:30", "noon", "midnight", optionally after "at" */
+export function parseTime(input: string): Time | null {
+  const phrase = input.replace(/^at /, '');
+  let match: RegExpMatchArray | null;
+
+  if (phrase === 'noon') {
+    return { hours: 12, minutes: 0 };
+  }
+  if (phrase === 'midnight') {
+    return { hours: 0, minutes: 0 };
+  }
+  if ((match = phrase.match(/^(\d{1,2})(?::(\d{2}))?(am|pm|a\.m\.|p\.m\.)$/))) {
+    const hours = Number(match[1]);
+    const minutes = Number(match[2] ?? 0);
+    if (hours < 1 || hours > 12 || minutes > 59) {
+      return null;
+    }
+    const pm = match[3].startsWith('p');
+    return { hours: (hours % 12) + (pm ? 12 : 0), minutes };
+  }
+  if ((match = phrase.match(/^(\d{1,2}):(\d{2})$/))) {
+    const hours = Number(match[1]);
+    const minutes = Number(match[2]);
+    return hours > 23 || minutes > 59 ? null : { hours, minutes };
+  }
+  return null;
+}
+
+function withTime(day: Date, time: Time | null): ParsedDate {
+  const date = new Date(day);
+  if (time) {
+    date.setHours(time.hours, time.minutes, 0, 0);
+  } else {
+    date.setHours(23, 59, 59, 999);
+  }
+  return { date, hasTime: time !== null };
+}
+
+function dropTrailingAt(tokens: string[]) {
+  return tokens[tokens.length - 1] === 'at' ? tokens.slice(0, -1) : tokens;
+}
+
+/**
+ * Parses a plain English due date ("next friday at 3pm", "mar 5", "in 2 weeks")
+ * relative to `now`. Returns null when the text is not understood.
+ */
+export function parseNaturalDate(input: string, now: Date = new Date()): ParsedDate | null {
+  const phrase = normalizePhrase(input);
+  if (phrase === '') {
+    return null;
+  }
+
+  const plainDate = parseDatePart(phrase, now);
+  if (plainDate) {
+    return withTime(plainDate, null);
+  }
+
+  const tokens = phrase.split(' ');
+
+  // Time after the date: "friday at 3pm", "mar 5 15:30"
+  for (let count = 1; count <= Math.min(2, tokens.length); count += 1) {
+    const time = parseTime(tokens.slice(-count).join(' '));
+    if (time) {
+      const rest = dropTrailingAt(tokens.slice(0, -count)).join(' ');
+      const day = rest === '' ? startOfDay(now) : parseDatePart(rest, now);
+      if (day) {
+        return withTime(day, time);
+      }
+    }
+  }
+
+  // Time before the date: "3pm today", "at noon tomorrow"
+  for (let count = 1; count < Math.min(3, tokens.length); count += 1) {
+    const time = parseTime(tokens.slice(0, count).join(' '));
+    if (time) {
+      const day = parseDatePart(tokens.slice(count).join(' '), now);
+      if (day) {
+        return withTime(day, time);
+      }
+    }
+  }
+
+  return null;
 }
 
 export function isEndOfDay(date: Date) {
@@ -80,195 +327,63 @@ export function isEndOfDay(date: Date) {
   );
 }
 
-/** Index in WEEKDAYS for a full or short (3+ letters) weekday name */
-export function findWeekday(token: string) {
-  return token.length >= 3 ? WEEKDAYS.findIndex((day) => day.startsWith(token)) : -1;
+const SHORT_WEEKDAYS = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+const SHORT_MONTHS = MONTHS.map((month) => month.charAt(0).toUpperCase() + month.slice(1, 3));
+
+/** "Fri, Oct 30, 3:00 PM"; the year only when it is not the current one, the time only when set */
+export function formatDueDate(date: Date, now: Date = new Date()) {
+  let result = `${SHORT_WEEKDAYS[date.getDay()]}, ${SHORT_MONTHS[date.getMonth()]} ${date.getDate()}`;
+  if (date.getFullYear() !== now.getFullYear()) {
+    result += `, ${date.getFullYear()}`;
+  }
+  if (!isEndOfDay(date)) {
+    const hours = date.getHours() % 12 || 12;
+    const minutes = String(date.getMinutes()).padStart(2, '0');
+    result += `, ${hours}:${minutes} ${date.getHours() < 12 ? 'AM' : 'PM'}`;
+  }
+  return result;
 }
 
-/** Index in MONTHS for a full or short (3+ letters) month name */
-export function findMonth(token: string) {
-  return token.length >= 3 ? MONTHS.findIndex((month) => month.startsWith(token)) : -1;
+function plural(count: number, unit: string) {
+  return `${count} ${unit}${count === 1 ? '' : 's'}`;
 }
 
-function findUnit(token: string): Unit | null {
-  return UNITS.find((unit) => token === unit || token === `${unit}s`) ?? null;
+function relative(count: number, unit: string) {
+  return count > 0 ? `in ${plural(count, unit)}` : `${plural(-count, unit)} ago`;
 }
 
-function addUnits(date: Date, amount: number, unit: Unit) {
-  if (unit === 'day') {
-    return addDays(date, amount);
-  }
-  if (unit === 'week') {
-    return addDays(date, amount * 7);
-  }
-  return addMonths(date, amount);
-}
+/** How far the date is from now: "today", "in 4 days", "2 hours ago" */
+export function formatRelative(date: Date, now: Date = new Date()) {
+  const days = Math.round((startOfDay(date).getTime() - startOfDay(now).getTime()) / DAY_MS);
 
-function parseTime(text: string): { hours: number; minutes: number } | null {
-  if (text === 'noon') {
-    return { hours: 12, minutes: 0 };
-  }
-  if (text === 'midnight') {
-    return { hours: 0, minutes: 0 };
-  }
-
-  const match = text.match(/^(\d{1,2})(?::(\d{2}))?\s*(am|pm)?$/);
-  if (!match) {
-    return null;
-  }
-
-  const hours = Number(match[1]);
-  const minutes = match[2] === undefined ? 0 : Number(match[2]);
-  const meridiem = match[3];
-  if (minutes > 59) {
-    return null;
-  }
-  if (meridiem) {
-    if (hours < 1 || hours > 12) {
-      return null;
+  if (days === 0 && !isEndOfDay(date)) {
+    const minutes = Math.round((date.getTime() - now.getTime()) / 60000);
+    if (minutes === 0) {
+      return 'now';
     }
-    return { hours: (hours % 12) + (meridiem === 'pm' ? 12 : 0), minutes };
-  }
-  return hours <= 23 ? { hours, minutes } : null;
-}
-
-function makeDate(year: number, month: number, day: number) {
-  const date = new Date(year, month, day);
-  return date.getMonth() === month && date.getDate() === day ? date : null;
-}
-
-/** A date without a year is the next such date, today included */
-function nextDate(month: number, day: number, today: Date) {
-  for (let year = today.getFullYear(); year <= today.getFullYear() + 8; year += 1) {
-    const date = makeDate(year, month, day);
-    if (date && date >= today) {
-      return date;
+    if (Math.abs(minutes) < 60) {
+      return relative(minutes, 'minute');
     }
-  }
-  return null;
-}
-
-function dateFromParts(month: number, day: number, year: string | undefined, today: Date) {
-  if (month < 0 || month > 11) {
-    return null;
-  }
-  if (year === undefined) {
-    return nextDate(month, day, today);
-  }
-  const fullYear = year.length === 2 ? 2000 + Number(year) : Number(year);
-  return makeDate(fullYear, month, day);
-}
-
-function parseCalendarDate(text: string, today: Date): Date | null {
-  const iso = text.match(/^(\d{4})-(\d{1,2})-(\d{1,2})$/);
-  if (iso) {
-    return makeDate(Number(iso[1]), Number(iso[2]) - 1, Number(iso[3]));
+    return relative(Math.trunc(minutes / 60), 'hour');
   }
 
-  const slash = text.match(/^(\d{1,2})\/(\d{1,2})(?:\/(\d{4}|\d{2}))?$/);
-  if (slash) {
-    return dateFromParts(Number(slash[1]) - 1, Number(slash[2]), slash[3], today);
+  if (days === 0) {
+    return 'today';
   }
-
-  const monthFirst = text.match(/^([a-z]+)\.?\s+(\d{1,2})(?:st|nd|rd|th)?(?:\s+(\d{4}))?$/);
-  if (monthFirst) {
-    return dateFromParts(findMonth(monthFirst[1]), Number(monthFirst[2]), monthFirst[3], today);
+  if (days === 1) {
+    return 'tomorrow';
   }
-
-  const dayFirst = text.match(/^(\d{1,2})(?:st|nd|rd|th)?\s+(?:of\s+)?([a-z]+)\.?(?:\s+(\d{4}))?$/);
-  if (dayFirst) {
-    return dateFromParts(findMonth(dayFirst[2]), Number(dayFirst[1]), dayFirst[3], today);
+  if (days === -1) {
+    return 'yesterday';
   }
-
-  return null;
-}
-
-function parseDay(text: string, now: Date): Date | null {
-  const today = startOfDay(now);
-
-  switch (text) {
-    case 'today':
-      return today;
-    case 'tomorrow':
-      return addDays(today, 1);
-    case 'yesterday':
-      return addDays(today, -1);
-    case 'next week':
-      return addDays(startOfWeek(today), 7);
-    case 'next month':
-      return new Date(today.getFullYear(), today.getMonth() + 1, 1);
-    case 'end of week':
-      return addDays(startOfWeek(today), 6);
-    case 'end of month':
-      return new Date(today.getFullYear(), today.getMonth() + 1, 0);
+  if (Math.abs(days) < 14) {
+    return relative(days, 'day');
   }
-
-  const weekday = findWeekday(text);
-  if (weekday !== -1) {
-    // the next such day, never today
-    const offset = (weekday - ((today.getDay() + 6) % 7) + 7) % 7 || 7;
-    return addDays(today, offset);
+  if (Math.abs(days) < 60) {
+    return relative(Math.round(days / 7), 'week');
   }
-
-  const nextWeekday = text.match(/^next ([a-z]+)$/);
-  if (nextWeekday && findWeekday(nextWeekday[1]) !== -1) {
-    return addDays(startOfWeek(today), 7 + findWeekday(nextWeekday[1]));
+  if (Math.abs(days) < 365) {
+    return relative(Math.round(days / 30), 'month');
   }
-
-  const inUnits =
-    text.match(/^in (\d{1,4}) ([a-z]+)$/) ?? text.match(/^(\d{1,4}) ([a-z]+) from now$/);
-  if (inUnits && findUnit(inUnits[2])) {
-    return addUnits(today, Number(inUnits[1]), findUnit(inUnits[2])!);
-  }
-
-  const calendarDate = parseCalendarDate(text, today);
-  if (calendarDate) {
-    return calendarDate;
-  }
-
-  // "fri oct 30": a weekday in front of a calendar date, as in the formatted value
-  const withWeekday = text.match(/^([a-z]+)\.?\s+(.+)$/);
-  if (withWeekday && findWeekday(withWeekday[1]) !== -1) {
-    return parseCalendarDate(withWeekday[2], today);
-  }
-
-  return null;
-}
-
-/**
- * Parses a due date phrase ("next friday at 3pm", "mar 5", "in 2 weeks").
- * Returns null when the text is not understood.
- */
-export function parseNaturalDate(text: string, now: Date = new Date()): ParsedDate | null {
-  const phrase = normalizePhrase(text);
-  if (phrase === '') {
-    return null;
-  }
-
-  let dayText = phrase;
-  let time: { hours: number; minutes: number } | null = null;
-
-  const timeAtEnd = phrase.match(TIME_AT_END);
-  const timeAtStart = phrase.match(TIME_AT_START);
-  if (timeAtEnd && parseTime(timeAtEnd[2])) {
-    dayText = timeAtEnd[1];
-    time = parseTime(timeAtEnd[2]);
-  } else if (timeAtStart && parseTime(timeAtStart[1])) {
-    dayText = timeAtStart[2] ?? '';
-    time = parseTime(timeAtStart[1]);
-  }
-
-  const day = dayText === '' && time ? startOfDay(now) : parseDay(dayText, now);
-  if (!day) {
-    return null;
-  }
-
-  if (!time) {
-    return { date: endOfDay(day), hasTime: false };
-  }
-
-  return {
-    date: new Date(day.getFullYear(), day.getMonth(), day.getDate(), time.hours, time.minutes),
-    hasTime: true,
-  };
+  return relative(Math.round(days / 365), 'year');
 }

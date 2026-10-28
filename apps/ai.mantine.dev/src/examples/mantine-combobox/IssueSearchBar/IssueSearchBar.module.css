@@ -1,14 +1,44 @@
-.key {
-  font-weight: var(--mantine-font-weight-medium);
+.tokenKey {
+  font-weight: 500;
 }
 
-.list {
+.keyOption {
+  display: flex;
+  align-items: baseline;
+  gap: var(--mantine-spacing-sm);
+}
+
+.keyName {
+  flex: 0 0 72px;
+  font-weight: 500;
+}
+
+.valueOption {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--mantine-spacing-sm);
+}
+
+.optionIcon {
+  flex-shrink: 0;
+}
+
+.count {
+  font-weight: 500;
+  color: var(--mantine-color-bright);
+}
+
+.issues {
+  list-style: none;
   margin: 0;
   padding: 0;
-  list-style: none;
 }
 
-.row {
+.issue {
+  display: flex;
+  align-items: center;
+  gap: var(--mantine-spacing-sm);
   padding: var(--mantine-spacing-sm) var(--mantine-spacing-md);
 
   & + & {
@@ -16,12 +46,12 @@
   }
 }
 
-.texts {
+.issueBody {
   flex: 1;
   min-width: 0;
 }
 
-.title {
-  font-weight: var(--mantine-font-weight-medium);
+.issueTitle {
+  font-weight: 500;
   color: var(--mantine-color-bright);
 }

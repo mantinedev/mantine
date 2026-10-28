@@ -7,7 +7,6 @@ const links = [
   { href: '/getting-started', label: 'Getting started' },
   { href: '/skills/mantine-form', label: 'mantine-form examples' },
   { href: '/skills/mantine-combobox', label: 'mantine-combobox examples' },
-  { href: '/skills/mantine-custom-components', label: 'mantine-custom-components examples' },
   { href: '/skills/mantine-ui', label: 'mantine-ui examples' },
 ];
 

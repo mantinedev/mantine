@@ -1,124 +1,191 @@
-import { useEffect, useState } from 'react';
-import { IconCalendarDue } from '@tabler/icons-react';
-import { Combobox, Input, Text, TextInput, useCombobox } from '@mantine/core';
-import { formatDueDate, formatRelative } from './formatDueDate';
-import { getDateSuggestions } from './getDateSuggestions';
-import { parseNaturalDate } from './parseNaturalDate';
+import { useRef, useState } from 'react';
+import { IconAlertTriangle, IconCalendar } from '@tabler/icons-react';
+import { CloseButton, Combobox, Group, Text, TextInput, useCombobox } from '@mantine/core';
+import { formatDueDate, formatRelative, parseNaturalDate } from './parseNaturalDate';
+import { getSuggestions } from './suggestions';
 import classes from './NaturalDateInput.module.css';
 
-const PRESETS = [
-  { label: 'Today', phrase: 'today' },
-  { label: 'Tomorrow', phrase: 'tomorrow' },
-  { label: 'Next week', phrase: 'next week' },
-  { label: 'End of month', phrase: 'end of month' },
-];
-
 export interface NaturalDateInputProps {
+  label: string;
   value: Date | null;
   onChange: (value: Date | null) => void;
-  label: React.ReactNode;
+  placeholder?: string;
 }
 
-export function NaturalDateInput({ value, onChange, label }: NaturalDateInputProps) {
+function sameDate(a: Date | null, b: Date | null) {
+  return (a?.getTime() ?? null) === (b?.getTime() ?? null);
+}
+
+const PROPER_NAMES = new Set([
+  'monday',
+  'tuesday',
+  'wednesday',
+  'thursday',
+  'friday',
+  'saturday',
+  'sunday',
+  'mon',
+  'tue',
+  'tues',
+  'wed',
+  'thu',
+  'thur',
+  'thurs',
+  'fri',
+  'sat',
+  'sun',
+  'january',
+  'february',
+  'march',
+  'april',
+  'may',
+  'june',
+  'july',
+  'august',
+  'september',
+  'october',
+  'november',
+  'december',
+  'jan',
+  'feb',
+  'mar',
+  'apr',
+  'jun',
+  'jul',
+  'aug',
+  'sep',
+  'sept',
+  'oct',
+  'nov',
+  'dec',
+]);
+
+function toDisplayLabel(phrase: string) {
+  const label = phrase.replace(/[a-z]+/g, (word) =>
+    PROPER_NAMES.has(word) ? word.charAt(0).toUpperCase() + word.slice(1) : word
+  );
+  return label.charAt(0).toUpperCase() + label.slice(1);
+}
+
+export function NaturalDateInput({
+  label,
+  value,
+  onChange,
+  placeholder = 'e.g. tomorrow at 3pm',
+}: NaturalDateInputProps) {
   const now = new Date();
   const formattedValue = value ? formatDueDate(value, now) : '';
+
   const [text, setText] = useState(formattedValue);
   const [error, setError] = useState<string | null>(null);
+  const [previousValue, setPreviousValue] = useState(value);
+  const selectOnMouseUp = useRef(false);
+
+  // Show the new value when it changes from outside
+  if (!sameDate(previousValue, value)) {
+    setPreviousValue(value);
+    setText(formattedValue);
+    setError(null);
+  }
 
   const combobox = useCombobox({
     onDropdownClose: () => combobox.resetSelectedOption(),
   });
 
-  // a value set from outside replaces the text
-  useEffect(() => {
-    setText(formattedValue);
-    setError(null);
-  }, [value?.getTime()]);
+  // The formatted value in the input is not a query: show presets for it
+  const query = text === formattedValue ? '' : text;
+  const suggestions = getSuggestions(query, now);
 
   const commit = (date: Date | null) => {
+    onChange(date);
     setText(date ? formatDueDate(date, now) : '');
     setError(null);
-    onChange(date);
     combobox.closeDropdown();
   };
 
-  // the input shows the value itself until the user types something else
-  const showsValue = text.trim() === '' || (value !== null && text === formattedValue);
-
-  /** Sets the value from the text; returns false when the text is not understood */
-  const commitText = () => {
-    if (text.trim() === '') {
-      commit(null);
-      return true;
+  const handleOptionSubmit = (optionValue: string) => {
+    const suggestion = suggestions[Number(optionValue)];
+    if (suggestion) {
+      commit(suggestion.date);
     }
-    if (value && text === formattedValue) {
-      combobox.closeDropdown();
-      return true;
-    }
-    const parsed = parseNaturalDate(text, now);
-    if (!parsed) {
-      setError(`Could not understand “${text.trim()}”`);
-      return false;
-    }
-    commit(parsed.date);
-    return true;
   };
 
-  const items = showsValue
-    ? PRESETS.map((preset) => {
-        const parsed = parseNaturalDate(preset.phrase, now)!;
-        return { value: preset.phrase, label: preset.label, date: parsed.date };
-      })
-    : getDateSuggestions(text, now).map((item) => ({
-        value: item.phrase,
-        label: item.phrase,
-        date: item.date,
-      }));
+  const handleEnter = () => {
+    if (text.trim() === '') {
+      commit(null);
+      return;
+    }
+    if (text === formattedValue) {
+      combobox.closeDropdown();
+      return;
+    }
+    const parsed = parseNaturalDate(text, now);
+    if (parsed) {
+      commit(parsed.date);
+    }
+  };
 
-  const options = items.map((item) => (
-    <Combobox.Option value={item.value} key={item.value}>
-      <Text size="sm" className={classes.phrase}>
-        {item.label}
-      </Text>
+  const handleBlur = () => {
+    combobox.closeDropdown();
+    if (text.trim() === '') {
+      if (value) {
+        onChange(null);
+      }
+      setText('');
+      setError(null);
+      return;
+    }
+    if (text === formattedValue) {
+      return;
+    }
+    const parsed = parseNaturalDate(text, now);
+    if (parsed) {
+      commit(parsed.date);
+    } else {
+      setError(`Could not understand “${text.trim()}”`);
+    }
+  };
+
+  const isPast = value !== null && value.getTime() < now.getTime();
+
+  const options = suggestions.map((suggestion, index) => (
+    <Combobox.Option value={String(index)} key={suggestion.label} className={classes.option}>
+      <Text size="sm">{toDisplayLabel(suggestion.label)}</Text>
       <Text size="xs">
-        {formatDueDate(item.date, now)} · {formatRelative(item.date, now)}
+        {formatDueDate(suggestion.date, now)} · {formatRelative(suggestion.date, now)}
       </Text>
     </Combobox.Option>
   ));
 
-  const isPast = value !== null && value.getTime() < now.getTime();
-  const canClear = value !== null || text !== '';
+  const clearButton =
+    text !== '' || value ? (
+      <CloseButton
+        size="sm"
+        aria-label="Clear date"
+        onMouseDown={(event) => event.preventDefault()}
+        onClick={() => commit(null)}
+      />
+    ) : null;
 
   return (
-    <Combobox
-      store={combobox}
-      onOptionSubmit={(phrase) => {
-        const parsed = parseNaturalDate(phrase, now);
-        if (parsed) {
-          commit(parsed.date);
-        }
-      }}
-    >
+    <Combobox store={combobox} onOptionSubmit={handleOptionSubmit}>
       <Combobox.Target>
         <TextInput
           label={label}
-          placeholder="Type a date, e.g. next friday at 3pm"
+          placeholder={placeholder}
           value={text}
           error={error}
-          description={isPast ? 'This date is in the past' : undefined}
-          inputWrapperOrder={['label', 'input', 'description', 'error']}
-          classNames={{ description: classes.warning }}
-          leftSection={<IconCalendarDue size={16} />}
-          rightSection={
-            canClear ? (
-              <Input.ClearButton
-                aria-label="Clear due date"
-                onMouseDown={(event) => event.preventDefault()}
-                onClick={() => commit(null)}
-              />
-            ) : null
+          description={
+            isPast && !error ? (
+              <Group gap={4} component="span" className={classes.warning}>
+                <IconAlertTriangle size={14} />
+                This date is in the past
+              </Group>
+            ) : undefined
           }
-          rightSectionPointerEvents={canClear ? 'all' : 'none'}
+          inputWrapperOrder={['label', 'input', 'description', 'error']}
+          leftSection={<IconCalendar size={16} />}
+          rightSection={clearButton}
           onChange={(event) => {
             setText(event.currentTarget.value);
             setError(null);
@@ -128,18 +195,27 @@ export function NaturalDateInput({ value, onChange, label }: NaturalDateInputPro
           onFocus={(event) => {
             if (value) {
               event.currentTarget.select();
+              selectOnMouseUp.current = true;
             }
             combobox.openDropdown();
           }}
+          onMouseUp={(event) => {
+            // Keep the text selected when focus came from a click
+            if (selectOnMouseUp.current) {
+              event.preventDefault();
+              selectOnMouseUp.current = false;
+            }
+          }}
           onClick={() => combobox.openDropdown()}
           onBlur={() => {
-            commitText();
-            combobox.closeDropdown();
+            selectOnMouseUp.current = false;
+            handleBlur();
           }}
           onKeyDown={(event) => {
+            selectOnMouseUp.current = false;
             if (event.key === 'Enter' && combobox.getSelectedOptionIndex() === -1) {
               event.preventDefault();
-              commitText();
+              handleEnter();
             }
           }}
         />

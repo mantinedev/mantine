@@ -1,24 +1,11 @@
+import dynamic from 'next/dynamic';
 import type { SkillExample } from '../types';
-import { AccountSettings } from './AccountSettings/AccountSettings';
-import accountSettingsCode from './AccountSettings/code.json';
 import type { OrganizationValues, ProfileValues } from './AccountSettings/types';
-import { AutomationRuleForm } from './AutomationRuleForm/AutomationRuleForm';
-import automationRuleFormCode from './AutomationRuleForm/code.json';
 import type { RuleValues } from './AutomationRuleForm/types';
-import contentEntryFormCode from './ContentEntryForm/code.json';
-import { ContentEntryDemo } from './ContentEntryForm/ContentEntryDemo';
 import type { EntryValues } from './ContentEntryForm/types';
-import contentModelFormCode from './ContentModelForm/code.json';
-import { ContentModelForm } from './ContentModelForm/ContentModelForm';
 import type { ContentModelValues, ModelField } from './ContentModelForm/types';
-import invoiceFormCode from './InvoiceForm/code.json';
-import { InvoiceForm } from './InvoiceForm/InvoiceForm';
 import type { InvoiceValues } from './InvoiceForm/types';
-import jobApplicationFormCode from './JobApplicationForm/code.json';
-import { JobApplicationForm } from './JobApplicationForm/JobApplicationForm';
 import type { JobApplicationValues } from './JobApplicationForm/types';
-import recurringEventFormCode from './RecurringEventForm/code.json';
-import { RecurringEventForm } from './RecurringEventForm/RecurringEventForm';
 import type { RecurringEventValues } from './RecurringEventForm/types';
 
 function dateInDays(days: number) {
@@ -77,8 +64,10 @@ Behavior:
 - on submit show a success notification and reset the form
 
 Write tests for the component.`,
-    component: JobApplicationForm,
-    code: jobApplicationFormCode as SkillExample['code'],
+    component: dynamic(() =>
+      import('./JobApplicationForm/JobApplicationForm').then((module) => module.JobApplicationForm)
+    ),
+    loadCode: () => import('./JobApplicationForm/code.json'),
     fill: async (filler) => {
       filler.setValues<JobApplicationValues>('job-application', {
         firstName: 'Ada',
@@ -138,8 +127,10 @@ Behavior:
 - on submit show a notification with the model JSON (name, key, ordered fields with their options) and keep the form as is
 
 Write tests for the component.`,
-    component: ContentModelForm,
-    code: contentModelFormCode as SkillExample['code'],
+    component: dynamic(() =>
+      import('./ContentModelForm/ContentModelForm').then((module) => module.ContentModelForm)
+    ),
+    loadCode: () => import('./ContentModelForm/code.json'),
     fill: async (filler) => {
       filler.setValues<ContentModelValues>('content-model', {
         name: 'Blog post',
@@ -231,8 +222,10 @@ Behavior:
 - on submit show a short notification (entry key and model name), display the entry JSON (key, language, tags, model key, values keyed by field key) under the form and keep the form as is
 
 Write tests for the component.`,
-    component: ContentEntryDemo,
-    code: contentEntryFormCode as SkillExample['code'],
+    component: dynamic(() =>
+      import('./ContentEntryForm/ContentEntryDemo').then((module) => module.ContentEntryDemo)
+    ),
+    loadCode: () => import('./ContentEntryForm/code.json'),
     fill: async (filler) => {
       filler.setValues<EntryValues>('content-entry', {
         key: 'launching-mantine-10',
@@ -289,8 +282,10 @@ Behavior:
 - on submit show a short notification (event title and first occurrence) and display the event JSON (title, description, start, end as ISO strings, allDay, timezone, location, recurrence with only the fields that apply, exceptions) under the form; keep the form as is
 
 Write tests for the component.`,
-    component: RecurringEventForm,
-    code: recurringEventFormCode as SkillExample['code'],
+    component: dynamic(() =>
+      import('./RecurringEventForm/RecurringEventForm').then((module) => module.RecurringEventForm)
+    ),
+    loadCode: () => import('./RecurringEventForm/code.json'),
     fill: async (filler) => {
       filler.setValues<RecurringEventValues>('recurring-event', {
         title: 'Design review',
@@ -336,8 +331,10 @@ Behavior:
 - closing or reloading the browser tab with unsaved changes in any section asks for confirmation (beforeunload)
 
 Write tests for the component.`,
-    component: AccountSettings,
-    code: accountSettingsCode as SkillExample['code'],
+    component: dynamic(() =>
+      import('./AccountSettings/AccountSettings').then((module) => module.AccountSettings)
+    ),
+    loadCode: () => import('./AccountSettings/code.json'),
     fill: async (filler) => {
       filler.setValues<ProfileValues>('profile', {
         displayName: 'Ada L.',
@@ -383,8 +380,10 @@ Behavior:
 - submit validates everything and focuses the first invalid field; on submit show a short notification (rule name and trigger) and display the rule JSON under the form; keep the form as is
 
 Write tests for the component.`,
-    component: AutomationRuleForm,
-    code: automationRuleFormCode as SkillExample['code'],
+    component: dynamic(() =>
+      import('./AutomationRuleForm/AutomationRuleForm').then((module) => module.AutomationRuleForm)
+    ),
+    loadCode: () => import('./AutomationRuleForm/code.json'),
     fill: async (filler) => {
       filler.setValues<RuleValues>('automation-rule', {
         name: 'Escalate urgent bugs',
@@ -471,8 +470,10 @@ Behavior:
 Write tests for the component.
 
 Put the component and its tests in src/InvoiceForm/.`,
-    component: InvoiceForm,
-    code: invoiceFormCode as SkillExample['code'],
+    component: dynamic(() =>
+      import('./InvoiceForm/InvoiceForm').then((module) => module.InvoiceForm)
+    ),
+    loadCode: () => import('./InvoiceForm/code.json'),
     fill: async (filler) => {
       filler.setValues<InvoiceValues>('invoice', {
         clientId: 'acme',

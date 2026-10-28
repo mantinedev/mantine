@@ -1,6 +1,6 @@
 'use client';
 
-import { useRef } from 'react';
+import { Suspense, use, useRef } from 'react';
 import { CodeHighlightFileTree, type CodeHighlightFileTreeCode } from '@mantine/code-highlight';
 import { Text } from '@mantine/core';
 import { useHotkeys } from '@mantine/hooks';
@@ -22,12 +22,45 @@ function isTestFile(file: SkillExampleCode) {
   return /\.test\.tsx?$/.test(file.fileName);
 }
 
-function getFiles(example: SkillExample): CodeHighlightFileTreeCode[] {
-  return [
-    { fileName: PROMPT_FILE, language: 'markdown', code: wrapPrompt(example.prompt), pinned: true },
-    ...example.code.filter((file) => !isTestFile(file)),
-    ...example.code.filter(isTestFile),
-  ];
+const codeRequests = new Map<string, Promise<CodeHighlightFileTreeCode[]>>();
+
+function loadFiles(example: SkillExample) {
+  let request = codeRequests.get(example.id);
+
+  if (!request) {
+    request = example.loadCode().then((module) => {
+      const code = module.default as SkillExampleCode[];
+      return [
+        {
+          fileName: PROMPT_FILE,
+          language: 'markdown',
+          code: wrapPrompt(example.prompt),
+          pinned: true,
+        },
+        ...code.filter((file) => !isTestFile(file)),
+        ...code.filter(isTestFile),
+      ];
+    });
+    codeRequests.set(example.id, request);
+  }
+
+  return request;
+}
+
+function ExampleCode({ example }: { example: SkillExample }) {
+  const files = use(loadFiles(example));
+
+  return (
+    <CodeHighlightFileTree
+      key={example.id}
+      code={files}
+      getFileIcon={getCodeFileIcon}
+      getFolderIcon={getCodeFolderIcon}
+      defaultActiveFile={PROMPT_FILE}
+      treeWidth={270}
+      treeStickyTop="var(--app-shell-header-height)"
+    />
+  );
 }
 
 export function ExampleDemo({ skill, example }: ExampleDemoProps) {
@@ -60,15 +93,9 @@ export function ExampleDemo({ skill, example }: ExampleDemoProps) {
       </div>
 
       <div className={classes.code}>
-        <CodeHighlightFileTree
-          key={example.id}
-          code={getFiles(example)}
-          getFileIcon={getCodeFileIcon}
-          getFolderIcon={getCodeFolderIcon}
-          defaultActiveFile={PROMPT_FILE}
-          treeWidth={270}
-          treeStickyTop="var(--app-shell-header-height)"
-        />
+        <Suspense>
+          <ExampleCode example={example} />
+        </Suspense>
       </div>
     </div>
   );

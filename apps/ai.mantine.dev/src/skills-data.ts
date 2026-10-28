@@ -1,8 +1,4 @@
-export type SkillId =
-  | 'mantine-form'
-  | 'mantine-combobox'
-  | 'mantine-custom-components'
-  | 'mantine-ui';
+export type SkillId = 'mantine-form' | 'mantine-combobox' | 'mantine-ui';
 
 export interface SkillData {
   /** Skill folder name in the skills repository, used in the url */
@@ -35,13 +31,6 @@ export const SKILLS: SkillData[] = [
     description:
       "Build custom dropdown, select, autocomplete and multiselect components using Mantine's Combobox primitives.",
     installCommand: getInstallCommand('mantine-combobox'),
-  },
-  {
-    id: 'mantine-custom-components',
-    name: 'mantine-custom-components',
-    description:
-      "Build custom components that integrate with Mantine's theming, Styles API and core features.",
-    installCommand: getInstallCommand('mantine-custom-components'),
   },
   {
     id: 'mantine-ui',

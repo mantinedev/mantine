@@ -1,20 +1,19 @@
 import dayjs from 'dayjs';
-import { useLayoutEffect, useMemo, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import {
+  IconCheck,
   IconCircleCheck,
   IconCircleDot,
   IconHistory,
   IconProgress,
-  IconSearch,
 } from '@tabler/icons-react';
 import {
   Avatar,
   Badge,
-  CheckIcon,
+  CloseButton,
   ColorSwatch,
   Combobox,
   Group,
-  Input,
   Pill,
   PillsInput,
   Stack,
@@ -23,93 +22,172 @@ import {
   ThemeIcon,
   useCombobox,
 } from '@mantine/core';
-import { ISSUES, LABELS, MEMBERS, type Issue, type IssueStatus } from './data';
+import { useLocalStorage } from '@mantine/hooks';
+import { Issue, ISSUES, LABELS, MEMBERS } from './data';
 import {
-  addToken,
-  extractTokens,
+  FilterDefinition,
+  FilterKey,
   FILTERS,
   filterIssues,
+  formatQuery,
   getFilter,
-  resolveToken,
-  serializeQuery,
-  tokenText,
-  type FilterDefinition,
-  type FilterValue,
-  type SearchQuery,
-  type Token,
+  getFilterValue,
+  isEmptyQuery,
+  matchValues,
+  normalizeQuery,
+  parseToken,
+  SearchQuery,
+  splitWord,
+  Token,
+  withToken,
 } from './query';
 import classes from './IssueSearchBar.module.css';
 
-const EMPTY_QUERY: SearchQuery = { tokens: [], text: '' };
+export const RECENT_STORAGE_KEY = 'issue-search-bar:recent';
 const MAX_RECENT = 5;
-const RECENT_SUGGESTIONS = 3;
+const MAX_RECENT_SUGGESTIONS = 3;
+const MAX_RESULTS = 10;
 
-const STATUSES: Record<IssueStatus, { label: string; color: string; icon: typeof IconCircleDot }> =
-  {
-    open: { label: 'Open', color: 'green', icon: IconCircleDot },
-    'in-progress': { label: 'In progress', color: 'yellow', icon: IconProgress },
-    closed: { label: 'Closed', color: 'violet', icon: IconCircleCheck },
-  };
-
-const PRIORITIES: Record<Issue['priority'], string> = {
-  urgent: 'Urgent',
-  high: 'High',
-  medium: 'Medium',
-  low: 'Low',
+const STATUS_ICONS = {
+  open: { icon: IconCircleDot, color: 'var(--mantine-color-green-text)' },
+  'in-progress': { icon: IconProgress, color: 'var(--mantine-color-blue-text)' },
+  closed: { icon: IconCircleCheck, color: 'var(--mantine-color-grape-text)' },
 };
 
-const memberByUsername = (username: string) =>
-  MEMBERS.find((member) => member.username === username)!;
-const labelByName = (name: string) => LABELS.find((label) => label.name === name)!;
+const getMember = (username: string) => MEMBERS.find((member) => member.username === username)!;
+const getLabelColor = (name: string) => LABELS.find((label) => label.name === name)!.color;
 
-/** The word around the caret: [start, end) is replaced on pick, `word` is the part before the caret */
-function wordAt(text: string, caret: number) {
-  const start = caret === 0 ? 0 : text.lastIndexOf(' ', caret - 1) + 1;
-  const space = text.indexOf(' ', caret);
-  return { start, end: space === -1 ? text.length : space, word: text.slice(start, caret) };
+function MemberAvatar({ username }: { username: string }) {
+  const member = getMember(username);
+  return (
+    <Avatar variant="default" size="sm" alt={member.name} title={member.name}>
+      {member.initials}
+    </Avatar>
+  );
 }
 
-export interface IssueSearchBarProps {
-  issues?: Issue[];
+function ValueOption({ filterKey, value }: { filterKey: FilterKey; value: string }) {
+  const filterValue = getFilterValue(filterKey, value)!;
+
+  if ((filterKey === 'author' || filterKey === 'assignee') && value !== 'none') {
+    const member = getMember(value);
+    return (
+      <Group gap="sm" wrap="nowrap">
+        <MemberAvatar username={value} />
+        <div>
+          <Text size="sm">{member.name}</Text>
+          <Text size="xs">{member.username}</Text>
+        </div>
+      </Group>
+    );
+  }
+
+  if (filterKey === 'label') {
+    return (
+      <Group gap="xs" wrap="nowrap">
+        <ColorSwatch color={getLabelColor(value)} size={8} withShadow={false} />
+        <span>{filterValue.label}</span>
+      </Group>
+    );
+  }
+
+  return <span>{filterValue.label}</span>;
 }
 
-export function IssueSearchBar({ issues = ISSUES }: IssueSearchBarProps) {
+function TokenPill({ token, onRemove }: { token: Token; onRemove: () => void }) {
+  const text = `${token.key}:${token.value}`;
+  return (
+    <Pill
+      withRemoveButton
+      onRemove={onRemove}
+      removeButtonProps={{ 'aria-label': `Remove ${text}`, 'aria-hidden': false }}
+    >
+      <span className={classes.tokenKey}>{token.key}:</span>
+      {token.value}
+    </Pill>
+  );
+}
+
+function IssueRow({ issue }: { issue: Issue }) {
+  const status = STATUS_ICONS[issue.status];
+  const StatusIcon = status.icon;
+  const statusLabel = getFilterValue('status', issue.status)!.label;
+  const meta = [
+    `#${issue.number}`,
+    statusLabel,
+    getFilterValue('priority', issue.priority)!.label,
+    issue.due ? `Due ${dayjs(issue.due).format('MMM D')}` : 'No due date',
+    `by ${getMember(issue.author).name}`,
+  ].join(' · ');
+
+  return (
+    <li className={classes.issue} aria-label={`#${issue.number} ${issue.title}`}>
+      <ThemeIcon variant="default" size="lg" aria-label={statusLabel} role="img">
+        <StatusIcon size={18} color={status.color} />
+      </ThemeIcon>
+      <div className={classes.issueBody}>
+        <Group gap="xs">
+          <Text size="sm" className={classes.issueTitle}>
+            {issue.title}
+          </Text>
+          {issue.labels.map((label) => (
+            <Badge
+              key={label}
+              variant="default"
+              size="sm"
+              leftSection={<ColorSwatch color={getLabelColor(label)} size={8} withShadow={false} />}
+            >
+              {label}
+            </Badge>
+          ))}
+        </Group>
+        <Text size="xs">{meta}</Text>
+      </div>
+      {issue.assignees.length > 0 && (
+        <Avatar.Group>
+          {issue.assignees.map((username) => (
+            <MemberAvatar key={username} username={username} />
+          ))}
+        </Avatar.Group>
+      )}
+    </li>
+  );
+}
+
+export function IssueSearchBar() {
   const [tokens, setTokens] = useState<Token[]>([]);
   const [text, setText] = useState('');
-  const [caret, setCaret] = useState(0);
-  const [applied, setApplied] = useState<SearchQuery>(EMPTY_QUERY);
-  const [recent, setRecent] = useState<SearchQuery[]>([]);
+  const [recent, setRecent] = useLocalStorage<SearchQuery[]>({
+    key: RECENT_STORAGE_KEY,
+    defaultValue: [],
+    getInitialValueInEffect: false,
+  });
+  const [pickCount, setPickCount] = useState(0);
   const inputRef = useRef<HTMLInputElement>(null);
-  const pendingCaret = useRef<number | null>(null);
 
   const combobox = useCombobox({
     onDropdownClose: () => combobox.resetSelectedOption(),
   });
 
-  useLayoutEffect(() => {
-    if (pendingCaret.current !== null && inputRef.current) {
-      inputRef.current.setSelectionRange(pendingCaret.current, pendingCaret.current);
-      pendingCaret.current = null;
+  // A pick that continues the query highlights the first option of the next list
+  useEffect(() => {
+    if (pickCount > 0 && combobox.dropdownOpened) {
+      combobox.selectFirstOption();
     }
-  });
+  }, [pickCount]);
 
-  const results = useMemo(() => filterIssues(applied, issues), [applied, issues]);
+  const currentWord = /\S*$/.exec(text)![0];
+  const textBeforeWord = text.slice(0, text.length - currentWord.length);
+  const query: SearchQuery = { tokens, text };
 
-  const updateText = (next: string, nextCaret: number) => {
-    setText(next);
-    setCaret(nextCaret);
-    pendingCaret.current = nextCaret;
-  };
-
-  const runSearch = (query: SearchQuery) => {
-    const next = extractTokens(query);
-    const serialized = serializeQuery(next);
-    setTokens(next.tokens);
-    updateText(next.text, next.text.length);
-    setApplied(next);
-    if (serialized !== '') {
+  const runSearch = (next: SearchQuery) => {
+    const normalized = normalizeQuery(next);
+    setTokens(normalized.tokens);
+    setText(normalized.text);
+    if (!isEmptyQuery(normalized)) {
+      const formatted = formatQuery(normalized);
       setRecent((current) =>
-        [next, ...current.filter((item) => serializeQuery(item) !== serialized)].slice(
+        [normalized, ...current.filter((item) => formatQuery(item) !== formatted)].slice(
           0,
           MAX_RECENT
         )
@@ -118,91 +196,49 @@ export function IssueSearchBar({ issues = ISSUES }: IssueSearchBarProps) {
     combobox.closeDropdown();
   };
 
-  const removeToken = (token: Token) => {
-    runSearch({ tokens: tokens.filter((item) => item !== token), text });
-  };
+  const addToken = (token: Token) => setTokens((current) => withToken(current, token));
+
+  const removeToken = (index: number) =>
+    setTokens((current) => current.filter((_, i) => i !== index));
 
   const clear = () => {
     setTokens([]);
-    updateText('', 0);
-    setApplied(EMPTY_QUERY);
+    setText('');
     inputRef.current?.focus();
-  };
-
-  const { start, end, word } = wordAt(text, caret);
-  const colon = word.indexOf(':');
-  const queryIsEmpty = tokens.length === 0 && text.trim() === '';
-
-  const keySuggestions =
-    colon === -1 ? FILTERS.filter((filter) => filter.key.startsWith(word.toLowerCase())) : [];
-  const recentSuggestions = word === '' && queryIsEmpty ? recent.slice(0, RECENT_SUGGESTIONS) : [];
-
-  const valueFilter = colon === -1 ? undefined : getFilter(word.slice(0, colon));
-  const valueSearch = word.slice(colon + 1).toLowerCase();
-  const valueSuggestions = valueFilter
-    ? valueFilter.values.filter(
-        (item) =>
-          !(
-            valueFilter.repeatable &&
-            tokens.some((token) => token.key === valueFilter.key && token.value === item.value)
-          ) && item.search.some((search) => search.toLowerCase().includes(valueSearch))
-      )
-    : [];
-
-  const hasSuggestions =
-    keySuggestions.length + recentSuggestions.length + valueSuggestions.length > 0;
-
-  const handleOptionSubmit = (option: string) => {
-    const [kind, payload] = option.split(':');
-
-    if (kind === 'key') {
-      const inserted = `${payload}:`;
-      updateText(text.slice(0, start) + inserted + text.slice(end), start + inserted.length);
-      combobox.resetSelectedOption();
-      return;
-    }
-
-    if (kind === 'value') {
-      setTokens((current) => addToken(current, { key: valueFilter!.key, value: payload }));
-      updateText(text.slice(0, start) + text.slice(end).replace(/^ /, ''), start);
-      combobox.closeDropdown();
-      return;
-    }
-
-    runSearch(recent[Number(payload)]);
-  };
-
-  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const { value } = event.currentTarget;
-    const position = event.currentTarget.selectionStart ?? value.length;
-
-    combobox.resetSelectedOption();
     combobox.openDropdown();
+  };
 
-    // A space after a complete `key:value` turns the word into a token
-    if (position > 0 && value[position - 1] === ' ') {
-      const before = value.slice(0, position - 1);
-      const wordStart = before.lastIndexOf(' ') + 1;
-      const token = resolveToken(before.slice(wordStart));
-      if (token) {
-        setTokens((current) => addToken(current, token));
-        updateText(value.slice(0, wordStart) + value.slice(position), wordStart);
-        return;
-      }
+  const handleOptionSubmit = (optionValue: string) => {
+    const [kind, ...rest] = optionValue.split(':');
+    if (kind === 'recent') {
+      runSearch(recent[Number(rest[0])]);
+      return;
     }
+    if (kind === 'key') {
+      setText(`${textBeforeWord}${rest[0]}:`);
+    } else {
+      addToken({ key: rest[0] as FilterKey, value: rest[1] });
+      setText(textBeforeWord);
+    }
+    combobox.openDropdown();
+    setPickCount((count) => count + 1);
+  };
 
-    setText(value);
-    setCaret(position);
+  const handleChange = (value: string) => {
+    const completed = /(\S+)\s$/.exec(value);
+    const token = completed && parseToken(completed[1]);
+    if (completed && token) {
+      addToken(token);
+      setText(value.slice(0, completed.index));
+    } else {
+      setText(value);
+    }
+    combobox.openDropdown();
+    combobox.resetSelectedOption();
   };
 
   const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
     const { selectionStart, selectionEnd } = event.currentTarget;
-
-    if (event.key === 'Enter' && combobox.getSelectedOptionIndex() === -1) {
-      event.preventDefault();
-      runSearch({ tokens, text });
-    }
-
     if (
       event.key === 'Backspace' &&
       selectionStart === 0 &&
@@ -210,197 +246,154 @@ export function IssueSearchBar({ issues = ISSUES }: IssueSearchBarProps) {
       tokens.length > 0
     ) {
       event.preventDefault();
-      const editable = tokenText(tokens[tokens.length - 1]);
-      setTokens(tokens.slice(0, -1));
-      updateText(text === '' ? editable : `${editable} ${text}`, editable.length);
-      combobox.openDropdown();
+      removeToken(tokens.length - 1);
+    }
+    if (
+      event.key === 'Enter' &&
+      (!combobox.dropdownOpened || combobox.getSelectedOptionIndex() === -1)
+    ) {
+      event.preventDefault();
+      runSearch(query);
     }
   };
 
-  const renderValue = (filter: FilterDefinition, item: FilterValue) => {
-    if ((filter.key === 'author' || filter.key === 'assignee') && item.value !== 'none') {
-      const member = memberByUsername(item.value);
+  const renderKeyOptions = (filters: FilterDefinition[]) =>
+    filters.map((filter) => (
+      <Combobox.Option value={`key:${filter.key}`} key={filter.key}>
+        <div className={classes.keyOption}>
+          <Text size="sm" className={classes.keyName}>
+            {filter.key}:
+          </Text>
+          <Text size="xs">{filter.description}</Text>
+        </div>
+      </Combobox.Option>
+    ));
+
+  const renderOptions = () => {
+    if (currentWord === '') {
+      const recentOptions = isEmptyQuery(query)
+        ? recent.slice(0, MAX_RECENT_SUGGESTIONS).map((item, index) => (
+            <Combobox.Option value={`recent:${index}`} key={formatQuery(item)}>
+              <Group gap="xs" wrap="nowrap">
+                <IconHistory size={16} className={classes.optionIcon} />
+                <span>{formatQuery(item)}</span>
+              </Group>
+            </Combobox.Option>
+          ))
+        : [];
+
       return (
-        <Group gap="sm" wrap="nowrap">
-          <Avatar size="sm">{member.initials}</Avatar>
-          <Text size="sm">{member.name}</Text>
-          <Text size="xs">{member.username}</Text>
-        </Group>
+        <>
+          <Combobox.Group label="Filters">{renderKeyOptions(FILTERS)}</Combobox.Group>
+          {recentOptions.length > 0 && (
+            <Combobox.Group label="Recent searches">{recentOptions}</Combobox.Group>
+          )}
+        </>
       );
     }
 
-    if (filter.key === 'label') {
-      return (
-        <Group gap="sm" wrap="nowrap">
-          <ColorSwatch
-            size={12}
-            color={`var(--mantine-color-${labelByName(item.value).color}-filled)`}
-          />
-          <Text size="sm">{item.label}</Text>
-        </Group>
-      );
+    const parts = splitWord(currentWord);
+    if (!parts) {
+      const word = currentWord.toLowerCase();
+      const keys = FILTERS.filter((filter) => filter.key.startsWith(word));
+      return keys.length > 0 ? renderKeyOptions(keys) : null;
     }
 
-    return <Text size="sm">{item.label}</Text>;
-  };
-
-  const options = valueFilter ? (
-    valueSuggestions.map((item) => {
-      const active = tokens.some(
-        (token) => token.key === valueFilter.key && token.value === item.value
-      );
+    const filter = getFilter(parts.key);
+    if (!filter) {
+      return null;
+    }
+    const used = tokens.filter((token) => token.key === filter.key).map((token) => token.value);
+    const values = matchValues(filter, parts.value).filter(
+      (item) => !filter.repeatable || !used.includes(item.value)
+    );
+    if (values.length === 0) {
+      return null;
+    }
+    return values.map((item) => {
+      const active = used.includes(item.value);
       return (
-        <Combobox.Option value={`value:${item.value}`} key={item.value} active={active}>
-          <Group gap="sm" wrap="nowrap" justify="space-between">
-            {renderValue(valueFilter, item)}
-            {active && <CheckIcon size={12} />}
-          </Group>
+        <Combobox.Option
+          value={`value:${filter.key}:${item.value}`}
+          key={item.value}
+          active={active}
+          className={classes.valueOption}
+        >
+          <ValueOption filterKey={filter.key} value={item.value} />
+          {active && <IconCheck size={16} className={classes.optionIcon} />}
         </Combobox.Option>
       );
-    })
-  ) : (
-    <>
-      {keySuggestions.length > 0 && (
-        <Combobox.Group label="Filters">
-          {keySuggestions.map((filter) => (
-            <Combobox.Option value={`key:${filter.key}`} key={filter.key}>
-              <Group gap="sm" wrap="nowrap" justify="space-between">
-                <Text size="sm" className={classes.key}>
-                  {filter.key}:
-                </Text>
-                <Text size="xs">{filter.description}</Text>
-              </Group>
-            </Combobox.Option>
-          ))}
-        </Combobox.Group>
-      )}
-      {recentSuggestions.length > 0 && (
-        <Combobox.Group label="Recent searches">
-          {recentSuggestions.map((query, index) => (
-            <Combobox.Option value={`recent:${index}`} key={serializeQuery(query)}>
-              <Group gap="sm" wrap="nowrap">
-                <IconHistory size={16} aria-hidden />
-                <Text size="sm">{serializeQuery(query)}</Text>
-              </Group>
-            </Combobox.Option>
-          ))}
-        </Combobox.Group>
-      )}
-    </>
-  );
+    });
+  };
+
+  const options = renderOptions();
+  const results = filterIssues(ISSUES, {
+    tokens,
+    text: currentWord.includes(':') ? textBeforeWord : text,
+  });
 
   return (
-    <Stack>
+    <Stack gap="md">
       <Combobox store={combobox} onOptionSubmit={handleOptionSubmit}>
         <Combobox.DropdownTarget>
           <PillsInput
-            leftSection={<IconSearch size={16} />}
+            onClick={() => combobox.openDropdown()}
             rightSection={
-              queryIsEmpty ? null : <Input.ClearButton aria-label="Clear search" onClick={clear} />
+              isEmptyQuery(query) ? null : (
+                <CloseButton
+                  aria-label="Clear search"
+                  onMouseDown={(event) => event.preventDefault()}
+                  onClick={clear}
+                />
+              )
             }
-            rightSectionPointerEvents="all"
-            onClick={() => inputRef.current?.focus()}
           >
             <Pill.Group>
-              {tokens.map((token) => (
-                <Pill
-                  key={tokenText(token)}
-                  withRemoveButton
-                  onRemove={() => removeToken(token)}
-                  removeButtonProps={{ 'aria-label': `Remove ${tokenText(token)}` }}
-                >
-                  {tokenText(token)}
-                </Pill>
+              {tokens.map((token, index) => (
+                <TokenPill
+                  key={`${token.key}:${token.value}`}
+                  token={token}
+                  onRemove={() => removeToken(index)}
+                />
               ))}
               <Combobox.EventsTarget>
                 <PillsInput.Field
                   ref={inputRef}
-                  value={text}
                   aria-label="Search issues"
-                  placeholder={
-                    tokens.length === 0
-                      ? 'Search issues or filter by status:, label:, due:…'
-                      : undefined
-                  }
-                  onChange={handleChange}
-                  onSelect={(event) => setCaret(event.currentTarget.selectionStart ?? 0)}
-                  onKeyDown={handleKeyDown}
+                  placeholder={tokens.length === 0 ? 'Search issues' : undefined}
+                  value={text}
+                  onChange={(event) => handleChange(event.currentTarget.value)}
                   onFocus={() => combobox.openDropdown()}
                   onBlur={() => combobox.closeDropdown()}
+                  onKeyDown={handleKeyDown}
                 />
               </Combobox.EventsTarget>
             </Pill.Group>
           </PillsInput>
         </Combobox.DropdownTarget>
 
-        <Combobox.Dropdown hidden={!hasSuggestions}>
+        <Combobox.Dropdown hidden={options === null}>
           <Combobox.Options>{options}</Combobox.Options>
         </Combobox.Dropdown>
       </Combobox>
 
-      <Text size="sm" aria-live="polite">
-        {results.length === 1 ? '1 issue' : `${results.length} issues`}
-      </Text>
-
-      {results.length === 0 ? (
-        <Text size="sm">No issues match this search</Text>
-      ) : (
-        <Surface withBorder component="ul" aria-label="Issues" className={classes.list}>
-          {results.map((issue) => (
-            <IssueRow issue={issue} key={issue.number} />
-          ))}
-        </Surface>
-      )}
-    </Stack>
-  );
-}
-
-function IssueRow({ issue }: { issue: Issue }) {
-  const status = STATUSES[issue.status];
-  const author = memberByUsername(issue.author);
-  const meta = [
-    `#${issue.number}`,
-    `opened by ${author.name}`,
-    issue.due ? `due ${dayjs(issue.due).format('MMM D')}` : 'no due date',
-  ].join(' · ');
-
-  return (
-    <li className={classes.row}>
-      <Group gap="sm" wrap="nowrap" align="flex-start">
-        <ThemeIcon variant="default" size="lg" role="img" aria-label={status.label}>
-          <status.icon size={18} color={`var(--mantine-color-${status.color}-text)`} />
-        </ThemeIcon>
-
-        <div className={classes.texts}>
-          <Text component="h3" size="sm" className={classes.title}>
-            {issue.title}
+      <div>
+        <Group gap="xs" mb="xs">
+          <Text size="sm" className={classes.count}>
+            {results.length === 1 ? '1 issue' : `${results.length} issues`}
           </Text>
-          <Text size="xs">{meta}</Text>
-          <Group gap={6} mt="xs">
-            <Badge variant="default" size="sm">
-              {PRIORITIES[issue.priority]}
-            </Badge>
-            {issue.labels.map((name) => (
-              <Badge key={name} size="sm" color={labelByName(name).color}>
-                {name}
-              </Badge>
+          {results.length > MAX_RESULTS && <Text size="xs">Showing the first {MAX_RESULTS}</Text>}
+        </Group>
+        {results.length === 0 ? (
+          <Text size="sm">No issues match this search</Text>
+        ) : (
+          <Surface withBorder component="ul" className={classes.issues} aria-label="Issues">
+            {results.slice(0, MAX_RESULTS).map((issue) => (
+              <IssueRow key={issue.number} issue={issue} />
             ))}
-          </Group>
-        </div>
-
-        {issue.assignees.length > 0 && (
-          <Avatar.Group>
-            {issue.assignees.map((username) => {
-              const member = memberByUsername(username);
-              return (
-                <Avatar key={username} size="sm" title={member.name}>
-                  {member.initials}
-                </Avatar>
-              );
-            })}
-          </Avatar.Group>
+          </Surface>
         )}
-      </Group>
-    </li>
+      </div>
+    </Stack>
   );
 }

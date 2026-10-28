@@ -1,18 +1,25 @@
-.dropdown {
-  padding: 4px;
+.controls {
+  display: flex;
+  flex-direction: column;
+  gap: var(--mantine-spacing-xs);
+  padding: 4px 4px var(--mantine-spacing-xs);
 }
 
-.styleControl {
-  margin: var(--mantine-spacing-xs) 4px 4px;
+.loader {
+  display: flex;
+  justify-content: center;
+  padding: var(--mantine-spacing-xl) 0;
+}
+
+.empty {
+  padding-block: var(--mantine-spacing-lg);
 }
 
 .grid {
   position: relative;
-  width: 100%;
 }
 
-.row,
-.sectionLabel {
+.virtualRow {
   position: absolute;
   top: 0;
   left: 0;
@@ -22,15 +29,13 @@
 .row {
   display: grid;
   grid-template-columns: repeat(8, 40px);
-  align-content: start;
   gap: 4px;
   padding-inline: 4px;
 }
 
 .sectionLabel {
-  display: flex;
-  align-items: flex-end;
-  padding: 0 4px 6px;
+  padding: 8px 4px 4px;
+  font-weight: 500;
 }
 
 .cell {
@@ -39,28 +44,27 @@
   justify-content: center;
   width: 40px;
   height: 40px;
-  padding: 0;
+  border-radius: var(--mantine-radius-sm);
+  color: var(--mantine-color-text);
+  cursor: pointer;
 
-  /* icon that holds the value */
-  &[data-combobox-active] {
-    background-color: var(--mantine-primary-color-light);
-    color: var(--mantine-primary-color-light-color);
+  &:hover {
+    background-color: var(--mantine-color-default-hover);
+  }
+
+  /* the icon that holds the current value */
+  &[data-active] {
+    outline: 1px solid var(--mantine-primary-color-filled);
+    outline-offset: -1px;
   }
 
   /* keyboard highlight */
-  &[data-combobox-selected] {
+  &[data-highlighted] {
     background-color: var(--mantine-primary-color-filled);
     color: var(--mantine-primary-color-contrast);
   }
 }
 
-.empty {
-  padding-block: var(--mantine-spacing-xl);
-}
-
 .footer {
-  display: flex;
-  align-items: center;
-  gap: var(--mantine-spacing-xs);
-  min-height: 40px;
+  padding-inline: calc(10px + var(--combobox-padding));
 }
