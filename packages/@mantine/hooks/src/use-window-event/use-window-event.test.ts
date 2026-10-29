@@ -89,4 +89,79 @@ describe('@mantine/hooks/use-window-event', () => {
 
     expect(handler).not.toHaveBeenCalled();
   });
+
+  it.each([false, true])('updates capture options (object syntax: %s)', (objectSyntax) => {
+    const phases: number[] = [];
+    const { rerender, unmount } = renderHook(
+      ({ capture }) =>
+        useWindowEvent(
+          'click',
+          (event) => phases.push(event.eventPhase),
+          objectSyntax ? { capture } : capture
+        ),
+      { initialProps: { capture: false } }
+    );
+
+    document.body.dispatchEvent(new MouseEvent('click', { bubbles: true }));
+    expect(phases).toEqual([Event.BUBBLING_PHASE]);
+
+    rerender({ capture: true });
+    document.body.dispatchEvent(new MouseEvent('click', { bubbles: true }));
+    expect(phases).toEqual([Event.BUBBLING_PHASE, Event.CAPTURING_PHASE]);
+
+    unmount();
+    document.body.dispatchEvent(new MouseEvent('click', { bubbles: true }));
+    expect(phases).toHaveLength(2);
+  });
+
+  it('updates passive options', () => {
+    const { rerender } = renderHook(
+      ({ passive }) => useWindowEvent('click', (event) => event.preventDefault(), { passive }),
+      { initialProps: { passive: true } }
+    );
+    const passiveEvent = new MouseEvent('click', { cancelable: true });
+    window.dispatchEvent(passiveEvent);
+    expect(passiveEvent.defaultPrevented).toBe(false);
+
+    rerender({ passive: false });
+    const activeEvent = new MouseEvent('click', { cancelable: true });
+    window.dispatchEvent(activeEvent);
+    expect(activeEvent.defaultPrevented).toBe(true);
+  });
+
+  it('updates once options without rearming on equivalent inline options', () => {
+    const handler = jest.fn();
+    const { rerender } = renderHook(({ once }) => useWindowEvent('click', handler, { once }), {
+      initialProps: { once: false },
+    });
+
+    rerender({ once: true });
+    window.dispatchEvent(new MouseEvent('click'));
+    rerender({ once: true });
+    window.dispatchEvent(new MouseEvent('click'));
+    expect(handler).toHaveBeenCalledTimes(1);
+
+    rerender({ once: false });
+    window.dispatchEvent(new MouseEvent('click'));
+    window.dispatchEvent(new MouseEvent('click'));
+    expect(handler).toHaveBeenCalledTimes(3);
+  });
+
+  it('updates the abort signal', () => {
+    const first = new AbortController();
+    const second = new AbortController();
+    const handler = jest.fn();
+    const { rerender } = renderHook(({ signal }) => useWindowEvent('click', handler, { signal }), {
+      initialProps: { signal: first.signal },
+    });
+
+    rerender({ signal: second.signal });
+    first.abort();
+    window.dispatchEvent(new MouseEvent('click'));
+    expect(handler).toHaveBeenCalledTimes(1);
+
+    second.abort();
+    window.dispatchEvent(new MouseEvent('click'));
+    expect(handler).toHaveBeenCalledTimes(1);
+  });
 });
