@@ -104,6 +104,10 @@ component you are about to use, then write the UI.
 - **Growing fields go last.** `Textarea autosize`, rich text, dropzones and code inputs are the
   last input of their section; short inputs never sit below them. See
   [textarea](references/components/textarea.md#position-in-the-form).
+- **A modal never opens on a dropdown.** Do not autofocus a combobox-based input (searchable
+  `Select`, `Autocomplete`, `TagsInput`, custom `Combobox`): it opens its options over the form.
+  Move it after a text input, or start the content with `<FocusTrap.InitialFocus />` when it
+  must be first. See [modal](references/components/modal.md).
 - **Exiting elements keep their content.** A closing `ActionBar`, `Modal`, `Drawer` or
   notification renders a snapshot of its last open content until the transition ends; state is
   cleared in `onExitTransitionEnd`, never in `onClose`. See
@@ -189,10 +193,17 @@ component you are about to use, then write the UI.
   icon); everything else is neutral. A list where every item has its own colored badge (labels,
   people, projects) reads aggressive and the colors stop meaning anything: show an item's color
   as a small dot next to neutral text, see [badge](references/components/badge.md).
+- **No colored dots inside chips.** A checked `Chip` is filled with the primary color, and a
+  category dot on that fill loses its contrast. Filter by category with a `Checkbox` per
+  category in the category color (`color="grape"`), which doubles as the legend, or keep the
+  chips plain text.
 - **No yellow text or icons in light mode.** Yellow and lime are barely visible on a light
   background, even as `-text` tokens: pick orange, or
   `light-dark(var(--mantine-color-orange-text), var(--mantine-color-yellow-text))` when the
   dark scheme should stay yellow. Yellow backgrounds with dark text are fine.
+- **A drag handle means "drag from here only".** Render a grip icon only when dragging starts
+  from the handle and the rest of the item does something else (click opens it, text is
+  selectable). An item that is draggable as a whole has no handle; give it `cursor: grab`.
 - **Category icons** (field types, statuses, kinds) are `ThemeIcon variant="default"` with the
   icon colored by a theme color per category, see [theme-icon](references/components/theme-icon.md).
 - **Icons** come from the icon library already in the project (`@tabler/icons-react` or

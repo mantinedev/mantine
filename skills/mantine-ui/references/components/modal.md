@@ -83,6 +83,12 @@ const openEditor = (field: ModelField | null) => {
   success closes the modal and shows a one-line notification.
 - Focus: `data-autofocus` on the first input; the modal returns focus to the element that opened
   it on close. Rows are keyed by item id, so the Edit button that opened the modal still exists.
+- A modal never opens on a dropdown. Combobox-based inputs (`Select searchable`, `Autocomplete`,
+  `MultiSelect`, `TagsInput`, a custom `Combobox`) open their options on focus, so autofocusing
+  one covers the form the moment the modal appears. Put a text input first and autofocus that.
+  When the combobox has to be the first field (the form is about picking that value), add
+  `<FocusTrap.InitialFocus />` as the first child of the modal content: the modal focuses that
+  invisible element, and the field opens only when the user goes to it.
 - Steps inside a modal (type picker, then options) are one modal whose content switches; a "Back"
   action as `variant="default"` on the left of the footer, Save on the right.
 - Size: `size="lg"` for forms with two columns, default size otherwise; `fullScreenBelow="sm"`

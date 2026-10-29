@@ -39,6 +39,40 @@ Example prompts:
 
 ---
 
+### `mantine-data-grid`
+
+Build data tables with `@mantine/data-grid` (DataGrid on TanStack Table v9).
+
+Use when: building an admin list, orders table or any table with sorting, filtering or pagination, connecting a grid to an API with server-side sorting, filtering and pagination, adding row selection with bulk actions, row actions or inline cell/row editing, rendering grouped rows, tree data, pinned or resizable columns or virtualized large datasets, adding a toolbar, filter controls, export or a custom footer, or working with `DataGrid`, `useDataGrid`, `DataGridColumnDef` or `@tanstack/react-table` in a Mantine app.
+
+```sh
+npx skills add https://github.com/mantinedev/skills --skill mantine-data-grid
+```
+
+Example prompts:
+
+- "Build an orders table loaded from /api/orders with server-side sorting, a status filter, search by customer and pagination"
+- "Make the products table editable inline: price as a number input, status as a select, save each row to the API and show errors"
+
+---
+
+### `mantine-calendar`
+
+Build custom calendars and date pickers with `@mantine/dates`: per-day content and states, your own selection rules, custom periods and display-only calendars.
+
+Use when: a calendar shows data per day (prices, free slots, event dots, an activity heatmap), days are unavailable with a reason or a range must not cross booked days, the selection is not a plain date or range (stays, fixed-length periods, fiscal quarters, week or custom-period pickers), a calendar sits next to time slots, presets or a toolbar, or working with `Calendar`, `useCalendar`, `getDayProps`, `renderDay`, `excludeDate`, `getMonthControlProps`, `Month`, `Day`, `CalendarHeader` or `PickerControl`.
+
+```sh
+npx skills add https://github.com/mantinedev/skills --skill mantine-calendar
+```
+
+Example prompts:
+
+- "Build a booking calendar for a holiday flat: two months, nightly price under each day, booked nights unavailable, check-out allowed on the morning of a booked night"
+- "Add an appointment picker: calendar on the left, free time slots of the picked day on the right, days without slots disabled"
+
+---
+
 ### `mantine-custom-components`
 
 Build custom components that integrate with Mantine's theming, Styles API, and core features.
@@ -80,6 +114,21 @@ Example prompts:
 - "Write tests for the checkout form: validation, conditional shipping address, submit payload"
 - "The date picker tests fail in jsdom, fix them"
 
+### `mantine-schedule`
+
+Build calendar and scheduling interfaces with `@mantine/schedule`: day, week, month, year and agenda views, and resources views with people, rooms or machines as rows.
+
+Use when: adding a calendar with `Schedule`, `DayView`, `WeekView`, `MonthView`, `YearView`, `AgendaView` or `MobileMonthView`, building a booking page, team rota or room planner with `ResourcesSchedule` and the `Resources*View` components, creating events from slot clicks or drag selection, moving and resizing events with validation, recurring events, business hours and blocked time, or custom event rendering.
+
+```sh
+npx skills add https://github.com/mantinedev/skills --skill mantine-schedule
+```
+
+Example prompts:
+
+- "Build a room booking page: rooms as rows, drag across free slots to book, no double booking"
+- "Add a clinic appointments calendar with recurring lunch breaks that cannot be booked and an edit modal"
+
 ## Install All Skills
 
 ```sh
@@ -88,6 +137,9 @@ npx skills add https://github.com/mantinedev/skills --skill mantine-form
 npx skills add https://github.com/mantinedev/skills --skill mantine-custom-components
 npx skills add https://github.com/mantinedev/skills --skill mantine-ui
 npx skills add https://github.com/mantinedev/skills --skill mantine-testing
+npx skills add https://github.com/mantinedev/skills --skill mantine-schedule
+npx skills add https://github.com/mantinedev/skills --skill mantine-calendar
+npx skills add https://github.com/mantinedev/skills --skill mantine-data-grid
 ```
 
 ## Maintainers
