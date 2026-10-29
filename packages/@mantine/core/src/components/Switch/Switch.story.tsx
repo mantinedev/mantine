@@ -183,3 +183,37 @@ export function GroupSizes() {
 
   return <div style={{ padding: 40 }}>{sizes}</div>;
 }
+
+const contrastColors = ['blue', 'yellow', 'lime', 'orange', 'teal', 'dark'];
+
+export function AutoContrast() {
+  return (
+    <div style={{ padding: 40 }}>
+      {[true, false].map((autoContrast) => (
+        <div key={String(autoContrast)} style={{ marginBottom: 40 }}>
+          <div style={{ marginBottom: 20 }}>autoContrast: {String(autoContrast)}</div>
+          {contrastColors.map((color) => (
+            <div key={color} style={{ display: 'flex', gap: 20, marginBottom: 16 }}>
+              <Switch defaultChecked color={color} autoContrast={autoContrast} label={color} />
+              <Switch
+                defaultChecked
+                color={color}
+                autoContrast={autoContrast}
+                size="lg"
+                onLabel="ON"
+                offLabel="OFF"
+              />
+              <Switch
+                defaultChecked
+                color={color}
+                autoContrast={autoContrast}
+                size="lg"
+                thumbIcon={<span style={{ fontSize: 10, lineHeight: 1 }}>✓</span>}
+              />
+            </div>
+          ))}
+        </div>
+      ))}
+    </div>
+  );
+}

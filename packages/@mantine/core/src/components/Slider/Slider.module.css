@@ -113,7 +113,7 @@
   :where(.root[data-variant='filled']) & {
     --slider-thumb-shadow: 0 1px 3px rgba(0, 0, 0, 0.25);
 
-    color: var(--mantine-color-white);
+    color: var(--slider-contrast-color, var(--mantine-primary-color-contrast));
     border-color: var(--mantine-color-white);
     background-color: var(--slider-color);
   }

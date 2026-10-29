@@ -439,4 +439,22 @@ describe('@mantine/core/Slider', () => {
     rerender(<Slider defaultValue={50} orientation="vertical" />);
     expect(screen.getByRole('slider')).toHaveAttribute('aria-orientation', 'vertical');
   });
+
+  it('sets contrast color for light colors when autoContrast is enabled', () => {
+    const { container } = render(<Slider {...defaultProps} color="yellow" />, {
+      autoContrast: true,
+    });
+    expect(container.querySelector('.mantine-Slider-root')).toHaveStyle({
+      '--slider-contrast-color': 'var(--mantine-color-black)',
+    });
+  });
+
+  it('keeps white contrast color when autoContrast is disabled on the component', () => {
+    const { container } = render(<Slider {...defaultProps} color="yellow" autoContrast={false} />, {
+      autoContrast: true,
+    });
+    expect(container.querySelector('.mantine-Slider-root')).toHaveStyle({
+      '--slider-contrast-color': 'var(--mantine-color-white)',
+    });
+  });
 });

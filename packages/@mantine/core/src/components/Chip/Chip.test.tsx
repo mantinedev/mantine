@@ -98,4 +98,23 @@ describe('@mantine/core/Chip', () => {
     expect(spy).not.toHaveBeenCalled();
     expect(screen.getByRole('checkbox')).not.toBeChecked();
   });
+
+  it('keeps white text when autoContrast is disabled on the component', () => {
+    const { container } = render(<Chip {...defaultProps} autoContrast={false} />, {
+      autoContrast: true,
+      primaryColor: 'yellow',
+    });
+    expect(container.querySelector('.mantine-Chip-root')).toHaveStyle({
+      '--chip-color': 'var(--mantine-color-white)',
+    });
+  });
+
+  it('does not set --chip-color inline when color, variant and autoContrast are not set', () => {
+    const { container } = render(<Chip {...defaultProps} />, {
+      autoContrast: true,
+      primaryColor: 'yellow',
+    });
+    const root = container.querySelector('.mantine-Chip-root') as HTMLElement;
+    expect(root.style.getPropertyValue('--chip-color')).toBe('');
+  });
 });

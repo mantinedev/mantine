@@ -122,7 +122,7 @@ const varsResolver = createVarsResolver<ChipFactory>(
         '--chip-icon-size': getSize(size, 'chip-icon-size'),
         '--chip-bg': color || variant ? colors.background : undefined,
         '--chip-hover': color || variant ? colors.hover : undefined,
-        '--chip-color': color || variant ? colors.color : undefined,
+        '--chip-color': color || variant || autoContrast !== undefined ? colors.color : undefined,
         '--chip-bd': color || variant ? colors.border : undefined,
         '--chip-spacing': getSize(size, 'chip-spacing'),
       },

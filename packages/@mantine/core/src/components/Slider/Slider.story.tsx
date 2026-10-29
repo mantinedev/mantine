@@ -240,3 +240,38 @@ export function Variants() {
     </div>
   );
 }
+
+const contrastColors = ['blue', 'yellow', 'lime', 'orange', 'teal', 'dark'];
+
+export function AutoContrast() {
+  return (
+    <div style={{ padding: 40, maxWidth: 500 }}>
+      {[true, false].map((autoContrast) => (
+        <div key={String(autoContrast)} style={{ marginBottom: 40 }}>
+          <div style={{ marginBottom: 20 }}>autoContrast: {String(autoContrast)}</div>
+          {contrastColors.map((color) => (
+            <div key={color} style={{ marginBottom: 32 }}>
+              <Slider
+                defaultValue={45}
+                variant="filled"
+                color={color}
+                thumbChildren="A"
+                thumbSize={26}
+                autoContrast={autoContrast}
+                mb="xl"
+              />
+              <RangeSlider
+                defaultValue={[25, 65]}
+                variant="filled"
+                color={color}
+                thumbChildren="A"
+                thumbSize={26}
+                autoContrast={autoContrast}
+              />
+            </div>
+          ))}
+        </div>
+      ))}
+    </div>
+  );
+}

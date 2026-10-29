@@ -88,7 +88,7 @@
 
   .input:checked + & {
     --switch-bg: var(--switch-color);
-    --switch-text-color: var(--mantine-color-white);
+    --switch-text-color: var(--switch-contrast-color, var(--mantine-primary-color-contrast));
   }
 
   .input:disabled + &,
@@ -115,6 +115,7 @@
   z-index: 1;
   border-radius: var(--switch-radius);
   display: flex;
+  color: var(--switch-bg);
   background-color: var(--switch-thumb-bg, var(--mantine-color-white));
   height: var(--switch-thumb-size);
   width: var(--switch-thumb-width);
@@ -140,6 +141,7 @@
   }
 
   .input:checked + * > & {
+    --switch-thumb-bg: var(--switch-contrast-color, var(--mantine-primary-color-contrast));
     --switch-thumb-start: calc(
       100% - var(--switch-thumb-width) - var(--switch-track-label-padding)
     );

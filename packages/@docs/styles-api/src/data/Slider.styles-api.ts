@@ -21,6 +21,8 @@ export const SliderStylesApi: StylesApiData<SliderFactory> = {
       '--slider-thumb-size':
         'Controls thumb `width` and `height`, by default based on `--slider-thumb-size-{size}` variables',
       '--slider-radius': 'Controls `border-radius` of track and thumb',
+      '--slider-contrast-color':
+        'Controls `color` of `thumb` children for `filled` variant, based on `autoContrast`',
     },
   },
 

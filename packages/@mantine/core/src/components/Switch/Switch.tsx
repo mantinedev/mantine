@@ -11,6 +11,7 @@ import {
   Factory,
   getRadius,
   getSize,
+  getContrastColor,
   getThemeColor,
   MantineColor,
   MantineRadius,
@@ -45,7 +46,8 @@ export type SwitchCssVariables = {
     | '--switch-thumb-size'
     | '--switch-label-font-size'
     | '--switch-track-label-padding'
-    | '--switch-color';
+    | '--switch-color'
+    | '--switch-contrast-color';
 };
 
 export interface SwitchProps
@@ -64,6 +66,9 @@ export interface SwitchProps
 
   /** Key of `theme.colors` or any valid CSS color to set input color in checked state @default theme.primaryColor @category appearance */
   color?: MantineColor;
+
+  /** If set, adjusts colors of the thumb and inner labels based on the track color in checked state @default theme.autoContrast @category appearance */
+  autoContrast?: boolean;
 
   /** Controls size of all elements @category appearance */
   size?: MantineSize | (string & {});
@@ -111,17 +116,23 @@ const defaultProps = {
   withThumbIndicator: true,
 } satisfies Partial<SwitchProps>;
 
-const varsResolver = createVarsResolver<SwitchFactory>((theme, { radius, color, size }) => ({
-  root: {
-    '--switch-radius': radius === undefined ? undefined : getRadius(radius),
-    '--switch-height': getSize(size, 'switch-height'),
-    '--switch-width': getSize(size, 'switch-width'),
-    '--switch-thumb-size': getSize(size, 'switch-thumb-size'),
-    '--switch-label-font-size': getSize(size, 'switch-label-font-size'),
-    '--switch-track-label-padding': getSize(size, 'switch-track-label-padding'),
-    '--switch-color': color ? getThemeColor(color, theme) : undefined,
-  },
-}));
+const varsResolver = createVarsResolver<SwitchFactory>(
+  (theme, { radius, color, size, autoContrast }) => ({
+    root: {
+      '--switch-radius': radius === undefined ? undefined : getRadius(radius),
+      '--switch-height': getSize(size, 'switch-height'),
+      '--switch-width': getSize(size, 'switch-width'),
+      '--switch-thumb-size': getSize(size, 'switch-thumb-size'),
+      '--switch-label-font-size': getSize(size, 'switch-label-font-size'),
+      '--switch-track-label-padding': getSize(size, 'switch-track-label-padding'),
+      '--switch-color': color ? getThemeColor(color, theme) : undefined,
+      '--switch-contrast-color':
+        color || autoContrast !== undefined
+          ? getContrastColor({ color, theme, autoContrast })
+          : undefined,
+    },
+  })
+);
 
 export const Switch = factory<SwitchFactory>((_props) => {
   const props = useProps('Switch', defaultProps, _props);
@@ -154,6 +165,7 @@ export const Switch = factory<SwitchFactory>((_props) => {
     withThumbIndicator,
     attributes,
     readOnly,
+    autoContrast,
     ...others
   } = props;
 

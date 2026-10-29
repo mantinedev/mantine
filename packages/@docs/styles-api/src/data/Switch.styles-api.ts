@@ -25,6 +25,8 @@ export const SwitchStylesApi: StylesApiData<SwitchFactory> = {
       '--switch-label-font-size': 'Controls `font-size` of `trackLabel`',
       '--switch-track-label-padding': 'Controls `trackLabel` offset',
       '--switch-color': 'Controls track `background-color` when input is checked',
+      '--switch-contrast-color':
+        'Controls `thumb` background and `trackLabel` color when input is checked, based on `autoContrast`',
     },
   },
 

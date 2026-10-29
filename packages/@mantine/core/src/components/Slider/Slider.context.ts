@@ -14,7 +14,12 @@ export type SliderStylesNames =
 export type SliderVariant = 'default' | 'filled' | 'white' | (string & {});
 
 export type SliderCssVariables = {
-  root: '--slider-size' | '--slider-color' | '--slider-thumb-size' | '--slider-radius';
+  root:
+    | '--slider-size'
+    | '--slider-color'
+    | '--slider-thumb-size'
+    | '--slider-radius'
+    | '--slider-contrast-color';
 };
 
 interface SliderContextValue {

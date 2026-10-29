@@ -564,4 +564,23 @@ describe('@mantine/core/RangeSlider', () => {
       expect(getSliders()[1]).toHaveAttribute('aria-valuenow', '48');
     });
   });
+
+  it('sets contrast color for light colors when autoContrast is enabled', () => {
+    const { container } = render(<RangeSlider {...defaultProps} color="yellow" />, {
+      autoContrast: true,
+    });
+    expect(container.querySelector('.mantine-RangeSlider-root')).toHaveStyle({
+      '--slider-contrast-color': 'var(--mantine-color-black)',
+    });
+  });
+
+  it('keeps white contrast color when autoContrast is disabled on the component', () => {
+    const { container } = render(
+      <RangeSlider {...defaultProps} color="yellow" autoContrast={false} />,
+      { autoContrast: true }
+    );
+    expect(container.querySelector('.mantine-RangeSlider-root')).toHaveStyle({
+      '--slider-contrast-color': 'var(--mantine-color-white)',
+    });
+  });
 });

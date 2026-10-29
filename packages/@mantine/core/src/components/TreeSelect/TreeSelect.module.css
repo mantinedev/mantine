@@ -29,7 +29,7 @@
   transform: rotate(-90deg);
 
   :where([data-combobox-selected]) & {
-    color: var(--mantine-color-white);
+    color: var(--mantine-primary-color-contrast);
   }
 
   @mixin where-rtl {

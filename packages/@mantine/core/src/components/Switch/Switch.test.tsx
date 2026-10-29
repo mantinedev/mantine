@@ -261,4 +261,28 @@ describe('@mantine/core/Switch', () => {
     expect(spy).not.toHaveBeenCalled();
     expect(screen.getByRole('switch')).not.toBeChecked();
   });
+
+  it('sets contrast color for light colors when autoContrast is enabled', () => {
+    const { container } = render(<Switch {...defaultProps} color="yellow" />, {
+      autoContrast: true,
+    });
+    expect(container.querySelector('.mantine-Switch-root')).toHaveStyle({
+      '--switch-contrast-color': 'var(--mantine-color-black)',
+    });
+  });
+
+  it('keeps white contrast color when autoContrast is disabled on the component', () => {
+    const { container } = render(<Switch {...defaultProps} color="yellow" autoContrast={false} />, {
+      autoContrast: true,
+    });
+    expect(container.querySelector('.mantine-Switch-root')).toHaveStyle({
+      '--switch-contrast-color': 'var(--mantine-color-white)',
+    });
+  });
+
+  it('does not set --switch-contrast-color inline when color and autoContrast are not set', () => {
+    const { container } = render(<Switch {...defaultProps} />, { autoContrast: true });
+    const root = container.querySelector('.mantine-Switch-root') as HTMLElement;
+    expect(root.style.getPropertyValue('--switch-contrast-color')).toBe('');
+  });
 });

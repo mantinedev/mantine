@@ -98,7 +98,7 @@
   /* Keyboard-current option in the column that is being navigated */
   &:where([data-current]) {
     background-color: var(--mantine-primary-color-filled);
-    color: var(--mantine-color-white);
+    color: var(--mantine-primary-color-contrast);
 
     @mixin hover {
       background-color: var(--mantine-primary-color-filled-hover);

@@ -9,6 +9,7 @@ import {
   findClosestNumber,
   getRadius,
   getSize,
+  getContrastColor,
   getThemeColor,
   MantineColor,
   MantineRadius,
@@ -55,6 +56,9 @@ export interface RangeSliderProps
 
   /** Key of `theme.colors` or any valid CSS color, controls color of track and thumb @default theme.primaryColor @category appearance */
   color?: MantineColor;
+
+  /** If set, adjusts color of `thumbChildren` based on the thumb color for `filled` variant @default theme.autoContrast @category appearance */
+  autoContrast?: boolean;
 
   /** Key of `theme.radius` or any valid CSS value to set `border-radius`, numbers are converted to rem @default 'xl' @category appearance */
   radius?: MantineRadius;
@@ -168,10 +172,14 @@ export type RangeSliderFactory = Factory<{
 }>;
 
 const varsResolver = createVarsResolver<RangeSliderFactory>(
-  (theme, { size, color, thumbSize, radius }) => ({
+  (theme, { size, color, thumbSize, radius, autoContrast }) => ({
     root: {
       '--slider-size': getSize(size, 'slider-size'),
       '--slider-color': color ? getThemeColor(color, theme) : undefined,
+      '--slider-contrast-color':
+        color || autoContrast !== undefined
+          ? getContrastColor({ color, theme, autoContrast })
+          : undefined,
       '--slider-radius': radius === undefined ? undefined : getRadius(radius),
       '--slider-thumb-size': getThumbSize(size, thumbSize),
     },
@@ -233,6 +241,7 @@ export const RangeSlider = factory<RangeSliderFactory>((_props) => {
     className,
     style,
     vars,
+    autoContrast,
     hiddenInputProps,
     restrictToMarks,
     thumbProps,

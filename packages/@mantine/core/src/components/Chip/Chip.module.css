@@ -36,7 +36,7 @@
   --chip-checked-padding: var(--chip-checked-padding-sm);
   --chip-bg: var(--mantine-primary-color-filled);
   --chip-hover: var(--mantine-primary-color-filled-hover);
-  --chip-color: var(--mantine-color-white);
+  --chip-color: var(--mantine-primary-color-contrast);
   --chip-bd: 1px solid transparent;
 }
 
