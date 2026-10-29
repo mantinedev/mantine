@@ -220,6 +220,63 @@ describe('useLongPress', () => {
     expect(onCancel).toHaveBeenCalledTimes(1);
   });
 
+  it.each(['touchEnd', 'touchCancel'] as const)(
+    'cancels all pending work on %s after a second touch starts',
+    (event) => {
+      const onLongPress = jest.fn();
+      const onCancel = jest.fn();
+      render(<TestComponent onLongPress={onLongPress} options={{ onCancel }} />);
+      const element = screen.getByTestId('test-element');
+      const firstTouch = { identifier: 1, clientX: 0, clientY: 0 };
+      const secondTouch = { identifier: 2, clientX: 10, clientY: 0 };
+
+      fireEvent.touchStart(element, { touches: [firstTouch] });
+      act(() => jest.advanceTimersByTime(100));
+      fireEvent.touchStart(element, { touches: [firstTouch, secondTouch] });
+      fireEvent[event](element, { touches: [] });
+      act(() => jest.advanceTimersByTime(400));
+
+      expect(onCancel).toHaveBeenCalledTimes(1);
+      expect(onLongPress).not.toHaveBeenCalled();
+    }
+  );
+
+  it('cleans up pending work on unmount after a second touch starts', () => {
+    const onLongPress = jest.fn();
+    const { unmount } = render(<TestComponent onLongPress={onLongPress} />);
+    const element = screen.getByTestId('test-element');
+
+    fireEvent.touchStart(element, { touches: [{ identifier: 1, clientX: 0, clientY: 0 }] });
+    fireEvent.touchStart(element, {
+      touches: [
+        { identifier: 1, clientX: 0, clientY: 0 },
+        { identifier: 2, clientX: 10, clientY: 0 },
+      ],
+    });
+    unmount();
+    act(() => jest.advanceTimersByTime(400));
+
+    expect(onLongPress).not.toHaveBeenCalled();
+  });
+
+  it('keeps one long press at the original threshold when another mouse button is pressed', () => {
+    const onLongPress = jest.fn();
+    const onStart = jest.fn();
+    render(<TestComponent onLongPress={onLongPress} options={{ onStart }} />);
+    const element = screen.getByTestId('test-element');
+
+    fireEvent.mouseDown(element, { button: 0, buttons: 1 });
+    act(() => jest.advanceTimersByTime(100));
+    fireEvent.mouseDown(element, { button: 2, buttons: 3 });
+    act(() => jest.advanceTimersByTime(300));
+
+    expect(onLongPress).toHaveBeenCalledTimes(1);
+    act(() => jest.advanceTimersByTime(100));
+    expect(onLongPress).toHaveBeenCalledTimes(1);
+    expect(onStart).toHaveBeenCalledTimes(1);
+    fireEvent.mouseUp(element);
+  });
+
   it('should return empty object if onLongPress is not a function', () => {
     // We need to suppress the TypeScript error for this test
     // @ts-ignore - Intentionally passing invalid prop for testing
