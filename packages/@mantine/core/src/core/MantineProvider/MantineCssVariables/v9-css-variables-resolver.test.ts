@@ -18,11 +18,17 @@ describe('v9CssVariablesResolver', () => {
     expect(result.dark['--mantine-color-blue-light-color']).toBe('var(--mantine-color-blue-0)');
   });
 
+  it('subtle-color matches light-color in both color schemes (v9 behavior)', () => {
+    const result = v9CssVariablesResolver(DEFAULT_THEME);
+    expect(result.light['--mantine-color-blue-subtle-color']).toBe('var(--mantine-color-blue-9)');
+    expect(result.dark['--mantine-color-blue-subtle-color']).toBe('var(--mantine-color-blue-0)');
+  });
+
   it('v9 and v10 resolvers differ only in the light vars and the dark error/success colors', () => {
     const v9 = v9CssVariablesResolver(DEFAULT_THEME);
     const v10 = defaultCssVariablesResolver(DEFAULT_THEME);
 
-    const expectedSuffixes = ['-light', '-light-hover', '-light-color'];
+    const expectedSuffixes = ['-light', '-light-hover', '-light-color', '-subtle-color'];
 
     const v9Dark = v9.dark as Record<string, string>;
     const v10Dark = v10.dark as Record<string, string>;

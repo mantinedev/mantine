@@ -36,6 +36,7 @@ function getV8CSSColorVariables({
       [`--mantine-color-${name}-light`]: alpha(theme.colors[color][primaryShade], 0.1),
       [`--mantine-color-${name}-light-hover`]: alpha(theme.colors[color][primaryShade], 0.12),
       [`--mantine-color-${name}-light-color`]: `var(--mantine-color-${name}-${primaryShade})`,
+      [`--mantine-color-${name}-subtle-color`]: `var(--mantine-color-${name}-${primaryShade})`,
       [`--mantine-color-${name}-outline`]: `var(--mantine-color-${name}-${primaryShade})`,
       [`--mantine-color-${name}-outline-hover`]: alpha(theme.colors[color][primaryShade], 0.05),
     };
@@ -75,6 +76,7 @@ function getV8CSSColorVariables({
       0.2
     ),
     [`--mantine-color-${name}-light-color`]: `var(--mantine-color-${name}-${Math.max(primaryShade - 5, 0)})`,
+    [`--mantine-color-${name}-subtle-color`]: `var(--mantine-color-${name}-${Math.max(primaryShade - 5, 0)})`,
     [`--mantine-color-${name}-outline`]: `var(--mantine-color-${name}-${Math.max(primaryShade - 4, 0)})`,
     [`--mantine-color-${name}-outline-hover`]: alpha(
       theme.colors[color][Math.max(primaryShade - 4, 0)],
@@ -145,6 +147,7 @@ export const v8CssVariablesResolver: CSSVariablesResolver = (theme) => {
       '--mantine-primary-color-light': `var(--mantine-color-${theme.primaryColor}-light)`,
       '--mantine-primary-color-light-hover': `var(--mantine-color-${theme.primaryColor}-light-hover)`,
       '--mantine-primary-color-light-color': `var(--mantine-color-${theme.primaryColor}-light-color)`,
+      '--mantine-primary-color-subtle-color': `var(--mantine-color-${theme.primaryColor}-subtle-color)`,
       '--mantine-primary-color-text': `var(--mantine-color-${theme.primaryColor}-text)`,
     },
     light: {

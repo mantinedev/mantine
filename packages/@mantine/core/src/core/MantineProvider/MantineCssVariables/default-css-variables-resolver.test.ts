@@ -341,6 +341,25 @@ describe('disabled opacity', () => {
     );
   });
 
+  it('emits subtle-color with shade 8 in light and shade 4 in dark color scheme', () => {
+    const result = defaultCssVariablesResolver(DEFAULT_THEME);
+    expect(result.light['--mantine-color-blue-subtle-color']).toBe('var(--mantine-color-blue-8)');
+    expect(result.dark['--mantine-color-blue-subtle-color']).toBe('var(--mantine-color-blue-4)');
+    expect(result.variables['--mantine-primary-color-subtle-color']).toBe(
+      'var(--mantine-color-blue-subtle-color)'
+    );
+  });
+
+  it('emits subtle-color from every resolver', () => {
+    [defaultCssVariablesResolver, v9CssVariablesResolver, v8CssVariablesResolver].forEach(
+      (resolver) => {
+        const result = resolver(DEFAULT_THEME);
+        expect(result.light).toHaveProperty('--mantine-color-red-subtle-color');
+        expect(result.dark).toHaveProperty('--mantine-color-red-subtle-color');
+      }
+    );
+  });
+
   it('does not emit the legacy disabled color tokens from any resolver', () => {
     const tokens = [
       '--mantine-color-disabled',

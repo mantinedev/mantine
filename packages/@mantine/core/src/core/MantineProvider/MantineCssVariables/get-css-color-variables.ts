@@ -32,6 +32,7 @@ export function getCSSColorVariables({
       [`--mantine-color-${name}-light`]: `var(--mantine-color-${name}-${1})`,
       [`--mantine-color-${name}-light-hover`]: `color-mix(in srgb, var(--mantine-color-${name}-1), var(--mantine-color-${name}-2) 50%)`,
       [`--mantine-color-${name}-light-color`]: `var(--mantine-color-${name}-${9})`,
+      [`--mantine-color-${name}-subtle-color`]: `var(--mantine-color-${name}-8)`,
       [`--mantine-color-${name}-outline`]: `var(--mantine-color-${name}-${primaryShade})`,
       [`--mantine-color-${name}-outline-hover`]: alpha(theme.colors[color][primaryShade], 0.05),
     };
@@ -65,6 +66,7 @@ export function getCSSColorVariables({
     [`--mantine-color-${name}-light`]: `color-mix(in srgb, var(--mantine-color-${name}-8), var(--mantine-color-body) 64%)`,
     [`--mantine-color-${name}-light-hover`]: `color-mix(in srgb, var(--mantine-color-${name}-8), var(--mantine-color-body) 57%)`,
     [`--mantine-color-${name}-light-color`]: `var(--mantine-color-${name}-1)`,
+    [`--mantine-color-${name}-subtle-color`]: `var(--mantine-color-${name}-4)`,
     [`--mantine-color-${name}-outline`]: `var(--mantine-color-${name}-${Math.max(primaryShade - 4, 0)})`,
     [`--mantine-color-${name}-outline-hover`]: alpha(
       theme.colors[color][Math.max(primaryShade - 4, 0)],

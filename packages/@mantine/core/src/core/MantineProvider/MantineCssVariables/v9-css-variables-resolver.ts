@@ -49,6 +49,7 @@ export const v9CssVariablesResolver: CSSVariablesResolver = (theme) => {
       '--mantine-primary-color-light': `var(--mantine-color-${theme.primaryColor}-light)`,
       '--mantine-primary-color-light-hover': `var(--mantine-color-${theme.primaryColor}-light-hover)`,
       '--mantine-primary-color-light-color': `var(--mantine-color-${theme.primaryColor}-light-color)`,
+      '--mantine-primary-color-subtle-color': `var(--mantine-color-${theme.primaryColor}-subtle-color)`,
       '--mantine-primary-color-text': `var(--mantine-color-${theme.primaryColor}-text)`,
       '--mantine-color-divider': 'var(--mantine-color-border)',
       '--mantine-color-text-muted': 'var(--mantine-color-dimmed)',

@@ -30,6 +30,7 @@
   --mantine-primary-color-light: var(--mantine-color-blue-light);
   --mantine-primary-color-light-hover: var(--mantine-color-blue-light-hover);
   --mantine-primary-color-light-color: var(--mantine-color-blue-light-color);
+  --mantine-primary-color-subtle-color: var(--mantine-color-blue-subtle-color);
   --mantine-primary-color-text: var(--mantine-color-blue-text);
   --mantine-color-divider: var(--mantine-color-border);
   --mantine-color-text-muted: var(--mantine-color-dimmed);
@@ -321,6 +322,7 @@
     var(--mantine-color-body) 57%
   );
   --mantine-color-dark-light-color: var(--mantine-color-dark-1);
+  --mantine-color-dark-subtle-color: var(--mantine-color-dark-4);
   --mantine-color-dark-outline: var(--mantine-color-dark-3);
   --mantine-color-dark-outline-hover: oklch(0.5 0 0 / 0.05);
   --mantine-color-gray-text: var(--mantine-color-gray-4);
@@ -337,6 +339,7 @@
     var(--mantine-color-body) 57%
   );
   --mantine-color-gray-light-color: var(--mantine-color-gray-1);
+  --mantine-color-gray-subtle-color: var(--mantine-color-gray-4);
   --mantine-color-gray-outline: var(--mantine-color-gray-3);
   --mantine-color-gray-outline-hover: oklch(0.89 0.0048 260 / 0.05);
   --mantine-color-red-text: var(--mantine-color-red-4);
@@ -353,6 +356,7 @@
     var(--mantine-color-body) 57%
   );
   --mantine-color-red-light-color: var(--mantine-color-red-1);
+  --mantine-color-red-subtle-color: var(--mantine-color-red-4);
   --mantine-color-red-outline: var(--mantine-color-red-3);
   --mantine-color-red-outline-hover: oklch(0.769 0.1361 25 / 0.05);
   --mantine-color-pink-text: var(--mantine-color-pink-4);
@@ -369,6 +373,7 @@
     var(--mantine-color-body) 57%
   );
   --mantine-color-pink-light-color: var(--mantine-color-pink-1);
+  --mantine-color-pink-subtle-color: var(--mantine-color-pink-4);
   --mantine-color-pink-outline: var(--mantine-color-pink-3);
   --mantine-color-pink-outline-hover: oklch(0.772 0.16 350 / 0.05);
   --mantine-color-grape-text: var(--mantine-color-grape-4);
@@ -385,6 +390,7 @@
     var(--mantine-color-body) 57%
   );
   --mantine-color-grape-light-color: var(--mantine-color-grape-1);
+  --mantine-color-grape-subtle-color: var(--mantine-color-grape-4);
   --mantine-color-grape-outline: var(--mantine-color-grape-3);
   --mantine-color-grape-outline-hover: oklch(0.772 0.1527 315 / 0.05);
   --mantine-color-violet-text: var(--mantine-color-violet-4);
@@ -401,6 +407,7 @@
     var(--mantine-color-body) 57%
   );
   --mantine-color-violet-light-color: var(--mantine-color-violet-1);
+  --mantine-color-violet-subtle-color: var(--mantine-color-violet-4);
   --mantine-color-violet-outline: var(--mantine-color-violet-3);
   --mantine-color-violet-outline-hover: oklch(0.768 0.1291 292 / 0.05);
   --mantine-color-indigo-text: var(--mantine-color-indigo-4);
@@ -417,6 +424,7 @@
     var(--mantine-color-body) 57%
   );
   --mantine-color-indigo-light-color: var(--mantine-color-indigo-1);
+  --mantine-color-indigo-subtle-color: var(--mantine-color-indigo-4);
   --mantine-color-indigo-outline: var(--mantine-color-indigo-3);
   --mantine-color-indigo-outline-hover: oklch(0.763 0.1205 270 / 0.05);
   --mantine-color-blue-text: var(--mantine-color-blue-4);
@@ -433,6 +441,7 @@
     var(--mantine-color-body) 57%
   );
   --mantine-color-blue-light-color: var(--mantine-color-blue-1);
+  --mantine-color-blue-subtle-color: var(--mantine-color-blue-4);
   --mantine-color-blue-outline: var(--mantine-color-blue-3);
   --mantine-color-blue-outline-hover: oklch(0.756 0.1273 255 / 0.05);
   --mantine-color-cyan-text: var(--mantine-color-cyan-4);
@@ -449,6 +458,7 @@
     var(--mantine-color-body) 57%
   );
   --mantine-color-cyan-light-color: var(--mantine-color-cyan-1);
+  --mantine-color-cyan-subtle-color: var(--mantine-color-cyan-4);
   --mantine-color-cyan-outline: var(--mantine-color-cyan-3);
   --mantine-color-cyan-outline-hover: oklch(0.75 0.097 227 / 0.05);
   --mantine-color-teal-text: var(--mantine-color-teal-4);
@@ -465,6 +475,7 @@
     var(--mantine-color-body) 57%
   );
   --mantine-color-teal-light-color: var(--mantine-color-teal-1);
+  --mantine-color-teal-subtle-color: var(--mantine-color-teal-4);
   --mantine-color-teal-outline: var(--mantine-color-teal-3);
   --mantine-color-teal-outline-hover: oklch(0.747 0.1164 168 / 0.05);
   --mantine-color-green-text: var(--mantine-color-green-4);
@@ -481,6 +492,7 @@
     var(--mantine-color-body) 57%
   );
   --mantine-color-green-light-color: var(--mantine-color-green-1);
+  --mantine-color-green-subtle-color: var(--mantine-color-green-4);
   --mantine-color-green-outline: var(--mantine-color-green-3);
   --mantine-color-green-outline-hover: oklch(0.745 0.1309 150 / 0.05);
   --mantine-color-lime-text: var(--mantine-color-lime-4);
@@ -497,6 +509,7 @@
     var(--mantine-color-body) 57%
   );
   --mantine-color-lime-light-color: var(--mantine-color-lime-1);
+  --mantine-color-lime-subtle-color: var(--mantine-color-lime-4);
   --mantine-color-lime-outline: var(--mantine-color-lime-3);
   --mantine-color-lime-outline-hover: oklch(0.88 0.1212 130 / 0.05);
   --mantine-color-yellow-text: var(--mantine-color-yellow-4);
@@ -513,6 +526,7 @@
     var(--mantine-color-body) 57%
   );
   --mantine-color-yellow-light-color: var(--mantine-color-yellow-1);
+  --mantine-color-yellow-subtle-color: var(--mantine-color-yellow-4);
   --mantine-color-yellow-outline: var(--mantine-color-yellow-3);
   --mantine-color-yellow-outline-hover: oklch(0.891 0.1033 80 / 0.05);
   --mantine-color-orange-text: var(--mantine-color-orange-4);
@@ -529,6 +543,7 @@
     var(--mantine-color-body) 57%
   );
   --mantine-color-orange-light-color: var(--mantine-color-orange-1);
+  --mantine-color-orange-subtle-color: var(--mantine-color-orange-4);
   --mantine-color-orange-outline: var(--mantine-color-orange-3);
   --mantine-color-orange-outline-hover: oklch(0.827 0.1019 43 / 0.05);
 }
@@ -586,6 +601,7 @@
     var(--mantine-color-dark-2) 50%
   );
   --mantine-color-dark-light-color: var(--mantine-color-dark-9);
+  --mantine-color-dark-subtle-color: var(--mantine-color-dark-8);
   --mantine-color-dark-outline: var(--mantine-color-dark-6);
   --mantine-color-dark-outline-hover: oklch(0.28 0 0 / 0.05);
   --mantine-color-gray-text: var(--mantine-color-gray-filled);
@@ -598,6 +614,7 @@
     var(--mantine-color-gray-2) 50%
   );
   --mantine-color-gray-light-color: var(--mantine-color-gray-9);
+  --mantine-color-gray-subtle-color: var(--mantine-color-gray-8);
   --mantine-color-gray-outline: var(--mantine-color-gray-6);
   --mantine-color-gray-outline-hover: oklch(0.61 0.008 260 / 0.05);
   --mantine-color-red-text: var(--mantine-color-red-filled);
@@ -610,6 +627,7 @@
     var(--mantine-color-red-2) 50%
   );
   --mantine-color-red-light-color: var(--mantine-color-red-9);
+  --mantine-color-red-subtle-color: var(--mantine-color-red-8);
   --mantine-color-red-outline: var(--mantine-color-red-6);
   --mantine-color-red-outline-hover: oklch(0.591 0.2397 25 / 0.05);
   --mantine-color-pink-text: var(--mantine-color-pink-filled);
@@ -622,6 +640,7 @@
     var(--mantine-color-pink-2) 50%
   );
   --mantine-color-pink-light-color: var(--mantine-color-pink-9);
+  --mantine-color-pink-subtle-color: var(--mantine-color-pink-8);
   --mantine-color-pink-outline: var(--mantine-color-pink-6);
   --mantine-color-pink-outline-hover: oklch(0.597 0.2489 350 / 0.05);
   --mantine-color-grape-text: var(--mantine-color-grape-filled);
@@ -634,6 +653,7 @@
     var(--mantine-color-grape-2) 50%
   );
   --mantine-color-grape-light-color: var(--mantine-color-grape-9);
+  --mantine-color-grape-subtle-color: var(--mantine-color-grape-8);
   --mantine-color-grape-outline: var(--mantine-color-grape-6);
   --mantine-color-grape-outline-hover: oklch(0.596 0.252 315 / 0.05);
   --mantine-color-violet-text: var(--mantine-color-violet-filled);
@@ -646,6 +666,7 @@
     var(--mantine-color-violet-2) 50%
   );
   --mantine-color-violet-light-color: var(--mantine-color-violet-9);
+  --mantine-color-violet-subtle-color: var(--mantine-color-violet-8);
   --mantine-color-violet-outline: var(--mantine-color-violet-6);
   --mantine-color-violet-outline-hover: oklch(0.59 0.2461 292 / 0.05);
   --mantine-color-indigo-text: var(--mantine-color-indigo-filled);
@@ -658,6 +679,7 @@
     var(--mantine-color-indigo-2) 50%
   );
   --mantine-color-indigo-light-color: var(--mantine-color-indigo-9);
+  --mantine-color-indigo-subtle-color: var(--mantine-color-indigo-8);
   --mantine-color-indigo-outline: var(--mantine-color-indigo-6);
   --mantine-color-indigo-outline-hover: oklch(0.579 0.2298 270 / 0.05);
   --mantine-color-blue-text: var(--mantine-color-blue-filled);
@@ -670,6 +692,7 @@
     var(--mantine-color-blue-2) 50%
   );
   --mantine-color-blue-light-color: var(--mantine-color-blue-9);
+  --mantine-color-blue-subtle-color: var(--mantine-color-blue-8);
   --mantine-color-blue-outline: var(--mantine-color-blue-6);
   --mantine-color-blue-outline-hover: oklch(0.566 0.1863 255 / 0.05);
   --mantine-color-cyan-text: var(--mantine-color-cyan-filled);
@@ -682,6 +705,7 @@
     var(--mantine-color-cyan-2) 50%
   );
   --mantine-color-cyan-light-color: var(--mantine-color-cyan-9);
+  --mantine-color-cyan-subtle-color: var(--mantine-color-cyan-8);
   --mantine-color-cyan-outline: var(--mantine-color-cyan-6);
   --mantine-color-cyan-outline-hover: oklch(0.555 0.1071 227 / 0.05);
   --mantine-color-teal-text: var(--mantine-color-teal-filled);
@@ -694,6 +718,7 @@
     var(--mantine-color-teal-2) 50%
   );
   --mantine-color-teal-light-color: var(--mantine-color-teal-9);
+  --mantine-color-teal-subtle-color: var(--mantine-color-teal-8);
   --mantine-color-teal-outline: var(--mantine-color-teal-6);
   --mantine-color-teal-outline-hover: oklch(0.549 0.1112 168 / 0.05);
   --mantine-color-green-text: var(--mantine-color-green-filled);
@@ -706,6 +731,7 @@
     var(--mantine-color-green-2) 50%
   );
   --mantine-color-green-light-color: var(--mantine-color-green-9);
+  --mantine-color-green-subtle-color: var(--mantine-color-green-8);
   --mantine-color-green-outline: var(--mantine-color-green-6);
   --mantine-color-green-outline-hover: oklch(0.546 0.1505 150 / 0.05);
   --mantine-color-lime-text: var(--mantine-color-lime-filled);
@@ -718,6 +744,7 @@
     var(--mantine-color-lime-2) 50%
   );
   --mantine-color-lime-light-color: var(--mantine-color-lime-9);
+  --mantine-color-lime-subtle-color: var(--mantine-color-lime-8);
   --mantine-color-lime-outline: var(--mantine-color-lime-6);
   --mantine-color-lime-outline-hover: oklch(0.8 0.2 130 / 0.05);
   --mantine-color-yellow-text: var(--mantine-color-yellow-filled);
@@ -730,6 +757,7 @@
     var(--mantine-color-yellow-2) 50%
   );
   --mantine-color-yellow-light-color: var(--mantine-color-yellow-9);
+  --mantine-color-yellow-subtle-color: var(--mantine-color-yellow-8);
   --mantine-color-yellow-outline: var(--mantine-color-yellow-6);
   --mantine-color-yellow-outline-hover: oklch(0.82 0.1698 80 / 0.05);
   --mantine-color-orange-text: var(--mantine-color-orange-filled);
@@ -742,6 +770,7 @@
     var(--mantine-color-orange-2) 50%
   );
   --mantine-color-orange-light-color: var(--mantine-color-orange-9);
+  --mantine-color-orange-subtle-color: var(--mantine-color-orange-8);
   --mantine-color-orange-outline: var(--mantine-color-orange-6);
   --mantine-color-orange-outline-hover: oklch(0.7 0.2 43 / 0.05);
 }

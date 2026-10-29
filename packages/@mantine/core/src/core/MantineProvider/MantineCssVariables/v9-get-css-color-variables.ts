@@ -32,6 +32,7 @@ export function getV9CSSColorVariables({
       [`--mantine-color-${name}-light`]: `var(--mantine-color-${name}-${1})`,
       [`--mantine-color-${name}-light-hover`]: `var(--mantine-color-${name}-${2})`,
       [`--mantine-color-${name}-light-color`]: `var(--mantine-color-${name}-${9})`,
+      [`--mantine-color-${name}-subtle-color`]: `var(--mantine-color-${name}-${9})`,
       [`--mantine-color-${name}-outline`]: `var(--mantine-color-${name}-${primaryShade})`,
       [`--mantine-color-${name}-outline-hover`]: alpha(theme.colors[color][primaryShade], 0.05),
     };
@@ -65,6 +66,7 @@ export function getV9CSSColorVariables({
     [`--mantine-color-${name}-light`]: darken(theme.colors[color][9], 0.5),
     [`--mantine-color-${name}-light-hover`]: darken(theme.colors[color][9], 0.3),
     [`--mantine-color-${name}-light-color`]: `var(--mantine-color-${name}-0)`,
+    [`--mantine-color-${name}-subtle-color`]: `var(--mantine-color-${name}-0)`,
     [`--mantine-color-${name}-outline`]: `var(--mantine-color-${name}-${Math.max(primaryShade - 4, 0)})`,
     [`--mantine-color-${name}-outline-hover`]: alpha(
       theme.colors[color][Math.max(primaryShade - 4, 0)],
