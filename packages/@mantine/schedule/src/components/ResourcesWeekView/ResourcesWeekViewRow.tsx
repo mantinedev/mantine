@@ -9,11 +9,12 @@ import {
   ResourceGroupInfo,
   ResourcesGridControlsRef,
 } from '../../utils';
+import { getDataAttributes } from '../../utils/get-data-attributes/get-data-attributes';
 import { getResourceSlotLabel } from '../../utils/resources-view-utils/resources-view-utils';
 import type { ResourcesWeekViewFactory } from './ResourcesWeekView';
 
 export interface ResourcesWeekViewRowProps {
-  locale: string;
+  slotDateTimeLabels: string[][];
   resource: ScheduleResourceData;
   resourceIndex: number;
   weekdays: string[];
@@ -67,7 +68,7 @@ export interface ResourcesWeekViewRowProps {
 }
 
 export function ResourcesWeekViewRow({
-  locale,
+  slotDateTimeLabels,
   resource,
   resourceIndex,
   weekdays,
@@ -99,6 +100,15 @@ export function ResourcesWeekViewRow({
   allDayCount,
 }: ResourcesWeekViewRowProps) {
   const slotGroup = String(resource.id);
+  const slotLabelPrefix = getLabel('resourceSlot', labels);
+  const slotsBusinessHoursState = slots.map((slot) =>
+    getBusinessHoursState({
+      time: slot.startTime,
+      endTime: addMinutesToTime(slot.startTime, clampIntervalMinutes(intervalMinutes)),
+      businessHours,
+      highlightBusinessHours,
+    })
+  );
 
   const items = weekdays.flatMap((day, dayIndex) =>
     slots.map((slot, slotIndex) => {
@@ -107,16 +117,11 @@ export function ResourcesWeekViewRow({
       const isFirstSlot =
         firstSlotIndex?.resourceIndex === resourceIndex && firstSlotIndex?.slotIndex === flatIndex;
       const isDragSelected = isSlotDragSelected?.(flatIndex, slotGroup) || false;
-
-      const businessHoursState = getBusinessHoursState({
-        time: slot.startTime,
-        endTime: addMinutesToTime(slot.startTime, clampIntervalMinutes(intervalMinutes)),
-        businessHours,
-        highlightBusinessHours,
-      });
+      const businessHoursState = slotsBusinessHoursState[slotIndex];
 
       return (
-        <UnstyledButton
+        <button
+          type="button"
           key={`${day}-${slot.startTime}`}
           ref={(node) => {
             if (!slotsRef?.current) {
@@ -135,22 +140,22 @@ export function ResourcesWeekViewRow({
               }
             }
           }}
-          {...getStyles('resourcesWeekViewRowSlot')}
-          mod={{
+          {...getStyles('resourcesWeekViewRowSlot', {
+            className: UnstyledButton.classes.root,
+            style: businessHoursState.vars,
+            focusable: true,
+          })}
+          {...getDataAttributes({
             'hour-start': slot.isHourStart,
             ...businessHoursState.mod,
             'drop-target': isDropTarget,
             'drag-selected': isDragSelected,
             static: mode === 'static',
-          }}
-          __vars={businessHoursState.vars}
+          })}
           aria-label={getResourceSlotLabel({
-            prefix: getLabel('resourceSlot', labels),
+            prefix: slotLabelPrefix,
             resourceLabel: resource.label,
-            date: day,
-            startTime: slot.startTime,
-            endTime: slot.endTime,
-            locale,
+            dateTimeLabel: slotDateTimeLabels[dayIndex][slotIndex],
           })}
           tabIndex={mode === 'static' ? -1 : isFirstSlot ? 0 : -1}
           data-drag-slot-index={withDragSlotSelect && mode !== 'static' ? flatIndex : undefined}

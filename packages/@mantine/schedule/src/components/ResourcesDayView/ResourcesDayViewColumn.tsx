@@ -9,14 +9,14 @@ import {
   ResourceGroupInfo,
   ResourcesGridControlsRef,
 } from '../../utils';
+import { getDataAttributes } from '../../utils/get-data-attributes/get-data-attributes';
 import { getResourceSlotLabel } from '../../utils/resources-view-utils/resources-view-utils';
 import type { ResourcesDayViewFactory } from './ResourcesDayView';
 
 export interface ResourcesDayViewRowProps {
-  locale: string;
+  slotDateTimeLabels: string[];
   resource: ScheduleResourceData;
   resourceIndex: number;
-  date: string;
   slots: DayTimeInterval[];
   intervalMinutes: number;
   getStyles: GetStylesApi<ResourcesDayViewFactory>;
@@ -66,10 +66,9 @@ export interface ResourcesDayViewRowProps {
 }
 
 export function ResourcesDayViewRow({
-  locale,
+  slotDateTimeLabels,
   resource,
   resourceIndex,
-  date,
   slots,
   intervalMinutes,
   getStyles,
@@ -98,6 +97,7 @@ export function ResourcesDayViewRow({
   allDayCount,
 }: ResourcesDayViewRowProps) {
   const slotGroup = String(resource.id);
+  const slotLabelPrefix = getLabel('resourceSlot', labels);
 
   const items = slots.map((slot, slotIndex) => {
     const isDropTarget = dropTargetSlotIndex === slotIndex;
@@ -113,7 +113,8 @@ export function ResourcesDayViewRow({
     });
 
     return (
-      <UnstyledButton
+      <button
+        type="button"
         key={slot.startTime}
         ref={(node) => {
           if (!slotsRef?.current) {
@@ -132,22 +133,22 @@ export function ResourcesDayViewRow({
             }
           }
         }}
-        {...getStyles('resourcesDayViewRowSlot')}
-        mod={{
+        {...getStyles('resourcesDayViewRowSlot', {
+          className: UnstyledButton.classes.root,
+          style: businessHoursState.vars,
+          focusable: true,
+        })}
+        {...getDataAttributes({
           'hour-start': slot.isHourStart,
           ...businessHoursState.mod,
           'drop-target': isDropTarget,
           'drag-selected': isDragSelected,
           static: mode === 'static',
-        }}
-        __vars={businessHoursState.vars}
+        })}
         aria-label={getResourceSlotLabel({
-          prefix: getLabel('resourceSlot', labels),
+          prefix: slotLabelPrefix,
           resourceLabel: resource.label,
-          date: date,
-          startTime: slot.startTime,
-          endTime: slot.endTime,
-          locale,
+          dateTimeLabel: slotDateTimeLabels[slotIndex],
         })}
         tabIndex={mode === 'static' ? -1 : isFirstSlot ? 0 : -1}
         data-drag-slot-index={withDragSlotSelect && mode !== 'static' ? slotIndex : undefined}

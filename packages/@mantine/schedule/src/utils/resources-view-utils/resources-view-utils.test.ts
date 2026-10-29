@@ -1,7 +1,9 @@
 import 'dayjs/locale/ru';
+import { getDayTimeIntervals } from '../get-day-time-intervals/get-day-time-intervals';
 import {
   getInlineTimeAxisEventStyle,
   getResourceSlotLabel,
+  getSlotDateTimeLabels,
   scrollCellIntoInlineView,
   scrollCellToInlineStart,
 } from './resources-view-utils';
@@ -48,22 +50,32 @@ describe('@mantine/schedule/resources-view-utils', () => {
     });
   });
 
-  it('formats the slot label with a localized date and short times', () => {
-    const base = {
-      prefix: 'Resource time slot',
-      resourceLabel: 'Room A',
+  it('formats slot date and time labels per date and slot', () => {
+    const slots = getDayTimeIntervals({
       startTime: '08:00:00',
-      endTime: '09:00:00',
-    };
+      endTime: '10:00:00',
+      intervalMinutes: 60,
+    });
 
-    expect(getResourceSlotLabel({ ...base, date: '2025-01-13 00:00:00', locale: 'en' })).toBe(
-      'Resource time slot Room A January 13, 2025 08:00 - 09:00'
-    );
-    expect(getResourceSlotLabel({ ...base, date: '2025-01-13', locale: 'ru' })).toBe(
-      'Resource time slot Room A январь 13, 2025 08:00 - 09:00'
-    );
     expect(
-      getResourceSlotLabel({ ...base, prefix: undefined, date: '2025-01-13', locale: 'en' })
+      getSlotDateTimeLabels({ dates: ['2025-01-13 00:00:00', '2025-01-14'], slots, locale: 'en' })
+    ).toStrictEqual([
+      ['January 13, 2025 08:00 - 09:00', 'January 13, 2025 09:00 - 10:00'],
+      ['January 14, 2025 08:00 - 09:00', 'January 14, 2025 09:00 - 10:00'],
+    ]);
+    expect(getSlotDateTimeLabels({ dates: ['2025-01-13'], slots, locale: 'ru' })[0][0]).toBe(
+      'январь 13, 2025 08:00 - 09:00'
+    );
+  });
+
+  it('builds the slot label from the prefix, resource label and date time label', () => {
+    const dateTimeLabel = 'January 13, 2025 08:00 - 09:00';
+
+    expect(
+      getResourceSlotLabel({ prefix: 'Resource time slot', resourceLabel: 'Room A', dateTimeLabel })
+    ).toBe('Resource time slot Room A January 13, 2025 08:00 - 09:00');
+    expect(
+      getResourceSlotLabel({ prefix: undefined, resourceLabel: 'Room A', dateTimeLabel })
     ).toBe('Room A January 13, 2025 08:00 - 09:00');
   });
 

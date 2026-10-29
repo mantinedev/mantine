@@ -67,6 +67,7 @@ import { getClippedEdges } from '../../utils/clip-event-to-day/clip-event-to-day
 import { resolveNow } from '../../utils/resolve-now/resolve-now';
 import {
   getInlineTimeAxisEventStyle,
+  getSlotDateTimeLabels,
   scrollCellIntoInlineView,
   scrollCellToInlineStart,
 } from '../../utils/resources-view-utils/resources-view-utils';
@@ -475,7 +476,10 @@ export const ResourcesDayView = factory<ResourcesDayViewFactory>((_props) => {
   const [scrolled, setScrolled] = useState(false);
   const [scrolledX, setScrolledX] = useState(false);
   const ctx = useDatesContext();
-  const slots = getDayTimeIntervals({ startTime, endTime, intervalMinutes });
+  const slots = useMemo(
+    () => getDayTimeIntervals({ startTime, endTime, intervalMinutes }),
+    [startTime, endTime, intervalMinutes]
+  );
   const { orderedResources, groupRanges, resourceGroupMap } = useMemo(
     () => getOrderedResources(resources, groups),
     [resources, groups]
@@ -669,6 +673,11 @@ export const ResourcesDayView = factory<ResourcesDayViewFactory>((_props) => {
   };
 
   const dateStr = dayjs(date).format('YYYY-MM-DD');
+  const resolvedLocale = ctx.getLocale(locale);
+  const slotDateTimeLabels = useMemo(
+    () => getSlotDateTimeLabels({ dates: [dateStr], slots, locale: resolvedLocale })[0],
+    [dateStr, slots, resolvedLocale]
+  );
   const now = useNow(getCurrentTime);
   const isToday = dayjs(date).isSame(now, 'day');
   const withCurrentTimeIndicator = _withCurrentTimeIndicator ?? isToday;
@@ -1053,11 +1062,10 @@ export const ResourcesDayView = factory<ResourcesDayViewFactory>((_props) => {
     return (
       <ResourcesDayViewRow
         key={resource.id}
-        locale={ctx.getLocale(locale)}
+        slotDateTimeLabels={slotDateTimeLabels}
         resource={resource}
         intervalMinutes={intervalMinutes}
         resourceIndex={resourceIndex}
-        date={dateStr}
         slots={slots}
         getStyles={getStyles}
         labels={labels}

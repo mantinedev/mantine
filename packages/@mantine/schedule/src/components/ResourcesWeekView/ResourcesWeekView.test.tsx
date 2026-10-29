@@ -1,7 +1,7 @@
 import dayjs from 'dayjs';
 import 'dayjs/locale/ru';
 import { act, createEvent, fireEvent } from '@testing-library/react';
-import { DirectionProvider, MantineProvider } from '@mantine/core';
+import { DirectionProvider, MantineProvider, UnstyledButton } from '@mantine/core';
 import { DatesProvider } from '@mantine/dates';
 import { render, screen, userEvent } from '@mantine-tests/core';
 import { toDateString } from '../../utils';
@@ -21,6 +21,14 @@ const defaultProps: ResourcesWeekViewProps = {
 };
 
 describe('@mantine/schedule/ResourcesWeekView', () => {
+  it('renders slots as focusable buttons that do not submit forms', () => {
+    const { container } = render(<ResourcesWeekView {...defaultProps} />);
+    const slot = container.querySelector('.mantine-ResourcesWeekView-resourcesWeekViewRowSlot')!;
+    expect(slot.tagName).toBe('BUTTON');
+    expect(slot).toHaveAttribute('type', 'button');
+    expect(slot).toHaveClass('mantine-focus-auto', UnstyledButton.classes.root);
+  });
+
   it('renders resource labels', () => {
     render(<ResourcesWeekView {...defaultProps} />);
     expect(screen.getByText('Room A')).toBeInTheDocument();

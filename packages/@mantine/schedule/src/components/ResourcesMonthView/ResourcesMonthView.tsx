@@ -53,6 +53,7 @@ import {
   isMultidayEvent,
   toDateString,
 } from '../../utils';
+import { getDataAttributes } from '../../utils/get-data-attributes/get-data-attributes';
 import { getEventEndDay, isEventOnDay } from '../../utils/get-event-end-day/get-event-end-day';
 import { getLogicalArrowKey } from '../../utils/get-logical-arrow-key/get-logical-arrow-key';
 import {
@@ -529,6 +530,14 @@ export const ResourcesMonthView = factory<ResourcesMonthViewFactory>((_props) =>
   );
 
   const monthDaySet = useMemo(() => new Set(monthDays), [monthDays]);
+  const resolvedLocale = ctx.getLocale(locale);
+  const monthDayLabels = useMemo(
+    () =>
+      monthDays.map((day) =>
+        formatDate({ date: day, locale: resolvedLocale, format: 'MMMM D, YYYY' })
+      ),
+    [monthDays, resolvedLocale]
+  );
 
   const eventResize = useDayGridEventResize({
     enabled: withEventResize,
@@ -1007,7 +1016,8 @@ export const ResourcesMonthView = factory<ResourcesMonthViewFactory>((_props) =>
       }
 
       return (
-        <UnstyledButton
+        <button
+          type="button"
           key={day}
           ref={(node) => {
             if (node) {
@@ -1017,16 +1027,19 @@ export const ResourcesMonthView = factory<ResourcesMonthViewFactory>((_props) =>
               cellsRef.current[resourceIndex][dayIndex] = node;
             }
           }}
-          {...getStyles('resourcesMonthViewCell')}
-          aria-label={`${resource.label} ${formatDate({ date: d, locale: ctx.getLocale(locale), format: 'MMMM D, YYYY' })}`}
+          {...getStyles('resourcesMonthViewCell', {
+            className: UnstyledButton.classes.root,
+            focusable: true,
+          })}
+          aria-label={`${resource.label} ${monthDayLabels[dayIndex]}`}
           data-drag-slot-index={withDragSlotSelect && mode !== 'static' ? dayIndex : undefined}
           data-drag-slot-group={withDragSlotSelect && mode !== 'static' ? slotGroup : undefined}
-          mod={{
+          {...getDataAttributes({
             weekend,
             'drop-target': isDropTarget,
             'drag-selected': isDragSelected,
             static: mode === 'static',
-          }}
+          })}
           tabIndex={mode === 'static' ? -1 : isFirstCell ? 0 : -1}
           onClick={
             mode === 'static'

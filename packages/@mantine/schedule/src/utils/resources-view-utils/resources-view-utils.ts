@@ -2,6 +2,7 @@ import dayjs from 'dayjs';
 import type { CSSProperties } from 'react';
 import { AnyDateValue } from '../../types';
 import { formatDate } from '../format-date/format-date';
+import type { DayTimeInterval } from '../get-day-time-intervals/get-day-time-intervals';
 import { getTimeAxisEventStyle } from '../get-time-axis-event-style/get-time-axis-event-style';
 
 export function getInlineTimeAxisEventStyle(input: {
@@ -13,28 +14,36 @@ export function getInlineTimeAxisEventStyle(input: {
   return { insetInlineStart: style.left, insetInlineEnd: style.right, minWidth: style.minWidth };
 }
 
+interface GetSlotDateTimeLabelsInput {
+  dates: AnyDateValue[];
+  slots: DayTimeInterval[];
+  locale: string;
+}
+
+export function getSlotDateTimeLabels({ dates, slots, locale }: GetSlotDateTimeLabelsInput) {
+  return dates.map((date) => {
+    const day = dayjs(date).format('YYYY-MM-DD');
+    const formattedDate = formatDate({ date: day, locale, format: 'MMMM D, YYYY' });
+    const formatTime = (time: string) =>
+      formatDate({ date: `${day} ${time}`, locale, format: 'HH:mm' });
+    return slots.map(
+      (slot) => `${formattedDate} ${formatTime(slot.startTime)} - ${formatTime(slot.endTime)}`
+    );
+  });
+}
+
 interface GetResourceSlotLabelInput {
   prefix: string | undefined;
   resourceLabel: React.ReactNode;
-  date: AnyDateValue;
-  startTime: string;
-  endTime: string;
-  locale: string;
+  dateTimeLabel: string;
 }
 
 export function getResourceSlotLabel({
   prefix,
   resourceLabel,
-  date,
-  startTime,
-  endTime,
-  locale,
+  dateTimeLabel,
 }: GetResourceSlotLabelInput) {
-  const day = dayjs(date).format('YYYY-MM-DD');
-  const formattedDate = formatDate({ date: day, locale, format: 'MMMM D, YYYY' });
-  const formatTime = (time: string) =>
-    formatDate({ date: `${day} ${time}`, locale, format: 'HH:mm' });
-  return [prefix, resourceLabel, formattedDate, `${formatTime(startTime)} - ${formatTime(endTime)}`]
+  return [prefix, resourceLabel, dateTimeLabel]
     .filter((part) => part !== undefined && part !== '')
     .join(' ');
 }

@@ -2,7 +2,7 @@ import dayjs from 'dayjs';
 import 'dayjs/locale/ru';
 import { useState } from 'react';
 import { createEvent, fireEvent } from '@testing-library/react';
-import { DirectionProvider } from '@mantine/core';
+import { DirectionProvider, UnstyledButton } from '@mantine/core';
 import { DatesProvider } from '@mantine/dates';
 import { render, screen, userEvent } from '@mantine-tests/core';
 import { ResourcesMonthView, ResourcesMonthViewProps } from './ResourcesMonthView';
@@ -65,6 +65,14 @@ function resizeHandles(container: HTMLElement, edge?: 'start' | 'end') {
 }
 
 describe('@mantine/schedule/ResourcesMonthView', () => {
+  it('renders slots as focusable buttons that do not submit forms', () => {
+    const { container } = render(<ResourcesMonthView {...defaultProps} />);
+    const slot = container.querySelector('.mantine-ResourcesMonthView-resourcesMonthViewCell')!;
+    expect(slot.tagName).toBe('BUTTON');
+    expect(slot).toHaveAttribute('type', 'button');
+    expect(slot).toHaveClass('mantine-focus-auto', UnstyledButton.classes.root);
+  });
+
   it('renders resource labels', () => {
     render(<ResourcesMonthView {...defaultProps} />);
     expect(screen.getByText('Room A')).toBeInTheDocument();

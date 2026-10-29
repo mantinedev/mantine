@@ -71,6 +71,7 @@ import { getClippedEdges } from '../../utils/clip-event-to-day/clip-event-to-day
 import { resolveNow } from '../../utils/resolve-now/resolve-now';
 import {
   getInlineTimeAxisEventStyle,
+  getSlotDateTimeLabels,
   scrollCellIntoInlineView,
   scrollCellToInlineStart,
 } from '../../utils/resources-view-utils/resources-view-utils';
@@ -463,7 +464,10 @@ export const ResourcesWeekView = factory<ResourcesWeekViewFactory>((_props) => {
   const [scrolled, setScrolled] = useState(false);
   const [scrolledX, setScrolledX] = useState(false);
   const ctx = useDatesContext();
-  const slots = getDayTimeIntervals({ startTime, endTime, intervalMinutes });
+  const slots = useMemo(
+    () => getDayTimeIntervals({ startTime, endTime, intervalMinutes }),
+    [startTime, endTime, intervalMinutes]
+  );
   const { orderedResources, groupRanges, resourceGroupMap } = useMemo(
     () => getOrderedResources(resources, groups),
     [resources, groups]
@@ -479,6 +483,12 @@ export const ResourcesWeekView = factory<ResourcesWeekViewFactory>((_props) => {
         firstDayOfWeek: ctx.getFirstDayOfWeek(firstDayOfWeek),
       }),
     [date, withWeekendDays, weekendDays, firstDayOfWeek, ctx]
+  );
+
+  const resolvedLocale = ctx.getLocale(locale);
+  const slotDateTimeLabels = useMemo(
+    () => getSlotDateTimeLabels({ dates: weekdays, slots, locale: resolvedLocale }),
+    [weekdays, slots, resolvedLocale]
   );
 
   const totalSlotsPerDay = slots.length;
@@ -1161,7 +1171,7 @@ export const ResourcesWeekView = factory<ResourcesWeekViewFactory>((_props) => {
     return (
       <ResourcesWeekViewRow
         key={resource.id}
-        locale={ctx.getLocale(locale)}
+        slotDateTimeLabels={slotDateTimeLabels}
         resource={resource}
         intervalMinutes={intervalMinutes}
         resourceIndex={resourceIndex}
