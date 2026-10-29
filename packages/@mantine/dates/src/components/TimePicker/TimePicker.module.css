@@ -34,7 +34,7 @@
 
   &:where([data-active]) {
     background-color: var(--mantine-primary-color-filled);
-    color: var(--mantine-color-white);
+    color: var(--mantine-primary-color-contrast);
   }
 
   @mixin hover {
@@ -59,7 +59,7 @@
 
   &:where([data-active]) {
     background-color: var(--mantine-primary-color-filled);
-    color: var(--mantine-color-white);
+    color: var(--mantine-primary-color-contrast);
   }
 
   @mixin hover {

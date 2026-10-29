@@ -50,11 +50,11 @@
 
   &:focus {
     background-color: var(--mantine-primary-color-filled);
-    color: var(--mantine-color-white);
+    color: var(--mantine-primary-color-contrast);
     outline: 0;
 
     &::placeholder {
-      color: var(--mantine-color-white);
+      color: var(--mantine-primary-color-contrast);
     }
   }
 }
