@@ -257,6 +257,7 @@ export const MultiSelect = genericFactory<MultiSelectFactory>((_props) => {
     openOnFocus,
     loading,
     loadingPosition,
+    loaderProps,
     withPillsReorder,
     ...others
   } = props;
@@ -487,6 +488,7 @@ export const MultiSelect = genericFactory<MultiSelectFactory>((_props) => {
             leftSectionProps={leftSectionProps}
             loading={loading}
             loadingPosition={loadingPosition}
+            loaderProps={loaderProps}
             inputContainer={inputContainer}
             inputWrapperOrder={inputWrapperOrder}
             withAsterisk={withAsterisk}

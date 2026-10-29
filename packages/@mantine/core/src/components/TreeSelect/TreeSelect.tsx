@@ -341,6 +341,9 @@ export const TreeSelect = genericFactory<TreeSelectFactory>((_props) => {
     success,
     withErrorStyles,
     withSuccessStyles,
+    loading,
+    loadingPosition,
+    loaderProps,
     name,
     form,
     id,
@@ -894,6 +897,9 @@ export const TreeSelect = genericFactory<TreeSelectFactory>((_props) => {
               leftSectionWidth={leftSectionWidth}
               leftSectionPointerEvents={leftSectionPointerEvents}
               leftSectionProps={leftSectionProps}
+              loading={loading}
+              loadingPosition={loadingPosition}
+              loaderProps={loaderProps}
               inputContainer={inputContainer}
               inputWrapperOrder={inputWrapperOrder}
               withAsterisk={withAsterisk}
@@ -1060,6 +1066,9 @@ export const TreeSelect = genericFactory<TreeSelectFactory>((_props) => {
             leftSectionPointerEvents={leftSectionPointerEvents}
             leftSectionProps={leftSectionProps}
             rightSectionWidth={rightSectionWidth}
+            loading={loading}
+            loadingPosition={loadingPosition}
+            loaderProps={loaderProps}
             rightSectionProps={rightSectionProps}
             inputContainer={inputContainer}
             inputWrapperOrder={inputWrapperOrder}
