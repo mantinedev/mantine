@@ -16,6 +16,20 @@ describe('@mantine/core/ComboboxHiddenInput', () => {
     expect(document.querySelector('input[type="hidden"]')).toHaveValue('');
   });
 
+  it('correctly handles falsy values', () => {
+    render(
+      <>
+        <ComboboxHiddenInput value={0} />
+        <ComboboxHiddenInput value={false} />
+        <ComboboxHiddenInput value="" />
+      </>
+    );
+    const inputs = document.querySelectorAll('input[type="hidden"]');
+    expect(inputs[0]).toHaveValue('0');
+    expect(inputs[1]).toHaveValue('false');
+    expect(inputs[2]).toHaveValue('');
+  });
+
   it('assigns correct array value to the input', () => {
     render(<ComboboxHiddenInput value={['test', 'test2']} />);
     expect(document.querySelector('input[type="hidden"]')).toHaveValue('test,test2');
