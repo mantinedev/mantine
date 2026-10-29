@@ -1,0 +1,12 @@
+.root {
+  width: 100%;
+}
+
+.main {
+  flex: 1;
+  min-width: 0;
+}
+
+.hidden {
+  display: none;
+}

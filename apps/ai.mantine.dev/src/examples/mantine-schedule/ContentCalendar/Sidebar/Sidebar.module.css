@@ -1,0 +1,42 @@
+.root {
+  flex: 0 0 260px;
+  min-width: 0;
+}
+
+.drafts {
+  padding: var(--mantine-spacing-xs);
+  margin: calc(var(--mantine-spacing-xs) * -1);
+  border: 1px dashed transparent;
+  border-radius: var(--mantine-radius-md);
+  transition: border-color 100ms ease;
+
+  &[data-drop-target] {
+    border-color: var(--mantine-color-default-border);
+  }
+
+  &[data-drop-over] {
+    border-color: var(--mantine-primary-color-filled);
+  }
+}
+
+.draft {
+  display: block;
+  width: 100%;
+  padding: var(--mantine-spacing-xs);
+  border: 1px dashed var(--mantine-color-default-border);
+  border-radius: var(--mantine-radius-md);
+  background-color: var(--mantine-color-body);
+  cursor: grab;
+
+  &:active {
+    cursor: grabbing;
+  }
+
+  @mixin hover {
+    background-color: var(--mantine-color-default-hover);
+  }
+}
+
+.draftTitle {
+  margin-bottom: 4px;
+}

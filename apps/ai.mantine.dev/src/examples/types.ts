@@ -25,6 +25,9 @@ export interface SkillExample {
   /** Loads the generated code.json, only the page of the example downloads it */
   loadCode: () => Promise<{ default: unknown }>;
 
+  /** Demo takes the full width of the page instead of the 800px column */
+  fullWidth?: boolean;
+
   /** Fills the visible inputs with sample values, triggered with mod+shift+E on the site, not part of the example code */
   fill?: (filler: Filler) => Promise<void>;
 }

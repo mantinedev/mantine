@@ -1,0 +1,26 @@
+.title,
+.day,
+.talkTitle {
+  font-weight: var(--mantine-font-weight-medium);
+}
+
+.list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.talk {
+  flex: 1;
+  min-width: 0;
+  border-radius: var(--mantine-radius-sm);
+}
+
+.conflict {
+  color: var(--mantine-color-red-text);
+}
+
+.conflictIcon {
+  flex-shrink: 0;
+  margin-top: 2px;
+}

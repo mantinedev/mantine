@@ -8680,6 +8680,7 @@ __metadata:
     "@mantine/form": "workspace:*"
     "@mantine/hooks": "workspace:*"
     "@mantine/notifications": "workspace:*"
+    "@mantine/schedule": "workspace:*"
     "@mantine/tiptap": "workspace:*"
     "@mantinex/demo": "workspace:*"
     "@mantinex/dev-icons": "workspace:*"

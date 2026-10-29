@@ -38,6 +38,10 @@
   flex: 1;
   max-width: 800px;
   min-width: 0;
+
+  &:where([data-full-width]) {
+    max-width: none;
+  }
 }
 
 .code {

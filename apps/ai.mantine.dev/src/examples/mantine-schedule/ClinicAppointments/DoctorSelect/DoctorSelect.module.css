@@ -1,0 +1,5 @@
+.root {
+  flex: 0 1 240px;
+  min-width: 0;
+  margin-inline-start: auto;
+}

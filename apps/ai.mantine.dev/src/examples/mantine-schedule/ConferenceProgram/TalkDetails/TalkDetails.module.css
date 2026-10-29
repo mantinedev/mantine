@@ -1,0 +1,14 @@
+.facts {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--mantine-spacing-sm) var(--mantine-spacing-md);
+  margin: 0;
+}
+
+.label {
+  font-weight: var(--mantine-font-weight-medium);
+}
+
+.value {
+  margin: 0;
+}

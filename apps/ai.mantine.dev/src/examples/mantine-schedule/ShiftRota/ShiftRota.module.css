@@ -1,0 +1,64 @@
+.layout {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--mantine-spacing-md);
+}
+
+.panel {
+  display: flex;
+  flex-direction: column;
+  gap: var(--mantine-spacing-xs);
+  flex: 0 0 200px;
+  padding: var(--mantine-spacing-sm);
+}
+
+.panelItem {
+  padding: var(--mantine-spacing-xs) var(--mantine-spacing-sm);
+  cursor: grab;
+
+  &:active {
+    cursor: grabbing;
+  }
+}
+
+.panelItemTitle {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.rota {
+  flex: 1;
+  min-width: 0;
+}
+
+.view {
+  margin-top: var(--mantine-spacing-xs);
+}
+
+.resourceLabel {
+  width: 100%;
+  min-width: 0;
+  text-align: start;
+}
+
+.hours {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+
+  &[data-over] {
+    color: var(--mantine-color-red-text);
+  }
+}
+
+.eventBody {
+  min-width: 0;
+}

@@ -1,0 +1,16 @@
+.patient {
+  font-weight: 600;
+}
+
+.lunch {
+  border-radius: 0;
+}
+
+.mobileHeader {
+  width: 100%;
+}
+
+.json {
+  max-height: 420px;
+  overflow: auto;
+}

@@ -3,6 +3,7 @@ import '@mantine/code-highlight/styles.css';
 import '@mantine/dates/styles.css';
 import '@mantine/dropzone/styles.css';
 import '@mantine/notifications/styles.css';
+import '@mantine/schedule/styles.css';
 import '@mantine/tiptap/styles.css';
 import '@mantinex/demo/styles.css';
 import '@mantinex/mantine-header/styles.css';

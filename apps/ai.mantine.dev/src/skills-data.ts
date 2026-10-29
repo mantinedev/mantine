@@ -1,4 +1,4 @@
-export type SkillId = 'mantine-form' | 'mantine-combobox' | 'mantine-ui';
+export type SkillId = 'mantine-form' | 'mantine-combobox' | 'mantine-schedule' | 'mantine-ui';
 
 export interface SkillData {
   /** Skill folder name in the skills repository, used in the url */
@@ -31,6 +31,13 @@ export const SKILLS: SkillData[] = [
     description:
       "Build custom dropdown, select, autocomplete and multiselect components using Mantine's Combobox primitives.",
     installCommand: getInstallCommand('mantine-combobox'),
+  },
+  {
+    id: 'mantine-schedule',
+    name: 'mantine-schedule',
+    description:
+      'Build calendars, booking and planning interfaces with @mantine/schedule: day, week, month, year and agenda views, resources, drag and drop, recurring events.',
+    installCommand: getInstallCommand('mantine-schedule'),
   },
   {
     id: 'mantine-ui',

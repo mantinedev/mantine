@@ -86,7 +86,12 @@ export function ExampleDemo({ skill, example }: ExampleDemoProps) {
         </div>
 
         <div className={classes.inner}>
-          <div className={classes.wrapper} key={example.id} ref={wrapperRef}>
+          <div
+            className={classes.wrapper}
+            data-full-width={example.fullWidth || undefined}
+            key={example.id}
+            ref={wrapperRef}
+          >
             <example.component />
           </div>
         </div>
