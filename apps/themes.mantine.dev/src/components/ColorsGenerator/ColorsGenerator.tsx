@@ -8,6 +8,7 @@ import { CodeOutput } from './CodeOutput';
 import type { ColorPreset } from './color-presets';
 import { ColorsInput } from './ColorsInput';
 import { ComponentsPreview } from './ComponentsPreview';
+import { DarkColorInput } from './DarkColorInput';
 import { GeneratorHeader } from './GeneratorHeader';
 import { OptionsControls } from './OptionsControls';
 import { buildPalette } from './palette';
@@ -59,17 +60,19 @@ function GeneratorContent() {
     () => buildPalette(params.color, toGeneratorOptions(lightParams), params.format),
     [params.color, params.format, JSON.stringify(lightParams)]
   );
+  const darkColor = params.darkColor ?? params.color;
   const dark = useMemo(
     () =>
       params.virtual
-        ? buildPalette(params.color, toGeneratorOptions(darkParams), params.format)
+        ? buildPalette(darkColor, toGeneratorOptions(darkParams), params.format)
         : null,
-    [params.color, params.format, params.virtual, JSON.stringify(darkParams)]
+    [darkColor, params.format, params.virtual, JSON.stringify(darkParams)]
   );
 
   const applyPreset = (preset: ColorPreset) =>
     setParams({
       color: preset.color,
+      darkColor: preset.darkColor ?? null,
       name: null,
       virtual: Boolean(preset.dark),
       ...toSchemeUpdate('light', { ...SCHEME_DEFAULTS, ...preset.light }),
@@ -86,6 +89,10 @@ function GeneratorContent() {
         other shades are built around it. Every change is stored in the URL, copy it to share the
         palette or to continue later.
       </Text>
+
+      <div className={classes.section}>
+        <Presets onSelect={applyPreset} />
+      </div>
 
       <div className={classes.top}>
         <ColorsInput
@@ -118,6 +125,14 @@ function GeneratorContent() {
           />
 
           {params.virtual && (
+            <DarkColorInput
+              color={params.darkColor}
+              fallback={params.color}
+              onChange={(value) => setParams({ darkColor: value })}
+            />
+          )}
+
+          {params.virtual && (
             <OptionsControls
               title="Dark color scheme shades"
               values={darkParams}
@@ -126,10 +141,6 @@ function GeneratorContent() {
             />
           )}
         </div>
-      </div>
-
-      <div className={classes.section}>
-        <Presets onSelect={applyPreset} />
       </div>
 
       {light && (

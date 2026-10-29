@@ -185,6 +185,39 @@
   border-radius: var(--mantine-radius-md);
 }
 
+.variants {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: var(--mantine-spacing-sm);
+
+  @media (max-width: em(700px)) {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+.variant {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 72px;
+  padding-inline: var(--mantine-spacing-md);
+  border: var(--variant-bd);
+  border-radius: var(--mantine-radius-md);
+  background-color: var(--variant-bg);
+  color: var(--variant-color);
+  font-size: var(--mantine-font-size-lg);
+  font-weight: var(--mantine-font-weight-medium);
+  text-transform: capitalize;
+  transition:
+    background-color 100ms ease,
+    color 100ms ease;
+
+  @mixin hover {
+    background-color: var(--variant-hover);
+    color: var(--variant-hover-color);
+  }
+}
+
 .previewGroup {
   display: flex;
   flex-wrap: wrap;

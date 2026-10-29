@@ -85,6 +85,7 @@ const generatorParsers = {
   name: parseAsColorName,
   format: parseAsStringLiteral(OUTPUT_FORMATS).withDefault('oklch'),
   virtual: parseAsBoolean.withDefault(false),
+  darkColor: parseAsColor,
 
   shade: parseAsInteger,
   lightest: parseAsInteger.withDefault(SCHEME_DEFAULTS.lightest),
@@ -103,6 +104,7 @@ const generatorParsers = {
 
 const generatorUrlKeys = {
   virtual: 'dark',
+  darkColor: 'dark-color',
   lightChroma: 'light-chroma',
   darkChroma: 'dark-chroma',
   hueShift: 'hue-shift',

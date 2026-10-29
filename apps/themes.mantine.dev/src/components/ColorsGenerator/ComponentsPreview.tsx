@@ -1,10 +1,8 @@
 'use client';
 
-import { useMemo, useRef } from 'react';
+import React, { useMemo, useRef } from 'react';
 import {
   Alert,
-  Badge,
-  Button,
   Checkbox,
   Chip,
   createTheme,
@@ -16,10 +14,10 @@ import {
   Radio,
   Slider,
   Switch,
-  Table,
   Tabs,
   Text,
   useComputedColorScheme,
+  useMantineTheme,
   virtualColor,
 } from '@mantine/core';
 import type { Palette } from './palette';
@@ -27,6 +25,36 @@ import classes from './ColorsGenerator.module.css';
 
 const PREVIEW_ID = 'colors-generator-preview';
 const VARIANTS = ['filled', 'light', 'outline', 'subtle', 'transparent'];
+
+function VariantsPreview({ color }: { color: string }) {
+  const theme = useMantineTheme();
+
+  return (
+    <div className={classes.variants}>
+      {VARIANTS.map((variant) => {
+        const colors = theme.variantColorResolver({ color, theme, variant });
+
+        return (
+          <div
+            key={variant}
+            className={classes.variant}
+            style={
+              {
+                '--variant-bg': colors.background,
+                '--variant-hover': colors.hover,
+                '--variant-color': colors.color,
+                '--variant-hover-color': colors.hoverColor ?? colors.color,
+                '--variant-bd': colors.border,
+              } as React.CSSProperties
+            }
+          >
+            {variant}
+          </div>
+        );
+      })}
+    </div>
+  );
+}
 
 interface ComponentsPreviewProps {
   name: string;
@@ -67,37 +95,7 @@ export function ComponentsPreview({ name, light, dark }: ComponentsPreviewProps)
         forceColorScheme={scheme}
         withGlobalClasses={false}
       >
-        <Table.ScrollContainer minWidth={640}>
-          <Table withTableBorder withColumnBorders>
-            <Table.Thead>
-              <Table.Tr>
-                {VARIANTS.map((variant) => (
-                  <Table.Th key={variant} ta="center" tt="capitalize">
-                    {variant}
-                  </Table.Th>
-                ))}
-              </Table.Tr>
-            </Table.Thead>
-            <Table.Tbody>
-              <Table.Tr>
-                {VARIANTS.map((variant) => (
-                  <Table.Td key={variant}>
-                    <Button variant={variant} fullWidth>
-                      Button
-                    </Button>
-                  </Table.Td>
-                ))}
-              </Table.Tr>
-              <Table.Tr>
-                {VARIANTS.map((variant) => (
-                  <Table.Td key={variant} ta="center">
-                    <Badge variant={variant === 'subtle' ? 'dot' : variant}>Badge</Badge>
-                  </Table.Td>
-                ))}
-              </Table.Tr>
-            </Table.Tbody>
-          </Table>
-        </Table.ScrollContainer>
+        <VariantsPreview color={name} />
 
         <div className={classes.previewGroup}>
           <div className={classes.previewBlock}>
