@@ -1,6 +1,14 @@
 import dayjs from 'dayjs';
 import { useRef } from 'react';
-import { BoxProps, ElementProps, factory, Factory, StylesApiProps, useProps } from '@mantine/core';
+import {
+  BoxProps,
+  ElementProps,
+  factory,
+  Factory,
+  StylesApiProps,
+  useDirection,
+  useProps,
+} from '@mantine/core';
 import { DateStringValue } from '../../types';
 import { handleControlKeyDown } from '../../utils';
 import { LevelsGroup, LevelsGroupStylesNames } from '../LevelsGroup';
@@ -52,6 +60,7 @@ const defaultProps = {
 
 export const MonthLevelGroup = factory<MonthLevelGroupFactory>((_props) => {
   const props = useProps('MonthLevelGroup', defaultProps, _props);
+  const { dir } = useDirection();
   const {
     // Month settings
     month,
@@ -132,6 +141,7 @@ export const MonthLevelGroup = factory<MonthLevelGroupFactory>((_props) => {
               cellIndex: payload.cellIndex,
               event,
               controlsRef: daysRefs,
+              dir,
             })
           }
           __getDayRef={(rowIndex, cellIndex, node) => {

@@ -1,4 +1,5 @@
-import { render, screen, tests } from '@mantine-tests/core';
+import { DirectionProvider } from '@mantine/core';
+import { render, screen, tests, userEvent } from '@mantine-tests/core';
 import { datesTests } from '@mantine-tests/dates';
 import {
   MonthLevelGroup,
@@ -89,5 +90,31 @@ describe('@mantine/dates/MonthLevelGroup', () => {
   it('supports custom __staticSelector', () => {
     const { container } = render(<MonthLevelGroup {...defaultProps} __staticSelector="Calendar" />);
     expect(container.querySelector('table button')).toHaveClass('mantine-Calendar-day');
+  });
+
+  it('moves focus with ArrowLeft and ArrowRight in ltr direction', async () => {
+    render(<MonthLevelGroup {...defaultProps} />);
+    screen.getByLabelText('11 April 2022').focus();
+
+    await userEvent.keyboard('{ArrowRight}');
+    expect(screen.getByLabelText('12 April 2022')).toHaveFocus();
+
+    await userEvent.keyboard('{ArrowLeft}');
+    expect(screen.getByLabelText('11 April 2022')).toHaveFocus();
+  });
+
+  it('mirrors ArrowLeft and ArrowRight in rtl direction', async () => {
+    render(
+      <DirectionProvider initialDirection="rtl" detectDirection={false}>
+        <MonthLevelGroup {...defaultProps} />
+      </DirectionProvider>
+    );
+    screen.getByLabelText('11 April 2022').focus();
+
+    await userEvent.keyboard('{ArrowRight}');
+    expect(screen.getByLabelText('10 April 2022')).toHaveFocus();
+
+    await userEvent.keyboard('{ArrowLeft}{ArrowLeft}');
+    expect(screen.getByLabelText('12 April 2022')).toHaveFocus();
   });
 });
