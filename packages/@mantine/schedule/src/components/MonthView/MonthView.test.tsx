@@ -1,6 +1,7 @@
 import dayjs from 'dayjs';
 import 'dayjs/locale/ru';
 import { createEvent, fireEvent } from '@testing-library/react';
+import { DirectionProvider } from '@mantine/core';
 import { DatesProvider } from '@mantine/dates';
 import { render, screen, tests, userEvent } from '@mantine-tests/core';
 import { getWeekNumber, toDateString } from '../../utils';
@@ -771,6 +772,33 @@ describe('@mantine/schedule/MonthView', () => {
       await userEvent.keyboard('{ArrowLeft}');
       const nov2 = screen.getByRole('button', { name: 'November 2, 2025' });
       expect(document.activeElement).toBe(nov2);
+    });
+
+    it('mirrors ArrowLeft and ArrowRight in rtl direction', async () => {
+      render(
+        <DirectionProvider initialDirection="rtl" detectDirection={false}>
+          <MonthView {...defaultProps} />
+        </DirectionProvider>
+      );
+
+      screen.getByRole('button', { name: 'October 28, 2025' }).focus();
+      await userEvent.keyboard('{ArrowRight}');
+      expect(screen.getByRole('button', { name: 'October 27, 2025' })).toHaveFocus();
+
+      await userEvent.keyboard('{ArrowLeft}{ArrowLeft}');
+      expect(screen.getByRole('button', { name: 'October 29, 2025' })).toHaveFocus();
+    });
+
+    it('ArrowLeft at end of week moves to first day of next week in rtl direction', async () => {
+      render(
+        <DirectionProvider initialDirection="rtl" detectDirection={false}>
+          <MonthView {...defaultProps} />
+        </DirectionProvider>
+      );
+
+      screen.getByRole('button', { name: 'November 2, 2025' }).focus();
+      await userEvent.keyboard('{ArrowLeft}');
+      expect(screen.getByRole('button', { name: 'November 3, 2025' })).toHaveFocus();
     });
 
     it('navigates to outside days with arrow keys', async () => {
