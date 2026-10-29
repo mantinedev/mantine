@@ -101,10 +101,10 @@
 }
 
 .alertClose {
-  color: var(--mantine-color-green-filled);
+  color: var(--mantine-color-meadow-filled);
 
   @mixin hover {
-    color: var(--mantine-color-green-filled);
+    color: var(--mantine-color-meadow-filled);
     background-color: color-mix(in srgb, var(--mantine-color-bright) 8%, transparent);
   }
 }

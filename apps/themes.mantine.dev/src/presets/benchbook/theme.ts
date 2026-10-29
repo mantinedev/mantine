@@ -58,7 +58,7 @@ export const theme = createTheme({
       '#55254a',
       '#3f1b37',
     ],
-    red: [
+    rust: [
       '#fdeceb',
       '#f9d4d1',
       '#f5b4ad',
@@ -70,7 +70,7 @@ export const theme = createTheme({
       '#7f241e',
       '#5f1b17',
     ],
-    green: [
+    sage: [
       '#e8f5ed',
       '#cdeada',
       '#a7d9bb',
@@ -290,6 +290,7 @@ export const cssVariablesResolver: CSSVariablesResolver = (theme) => {
     variables: defaults.variables,
     light: {
       ...defaults.light,
+      '--mantine-color-error': 'var(--mantine-color-rust-6)',
       '--mantine-color-text': 'var(--mantine-color-gray-8)',
       '--mantine-color-hover': 'var(--mantine-color-gray-1)',
       '--mantine-color-default-hover': 'var(--mantine-color-gray-1)',
@@ -302,6 +303,7 @@ export const cssVariablesResolver: CSSVariablesResolver = (theme) => {
     },
     dark: {
       ...defaults.dark,
+      '--mantine-color-error': 'var(--mantine-color-rust-5)',
       '--mantine-color-bright': '#f6f4f9',
       '--mantine-color-hover': 'var(--mantine-color-dark-6)',
       '--mantine-color-default-border': 'var(--mantine-color-dark-4)',

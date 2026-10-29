@@ -64,13 +64,13 @@
   }
 
   &[data-result='right'] {
-    border-color: var(--mantine-color-green-filled);
-    box-shadow: inset 0 0 0 1px var(--mantine-color-green-filled);
+    border-color: var(--mantine-color-glaze-filled);
+    box-shadow: inset 0 0 0 1px var(--mantine-color-glaze-filled);
   }
 
   &[data-result='wrong'] {
-    border-color: var(--mantine-color-red-filled);
-    box-shadow: inset 0 0 0 1px var(--mantine-color-red-filled);
+    border-color: var(--mantine-color-kiln-filled);
+    box-shadow: inset 0 0 0 1px var(--mantine-color-kiln-filled);
   }
 }
 
@@ -90,11 +90,11 @@
 
   & b {
     font-weight: var(--mantine-font-weight-bold);
-    color: var(--mantine-color-red-filled);
+    color: var(--mantine-color-kiln-filled);
   }
 
   &[data-ok] b {
-    color: var(--mantine-color-green-filled);
+    color: var(--mantine-color-glaze-filled);
   }
 }
 
@@ -114,7 +114,7 @@
 }
 
 .hint[data-error] {
-  color: var(--mantine-color-red-filled);
+  color: var(--mantine-color-kiln-filled);
   font-weight: var(--mantine-font-weight-bold);
 }
 

@@ -59,6 +59,6 @@
   box-shadow: var(--mantine-shadow-md);
 
   & svg {
-    color: var(--mantine-color-green-text);
+    color: var(--mantine-color-fern-text);
   }
 }

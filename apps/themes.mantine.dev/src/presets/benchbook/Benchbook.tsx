@@ -144,7 +144,7 @@ function App() {
       <Transition mounted={toast !== null} transition="pop" duration={140} keepMounted={false}>
         {(styles) => (
           <div className={classes.toast} style={styles} role="status">
-            <ThemeIcon color="green" radius="xl" size={22}>
+            <ThemeIcon color="sage" radius="xl" size={22}>
               <IconCheck size={14} stroke={2.5} />
             </ThemeIcon>
             {toast}

@@ -90,7 +90,7 @@ export function NotesAndNext({ complete, onCompleteToggle }: NotesAndNextProps) 
         </a>
         <div className={classes.completeRow}>
           <Button
-            color={complete ? 'green' : undefined}
+            color={complete ? 'glaze' : undefined}
             leftSection={<IconCheck size={17} stroke={1.75} />}
             onClick={onCompleteToggle}
           >

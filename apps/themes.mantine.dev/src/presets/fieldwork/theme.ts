@@ -28,12 +28,12 @@ function isPrimaryFilled(props: { variant?: string; color?: string }) {
 }
 
 export const theme = createTheme({
-  primaryColor: 'pink',
+  primaryColor: 'flamingo',
   primaryShade: { light: 6, dark: 4 },
   black: '#0a1e22',
   disabledOpacity: 0.4,
   colors: {
-    pink: [
+    flamingo: [
       '#fff0f4',
       '#fde4ec',
       '#ffb3c9',
@@ -45,7 +45,7 @@ export const theme = createTheme({
       '#9c1d47',
       '#6e1232',
     ],
-    teal: [
+    lagoon: [
       '#e6f3f4',
       '#dcecee',
       '#a9e0e1',
@@ -192,7 +192,7 @@ export const theme = createTheme({
 
 export const cssVariablesResolver: CSSVariablesResolver = (theme) => {
   const defaults = defaultCssVariablesResolver(theme);
-  const brandPrimary = theme.primaryColor === 'pink';
+  const brandPrimary = theme.primaryColor === 'flamingo';
   return {
     variables: defaults.variables,
     light: {
@@ -216,7 +216,7 @@ export const cssVariablesResolver: CSSVariablesResolver = (theme) => {
       '--mantine-color-border-strong': 'var(--mantine-color-dark-4)',
       '--mantine-color-default-border': 'var(--mantine-color-dark-4)',
       '--mantine-color-focus-ring': 'var(--mantine-primary-color-4)',
-      '--mantine-color-pink-filled-hover': 'var(--mantine-color-pink-3)',
+      '--mantine-color-flamingo-filled-hover': 'var(--mantine-color-flamingo-3)',
       '--mantine-color-anchor': 'var(--mantine-primary-color-4)',
       '--mantine-shadow-lg': '0 20px 48px -20px rgba(0, 0, 0, 0.8), 0 3px 8px rgba(0, 0, 0, 0.4)',
       '--fw-teal-ink': '#062226',

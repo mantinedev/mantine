@@ -91,7 +91,7 @@
   }
 
   &:where([data-status='solved']) {
-    background: var(--mantine-color-green-text);
+    background: var(--mantine-color-fern-text);
   }
 }
 

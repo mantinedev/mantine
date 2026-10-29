@@ -394,16 +394,16 @@ export function Thread({ conversation, safetyHidden, counter, pickup, actions }:
             </Menu.Item>
             <Menu.Divider />
             <Menu.Item
-              color="red"
-              c="var(--mantine-color-red-filled)"
+              color="brick"
+              c="var(--mantine-color-brick-filled)"
               leftSection={<IconFlag size={18} stroke={1.7} />}
               onClick={actions.onReport}
             >
               Report {conversation.name}
             </Menu.Item>
             <Menu.Item
-              color="red"
-              c="var(--mantine-color-red-filled)"
+              color="brick"
+              c="var(--mantine-color-brick-filled)"
               leftSection={<IconBan size={18} stroke={1.7} />}
               onClick={actions.onBlock}
             >

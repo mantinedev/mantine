@@ -103,7 +103,7 @@
   }
 
   &[data-kind='deal'] {
-    --pin-color: var(--mantine-color-green-filled);
+    --pin-color: var(--mantine-color-meadow-filled);
   }
 
   &[data-old] {
@@ -129,7 +129,7 @@
 }
 
 .pin[data-kind='deal'] .tag {
-  color: var(--mantine-color-green-contrast);
+  color: var(--mantine-color-meadow-contrast);
 }
 
 .pin[data-old] .tag {

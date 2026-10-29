@@ -107,7 +107,7 @@ export function CustomerPanel({
                   </span>
                   <Progress
                     value={left}
-                    color="green"
+                    color="fern"
                     size={6}
                     radius={3}
                     aria-label="Warranty cover left"

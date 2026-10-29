@@ -57,11 +57,11 @@ function NotesPanel() {
       </ol>
 
       <Alert
-        color="red"
+        color="kiln"
         title="Common mistakes"
         className={classes.callout}
         icon={
-          <ThemeIcon color="red" radius="xl" size={32}>
+          <ThemeIcon color="kiln" radius="xl" size={32}>
             <IconAlertCircle size={17} stroke={1.75} />
           </ThemeIcon>
         }
@@ -79,11 +79,11 @@ function NotesPanel() {
       </Alert>
 
       <Alert
-        color="green"
+        color="glaze"
         title="Practise without the wheel"
         className={classes.callout}
         icon={
-          <ThemeIcon color="green" radius="xl" size={32}>
+          <ThemeIcon color="glaze" radius="xl" size={32}>
             <IconBulb size={17} stroke={1.75} />
           </ThemeIcon>
         }

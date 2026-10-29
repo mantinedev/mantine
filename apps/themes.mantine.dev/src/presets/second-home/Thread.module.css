@@ -270,8 +270,8 @@
 
   &[data-ok] {
     border-style: solid;
-    border-color: var(--mantine-color-green-filled);
-    color: var(--mantine-color-green-filled);
+    border-color: var(--mantine-color-meadow-filled);
+    color: var(--mantine-color-meadow-filled);
   }
 }
 

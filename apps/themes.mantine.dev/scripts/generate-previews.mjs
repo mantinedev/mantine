@@ -11,7 +11,10 @@ const QUALITY = 0.72;
 const SCHEMES = ['light', 'dark'];
 
 const source = await fs.readFile(path.join(ROOT, 'src/presets/presets.ts'), 'utf8');
-const ids = [...source.matchAll(/id: '([^']+)'/g)].map((match) => match[1]);
+const only = process.argv.slice(3);
+const ids = [...source.matchAll(/id: '([^']+)'/g)]
+  .map((match) => match[1])
+  .filter((id) => only.length === 0 || only.includes(id));
 
 async function encodeWebp(page, png) {
   const dataUrl = await page.evaluate(

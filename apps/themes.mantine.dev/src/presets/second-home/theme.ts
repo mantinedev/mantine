@@ -41,8 +41,8 @@ function filledContrast(props: { variant?: string; color?: string }) {
   if (!props.color) {
     return 'var(--mantine-primary-color-contrast)';
   }
-  if (props.color === 'green') {
-    return 'var(--mantine-color-green-contrast)';
+  if (props.color === 'meadow') {
+    return 'var(--mantine-color-meadow-contrast)';
   }
   return undefined;
 }
@@ -64,7 +64,7 @@ export const theme = createTheme({
       '#6b3519',
       '#4f2712',
     ],
-    green: [
+    meadow: [
       '#e8f5ec',
       '#c9e8d3',
       '#9fd6b1',
@@ -76,7 +76,7 @@ export const theme = createTheme({
       '#1f5431',
       '#153a22',
     ],
-    red: [
+    brick: [
       '#fdecea',
       '#f9d0cc',
       '#f3a8a1',
@@ -246,7 +246,7 @@ export const theme = createTheme({
           '--alert-bd': '0',
           '--alert-color': 'var(--mantine-color-text)',
           '--alert-title-color': 'var(--mantine-color-bright)',
-          '--alert-icon-color': 'var(--mantine-color-green-filled)',
+          '--alert-icon-color': 'var(--mantine-color-meadow-filled)',
           '--alert-radius': 'var(--mantine-radius-lg)',
           '--alert-padding': 'calc(var(--mantine-spacing-sm) * 1.2) var(--mantine-spacing-md)',
           '--alert-close-size': rem(30),
@@ -283,8 +283,9 @@ export const cssVariablesResolver: CSSVariablesResolver = (theme) => {
     variables: defaults.variables,
     light: {
       ...defaults.light,
+      '--mantine-color-error': 'var(--mantine-color-brick-6)',
       ...(brandPrimary && { '--mantine-primary-color-contrast': '#ffffff' }),
-      '--mantine-color-green-contrast': '#ffffff',
+      '--mantine-color-meadow-contrast': '#ffffff',
       '--mantine-color-text': 'var(--mantine-color-gray-8)',
       '--mantine-color-border': 'var(--mantine-color-gray-2)',
       '--mantine-color-default-border': 'var(--mantine-color-gray-4)',
@@ -293,8 +294,9 @@ export const cssVariablesResolver: CSSVariablesResolver = (theme) => {
     },
     dark: {
       ...defaults.dark,
+      '--mantine-color-error': 'var(--mantine-color-brick-5)',
       ...(brandPrimary && { '--mantine-primary-color-contrast': '#1e0f06' }),
-      '--mantine-color-green-contrast': '#08210f',
+      '--mantine-color-meadow-contrast': '#08210f',
       '--mantine-color-bright': '#f4f6f2',
       '--mantine-color-default-color': 'var(--mantine-color-bright)',
       '--mantine-color-default-border': 'var(--mantine-color-dark-4)',

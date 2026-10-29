@@ -148,7 +148,7 @@ export function OfferBubble({
       <div className={classes.offerActions}>
         <Button
           size="xs"
-          color="green"
+          color="meadow"
           leftSection={<IconCheck size={18} stroke={1.7} />}
           onClick={actions.onAccept}
           className={classes.agree}

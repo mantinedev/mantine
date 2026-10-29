@@ -167,7 +167,7 @@ function OrdersBoard() {
           <div className={classes.toast} style={styles}>
             <Notification
               icon={<IconCheck size={14} stroke={2.6} />}
-              color="green"
+              color="viridian"
               withCloseButton={false}
               role="status"
             >

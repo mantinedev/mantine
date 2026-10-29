@@ -97,10 +97,8 @@ const parseAsRampList = createParser<CustomNeutral[]>({
   eq: (a, b) => JSON.stringify(a) === JSON.stringify(b),
 });
 
-export const SHADOW_PRESETS = ['none', 'subtle', 'mantine', 'strong'] as const;
+export const SHADOW_COLORS = ['black', 'gray', 'primary'] as const;
 export const HEADING_WRAPS = ['wrap', 'nowrap', 'balance', 'pretty', 'stable'] as const;
-export const FOCUS_RINGS = ['auto', 'always', 'never'] as const;
-export const CURSOR_TYPES = ['default', 'pointer'] as const;
 
 export const themeParsers = {
   primaryColor: parseAsString,
@@ -136,10 +134,11 @@ export const themeParsers = {
   headingLineHeights: parseAsInteger.withDefault(100),
   headingLineHeightsValues: parseAsNumberRecord,
   defaultRadius: parseAsString,
-  shadows: parseAsStringLiteral(SHADOW_PRESETS),
+  shadowStrength: parseAsInteger,
+  shadowSize: parseAsInteger,
+  shadowDistance: parseAsInteger,
+  shadowColor: parseAsStringLiteral(SHADOW_COLORS),
 
-  focusRing: parseAsStringLiteral(FOCUS_RINGS),
-  cursorType: parseAsStringLiteral(CURSOR_TYPES),
   disabledOpacity: parseAsFloat,
 };
 
@@ -175,9 +174,10 @@ export const themeUrlKeys = {
   headingLineHeights: 'heading-line-height',
   headingLineHeightsValues: 'heading-line-heights',
   defaultRadius: 'default-radius',
-  shadows: 'shadows',
-  focusRing: 'focus-ring',
-  cursorType: 'cursor',
+  shadowStrength: 'shadow-strength',
+  shadowSize: 'shadow-size',
+  shadowDistance: 'shadow-distance',
+  shadowColor: 'shadow-color',
   disabledOpacity: 'disabled-opacity',
 };
 

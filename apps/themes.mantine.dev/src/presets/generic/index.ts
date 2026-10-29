@@ -1,0 +1,1 @@
+export { Generic } from './Generic';

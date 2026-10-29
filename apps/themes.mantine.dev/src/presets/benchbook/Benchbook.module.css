@@ -189,7 +189,7 @@
   white-space: nowrap;
 
   &[data-late] {
-    color: var(--mantine-color-red-text);
+    color: var(--mantine-color-rust-text);
     font-weight: var(--mantine-font-weight-bold);
   }
 }
@@ -431,7 +431,7 @@
 }
 
 .taskDue[data-late] {
-  color: var(--mantine-color-red-text);
+  color: var(--mantine-color-rust-text);
   font-weight: var(--mantine-font-weight-bold);
 }
 

@@ -50,7 +50,7 @@ export const theme = createTheme({
       '#5a4418',
       '#2a2315',
     ],
-    red: [
+    brick: [
       '#fdeceb',
       '#fad3d0',
       '#f5aaa4',
@@ -62,7 +62,7 @@ export const theme = createTheme({
       '#86231c',
       '#5e1914',
     ],
-    green: [
+    fern: [
       '#e6f6ee',
       '#c5ead6',
       '#99dbb8',
@@ -240,6 +240,7 @@ export const cssVariablesResolver: CSSVariablesResolver = (theme) => {
     variables: defaults.variables,
     light: {
       ...defaults.light,
+      '--mantine-color-error': 'var(--mantine-color-brick-6)',
       '--mantine-color-text': 'var(--mantine-color-gray-8)',
       '--mantine-color-placeholder': 'var(--mantine-color-gray-6)',
       '--mantine-color-default': 'var(--mantine-color-gray-0)',
@@ -248,11 +249,12 @@ export const cssVariablesResolver: CSSVariablesResolver = (theme) => {
       '--mantine-color-default-color': 'var(--mantine-color-text)',
       '--mantine-color-hover': 'var(--mantine-color-gray-2)',
       '--mantine-color-hearth-text': 'var(--mantine-color-hearth-7)',
-      '--mantine-color-red-text': 'var(--mantine-color-red-6)',
-      '--mantine-color-green-text': 'var(--mantine-color-green-6)',
+      '--mantine-color-brick-text': 'var(--mantine-color-brick-6)',
+      '--mantine-color-fern-text': 'var(--mantine-color-fern-6)',
     },
     dark: {
       ...defaults.dark,
+      '--mantine-color-error': 'var(--mantine-color-brick-5)',
       '--mantine-color-bright': '#f3f5f7',
       '--mantine-color-placeholder': 'var(--mantine-color-dark-2)',
       '--mantine-color-default': 'var(--mantine-color-dark-6)',
@@ -261,8 +263,8 @@ export const cssVariablesResolver: CSSVariablesResolver = (theme) => {
       '--mantine-color-default-color': 'var(--mantine-color-text)',
       '--mantine-color-hover': 'var(--mantine-color-dark-5)',
       '--mantine-color-hearth-filled-hover': 'var(--mantine-color-hearth-3)',
-      '--mantine-color-red-text': 'var(--mantine-color-red-5)',
-      '--mantine-color-green-text': 'var(--mantine-color-green-5)',
+      '--mantine-color-brick-text': 'var(--mantine-color-brick-5)',
+      '--mantine-color-fern-text': 'var(--mantine-color-fern-5)',
       '--mantine-primary-color-contrast': parseThemeColor({
         color: theme.primaryColor,
         theme,

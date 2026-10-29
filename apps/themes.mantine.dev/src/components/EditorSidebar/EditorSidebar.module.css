@@ -74,13 +74,23 @@
 }
 
 .swatch,
-.addColor {
+.addColor,
+.emptySwatch {
   flex: 0 0 calc((100% - 11 * 4px) / 12);
   width: auto;
   min-width: 0;
   height: auto;
   min-height: 0;
   aspect-ratio: 1;
+}
+
+.emptySwatch {
+  border: 1px dashed var(--mantine-color-default-border);
+  border-radius: var(--mantine-radius-xl);
+}
+
+.swatches:has(.emptySwatch) {
+  align-items: center;
 }
 
 .swatch {
@@ -175,4 +185,52 @@
 .neutralCheckIcon {
   width: 70%;
   height: 70%;
+}
+
+.shadows {
+  display: flex;
+  flex-direction: column;
+  gap: var(--mantine-spacing-md);
+}
+
+.shadowsHead {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--mantine-spacing-xs);
+  min-height: 22px;
+}
+
+.shadowTiles {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: var(--mantine-spacing-sm);
+  padding: var(--mantine-spacing-md) var(--mantine-spacing-sm) var(--mantine-spacing-lg);
+  border-radius: var(--mantine-radius-md);
+
+  @mixin light {
+    background-color: var(--mantine-color-gray-0);
+  }
+
+  @mixin dark {
+    background-color: var(--mantine-color-dark-8);
+  }
+}
+
+.shadowTile {
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  aspect-ratio: 1;
+  padding-bottom: 4px;
+  border-radius: var(--mantine-radius-sm);
+  transition: box-shadow 150ms ease;
+
+  @mixin light {
+    background-color: var(--mantine-color-white);
+  }
+
+  @mixin dark {
+    background-color: var(--mantine-color-dark-7);
+  }
 }

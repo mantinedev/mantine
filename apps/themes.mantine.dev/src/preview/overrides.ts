@@ -12,13 +12,7 @@ import {
 import { generatePalette, toHexColor } from './colors';
 import { getFontStack, type GoogleFont, SYSTEM_FONT } from './fonts';
 import { NEUTRALS, resolveNeutral } from './neutrals';
-import {
-  type CURSOR_TYPES,
-  type FOCUS_RINGS,
-  type HEADING_WRAPS,
-  SHADOW_PRESETS,
-  type ThemeOverrides,
-} from './params';
+import { type HEADING_WRAPS, type SHADOW_COLORS, type ThemeOverrides } from './params';
 import { type PresetScales, SCALE_GROUPS, type ScaleGroup, type ScaleValue } from './scales';
 
 export interface PrimaryShade {
@@ -47,29 +41,79 @@ export interface PresetThemeInfo {
   headingsWrap: (typeof HEADING_WRAPS)[number];
   defaultRadius: string;
   fonts: { body: string; headings: string; mono: string };
-  focusRing: (typeof FOCUS_RINGS)[number];
-  cursorType: (typeof CURSOR_TYPES)[number];
+  shadows: MantineTheme['shadows'];
   disabledOpacity: number;
 }
 
 const NEUTRAL_COLORS = ['gray', 'dark'];
 
-function createShadows(alpha: number, size: number) {
-  const steps = { xs: [1, 3], sm: [2, 6], md: [4, 12], lg: [8, 24], xl: [16, 40] };
-  return Object.fromEntries(
-    Object.entries(steps).map(([key, [y, blur]]) => [
-      key,
-      `0 ${rem(1)} ${rem(2)} rgba(0, 0, 0, ${alpha / 2}), 0 ${rem(y * size)} ${rem(blur * size)} rgba(0, 0, 0, ${alpha})`,
-    ])
+export type ShadowColor = (typeof SHADOW_COLORS)[number];
+
+export interface ShadowSettings {
+  strength: number;
+  size: number;
+  distance: number;
+  color: ShadowColor;
+}
+
+export const SHADOW_DEFAULTS: ShadowSettings = {
+  strength: 12,
+  size: 100,
+  distance: 50,
+  color: 'black',
+};
+
+const SHADOW_BLUR = { xs: 3, sm: 6, md: 12, lg: 24, xl: 40 };
+
+const SHADOW_COLOR_VARIABLES: Record<ShadowColor, string> = {
+  black: '#000',
+  gray: 'var(--mantine-color-gray-9)',
+  primary: 'var(--mantine-primary-color-9)',
+};
+
+function round(value: number) {
+  return Math.round(value * 100) / 100;
+}
+
+export function hasShadowOverrides(overrides: ThemeOverrides) {
+  return (
+    overrides.shadowStrength !== null ||
+    overrides.shadowSize !== null ||
+    overrides.shadowDistance !== null ||
+    overrides.shadowColor !== null
   );
 }
 
-const SHADOWS: Record<(typeof SHADOW_PRESETS)[number], MantineTheme['shadows']> = {
-  none: { xs: 'none', sm: 'none', md: 'none', lg: 'none', xl: 'none' },
-  subtle: createShadows(0.06, 0.6) as MantineTheme['shadows'],
-  mantine: DEFAULT_THEME.shadows,
-  strong: createShadows(0.18, 1.4) as MantineTheme['shadows'],
-};
+export function getShadowSettings(overrides: ThemeOverrides): ShadowSettings {
+  return {
+    strength: clamp(overrides.shadowStrength ?? SHADOW_DEFAULTS.strength, 0, 40),
+    size: clamp(overrides.shadowSize ?? SHADOW_DEFAULTS.size, 25, 250),
+    distance: clamp(overrides.shadowDistance ?? SHADOW_DEFAULTS.distance, 0, 100),
+    color: overrides.shadowColor ?? SHADOW_DEFAULTS.color,
+  };
+}
+
+export function createShadows(
+  { strength, size, distance }: ShadowSettings,
+  color: string
+): MantineTheme['shadows'] {
+  const mix = (alpha: number) =>
+    `color-mix(in srgb, ${color} ${round(alpha * strength)}%, transparent)`;
+
+  return Object.fromEntries(
+    Object.entries(SHADOW_BLUR).map(([key, base]) => {
+      if (strength === 0) {
+        return [key, 'none'];
+      }
+
+      const blur = (base * size) / 100;
+      const lift = distance / 100;
+      const contact = `0 ${rem(round(Math.max(1, blur * lift * 0.1)))} ${rem(round(Math.max(2, blur * 0.15)))} ${mix(0.5)}`;
+      const ambient = `0 ${rem(round(blur * lift * 0.5))} ${rem(round(blur))} ${rem(round(-blur * lift * 0.25))} ${mix(1)}`;
+      return [key, `${contact}, ${ambient}`];
+    })
+  ) as MantineTheme['shadows'];
+}
 
 function hasKey<T extends object>(object: T, key: string | null): key is Extract<keyof T, string> {
   return key !== null && Object.hasOwn(object, key);
@@ -83,8 +127,20 @@ function toWeight(value: number) {
   return String(clamp(Math.round(value / 100) * 100, 100, 900));
 }
 
+const SYSTEM_FAMILIES = ['-apple-system', 'system-ui'];
+
 function getFirstFamily(stack: string) {
-  return (stack.split(',')[0] ?? '').trim().replace(/^['"]|['"]$/g, '');
+  const family = (stack.split(',')[0] ?? '').trim().replace(/^['"]|['"]$/g, '');
+  return SYSTEM_FAMILIES.includes(family) ? SYSTEM_FONT : family;
+}
+
+function measureStatic(value: string) {
+  const rem = value.match(/([\d.]+)rem/);
+  if (rem) {
+    return Number.parseFloat(rem[1]) * 16;
+  }
+  const px = value.match(/([\d.]+)px/);
+  return px ? Number.parseFloat(px[1]) : Number.parseFloat(value) || 0;
 }
 
 function normalizePrimaryShade(theme: MantineTheme): PrimaryShade {
@@ -227,14 +283,20 @@ export function getPresetThemeInfo(
       headings: getFirstFamily(theme.headings.fontFamily ?? theme.fontFamily),
       mono: getFirstFamily(theme.fontFamilyMonospace),
     },
-    focusRing: theme.focusRing,
-    cursorType: theme.cursorType,
+    shadows: theme.shadows,
     disabledOpacity: theme.disabledOpacity,
   };
 }
 
-export function getOverrideShadows(shadows: ThemeOverrides['shadows']) {
-  return shadows && SHADOW_PRESETS.includes(shadows) ? SHADOWS[shadows] : null;
+export const DEFAULT_PRESET_INFO = getPresetThemeInfo({}, measureStatic);
+
+export function getOverrideShadows(overrides: ThemeOverrides) {
+  if (!hasShadowOverrides(overrides)) {
+    return null;
+  }
+
+  const settings = getShadowSettings(overrides);
+  return createShadows(settings, SHADOW_COLOR_VARIABLES[settings.color]);
 }
 
 export function getCustomPalettes(overrides: ThemeOverrides) {
@@ -387,16 +449,9 @@ export function applyThemeOverrides(
     patch.defaultRadius = overrides.defaultRadius;
   }
 
-  if (overrides.shadows && SHADOW_PRESETS.includes(overrides.shadows)) {
-    patch.shadows = SHADOWS[overrides.shadows];
-  }
-
-  if (overrides.focusRing) {
-    patch.focusRing = overrides.focusRing;
-  }
-
-  if (overrides.cursorType) {
-    patch.cursorType = overrides.cursorType;
+  const shadows = getOverrideShadows(overrides);
+  if (shadows) {
+    patch.shadows = shadows;
   }
 
   if (overrides.disabledOpacity !== null) {

@@ -14,7 +14,7 @@ function StatusBadge({ conversation }: { conversation: Conversation }) {
   }
   if (conversation.status === 'agreed') {
     return (
-      <Badge variant="dot" color="green" className={classes.agreed}>
+      <Badge variant="dot" color="meadow" className={classes.agreed}>
         Agreed
       </Badge>
     );

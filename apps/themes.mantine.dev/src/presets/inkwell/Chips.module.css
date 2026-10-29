@@ -62,19 +62,19 @@
   color: var(--mantine-color-bright);
 
   &[data-tone='today'] {
-    border-color: var(--mantine-color-orange-filled);
-    color: var(--mantine-color-orange-filled);
+    border-color: var(--mantine-color-saffron-filled);
+    color: var(--mantine-color-saffron-filled);
   }
 
   &[data-tone='late'] {
-    background: var(--mantine-color-red-filled);
-    border-color: var(--mantine-color-red-filled);
+    background: var(--mantine-color-vermilion-filled);
+    border-color: var(--mantine-color-vermilion-filled);
     color: var(--mantine-color-white);
   }
 
   &[data-tone='done'] {
-    border-color: var(--mantine-color-green-filled);
-    color: var(--mantine-color-green-filled);
+    border-color: var(--mantine-color-viridian-filled);
+    color: var(--mantine-color-viridian-filled);
   }
 
   & [data-position='left'] {

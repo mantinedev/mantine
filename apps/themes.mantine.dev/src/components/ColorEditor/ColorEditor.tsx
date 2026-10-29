@@ -1,51 +1,49 @@
 'use client';
 
 import { useDeferredValue, useEffect, useMemo, useState } from 'react';
-import {
-  Button,
-  ColorPicker,
-  ColorSwatch,
-  Group,
-  Modal,
-  Stack,
-  Text,
-  TextInput,
-} from '@mantine/core';
+import { Button, ColorPicker, ColorSwatch, Stack, Text, TextInput } from '@mantine/core';
 import { isBaseColor, isColorName, isHexColor, suggestColorName, toHexColor } from '@/preview';
-import classes from './ColorModal.module.css';
+import { EditorDrawer, EditorDrawerFooter } from '../EditorDrawer';
+import classes from './ColorEditor.module.css';
 
-export interface ColorModalResult {
+export interface ColorEditorResult {
   name: string;
   value: string;
 }
 
-interface ColorModalContentProps {
+interface ColorEditorContentProps {
   initialValue: string;
   initialName?: string;
   withName: boolean;
   takenNames: Set<string>;
   submitLabel: string;
   getShades: (value: string) => string[] | null;
-  onSubmit: (result: ColorModalResult) => void;
+  onValueChange: (value: string) => void;
+  onSubmit: (result: ColorEditorResult) => void;
   onClose: () => void;
 }
 
-function ColorModalContent({
+function ColorEditorContent({
   initialValue,
   initialName,
   withName,
   takenNames,
   submitLabel,
   getShades,
+  onValueChange,
   onSubmit,
   onClose,
-}: ColorModalContentProps) {
+}: ColorEditorContentProps) {
   const [value, setValue] = useState(initialValue);
   const [input, setInput] = useState(initialValue);
   const [name, setName] = useState(initialName ?? '');
   const [nameTouched, setNameTouched] = useState(Boolean(initialName));
   const deferredValue = useDeferredValue(value);
   const shades = useMemo(() => getShades(deferredValue), [deferredValue, getShades]);
+
+  useEffect(() => {
+    onValueChange(deferredValue);
+  }, [deferredValue, onValueChange]);
 
   useEffect(() => {
     if (!withName || nameTouched) {
@@ -130,42 +128,41 @@ function ColorModalContent({
             </div>
           </div>
         )}
-        <Group justify="flex-end" gap="xs">
+        <EditorDrawerFooter>
           <Button variant="default" onClick={onClose}>
-            Cancel
+            Discard
           </Button>
           <Button type="submit" disabled={Boolean(nameError || inputError)}>
             {submitLabel}
           </Button>
-        </Group>
+        </EditorDrawerFooter>
       </Stack>
     </form>
   );
 }
 
-interface ColorModalProps extends Omit<ColorModalContentProps, 'onClose'> {
+interface ColorEditorProps extends Omit<ColorEditorContentProps, 'onClose'> {
   opened: boolean;
   title: string;
   onClose: () => void;
   onExitTransitionEnd: () => void;
 }
 
-export function ColorModal({
+export function ColorEditor({
   opened,
   title,
   onClose,
   onExitTransitionEnd,
   ...others
-}: ColorModalProps) {
+}: ColorEditorProps) {
   return (
-    <Modal
+    <EditorDrawer
       opened={opened}
+      title={title}
       onClose={onClose}
       onExitTransitionEnd={onExitTransitionEnd}
-      title={title}
-      size="md"
     >
-      <ColorModalContent {...others} onClose={onClose} />
-    </Modal>
+      <ColorEditorContent {...others} onClose={onClose} />
+    </EditorDrawer>
   );
 }

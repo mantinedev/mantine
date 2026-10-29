@@ -35,7 +35,7 @@ export function SlaTimer({ ticket, elapsed }: SlaTimerProps) {
 
   if (left < 0) {
     return (
-      <Badge color="red" size="md" className={classes.breached}>
+      <Badge color="brick" size="md" className={classes.breached}>
         Breached {formatMinutes(-left)} ago
       </Badge>
     );

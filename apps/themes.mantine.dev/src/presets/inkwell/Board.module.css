@@ -116,7 +116,7 @@
   height: 16px;
   flex: none;
   fill: none;
-  stroke: var(--mantine-color-pink-filled);
+  stroke: var(--mantine-color-magenta-filled);
   stroke-width: 1.6;
 }
 
@@ -213,7 +213,7 @@
   gap: var(--mantine-spacing-2xs);
   font-size: var(--mantine-font-size-xs);
   font-weight: var(--mantine-font-weight-medium);
-  color: var(--mantine-color-red-filled);
+  color: var(--mantine-color-vermilion-filled);
 }
 
 .parts {

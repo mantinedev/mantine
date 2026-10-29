@@ -239,8 +239,8 @@ export function DealDetail({
                 <span>
                   {deal.project}, {deal.place}
                 </span>
-                {deal.late && <Badge color="red">{deal.due}</Badge>}
-                {!deal.late && deal.closed && <Badge color="green">Closed</Badge>}
+                {deal.late && <Badge color="rust">{deal.due}</Badge>}
+                {!deal.late && deal.closed && <Badge color="sage">Closed</Badge>}
               </div>
             </div>
             <div className={classes.recordActions}>
@@ -265,7 +265,7 @@ export function DealDetail({
                     Duplicate as new quote
                   </Menu.Item>
                   <Menu.Divider />
-                  <Menu.Item color="red" leftSection={<IconArchive {...MENU_ICON} />}>
+                  <Menu.Item color="rust" leftSection={<IconArchive {...MENU_ICON} />}>
                     Mark as lost
                   </Menu.Item>
                 </Menu.Dropdown>

@@ -5,8 +5,6 @@ import {
   Button,
   ColorInput,
   Divider,
-  Group,
-  Modal,
   Radio,
   Slider,
   Stack,
@@ -30,8 +28,9 @@ import {
   THEME_NEUTRAL,
   toHexColor,
 } from '@/preview';
+import { EditorDrawer, EditorDrawerFooter } from '../EditorDrawer';
 import { NeutralShades } from '../EditorSidebar/NeutralSwatches';
-import classes from './NeutralModal.module.css';
+import classes from './NeutralEditor.module.css';
 
 function capitalize(value: string) {
   return value.charAt(0).toUpperCase() + value.slice(1);
@@ -69,28 +68,30 @@ function LabeledSlider({ label, value, min, max, disabled, format, onChange }: L
   );
 }
 
-interface NeutralModalContentProps {
+interface NeutralEditorContentProps {
   neutral: Neutral;
   themeRamp: string[];
   primaryTint: string | undefined;
   initial: CustomNeutral | null;
   takenNames: Set<string>;
   onSubmit: (value: CustomNeutral) => void;
+  onRampChange: (ramp: string[]) => void;
   onClose: () => void;
 }
 
 const CUSTOM_BASE = 'custom';
 const CURRENT_BASE = 'current';
 
-function NeutralModalContent({
+function NeutralEditorContent({
   neutral,
   themeRamp,
   primaryTint,
   initial,
   takenNames,
   onSubmit,
+  onRampChange,
   onClose,
-}: NeutralModalContentProps) {
+}: NeutralEditorContentProps) {
   const withPreset = hasThemeNeutral(neutral, themeRamp);
   const [base, setBase] = useState<string>(
     initial ? CURRENT_BASE : withPreset ? THEME_NEUTRAL : 'default'
@@ -128,6 +129,10 @@ function NeutralModalContent({
     const shifted = shiftLightness(baseRamp ?? NEUTRAL_LIBRARY[neutral].default, shift);
     return canMix && mixEnabled && primaryTint ? mixNeutral(shifted, primaryTint, mix) : shifted;
   }, [base, canMix, color, initial, mix, mixEnabled, neutral, primaryTint, shift, themeRamp]);
+
+  useEffect(() => {
+    onRampChange(ramp.map((shade) => toHexColor(shade) || shade));
+  }, [onRampChange, ramp]);
 
   const suggestionSource = ramp[5];
   useEffect(() => {
@@ -255,41 +260,40 @@ function NeutralModalContent({
           }}
         />
 
-        <Group justify="flex-end" gap="xs">
+        <EditorDrawerFooter>
           <Button variant="default" onClick={onClose}>
-            Cancel
+            Discard
           </Button>
           <Button type="submit" disabled={Boolean(nameError)}>
             {initial ? 'Save color' : 'Add color'}
           </Button>
-        </Group>
+        </EditorDrawerFooter>
       </Stack>
     </form>
   );
 }
 
-interface NeutralModalProps extends Omit<NeutralModalContentProps, 'onClose'> {
+interface NeutralEditorProps extends Omit<NeutralEditorContentProps, 'onClose'> {
   opened: boolean;
   onClose: () => void;
   onExitTransitionEnd: () => void;
 }
 
-export function NeutralModal({
+export function NeutralEditor({
   opened,
   onClose,
   onExitTransitionEnd,
   neutral,
   ...others
-}: NeutralModalProps) {
+}: NeutralEditorProps) {
   return (
-    <Modal
+    <EditorDrawer
       opened={opened}
+      title={`${others.initial ? 'Edit' : 'Add'} ${neutral} color`}
       onClose={onClose}
       onExitTransitionEnd={onExitTransitionEnd}
-      title={`${others.initial ? 'Edit' : 'Add'} ${neutral} color`}
-      size="md"
     >
-      <NeutralModalContent neutral={neutral} {...others} onClose={onClose} />
-    </Modal>
+      <NeutralEditorContent neutral={neutral} {...others} onClose={onClose} />
+    </EditorDrawer>
   );
 }

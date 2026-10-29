@@ -5,31 +5,26 @@ import {
   Button,
   Divider,
   ScrollArea,
-  SegmentedControl,
   Select,
   SimpleGrid,
   Stack,
   Title,
 } from '@mantine/core';
+import { hasPresetValues } from '@/hooks/preset-storage';
 import { useEditorParams } from '@/hooks/use-editor-params';
 import {
-  CURSOR_TYPES,
-  DEFAULT_OVERRIDES,
-  FOCUS_RINGS,
   HEADING_WRAPS,
   type PresetThemeInfo,
   type ScaleGroup,
-  SHADOW_PRESETS,
   type ThemeOverrides,
 } from '@/preview';
 import { FontPicker } from '../FontPicker';
 import { ColorsPanel } from './ColorsPanel';
-import { Control, ScaleControl } from './controls';
+import { ScaleControl } from './controls';
+import { ShadowsControl } from './ShadowsControl';
 import classes from './EditorSidebar.module.css';
 
-const PRESET = 'preset';
-
-const PANELS = ['colors', 'typography', 'headings', 'spacing', 'radius', 'shadows', 'interaction'];
+const PANELS = ['colors', 'typography', 'headings', 'layout'];
 
 const WEIGHTS = ['100', '200', '300', '400', '500', '600', '700', '800', '900'];
 
@@ -37,24 +32,14 @@ function capitalize(value: string) {
   return value.charAt(0).toUpperCase() + value.slice(1);
 }
 
-function withPreset<T extends string>(values: readonly T[]) {
-  return [
-    { value: PRESET, label: 'Preset' },
-    ...values.map((value) => ({ value, label: capitalize(value) })),
-  ];
-}
-
-function fromPreset<T extends string>(value: string | null) {
-  return value === null || value === PRESET ? null : (value as T);
-}
-
 interface EditorSidebarProps {
   info: PresetThemeInfo | null;
+  loading: boolean;
 }
 
-export function EditorSidebar({ info }: EditorSidebarProps) {
-  const { overrides, setParams } = useEditorParams();
-  const changed = JSON.stringify(overrides) !== JSON.stringify(DEFAULT_OVERRIDES);
+export function EditorSidebar({ info, loading }: EditorSidebarProps) {
+  const { overrides, setParams, resetPreset } = useEditorParams();
+  const changed = hasPresetValues(overrides);
 
   const scale = (group: ScaleGroup, label?: string) => (
     <ScaleControl
@@ -90,12 +75,7 @@ export function EditorSidebar({ info }: EditorSidebarProps) {
         <Title order={2} size="h4" className={classes.title}>
           Theme
         </Title>
-        <Button
-          variant="default"
-          size="xs"
-          onClick={() => setParams(DEFAULT_OVERRIDES)}
-          disabled={!changed}
-        >
+        <Button variant="default" size="xs" onClick={resetPreset} disabled={!changed}>
           Reset
         </Button>
       </div>
@@ -114,7 +94,12 @@ export function EditorSidebar({ info }: EditorSidebarProps) {
         <Accordion.Item value="colors">
           <Accordion.Control>Colors</Accordion.Control>
           <Accordion.Panel>
-            <ColorsPanel info={info} overrides={overrides} setParams={setParams} />
+            <ColorsPanel
+              info={info}
+              loading={loading}
+              overrides={overrides}
+              setParams={setParams}
+            />
           </Accordion.Panel>
         </Accordion.Item>
 
@@ -175,16 +160,13 @@ export function EditorSidebar({ info }: EditorSidebarProps) {
           </Accordion.Panel>
         </Accordion.Item>
 
-        <Accordion.Item value="spacing">
-          <Accordion.Control>Spacing</Accordion.Control>
-          <Accordion.Panel>{scale('spacing', 'All sizes')}</Accordion.Panel>
-        </Accordion.Item>
-
-        <Accordion.Item value="radius">
-          <Accordion.Control>Radius</Accordion.Control>
+        <Accordion.Item value="layout">
+          <Accordion.Control>Spacing, radius and shadows</Accordion.Control>
           <Accordion.Panel>
             <Stack gap="md">
-              {scale('radius', 'All sizes')}
+              {scale('spacing', 'Spacing')}
+              <Divider />
+              {scale('radius', 'Radius')}
               <Select
                 label="Default radius"
                 data={info?.scales.radius.map((item) => item.key) ?? []}
@@ -193,49 +175,8 @@ export function EditorSidebar({ info }: EditorSidebarProps) {
                 allowDeselect={false}
                 comboboxProps={{ withinPortal: false }}
               />
-            </Stack>
-          </Accordion.Panel>
-        </Accordion.Item>
-
-        <Accordion.Item value="shadows">
-          <Accordion.Control>Shadows</Accordion.Control>
-          <Accordion.Panel>
-            <SegmentedControl
-              fullWidth
-              aria-label="Shadows"
-              value={overrides.shadows ?? PRESET}
-              onChange={(value) => setParams({ shadows: fromPreset(value) })}
-              data={withPreset(SHADOW_PRESETS)}
-            />
-          </Accordion.Panel>
-        </Accordion.Item>
-
-        <Accordion.Item value="interaction">
-          <Accordion.Control>Interaction</Accordion.Control>
-          <Accordion.Panel>
-            <Stack gap="md">
-              <Control label="Focus ring">
-                <SegmentedControl
-                  fullWidth
-                  aria-label="Focus ring"
-                  value={overrides.focusRing ?? info?.focusRing ?? 'auto'}
-                  onChange={(value) =>
-                    setParams({ focusRing: value as ThemeOverrides['focusRing'] })
-                  }
-                  data={FOCUS_RINGS.map((value) => ({ value, label: capitalize(value) }))}
-                />
-              </Control>
-              <Control label="Cursor on buttons and checkboxes">
-                <SegmentedControl
-                  fullWidth
-                  aria-label="Cursor type"
-                  value={overrides.cursorType ?? info?.cursorType ?? 'default'}
-                  onChange={(value) =>
-                    setParams({ cursorType: value as ThemeOverrides['cursorType'] })
-                  }
-                  data={CURSOR_TYPES.map((value) => ({ value, label: capitalize(value) }))}
-                />
-              </Control>
+              <Divider />
+              <ShadowsControl info={info} overrides={overrides} setParams={setParams} />
             </Stack>
           </Accordion.Panel>
         </Accordion.Item>

@@ -1,1 +1,0 @@
-export { NeutralModal } from './NeutralModal';

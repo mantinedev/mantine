@@ -69,8 +69,8 @@ function Sponsors() {
                       style={{
                         background:
                           sponsor.mark === 'circle'
-                            ? 'var(--mantine-color-pink-filled)'
-                            : 'var(--mantine-color-teal-filled)',
+                            ? 'var(--mantine-color-flamingo-filled)'
+                            : 'var(--mantine-color-lagoon-filled)',
                       }}
                     />
                   )}

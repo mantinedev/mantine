@@ -1,4 +1,11 @@
-export type PresetCategory = 'Tools' | 'Content' | 'Marketing' | 'Scheduling' | 'Chat' | 'AI';
+export type PresetCategory =
+  | 'Generic'
+  | 'Tools'
+  | 'Content'
+  | 'Marketing'
+  | 'Scheduling'
+  | 'Chat'
+  | 'AI';
 
 export interface Preset {
   id: string;
@@ -8,6 +15,12 @@ export interface Preset {
 }
 
 export const presets: Preset[] = [
+  {
+    id: 'generic',
+    label: 'Generic',
+    description: 'Common components with the default theme',
+    category: 'Generic',
+  },
   {
     id: 'riverline',
     label: 'Riverline',

@@ -51,7 +51,7 @@ function VenueMap() {
         <text x="138" y="190" fontWeight="700">
           Tobacco Factory
         </text>
-        <circle cx="420" cy="292" r="12" fill="var(--mantine-color-teal-filled)" />
+        <circle cx="420" cy="292" r="12" fill="var(--mantine-color-lagoon-filled)" />
         <text x="398" y="324">
           Bedminster station
         </text>

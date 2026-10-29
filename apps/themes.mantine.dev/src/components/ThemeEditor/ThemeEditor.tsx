@@ -1,25 +1,31 @@
 'use client';
 
 import { Suspense, useState } from 'react';
-import type { PresetThemeInfo } from '@/preview';
+import { DEFAULT_PRESET_INFO, type PresetThemeInfo } from '@/preview';
 import { EditorSidebar } from '../EditorSidebar';
 import { PresetPreview } from '../PresetPreview';
 import { Shell } from '../Shell';
+import { PresetMemory } from './PresetMemory';
+import { type ThemeDraft, ThemeDraftContext } from './ThemeDraft.context';
 
 export function ThemeEditor() {
   const [info, setInfo] = useState<PresetThemeInfo | null>(null);
+  const [draft, setDraft] = useState<ThemeDraft | null>(null);
 
   return (
-    <Shell
-      sidebar={
+    <ThemeDraftContext value={{ draft, setDraft }}>
+      <Shell
+        sidebar={
+          <Suspense>
+            <EditorSidebar info={info ?? DEFAULT_PRESET_INFO} loading={info === null} />
+          </Suspense>
+        }
+      >
         <Suspense>
-          <EditorSidebar info={info} />
+          <PresetMemory />
+          <PresetPreview onReady={setInfo} />
         </Suspense>
-      }
-    >
-      <Suspense>
-        <PresetPreview onReady={setInfo} />
-      </Suspense>
-    </Shell>
+      </Shell>
+    </ThemeDraftContext>
   );
 }

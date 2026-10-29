@@ -1,10 +1,11 @@
-import { useMemo } from 'react';
+import { useCallback, useMemo } from 'react';
 import { parseAsStringLiteral, throttle, useQueryStates } from 'nuqs';
 import { presets } from '@/presets';
 import { themeParsers, themeUrlKeys, type ThemeOverrides } from '@/preview';
+import { DEFAULT_PRESET_VALUES, readPresetValues } from './preset-storage';
 
 const editorParsers = {
-  preset: parseAsStringLiteral(presets.map((preset) => preset.id)).withDefault('riverline'),
+  preset: parseAsStringLiteral(presets.map((preset) => preset.id)).withDefault('generic'),
   ...themeParsers,
 };
 
@@ -19,5 +20,12 @@ export function useEditorParams() {
   const key = JSON.stringify(rest);
   const overrides = useMemo(() => JSON.parse(key) as ThemeOverrides, [key]);
 
-  return { presetId: preset, overrides, setParams };
+  const selectPreset = useCallback(
+    (presetId: string) => setParams({ preset: presetId, ...readPresetValues(presetId) }),
+    [setParams]
+  );
+
+  const resetPreset = useCallback(() => setParams(DEFAULT_PRESET_VALUES), [setParams]);
+
+  return { presetId: preset, overrides, setParams, selectPreset, resetPreset };
 }

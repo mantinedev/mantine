@@ -39,8 +39,8 @@
   border: 1.5px solid var(--mantine-color-default-border);
 
   &[data-state='done'] {
-    background: var(--mantine-color-green-filled);
-    border-color: var(--mantine-color-green-filled);
+    background: var(--mantine-color-glaze-filled);
+    border-color: var(--mantine-color-glaze-filled);
     color: var(--mantine-color-white);
   }
 

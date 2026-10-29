@@ -125,14 +125,14 @@
     width: 7px;
     height: 7px;
     border-radius: 50%;
-    background: var(--mantine-color-green-text);
+    background: var(--mantine-color-fern-text);
   }
 
   &:where([data-off]) {
-    color: var(--mantine-color-red-text);
+    color: var(--mantine-color-brick-text);
 
     &::before {
-      background: var(--mantine-color-red-text);
+      background: var(--mantine-color-brick-text);
     }
   }
 }

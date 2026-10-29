@@ -1,0 +1,13 @@
+.drawer {
+  border-inline-end: 1px solid var(--mantine-color-default-border);
+  box-shadow: var(--mantine-shadow-md);
+}
+
+.footer {
+  position: sticky;
+  bottom: 0;
+  z-index: 1;
+  padding-block: var(--mantine-spacing-sm);
+  border-top: 1px solid var(--mantine-color-default-border);
+  background-color: var(--mantine-color-body);
+}

@@ -44,7 +44,7 @@ export const theme = createTheme({
       '#18258a',
       '#121b6b',
     ],
-    red: [
+    vermilion: [
       '#fff0ef',
       '#fdd9d7',
       '#f9b3af',
@@ -56,7 +56,7 @@ export const theme = createTheme({
       '#861c1a',
       '#661413',
     ],
-    green: [
+    viridian: [
       '#e9f7ef',
       '#cbeedb',
       '#a1e0bd',
@@ -68,7 +68,7 @@ export const theme = createTheme({
       '#155632',
       '#0f4125',
     ],
-    orange: [
+    saffron: [
       '#fdf3e3',
       '#fbe3bd',
       '#f4cb8a',
@@ -80,7 +80,7 @@ export const theme = createTheme({
       '#704200',
       '#543200',
     ],
-    pink: [
+    magenta: [
       '#ffeaf5',
       '#ffcfe7',
       '#ffa3d2',
@@ -200,7 +200,7 @@ export const theme = createTheme({
     }),
 
     Switch: Switch.extend({
-      defaultProps: { color: 'green', withThumbIndicator: false },
+      defaultProps: { color: 'viridian', withThumbIndicator: false },
       classNames: { track: classes.switchTrack, thumb: classes.switchThumb },
       vars: () => ({
         root: {
@@ -273,6 +273,7 @@ export const cssVariablesResolver: CSSVariablesResolver = (theme) => {
     variables: defaults.variables,
     light: {
       ...defaults.light,
+      '--mantine-color-error': 'var(--mantine-color-vermilion-6)',
       '--mantine-color-text': 'var(--mantine-color-gray-8)',
       '--mantine-color-dimmed': 'var(--mantine-color-gray-6)',
       '--mantine-color-default-border': 'var(--mantine-color-gray-4)',
@@ -282,6 +283,7 @@ export const cssVariablesResolver: CSSVariablesResolver = (theme) => {
     },
     dark: {
       ...defaults.dark,
+      '--mantine-color-error': 'var(--mantine-color-vermilion-5)',
       '--mantine-color-bright': '#f6f7fb',
       '--mantine-color-surface-page': 'var(--mantine-color-dark-7)',
       '--mantine-color-default-border': 'var(--mantine-color-dark-4)',

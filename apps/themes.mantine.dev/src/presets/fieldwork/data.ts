@@ -3,8 +3,8 @@ export type Shape = 'circle' | 'square' | 'tri' | 'half';
 export type Day = 'thu' | 'fri';
 
 export const trackColor: Record<Track, string> = {
-  Design: 'var(--mantine-color-pink-filled)',
-  Engineering: 'var(--mantine-color-teal-filled)',
+  Design: 'var(--mantine-color-flamingo-filled)',
+  Engineering: 'var(--mantine-color-lagoon-filled)',
   Policy: 'var(--mantine-color-bright)',
 };
 

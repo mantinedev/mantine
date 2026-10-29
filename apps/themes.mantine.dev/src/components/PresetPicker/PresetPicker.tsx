@@ -4,7 +4,15 @@ import { Combobox, InputBase, ScrollArea, Text, useCombobox } from '@mantine/cor
 import { type Preset, type PresetCategory, presets } from '@/presets';
 import classes from './PresetPicker.module.css';
 
-const CATEGORIES: PresetCategory[] = ['Tools', 'Content', 'Marketing', 'Scheduling', 'Chat', 'AI'];
+const CATEGORIES: PresetCategory[] = [
+  'Generic',
+  'Tools',
+  'Content',
+  'Marketing',
+  'Scheduling',
+  'Chat',
+  'AI',
+];
 
 interface PresetThumbnailProps {
   preset: Preset;

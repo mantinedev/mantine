@@ -38,7 +38,7 @@
     content: '';
     position: absolute;
     inset: 8px 0 0 8px;
-    background: var(--mantine-color-teal-filled);
+    background: var(--mantine-color-lagoon-filled);
     mix-blend-mode: multiply;
   }
 }
@@ -159,7 +159,7 @@
 .heroSide {
   display: flex;
   flex-direction: column;
-  background: var(--mantine-color-teal-filled);
+  background: var(--mantine-color-lagoon-filled);
   color: var(--fw-teal-ink);
 }
 
@@ -289,7 +289,7 @@
 }
 
 .ticketsBlock {
-  background: var(--mantine-color-teal-filled);
+  background: var(--mantine-color-lagoon-filled);
   color: var(--fw-teal-ink);
 }
 

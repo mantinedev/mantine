@@ -116,9 +116,9 @@
 }
 
 .agreed {
-  --badge-bd: 1px solid var(--mantine-color-green-filled);
+  --badge-bd: 1px solid var(--mantine-color-meadow-filled);
 
-  color: var(--mantine-color-green-filled);
+  color: var(--mantine-color-meadow-filled);
 }
 
 .empty {

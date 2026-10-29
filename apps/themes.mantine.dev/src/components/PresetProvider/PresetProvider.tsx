@@ -88,7 +88,7 @@ function useOverridesResolver(
   resolver: CSSVariablesResolver | undefined,
   overrides: ThemeOverrides | null
 ) {
-  const shadows = getOverrideShadows(overrides?.shadows ?? null);
+  const shadows = useMemo(() => (overrides ? getOverrideShadows(overrides) : null), [overrides]);
 
   return useMemo<CSSVariablesResolver | undefined>(() => {
     if (!shadows) {

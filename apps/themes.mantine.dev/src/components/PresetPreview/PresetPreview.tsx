@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import { IconExternalLink } from '@tabler/icons-react';
 import {
   ActionIcon,
@@ -20,6 +20,7 @@ import {
 } from '@/preview';
 import { PresetPicker } from '../PresetPicker';
 import { useShell } from '../Shell';
+import { useThemeDraft } from '../ThemeEditor/ThemeDraft.context';
 import classes from './PresetPreview.module.css';
 
 function getFrameUrl(presetId: string, overrides: ThemeOverrides) {
@@ -32,7 +33,12 @@ interface PresetPreviewProps {
 }
 
 export function PresetPreview({ onReady }: PresetPreviewProps) {
-  const { presetId, overrides, setParams } = useEditorParams();
+  const { presetId, overrides, setParams, selectPreset } = useEditorParams();
+  const { draft } = useThemeDraft();
+  const previewOverrides = useMemo(
+    () => (draft ? { ...overrides, ...draft } : overrides),
+    [overrides, draft]
+  );
   const { setColorScheme, toggleColorScheme } = useMantineColorScheme();
   const { navbarOpened, toggleNavbar } = useShell();
   const colorScheme = useComputedColorScheme('light');
@@ -52,7 +58,11 @@ export function PresetPreview({ onReady }: PresetPreviewProps) {
 
   useEffect(() => {
     const postState = () => {
-      const message: EditorMessage = { type: 'theme-editor:state', overrides, colorScheme };
+      const message: EditorMessage = {
+        type: 'theme-editor:state',
+        overrides: previewOverrides,
+        colorScheme,
+      };
       iframeRef.current?.contentWindow?.postMessage(message, window.location.origin);
     };
 
@@ -70,7 +80,8 @@ export function PresetPreview({ onReady }: PresetPreviewProps) {
         onReady(message.info);
         if (
           overrides.primaryColor &&
-          !message.info.swatches.some((swatch) => swatch.name === overrides.primaryColor)
+          !message.info.swatches.some((swatch) => swatch.name === overrides.primaryColor) &&
+          !overrides.customColors?.some((color) => color.name === overrides.primaryColor)
         ) {
           setParams({ primaryColor: null });
         }
@@ -89,7 +100,15 @@ export function PresetPreview({ onReady }: PresetPreviewProps) {
     postState();
     window.addEventListener('message', handleMessage);
     return () => window.removeEventListener('message', handleMessage);
-  }, [overrides, colorScheme, onReady, setParams, setColorScheme, toggleColorScheme]);
+  }, [
+    overrides,
+    previewOverrides,
+    colorScheme,
+    onReady,
+    setParams,
+    setColorScheme,
+    toggleColorScheme,
+  ]);
 
   return (
     <div className={classes.root}>
@@ -101,10 +120,7 @@ export function PresetPreview({ onReady }: PresetPreviewProps) {
           size="sm"
           aria-label="Open theme controls"
         />
-        <PresetPicker
-          value={presetId}
-          onChange={(value) => setParams({ preset: value as typeof presetId })}
-        />
+        <PresetPicker value={presetId} onChange={selectPreset} />
         <Tooltip label="Open page in a new tab" floatingStrategy="fixed">
           <ActionIcon
             variant="default"
