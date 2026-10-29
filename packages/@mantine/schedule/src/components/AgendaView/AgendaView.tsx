@@ -83,6 +83,9 @@ export interface AgendaViewProps
   /** Format for the header label showing the date range @default 'MMMM D, YYYY' */
   headerFormat?: DateLabelFormat;
 
+  /** Format of event start and end time @default 'HH:mm' */
+  eventTimeFormat?: DateLabelFormat;
+
   /** Called when event is clicked */
   onEventClick?: (event: ScheduleEventData, e: React.MouseEvent<HTMLButtonElement>) => void;
 
@@ -102,6 +105,7 @@ const defaultProps = {
   mode: 'default',
   dateHeaderFormat: 'dddd, MMMM D',
   headerFormat: 'MMMM D, YYYY',
+  eventTimeFormat: 'HH:mm',
 } satisfies Partial<AgendaViewProps>;
 
 const varsResolver = createVarsResolver<AgendaViewFactory>((_theme, { radius }) => ({
@@ -131,6 +135,7 @@ export const AgendaView = factory<AgendaViewFactory>((_props) => {
     renderEvent,
     dateHeaderFormat,
     headerFormat,
+    eventTimeFormat,
     onEventClick,
     recurrenceExpansionLimit,
     ...others
@@ -183,8 +188,16 @@ export const AgendaView = factory<AgendaViewFactory>((_props) => {
     const dateEvents = sortEvents(groupedEvents[dateStr]);
 
     const eventNodes = dateEvents.map((event) => {
-      const startTime = dayjs(event.start).format('HH:mm');
-      const endTime = dayjs(event.end).format('HH:mm');
+      const startTime = formatDate({
+        locale: ctx.getLocale(locale),
+        date: event.start,
+        format: eventTimeFormat,
+      });
+      const endTime = formatDate({
+        locale: ctx.getLocale(locale),
+        date: event.end,
+        format: eventTimeFormat,
+      });
       const isAllDay = isMultidayEvent(event) || isAllDayEvent({ event, date: dateStr });
 
       const eventChildren = (

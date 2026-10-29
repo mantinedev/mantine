@@ -361,6 +361,15 @@ describe('@mantine/schedule/MobileMonthView', () => {
     expect(screen.getByText('14:00 – 15:00')).toBeInTheDocument();
   });
 
+  it('supports eventTimeFormat prop', () => {
+    render(
+      <MobileMonthView {...defaultProps} selectedDate="2025-11-05" eventTimeFormat="h:mm A" />
+    );
+
+    expect(screen.getByText('10:00 AM – 11:00 AM')).toBeInTheDocument();
+    expect(screen.getByText('2:00 PM – 3:00 PM')).toBeInTheDocument();
+  });
+
   it('shows "All day" for all-day events', () => {
     render(<MobileMonthView {...defaultProps} selectedDate="2025-11-15" />);
 

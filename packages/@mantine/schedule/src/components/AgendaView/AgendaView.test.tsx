@@ -85,6 +85,17 @@ describe('@mantine/schedule/AgendaView', () => {
     expect(screen.getByText('14:00 – 15:00')).toBeInTheDocument();
   });
 
+  it('supports eventTimeFormat prop', () => {
+    render(<AgendaView {...defaultProps} eventTimeFormat="h:mm A" />);
+    expect(screen.getByText('10:00 AM – 11:00 AM')).toBeInTheDocument();
+    expect(screen.getByText('2:00 PM – 3:00 PM')).toBeInTheDocument();
+  });
+
+  it('supports eventTimeFormat function', () => {
+    render(<AgendaView {...defaultProps} eventTimeFormat={(date) => date.slice(11, 13)} />);
+    expect(screen.getByText('10 – 11')).toBeInTheDocument();
+  });
+
   it('renders "All day" for all-day events', () => {
     render(<AgendaView {...defaultProps} />);
     expect(screen.getByText('All day')).toBeInTheDocument();
