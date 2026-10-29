@@ -1,4 +1,4 @@
-import { RefCallback, useCallback, useEffect, useRef, useState } from 'react';
+import { RefCallback, useCallback, useRef, useState } from 'react';
 
 export interface UseScrollerOptions {
   /** Amount of pixels to scroll when calling scroll functions, `200` by default */
@@ -93,21 +93,6 @@ export function useScroller<T extends HTMLElement = HTMLDivElement>(
       });
     }
   }, []);
-
-  useEffect(() => {
-    updateScrollState();
-    const container = containerRef.current;
-    if (container) {
-      container.addEventListener('scroll', updateScrollState);
-      const resizeObserver = new ResizeObserver(updateScrollState);
-      resizeObserver.observe(container);
-      return () => {
-        container.removeEventListener('scroll', updateScrollState);
-        resizeObserver.disconnect();
-      };
-    }
-    return undefined;
-  }, [updateScrollState]);
 
   const scroll = useCallback(
     (direction: 'start' | 'end') => {
@@ -204,6 +189,14 @@ export function useScroller<T extends HTMLElement = HTMLDivElement>(
       containerRef.current = node;
       if (node) {
         updateScrollState();
+        node.addEventListener('scroll', updateScrollState);
+        const resizeObserver = new ResizeObserver(updateScrollState);
+        resizeObserver.observe(node);
+        return () => {
+          node.removeEventListener('scroll', updateScrollState);
+          resizeObserver.disconnect();
+          containerRef.current = null;
+        };
       }
     },
     [updateScrollState]
