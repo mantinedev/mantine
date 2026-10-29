@@ -7,6 +7,7 @@ export { YarnIcon } from './YarnIcon';
 export { TypeScriptIcon } from './TypeScriptIcon';
 export { TypeScriptCircleIcon } from './TypeScriptCircleIcon';
 export { CssIcon } from './CssIcon';
+export { HtmlIcon } from './HtmlIcon';
 export { MarkdownIcon } from './MarkdownIcon';
 export { FolderIcon } from './FolderIcon';
 export { FolderOpenIcon } from './FolderOpenIcon';

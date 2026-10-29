@@ -1,6 +1,7 @@
 import { CssIcon } from './CssIcon';
 import { FolderIcon } from './FolderIcon';
 import { FolderOpenIcon } from './FolderOpenIcon';
+import { HtmlIcon } from './HtmlIcon';
 import { MarkdownIcon } from './MarkdownIcon';
 import { TypeScriptIcon } from './TypeScriptIcon';
 
@@ -11,6 +12,10 @@ export function getCodeFileIcon(fileName: string) {
 
   if (fileName.endsWith('.css') || fileName.endsWith('.scss')) {
     return <CssIcon size={14} />;
+  }
+
+  if (fileName.endsWith('.html')) {
+    return <HtmlIcon size={14} />;
   }
 
   if (fileName.endsWith('.md') || fileName.endsWith('.mdx')) {
