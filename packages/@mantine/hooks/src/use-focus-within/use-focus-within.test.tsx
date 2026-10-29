@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { fireEvent, render, screen } from '@testing-library/react';
+import { act, fireEvent, render, screen } from '@testing-library/react';
 import { useFocusWithin } from './use-focus-within';
 
 const Target: React.FunctionComponent = () => {
@@ -37,6 +37,44 @@ const StaleClosureTarget: React.FunctionComponent = () => {
 };
 
 describe('@mantine/hooks/use-focus-within', () => {
+  it('does not blur when focus moves to an SVG descendant', () => {
+    const onFocus = jest.fn();
+    const onBlur = jest.fn();
+
+    function SvgTarget() {
+      const { ref, focused } = useFocusWithin({ onFocus, onBlur });
+      return (
+        <>
+          <div ref={ref}>
+            <span data-testid="focused">{String(focused)}</span>
+            <input data-testid="input" />
+            <svg role="button" aria-label="Inside control" tabIndex={0} data-testid="inside-svg" />
+          </div>
+          <svg role="button" aria-label="Outside control" tabIndex={0} data-testid="outside-svg" />
+        </>
+      );
+    }
+
+    render(<SvgTarget />);
+    act(() => screen.getByTestId('input').focus());
+    expect(onFocus).toHaveBeenCalledTimes(1);
+
+    act(() => screen.getByTestId('inside-svg').focus());
+    expect(screen.getByTestId('inside-svg')).toHaveFocus();
+    expect(screen.getByTestId('focused')).toHaveTextContent('true');
+    expect(onFocus).toHaveBeenCalledTimes(1);
+    expect(onBlur).not.toHaveBeenCalled();
+
+    act(() => screen.getByTestId('input').focus());
+    expect(onFocus).toHaveBeenCalledTimes(1);
+    expect(onBlur).not.toHaveBeenCalled();
+
+    act(() => screen.getByTestId('outside-svg').focus());
+    expect(screen.getByTestId('outside-svg')).toHaveFocus();
+    expect(screen.getByTestId('focused')).toHaveTextContent('false');
+    expect(onBlur).toHaveBeenCalledTimes(1);
+  });
+
   it('changes `focused` on focusin/focusout correctly', () => {
     render(<Target />);
     const input = screen.getByTestId('input');
