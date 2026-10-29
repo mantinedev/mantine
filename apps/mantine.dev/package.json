@@ -23,7 +23,6 @@
     "@mantine/carousel": "workspace:*",
     "@mantine/charts": "workspace:*",
     "@mantine/code-highlight": "workspace:*",
-    "@mantine/colors-generator": "workspace:*",
     "@mantine/core": "workspace:*",
     "@mantine/dates": "workspace:*",
     "@mantine/dropzone": "workspace:*",

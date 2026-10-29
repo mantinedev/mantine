@@ -488,17 +488,20 @@ const theme = createTheme({
 });
 ```
 
-## OKLCH colors generator
+## Colors generator
 
-`generateColors` from `@mantine/colors-generator` now returns OKLCH colors.
-New `generateColorFormats` function returns the palette in hex, rgb, hsl and oklch:
+`generateColors` from `@mantine/colors-generator` now returns OKLCH colors and keeps the input color
+in the palette. The second argument adjusts lightness, saturation and hue of the generated shades,
+see [colors generation](/theming/colors#colors-generation). The online tool moved to
+[themes.mantine.dev/colors-generator](https://themes.mantine.dev/colors-generator/), it has presets and a
+separate palette for dark color scheme:
 
 ```tsx
 import { generateColors } from '@mantine/colors-generator';
 
 const theme = createTheme({
   colors: {
-    brand: generateColors('#375EAC'),
+    brand: generateColors('#375EAC', { baseShade: 7, hueShift: 10 }),
   },
 });
 ```

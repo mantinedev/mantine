@@ -63,7 +63,7 @@ This will allow you to use them in all components that support the `color` prop,
 >
 > A colors override must include **at least 10 shades per color**. Otherwise, you will get a TypeScript error
 > and some variants will not have proper colors. If you only have one color value, you can either
-> pick the remaining colors manually or use the [colors generator tool](/colors-generator).
+> pick the remaining colors manually or use the [colors generator tool](https://themes.mantine.dev/colors-generator/).
 >
 > You can add more than 10 shades per color: these values will not be used by Mantine components with the default colors resolver,
 > but you can still reference them by index, for example, `color="blue.11"`.
@@ -479,15 +479,13 @@ or to add support for new variants:
 
 ## Colors generation
 
-You can use the [colors generator](/colors-generator) to generate 10 shades of color based on a single value
-or install the `@mantine/colors-generator` package to generate dynamic colors in your application:
+Use the [colors generator](https://themes.mantine.dev/colors-generator/) to generate 10 shades from a single color.
+To generate colors at runtime, install the `@mantine/colors-generator` package:
 
 <InstallScript packages="@mantine/colors-generator" />
 
-The package exports a `generateColors` function that accepts a color value (hex or oklch) and returns
-a `MantineColorsTuple` of 10 OKLCH shades built on the same shared lightness ramp as the built-in
-palettes. The input color is placed at its closest natural lightness slot, so the palette will look
-consistent alongside Mantine's defaults.
+`generateColors` accepts any CSS color and returns a `MantineColorsTuple` of 10 OKLCH shades.
+The input color is kept as is at the shade that matches its lightness, the other shades are built around it:
 
 ```tsx
 import { generateColors } from '@mantine/colors-generator';
@@ -508,17 +506,35 @@ function Demo() {
 }
 ```
 
-When you need the full palette in multiple formats (oklch, hex, rgb, hsl) together with the detected
-base color index, use `generateColorFormats`:
+The second argument adjusts the generated shades. All options are optional:
+
+```tsx
+import { generateColors } from '@mantine/colors-generator';
+
+const yellow = generateColors('#fcc419', {
+  // Shade that is set to the input color, 0-9, 'auto' by default
+  baseShade: 6,
+  // Lightness of shades 0 and 9, 0-1
+  lightest: 0.97,
+  darkest: 0.4,
+  // Saturation of shades 0 and 9 relative to the input color, 0-1
+  lightestChroma: 0.1,
+  darkestChroma: 0.8,
+  // Hue rotation in degrees from shade 0 to shade 9
+  hueShift: -25,
+});
+```
+
+`generateColorFormats` returns the palette in oklch, hex, rgb and hsl formats together with the index of the base shade:
 
 ```tsx
 import { generateColorFormats } from '@mantine/colors-generator';
 
-const result = generateColorFormats('#375EAC');
+const result = generateColorFormats('#375EAC', { baseShade: 7 });
 // result.colors       – MantineColorsTuple (oklch strings)
 // result.formats.hex  – string[]
 // result.formats.rgb  – string[]
-// result.baseColorIndex – number
+// result.baseColorIndex – 7
 ```
 
 ## Default colors
