@@ -8,9 +8,15 @@ export function useWindowEvent<K extends string>(
   options?: boolean | AddEventListenerOptions
 ) {
   const stableListener = useEffectEvent(listener);
+  const {
+    capture = false,
+    passive,
+    once = false,
+    signal,
+  } = typeof options === 'object' ? options : { capture: options };
 
   useEffect(() => {
-    window.addEventListener(type as any, stableListener, options);
-    return () => window.removeEventListener(type as any, stableListener, options);
-  }, [type]);
+    window.addEventListener(type as any, stableListener, { capture, passive, once, signal });
+    return () => window.removeEventListener(type as any, stableListener, capture);
+  }, [type, capture, passive, once, signal]);
 }
