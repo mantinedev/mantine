@@ -1181,6 +1181,7 @@ export const ResourcesMonthView = factory<ResourcesMonthViewFactory>((_props) =>
         {
           static: mode === 'static',
           'slot-dragging': slotDragSelect.isDragging,
+          'drop-invalid': dragDrop.dropTarget !== null && !dragDrop.dropValid,
           'event-interaction': eventResize.isResizing || dragDrop.dragContextValue.isDragging,
           resizing: eventResize.isResizing,
         },

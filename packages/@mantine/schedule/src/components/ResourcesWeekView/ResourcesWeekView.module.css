@@ -556,7 +556,15 @@
 
   &:where([data-invalid]) {
     border-color: var(--mantine-color-error);
-    background-color: transparent;
-    opacity: 0.4;
+    background-color: var(--mantine-color-red-light);
+    opacity: 1;
+  }
+}
+
+.resourcesWeekView:where([data-drop-invalid]) .resourcesWeekViewRowSlot:where([data-drop-target]) {
+  background-color: var(--mantine-color-red-light);
+
+  &::before {
+    border-color: var(--mantine-color-error);
   }
 }

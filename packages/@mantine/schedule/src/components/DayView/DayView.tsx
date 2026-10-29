@@ -974,6 +974,7 @@ export const DayView = factory<DayViewFactory>((_props) => {
       mod={{
         static: mode === 'static',
         'slot-dragging': slotDragSelect.isDragging,
+        'drop-invalid': dragDrop.dropTarget !== null && !dragDrop.dropValid,
         'hide-sub-hour-grid-lines': !withSubHourGridLines,
         'event-interaction': eventResize.isResizing || dragDrop.dragContextValue.isDragging,
       }}

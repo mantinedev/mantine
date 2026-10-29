@@ -123,6 +123,14 @@ export interface DragDropHandlers<T = any> {
  *
  * @template T - Type of the drop target (e.g., slot index, day string, etc.)
  */
+function getExternalDropEffect(dataTransfer: DataTransfer): DataTransfer['dropEffect'] {
+  const allowed = dataTransfer.effectAllowed;
+  if (allowed === 'move' || allowed === 'link') {
+    return allowed;
+  }
+  return allowed === 'linkMove' ? 'move' : 'copy';
+}
+
 export function useDragDropHandlers<T = any>(
   options: UseDragDropHandlersOptions<T>
 ): DragDropHandlers<T> {
@@ -264,7 +272,9 @@ export function useDragDropHandlers<T = any>(
       // browser end the drag with dragleave/dragend and never fire `drop`, which would stop
       // `handleDrop` from rejecting the placement and reporting it through onEventPlacementRejected.
       // Invalid targets are signalled with `data-invalid` on the drag preview instead.
-      event.dataTransfer.dropEffect = isInternalDrag ? 'move' : 'copy';
+      event.dataTransfer.dropEffect = isInternalDrag
+        ? 'move'
+        : getExternalDropEffect(event.dataTransfer);
       setDropTarget(target);
     },
     [

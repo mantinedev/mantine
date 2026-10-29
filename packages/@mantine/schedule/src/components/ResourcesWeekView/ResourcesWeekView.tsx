@@ -1272,6 +1272,7 @@ export const ResourcesWeekView = factory<ResourcesWeekViewFactory>((_props) => {
       mod={{
         static: mode === 'static',
         'slot-dragging': slotDragSelect.isDragging,
+        'drop-invalid': dragDrop.dropTarget !== null && !dragDrop.dropValid,
         resizing: eventResize.isResizing,
         'event-interaction': eventResize.isResizing || dragDrop.dragContextValue.isDragging,
       }}

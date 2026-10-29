@@ -1531,6 +1531,65 @@ describe('@mantine/schedule/ResourcesDayView', () => {
       });
       expect(rejection).not.toHaveProperty('end');
     });
+
+    const dragExternalItemOverRoomBAt10 = (
+      props: Partial<ResourcesDayViewProps>,
+      effectAllowed: DataTransfer['effectAllowed']
+    ) => {
+      const { container } = render(<ResourcesDayView {...defaultProps} {...props} />);
+      const rowSlots = container.querySelectorAll(
+        '.mantine-ResourcesDayView-resourcesDayViewRowSlots'
+      );
+      mockRowSlotRects(rowSlots[1]);
+      const dataTransfer = {
+        effectAllowed,
+        dropEffect: 'none',
+        types: ['text/plain'],
+        getData: jest.fn(),
+        setData: jest.fn(),
+      };
+      const dragEvent = createEvent.dragOver(rowSlots[1]);
+      Object.defineProperty(dragEvent, 'dataTransfer', { value: dataTransfer });
+      Object.defineProperty(dragEvent, 'clientX', { value: 250, configurable: true });
+      fireEvent(rowSlots[1], dragEvent);
+      return { container, dataTransfer };
+    };
+
+    it('sets a drop effect that the external item allows, so the browser fires drop', () => {
+      const { dataTransfer } = dragExternalItemOverRoomBAt10(
+        { onExternalEventDrop: jest.fn() },
+        'move'
+      );
+      expect(dataTransfer.dropEffect).toBe('move');
+    });
+
+    it('uses the copy drop effect for external items that allow copying', () => {
+      const { dataTransfer } = dragExternalItemOverRoomBAt10(
+        { onExternalEventDrop: jest.fn() },
+        'copyMove'
+      );
+      expect(dataTransfer.dropEffect).toBe('copy');
+    });
+
+    it('marks the view with data-drop-invalid while an external item is over a rejected target', () => {
+      const { container } = dragExternalItemOverRoomBAt10(
+        { onExternalEventDrop: jest.fn(), canDropExternalEvent: () => false },
+        'copy'
+      );
+      expect(container.querySelector('.mantine-ResourcesDayView-resourcesDayView')).toHaveAttribute(
+        'data-drop-invalid'
+      );
+    });
+
+    it('does not mark the view with data-drop-invalid over an accepted target', () => {
+      const { container } = dragExternalItemOverRoomBAt10(
+        { onExternalEventDrop: jest.fn(), canDropExternalEvent: () => true },
+        'copy'
+      );
+      expect(
+        container.querySelector('.mantine-ResourcesDayView-resourcesDayView')
+      ).not.toHaveAttribute('data-drop-invalid');
+    });
   });
 
   describe('events carried over from other days', () => {

@@ -321,3 +321,11 @@
     }
   }
 }
+
+.resourcesMonthView:where([data-drop-invalid]) .resourcesMonthViewCell:where([data-drop-target]) {
+  background-color: var(--mantine-color-red-light);
+
+  &::before {
+    border-color: var(--mantine-color-error);
+  }
+}

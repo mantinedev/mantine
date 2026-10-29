@@ -292,3 +292,11 @@
   pointer-events: none;
   z-index: 3;
 }
+
+.monthView:where([data-drop-invalid]) .monthViewDay:where([data-drop-target]) {
+  background-color: var(--mantine-color-red-light);
+
+  &::before {
+    border-color: var(--mantine-color-error);
+  }
+}

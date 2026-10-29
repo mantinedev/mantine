@@ -1242,7 +1242,13 @@ export const WeekView = factory<WeekViewFactory>((_props) => {
   const content = (
     <Box
       {...getStyles('weekView')}
-      mod={{ static: mode === 'static', 'slot-dragging': slotDragSelect.isDragging }}
+      mod={{
+        static: mode === 'static',
+        'slot-dragging': slotDragSelect.isDragging,
+        'drop-invalid':
+          (dragDrop.dropTarget !== null && !dragDrop.dropValid) ||
+          (allDayDragDrop.dropTarget !== null && !allDayDragDrop.dropValid),
+      }}
       {...others}
     >
       {withHeader && (
