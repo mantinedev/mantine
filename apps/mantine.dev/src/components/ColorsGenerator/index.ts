@@ -1,1 +1,0 @@
-export { ColorsGenerator } from './ColorsGenerator';

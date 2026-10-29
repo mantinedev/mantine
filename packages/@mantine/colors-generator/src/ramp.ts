@@ -20,29 +20,41 @@ export const LIGHTNESS_RAMP = STANDARD_LIGHTNESS_RAMP;
 export const CHROMA_ENVELOPE = [0.1, 0.2, 0.38, 0.6, 0.84, 1.0, 0.99, 0.9, 0.74, 0.56] as const;
 
 /**
- * Returns a weight in [0, 1] describing how "bright/warm" a hue is.
- * The weight is a cosine bump centered on yellow (~90°) with a half-width of
- * 75°, falling to zero outside that window. Blue (255°), teal (185°), etc.
- * receive weight 0; yellow (90°) receives weight 1.
+ * Lightness of the default Mantine palettes by hue, used to pick the base shade
+ * of a color when `baseShade` is `'auto'`. Bright hues (orange, yellow, lime)
+ * sit on lighter shades than cool hues.
  */
-export function brightnessWeight(hue: number): number {
-  const center = 90;
-  const halfwidth = 75;
-  const raw = Math.abs(((hue - center + 540) % 360) - 180);
-  const d = Math.min(raw, 360 - raw);
-  if (d >= halfwidth) {
-    return 0;
-  }
-  return 0.5 * (1 + Math.cos((Math.PI * d) / halfwidth));
-}
+export const REFERENCE_LIGHTNESS_RAMPS: readonly { hue: number; ramp: readonly number[] }[] = [
+  { hue: 25, ramp: [0.97, 0.913, 0.845, 0.769, 0.701, 0.644, 0.591, 0.528, 0.464, 0.4] },
+  { hue: 43, ramp: [0.97, 0.93, 0.881, 0.827, 0.778, 0.738, 0.7, 0.646, 0.535, 0.4] },
+  { hue: 80, ramp: [0.97, 0.948, 0.921, 0.891, 0.863, 0.841, 0.82, 0.744, 0.589, 0.4] },
+  { hue: 130, ramp: [0.97, 0.945, 0.914, 0.88, 0.849, 0.824, 0.8, 0.728, 0.58, 0.4] },
+  { hue: 150, ramp: [0.97, 0.906, 0.83, 0.745, 0.669, 0.606, 0.546, 0.498, 0.449, 0.4] },
+  { hue: 168, ramp: [0.97, 0.907, 0.831, 0.747, 0.671, 0.608, 0.549, 0.5, 0.45, 0.4] },
+  { hue: 227, ramp: [0.97, 0.908, 0.833, 0.75, 0.675, 0.613, 0.555, 0.503, 0.452, 0.4] },
+  { hue: 255, ramp: [0.97, 0.909, 0.837, 0.756, 0.683, 0.622, 0.566, 0.511, 0.455, 0.4] },
+  { hue: 270, ramp: [0.97, 0.911, 0.841, 0.763, 0.693, 0.634, 0.579, 0.52, 0.46, 0.4] },
+  { hue: 292, ramp: [0.97, 0.913, 0.844, 0.768, 0.7, 0.643, 0.59, 0.527, 0.463, 0.4] },
+  { hue: 315, ramp: [0.97, 0.914, 0.847, 0.772, 0.705, 0.648, 0.596, 0.531, 0.465, 0.4] },
+  { hue: 350, ramp: [0.97, 0.914, 0.847, 0.772, 0.705, 0.649, 0.597, 0.531, 0.465, 0.4] },
+];
 
 /**
- * Returns the 10-entry lightness ramp appropriate for the given hue, blending
- * linearly between `STANDARD_LIGHTNESS_RAMP` (cool hues) and
- * `BRIGHT_LIGHTNESS_RAMP` (warm/bright hues) according to
- * `brightnessWeight(hue)`.
+ * Returns the 10-entry lightness ramp for the given hue, interpolated between
+ * the lightness ramps of the two closest default Mantine palettes.
  */
 export function lightnessRampForHue(hue: number): number[] {
-  const w = brightnessWeight(hue);
-  return STANDARD_LIGHTNESS_RAMP.map((l, i) => l + w * (BRIGHT_LIGHTNESS_RAMP[i] - l));
+  const h = ((hue % 360) + 360) % 360;
+  const ramps = REFERENCE_LIGHTNESS_RAMPS;
+  let next = ramps.findIndex((item) => item.hue > h);
+  if (next === -1) {
+    next = 0;
+  }
+  const previous = (next - 1 + ramps.length) % ramps.length;
+  const from = ramps[previous];
+  const to = ramps[next];
+  const span = (((to.hue - from.hue) % 360) + 360) % 360 || 360;
+  const distance = (((h - from.hue) % 360) + 360) % 360;
+  const t = distance / span;
+  return from.ramp.map((l, i) => l + t * (to.ramp[i] - l));
 }

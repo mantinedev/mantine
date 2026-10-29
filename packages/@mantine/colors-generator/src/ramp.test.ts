@@ -4,8 +4,8 @@ import {
   DARK_LIGHTNESS_RAMP,
   LIGHTNESS_RAMP,
   STANDARD_LIGHTNESS_RAMP,
-  brightnessWeight,
   lightnessRampForHue,
+  REFERENCE_LIGHTNESS_RAMPS,
 } from './ramp';
 
 describe('@mantine/colors-generator/ramp', () => {
@@ -75,54 +75,28 @@ describe('@mantine/colors-generator/ramp', () => {
     }
   });
 
-  describe('brightnessWeight', () => {
-    it('returns approximately 1 at yellow hue (90°)', () => {
-      expect(brightnessWeight(90)).toBeCloseTo(1, 10);
-    });
-
-    it('returns 0 for blue (255°)', () => {
-      expect(brightnessWeight(255)).toBe(0);
-    });
-
-    it('returns 0 for teal (185°)', () => {
-      expect(brightnessWeight(185)).toBe(0);
-    });
-
-    it('returns 0 at the halfwidth boundary (90 ± 75 = 15° and 165°)', () => {
-      expect(brightnessWeight(15)).toBe(0);
-      expect(brightnessWeight(165)).toBe(0);
-    });
-
-    it('returns a positive weight for lime (130°) which is within the window', () => {
-      const w = brightnessWeight(130);
-      expect(w).toBeGreaterThan(0);
-      expect(w).toBeLessThan(1);
-    });
-
-    it('returns a positive weight for orange (55°) which is within the window', () => {
-      const w = brightnessWeight(55);
-      expect(w).toBeGreaterThan(0);
-      expect(w).toBeLessThan(1);
-    });
-
-    it('is symmetric around 90°', () => {
-      expect(brightnessWeight(90 - 30)).toBeCloseTo(brightnessWeight(90 + 30), 10);
-    });
-  });
-
   describe('lightnessRampForHue', () => {
-    it('returns STANDARD_LIGHTNESS_RAMP values for blue (255°, weight=0)', () => {
-      const ramp = lightnessRampForHue(255);
-      STANDARD_LIGHTNESS_RAMP.forEach((l, i) => {
-        expect(ramp[i]).toBeCloseTo(l, 10);
+    it('returns the reference ramp exactly at a reference hue', () => {
+      REFERENCE_LIGHTNESS_RAMPS.forEach(({ hue, ramp }) => {
+        lightnessRampForHue(hue).forEach((l, i) => expect(l).toBeCloseTo(ramp[i], 10));
       });
     });
 
-    it('returns BRIGHT_LIGHTNESS_RAMP values for yellow (90°, weight=1)', () => {
-      const ramp = lightnessRampForHue(90);
-      BRIGHT_LIGHTNESS_RAMP.forEach((l, i) => {
-        expect(ramp[i]).toBeCloseTo(l, 10);
-      });
+    it('interpolates between the two closest reference hues', () => {
+      const ramp = lightnessRampForHue(140);
+      const lime = lightnessRampForHue(130);
+      const green = lightnessRampForHue(150);
+      ramp.forEach((l, i) => expect(l).toBeCloseTo((lime[i] + green[i]) / 2, 10));
+    });
+
+    it('wraps around the hue circle', () => {
+      const ramp = lightnessRampForHue(7.5);
+      const pink = lightnessRampForHue(350);
+      const red = lightnessRampForHue(25);
+      ramp.forEach((l, i) => expect(l).toBeCloseTo((pink[i] + red[i]) / 2, 10));
+      lightnessRampForHue(365).forEach((l, i) =>
+        expect(l).toBeCloseTo(lightnessRampForHue(5)[i], 10)
+      );
     });
 
     it('yellow/bright hue index-6 lightness is higher than blue index-6 lightness', () => {
