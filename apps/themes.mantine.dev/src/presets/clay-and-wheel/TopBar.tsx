@@ -62,7 +62,9 @@ export function TopBar({ doneCount, outlineOpened, onOutlineToggle }: TopBarProp
           <IconMoon size={18} stroke={1.75} className={classes.moon} />
           <IconSun size={18} stroke={1.75} className={classes.sun} />
         </ActionIcon>
-        <Avatar title="Jess Moreno">JM</Avatar>
+        <Avatar title="Jess Moreno" className={classes.avatar}>
+          JM
+        </Avatar>
       </div>
     </header>
   );

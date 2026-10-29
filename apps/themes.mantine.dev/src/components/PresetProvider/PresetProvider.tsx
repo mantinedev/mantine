@@ -13,6 +13,7 @@ import {
   getGoogleFontsUrl,
   getOverrideShadows,
   getPresetThemeInfo,
+  getThemeExport,
   type GoogleFont,
   loadGoogleFonts,
   loadThemeParams,
@@ -159,6 +160,15 @@ export function PresetProvider({
       postToEditor({ type: 'theme-editor:applied' });
     }
   }, [overrides]);
+
+  useEffect(() => {
+    if (connected) {
+      postToEditor({
+        type: 'theme-editor:export',
+        export: getThemeExport(resolvedTheme, resolver),
+      });
+    }
+  }, [resolvedTheme, resolver, connected]);
 
   return (
     <>

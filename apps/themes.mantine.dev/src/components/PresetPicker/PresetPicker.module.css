@@ -1,6 +1,6 @@
 .target {
   flex: 1;
-  max-width: 380px;
+  max-width: 440px;
   margin-inline-end: auto;
 }
 
@@ -19,26 +19,25 @@
 
 .targetText {
   display: flex;
-  align-items: baseline;
-  gap: var(--mantine-spacing-xs);
+  flex-direction: column;
   min-width: 0;
   overflow: hidden;
   white-space: nowrap;
 }
 
 .targetLabel {
+  overflow: hidden;
+  text-overflow: ellipsis;
   font-weight: var(--mantine-font-weight-medium);
+  line-height: 1.3;
   color: var(--mantine-color-bright);
 }
 
 .targetDescription {
   overflow: hidden;
   text-overflow: ellipsis;
-  font-size: var(--mantine-font-size-sm);
-
-  @media (max-width: 520px) {
-    display: none;
-  }
+  font-size: var(--mantine-font-size-xs);
+  line-height: 1.3;
 }
 
 .dropdown {
@@ -93,6 +92,7 @@
 }
 
 .thumbnail {
+  position: relative;
   display: block;
   aspect-ratio: 16 / 9;
   overflow: hidden;
@@ -100,6 +100,8 @@
   border-radius: var(--mantine-radius-sm);
 
   & img {
+    position: absolute;
+    inset: 0;
     display: block;
     width: 100%;
     height: 100%;
@@ -109,12 +111,12 @@
 
 .light {
   @mixin dark {
-    display: none !important;
+    visibility: hidden;
   }
 }
 
 .dark {
   @mixin light {
-    display: none !important;
+    visibility: hidden;
   }
 }

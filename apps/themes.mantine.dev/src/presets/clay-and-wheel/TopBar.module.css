@@ -66,6 +66,10 @@
 .progressText {
   white-space: nowrap;
 
+  @container preset (max-width: 520px) {
+    display: none;
+  }
+
   & b {
     color: var(--mantine-color-bright);
     font-weight: var(--mantine-font-weight-bold);
@@ -83,6 +87,12 @@
   align-items: center;
   gap: var(--mantine-spacing-xs);
   margin-inline-start: auto;
+}
+
+.avatar {
+  @container preset (max-width: 420px) {
+    display: none;
+  }
 }
 
 .moon {

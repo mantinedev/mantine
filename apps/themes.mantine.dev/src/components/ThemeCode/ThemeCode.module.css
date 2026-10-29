@@ -1,0 +1,34 @@
+.root {
+  height: 100%;
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  gap: var(--mantine-spacing-md);
+  padding: var(--mantine-spacing-md);
+}
+
+.list {
+  padding-inline-start: var(--mantine-spacing-sm);
+}
+
+.stepTitle {
+  font-weight: var(--mantine-font-weight-medium);
+  color: var(--mantine-color-bright);
+  margin-bottom: 2px;
+}
+
+.file {
+  font-family: var(--mantine-font-family-monospace);
+  font-size: var(--mantine-font-size-xs);
+}
+
+.switchLabel {
+  font-weight: var(--mantine-font-weight-medium);
+}
+
+.code {
+  margin-bottom: 300px;
+  border-top: 1px solid var(--mantine-color-default-border);
+}

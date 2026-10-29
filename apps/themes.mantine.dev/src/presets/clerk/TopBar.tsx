@@ -32,7 +32,7 @@ export function TopBar({ pane, onPaneChange, mattersOpened, onOpenMatters }: Top
         <span className={classes.logoMark} aria-hidden="true">
           c
         </span>
-        Clerk
+        <span className={classes.logoText}>Clerk</span>
       </span>
       <span className={classes.firm}>Muir &amp; Calder, Solicitors</span>
 

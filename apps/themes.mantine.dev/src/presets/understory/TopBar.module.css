@@ -9,6 +9,11 @@
   padding: 0 var(--mantine-spacing-lg);
   border-bottom: 1px solid var(--mantine-color-border);
   background: var(--mantine-color-surface-panel);
+
+  @container preset (max-width: 520px) {
+    gap: var(--mantine-spacing-sm);
+    padding: 0 var(--mantine-spacing-md);
+  }
 }
 
 .brand {
@@ -25,6 +30,12 @@
 .logo {
   width: 28px;
   height: 28px;
+}
+
+.brandName {
+  @container preset (max-width: 420px) {
+    display: none;
+  }
 }
 
 .crumb {

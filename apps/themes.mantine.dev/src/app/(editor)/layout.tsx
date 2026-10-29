@@ -1,10 +1,12 @@
 import '@mantine/core/styles.css';
+import '@mantine/code-highlight/styles.css';
 import '@mantinex/mantine-header/styles.css';
 import '@mantinex/mantine-logo/styles.css';
 
 import type { Metadata } from 'next';
 import { NuqsAdapter } from 'nuqs/adapters/next/app';
 import { ColorSchemeScript, MantineProvider, mantineHtmlProps } from '@mantine/core';
+import { HighlightProvider } from '@/components/HighlightProvider';
 import { theme } from '@/theme';
 
 const socialPreview =
@@ -40,7 +42,9 @@ export default function RootLayout({ children }: RootLayoutProps) {
       </head>
       <body>
         <NuqsAdapter>
-          <MantineProvider theme={theme}>{children}</MantineProvider>
+          <MantineProvider theme={theme}>
+            <HighlightProvider>{children}</HighlightProvider>
+          </MantineProvider>
         </NuqsAdapter>
       </body>
     </html>

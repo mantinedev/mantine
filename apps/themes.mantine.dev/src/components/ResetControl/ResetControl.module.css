@@ -1,0 +1,6 @@
+.control {
+  &:disabled {
+    opacity: var(--mantine-disabled-opacity);
+    cursor: not-allowed;
+  }
+}

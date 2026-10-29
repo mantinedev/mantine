@@ -1,0 +1,1 @@
+export { HighlightProvider } from './HighlightProvider';

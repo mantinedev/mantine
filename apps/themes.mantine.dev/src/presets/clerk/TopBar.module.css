@@ -7,6 +7,11 @@
   padding: 0 var(--mantine-spacing-lg);
   background: var(--clerk-surface);
   border-bottom: 1px solid var(--mantine-color-border);
+
+  @container preset (max-width: 520px) {
+    gap: var(--mantine-spacing-sm);
+    padding: 0 var(--mantine-spacing-md);
+  }
 }
 
 .mattersButton {
@@ -39,6 +44,12 @@
   font-style: italic;
   font-size: 16px;
   line-height: 1;
+}
+
+.logoText {
+  @container preset (max-width: 420px) {
+    display: none;
+  }
 }
 
 .firm {

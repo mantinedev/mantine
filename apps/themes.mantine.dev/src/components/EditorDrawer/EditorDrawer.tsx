@@ -25,7 +25,7 @@ export function EditorDrawer({
       onExitTransitionEnd={onExitTransitionEnd}
       title={title}
       position="left"
-      size={360}
+      size={400}
       withOverlay={false}
       lockScroll={false}
       trapFocus={false}

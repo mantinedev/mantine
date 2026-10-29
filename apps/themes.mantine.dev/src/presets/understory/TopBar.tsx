@@ -30,7 +30,7 @@ export function TopBar({ pane, onPaneChange, onShare }: TopBarProps) {
             strokeLinejoin="round"
           />
         </svg>
-        Understory
+        <span className={classes.brandName}>Understory</span>
       </span>
 
       <span className={classes.crumb}>

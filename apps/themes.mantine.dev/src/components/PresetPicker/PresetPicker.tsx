@@ -1,5 +1,6 @@
 'use client';
 
+import { useEffect } from 'react';
 import { Combobox, InputBase, ScrollArea, Text, useCombobox } from '@mantine/core';
 import { type Preset, type PresetCategory, presets } from '@/presets';
 import classes from './PresetPicker.module.css';
@@ -14,28 +15,54 @@ const CATEGORIES: PresetCategory[] = [
   'AI',
 ];
 
+const SCHEMES = ['light', 'dark'] as const;
+
+function getPreviewUrl(presetId: string, scheme: (typeof SCHEMES)[number]) {
+  return `/previews/${presetId}-${scheme}.webp`;
+}
+
+function usePreviewsWarmup() {
+  useEffect(() => {
+    const images: HTMLImageElement[] = [];
+    const warm = () => {
+      presets.forEach((preset) => {
+        SCHEMES.forEach((scheme) => {
+          const image = new Image();
+          image.decoding = 'async';
+          image.fetchPriority = 'low';
+          image.src = getPreviewUrl(preset.id, scheme);
+          images.push(image);
+        });
+      });
+    };
+
+    const timeout = window.setTimeout(warm, 1000);
+    return () => {
+      window.clearTimeout(timeout);
+      images.length = 0;
+    };
+  }, []);
+}
+
 interface PresetThumbnailProps {
   preset: Preset;
+  eager?: boolean;
   className?: string;
 }
 
-function PresetThumbnail({ preset, className }: PresetThumbnailProps) {
+function PresetThumbnail({ preset, eager, className }: PresetThumbnailProps) {
   return (
     <span className={`${classes.thumbnail} ${className ?? ''}`}>
-      <img
-        src={`/previews/${preset.id}-light.webp`}
-        alt=""
-        loading="lazy"
-        decoding="async"
-        className={classes.light}
-      />
-      <img
-        src={`/previews/${preset.id}-dark.webp`}
-        alt=""
-        loading="lazy"
-        decoding="async"
-        className={classes.dark}
-      />
+      {SCHEMES.map((scheme) => (
+        <img
+          key={scheme}
+          src={getPreviewUrl(preset.id, scheme)}
+          alt=""
+          loading={eager ? 'eager' : 'lazy'}
+          decoding="async"
+          className={classes[scheme]}
+        />
+      ))}
     </span>
   );
 }
@@ -52,6 +79,7 @@ export function PresetPicker({ value, onChange }: PresetPickerProps) {
   });
 
   const current = presets.find((preset) => preset.id === value) ?? presets[0];
+  usePreviewsWarmup();
 
   return (
     <Combobox
@@ -63,6 +91,7 @@ export function PresetPicker({ value, onChange }: PresetPickerProps) {
       floatingStrategy="fixed"
       position="bottom-start"
       width="min(640px, calc(100vw - 32px))"
+      middlewares={{ shift: { padding: 16 } }}
     >
       <Combobox.Target targetType="button">
         <InputBase
@@ -76,7 +105,7 @@ export function PresetPicker({ value, onChange }: PresetPickerProps) {
           className={classes.target}
           classNames={{ input: classes.targetInput }}
         >
-          <PresetThumbnail preset={current} className={classes.targetThumbnail} />
+          <PresetThumbnail preset={current} eager className={classes.targetThumbnail} />
           <span className={classes.targetText}>
             <span className={classes.targetLabel}>{current.label}</span>
             <span className={classes.targetDescription}>{current.description}</span>

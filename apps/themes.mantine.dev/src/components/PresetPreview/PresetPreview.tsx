@@ -20,6 +20,7 @@ import {
 } from '@/preview';
 import { PresetPicker } from '../PresetPicker';
 import { useShell } from '../Shell';
+import type { ThemeExportState } from '../ThemeCode';
 import { useThemeDraft } from '../ThemeEditor/ThemeDraft.context';
 import classes from './PresetPreview.module.css';
 
@@ -30,9 +31,10 @@ function getFrameUrl(presetId: string, overrides: ThemeOverrides) {
 
 interface PresetPreviewProps {
   onReady: (info: PresetThemeInfo) => void;
+  onExport: (state: ThemeExportState) => void;
 }
 
-export function PresetPreview({ onReady }: PresetPreviewProps) {
+export function PresetPreview({ onReady, onExport }: PresetPreviewProps) {
   const { presetId, overrides, setParams, selectPreset } = useEditorParams();
   const { draft } = useThemeDraft();
   const previewOverrides = useMemo(
@@ -88,6 +90,8 @@ export function PresetPreview({ onReady }: PresetPreviewProps) {
         postState();
       } else if (message.type === 'theme-editor:applied') {
         setApplied(true);
+      } else if (message.type === 'theme-editor:export') {
+        onExport({ presetId, value: message.export });
       } else if (message.type === 'theme-editor:resize') {
         setHeight(message.height);
       } else if (message.type === 'theme-editor:toggle-color-scheme') {
@@ -101,10 +105,12 @@ export function PresetPreview({ onReady }: PresetPreviewProps) {
     window.addEventListener('message', handleMessage);
     return () => window.removeEventListener('message', handleMessage);
   }, [
+    presetId,
     overrides,
     previewOverrides,
     colorScheme,
     onReady,
+    onExport,
     setParams,
     setColorScheme,
     toggleColorScheme,

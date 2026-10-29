@@ -1,16 +1,6 @@
 'use client';
 
-import {
-  Accordion,
-  Button,
-  Divider,
-  ScrollArea,
-  Select,
-  SimpleGrid,
-  Stack,
-  Title,
-} from '@mantine/core';
-import { hasPresetValues } from '@/hooks/preset-storage';
+import { Accordion, Divider, ScrollArea, Select, SimpleGrid, Stack } from '@mantine/core';
 import { useEditorParams } from '@/hooks/use-editor-params';
 import {
   HEADING_WRAPS,
@@ -38,8 +28,7 @@ interface EditorSidebarProps {
 }
 
 export function EditorSidebar({ info, loading }: EditorSidebarProps) {
-  const { overrides, setParams, resetPreset } = useEditorParams();
-  const changed = hasPresetValues(overrides);
+  const { overrides, setParams } = useEditorParams();
 
   const scale = (group: ScaleGroup, label?: string) => (
     <ScaleControl
@@ -70,117 +59,110 @@ export function EditorSidebar({ info, loading }: EditorSidebarProps) {
   );
 
   return (
-    <ScrollArea className={classes.root} scrollbarSize={4} offsetScrollbars="y">
-      <div className={classes.header}>
-        <Title order={2} size="h4" className={classes.title}>
-          Theme
-        </Title>
-        <Button variant="default" size="xs" onClick={resetPreset} disabled={!changed}>
-          Reset
-        </Button>
+    <ScrollArea className={classes.root} scrollbarSize={4}>
+      <div className={classes.content}>
+        <Accordion
+          multiple
+          defaultValue={PANELS}
+          chevronPosition="right"
+          classNames={{
+            item: classes.panel,
+            control: classes.panelControl,
+            label: classes.panelLabel,
+            content: classes.panelContent,
+          }}
+        >
+          <Accordion.Item value="colors">
+            <Accordion.Control>Colors</Accordion.Control>
+            <Accordion.Panel>
+              <ColorsPanel
+                info={info}
+                loading={loading}
+                overrides={overrides}
+                setParams={setParams}
+              />
+            </Accordion.Panel>
+          </Accordion.Item>
+
+          <Accordion.Item value="typography">
+            <Accordion.Control>Typography</Accordion.Control>
+            <Accordion.Panel>
+              <Stack gap="md">
+                <FontPicker
+                  label="Body font"
+                  defaultFamily={info?.fonts.body ?? ''}
+                  value={overrides.font}
+                  onChange={(font) => setParams({ font })}
+                />
+                <FontPicker
+                  label="Monospace font"
+                  defaultFamily={info?.fonts.mono ?? ''}
+                  value={overrides.monoFont}
+                  onChange={(monoFont) => setParams({ monoFont })}
+                />
+                <Divider />
+                {scale('fontSizes')}
+                <Divider />
+                {scale('lineHeights')}
+                <Divider />
+                <SimpleGrid cols={3} spacing="xs">
+                  {weightSelect('Regular', 'fontWeightRegular', info?.fontWeights.regular)}
+                  {weightSelect('Medium', 'fontWeightMedium', info?.fontWeights.medium)}
+                  {weightSelect('Bold', 'fontWeightBold', info?.fontWeights.bold)}
+                </SimpleGrid>
+              </Stack>
+            </Accordion.Panel>
+          </Accordion.Item>
+
+          <Accordion.Item value="headings">
+            <Accordion.Control>Headings</Accordion.Control>
+            <Accordion.Panel>
+              <Stack gap="md">
+                <FontPicker
+                  label="Headings font"
+                  defaultFamily={info?.fonts.headings ?? ''}
+                  value={overrides.headingsFont}
+                  onChange={(headingsFont) => setParams({ headingsFont })}
+                />
+                {weightSelect('Headings weight', 'headingsWeight', info?.headingsWeight)}
+                <Select
+                  label="Text wrap"
+                  data={HEADING_WRAPS.map((value) => ({ value, label: capitalize(value) }))}
+                  value={overrides.headingsWrap ?? info?.headingsWrap ?? 'wrap'}
+                  onChange={(value) =>
+                    setParams({ headingsWrap: value as ThemeOverrides['headingsWrap'] })
+                  }
+                  allowDeselect={false}
+                  comboboxProps={{ withinPortal: false }}
+                />
+                {scale('headingSizes')}
+                {scale('headingLineHeights')}
+              </Stack>
+            </Accordion.Panel>
+          </Accordion.Item>
+
+          <Accordion.Item value="layout">
+            <Accordion.Control>Spacing, radius and shadows</Accordion.Control>
+            <Accordion.Panel>
+              <Stack gap="md">
+                {scale('spacing', 'Spacing')}
+                <Divider />
+                {scale('radius', 'Radius')}
+                <Select
+                  label="Default radius"
+                  data={info?.scales.radius.map((item) => item.key) ?? []}
+                  value={overrides.defaultRadius ?? (info?.defaultRadius || null)}
+                  onChange={(defaultRadius) => setParams({ defaultRadius })}
+                  allowDeselect={false}
+                  comboboxProps={{ withinPortal: false }}
+                />
+                <Divider />
+                <ShadowsControl info={info} overrides={overrides} setParams={setParams} />
+              </Stack>
+            </Accordion.Panel>
+          </Accordion.Item>
+        </Accordion>
       </div>
-
-      <Accordion
-        multiple
-        defaultValue={PANELS}
-        chevronPosition="right"
-        classNames={{
-          item: classes.panel,
-          control: classes.panelControl,
-          label: classes.panelLabel,
-          content: classes.panelContent,
-        }}
-      >
-        <Accordion.Item value="colors">
-          <Accordion.Control>Colors</Accordion.Control>
-          <Accordion.Panel>
-            <ColorsPanel
-              info={info}
-              loading={loading}
-              overrides={overrides}
-              setParams={setParams}
-            />
-          </Accordion.Panel>
-        </Accordion.Item>
-
-        <Accordion.Item value="typography">
-          <Accordion.Control>Typography</Accordion.Control>
-          <Accordion.Panel>
-            <Stack gap="md">
-              <FontPicker
-                label="Body font"
-                defaultFamily={info?.fonts.body ?? ''}
-                value={overrides.font}
-                onChange={(font) => setParams({ font })}
-              />
-              <FontPicker
-                label="Monospace font"
-                defaultFamily={info?.fonts.mono ?? ''}
-                value={overrides.monoFont}
-                onChange={(monoFont) => setParams({ monoFont })}
-              />
-              <Divider />
-              {scale('fontSizes')}
-              <Divider />
-              {scale('lineHeights')}
-              <Divider />
-              <SimpleGrid cols={3} spacing="xs">
-                {weightSelect('Regular', 'fontWeightRegular', info?.fontWeights.regular)}
-                {weightSelect('Medium', 'fontWeightMedium', info?.fontWeights.medium)}
-                {weightSelect('Bold', 'fontWeightBold', info?.fontWeights.bold)}
-              </SimpleGrid>
-            </Stack>
-          </Accordion.Panel>
-        </Accordion.Item>
-
-        <Accordion.Item value="headings">
-          <Accordion.Control>Headings</Accordion.Control>
-          <Accordion.Panel>
-            <Stack gap="md">
-              <FontPicker
-                label="Headings font"
-                defaultFamily={info?.fonts.headings ?? ''}
-                value={overrides.headingsFont}
-                onChange={(headingsFont) => setParams({ headingsFont })}
-              />
-              {weightSelect('Headings weight', 'headingsWeight', info?.headingsWeight)}
-              <Select
-                label="Text wrap"
-                data={HEADING_WRAPS.map((value) => ({ value, label: capitalize(value) }))}
-                value={overrides.headingsWrap ?? info?.headingsWrap ?? 'wrap'}
-                onChange={(value) =>
-                  setParams({ headingsWrap: value as ThemeOverrides['headingsWrap'] })
-                }
-                allowDeselect={false}
-                comboboxProps={{ withinPortal: false }}
-              />
-              {scale('headingSizes')}
-              {scale('headingLineHeights')}
-            </Stack>
-          </Accordion.Panel>
-        </Accordion.Item>
-
-        <Accordion.Item value="layout">
-          <Accordion.Control>Spacing, radius and shadows</Accordion.Control>
-          <Accordion.Panel>
-            <Stack gap="md">
-              {scale('spacing', 'Spacing')}
-              <Divider />
-              {scale('radius', 'Radius')}
-              <Select
-                label="Default radius"
-                data={info?.scales.radius.map((item) => item.key) ?? []}
-                value={overrides.defaultRadius ?? (info?.defaultRadius || null)}
-                onChange={(defaultRadius) => setParams({ defaultRadius })}
-                allowDeselect={false}
-                comboboxProps={{ withinPortal: false }}
-              />
-              <Divider />
-              <ShadowsControl info={info} overrides={overrides} setParams={setParams} />
-            </Stack>
-          </Accordion.Panel>
-        </Accordion.Item>
-      </Accordion>
     </ScrollArea>
   );
 }

@@ -1,0 +1,44 @@
+.tabs {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.tabsList {
+  flex-shrink: 0;
+  gap: var(--mantine-spacing-xs);
+  padding: var(--mantine-spacing-md);
+  border-bottom: 1px solid var(--mantine-color-default-border);
+}
+
+.tab {
+  height: 42px;
+  border: 1px solid var(--mantine-color-default-border);
+  font-size: var(--mantine-font-size-sm);
+  font-weight: var(--mantine-font-weight-bold);
+  color: var(--mantine-color-bright);
+  background-color: light-dark(var(--mantine-color-white), var(--mantine-color-dark-7));
+
+  @mixin hover {
+    background-color: light-dark(var(--mantine-color-gray-0), var(--mantine-color-dark-6));
+  }
+
+  &[data-active] {
+    border-color: transparent;
+    color: light-dark(var(--mantine-color-white), var(--mantine-color-black));
+    background-color: light-dark(var(--mantine-color-gray-9), var(--mantine-color-gray-1));
+
+    .tabIcon {
+      color: inherit;
+    }
+  }
+}
+
+.tabIcon {
+  color: light-dark(var(--mantine-color-gray-6), var(--mantine-color-dark-1));
+}
+
+.tabsPanel {
+  flex: 1;
+  min-height: 0;
+}
