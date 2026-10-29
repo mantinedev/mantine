@@ -638,6 +638,8 @@ with the same font size as other inputs:
 - [Avatar.Group](/core/avatar) now supports `max` prop: avatars that do not fit are replaced with a `+N` counter.
 - [Badge](/core/badge) with `variant="dot"` no longer renders `leftSection`.
 - [Breadcrumbs](/core/breadcrumbs) and [Pagination](/core/pagination) root elements are now `nav` landmarks.
+- [Chip](/core/chip), [Switch](/core/switch) and [Slider](/core/slider) now follow `theme.autoContrast`: chip text, switch thumb and inner labels, filled slider thumb icons adjust to the control color.
+- Selected options in [Combobox](/core/combobox) dropdowns and active [TimePicker](/dates/time-picker) controls use the primary color contrast color.
 - [ColorPicker](/core/color-picker) now follows `theme.defaultRadius`.
 - [Drawer](/core/drawer) now supports `fullScreen` prop.
 - [Input](/core/input) rendered inside another input's section (for example, `NativeSelect` in the `rightSection` of `NumberInput`) no longer inherits the outer input's section width, error color and size styles.
