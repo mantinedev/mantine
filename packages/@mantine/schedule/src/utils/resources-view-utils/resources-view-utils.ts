@@ -9,6 +9,7 @@ export function getInlineTimeAxisEventStyle(input: {
   start: number;
   span: number;
   minSize?: number;
+  trailingGap?: number;
 }): CSSProperties {
   const style = getTimeAxisEventStyle(input);
   return { insetInlineStart: style.left, insetInlineEnd: style.right, minWidth: style.minWidth };

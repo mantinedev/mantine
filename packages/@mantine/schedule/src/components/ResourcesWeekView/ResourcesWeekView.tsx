@@ -989,6 +989,7 @@ export const ResourcesWeekView = factory<ResourcesWeekViewFactory>((_props) => {
                 start: eventLeft,
                 span: eventWidth,
                 minSize: minEventSize,
+                trailingGap: 1,
               }),
               top: adjustPosition
                 ? `calc((100% - 22px) * ${event.position.column} / ${maxEventsPerTimeSlot})`
@@ -1018,7 +1019,7 @@ export const ResourcesWeekView = factory<ResourcesWeekViewFactory>((_props) => {
                     }
                   : undefined
               }
-              style={{ width: '100%', height: '100%', padding: 0 }}
+              style={{ width: '100%', height: '100%', paddingInline: 0 }}
             />
             {isResizable && mode !== 'static' && (
               <>

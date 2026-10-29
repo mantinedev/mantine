@@ -50,4 +50,19 @@ describe('@mantine/schedule/get-time-axis-event-style', () => {
     expect(long.bottom).toBe('70%');
     expect(short.top).toBe('10%');
   });
+
+  it('keeps the requested gaps off the leading and trailing grid lines', () => {
+    expect(
+      getTimeAxisEventStyle({ start: 10, span: 20, axis: 'vertical', leadingGap: 1 })
+    ).toStrictEqual({
+      top: 'calc(10% + 1px)',
+      bottom: '70%',
+      minHeight: '1px',
+    });
+    expect(getTimeAxisEventStyle({ start: 10, span: 20, trailingGap: 1 })).toStrictEqual({
+      left: '10%',
+      right: 'calc(70% + 1px)',
+      minWidth: '1px',
+    });
+  });
 });

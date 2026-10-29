@@ -1647,7 +1647,7 @@ describe('@mantine/schedule/ResourcesDayView', () => {
       .getByText('Logical')
       .closest('.mantine-ResourcesDayView-resourcesDayViewEventWrapper') as HTMLElement;
     expect(wrapper.style.insetInlineStart).toBe('25%');
-    expect(wrapper.style.insetInlineEnd).toBe('50%');
+    expect(wrapper.style.insetInlineEnd).toBe('calc(50% + 1px)');
     expect(wrapper.style.left).toBe('');
     expect(wrapper.style.right).toBe('');
   });

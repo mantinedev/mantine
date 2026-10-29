@@ -958,6 +958,7 @@ export const DayView = factory<DayViewFactory>((_props) => {
               start: resizePosition ? resizePosition.top : event.position.top,
               span: resizePosition ? resizePosition.height : event.position.height,
               axis: 'vertical',
+              leadingGap: 1,
             }),
             width: '100%',
           },

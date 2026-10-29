@@ -1065,6 +1065,7 @@ export const WeekView = factory<WeekViewFactory>((_props) => {
               start: eventTop,
               span: eventHeight,
               axis: 'vertical',
+              leadingGap: 1,
             }),
             left: `${event.position.offset}%`,
             width: `${event.position.width}%`,
