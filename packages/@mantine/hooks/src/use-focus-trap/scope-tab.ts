@@ -2,6 +2,7 @@ import { findTabbableDescendants } from './tabbable';
 
 const NATIVE_TAB_STOPS_INPUT_TYPES = ['date', 'time', 'datetime-local', 'month', 'week'];
 const NATIVE_TAB_STOPS_NODES = ['audio', 'video', 'iframe', 'object', 'embed'];
+const TEXT_INPUT_TYPES = ['text', 'search', 'url', 'tel', 'password', 'email', 'number'];
 
 function isRadio(element: Element | null): element is HTMLInputElement {
   return !!element && element.tagName === 'INPUT' && (element as HTMLInputElement).type === 'radio';
@@ -9,6 +10,12 @@ function isRadio(element: Element | null): element is HTMLInputElement {
 
 function isSameRadioGroup(a: HTMLInputElement, b: HTMLInputElement) {
   return a.name !== '' && a.name === b.name && a.form === b.form;
+}
+
+function isTextInput(element: Element): element is HTMLInputElement {
+  return (
+    element.tagName === 'INPUT' && TEXT_INPUT_TYPES.includes((element as HTMLInputElement).type)
+  );
 }
 
 function hasNativeTabStops(element: Element) {
@@ -83,6 +90,9 @@ function focusFirstAvailable(candidates: HTMLElement[], root: DocumentOrShadowRo
     candidate.focus();
 
     if (root.activeElement === candidate) {
+      if (isTextInput(candidate)) {
+        candidate.select();
+      }
       return;
     }
   }

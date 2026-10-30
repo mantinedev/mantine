@@ -233,4 +233,38 @@ describe('@mantine/hooks/use-focus-trap/scope-tab', () => {
     expect(event.defaultPrevented).toBe(true);
     expect(node).toHaveFocus();
   });
+
+  it('selects the value of a text input it moves focus to, like native Tab', () => {
+    const { el, tab } = setup(`
+      <input id="first" value="first value" />
+      <button id="middle">middle</button>
+      <input id="last" value="100,00" />
+    `);
+    const first = el('first') as HTMLInputElement;
+    const last = el('last') as HTMLInputElement;
+
+    el('middle').focus();
+    tab();
+    expect(last).toHaveFocus();
+    expect([last.selectionStart, last.selectionEnd]).toEqual([0, last.value.length]);
+
+    el('middle').focus();
+    tab(true);
+    expect(first).toHaveFocus();
+    expect([first.selectionStart, first.selectionEnd]).toEqual([0, first.value.length]);
+  });
+
+  it('keeps the caret position of a textarea it moves focus to, like native Tab', () => {
+    const { el, tab } = setup(`
+      <button id="close">close</button>
+      <textarea id="notes">first line</textarea>
+    `);
+    const notes = el('notes') as HTMLTextAreaElement;
+    notes.setSelectionRange(5, 5);
+
+    el('close').focus();
+    tab();
+    expect(notes).toHaveFocus();
+    expect([notes.selectionStart, notes.selectionEnd]).toEqual([5, 5]);
+  });
 });
