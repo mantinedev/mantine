@@ -19,10 +19,10 @@ export type {
   NotificationsStore,
   PromiseNotificationData,
   PromiseNotificationOptions,
-} from './notifications.store';
+} from './notifications.store.js';
 export type {
   NotificationsCssVariables,
   NotificationsFactory,
   NotificationsProps,
   NotificationsStylesNames,
-} from './Notifications';
+} from './Notifications.js';

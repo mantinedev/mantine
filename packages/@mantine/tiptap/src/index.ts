@@ -1,20 +1,20 @@
-import type { ResolvedRichTextEditorLabels, RichTextEditorLabels } from './labels';
+import type { ResolvedRichTextEditorLabels, RichTextEditorLabels } from './labels.js';
 import type {
   RichTextEditorFactory,
   RichTextEditorProps,
   RichTextEditorStylesNames,
-} from './RichTextEditor';
-import type { RichTextEditorContentProps } from './RichTextEditorContent/RichTextEditorContent';
-import type { RichTextEditorColorControlProps } from './RichTextEditorControl/RichTextEditorColorControl';
-import type { RichTextEditorControlProps } from './RichTextEditorControl/RichTextEditorControl';
-import type { RichTextEditorDetailsControlProps } from './RichTextEditorControl/RichTextEditorDetailsControl';
-import type { RichTextEditorImageUploadControlProps } from './RichTextEditorControl/RichTextEditorImageUploadControl';
-import type { RichTextEditorInvisibleCharactersControlProps } from './RichTextEditorControl/RichTextEditorInvisibleCharactersControl';
-import type { RichTextEditorLinkControlProps } from './RichTextEditorControl/RichTextEditorLinkControl';
-import type { RichTextEditorSourceCodeControlProps } from './RichTextEditorControl/RichTextEditorSourceCodeControl';
-import type { RichTextEditorTableInsertControlProps } from './RichTextEditorControl/RichTextEditorTableInsertControl';
-import type { RichTextEditorControlsGroupProps } from './RichTextEditorControlsGroup/RichTextEditorControlsGroup';
-import type { RichTextEditorToolbarProps } from './RichTextEditorToolbar/RichTextEditorToolbar';
+} from './RichTextEditor.js';
+import type { RichTextEditorContentProps } from './RichTextEditorContent/RichTextEditorContent.js';
+import type { RichTextEditorColorControlProps } from './RichTextEditorControl/RichTextEditorColorControl.js';
+import type { RichTextEditorControlProps } from './RichTextEditorControl/RichTextEditorControl.js';
+import type { RichTextEditorDetailsControlProps } from './RichTextEditorControl/RichTextEditorDetailsControl.js';
+import type { RichTextEditorImageUploadControlProps } from './RichTextEditorControl/RichTextEditorImageUploadControl.js';
+import type { RichTextEditorInvisibleCharactersControlProps } from './RichTextEditorControl/RichTextEditorInvisibleCharactersControl.js';
+import type { RichTextEditorLinkControlProps } from './RichTextEditorControl/RichTextEditorLinkControl.js';
+import type { RichTextEditorSourceCodeControlProps } from './RichTextEditorControl/RichTextEditorSourceCodeControl.js';
+import type { RichTextEditorTableInsertControlProps } from './RichTextEditorControl/RichTextEditorTableInsertControl.js';
+import type { RichTextEditorControlsGroupProps } from './RichTextEditorControlsGroup/RichTextEditorControlsGroup.js';
+import type { RichTextEditorToolbarProps } from './RichTextEditorToolbar/RichTextEditorToolbar.js';
 
 export * from './extensions/index.js';
 export { RichTextEditor } from './RichTextEditor.js';
