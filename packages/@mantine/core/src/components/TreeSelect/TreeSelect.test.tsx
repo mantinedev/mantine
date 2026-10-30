@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { fireEvent } from '@testing-library/react';
 import {
   externalInputFill,
   inputDefaultProps,
@@ -260,6 +261,15 @@ describe('@mantine/core/TreeSelect', () => {
       );
       await userEvent.click(screen.getByRole('textbox'));
       await userEvent.keyboard('{Backspace}');
+      expect(screen.getByText('Apple', { selector: '.mantine-Pill-label' })).toBeInTheDocument();
+      expect(screen.getByText('Milk', { selector: '.mantine-Pill-label' })).toBeInTheDocument();
+    });
+
+    it('does not remove last value when backspace is pressed during IME composition', () => {
+      render(
+        <TreeSelect {...defaultProps} mode="multiple" defaultValue={['apple', 'milk']} searchable />
+      );
+      fireEvent.keyDown(screen.getByRole('textbox'), { key: 'Backspace', isComposing: true });
       expect(screen.getByText('Apple', { selector: '.mantine-Pill-label' })).toBeInTheDocument();
       expect(screen.getByText('Milk', { selector: '.mantine-Pill-label' })).toBeInTheDocument();
     });
