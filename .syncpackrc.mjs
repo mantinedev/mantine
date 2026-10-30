@@ -21,6 +21,7 @@ const config = {
     'workspaces',
     'scripts',
     'peerDependencies',
+    'peerDependenciesMeta',
     'dependencies',
     'devDependencies',
   ],
