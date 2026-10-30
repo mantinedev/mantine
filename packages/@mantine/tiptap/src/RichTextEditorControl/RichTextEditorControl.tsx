@@ -44,6 +44,7 @@ export const RichTextEditorControl = factory<RichTextEditorControlFactory>((_pro
     vars,
     interactive,
     active,
+    'aria-pressed': ariaPressed,
     onMouseDown,
     disabled,
     ...others
@@ -60,7 +61,7 @@ export const RichTextEditorControl = factory<RichTextEditorControlFactory>((_pro
       data-interactive={interactive || undefined}
       data-disabled={disabled || undefined}
       data-active={active || undefined}
-      aria-pressed={(active && interactive) || undefined}
+      aria-pressed={ariaPressed ?? (interactive ? !!active : undefined)}
       aria-hidden={!interactive || undefined}
       unstyled={ctx.unstyled}
       variant={ctx.variant || 'default'}
