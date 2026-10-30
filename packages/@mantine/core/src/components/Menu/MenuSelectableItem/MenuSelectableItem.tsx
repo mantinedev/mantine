@@ -103,7 +103,7 @@ export function MenuSelectableItem({
       role={role}
       aria-checked={checked}
       disabled={disabled}
-      aria-disabled={disabled || dataDisabled || undefined}
+      aria-disabled={others['aria-disabled'] ?? (disabled || dataDisabled || undefined)}
       data-menu-item
       data-checked={checked || undefined}
       data-disabled={disabled || dataDisabled || undefined}
