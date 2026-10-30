@@ -5,20 +5,20 @@ import type {
   SpotlightFilterFunction,
   SpotlightProps,
   SpotlightStylesNames,
-} from './Spotlight';
-import type { SpotlightActionProps, SpotlightActionStylesNames } from './SpotlightAction';
+} from './Spotlight.js';
+import type { SpotlightActionProps, SpotlightActionStylesNames } from './SpotlightAction.js';
 import type {
   SpotlightActionsGroupProps,
   SpotlightActionsGroupStylesNames,
-} from './SpotlightActionsGroup';
+} from './SpotlightActionsGroup.js';
 import type {
   SpotlightActionsListProps,
   SpotlightActionsListStylesNames,
-} from './SpotlightActionsList';
-import type { SpotlightEmptyProps, SpotlightEmptyStylesNames } from './SpotlightEmpty';
-import type { SpotlightFooterProps, SpotlightFooterStylesNames } from './SpotlightFooter';
-import type { SpotlightRootProps, SpotlightRootStylesNames } from './SpotlightRoot';
-import type { SpotlightSearchProps, SpotlightSearchStylesNames } from './SpotlightSearch';
+} from './SpotlightActionsList.js';
+import type { SpotlightEmptyProps, SpotlightEmptyStylesNames } from './SpotlightEmpty.js';
+import type { SpotlightFooterProps, SpotlightFooterStylesNames } from './SpotlightFooter.js';
+import type { SpotlightRootProps, SpotlightRootStylesNames } from './SpotlightRoot.js';
+import type { SpotlightSearchProps, SpotlightSearchStylesNames } from './SpotlightSearch.js';
 
 export {
   spotlight,

@@ -23,4 +23,4 @@ export * from './BulletChart/index.js';
 export * from './GaugeChart/index.js';
 export * from './WaffleChart/index.js';
 export * from './MatrixChart/index.js';
-export * from './types';
+export * from './types.js';

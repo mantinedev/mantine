@@ -11,7 +11,7 @@ export {
   modals,
 } from './events.js';
 
-export type { ModalsProviderProps } from './ModalsProvider';
+export type { ModalsProviderProps } from './ModalsProvider.js';
 export type {
   ContextModalProps,
   MantineModalsOverride,
@@ -20,5 +20,5 @@ export type {
   ModalSettings,
   OpenConfirmModal,
   OpenContextModal,
-} from './context';
-export type { ConfirmModalProps } from './ConfirmModal';
+} from './context.js';
+export type { ConfirmModalProps } from './ConfirmModal.js';
