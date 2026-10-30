@@ -724,6 +724,10 @@ export function useMask(options: UseMaskOptions): UseMaskReturnValue {
 
   const handleKeyDown = useCallback(
     (e: KeyboardEvent) => {
+      if (typeof e.key !== 'string') {
+        return;
+      }
+
       const input = e.target as HTMLInputElement;
       const opts = optionsRef.current;
 
