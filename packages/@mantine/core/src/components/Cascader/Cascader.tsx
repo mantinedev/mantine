@@ -486,6 +486,10 @@ export const Cascader = factory<CascaderFactory>((_props) => {
   const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
     onKeyDown?.(event);
 
+    if (event.nativeEvent.isComposing || event.nativeEvent.keyCode === 229) {
+      return;
+    }
+
     if (event.key === 'Escape') {
       combobox.closeDropdown();
       return;
