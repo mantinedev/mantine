@@ -39,4 +39,8 @@ describe('@mantine/core/rgba', () => {
       'color-mix(in srgb, var(--color-primary), transparent 26%)'
     );
   });
+
+  it('preserves color channels from a four-digit hex string', () => {
+    expect(rgba('#1a28', 0.4)).toBe('rgba(17, 170, 34, 0.4)');
+  });
 });
