@@ -178,7 +178,7 @@ export function useTour({
     middleware: [
       offset(12),
       flip(isSidePlacement ? { fallbackAxisSideDirection: 'end' } : undefined),
-      shift({ padding: 8 }),
+      shift({ padding: 8, crossAxis: true }),
       size({
         padding: 8,
         apply({ availableWidth, placement }) {
