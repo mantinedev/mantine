@@ -1,5 +1,6 @@
 import { createRef } from 'react';
-import { createContextContainer, renderWithAct, screen } from '@mantine-tests/core';
+import { act } from '@testing-library/react';
+import { createContextContainer, renderWithAct, screen, wait } from '@mantine-tests/core';
 import { Tour } from '../Tour';
 import { TourTooltip, TourTooltipProps } from './TourTooltip';
 
@@ -47,6 +48,37 @@ describe('@mantine/core/TourTooltip', () => {
   it('sets data-centered when targetElement is not provided', async () => {
     await renderWithAct(<TestContainer {...defaultProps} />);
     expect(screen.getByRole('dialog')).toHaveAttribute('data-centered');
+  });
+
+  it('keeps the tooltip inside the viewport when the target has no room on any side', async () => {
+    jest.spyOn(document.documentElement, 'clientWidth', 'get').mockReturnValue(1000);
+    jest.spyOn(document.documentElement, 'clientHeight', 'get').mockReturnValue(800);
+    const target = document.createElement('div');
+    document.body.appendChild(target);
+    jest.spyOn(target, 'getBoundingClientRect').mockReturnValue({
+      top: 0,
+      left: 0,
+      width: 1000,
+      height: 800,
+      right: 1000,
+      bottom: 800,
+      x: 0,
+      y: 0,
+      toJSON: () => {},
+    } as DOMRect);
+
+    await renderWithAct(<TestContainer {...defaultProps} targetElement={target} />);
+    await act(async () => {
+      await wait(20);
+    });
+
+    const { transform } = screen.getByRole('dialog').style;
+    const top = Number(transform.match(/translate\(-?[\d.]+px, (-?[\d.]+)px\)/)?.[1]);
+    expect(top).toBeGreaterThanOrEqual(8);
+    expect(top).toBeLessThanOrEqual(792);
+
+    document.body.removeChild(target);
+    jest.restoreAllMocks();
   });
 
   it('renders nothing when mounted is false', async () => {

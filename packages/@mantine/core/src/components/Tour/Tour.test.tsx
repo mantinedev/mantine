@@ -307,6 +307,26 @@ describe('@mantine/core/Tour', () => {
     expect(screen.getByRole('dialog').style.transition).not.toContain('top');
   });
 
+  it('keeps the tooltip inside the viewport when the target has no room on any side', async () => {
+    jest.spyOn(document.documentElement, 'clientWidth', 'get').mockReturnValue(1000);
+    jest.spyOn(document.documentElement, 'clientHeight', 'get').mockReturnValue(800);
+    stubRect(document.getElementById('target-1')!, {
+      width: 1000,
+      height: 800,
+      right: 1000,
+      bottom: 800,
+    });
+
+    await renderWithAct(<DefaultTour step={0} />);
+    await act(async () => {
+      await wait(20);
+    });
+
+    const top = parseFloat(screen.getByRole('dialog').style.top);
+    expect(top).toBeGreaterThanOrEqual(8);
+    expect(top).toBeLessThanOrEqual(792);
+  });
+
   describe('centered steps', () => {
     it('uses maxWidth for a centered step after a targeted step was constrained', async () => {
       stubRect(document.getElementById('target-1')!, {
@@ -830,6 +850,8 @@ describe('@mantine/core/Tour', () => {
     });
 
     it('freezes the spotlight and the tooltip while the target is pressed and syncs them after release', async () => {
+      jest.spyOn(document.documentElement, 'clientWidth', 'get').mockReturnValue(1000);
+      jest.spyOn(document.documentElement, 'clientHeight', 'get').mockReturnValue(800);
       const target = document.getElementById('target-1')!;
       const rect = stubRect(target, { top: 100, left: 200, width: 50, height: 30 });
 
