@@ -307,6 +307,37 @@ describe('@mantine/core/Tour', () => {
     expect(screen.getByRole('dialog').style.transition).not.toContain('top');
   });
 
+  it('places the tooltip over the center of the target when position is center', async () => {
+    jest.spyOn(document.documentElement, 'clientWidth', 'get').mockReturnValue(1000);
+    jest.spyOn(document.documentElement, 'clientHeight', 'get').mockReturnValue(800);
+    jest.spyOn(HTMLElement.prototype, 'offsetWidth', 'get').mockReturnValue(200);
+    jest.spyOn(HTMLElement.prototype, 'offsetHeight', 'get').mockReturnValue(100);
+    stubRect(document.getElementById('target-1')!, {
+      top: 250,
+      left: 300,
+      width: 400,
+      height: 300,
+      right: 700,
+      bottom: 550,
+    });
+
+    await renderWithAct(
+      <Tour active withOverlay={false}>
+        <Tour.Step target="#target-1" position="center">
+          Centered over target
+        </Tour.Step>
+      </Tour>
+    );
+    await act(async () => {
+      await wait(20);
+    });
+
+    const tooltip = screen.getByRole('dialog');
+    expect(tooltip).not.toHaveAttribute('data-centered');
+    expect(tooltip.style.top).toBe('350px');
+    expect(tooltip.style.left).toBe('400px');
+  });
+
   describe('centered steps', () => {
     it('uses maxWidth for a centered step after a targeted step was constrained', async () => {
       stubRect(document.getElementById('target-1')!, {

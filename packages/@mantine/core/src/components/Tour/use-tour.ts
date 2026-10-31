@@ -153,7 +153,9 @@ export function useTour({
     return !!element && !isElementInView(element);
   });
 
-  const stepPosition = getFloatingPosition(dir, displayStep?.position || 'bottom');
+  const position = displayStep?.position || 'bottom';
+  const overTarget = position === 'center';
+  const stepPosition = getFloatingPosition(dir, position === 'center' ? 'bottom' : position);
   const isSidePlacement = stepPosition.startsWith('left') || stepPosition.startsWith('right');
 
   const [constrainedWidth, setConstrainedWidth] = useState(maxWidth!);
@@ -176,8 +178,10 @@ export function useTour({
       return cleanup;
     },
     middleware: [
-      offset(12),
-      flip(isSidePlacement ? { fallbackAxisSideDirection: 'end' } : undefined),
+      offset(
+        overTarget ? ({ rects }) => -(rects.reference.height + rects.floating.height) / 2 : 12
+      ),
+      !overTarget && flip(isSidePlacement ? { fallbackAxisSideDirection: 'end' } : undefined),
       shift({ padding: 8 }),
       size({
         padding: 8,

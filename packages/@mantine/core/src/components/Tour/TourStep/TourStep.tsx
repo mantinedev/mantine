@@ -16,8 +16,8 @@ export interface TourStepProps {
   /** Called when this step is deactivated */
   onStepClose?: () => void;
 
-  /** Tooltip position relative to the target element @default 'bottom' */
-  position?: FloatingPosition;
+  /** Tooltip position relative to the target element, `'center'` places the tooltip over the center of the target @default 'bottom' */
+  position?: FloatingPosition | 'center';
 
   /** Whether to display the overlay for this step (per-step override) */
   withOverlay?: boolean;
