@@ -31,6 +31,9 @@ function Demo() {
         <Tour.Step target="#position-target" title="Right" position="right">
           Tooltip positioned at the right.
         </Tour.Step>
+        <Tour.Step target="#position-target" title="Center" position="center">
+          Tooltip positioned over the center of the target.
+        </Tour.Step>
       </Tour>
     </>
   );
@@ -67,6 +70,9 @@ function Demo() {
         </Tour.Step>
         <Tour.Step target="#position-target" title="Right" position="right">
           Tooltip positioned at the right.
+        </Tour.Step>
+        <Tour.Step target="#position-target" title="Center" position="center">
+          Tooltip positioned over the center of the target.
         </Tour.Step>
       </Tour>
     </>
