@@ -182,7 +182,7 @@ export function useTour({
         overTarget ? ({ rects }) => -(rects.reference.height + rects.floating.height) / 2 : 12
       ),
       !overTarget && flip(isSidePlacement ? { fallbackAxisSideDirection: 'end' } : undefined),
-      shift({ padding: 8 }),
+      shift({ padding: 8, crossAxis: overTarget }),
       size({
         padding: 8,
         apply({ availableWidth, placement }) {
