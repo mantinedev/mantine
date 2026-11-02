@@ -71,6 +71,42 @@ describe('@mantine/schedule/YearView', () => {
     expect(days[days.length - 1]).not.toHaveAttribute('data-weekend'); // Feb 9, 2025 (Sunday)
   });
 
+  it('renders multi-day events that started in the previous year', () => {
+    const events: ScheduleEventData[] = [
+      {
+        id: 1,
+        title: 'New Year Trip',
+        start: '2026-12-28 09:00:00',
+        end: '2027-01-03 18:00:00',
+        color: 'blue',
+        payload: {},
+      },
+    ];
+
+    render(<YearView date="2027-01-15 00:00:00" events={events} />);
+
+    const getVisibleDayButton = (name: string) => {
+      const buttons = screen.getAllByRole('button', { name });
+      return buttons.find((button) => !button.hasAttribute('data-outside')) || buttons[0];
+    };
+
+    expect(
+      getVisibleDayButton('January 1, 2027').querySelectorAll(
+        '.mantine-YearView-yearViewDayIndicator'
+      )
+    ).toHaveLength(1);
+    expect(
+      getVisibleDayButton('January 2, 2027').querySelectorAll(
+        '.mantine-YearView-yearViewDayIndicator'
+      )
+    ).toHaveLength(1);
+    expect(
+      getVisibleDayButton('January 3, 2027').querySelectorAll(
+        '.mantine-YearView-yearViewDayIndicator'
+      )
+    ).toHaveLength(1);
+  });
+
   describe('withWeekendDays', () => {
     const getFirstMonth = (container: HTMLElement) =>
       container.querySelector('.mantine-YearView-yearViewMonth') as HTMLElement;
@@ -491,13 +527,14 @@ describe('@mantine/schedule/YearView', () => {
         id: '1',
         title: 'Conference',
         start: '2025-11-05',
-        end: '2025-11-07',
+        end: '2025-11-08',
         color: 'blue',
         payload: {},
       },
     ];
     render(<YearView {...defaultProps} events={events} />);
-    // The event appears on 3 days (Nov 5, 6, 7), with 1 indicator per day in this case
+    // The event appears on 3 days (Nov 5, 6, 7) – end at midnight is treated as exclusive,
+    // with 1 indicator per day in this case
     // But since each day button has its own indicators container, we need to count per day
     const nov5Button = screen.getAllByRole('button', { name: 'November 5, 2025' })[0];
     const nov5Indicators = nov5Button.querySelectorAll('.mantine-YearView-yearViewDayIndicator');
