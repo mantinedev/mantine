@@ -105,6 +105,11 @@ describe('@mantine/schedule/YearView', () => {
         '.mantine-YearView-yearViewDayIndicator'
       )
     ).toHaveLength(1);
+    expect(
+      getVisibleDayButton('January 4, 2027').querySelectorAll(
+        '.mantine-YearView-yearViewDayIndicator'
+      )
+    ).toHaveLength(0);
   });
 
   describe('withWeekendDays', () => {
@@ -533,9 +538,6 @@ describe('@mantine/schedule/YearView', () => {
       },
     ];
     render(<YearView {...defaultProps} events={events} />);
-    // The event appears on 3 days (Nov 5, 6, 7) – end at midnight is treated as exclusive,
-    // with 1 indicator per day in this case
-    // But since each day button has its own indicators container, we need to count per day
     const nov5Button = screen.getAllByRole('button', { name: 'November 5, 2025' })[0];
     const nov5Indicators = nov5Button.querySelectorAll('.mantine-YearView-yearViewDayIndicator');
     expect(nov5Indicators).toHaveLength(1);
@@ -547,6 +549,8 @@ describe('@mantine/schedule/YearView', () => {
     const nov7Button = screen.getAllByRole('button', { name: 'November 7, 2025' })[0];
     const nov7Indicators = nov7Button.querySelectorAll('.mantine-YearView-yearViewDayIndicator');
     expect(nov7Indicators).toHaveLength(1);
+    const nov8Button = screen.getAllByRole('button', { name: 'November 8, 2025' })[0];
+    expect(nov8Button.querySelectorAll('.mantine-YearView-yearViewDayIndicator')).toHaveLength(0);
   });
 
   it('shows maximum 3 indicators per day when multiple events exist', () => {
