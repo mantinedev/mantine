@@ -1,4 +1,4 @@
-import { useCallback, useRef, useState } from 'react';
+import { useCallback, useState } from 'react';
 import { ClearErrors, ClearFieldError, FormErrors, SetErrors, SetFieldError } from '../../types';
 import { filterErrors } from './filter-errors/filter-errors';
 
@@ -14,42 +14,39 @@ export function useFormErrors<Values extends Record<string, any>>(
   initialErrors: FormErrors
 ): $FormErrors<Values> {
   const [errorsState, setErrorsState] = useState(filterErrors(initialErrors));
-  const errorsRef = useRef(errorsState);
 
   const setErrors: SetErrors = useCallback((errors) => {
     setErrorsState((current) => {
-      const newErrors = filterErrors(typeof errors === 'function' ? errors(current) : errors);
-      errorsRef.current = newErrors;
-      return newErrors;
+      const next = typeof errors === 'function' ? errors(current) : errors;
+      return next === current ? current : filterErrors(next);
     });
   }, []);
 
   const clearErrors: ClearErrors = useCallback(() => setErrors({}), []);
 
-  const clearFieldError: ClearFieldError = useCallback(
-    (path) => {
-      if (errorsRef.current[path as string] === undefined) {
-        return;
+  const clearFieldError: ClearFieldError = useCallback((path) => {
+    setErrors((current) => {
+      if (current[path as string] === undefined) {
+        return current;
       }
 
-      setErrors((current) => {
-        const errors = { ...current };
-        delete errors[path as string];
-        return errors;
-      });
-    },
-    [errorsState]
-  );
+      const errors = { ...current };
+      delete errors[path as string];
+      return errors;
+    });
+  }, []);
 
   const setFieldError: SetFieldError<Values> = useCallback(
     (path, error) => {
       if (error == null || error === false) {
         clearFieldError(path);
-      } else if (errorsRef.current[path as string] !== error) {
-        setErrors((current) => ({ ...current, [path]: error }));
+      } else {
+        setErrors((current) =>
+          current[path as string] === error ? current : { ...current, [path]: error }
+        );
       }
     },
-    [errorsState]
+    [clearFieldError]
   );
 
   return {
