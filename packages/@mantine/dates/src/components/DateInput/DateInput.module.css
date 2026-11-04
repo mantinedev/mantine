@@ -35,3 +35,9 @@
     }
   }
 }
+
+.dropdown {
+  &:where([data-with-presets]) {
+    padding-inline-start: rem(4px);
+  }
+}

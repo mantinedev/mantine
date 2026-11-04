@@ -1,5 +1,11 @@
 import { __InputStylesNames } from '@mantine/core';
-import { inputDefaultProps, inputStylesApiSelectors, render, tests } from '@mantine-tests/core';
+import {
+  inputDefaultProps,
+  inputStylesApiSelectors,
+  render,
+  tests,
+  userEvent,
+} from '@mantine-tests/core';
 import { clickControl, clickInput, datesTests, expectValue } from '@mantine-tests/dates';
 import { DatePickerInput, DatePickerInputProps } from './DatePickerInput';
 
@@ -104,6 +110,41 @@ describe('@mantine/dates/DatePickerInput', () => {
     );
 
     expect(container.querySelector('table button')).toHaveClass('mantine-DatePickerInput-day');
+  });
+
+  it('returns focus to the input when the dropdown is closed after keyboard selection', async () => {
+    const { container } = render(<DatePickerInput {...defaultProps} defaultDate="2022-04-11" />);
+    await clickInput(container);
+    const day = container.querySelector<HTMLButtonElement>('table button')!;
+    day.focus();
+    await userEvent.keyboard('{Enter}');
+    expectValue(container, 'March 28, 2022');
+    expect(container.querySelector('[data-dates-input]')).toHaveFocus();
+  });
+
+  it('does not return focus to the input when the dropdown is closed after mouse selection', async () => {
+    const { container } = render(<DatePickerInput {...defaultProps} defaultDate="2022-04-11" />);
+    await clickInput(container);
+    await clickControl(container, 0);
+    expectValue(container, 'March 28, 2022');
+    expect(container.querySelector('[data-dates-input]')).not.toHaveFocus();
+  });
+
+  it('sets data-with-presets attribute on the dropdown when presets are provided', async () => {
+    const { container, rerender } = render(
+      <DatePickerInput {...defaultProps} presets={[{ label: 'Today', value: '2022-04-11' }]} />
+    );
+    await clickInput(container);
+    expect(container.querySelector('[data-dates-dropdown]')).toHaveAttribute('data-with-presets');
+
+    rerender(
+      <>
+        <DatePickerInput {...defaultProps} />
+      </>
+    );
+    expect(container.querySelector('[data-dates-dropdown]')).not.toHaveAttribute(
+      'data-with-presets'
+    );
   });
 
   it('supports controlled state (dropdown click)', async () => {

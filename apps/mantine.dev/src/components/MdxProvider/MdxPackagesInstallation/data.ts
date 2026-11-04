@@ -53,6 +53,11 @@ export const PACKAGES_DATA = [
     dependencies: ['@mantine/hooks', '@mantine/core', '@mantine/dropzone'],
   },
   {
+    package: '@mantine/emoji',
+    description: 'Emoji picker components',
+    dependencies: ['@mantine/hooks', '@mantine/core', '@mantine/emoji'],
+  },
+  {
     package: '@mantine/carousel',
     description: 'Embla based carousel component',
     dependencies: [

@@ -8,7 +8,7 @@ import {
 } from '@mantine/core';
 import { useDidUpdate, useDrag, useMergedRef } from '@mantine/hooks';
 import { getAutoClose } from './get-auto-close/get-auto-close';
-import { NotificationData } from './notifications.store';
+import { NotificationAutoCloseProgressPosition, NotificationData } from './notifications.store';
 
 const SCROLL_DISMISS_RESET_TIMEOUT = 120;
 
@@ -21,6 +21,7 @@ interface NotificationContainerProps extends NotificationProps {
   allowScrollDismiss: boolean;
   paused: boolean;
   withAutoCloseProgress: boolean;
+  autoCloseProgressPosition: NotificationAutoCloseProgressPosition;
   progressProps: Record<string, any>;
   onHoverStart?: () => void;
   onHoverEnd?: () => void;
@@ -86,6 +87,7 @@ export function NotificationContainer({
   allowScrollDismiss,
   paused,
   withAutoCloseProgress,
+  autoCloseProgressPosition,
   progressProps,
   onHoverStart,
   onHoverEnd,
@@ -118,6 +120,7 @@ export function NotificationContainer({
     onOpen: _onOpen,
     priority: _priority,
     withAutoCloseProgress: _withAutoCloseProgress,
+    autoCloseProgressPosition: _autoCloseProgressPosition,
     __sequence: _sequence,
     ...notificationProps
   } = data as NotificationData & { __sequence?: number };
@@ -591,6 +594,7 @@ export function NotificationContainer({
           key={autoCloseProgress.cycle}
           aria-hidden
           {...progressProps}
+          data-position={data.autoCloseProgressPosition ?? autoCloseProgressPosition}
           data-paused={!autoCloseProgress.running || undefined}
           style={{
             ...progressProps.style,

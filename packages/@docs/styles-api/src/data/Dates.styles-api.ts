@@ -11,7 +11,12 @@ import type {
   MonthLevelGroupFactory,
   MonthPickerFactory,
   MonthPickerInputFactory,
+  QuarterLevelGroupFactory,
+  QuarterPickerFactory,
+  QuarterPickerInputFactory,
   TimeInputFactory,
+  WeekPickerFactory,
+  WeekPickerInputFactory,
   YearLevelGroupFactory,
   YearPickerFactory,
   YearPickerInputFactory,
@@ -30,6 +35,7 @@ export const MonthStylesApi: StylesApiData<MonthFactory> = {
     weekday: 'Weekday th element',
     day: 'Month day control',
     weekNumber: 'Week number td element',
+    weekControl: 'Week control button inside week number cell, rendered only in WeekPicker',
   },
 
   vars: {
@@ -131,6 +137,19 @@ export const YearLevelGroupStylesApi: StylesApiData<YearLevelGroupFactory> = {
   vars: {},
 };
 
+export const QuarterLevelGroupStylesApi: StylesApiData<QuarterLevelGroupFactory> = {
+  selectors: {
+    ...CalendarHeaderStylesApi.selectors,
+    levelsGroup: 'Group of quarter levels',
+    quartersList: 'Quarters list table element',
+    quartersListRow: 'Quarters list row element',
+    quartersListCell: 'Quarters list cell element',
+    quartersListControl: 'Button used to pick quarters',
+  },
+
+  vars: {},
+};
+
 export const MonthLevelGroupStylesApi: StylesApiData<MonthLevelGroupFactory> = {
   selectors: {
     ...CalendarHeaderStylesApi.selectors,
@@ -191,6 +210,25 @@ export const MonthPickerStylesApi: StylesApiData<MonthPickerFactory> = {
   modifiers: CalendarHeaderStylesApi.modifiers,
 };
 
+export const QuarterPickerStylesApi: StylesApiData<QuarterPickerFactory> = {
+  selectors: {
+    ...CalendarHeaderStylesApi.selectors,
+    ...DecadeLevelGroupStylesApi.selectors,
+    ...QuarterLevelGroupStylesApi.selectors,
+    quarterPickerRoot: 'Quarter picker root element, contains calendar and presets',
+    presetsList: 'Presets wrapper element',
+    presetButton: 'Preset button',
+  },
+
+  vars: {
+    quarterPickerRoot: {
+      '--preset-font-size': 'Controls font size of preset buttons',
+    },
+  },
+
+  modifiers: CalendarHeaderStylesApi.modifiers,
+};
+
 export const DatePickerStylesApi: StylesApiData<DatePickerFactory> = {
   selectors: {
     ...CalendarHeaderStylesApi.selectors,
@@ -209,6 +247,40 @@ export const DatePickerStylesApi: StylesApiData<DatePickerFactory> = {
   },
 
   modifiers: [...CalendarHeaderStylesApi.modifiers!, ...MonthStylesApi.modifiers!],
+};
+
+export const WeekPickerStylesApi: StylesApiData<WeekPickerFactory> = {
+  selectors: {
+    ...CalendarHeaderStylesApi.selectors,
+    ...DecadeLevelGroupStylesApi.selectors,
+    ...YearLevelGroupStylesApi.selectors,
+    ...MonthLevelGroupStylesApi.selectors,
+    weekPickerRoot: 'Week picker root element, contains calendar and presets',
+    presetsList: 'Presets wrapper element',
+    presetButton: 'Preset button',
+  },
+
+  vars: {
+    weekPickerRoot: {
+      '--preset-font-size': 'Controls font size of preset buttons',
+    },
+  },
+
+  modifiers: [
+    ...CalendarHeaderStylesApi.modifiers!,
+    ...MonthStylesApi.modifiers!,
+    {
+      modifier: 'data-week-hovered',
+      selector: 'day',
+      condition: 'Day belongs to the hovered week',
+    },
+    { modifier: 'data-selected', selector: 'weekControl', condition: 'Week is selected' },
+    {
+      modifier: 'data-disabled',
+      selector: 'weekControl',
+      condition: 'Every day of the week is disabled',
+    },
+  ],
 };
 
 export const YearPickerInputStylesApi: StylesApiData<YearPickerInputFactory> = {
@@ -235,6 +307,18 @@ export const MonthPickerInputStylesApi: StylesApiData<MonthPickerInputFactory> =
   modifiers: MonthPickerStylesApi.modifiers,
 };
 
+export const QuarterPickerInputStylesApi: StylesApiData<QuarterPickerInputFactory> = {
+  selectors: {
+    ...InputBaseStylesApi.selectors,
+    ...QuarterPickerStylesApi.selectors,
+    placeholder: 'Placeholder element',
+  },
+
+  vars: {},
+
+  modifiers: QuarterPickerStylesApi.modifiers,
+};
+
 export const DatePickerInputStylesApi: StylesApiData<DatePickerInputFactory> = {
   selectors: {
     ...InputBaseStylesApi.selectors,
@@ -245,6 +329,18 @@ export const DatePickerInputStylesApi: StylesApiData<DatePickerInputFactory> = {
   vars: {},
 
   modifiers: DatePickerStylesApi.modifiers as any,
+};
+
+export const WeekPickerInputStylesApi: StylesApiData<WeekPickerInputFactory> = {
+  selectors: {
+    ...InputBaseStylesApi.selectors,
+    ...WeekPickerStylesApi.selectors,
+    placeholder: 'Placeholder element',
+  },
+
+  vars: {},
+
+  modifiers: WeekPickerStylesApi.modifiers as any,
 };
 
 export const DateInputStylesApi: StylesApiData<DateInputFactory> = {

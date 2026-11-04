@@ -1,3 +1,4 @@
+import dayjs from 'dayjs';
 import userEvent from '@testing-library/user-event';
 import { render } from '@mantine-tests/core';
 
@@ -5,6 +6,21 @@ interface Options {
   component: React.ComponentType<any>;
   props: Record<string, any>;
   name: string;
+
+  /** Set when the component changes displayed month when arrow navigation runs off the grid */
+  withMonthChange?: boolean;
+}
+
+function getDayLabel(day: Element, offset: number) {
+  return dayjs(day.getAttribute('aria-label'), 'D MMMM YYYY')
+    .add(offset, 'day')
+    .format('D MMMM YYYY');
+}
+
+function expectFocusedDay(container: HTMLElement, label: string) {
+  const day = container.querySelector(`table button[aria-label="${label}"]`);
+  expect(day).not.toBeNull();
+  expect(day).toHaveFocus();
 }
 
 export function itHandlesMonthKeyboardEvents(
@@ -63,13 +79,52 @@ export function itHandlesMonthKeyboardEvents(
     await userEvent.type(days[6], '{ArrowRight}');
     expect(days[7]).toHaveFocus();
 
+    if (!options.withMonthChange) {
+      await userEvent.type(days[0], '{ArrowLeft}');
+      expect(days[0]).toHaveFocus();
+
+      await userEvent.type(days[0], '{ArrowUp}');
+      expect(days[0]).toHaveFocus();
+
+      await userEvent.type(days[days.length - 1], '{ArrowDown}');
+      expect(days[days.length - 1]).toHaveFocus();
+      return;
+    }
+
+    const previousDay = getDayLabel(days[0], -1);
     await userEvent.type(days[0], '{ArrowLeft}');
-    expect(days[0]).toHaveFocus();
+    expectFocusedDay(container, previousDay);
 
-    await userEvent.type(days[0], '{ArrowUp}');
-    expect(days[0]).toHaveFocus();
+    const nextDay = getDayLabel(document.activeElement!, 1);
+    await userEvent.keyboard('{ArrowRight}');
+    expectFocusedDay(container, nextDay);
 
-    await userEvent.type(days[days.length - 1], '{ArrowDown}');
-    expect(days[days.length - 1]).toHaveFocus();
+    const previousWeek = getDayLabel(document.activeElement!, -7);
+    await userEvent.keyboard('{ArrowUp}');
+    expectFocusedDay(container, previousWeek);
+
+    const nextWeek = getDayLabel(document.activeElement!, 7);
+    await userEvent.keyboard('{ArrowDown}');
+    expectFocusedDay(container, nextWeek);
+  });
+
+  it(`${name} navigates to outside dates`, async () => {
+    const { container } = render(
+      <options.component {...options.props} numberOfColumns={1} hideOutsideDates={false} />
+    );
+    const days = container.querySelectorAll('table button');
+    const outsideDays = container.querySelectorAll('table button[data-outside]');
+
+    if (outsideDays.length === 0) {
+      return;
+    }
+
+    const firstInsideIndex = Array.from(days).findIndex((day) => !day.hasAttribute('data-outside'));
+
+    if (firstInsideIndex > 0) {
+      await userEvent.type(days[firstInsideIndex], '{ArrowLeft}');
+      expect(days[firstInsideIndex - 1]).toHaveFocus();
+      expect(days[firstInsideIndex - 1]).toHaveAttribute('data-outside');
+    }
   });
 }

@@ -113,6 +113,7 @@ export const DatePickerInput: DatePickerInputComponent = factory<DatePickerInput
     return (
       <PickerInputBase
         formattedValue={formattedValue}
+        withPresets={!!presets}
         dropdownOpened={dropdownOpened}
         dropdownHandlers={dropdownHandlers}
         classNames={resolvedClassNames}
