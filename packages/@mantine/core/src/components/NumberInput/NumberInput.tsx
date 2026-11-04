@@ -385,6 +385,7 @@ export const NumberInput = genericFactory<NumberInputFactory>(
       allowNegative,
       readOnly,
       size,
+      inputMode,
       rightSectionWidth,
       stepHoldInterval,
       stepHoldDelay,
@@ -867,7 +868,7 @@ export const NumberInput = genericFactory<NumberInputFactory>(
         className={cx(classes.root, className)}
         size={size}
         {...others}
-        inputMode={isBigIntMode ? 'numeric' : 'decimal'}
+        inputMode={inputMode ?? (isBigIntMode ? 'numeric' : 'decimal')}
         readOnly={readOnly}
         disabled={disabled}
         value={typeof _value === 'bigint' ? _value.toString() : _value}

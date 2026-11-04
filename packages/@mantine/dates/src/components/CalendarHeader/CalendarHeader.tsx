@@ -227,7 +227,7 @@ export const CalendarHeader = factory<CalendarHeaderFactory>((_props) => {
     </UnstyledButton>
   );
 
-  const currentYear = new Date().getFullYear();
+  const currentYear = dayjs().year();
   const displayedYear = __date ? dayjs(__date).year() : currentYear;
   const rawMinYear =
     yearsSelectRange?.[0] ?? (__minDate ? dayjs(__minDate).year() : currentYear - 100);

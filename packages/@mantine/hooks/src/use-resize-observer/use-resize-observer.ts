@@ -67,7 +67,7 @@ export function useResizeObserver<T extends HTMLElement = any>(
       });
       observerRef.current.observe(node, options);
     },
-    [options]
+    [options?.box]
   );
 
   return [refCallback, rect] as const;

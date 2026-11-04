@@ -6,7 +6,7 @@ export interface RGBA {
 }
 
 function isHexColor(hex: string): boolean {
-  const HEX_REGEXP = /^#?([0-9A-F]{3}){1,2}([0-9A-F]{2})?$/i;
+  const HEX_REGEXP = /^#?([0-9A-F]{3,4}|[0-9A-F]{6}|[0-9A-F]{8})$/i;
 
   return HEX_REGEXP.test(hex);
 }
@@ -14,16 +14,11 @@ function isHexColor(hex: string): boolean {
 function hexToRgba(color: string): RGBA {
   let hexString = color.replace('#', '');
 
-  if (hexString.length === 3) {
-    const shorthandHex = hexString.split('');
-    hexString = [
-      shorthandHex[0],
-      shorthandHex[0],
-      shorthandHex[1],
-      shorthandHex[1],
-      shorthandHex[2],
-      shorthandHex[2],
-    ].join('');
+  if (hexString.length === 3 || hexString.length === 4) {
+    hexString = hexString
+      .split('')
+      .map((char) => char + char)
+      .join('');
   }
 
   if (hexString.length === 8) {

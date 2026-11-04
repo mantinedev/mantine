@@ -12,6 +12,18 @@ describe('@mantine/core/to-rgba', () => {
     expect(toRgba('#F03E3E84')).toStrictEqual({ r: 240, g: 62, b: 62, a: 0.5176470588235295 });
   });
 
+  it('returns the correct rgba values when given a four-digit hex string', () => {
+    expect(toRgba('#f000')).toStrictEqual({ r: 255, g: 0, b: 0, a: 0 });
+    expect(toRgba('#0f0f')).toStrictEqual({ r: 0, g: 255, b: 0, a: 1 });
+    expect(toRgba('#1a28')).toStrictEqual({ r: 17, g: 170, b: 34, a: 136 / 255 });
+    expect(toRgba('#1A28')).toStrictEqual({ r: 17, g: 170, b: 34, a: 136 / 255 });
+    expect(toRgba('1a28')).toStrictEqual({ r: 17, g: 170, b: 34, a: 136 / 255 });
+  });
+
+  it('does not treat a five-digit hex string as a color', () => {
+    expect(toRgba('#12345')).toStrictEqual({ r: 0, g: 0, b: 0, a: 1 });
+  });
+
   it('returns the correct rgba values when given an rgb string', () => {
     expect(toRgba('rgb(240, 62, 62)')).toStrictEqual({ r: 240, g: 62, b: 62, a: 1 });
     expect(toRgba('rgb(214, 51, 108)')).toStrictEqual({ r: 214, g: 51, b: 108, a: 1 });

@@ -122,7 +122,7 @@ export const MenuItem = polymorphicFactory<MenuItemFactory>((props) => {
       ref={useMergedRef(itemRef, ref)}
       role="menuitem"
       disabled={disabled}
-      aria-disabled={disabled || dataDisabled || undefined}
+      aria-disabled={_others['aria-disabled'] ?? (disabled || dataDisabled || undefined)}
       data-menu-item
       data-disabled={disabled || dataDisabled || undefined}
       data-mantine-stop-propagation

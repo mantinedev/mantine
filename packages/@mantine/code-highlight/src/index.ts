@@ -1,33 +1,33 @@
+import type { CodeHighlightContextValue } from './CodeHighlight/CodeHighlight.context.js';
 import type {
   CodeHighlightCssVariables,
   CodeHighlightFactory,
   CodeHighlightProps,
   CodeHighlightStylesNames,
-} from './CodeHighlight/CodeHighlight';
-import type { CodeHighlightContextValue } from './CodeHighlight/CodeHighlight.context';
-import type { CodeHighlightControlProps } from './CodeHighlight/CodeHighlightControl/CodeHighlightControl';
+} from './CodeHighlight/CodeHighlight.js';
+import type { CodeHighlightControlProps } from './CodeHighlight/CodeHighlightControl/CodeHighlightControl.js';
 import type {
   InlineCodeHighlightCssVariables,
   InlineCodeHighlightFactory,
   InlineCodeHighlightProps,
   InlineCodeHighlightStylesNames,
-} from './CodeHighlight/InlineCodeHighlight';
-import type { CodeHighlightAdapter } from './CodeHighlightProvider/CodeHighlightProvider';
+} from './CodeHighlight/InlineCodeHighlight.js';
+import type { CodeHighlightAdapter } from './CodeHighlightProvider/CodeHighlightProvider.js';
 import type {
   CodeHighlightDefaultLanguage,
   CodeHighlightTabsCode,
   CodeHighlightTabsFactory,
   CodeHighlightTabsProps,
   CodeHighlightTabsStylesNames,
-} from './CodeHighlightTabs/CodeHighlightTabs';
+} from './CodeHighlightTabs/CodeHighlightTabs.js';
 import type {
   JsonViewerCssVariables,
   JsonViewerFactory,
   JsonViewerHighlightType,
   JsonViewerProps,
   JsonViewerStylesNames,
-} from './JsonViewer/JsonViewer';
-import type { NormalizeCodeOptions } from './normalize-code';
+} from './JsonViewer/JsonViewer.js';
+import type { NormalizeCodeOptions } from './normalize-code.js';
 
 export { CodeHighlight } from './CodeHighlight/CodeHighlight.js';
 export { InlineCodeHighlight } from './CodeHighlight/InlineCodeHighlight.js';

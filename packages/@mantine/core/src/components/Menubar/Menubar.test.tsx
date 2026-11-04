@@ -342,6 +342,21 @@ describe('@mantine/core/Menubar', () => {
     expect(getTarget('Edit')).not.toHaveAttribute('aria-disabled');
   });
 
+  it('keeps explicit aria-disabled prop on target', () => {
+    render(
+      <Menubar>
+        <Menubar.Menu withinPortal={false}>
+          <Menubar.Target aria-disabled>File</Menubar.Target>
+          <Menubar.Dropdown>
+            <Menu.Item>New file</Menu.Item>
+          </Menubar.Dropdown>
+        </Menubar.Menu>
+      </Menubar>
+    );
+
+    expect(getTarget('File')).toHaveAttribute('aria-disabled', 'true');
+  });
+
   it('keeps menu indexes in DOM order when menus are added dynamically', async () => {
     function Dynamic() {
       const [withExtra, setWithExtra] = useState(false);

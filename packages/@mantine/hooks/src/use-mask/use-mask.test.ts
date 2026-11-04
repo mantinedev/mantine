@@ -67,6 +67,37 @@ describe('@mantine/hooks/use-mask', () => {
       expect(input.value).toBe('');
     });
 
+    it('handles autofill after a keydown event without a key', () => {
+      const input = document.createElement('input');
+      const onChangeRaw = jest.fn();
+      const { result } = renderHook(() =>
+        useMask({ mask: 'a9a 9a9', slotChar: null, onChangeRaw })
+      );
+
+      act(() => {
+        result.current.ref(input);
+      });
+
+      const event = new Event('keydown', { bubbles: true, cancelable: true });
+      act(() => {
+        input.dispatchEvent(event);
+      });
+
+      expect(event.defaultPrevented).toBe(false);
+      expect(onChangeRaw).not.toHaveBeenCalled();
+
+      act(() => {
+        input.value = 'K1A0B1';
+        input.dispatchEvent(new Event('input', { bubbles: true }));
+      });
+
+      expect(input.value).toBe('K1A 0B1');
+      expect(result.current.value).toBe('K1A 0B1');
+      expect(result.current.rawValue).toBe('K1A0B1');
+      expect(result.current.isComplete).toBe(true);
+      expect(onChangeRaw).toHaveBeenCalledWith('K1A0B1', 'K1A 0B1');
+    });
+
     it('applies transform to the initial input value', () => {
       const input = document.createElement('input');
       input.value = 'abc';

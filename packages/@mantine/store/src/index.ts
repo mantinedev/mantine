@@ -1,2 +1,2 @@
-export { useStore, createStore } from './store';
-export type { MantineStore, MantineStoreSubscriber, MantineStoreValue } from './store';
+export { useStore, createStore } from './store.js';
+export type { MantineStore, MantineStoreSubscriber, MantineStoreValue } from './store.js';

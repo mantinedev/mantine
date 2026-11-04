@@ -95,158 +95,161 @@ export { useRovingIndex } from './use-roving-index/use-roving-index.js';
 export { useDrag } from './use-drag/use-drag.js';
 export { useSplitter } from './use-splitter/use-splitter.js';
 
-export type { UseMediaQueryOptions } from './use-media-query/use-media-query';
+export type { UseMediaQueryOptions } from './use-media-query/use-media-query.js';
 export type {
   UseClipboardInput as UseClipboardOptions,
   UseClipboardReturnValue,
-} from './use-clipboard/use-clipboard';
-export type { UseColorSchemeValue } from './use-color-scheme/use-color-scheme';
+} from './use-clipboard/use-clipboard.js';
+export type { UseColorSchemeValue } from './use-color-scheme/use-color-scheme.js';
 export type {
   UseCounterOptions,
   UseCounterHandlers,
   UseCounterReturnValue,
-} from './use-counter/use-counter';
+} from './use-counter/use-counter.js';
 export type {
   UseDebouncedCallbackOptions,
   UseDebouncedCallbackReturnValue,
-} from './use-debounced-callback/use-debounced-callback';
+} from './use-debounced-callback/use-debounced-callback.js';
 export type {
   UseDebouncedStateOptions,
   UseDebouncedStateReturnValue,
-} from './use-debounced-state/use-debounced-state';
+} from './use-debounced-state/use-debounced-state.js';
 export type {
   UseDebouncedValueHandlers,
   UseDebouncedValueOptions,
   UseDebouncedValueReturnValue,
-} from './use-debounced-value/use-debounced-value';
+} from './use-debounced-value/use-debounced-value.js';
 export type {
   UseDisclosureOptions,
   UseDisclosureHandlers,
   UseDisclosureReturnValue,
-} from './use-disclosure/use-disclosure';
+} from './use-disclosure/use-disclosure.js';
 export type {
   EyeDropperOpenOptions,
   EyeDropperOpenReturnType,
   UseEyeDropperReturnValue,
-} from './use-eye-dropper/use-eye-dropper';
-export type { UseFetchOptions, UseFetchReturnValue } from './use-fetch/use-fetch';
+} from './use-eye-dropper/use-eye-dropper.js';
+export type { UseFetchOptions, UseFetchReturnValue } from './use-fetch/use-fetch.js';
 export type {
   UseFileDialogOptions,
   UseFileDialogReturnValue,
-} from './use-file-dialog/use-file-dialog';
+} from './use-file-dialog/use-file-dialog.js';
 export type {
   UseFocusReturnInput as UseFocusReturnOptions,
   UseFocusReturnReturnValue,
-} from './use-focus-return/use-focus-return';
+} from './use-focus-return/use-focus-return.js';
 export type {
   UseFocusWithinOptions,
   UseFocusWithinReturnValue,
-} from './use-focus-within/use-focus-within';
-export type { UseFullscreenElementReturnValue } from './use-fullscreen/use-fullscreen';
-export type { UseHashInput as UseHashOptions, UseHashReturnValue } from './use-hash/use-hash';
-export type { UseHeadroomInput as UseHeadroomOptions } from './use-headroom/use-headroom';
-export type { ScrollDirection } from './use-scroll-direction/use-scroll-direction';
-export type { HotkeyItemOptions, HotkeyItem } from './use-hotkeys/use-hotkeys';
-export type { UseHoverReturnValue } from './use-hover/use-hover';
-export type { UseIdleOptions } from './use-idle/use-idle';
-export type { UseInViewportReturnValue } from './use-in-viewport/use-in-viewport';
-export type { UseInputStateReturnValue } from './use-input-state/use-input-state';
-export type { UseIntersectionReturnValue } from './use-intersection/use-intersection';
-export type { UseIntervalOptions, UseIntervalReturnValue } from './use-interval/use-interval';
+} from './use-focus-within/use-focus-within.js';
+export type { UseFullscreenElementReturnValue } from './use-fullscreen/use-fullscreen.js';
+export type { UseHashInput as UseHashOptions, UseHashReturnValue } from './use-hash/use-hash.js';
+export type { UseHeadroomInput as UseHeadroomOptions } from './use-headroom/use-headroom.js';
+export type { ScrollDirection } from './use-scroll-direction/use-scroll-direction.js';
+export type { HotkeyItemOptions, HotkeyItem } from './use-hotkeys/use-hotkeys.js';
+export type { UseHoverReturnValue } from './use-hover/use-hover.js';
+export type { UseIdleOptions } from './use-idle/use-idle.js';
+export type { UseInViewportReturnValue } from './use-in-viewport/use-in-viewport.js';
+export type { UseInputStateReturnValue } from './use-input-state/use-input-state.js';
+export type { UseIntersectionReturnValue } from './use-intersection/use-intersection.js';
+export type { UseIntervalOptions, UseIntervalReturnValue } from './use-interval/use-interval.js';
 export type {
   UseListStateReturnValue,
   UseListStateHandlers,
-} from './use-list-state/use-list-state';
-export type { UseStorageOptions, UseStorageReturnValue } from './use-local-storage/create-storage';
-export type { UseMovePosition, UseMoveHandlers, UseMoveReturnValue } from './use-move/use-move';
-export type { UserNetworkReturnValue } from './use-network/use-network';
+} from './use-list-state/use-list-state.js';
+export type {
+  UseStorageOptions,
+  UseStorageReturnValue,
+} from './use-local-storage/create-storage.js';
+export type { UseMovePosition, UseMoveHandlers, UseMoveReturnValue } from './use-move/use-move.js';
+export type { UserNetworkReturnValue } from './use-network/use-network.js';
 export type {
   UseOrientationOptions,
   UseOrientationReturnType,
-} from './use-orientation/use-orientation';
-export type { UseOSReturnValue, UseOsOptions } from './use-os/use-os';
+} from './use-orientation/use-orientation.js';
+export type { UseOSReturnValue, UseOsOptions } from './use-os/use-os.js';
 export type {
   UsePaginationOptions,
   UsePaginationReturnValue,
-} from './use-pagination/use-pagination';
-export type { UseQueueOptions, UseQueueReturnValue } from './use-queue/use-queue';
+} from './use-pagination/use-pagination.js';
+export type { UseQueueOptions, UseQueueReturnValue } from './use-queue/use-queue.js';
 export type {
   UseRadialMoveOptions,
   UseRadialMoveReturnValue,
-} from './use-radial-move/use-radial-move';
+} from './use-radial-move/use-radial-move.js';
 export type {
   UseScrollIntoViewOptions,
   UseScrollIntoViewReturnValue,
-} from './use-scroll-into-view/use-scroll-into-view';
+} from './use-scroll-into-view/use-scroll-into-view.js';
 export type {
   UseScrollSpyOptions,
   UseScrollSpyHeadingData,
   UseScrollSpyReturnValue,
-} from './use-scroll-spy/use-scroll-spy';
+} from './use-scroll-spy/use-scroll-spy.js';
 export type {
   UseScrollerOptions,
   UseScrollerReturnValue,
   UseScrollerScrollState,
-} from './use-scroller/use-scroller';
-export type { UseSetStateCallback, UseSetStateReturnValue } from './use-set-state/use-set-state';
+} from './use-scroller/use-scroller.js';
+export type { UseSetStateCallback, UseSetStateReturnValue } from './use-set-state/use-set-state.js';
 export type {
   UseStateHistoryHandlers,
   UseStateHistoryValue as StateHistory,
   UseStateHistoryValue,
   UseStateHistoryReturnValue,
-} from './use-state-history/use-state-history';
-export type { UseTimeoutOptions, UseTimeoutReturnValue } from './use-timeout/use-timeout';
-export type { UseToggleReturnValue } from './use-toggle/use-toggle';
+} from './use-state-history/use-state-history.js';
+export type { UseTimeoutOptions, UseTimeoutReturnValue } from './use-timeout/use-timeout.js';
+export type { UseToggleReturnValue } from './use-toggle/use-toggle.js';
 export type {
   UseUncontrolledOptions,
   UseUncontrolledReturnValue,
-} from './use-uncontrolled/use-uncontrolled';
+} from './use-uncontrolled/use-uncontrolled.js';
 export type {
   UseValidatedStateValue,
   UseValidatedStateReturnValue,
-} from './use-validated-state/use-validated-state';
+} from './use-validated-state/use-validated-state.js';
 export type {
   UseWindowScrollPosition,
   UseWindowScrollTo,
   UseWindowScrollReturnValue,
-} from './use-window-scroll/use-window-scroll';
+} from './use-window-scroll/use-window-scroll.js';
 export type {
   UseLongPressEvent,
   UseLongPressOptions,
   UseLongPressReturnValue,
-} from './use-long-press/use-long-press';
+} from './use-long-press/use-long-press.js';
 export type {
   SetFloatingWindowPosition,
   UseFloatingWindowOptions,
   UseFloatingWindowReturnValue,
-} from './use-floating-window/use-floating-window';
+} from './use-floating-window/use-floating-window.js';
 export type {
   UseSelectionHandlers,
   UseSelectionInput,
   UseSelectionReturnValue,
-} from './use-selection/use-selection';
+} from './use-selection/use-selection.js';
 export type {
   UseElementSizeReturnValue,
   UseResizeObserverReturnValue,
   ObserverRect,
-} from './use-resize-observer/use-resize-observer';
+} from './use-resize-observer/use-resize-observer.js';
 export type {
   UseCollapseInput,
   UseCollapseReturnValue,
   UseCollapseState,
-} from './use-collapse/use-collapse';
+} from './use-collapse/use-collapse.js';
 export type {
   UseHorizontalCollapseInput,
   UseHorizontalCollapseReturnValue,
   UseHorizontalCollapseState,
-} from './use-collapse/use-horizontal-collapse';
-export type { UseMaskOptions, UseMaskReturnValue, MaskState } from './use-mask/use-mask';
+} from './use-collapse/use-horizontal-collapse.js';
+export type { UseMaskOptions, UseMaskReturnValue, MaskState } from './use-mask/use-mask.js';
 export type {
   UseRovingIndexInput,
   UseRovingIndexGetItemPropsInput,
   UseRovingIndexReturnValue,
-} from './use-roving-index/use-roving-index';
-export type { UseDragState, UseDragOptions, UseDragReturnValue } from './use-drag/use-drag';
+} from './use-roving-index/use-roving-index.js';
+export type { UseDragState, UseDragOptions, UseDragReturnValue } from './use-drag/use-drag.js';
 export type {
   UseSplitterPanel,
   UseSplitterOptions,
@@ -256,4 +259,4 @@ export type {
   UseSplitterResolvedPanel,
   SplitterPaneSize,
   SplitterStep,
-} from './use-splitter/use-splitter';
+} from './use-splitter/use-splitter.js';

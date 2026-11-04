@@ -2,7 +2,7 @@ import { useCallback, useEffect, useRef, useState } from 'react';
 import { useCallbackRef } from '../utils';
 
 function containsRelatedTarget(event: FocusEvent) {
-  if (event.currentTarget instanceof HTMLElement && event.relatedTarget instanceof HTMLElement) {
+  if (event.currentTarget instanceof HTMLElement && event.relatedTarget instanceof Node) {
     return event.currentTarget.contains(event.relatedTarget);
   }
 

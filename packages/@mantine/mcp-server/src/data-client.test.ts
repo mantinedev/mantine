@@ -289,4 +289,105 @@ describe('MantineMcpDataClient getApi', () => {
     expect(result?.suggestedSection).toBeUndefined();
     expect(result?.availableSections).toBeUndefined();
   });
+
+  const rtlGuide: IndexItem = {
+    ...baseItem,
+    id: 'styles-rtl',
+    name: 'RTL (right-to-left)',
+    kind: 'guide',
+    group: 'theming',
+    category: 'Styling',
+    package: undefined,
+    route: '/styles/rtl',
+    searchTags: 'DirectionProvider, useDirection, use-direction, dir attribute, rtl mixin',
+    headings: ['DirectionProvider', 'dir attribute', 'useDirection hook', 'rtl mixin'],
+    propsCount: 0,
+    hasSignature: false,
+    searchText: 'rtl (right-to-left) /styles/rtl styling directionprovider, usedirection',
+  };
+
+  const rtlGuideData = {
+    item: rtlGuide,
+    intro: 'Mantine supports right-to-left direction.',
+    sections: [
+      { heading: 'DirectionProvider', slug: 'directionprovider', body: '<DirectionProvider>' },
+      { heading: 'dir attribute', slug: 'dir-attribute', body: '<html dir="rtl">' },
+      { heading: 'useDirection hook', slug: 'usedirection-hook', body: 'useDirection()' },
+      { heading: 'rtl mixin', slug: 'rtl-mixin', body: '@mixin rtl' },
+    ],
+    props: [],
+    signature: null,
+    exportedTypeNames: null,
+  };
+
+  it('resolves a symbol documented in a guide page through its search tags', async () => {
+    fetchMock.mockResolvedValueOnce(jsonResponse([baseItem, rtlGuide], 'v1'));
+    fetchMock.mockResolvedValueOnce(jsonResponse(rtlGuideData, 'doc-v1'));
+
+    const client = new MantineMcpDataClient('https://example.com/mcp');
+    const result = await client.getApi('useDirection');
+
+    expect(result?.item.id).toBe('styles-rtl');
+    expect(result?.suggestedSection).toBe('usedirection-hook');
+    expect(result?.availableSections).toEqual([
+      'directionprovider',
+      'dir-attribute',
+      'usedirection-hook',
+      'rtl-mixin',
+    ]);
+  });
+
+  it('points a tag match at the section named after the symbol', async () => {
+    fetchMock.mockResolvedValueOnce(jsonResponse([rtlGuide], 'v1'));
+    fetchMock.mockResolvedValueOnce(jsonResponse(rtlGuideData, 'doc-v1'));
+
+    const client = new MantineMcpDataClient('https://example.com/mcp');
+    const result = await client.getApi('DirectionProvider');
+
+    expect(result?.item.id).toBe('styles-rtl');
+    expect(result?.suggestedSection).toBe('directionprovider');
+  });
+
+  it('does not match a symbol that is only part of a search tag', async () => {
+    fetchMock.mockResolvedValueOnce(jsonResponse([rtlGuide], 'v1'));
+
+    const client = new MantineMcpDataClient('https://example.com/mcp');
+
+    expect(await client.getApi('Direction')).toBeNull();
+    expect(fetchMock).toHaveBeenCalledTimes(1);
+  });
+
+  it('prefers a page with a signature over a guide that tags the same symbol', async () => {
+    const useDirectionHook: IndexItem = {
+      ...baseItem,
+      id: 'hooks-use-direction',
+      name: 'use-direction',
+      kind: 'hook',
+      package: '@mantine/core',
+      hasSignature: true,
+      propsCount: 0,
+      searchText: 'use-direction @mantine/core',
+    };
+
+    fetchMock.mockResolvedValueOnce(jsonResponse([rtlGuide, useDirectionHook], 'v1'));
+    fetchMock.mockResolvedValueOnce(
+      jsonResponse(
+        {
+          item: useDirectionHook,
+          intro: 'Returns the current direction.',
+          sections: [],
+          props: [],
+          signature: 'function useDirection(): DirectionContextValue',
+          exportedTypeNames: ['DirectionContextValue'],
+        },
+        'doc-v1'
+      )
+    );
+
+    const client = new MantineMcpDataClient('https://example.com/mcp');
+    const result = await client.getApi('useDirection');
+
+    expect(result?.item.id).toBe('hooks-use-direction');
+    expect(result?.signature).toBe('function useDirection(): DirectionContextValue');
+  });
 });

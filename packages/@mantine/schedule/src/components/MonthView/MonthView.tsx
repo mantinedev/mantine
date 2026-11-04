@@ -14,6 +14,7 @@ import {
   ScrollAreaProps,
   StylesApiProps,
   UnstyledButton,
+  useDirection,
   useProps,
   useResolvedStylesApi,
   useStyles,
@@ -366,6 +367,7 @@ export const MonthView = factory<MonthViewFactory>((_props) => {
   };
 
   const ctx = useDatesContext();
+  const { dir } = useDirection();
 
   const resolvedFirstDayOfWeek = ctx.getFirstDayOfWeek(firstDayOfWeek);
   const resolvedWeekendDays = ctx.getWeekendDays(weekendDays);
@@ -574,6 +576,7 @@ export const MonthView = factory<MonthViewFactory>((_props) => {
                 weekIndex,
                 dayIndex,
                 event,
+                dir,
               });
               dayProps.onKeyDown?.(event);
             }}
