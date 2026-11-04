@@ -144,8 +144,12 @@ export function createStorage<T>(type: StorageType, hookName: string) {
 
     useWindowEvent('storage', (event) => {
       if (sync) {
-        if (event.storageArea === window[type] && event.key === key) {
-          setValue(deserialize(event.newValue ?? undefined));
+        if (event.storageArea === window[type]) {
+          if (event.key === null) {
+            setValue(defaultValue as T);
+          } else if (event.key === key) {
+            setValue(deserialize(event.newValue ?? undefined));
+          }
         }
       }
     });
