@@ -1,6 +1,14 @@
 import dayjs from 'dayjs';
 import { useRef } from 'react';
-import { BoxProps, ElementProps, factory, Factory, StylesApiProps, useProps } from '@mantine/core';
+import {
+  BoxProps,
+  ElementProps,
+  factory,
+  Factory,
+  StylesApiProps,
+  useDirection,
+  useProps,
+} from '@mantine/core';
 import { DateStringValue } from '../../types';
 import { handleControlKeyDown } from '../../utils';
 import { DecadeLevel, DecadeLevelSettings, DecadeLevelStylesNames } from '../DecadeLevel';
@@ -46,6 +54,7 @@ const defaultProps = {
 
 export const DecadeLevelGroup = factory<DecadeLevelGroupFactory>((_props) => {
   const props = useProps('DecadeLevelGroup', defaultProps, _props);
+  const { dir } = useDirection();
   const {
     // DecadeLevel settings
     decade,
@@ -113,6 +122,7 @@ export const DecadeLevelGroup = factory<DecadeLevelGroupFactory>((_props) => {
               cellIndex: payload.cellIndex,
               event,
               controlsRef,
+              dir,
             })
           }
           __getControlRef={(rowIndex, cellIndex, node) => {
