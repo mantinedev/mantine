@@ -807,4 +807,18 @@ describe('@mantine/core/NumberInput', () => {
     blurInput();
     expectValue('50.');
   });
+
+  it('supports inputMode prop', () => {
+    const { rerender } = render(<NumberInput />);
+    expect(getInput()).toHaveAttribute('inputmode', 'decimal');
+
+    rerender(<NumberInput inputMode="text" />);
+    expect(getInput()).toHaveAttribute('inputmode', 'text');
+
+    rerender(<NumberInput defaultValue={BigInt(0)} key="bigint" />);
+    expect(getInput()).toHaveAttribute('inputmode', 'numeric');
+
+    rerender(<NumberInput defaultValue={BigInt(0)} inputMode="text" key="bigint" />);
+    expect(getInput()).toHaveAttribute('inputmode', 'text');
+  });
 });
