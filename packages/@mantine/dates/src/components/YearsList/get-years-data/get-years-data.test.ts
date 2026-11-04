@@ -18,4 +18,8 @@ describe('@mantine/dates/getYearsData', () => {
     expect(getYearsData('2027-01-01')).toStrictEqual(TEST_RANGE);
     expect(getYearsData('2029-01-01')).toStrictEqual(TEST_RANGE);
   });
+
+  it('returns correct decade range for a date that is not January 1st', () => {
+    expect(getYearsData('2023-07-15')).toStrictEqual(TEST_RANGE);
+  });
 });
