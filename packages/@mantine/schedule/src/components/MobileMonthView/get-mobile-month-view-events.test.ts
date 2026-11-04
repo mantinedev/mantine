@@ -39,6 +39,26 @@ describe('@mantine/schedule/get-mobile-month-view-events', () => {
     expect(result).toStrictEqual({ '2025-11-15': [events[0]] });
   });
 
+  it('includes events on outside days within a visible range', () => {
+    const events: ScheduleEventData[] = [
+      testUtils.createEvent({ id: 1, start: '2025-10-31 10:00:00', end: '2025-10-31 11:00:00' }),
+      testUtils.createEvent({ id: 2, start: '2025-12-01 10:00:00', end: '2025-12-01 11:00:00' }),
+      testUtils.createEvent({ id: 3, start: '2025-12-15 10:00:00', end: '2025-12-15 11:00:00' }),
+    ];
+
+    const result = getMobileMonthViewEvents({
+      date: '2025-11-01',
+      events,
+      rangeStart: '2025-10-27',
+      rangeEnd: '2025-12-07',
+    });
+
+    expect(result).toStrictEqual({
+      '2025-10-31': [events[0]],
+      '2025-12-01': [events[1]],
+    });
+  });
+
   it('groups multiple events on the same date', () => {
     const events: ScheduleEventData[] = [
       testUtils.createEvent({ id: 1, start: '2025-11-10 09:00:00', end: '2025-11-10 10:00:00' }),

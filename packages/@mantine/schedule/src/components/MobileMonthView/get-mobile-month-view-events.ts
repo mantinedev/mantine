@@ -42,17 +42,24 @@ function groupEventByDate(event: ScheduleEventData, groupedEvents: GroupedEvents
 interface GetMobileMonthViewEventsInput {
   date: AnyDateValue;
   events: ScheduleEventData[] | undefined;
+  rangeStart?: AnyDateValue;
+  rangeEnd?: AnyDateValue;
 }
 
-export function getMobileMonthViewEvents({ date, events }: GetMobileMonthViewEventsInput) {
+export function getMobileMonthViewEvents({
+  date,
+  events,
+  rangeStart,
+  rangeEnd,
+}: GetMobileMonthViewEventsInput) {
   const groupedEvents: GroupedEvents = {};
 
   if (events === undefined) {
     return groupedEvents;
   }
 
-  const monthStart = dayjs(date).startOf('month');
-  const monthEnd = dayjs(date).endOf('month');
+  const firstDay = rangeStart ? dayjs(rangeStart).startOf('day') : dayjs(date).startOf('month');
+  const lastDay = rangeEnd ? dayjs(rangeEnd).endOf('day') : dayjs(date).endOf('month');
 
   const ids = new Set<string | number>();
 
@@ -61,11 +68,11 @@ export function getMobileMonthViewEvents({ date, events }: GetMobileMonthViewEve
       continue;
     }
 
-    const overlapsMonth =
-      !getEventEndDay(event).isBefore(monthStart, 'day') &&
-      !dayjs(event.start).isAfter(monthEnd, 'day');
+    const overlapsRange =
+      !getEventEndDay(event).isBefore(firstDay, 'day') &&
+      !dayjs(event.start).isAfter(lastDay, 'day');
 
-    if (overlapsMonth) {
+    if (overlapsRange) {
       groupEventByDate(validateEvent(event), groupedEvents);
 
       if (!ids.has(event.id)) {
