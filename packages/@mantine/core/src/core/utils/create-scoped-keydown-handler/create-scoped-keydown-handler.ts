@@ -142,14 +142,18 @@ export function createScopedKeydownHandler({
       case 'Home': {
         event.stopPropagation();
         event.preventDefault();
-        elements[getNextIndex(-1, elements, false)]?.focus();
+        const firstElement = elements[getNextIndex(-1, elements, false)];
+        firstElement?.focus();
+        activateOnFocus && firstElement?.click();
         break;
       }
 
       case 'End': {
         event.stopPropagation();
         event.preventDefault();
-        elements[getPreviousIndex(elements.length, elements, false)]?.focus();
+        const lastElement = elements[getPreviousIndex(elements.length, elements, false)];
+        lastElement?.focus();
+        activateOnFocus && lastElement?.click();
         break;
       }
     }
