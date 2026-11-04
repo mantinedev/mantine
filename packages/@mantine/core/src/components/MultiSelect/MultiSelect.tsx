@@ -346,7 +346,13 @@ export const MultiSelect = genericFactory<MultiSelectFactory>((_props) => {
       combobox.toggleDropdown();
     }
 
-    if (event.key === 'Backspace' && _searchValue.length === 0 && _value.length > 0 && !readOnly) {
+    if (
+      event.key === 'Backspace' &&
+      _searchValue.length === 0 &&
+      _value.length > 0 &&
+      !event.nativeEvent.isComposing &&
+      !readOnly
+    ) {
       onRemove?.(_value[_value.length - 1]);
       setValue(_value.slice(0, _value.length - 1));
     }
