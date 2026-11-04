@@ -149,24 +149,28 @@ export const BlockquoteControl = createControl({
 export const AlignLeftControl = createControl({
   label: 'alignLeftControlLabel',
   icon: (props) => <IconAlignLeft {...props} />,
+  isActive: { attributes: { textAlign: 'left' } },
   operation: { name: 'setTextAlign', attributes: 'left' },
 });
 
 export const AlignRightControl = createControl({
   label: 'alignRightControlLabel',
   icon: (props) => <IconAlignRight {...props} />,
+  isActive: { attributes: { textAlign: 'right' } },
   operation: { name: 'setTextAlign', attributes: 'right' },
 });
 
 export const AlignCenterControl = createControl({
   label: 'alignCenterControlLabel',
   icon: (props) => <IconAlignCenter {...props} />,
+  isActive: { attributes: { textAlign: 'center' } },
   operation: { name: 'setTextAlign', attributes: 'center' },
 });
 
 export const AlignJustifyControl = createControl({
   label: 'alignJustifyControlLabel',
   icon: (props) => <IconAlignJustified {...props} />,
+  isActive: { attributes: { textAlign: 'justify' } },
   operation: { name: 'setTextAlign', attributes: 'justify' },
 });
 
