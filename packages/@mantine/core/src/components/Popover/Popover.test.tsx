@@ -185,6 +185,57 @@ describe('@mantine/core/Popover', () => {
     offsetWidth.mockRestore();
   });
 
+  it('keeps dropdown side locked when its content grows after opening', async () => {
+    let dropdownHeight = 100;
+    const offsetHeight = jest
+      .spyOn(HTMLElement.prototype, 'offsetHeight', 'get')
+      .mockImplementation(() => dropdownHeight);
+    const offsetWidth = jest
+      .spyOn(HTMLElement.prototype, 'offsetWidth', 'get')
+      .mockReturnValue(200);
+    const clientHeight = jest
+      .spyOn(document.documentElement, 'clientHeight', 'get')
+      .mockReturnValue(768);
+    const clientWidth = jest
+      .spyOn(document.documentElement, 'clientWidth', 'get')
+      .mockReturnValue(1024);
+    const wait = () => act(() => new Promise((resolve) => setTimeout(resolve, 100)));
+
+    render(<TestContainer position="bottom" transitionProps={{ duration: 10 }} />, undefined, {
+      env: 'default',
+    });
+
+    const target = screen.getByRole('button', { name: 'test-target' });
+    const targetRect = jest.spyOn(target, 'getBoundingClientRect').mockReturnValue({
+      x: 0,
+      y: 500,
+      top: 500,
+      left: 0,
+      right: 200,
+      bottom: 530,
+      width: 200,
+      height: 30,
+      toJSON: () => ({}),
+    } as DOMRect);
+
+    await userEvent.click(target);
+    await wait();
+    expect(screen.getByRole('dialog')).toHaveAttribute('data-position', 'bottom');
+
+    dropdownHeight = 300;
+    await act(async () => {
+      window.dispatchEvent(new Event('resize'));
+    });
+    await wait();
+    expect(screen.getByRole('dialog')).toHaveAttribute('data-position', 'bottom');
+
+    targetRect.mockRestore();
+    clientWidth.mockRestore();
+    clientHeight.mockRestore();
+    offsetWidth.mockRestore();
+    offsetHeight.mockRestore();
+  });
+
   it('exposes PopoverTarget and PopoverDropdown as static properties', () => {
     expect(Popover.Dropdown).toBe(PopoverDropdown);
     expect(Popover.Target).toBe(PopoverTarget);
