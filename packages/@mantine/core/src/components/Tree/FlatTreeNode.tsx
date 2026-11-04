@@ -1,5 +1,5 @@
 import { memo, useRef } from 'react';
-import { findElementAncestor } from '../../core';
+import { findElementAncestor, useDirection } from '../../core';
 import type { FlatTreeLineState } from './flatten-tree-data/flatten-tree-data';
 import type { RenderNode, TreeNodeData } from './Tree';
 import type { TreeController } from './use-tree';
@@ -85,8 +85,12 @@ export const FlatTreeNode = memo(function FlatTreeNode({
     ref.current?.focus();
   };
 
+  const { dir } = useDirection();
+  const expandKey = dir === 'rtl' ? 'ArrowLeft' : 'ArrowRight';
+  const collapseKey = dir === 'rtl' ? 'ArrowRight' : 'ArrowLeft';
+
   const handleKeyDown = (event: React.KeyboardEvent) => {
-    if (event.nativeEvent.code === 'ArrowRight') {
+    if (event.nativeEvent.code === expandKey) {
       event.stopPropagation();
       event.preventDefault();
 
@@ -108,7 +112,7 @@ export const FlatTreeNode = memo(function FlatTreeNode({
       }
     }
 
-    if (event.nativeEvent.code === 'ArrowLeft') {
+    if (event.nativeEvent.code === collapseKey) {
       event.stopPropagation();
       event.preventDefault();
 

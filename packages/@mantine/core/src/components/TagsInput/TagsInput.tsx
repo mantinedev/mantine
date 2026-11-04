@@ -237,6 +237,7 @@ export const TagsInput = factory<TagsInputFactory>((_props) => {
     ref,
     loading,
     loadingPosition,
+    loaderProps,
     withPillsReorder,
     ...others
   } = props;
@@ -394,6 +395,11 @@ export const TagsInput = factory<TagsInputFactory>((_props) => {
 
   const handlePaste = (event: React.ClipboardEvent<HTMLInputElement>) => {
     onPaste?.(event);
+
+    if (readOnly) {
+      return;
+    }
+
     event.preventDefault();
 
     if (event.clipboardData) {
@@ -524,6 +530,7 @@ export const TagsInput = factory<TagsInputFactory>((_props) => {
             leftSectionProps={leftSectionProps}
             loading={loading}
             loadingPosition={loadingPosition}
+            loaderProps={loaderProps}
             inputContainer={inputContainer}
             inputWrapperOrder={inputWrapperOrder}
             withAsterisk={withAsterisk}

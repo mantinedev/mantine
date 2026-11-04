@@ -30,10 +30,29 @@ describe('formatGithubNotes', () => {
 describe('formatDiscordMessage', () => {
   it('prefixes the version, strips PR refs, and appends the GitHub link', () => {
     const result = formatDiscordMessage('- `[@mantine/core]` Button: Fix (#100)', '9.4.3');
-    expect(result).toContain('Patch 9.4.3 is out:');
-    expect(result).toContain('- `[@mantine/core]` Button: Fix');
-    expect(result).not.toContain('(#100)');
-    expect(result).toContain('https://github.com/mantinedev/mantine/releases/tag/9.4.3');
+    expect(result).toBe(
+      'Patch 9.4.3 is out:\n\n- `[@mantine/core]` Button: Fix\n\nView on GitHub – https://github.com/mantinedev/mantine/releases/tag/9.4.3'
+    );
+  });
+
+  it('includes only complete commit messages that fit and reserves the link', () => {
+    const title = 'Patch 9.4.3 is out:';
+    const link = 'View on GitHub – https://github.com/mantinedev/mantine/releases/tag/9.4.3';
+    const available = 2000 - title.length - link.length - 4;
+    const first = `- ${'a'.repeat(available - 2)}`;
+    const result = formatDiscordMessage(`${first}\n- second change`, '9.4.3');
+
+    expect(result).toBe(`${title}\n\n${first}\n\n${link}`);
+    expect(result.length).toBe(2000);
+  });
+
+  it('keeps the title and link when the first commit cannot fit', () => {
+    const result = formatDiscordMessage(`- ${'a'.repeat(2000)}\n- short change`, '9.4.3');
+
+    expect(result).toBe(
+      'Patch 9.4.3 is out:\n\nView on GitHub – https://github.com/mantinedev/mantine/releases/tag/9.4.3'
+    );
+    expect(result.length).toBeLessThanOrEqual(2000);
   });
 });
 

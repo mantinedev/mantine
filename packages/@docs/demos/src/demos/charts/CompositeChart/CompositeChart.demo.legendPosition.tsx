@@ -13,7 +13,7 @@ function Demo() {
       data={data}
       dataKey="date"
       withLegend
-      legendProps={{ verticalAlign: 'bottom', height: 50 }}
+      legendProps={{ position: 'bottom' }}
       maxBarWidth={30}
       series={[
         { name: 'Tomatoes', color: 'rgba(18, 120, 255, 0.2)', type: 'bar' },
@@ -32,7 +32,7 @@ function Demo() {
       data={data}
       dataKey="date"
       withLegend
-      legendProps={{ verticalAlign: 'bottom', height: 50 }}
+      legendProps={{ position: 'bottom' }}
       maxBarWidth={30}
       series={[
         { name: 'Tomatoes', color: 'rgba(18, 120, 255, 0.2)', type: 'bar' },

@@ -27,6 +27,7 @@ import {
   useStyles,
 } from '@mantine/core';
 import { ChartLegend, ChartLegendStylesNames } from '../ChartLegend';
+import { getLegendPosition } from '../utils';
 import classes from './RadialBarChart.module.css';
 
 export type RadialBarChartStylesNames = 'root' | 'tooltip' | ChartLegendStylesNames;
@@ -218,7 +219,7 @@ export const RadialBarChart = factory<RadialBarChartFactory>((_props) => {
                   onHighlight={(value) =>
                     setHighlightedIndex(typeof value === 'number' ? value : null)
                   }
-                  legendPosition={legendProps?.verticalAlign || 'bottom'}
+                  legendPosition={getLegendPosition(legendProps, 'bottom')}
                   classNames={resolvedClassNames}
                   styles={resolvedStyles}
                   centered

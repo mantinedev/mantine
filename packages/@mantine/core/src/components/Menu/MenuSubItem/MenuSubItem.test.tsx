@@ -49,4 +49,23 @@ describe('@mantine/core/MenuSubItem', () => {
     expect(screen.getByText('test-left-section')).toBeInTheDocument();
     expect(screen.getByText('test-right-section')).toBeInTheDocument();
   });
+
+  it('sets aria-disabled when data-disabled is set', () => {
+    render(<TestContainer data-disabled />);
+    expect(screen.getByRole('menuitem')).toHaveAttribute('aria-disabled', 'true');
+  });
+
+  it('does not set aria-disabled by default', () => {
+    render(<TestContainer />);
+    expect(screen.getByRole('menuitem')).not.toHaveAttribute('aria-disabled');
+  });
+
+  it('keeps explicit aria-disabled prop', () => {
+    const { rerender } = render(<TestContainer aria-disabled />);
+    expect(screen.getByRole('menuitem')).toHaveAttribute('aria-disabled', 'true');
+    expect(screen.getByRole('menuitem')).not.toHaveAttribute('data-disabled');
+
+    rerender(<TestContainer aria-disabled={false} />);
+    expect(screen.getByRole('menuitem')).toHaveAttribute('aria-disabled', 'false');
+  });
 });

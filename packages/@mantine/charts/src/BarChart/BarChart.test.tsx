@@ -53,4 +53,28 @@ describe('@mantine/charts/BarChart', () => {
     expect(labels.filter((label) => label === 'left-label')).toHaveLength(1);
     expect(labels.filter((label) => label === 'right-label')).toHaveLength(1);
   });
+
+  it('does not mutate data passed by the caller with waterfall type', () => {
+    const data = [
+      { date: 'Mar 22', spent: 110, earned: 40 },
+      { date: 'Mar 23', spent: 60, earned: 90 },
+      { date: 'Mar 24', spent: 80, earned: 120 },
+    ];
+
+    render(
+      <BarChart
+        {...defaultProps}
+        type="waterfall"
+        data={data}
+        series={[
+          { name: 'spent', color: 'blue' },
+          { name: 'earned', color: 'green' },
+        ]}
+      />
+    );
+
+    expect(data[0]).toEqual({ date: 'Mar 22', spent: 110, earned: 40 });
+    expect(data[1]).toEqual({ date: 'Mar 23', spent: 60, earned: 90 });
+    expect(data[2]).toEqual({ date: 'Mar 24', spent: 80, earned: 120 });
+  });
 });

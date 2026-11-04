@@ -56,6 +56,7 @@ import {
   isAllDayEvent,
   toDateString,
 } from '../../utils';
+import { getSlotLabelDate } from '../../utils/get-slot-label-date/get-slot-label-date';
 import { AgendaView, AgendaViewStylesNames } from '../AgendaView/AgendaView';
 import {
   CurrentTimeIndicator,
@@ -306,6 +307,9 @@ export interface DayViewProps
 
   /** If set, displays an Agenda button in the header that opens an agenda list view @default false */
   withAgenda?: boolean;
+
+  /** Format of event start and end time in the agenda displayed with `withAgenda` @default 'HH:mm' */
+  eventTimeFormat?: DateLabelFormat;
 }
 
 export type DayViewFactory = Factory<{
@@ -421,6 +425,7 @@ export const DayView = factory<DayViewFactory>((_props) => {
     recurrenceExpansionLimit,
     getTimeSlotProps,
     withAgenda,
+    eventTimeFormat,
     ...others
   } = props;
 
@@ -840,7 +845,7 @@ export const DayView = factory<DayViewFactory>((_props) => {
     const label = group.isLabelStart
       ? formatDate({
           locale: ctx.getLocale(locale),
-          date: dayjs(`${dayjs(date).format('YYYY-MM-DD')} ${group.startTime}`),
+          date: getSlotLabelDate(date, group.startTime),
           format: slotLabelFormat,
         })
       : null;
@@ -984,6 +989,7 @@ export const DayView = factory<DayViewFactory>((_props) => {
           mode={mode}
           onEventClick={onEventClick}
           recurrenceExpansionLimit={recurrenceExpansionLimit}
+          eventTimeFormat={eventTimeFormat}
           {...stylesApiProps}
         />
       )}

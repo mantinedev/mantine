@@ -67,7 +67,7 @@ export function useLongPress(
       cancelOnMove === true ? DEFAULT_MOVE_THRESHOLD : cancelOnMove === false ? 0 : cancelOnMove;
 
     const start = (event: React.MouseEvent | React.TouchEvent) => {
-      if (!isMouseEvent(event) && !isTouchEvent(event)) {
+      if (isPressed.current || (!isMouseEvent(event) && !isTouchEvent(event))) {
         return;
       }
 

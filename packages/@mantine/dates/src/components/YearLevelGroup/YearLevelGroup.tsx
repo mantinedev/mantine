@@ -1,6 +1,14 @@
 import dayjs from 'dayjs';
 import { useRef } from 'react';
-import { BoxProps, ElementProps, factory, Factory, StylesApiProps, useProps } from '@mantine/core';
+import {
+  BoxProps,
+  ElementProps,
+  factory,
+  Factory,
+  StylesApiProps,
+  useDirection,
+  useProps,
+} from '@mantine/core';
 import { usePendingControlFocus } from '../../hooks';
 import { DateStringValue } from '../../types';
 import { ControlEdgeCrossPayload, handleControlKeyDown } from '../../utils';
@@ -50,6 +58,7 @@ const defaultProps = {
 
 export const YearLevelGroup = factory<YearLevelGroupFactory>((_props) => {
   const props = useProps('YearLevelGroup', defaultProps, _props);
+  const { dir } = useDirection();
   const {
     // YearLevel settings
     year,
@@ -160,6 +169,7 @@ export const YearLevelGroup = factory<YearLevelGroupFactory>((_props) => {
               event,
               controlsRef,
               onEdgeCross: handleEdgeCross,
+              dir,
             })
           }
           __getControlRef={(rowIndex, cellIndex, node) => {

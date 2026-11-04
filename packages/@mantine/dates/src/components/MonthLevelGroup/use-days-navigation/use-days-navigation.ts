@@ -7,16 +7,16 @@ type Direction = 'up' | 'down' | 'left' | 'right';
 
 const STEPS: Record<Direction, number> = { up: -7, down: 7, left: -1, right: 1 };
 
-function getDirection(key: string): Direction | null {
+function getDirection(key: string, dir: 'ltr' | 'rtl'): Direction | null {
   switch (key) {
     case 'ArrowDown':
       return 'down';
     case 'ArrowUp':
       return 'up';
     case 'ArrowRight':
-      return 'right';
+      return dir === 'rtl' ? 'left' : 'right';
     case 'ArrowLeft':
-      return 'left';
+      return dir === 'rtl' ? 'right' : 'left';
     default:
       return null;
   }
@@ -32,6 +32,7 @@ function isFocusable(node: HTMLButtonElement) {
 
 interface UseDaysNavigationInput {
   month: DateStringValue;
+  dir: 'ltr' | 'rtl';
   numberOfColumns: number;
   firstDayOfWeek: DayOfWeek;
   consistentWeeks: boolean;
@@ -62,6 +63,7 @@ interface FocusDateInput {
 
 export function useDaysNavigation({
   month,
+  dir,
   numberOfColumns,
   firstDayOfWeek,
   consistentWeeks,
@@ -199,7 +201,7 @@ export function useDaysNavigation({
     event: React.KeyboardEvent<HTMLButtonElement>,
     payload: { date: DateStringValue }
   ) => {
-    const direction = getDirection(event.key);
+    const direction = getDirection(event.key, dir);
 
     if (!direction) {
       return;
@@ -219,7 +221,7 @@ export function useDaysNavigation({
     event: React.KeyboardEvent<HTMLButtonElement>,
     payload: { date: DateStringValue }
   ) => {
-    const direction = getDirection(event.key);
+    const direction = getDirection(event.key, dir);
 
     if (direction !== 'up' && direction !== 'down') {
       return;

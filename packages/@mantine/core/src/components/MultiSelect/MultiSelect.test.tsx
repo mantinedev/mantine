@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { fireEvent } from '@testing-library/react';
 import {
   externalInputFill,
   inputDefaultProps,
@@ -181,6 +182,13 @@ describe('@mantine/core/MultiSelect', () => {
     );
     await userEvent.click(screen.getByRole('combobox'));
     await userEvent.keyboard('{Backspace}');
+    expect(screen.getByText('test-1', { selector: '.mantine-Pill-label' })).toBeInTheDocument();
+    expect(screen.getByText('test-2', { selector: '.mantine-Pill-label' })).toBeInTheDocument();
+  });
+
+  it('does not remove last value when backspace is pressed during IME composition', () => {
+    render(<MultiSelect {...defaultProps} defaultValue={['test-1', 'test-2']} searchable />);
+    fireEvent.keyDown(screen.getByRole('combobox'), { key: 'Backspace', isComposing: true });
     expect(screen.getByText('test-1', { selector: '.mantine-Pill-label' })).toBeInTheDocument();
     expect(screen.getByText('test-2', { selector: '.mantine-Pill-label' })).toBeInTheDocument();
   });
@@ -644,5 +652,12 @@ describe('@mantine/core/MultiSelect', () => {
     );
     expect(screen.getByRole('listbox')).not.toHaveAttribute('aria-labelledby');
     expect(screen.getByRole('listbox')).toHaveAccessibleName('Test aria-label');
+  });
+
+  it('passes loaderProps to the Loader component', () => {
+    const { container } = render(
+      <MultiSelect data={['test-1']} loading loaderProps={{ className: 'test-loader' }} />
+    );
+    expect(container.querySelector('.test-loader')).toBeInTheDocument();
   });
 });

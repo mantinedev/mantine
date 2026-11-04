@@ -204,16 +204,16 @@ export function focusControl({
   focusOnNextFocusableControl({ controlsRef, direction, levelIndex, rowIndex, cellIndex, size });
 }
 
-function getDirection(key: KeyboardEvent['key']): Direction {
+function getDirection(key: KeyboardEvent['key'], dir: 'ltr' | 'rtl'): Direction {
   switch (key) {
     case 'ArrowDown':
       return 'down';
     case 'ArrowUp':
       return 'up';
     case 'ArrowRight':
-      return 'right';
+      return dir === 'rtl' ? 'left' : 'right';
     case 'ArrowLeft':
-      return 'left';
+      return dir === 'rtl' ? 'right' : 'left';
     default:
       return null!;
   }
@@ -232,6 +232,8 @@ interface HandleControlKeyDownInput {
 
   /** Called when arrow navigation runs off the first or the last grid */
   onEdgeCross?: (payload: ControlEdgeCrossPayload) => void;
+  /** Text direction, `ArrowLeft` and `ArrowRight` are mirrored in `rtl`, `'ltr'` by default */
+  dir?: 'ltr' | 'rtl';
 }
 
 export function handleControlKeyDown({
@@ -241,8 +243,9 @@ export function handleControlKeyDown({
   cellIndex,
   event,
   onEdgeCross,
+  dir = 'ltr',
 }: HandleControlKeyDownInput) {
-  const direction = getDirection(event.key);
+  const direction = getDirection(event.key, dir);
 
   if (direction) {
     event.preventDefault();

@@ -14,6 +14,7 @@ import {
   ScrollAreaProps,
   StylesApiProps,
   UnstyledButton,
+  useDirection,
   useProps,
   useResolvedStylesApi,
   useStyles,
@@ -232,6 +233,9 @@ export interface MonthViewProps
 
   /** If set, displays an Agenda button in the header that opens an agenda list view @default false */
   withAgenda?: boolean;
+
+  /** Format of event start and end time in the agenda displayed with `withAgenda` @default 'HH:mm' */
+  eventTimeFormat?: DateLabelFormat;
 }
 
 export type MonthViewFactory = Factory<{
@@ -326,6 +330,7 @@ export const MonthView = factory<MonthViewFactory>((_props) => {
     recurrenceExpansionLimit,
     maxEventsPerDay: _maxEventsPerDay,
     withAgenda,
+    eventTimeFormat,
     ...others
   } = props;
 
@@ -362,6 +367,7 @@ export const MonthView = factory<MonthViewFactory>((_props) => {
   };
 
   const ctx = useDatesContext();
+  const { dir } = useDirection();
 
   const resolvedFirstDayOfWeek = ctx.getFirstDayOfWeek(firstDayOfWeek);
   const resolvedWeekendDays = ctx.getWeekendDays(weekendDays);
@@ -570,6 +576,7 @@ export const MonthView = factory<MonthViewFactory>((_props) => {
                 weekIndex,
                 dayIndex,
                 event,
+                dir,
               });
               dayProps.onKeyDown?.(event);
             }}
@@ -811,6 +818,7 @@ export const MonthView = factory<MonthViewFactory>((_props) => {
           mode={mode}
           onEventClick={onEventClick}
           recurrenceExpansionLimit={recurrenceExpansionLimit}
+          eventTimeFormat={eventTimeFormat}
           {...stylesApiProps}
         />
       )}

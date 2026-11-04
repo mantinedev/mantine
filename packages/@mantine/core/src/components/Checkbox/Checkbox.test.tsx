@@ -198,6 +198,7 @@ describe('@mantine/core/Checkbox', () => {
     const spy = jest.fn();
     render(<Checkbox checked={false} readOnly onChange={spy} aria-label="readonly" />);
     const input = screen.getByLabelText('readonly') as HTMLInputElement;
+    expect(input).toHaveAttribute('readonly');
 
     await userEvent.click(input);
     expect(input.checked).toBe(false);

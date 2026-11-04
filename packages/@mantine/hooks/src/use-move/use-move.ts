@@ -67,6 +67,7 @@ export function useMove<T extends HTMLElement = any>(
         document.addEventListener('mouseup', stopScrubbing);
         document.addEventListener('touchmove', onTouchMove, { passive: false });
         document.addEventListener('touchend', stopScrubbing);
+        document.addEventListener('touchcancel', stopScrubbing);
       };
 
       const unbindEvents = () => {
@@ -74,6 +75,7 @@ export function useMove<T extends HTMLElement = any>(
         document.removeEventListener('mouseup', stopScrubbing);
         document.removeEventListener('touchmove', onTouchMove);
         document.removeEventListener('touchend', stopScrubbing);
+        document.removeEventListener('touchcancel', stopScrubbing);
       };
 
       const startScrubbing = () => {

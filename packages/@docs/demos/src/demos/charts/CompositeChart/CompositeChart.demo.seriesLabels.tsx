@@ -13,7 +13,7 @@ function Demo() {
       data={data}
       dataKey="date"
       withLegend
-      legendProps={{ verticalAlign: 'bottom' }}
+      legendProps={{ position: 'bottom' }}
       maxBarWidth={30}
       series={[
         {
@@ -37,7 +37,7 @@ function Demo() {
       data={data}
       dataKey="date"
       withLegend
-      legendProps={{ verticalAlign: 'bottom' }}
+      legendProps={{ position: 'bottom' }}
       maxBarWidth={30}
       series={[
         {

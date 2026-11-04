@@ -1,6 +1,7 @@
 import dayjs from 'dayjs';
 import 'dayjs/locale/ru';
 import React from 'react';
+import { DirectionProvider } from '@mantine/core';
 import { DatesProvider } from '@mantine/dates';
 import { render, screen, tests, userEvent } from '@mantine-tests/core';
 import { ScheduleEventData } from '../../types';
@@ -359,6 +360,15 @@ describe('@mantine/schedule/MobileMonthView', () => {
 
     expect(screen.getByText('10:00 – 11:00')).toBeInTheDocument();
     expect(screen.getByText('14:00 – 15:00')).toBeInTheDocument();
+  });
+
+  it('supports eventTimeFormat prop', () => {
+    render(
+      <MobileMonthView {...defaultProps} selectedDate="2025-11-05" eventTimeFormat="h:mm A" />
+    );
+
+    expect(screen.getByText('10:00 AM – 11:00 AM')).toBeInTheDocument();
+    expect(screen.getByText('2:00 PM – 3:00 PM')).toBeInTheDocument();
   });
 
   it('shows "All day" for all-day events', () => {
@@ -785,6 +795,21 @@ describe('@mantine/schedule/MobileMonthView', () => {
         'tabIndex',
         '-1'
       );
+    });
+
+    it('mirrors ArrowLeft and ArrowRight in rtl direction', async () => {
+      render(
+        <DirectionProvider initialDirection="rtl" detectDirection={false}>
+          <MobileMonthView {...defaultProps} />
+        </DirectionProvider>
+      );
+
+      screen.getByRole('button', { name: 'November 1, 2025' }).focus();
+      await userEvent.keyboard('{ArrowLeft}');
+      expect(screen.getByRole('button', { name: 'November 2, 2025' })).toHaveFocus();
+
+      await userEvent.keyboard('{ArrowRight}');
+      expect(screen.getByRole('button', { name: 'November 1, 2025' })).toHaveFocus();
     });
 
     it('supports arrow keys to navigate between days', async () => {

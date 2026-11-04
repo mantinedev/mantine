@@ -5,7 +5,7 @@ const DEFAULT_TOKENS: Record<string, RegExp> = {
   a: /[A-Za-z]/,
   A: /[A-Z]/,
   '*': /[A-Za-z0-9]/,
-  '#': /[-+0-9]/,
+  '#': /[+\-0-9]/,
 };
 
 export interface UseMaskOptions {
@@ -724,6 +724,10 @@ export function useMask(options: UseMaskOptions): UseMaskReturnValue {
 
   const handleKeyDown = useCallback(
     (e: KeyboardEvent) => {
+      if (typeof e.key !== 'string') {
+        return;
+      }
+
       const input = e.target as HTMLInputElement;
       const opts = optionsRef.current;
 

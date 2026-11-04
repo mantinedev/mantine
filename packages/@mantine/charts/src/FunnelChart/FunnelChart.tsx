@@ -28,6 +28,7 @@ import {
 } from '@mantine/core';
 import { ChartLegend, ChartLegendStylesNames } from '../ChartLegend';
 import { ChartTooltip, ChartTooltipStylesNames } from '../ChartTooltip/ChartTooltip';
+import { getLegendPosition } from '../utils';
 import classes from './FunnelChart.module.css';
 
 export interface FunnelChartCell {
@@ -254,7 +255,7 @@ export const FunnelChart = factory<FunnelChartFactory>((_props) => {
                   onHighlight={(value) =>
                     setHighlightedIndex(typeof value === 'number' ? value : null)
                   }
-                  legendPosition={legendProps?.verticalAlign || 'bottom'}
+                  legendPosition={getLegendPosition(legendProps, 'bottom')}
                   classNames={resolvedClassNames}
                   styles={resolvedStyles}
                   centered

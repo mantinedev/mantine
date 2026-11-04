@@ -12,6 +12,19 @@ describe('@mantine/core/get-size', () => {
     expect(getSize('10cqmax')).toBe('10cqmax');
   });
 
+  it('handles values with a leading decimal', () => {
+    expect(getSize('.5')).toBe('calc(0.03125rem * var(--mantine-scale))');
+    expect(getSize('-.5px')).toBe('calc(-0.03125rem * var(--mantine-scale))');
+    expect(getSize('.5rem')).toBe('.5rem');
+    expect(getSize('+.5em')).toBe('+.5em');
+    expect(getSize('.5%')).toBe('.5%');
+    expect(getSize('.5cqw')).toBe('.5cqw');
+    expect(getSpacing('-.5rem')).toBe('-.5rem');
+    expect(getFontSize('.5rem')).toBe('.5rem');
+    expect(getLineHeight('.5')).toBe('.5');
+    expect(getRadius('.5rem')).toBe('.5rem');
+  });
+
   it('returns correct size with custom prefix', () => {
     expect(getSize('xs', 'test')).toBe('var(--test-xs)');
     expect(getSize('md', 'test')).toBe('var(--test-md)');

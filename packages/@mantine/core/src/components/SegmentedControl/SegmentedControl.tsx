@@ -93,7 +93,7 @@ export interface SegmentedControlProps<Value extends Primitive = string>
   /** Component orientation @default 'horizontal' */
   orientation?: 'vertical' | 'horizontal';
 
-  /** If set to `false`, prevents changing the value */
+  /** If set, value cannot be changed */
   readOnly?: boolean;
 
   /** If set, automatically adjusts label text color for optimal contrast against the indicator background color */

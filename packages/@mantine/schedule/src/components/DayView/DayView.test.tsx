@@ -907,6 +907,12 @@ describe('@mantine/schedule/DayView', () => {
       expect(container.querySelector('.mantine-DayView-agendaView')).toBeInTheDocument();
     });
 
+    it('passes eventTimeFormat to AgendaView', async () => {
+      render(<DayView {...defaultProps} withAgenda eventTimeFormat="h:mm A" />);
+      await userEvent.click(screen.getAllByText('Agenda')[0]);
+      expect(screen.getByText('9:00 AM – 9:30 AM')).toBeInTheDocument();
+    });
+
     it('toggles AgendaView off when agenda button is clicked again', async () => {
       const { container } = render(<DayView {...defaultProps} withAgenda />);
       await userEvent.click(screen.getAllByText('Agenda')[0]);

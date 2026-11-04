@@ -301,6 +301,7 @@ export const Checkbox = factory<CheckboxFactory>((_props) => {
           disabled={finalDisabled}
           inert={rest.inert}
           type="checkbox"
+          readOnly={readOnly}
           onClick={(event) => {
             if (readOnly && withContextProps.checked === undefined) {
               event.preventDefault();

@@ -129,6 +129,9 @@ export const PasswordInput = factory<PasswordInputFactory>((_props) => {
     leftSectionPointerEvents,
     withErrorStyles,
     withSuccessStyles,
+    loading,
+    loadingPosition,
+    loaderProps,
     mod,
     attributes,
     dir,
@@ -255,6 +258,9 @@ export const PasswordInput = factory<PasswordInputFactory>((_props) => {
         rightSectionProps={rightSectionProps}
         leftSectionProps={leftSectionProps}
         leftSectionPointerEvents={leftSectionPointerEvents}
+        loading={loading}
+        loadingPosition={loadingPosition}
+        loaderProps={loaderProps}
         withAria={false}
         withErrorStyles={withErrorStyles}
         withSuccessStyles={withSuccessStyles}

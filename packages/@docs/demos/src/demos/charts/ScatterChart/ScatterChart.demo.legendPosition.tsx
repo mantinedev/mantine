@@ -15,7 +15,7 @@ function Demo() {
       xAxisLabel="Age"
       yAxisLabel="BMI"
       withLegend
-      legendProps={{ verticalAlign: 'bottom', height: 20 }}
+      legendProps={{ position: 'bottom' }}
     />
   );
 }
@@ -30,7 +30,7 @@ function Demo() {
       xAxisLabel="Age"
       yAxisLabel="BMI"
       withLegend
-      legendProps={{ verticalAlign: 'bottom', height: 20 }}
+      legendProps={{ position: 'bottom' }}
     />
   );
 }

@@ -33,7 +33,11 @@ export function Thumb(props: ThumbProps) {
       };
       onThumbPositionChange();
       viewport.addEventListener('scroll', handleScroll);
-      return () => viewport.removeEventListener('scroll', handleScroll);
+      return () => {
+        viewport.removeEventListener('scroll', handleScroll);
+        removeUnlinkedScrollListenerRef.current?.();
+        removeUnlinkedScrollListenerRef.current = undefined;
+      };
     }
 
     return undefined;

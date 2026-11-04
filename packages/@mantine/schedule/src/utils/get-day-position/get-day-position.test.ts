@@ -1,3 +1,4 @@
+import dayjs from 'dayjs';
 import { testUtils } from '../../test-utils';
 import { getDayPosition } from './get-day-position';
 
@@ -107,5 +108,17 @@ describe('@mantine/schedule/get-day-position', () => {
 
     expect(result.top).toBe(0);
     expect(result.height).toBe(100);
+  });
+
+  it('places event ending at next day midnight when endTime is 24:00:00', () => {
+    const event = testUtils.createEvent({
+      start: `${testUtils.testDate} 22:00:00`,
+      end: dayjs(testUtils.testDate).add(1, 'day').format('YYYY-MM-DD 00:00:00'),
+    });
+
+    const result = getDayPosition({ event, endTime: '24:00:00' });
+
+    expect(result.top).toBeCloseTo(91.667, 2);
+    expect(result.height).toBeCloseTo(8.333, 2);
   });
 });

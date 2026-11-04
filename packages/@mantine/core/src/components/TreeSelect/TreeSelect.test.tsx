@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { fireEvent } from '@testing-library/react';
 import {
   externalInputFill,
   inputDefaultProps,
@@ -8,6 +9,7 @@ import {
   tests,
   userEvent,
 } from '@mantine-tests/core';
+import { DirectionProvider } from '../../core';
 import type { TreeNodeData } from '../Tree';
 import {
   TreeSelect,
@@ -260,6 +262,15 @@ describe('@mantine/core/TreeSelect', () => {
       );
       await userEvent.click(screen.getByRole('textbox'));
       await userEvent.keyboard('{Backspace}');
+      expect(screen.getByText('Apple', { selector: '.mantine-Pill-label' })).toBeInTheDocument();
+      expect(screen.getByText('Milk', { selector: '.mantine-Pill-label' })).toBeInTheDocument();
+    });
+
+    it('does not remove last value when backspace is pressed during IME composition', () => {
+      render(
+        <TreeSelect {...defaultProps} mode="multiple" defaultValue={['apple', 'milk']} searchable />
+      );
+      fireEvent.keyDown(screen.getByRole('textbox'), { key: 'Backspace', isComposing: true });
       expect(screen.getByText('Apple', { selector: '.mantine-Pill-label' })).toBeInTheDocument();
       expect(screen.getByText('Milk', { selector: '.mantine-Pill-label' })).toBeInTheDocument();
     });
@@ -653,6 +664,44 @@ describe('@mantine/core/TreeSelect', () => {
 
       expect(screen.queryByRole('option', { name: 'Apple' })).toBe(null);
     });
+
+    it('mirrors ArrowLeft and ArrowRight in rtl direction', async () => {
+      render(
+        <DirectionProvider initialDirection="rtl" detectDirection={false}>
+          <TreeSelect {...defaultProps} />
+        </DirectionProvider>
+      );
+      await userEvent.click(screen.getByRole('textbox'));
+      await userEvent.keyboard('{ArrowDown}');
+
+      await userEvent.keyboard('{ArrowRight}');
+      expect(screen.queryByRole('option', { name: 'Apple' })).toBe(null);
+
+      await userEvent.keyboard('{ArrowLeft}');
+      expect(screen.getByRole('option', { name: 'Apple' })).toBeVisible();
+
+      await userEvent.keyboard('{ArrowRight}');
+      expect(screen.queryByRole('option', { name: 'Apple' })).toBe(null);
+    });
+
+    it('moves to the parent node on ArrowRight in rtl direction', async () => {
+      render(
+        <DirectionProvider initialDirection="rtl" detectDirection={false}>
+          <TreeSelect {...defaultProps} defaultExpandedValues={['fruits']} />
+        </DirectionProvider>
+      );
+      await userEvent.click(screen.getByRole('textbox'));
+      await userEvent.keyboard('{ArrowDown}{ArrowDown}');
+      expect(screen.getByRole('option', { name: 'Apple' })).toHaveAttribute(
+        'data-combobox-selected'
+      );
+
+      await userEvent.keyboard('{ArrowRight}');
+      expect(screen.getByRole('option', { name: 'Fruits' })).toHaveAttribute(
+        'data-combobox-selected'
+      );
+      expect(screen.getByRole('option', { name: 'Apple' })).toBeVisible();
+    });
   });
 
   describe('clearable', () => {
@@ -932,5 +981,24 @@ describe('@mantine/core/TreeSelect', () => {
       expect(screen.getByRole('option', { name: 'Broccoli' })).toBeVisible();
       expect(screen.queryByRole('option', { name: 'Apple' })).toBe(null);
     });
+  });
+
+  it('passes loaderProps to the Loader component in single and multiple modes', () => {
+    const { container, rerender } = render(
+      <TreeSelect data={treeData} loading loaderProps={{ className: 'test-loader' }} />
+    );
+    expect(container.querySelector('.test-loader')).toBeInTheDocument();
+
+    rerender(
+      <>
+        <TreeSelect
+          data={treeData}
+          mode="multiple"
+          loading
+          loaderProps={{ className: 'test-loader' }}
+        />
+      </>
+    );
+    expect(container.querySelector('.test-loader')).toBeInTheDocument();
   });
 });

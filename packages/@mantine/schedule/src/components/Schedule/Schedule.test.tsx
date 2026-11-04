@@ -402,6 +402,25 @@ describe('@mantine/schedule/Schedule', () => {
       rerender(<Schedule {...defaultProps} withAgenda defaultView="month" />);
       expect(screen.getAllByText('Agenda').length).toBeGreaterThan(0);
     });
+
+    it('passes eventTimeFormat to the agenda of views', async () => {
+      render(<Schedule {...defaultProps} withAgenda view="day" eventTimeFormat="h:mm A" />);
+      await userEvent.click(screen.getAllByText('Agenda')[0]);
+      expect(screen.getByText('10:00 AM – 11:00 AM')).toBeInTheDocument();
+    });
+  });
+
+  it('passes eventTimeFormat to MobileMonthView', () => {
+    render(
+      <Schedule
+        {...defaultProps}
+        layout="responsive"
+        view="month"
+        eventTimeFormat="h:mm A"
+        mobileMonthViewProps={{ selectedDate: '2024-01-15' }}
+      />
+    );
+    expect(screen.getByText('10:00 AM – 11:00 AM')).toBeInTheDocument();
   });
 
   it('forwards withInteractiveBackgroundEvents to the day view', async () => {

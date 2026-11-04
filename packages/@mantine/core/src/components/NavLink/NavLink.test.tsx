@@ -72,6 +72,44 @@ describe('@mantine/core/NavLink', () => {
     expect(screen.getByRole('link')).toHaveAttribute('data-expanded');
   });
 
+  it('sets aria-expanded on link with children (uncontrolled)', async () => {
+    render(
+      <NavLink {...defaultProps}>
+        <div>test-dropdown</div>
+      </NavLink>
+    );
+
+    expect(screen.getByRole('link')).toHaveAttribute('aria-expanded', 'false');
+    await userEvent.click(screen.getByRole('link'));
+    expect(screen.getByRole('link')).toHaveAttribute('aria-expanded', 'true');
+  });
+
+  it('sets aria-expanded on link with children based on opened prop (controlled)', () => {
+    render(
+      <NavLink {...defaultProps} opened>
+        <div>test-dropdown</div>
+      </NavLink>
+    );
+    expect(screen.getByRole('link')).toHaveAttribute('aria-expanded', 'true');
+  });
+
+  it('connects link with children to its collapse with aria-controls', () => {
+    render(
+      <NavLink {...defaultProps} opened>
+        <div>test-dropdown</div>
+      </NavLink>
+    );
+    const controls = screen.getByRole('link').getAttribute('aria-controls');
+    expect(controls).toBeTruthy();
+    expect(document.getElementById(controls!)).toContainElement(screen.getByText('test-dropdown'));
+  });
+
+  it('does not set aria-expanded on link without children', () => {
+    render(<NavLink href="#test-link" label="label" />);
+    expect(screen.getByRole('link')).not.toHaveAttribute('aria-expanded');
+    expect(screen.getByRole('link')).not.toHaveAttribute('aria-controls');
+  });
+
   it('renders given leftSection', () => {
     render(<NavLink {...defaultProps} leftSection="test-leftSection" />);
     expect(screen.getByText('test-leftSection')).toBeInTheDocument();

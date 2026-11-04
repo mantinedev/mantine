@@ -9,7 +9,7 @@ function Demo() {
     <MaskInput
       label="Hex color"
       placeholder="#______"
-      mask="#hhhhhh"
+      mask="\\#hhhhhh"
       tokens={{ h: /[0-9a-fA-F]/ }}
     />
   );
@@ -21,7 +21,7 @@ function Demo() {
     <MaskInput
       label="Hex color"
       placeholder="#______"
-      mask="#hhhhhh"
+      mask="\#hhhhhh"
       tokens={{ h: /[0-9a-fA-F]/ }}
     />
   );

@@ -64,6 +64,7 @@ import {
   ResourcesGridControlsRef,
   toDateString,
 } from '../../utils';
+import { getSlotLabelDate } from '../../utils/get-slot-label-date/get-slot-label-date';
 import { DragContext, DragContextValue } from '../DragContext/DragContext';
 import { MoreEvents, MoreEventsProps, MoreEventsStylesNames } from '../MoreEvents/MoreEvents';
 import { ScheduleBackgroundEvent } from '../ScheduleBackgroundEvent';
@@ -691,7 +692,7 @@ export const ResourcesDayView = factory<ResourcesDayViewFactory>((_props) => {
   );
 
   const timeLabels = slots.map((interval) => {
-    const intervalTime = dayjs(`${dateStr} ${interval.startTime}`);
+    const intervalTime = getSlotLabelDate(date, interval.startTime);
     const label = formatDate({
       date: intervalTime,
       locale: ctx.getLocale(locale),

@@ -33,6 +33,7 @@ import {
 import { ChartLegend, ChartLegendStylesNames } from '../ChartLegend';
 import { ChartTooltip, ChartTooltipStylesNames } from '../ChartTooltip';
 import { MantineChartDotProps } from '../types';
+import { getLegendPosition } from '../utils';
 import classes from './RadarChart.module.css';
 
 export interface RadarChartSeries {
@@ -293,7 +294,7 @@ export const RadarChart = factory<RadarChartFactory>((_props) => {
                 <ChartLegend
                   payload={payload.payload}
                   onHighlight={setHighlightedArea}
-                  legendPosition={legendProps?.verticalAlign || 'bottom'}
+                  legendPosition={getLegendPosition(legendProps, 'bottom')}
                   classNames={resolvedClassNames}
                   styles={resolvedStyles}
                   series={series}

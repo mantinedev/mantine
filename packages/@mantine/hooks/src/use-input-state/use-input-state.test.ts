@@ -46,8 +46,8 @@ describe('@mantine/hooks/use-input-state', () => {
   });
 
   it('sets value with a callback function', () => {
-    const hook: any = renderHook(() => useInputState(10));
-    act(() => hook.result.current[1]((current: any) => current + 11));
+    const hook = renderHook(() => useInputState(10));
+    act(() => hook.result.current[1]((current) => current + 11));
     const [value] = hook.result.current;
     expect(value).toBe(21);
   });

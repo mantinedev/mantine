@@ -60,6 +60,7 @@ import {
   previousWeek,
   toDateString,
 } from '../../utils';
+import { getSlotLabelDate } from '../../utils/get-slot-label-date/get-slot-label-date';
 import { AgendaView, AgendaViewStylesNames } from '../AgendaView/AgendaView';
 import {
   CurrentTimeIndicator,
@@ -339,6 +340,9 @@ export interface WeekViewProps
 
   /** If set, displays an Agenda button in the header that opens an agenda list view @default false */
   withAgenda?: boolean;
+
+  /** Format of event start and end time in the agenda displayed with `withAgenda` @default 'HH:mm' */
+  eventTimeFormat?: DateLabelFormat;
 }
 
 export type WeekViewFactory = Factory<{
@@ -465,6 +469,7 @@ export const WeekView = factory<WeekViewFactory>((_props) => {
     recurrenceExpansionLimit,
     getTimeSlotProps,
     withAgenda,
+    eventTimeFormat,
     ...others
   } = props;
 
@@ -730,7 +735,7 @@ export const WeekView = factory<WeekViewFactory>((_props) => {
   const timeValues = getSlotLabelGroups(slots).map((group) => {
     const label = group.isLabelStart
       ? formatDate({
-          date: dayjs(`${dayjs(date).format('YYYY-MM-DD')} ${group.startTime}`),
+          date: getSlotLabelDate(date, group.startTime),
           locale: ctx.getLocale(locale),
           format: slotLabelFormat,
         })
@@ -1264,6 +1269,7 @@ export const WeekView = factory<WeekViewFactory>((_props) => {
           mode={mode}
           onEventClick={onEventClick}
           recurrenceExpansionLimit={recurrenceExpansionLimit}
+          eventTimeFormat={eventTimeFormat}
           {...stylesApiProps}
         />
       )}

@@ -8,7 +8,7 @@ import { useMask } from '@mantine/hooks';
 
 function Demo() {
   const { ref, rawValue } = useMask({
-    mask: '\\A-9999',
+    mask: '\\\\A-9999',
   });
 
   return (

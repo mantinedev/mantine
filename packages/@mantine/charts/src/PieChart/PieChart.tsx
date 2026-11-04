@@ -28,7 +28,7 @@ import {
 } from '@mantine/core';
 import { ChartLegend, ChartLegendStylesNames } from '../ChartLegend';
 import { ChartTooltip, ChartTooltipStylesNames } from '../ChartTooltip/ChartTooltip';
-import { getPieChartData } from '../utils';
+import { getLegendPosition, getPieChartData } from '../utils';
 import classes from './PieChart.module.css';
 
 export interface PieChartCell {
@@ -349,7 +349,7 @@ export const PieChart = factory<PieChartFactory>((_props) => {
                   onHighlight={(value) =>
                     setHighlightedIndex(typeof value === 'number' ? value : null)
                   }
-                  legendPosition={legendProps?.verticalAlign || 'bottom'}
+                  legendPosition={getLegendPosition(legendProps, 'bottom')}
                   classNames={resolvedClassNames}
                   styles={resolvedStyles}
                   centered

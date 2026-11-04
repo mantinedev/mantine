@@ -43,6 +43,7 @@ import type {
   GridChartBaseProps,
   MantineChartDotProps,
 } from '../types';
+import { getLegendPosition } from '../utils';
 import classes from '../grid-chart.module.css';
 
 export type CompositeChartCurveType =
@@ -479,7 +480,7 @@ export const CompositeChart = factory<CompositeChartFactory>((_props) => {
                 <ChartLegend
                   payload={payload.payload}
                   onHighlight={setHighlightedArea}
-                  legendPosition={legendProps?.verticalAlign || 'top'}
+                  legendPosition={getLegendPosition(legendProps, 'top')}
                   classNames={resolvedClassNames}
                   styles={resolvedStyles}
                   series={series}

@@ -251,4 +251,9 @@ describe('@mantine/core/Input', () => {
     expect(Input.Placeholder).toBe(InputPlaceholder);
     expect(Input.ClearButton).toBe(InputClearButton);
   });
+
+  it('passes loaderProps to the Loader component', () => {
+    const { container } = render(<Input loading loaderProps={{ className: 'test-loader' }} />);
+    expect(container.querySelector('.test-loader')).toBeInTheDocument();
+  });
 });
