@@ -132,7 +132,7 @@ export const MenuSubItem = polymorphicFactory<MenuSubItemFactory>((props) => {
       ref={useMergedRef(itemRef, ref, subCtx?.setReference)}
       role="menuitem"
       disabled={disabled}
-      aria-disabled={disabled || dataDisabled || undefined}
+      aria-disabled={_others['aria-disabled'] ?? (disabled || dataDisabled || undefined)}
       data-menu-item
       data-sub-menu-item
       data-disabled={disabled || dataDisabled || undefined}
