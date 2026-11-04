@@ -41,8 +41,14 @@
   "peerDependencies": {
     "@mantine/core": "9.7.4",
     "@mantine/hooks": "9.7.4",
+    "@types/react": ">=19.2.0",
     "react": "^19.2.0",
     "react-dom": "^19.2.0"
+  },
+  "peerDependenciesMeta": {
+    "@types/react": {
+      "optional": true
+    }
   },
   "devDependencies": {
     "@mantine/core": "workspace:*",
