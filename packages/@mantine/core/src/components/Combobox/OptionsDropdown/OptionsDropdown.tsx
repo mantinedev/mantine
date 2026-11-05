@@ -24,12 +24,12 @@ export type OptionsData = (ComboboxItem<Primitive> | OptionsGroup)[];
 
 interface OptionProps {
   data: ComboboxItem<Primitive> | OptionsGroup;
-  withCheckIcon?: boolean;
-  withAlignedLabels?: boolean;
-  value?: Primitive | Primitive[] | null;
-  checkIconPosition?: 'left' | 'right';
+  withCheckIcon?: boolean | undefined;
+  withAlignedLabels?: boolean | undefined;
+  value?: Primitive | Primitive[] | null | undefined;
+  checkIconPosition?: 'left' | 'right' | undefined;
   unstyled: boolean | undefined;
-  renderOption?: (input: ComboboxLikeRenderOptionInput<any>) => React.ReactNode;
+  renderOption?: ((input: ComboboxLikeRenderOptionInput<any>) => React.ReactNode) | undefined;
 }
 
 function isValueChecked(value: Primitive | Primitive[] | undefined | null, optionValue: Primitive) {
@@ -104,19 +104,19 @@ export interface OptionsDropdownProps {
   withScrollArea: boolean | undefined;
   maxDropdownHeight: number | string | undefined;
   /** Overrides `floatingHeight` from the `Combobox` context, used by `Combobox`-based components */
-  floatingHeight?: 'viewport';
-  hidden?: boolean;
-  hiddenWhenEmpty?: boolean;
-  filterOptions?: boolean;
-  withCheckIcon?: boolean;
-  withAlignedLabels?: boolean;
-  value?: Primitive | Primitive[] | null;
-  checkIconPosition?: 'left' | 'right';
+  floatingHeight?: 'viewport' | undefined;
+  hidden?: boolean | undefined;
+  hiddenWhenEmpty?: boolean | undefined;
+  filterOptions?: boolean | undefined;
+  withCheckIcon?: boolean | undefined;
+  withAlignedLabels?: boolean | undefined;
+  value?: Primitive | Primitive[] | null | undefined;
+  checkIconPosition?: 'left' | 'right' | undefined;
   nothingFoundMessage?: React.ReactNode;
   unstyled: boolean | undefined;
   labelId: string | undefined;
   'aria-label': string | undefined;
-  renderOption?: (input: ComboboxLikeRenderOptionInput<any>) => React.ReactNode;
+  renderOption?: ((input: ComboboxLikeRenderOptionInput<any>) => React.ReactNode) | undefined;
   scrollAreaProps: ScrollAreaProps | undefined;
 }
 

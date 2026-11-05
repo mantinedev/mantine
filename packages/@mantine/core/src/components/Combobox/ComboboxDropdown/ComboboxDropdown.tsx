@@ -7,7 +7,7 @@ export type ComboboxDropdownStylesNames = 'dropdown';
 
 export interface ComboboxDropdownProps extends PopoverDropdownProps {
   /** Determines whether the dropdown should be hidden, for example, when there are no options to display */
-  hidden?: boolean;
+  hidden?: boolean | undefined;
 }
 
 export type ComboboxDropdownFactory = Factory<{

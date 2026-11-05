@@ -40,52 +40,52 @@ export interface TabsProps
     StylesApiProps<TabsFactory>,
     ElementProps<'div', 'defaultValue' | 'value' | 'onChange'> {
   /** Uncontrolled component default value */
-  defaultValue?: string | null;
+  defaultValue?: string | null | undefined;
 
   /** Controlled component value */
-  value?: string | null;
+  value?: string | null | undefined;
 
   /** Called when value changes */
-  onChange?: (value: string | null) => void;
+  onChange?: ((value: string | null) => void) | undefined;
 
   /** Tabs orientation @default 'horizontal' */
-  orientation?: 'vertical' | 'horizontal';
+  orientation?: 'vertical' | 'horizontal' | undefined;
 
   /** `Tabs.List` placement relative to `Tabs.Panel`, applicable only when `orientation="vertical"` @default 'left' */
-  placement?: 'left' | 'right';
+  placement?: 'left' | 'right' | undefined;
 
   /** Base id, used to generate ids to connect labels with controls, generated randomly by default */
-  id?: string;
+  id?: string | undefined;
 
   /** If set, arrow key presses loop though items (first to last and last to first) @default true */
-  loop?: boolean;
+  loop?: boolean | undefined;
 
   /** If set, tab is activated with arrow key press @default true */
-  activateTabWithKeyboard?: boolean;
+  activateTabWithKeyboard?: boolean | undefined;
 
   /** If set, tab can be deactivated @default false */
-  allowTabDeactivation?: boolean;
+  allowTabDeactivation?: boolean | undefined;
 
   /** Tabs content */
   children?: React.ReactNode;
 
   /** Changes colors of `Tabs.Tab` components when variant is `pills` or `default`, does nothing for other variants */
-  color?: MantineColor;
+  color?: MantineColor | undefined;
 
   /** Key of `theme.radius` or any valid CSS value to set `border-radius` @default theme.defaultRadius */
-  radius?: MantineRadius;
+  radius?: MantineRadius | undefined;
 
   /** Determines whether tabs should have inverted styles @default false */
-  inverted?: boolean;
+  inverted?: boolean | undefined;
 
   /** If set to `false`, `Tabs.Panel` content will be unmounted when the associated tab is not active @default true */
-  keepMounted?: boolean;
+  keepMounted?: boolean | undefined;
 
   /** Controls how inactive tabs content is hidden when `keepMounted` is `true`, `'activity'` – hidden with `Activity` component, `'display-none'` – hidden with `display: none` styles @default 'activity' */
-  keepMountedMode?: 'activity' | 'display-none';
+  keepMountedMode?: 'activity' | 'display-none' | undefined;
 
   /** If set, adjusts text color based on background color for `pills` variant */
-  autoContrast?: boolean;
+  autoContrast?: boolean | undefined;
 }
 
 export type TabsFactory = Factory<{

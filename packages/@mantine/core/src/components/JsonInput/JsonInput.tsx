@@ -8,28 +8,28 @@ import { validateJson } from './validate-json/validate-json';
 
 export interface JsonInputProps extends Omit<TextareaProps, 'onChange'> {
   /** Controlled component value */
-  value?: string;
+  value?: string | undefined;
 
   /** Uncontrolled component default value */
-  defaultValue?: string;
+  defaultValue?: string | undefined;
 
   /** Called when value changes */
-  onChange?: (value: string) => void;
+  onChange?: ((value: string) => void) | undefined;
 
   /** Determines whether the value should be formatted on blur @default false */
-  formatOnBlur?: boolean;
+  formatOnBlur?: boolean | undefined;
 
   /** Error message shown when the input value is invalid JSON (checked on blur). If not provided, a generic error state is shown. Takes precedence over the `error` prop when validation fails. */
   validationError?: React.ReactNode;
 
   /** Function to serialize value into a string for formatting. Called with (value, null, 2) where 2 is the indentation level. @default JSON.stringify */
-  serialize?: typeof JSON.stringify;
+  serialize?: typeof JSON.stringify | undefined;
 
   /** Function to deserialize string value for formatting and validation. Must throw an error if the string is invalid JSON. @default JSON.parse */
-  deserialize?: typeof JSON.parse;
+  deserialize?: typeof JSON.parse | undefined;
 
   /** Number of spaces to use as white space for formatting. Passed as the third argument to `serialize` function. @default 2 */
-  indentSpaces?: number;
+  indentSpaces?: number | undefined;
 }
 
 export type JsonInputFactory = Factory<{

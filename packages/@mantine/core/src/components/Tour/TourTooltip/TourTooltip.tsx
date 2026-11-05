@@ -24,16 +24,16 @@ export type TourTooltipStylesNames = 'tooltip';
 export interface TourTooltipProps
   extends BoxProps, CompoundStylesApiProps<TourTooltipFactory>, ElementProps<'div'> {
   /** Target element to position against */
-  targetElement?: HTMLElement | null;
+  targetElement?: HTMLElement | null | undefined;
 
   /** Tooltip position @default 'bottom' */
-  position?: FloatingPosition;
+  position?: FloatingPosition | undefined;
 
   /** Whether the tooltip is visible */
-  mounted?: boolean;
+  mounted?: boolean | undefined;
 
   /** Transition props for the tooltip, merged with `transitionProps` of `Tour.Root` */
-  transitionProps?: TransitionOverride;
+  transitionProps?: TransitionOverride | undefined;
 }
 
 export type TourTooltipFactory = Factory<{

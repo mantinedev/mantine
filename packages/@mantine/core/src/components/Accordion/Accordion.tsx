@@ -44,52 +44,52 @@ export interface AccordionProps<Multiple extends boolean = false>
     StylesApiProps<AccordionFactory>,
     ElementProps<'div', 'value' | 'defaultValue' | 'onChange'> {
   /** If set, multiple items can be opened at the same time @default false */
-  multiple?: Multiple;
+  multiple?: Multiple | undefined;
 
   /** Controlled component value */
-  value?: AccordionValue<Multiple>;
+  value?: AccordionValue<Multiple> | undefined;
 
   /** Uncontrolled component default value */
-  defaultValue?: AccordionValue<Multiple>;
+  defaultValue?: AccordionValue<Multiple> | undefined;
 
   /** Called when value changes, payload type depends on `multiple` prop */
-  onChange?: (value: AccordionValue<Multiple>) => void;
+  onChange?: ((value: AccordionValue<Multiple>) => void) | undefined;
 
   /** If set, arrow keys loop through items (first to last and last to first) @default true */
-  loop?: boolean;
+  loop?: boolean | undefined;
 
   /** Transition duration in ms @default 200 */
-  transitionDuration?: number;
+  transitionDuration?: number | undefined;
 
   /** If set, chevron rotation is disabled @default false */
-  disableChevronRotation?: boolean;
+  disableChevronRotation?: boolean | undefined;
 
   /** If set, the open item cannot be collapsed by clicking it again, so one item always stays open. Only applies when `multiple` is `false`. @default false */
-  disableCollapse?: boolean;
+  disableCollapse?: boolean | undefined;
 
   /** Position of the chevron relative to the item label @default right */
-  chevronPosition?: AccordionChevronPosition;
+  chevronPosition?: AccordionChevronPosition | undefined;
 
   /** Size of the chevron icon container @default auto */
-  chevronSize?: number | string;
+  chevronSize?: number | string | undefined;
 
   /** Size of the default chevron icon. Ignored when `chevron` prop is set. Use `chevronSize` instead when using custom chevron. @default 16 */
-  chevronIconSize?: number | string;
+  chevronIconSize?: number | string | undefined;
 
   /** Sets heading level (h2-h6) for `Accordion.Control` elements. Wraps each control in the corresponding heading tag, recommended to meet WAI-ARIA accessibility requirements. Has no visual effect. */
-  order?: AccordionHeadingOrder;
+  order?: AccordionHeadingOrder | undefined;
 
   /** Custom chevron icon */
   chevron?: React.ReactNode;
 
   /** Key of `theme.radius` or any valid CSS value to set border-radius. Numbers are converted to rem. @default theme.defaultRadius */
-  radius?: MantineRadius;
+  radius?: MantineRadius | undefined;
 
   /** If set to `false`, panels are unmounted when collapsed. By default, panels stay mounted when collapsed. @default true */
-  keepMounted?: boolean;
+  keepMounted?: boolean | undefined;
 
   /** Controls how inactive panels content is hidden when `keepMounted` is `true`, `'activity'` – hidden with `Activity` component, `'display-none'` – hidden with `display: none` styles @default 'activity' */
-  keepMountedMode?: 'activity' | 'display-none';
+  keepMountedMode?: 'activity' | 'display-none' | undefined;
 }
 
 export type AccordionFactory = Factory<{

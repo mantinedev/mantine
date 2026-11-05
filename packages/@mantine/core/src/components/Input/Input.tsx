@@ -71,7 +71,7 @@ type WrapperProps = React.ComponentProps<'div'> & DataAttributes;
 
 export interface __BaseInputProps extends __InputWrapperProps, __InputProps {
   /** Props passed down to the root element */
-  wrapperProps?: WrapperProps;
+  wrapperProps?: WrapperProps | undefined;
 }
 
 export type __InputStylesNames = InputStylesNames | InputWrapperStylesNames;
@@ -105,7 +105,7 @@ export interface __InputProps {
   leftSectionWidth?: React.CSSProperties['width'];
 
   /** Props passed down to the `leftSection` element */
-  leftSectionProps?: React.ComponentProps<'div'>;
+  leftSectionProps?: React.ComponentProps<'div'> | undefined;
 
   /** Sets `pointer-events` styles on the `leftSection` element. Use `'all'` when section contains interactive elements (buttons, links). @default 'none' */
   leftSectionPointerEvents?: React.CSSProperties['pointerEvents'];
@@ -117,68 +117,68 @@ export interface __InputProps {
   rightSectionWidth?: React.CSSProperties['width'];
 
   /** Props passed down to the `rightSection` element */
-  rightSectionProps?: React.ComponentProps<'div'>;
+  rightSectionProps?: React.ComponentProps<'div'> | undefined;
 
   /** Sets `pointer-events` styles on the `rightSection` element. Use `'all'` when section contains interactive elements (buttons, links). @default 'none' */
   rightSectionPointerEvents?: React.CSSProperties['pointerEvents'];
 
   /** Sets `required` attribute on the `input` element */
-  required?: boolean;
+  required?: boolean | undefined;
 
   /** Key of `theme.radius` or any valid CSS value to set `border-radius`, numbers are converted to rem @default theme.defaultRadius */
-  radius?: MantineRadius;
+  radius?: MantineRadius | undefined;
 
   /** Sets `disabled` attribute on the `input` element */
-  disabled?: boolean;
+  disabled?: boolean | undefined;
 
   /** Controls input `height`, horizontal `padding`, and `font-size` @default 'sm' */
-  size?: MantineSize | (string & {});
+  size?: MantineSize | (string & {}) | undefined;
 
   /** Determines whether the input should have `cursor: pointer` style. Use when input acts as a button-like trigger (e.g., `component="button"` for Select/DatePicker). @default false */
-  pointer?: boolean;
+  pointer?: boolean | undefined;
 
   /** Determines whether the input should have red border and red text color when the `error` prop is set @default true */
-  withErrorStyles?: boolean;
+  withErrorStyles?: boolean | undefined;
 
   /** Determines whether the input should have green border when the `success` prop is set @default true */
-  withSuccessStyles?: boolean;
+  withSuccessStyles?: boolean | undefined;
 
   /** HTML `size` attribute for the input element (number of visible characters) */
-  inputSize?: string;
+  inputSize?: string | undefined;
 
   /** Section to be displayed when the input is `__clearable` and `rightSection` is not defined */
   __clearSection?: React.ReactNode;
 
   /** Determines whether the `__clearSection` should be displayed if it is passed to the component, has no effect if `rightSection` is defined */
-  __clearable?: boolean;
+  __clearable?: boolean | undefined;
 
   /** Determines how the clear button and rightSection are rendered @default 'both' */
-  __clearSectionMode?: ClearSectionMode;
+  __clearSectionMode?: ClearSectionMode | undefined;
 
   /** Right section displayed when both `__clearSection` and `rightSection` are not defined */
   __defaultRightSection?: React.ReactNode;
 
   /** Displays loading indicator in the left or right section @default false */
-  loading?: boolean;
+  loading?: boolean | undefined;
 
   /** Position of the loading indicator @default 'right' */
-  loadingPosition?: 'left' | 'right';
+  loadingPosition?: 'left' | 'right' | undefined;
 
   /** Props passed down to the `Loader` component displayed when `loading` prop is set */
-  loaderProps?: LoaderProps;
+  loaderProps?: LoaderProps | undefined;
 
   /** Content section displayed at the bottom of the input, inside the border */
   __bottomSection?: React.ReactNode;
 
   /** Props passed down to the `__bottomSection` element */
-  __bottomSectionProps?: React.ComponentProps<'div'>;
+  __bottomSectionProps?: React.ComponentProps<'div'> | undefined;
 }
 
 export interface InputProps extends BoxProps, __InputProps, StylesApiProps<InputFactory> {
-  __staticSelector?: string;
+  __staticSelector?: string | undefined;
 
   /** Props passed to Styles API context, replaces `Input.Wrapper` props */
-  __stylesApiProps?: Record<string, any>;
+  __stylesApiProps?: Record<string, any> | undefined;
 
   /** Determines whether the input should have error styles and `aria-invalid` attribute */
   error?: React.ReactNode;
@@ -187,19 +187,19 @@ export interface InputProps extends BoxProps, __InputProps, StylesApiProps<Input
   success?: React.ReactNode;
 
   /** Adjusts padding and sizing calculations for multiline inputs (use with `component="textarea"`). Does not make the input multiline by itself. @default false */
-  multiline?: boolean;
+  multiline?: boolean | undefined;
 
   /** Input element id */
-  id?: string;
+  id?: string | undefined;
 
   /** Determines whether `aria-` and other accessibility attributes should be added to the input. Only disable when implementing custom accessibility handling. @default true */
-  withAria?: boolean;
+  withAria?: boolean | undefined;
 
   /** Props passed down to the root element of the `Input` component */
-  wrapperProps?: WrapperProps;
+  wrapperProps?: WrapperProps | undefined;
 
   /** Root element ref */
-  rootRef?: React.Ref<HTMLDivElement>;
+  rootRef?: React.Ref<HTMLDivElement> | undefined;
 }
 
 export type InputFactory = PolymorphicFactory<{

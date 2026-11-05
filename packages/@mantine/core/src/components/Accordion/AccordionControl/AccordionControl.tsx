@@ -18,7 +18,7 @@ export type AccordionControlStylesNames = 'control' | 'chevron' | 'label' | 'ite
 export interface AccordionControlProps
   extends BoxProps, CompoundStylesApiProps<AccordionControlFactory>, ElementProps<'button'> {
   /** Sets `disabled` attribute, prevents interactions */
-  disabled?: boolean;
+  disabled?: boolean | undefined;
 
   /** Custom chevron icon */
   chevron?: React.ReactNode;

@@ -15,8 +15,8 @@ interface GetSplittedTagsInput {
   maxTags: number | undefined;
   value: string;
   currentTags: string[];
-  isDuplicate?: (value: string, currentValues: string[]) => boolean;
-  onDuplicate?: (value: string) => void;
+  isDuplicate?: ((value: string, currentValues: string[]) => boolean) | undefined;
+  onDuplicate?: ((value: string) => void) | undefined;
 }
 
 export function getSplittedTags({

@@ -3,8 +3,8 @@ import type { FlipOptions, InlineOptions, ShiftOptions, SizeOptions } from '@flo
 export type PopoverWidth = 'target' | React.CSSProperties['width'] | null;
 
 export interface PopoverMiddlewares {
-  shift?: boolean | ShiftOptions;
-  flip?: boolean | FlipOptions;
-  inline?: boolean | InlineOptions;
-  size?: boolean | SizeOptions;
+  shift?: boolean | ShiftOptions | undefined;
+  flip?: boolean | FlipOptions | undefined;
+  inline?: boolean | InlineOptions | undefined;
+  size?: boolean | SizeOptions | undefined;
 }

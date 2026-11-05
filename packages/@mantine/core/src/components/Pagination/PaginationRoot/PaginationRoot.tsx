@@ -39,58 +39,58 @@ export interface PaginationRootProps
     StylesApiProps<PaginationRootFactory>,
     ElementProps<'div', 'value' | 'onChange'> {
   /** `height` and `min-width` of controls @default 'md' */
-  size?: MantineSize | `input-${MantineSize}` | (string & {}) | number;
+  size?: MantineSize | `input-${MantineSize}` | (string & {}) | number | undefined;
 
   /** Total number of pages, must be an integer */
   total: number;
 
   /** Active page for controlled component, must be an integer in [1, total] interval */
-  value?: number;
+  value?: number | undefined;
 
   /** Active page for uncontrolled component, must be an integer in [1, total] interval */
-  defaultValue?: number;
+  defaultValue?: number | undefined;
 
   /** Called when page changes */
-  onChange?: (value: number) => void;
+  onChange?: ((value: number) => void) | undefined;
 
   /** Disables all controls, applies disabled styles */
-  disabled?: boolean;
+  disabled?: boolean | undefined;
 
   /** Number of siblings displayed on the left/right side of the selected page @default 1 */
-  siblings?: number;
+  siblings?: number | undefined;
 
   /** Number of elements visible on the left/right edges @default 1 */
-  boundaries?: number;
+  boundaries?: number | undefined;
 
   /** Key of `theme.colors`, active item color @default theme.primaryColor */
-  color?: MantineColor;
+  color?: MantineColor | undefined;
 
   /** Key of `theme.radius` or any valid CSS value to set `border-radius`, numbers are converted to rem @default theme.defaultRadius */
-  radius?: MantineRadius;
+  radius?: MantineRadius | undefined;
 
   /** Called when next page control is clicked */
-  onNextPage?: () => void;
+  onNextPage?: (() => void) | undefined;
 
   /** Called when previous page control is clicked */
-  onPreviousPage?: () => void;
+  onPreviousPage?: (() => void) | undefined;
 
   /** Called when first page control is clicked */
-  onFirstPage?: () => void;
+  onFirstPage?: (() => void) | undefined;
 
   /** Called when last page control is clicked */
-  onLastPage?: () => void;
+  onLastPage?: (() => void) | undefined;
 
   /** Additional props passed down to controls */
-  getItemProps?: (page: number) => Record<string, any>;
+  getItemProps?: ((page: number) => Record<string, any>) | undefined;
 
   /** If set, adjusts text color based on the active page background color to ensure sufficient contrast */
-  autoContrast?: boolean;
+  autoContrast?: boolean | undefined;
 
   /** Starting page number, defaults to 1 */
-  startValue?: number;
+  startValue?: number | undefined;
 
   /** Determines how the pagination is displayed, `'responsive'` uses CSS container queries to switch between pages and a compact label @default 'default' */
-  layout?: 'default' | 'responsive';
+  layout?: 'default' | 'responsive' | undefined;
 }
 
 export type PaginationRootFactory = Factory<{

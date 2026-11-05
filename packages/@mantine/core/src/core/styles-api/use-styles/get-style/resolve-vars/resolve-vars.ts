@@ -19,7 +19,7 @@ interface ResolveVarsInput {
   stylesCtx: Record<string, any> | undefined;
   selector: string;
   themeName: string[];
-  headless?: boolean;
+  headless?: boolean | undefined;
 }
 
 export function resolveVars({

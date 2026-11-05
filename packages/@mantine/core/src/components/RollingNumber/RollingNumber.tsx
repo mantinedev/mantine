@@ -27,34 +27,34 @@ export interface RollingNumberProps
   value: number;
 
   /** Prefix added before the value */
-  prefix?: string;
+  prefix?: string | undefined;
 
   /** Suffix added after the value */
-  suffix?: string;
+  suffix?: string | undefined;
 
   /** Character used as a decimal separator @default '.' */
-  decimalSeparator?: string;
+  decimalSeparator?: string | undefined;
 
   /** Character used to separate thousands, set to `true` for `,` @default false */
-  thousandSeparator?: string | boolean;
+  thousandSeparator?: string | boolean | undefined;
 
   /** Number of decimal places to display */
-  decimalScale?: number;
+  decimalScale?: number | undefined;
 
   /** If set, trailing zeros are added to match `decimalScale` @default false */
-  fixedDecimalScale?: boolean;
+  fixedDecimalScale?: boolean | undefined;
 
   /** Animation duration in milliseconds @default 600 */
-  animationDuration?: number;
+  animationDuration?: number | undefined;
 
   /** CSS timing function for animation @default 'ease' */
-  timingFunction?: string;
+  timingFunction?: string | undefined;
 
   /** If set, use tabular (monospace) numbers @default true */
-  tabularNumbers?: boolean;
+  tabularNumbers?: boolean | undefined;
 
   /** If set, the root element acts as an `aria-live="polite"` region (`role="status"`) and screen readers announce every value change. When `false`, the root uses `role="img"` so the current value is still accessible but updates are not announced. @default false */
-  withLiveRegion?: boolean;
+  withLiveRegion?: boolean | undefined;
 }
 
 export type RollingNumberFactory = Factory<{

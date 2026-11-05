@@ -11,8 +11,8 @@ interface AssignHeaderVariablesInput {
   minMediaStyles: MediaQueryVariables;
   header: AppShellProps['header'] | undefined;
   mode: 'fixed' | 'static';
-  resizedSize?: number;
-  resizable?: boolean;
+  resizedSize?: number | undefined;
+  resizable?: boolean | undefined;
 }
 
 export function assignHeaderVariables({

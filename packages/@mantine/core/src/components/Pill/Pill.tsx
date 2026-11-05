@@ -33,22 +33,22 @@ export type PillCssVariables = {
 
 export interface PillProps extends BoxProps, StylesApiProps<PillFactory>, ElementProps<'div'> {
   /** Controls pill `font-size` and `padding` @default 'sm' */
-  size?: MantineSize;
+  size?: MantineSize | undefined;
 
   /** Controls visibility of the remove button @default false */
-  withRemoveButton?: boolean;
+  withRemoveButton?: boolean | undefined;
 
   /** Called when the remove button is clicked */
-  onRemove?: () => void;
+  onRemove?: (() => void) | undefined;
 
   /** Props passed down to the remove button */
-  removeButtonProps?: CloseButtonProps & React.ComponentProps<'button'>;
+  removeButtonProps?: (CloseButtonProps & React.ComponentProps<'button'>) | undefined;
 
   /** Key of `theme.radius` or any valid CSS value to set border-radius. Numbers are converted to rem.  @default 'xl' */
-  radius?: MantineRadius;
+  radius?: MantineRadius | undefined;
 
   /** Adds disabled attribute, applies disabled styles */
-  disabled?: boolean;
+  disabled?: boolean | undefined;
 }
 
 export type PillFactory = Factory<{

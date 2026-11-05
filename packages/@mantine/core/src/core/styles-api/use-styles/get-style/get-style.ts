@@ -20,7 +20,7 @@ export interface GetStyleInput {
   options: GetStylesApiOptions | undefined;
   props: Record<string, any>;
   stylesCtx: Record<string, any> | undefined;
-  withStylesTransform?: boolean;
+  withStylesTransform?: boolean | undefined;
   resolvedStyles: Record<string, any>;
   resolvedThemeStyles: Record<string, any>;
   resolvedVars: Record<string, any>;

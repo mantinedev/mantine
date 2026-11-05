@@ -23,52 +23,52 @@ export type AngleSliderCssVariables = {
 export interface AngleSliderProps
   extends BoxProps, StylesApiProps<AngleSliderFactory>, ElementProps<'div', 'onChange'> {
   /** Step between values @default 1 */
-  step?: number;
+  step?: number | undefined;
 
   /** Controlled component value */
-  value?: number;
+  value?: number | undefined;
 
   /** Uncontrolled component default value */
-  defaultValue?: number;
+  defaultValue?: number | undefined;
 
   /** Called on value change */
-  onChange?: (value: number) => void;
+  onChange?: ((value: number) => void) | undefined;
 
   /** Called after the selection is finished */
-  onChangeEnd?: (value: number) => void;
+  onChangeEnd?: ((value: number) => void) | undefined;
 
   /** Called in `onMouseDown` and `onTouchStart` */
-  onScrubStart?: () => void;
+  onScrubStart?: (() => void) | undefined;
 
   /** Called in `onMouseUp` and `onTouchEnd` */
-  onScrubEnd?: () => void;
+  onScrubEnd?: (() => void) | undefined;
 
   /** If set, the label is displayed inside the slider @default true */
-  withLabel?: boolean;
+  withLabel?: boolean | undefined;
 
   /** Array of marks displayed on the slider */
-  marks?: { value: number; label?: string }[];
+  marks?: { value: number; label?: string | undefined }[] | undefined;
 
   /** Slider size in px @default 60 */
-  size?: number;
+  size?: number | undefined;
 
   /** Size of the thumb in px. Calculated based on the `size` value by default. */
-  thumbSize?: number;
+  thumbSize?: number | undefined;
 
   /** A function to format label based on the current value */
-  formatLabel?: (value: number) => React.ReactNode;
+  formatLabel?: ((value: number) => React.ReactNode) | undefined;
 
   /** Sets `data-disabled` attribute, disables interactions */
-  disabled?: boolean;
+  disabled?: boolean | undefined;
 
   /** If set, the selection is allowed only from the given marks array @default false */
-  restrictToMarks?: boolean;
+  restrictToMarks?: boolean | undefined;
 
   /** Props passed down to the hidden input */
-  hiddenInputProps?: React.ComponentProps<'input'>;
+  hiddenInputProps?: React.ComponentProps<'input'> | undefined;
 
   /** Hidden input name, use with uncontrolled component */
-  name?: string;
+  name?: string | undefined;
 }
 
 export type AngleSliderFactory = Factory<{

@@ -8,7 +8,7 @@ interface CurveData extends React.ComponentProps<'circle'>, DataAttributes {
 
 interface RootCurveData extends React.ComponentProps<'circle'>, DataAttributes {
   value?: never;
-  color?: MantineColor;
+  color?: MantineColor | undefined;
 }
 
 interface GetCurves {
@@ -16,8 +16,8 @@ interface GetCurves {
   size: number;
   thickness: number;
   renderRoundedLineCaps: boolean | undefined;
-  rootColor?: MantineColor;
-  sectionGap?: number;
+  rootColor?: MantineColor | undefined;
+  sectionGap?: number | undefined;
 }
 
 interface Curve {
@@ -25,7 +25,7 @@ interface Curve {
   offset: number;
   root: boolean;
   data: CurveData | RootCurveData;
-  lineRoundCaps?: boolean;
+  lineRoundCaps?: boolean | undefined;
 }
 
 export function getCurves({

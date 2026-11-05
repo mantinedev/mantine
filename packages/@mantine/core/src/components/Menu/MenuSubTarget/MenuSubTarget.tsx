@@ -7,7 +7,7 @@ export interface MenuSubTargetProps {
   children: React.ReactNode;
 
   /** Key of the prop used to get element ref @default 'ref' */
-  refProp?: string;
+  refProp?: string | undefined;
 }
 
 export function MenuSubTarget({ children, refProp }: MenuSubTargetProps) {

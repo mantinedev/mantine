@@ -48,40 +48,40 @@ export interface AutocompleteProps
     StylesApiProps<AutocompleteFactory>,
     ElementProps<'input', 'onChange' | 'size'> {
   /** Data used to display options. Values must be unique. */
-  data?: ComboboxGenericData;
+  data?: ComboboxGenericData | undefined;
 
   /** Controlled component value */
-  value?: string;
+  value?: string | undefined;
 
   /** Default value for uncontrolled component */
-  defaultValue?: string;
+  defaultValue?: string | undefined;
 
   /** Called when value changes */
-  onChange?: (value: string) => void;
+  onChange?: ((value: string) => void) | undefined;
 
   /** Function to render custom option content */
-  renderOption?: RenderAutocompleteOption;
+  renderOption?: RenderAutocompleteOption | undefined;
 
   /** Props passed to the underlying `ScrollArea` component in the dropdown */
-  scrollAreaProps?: ScrollAreaProps;
+  scrollAreaProps?: ScrollAreaProps | undefined;
 
   /** Called when the clear button is clicked */
-  onClear?: () => void;
+  onClear?: (() => void) | undefined;
 
   /** Props passed down to the clear button */
-  clearButtonProps?: InputClearButtonProps;
+  clearButtonProps?: InputClearButtonProps | undefined;
 
   /** If set, the clear button is displayed when the component has a value @default false */
-  clearable?: boolean;
+  clearable?: boolean | undefined;
 
   /** Determines how the clear button and rightSection are rendered @default 'both' */
-  clearSectionMode?: ClearSectionMode;
+  clearSectionMode?: ClearSectionMode | undefined;
 
   /** If set, the highlighted option is selected when the input loses focus @default false */
-  autoSelectOnBlur?: boolean;
+  autoSelectOnBlur?: boolean | undefined;
 
   /** If set, the dropdown opens when the input receives focus @default true */
-  openOnFocus?: boolean;
+  openOnFocus?: boolean | undefined;
 }
 
 export type AutocompleteFactory = Factory<{

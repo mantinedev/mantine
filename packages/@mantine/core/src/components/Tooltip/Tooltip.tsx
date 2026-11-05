@@ -36,64 +36,64 @@ import { useTooltip } from './use-tooltip';
 import classes from './Tooltip.module.css';
 export interface TooltipProps extends TooltipBaseProps {
   /** Called when tooltip position changes */
-  onPositionChange?: (position: FloatingPosition) => void;
+  onPositionChange?: ((position: FloatingPosition) => void) | undefined;
 
   /** Open delay in ms */
-  openDelay?: number;
+  openDelay?: number | undefined;
 
   /** Close delay in ms @default 0 */
-  closeDelay?: number;
+  closeDelay?: number | undefined;
 
   /** Controlled opened state */
-  opened?: boolean;
+  opened?: boolean | undefined;
 
   /** Uncontrolled tooltip initial opened state */
-  defaultOpened?: boolean;
+  defaultOpened?: boolean | undefined;
 
   /** Space between target element and tooltip in px @default 5 */
-  offset?: number | FloatingAxesOffsets;
+  offset?: number | FloatingAxesOffsets | undefined;
 
   /** If set, the tooltip has an arrow @default false */
-  withArrow?: boolean;
+  withArrow?: boolean | undefined;
 
   /** Arrow size in px @default 4 */
-  arrowSize?: number;
+  arrowSize?: number | undefined;
 
   /** Arrow offset in px @default 5 */
-  arrowOffset?: number;
+  arrowOffset?: number | undefined;
 
   /** Arrow `border-radius` in px @default 0 */
-  arrowRadius?: number;
+  arrowRadius?: number | undefined;
 
   /** Arrow position relative to the tooltip @default side */
-  arrowPosition?: ArrowPosition;
+  arrowPosition?: ArrowPosition | undefined;
 
   /** Props passed down to the `Transition` component that used to animate tooltip presence, use to configure duration and animation type @default { duration: 100, transition: 'fade' } */
-  transitionProps?: TransitionOverride;
+  transitionProps?: TransitionOverride | undefined;
 
   /** Determines which events will be used to show tooltip @default { hover: true, focus: false, touch: false } */
-  events?: { hover: boolean; focus: boolean; touch: boolean };
+  events?: { hover: boolean; focus: boolean; touch: boolean } | undefined;
 
   /** If set, the tooltip stays open while the pointer is over it @default false */
-  interactive?: boolean;
+  interactive?: boolean | undefined;
 
   /** Must be set if the tooltip target is an inline element */
-  inline?: boolean;
+  inline?: boolean | undefined;
 
   /** If set, the tooltip is not unmounted from the DOM when hidden, `display: none` styles are applied instead */
-  keepMounted?: boolean;
+  keepMounted?: boolean | undefined;
 
   /** Changes floating ui [position strategy](https://floating-ui.com/docs/usefloating#strategy) @default 'absolute' */
-  floatingStrategy?: FloatingStrategy;
+  floatingStrategy?: FloatingStrategy | undefined;
 
   /** If set, adjusts text color based on background color for `filled` variant */
-  autoContrast?: boolean;
+  autoContrast?: boolean | undefined;
 
   /** Selector, ref of an element or element itself that should be used for positioning */
-  target?: React.RefObject<HTMLElement | null> | HTMLElement | null | string;
+  target?: React.RefObject<HTMLElement | null> | HTMLElement | null | string | undefined;
 
   /** If set, the tooltip is hidden when the target element is removed from the DOM, hidden with `display: none` or scrolled out of the visible area. Has no effect on `Tooltip.Floating` @default true */
-  hideDetached?: boolean;
+  hideDetached?: boolean | undefined;
 }
 
 export type TooltipFactory = Factory<{

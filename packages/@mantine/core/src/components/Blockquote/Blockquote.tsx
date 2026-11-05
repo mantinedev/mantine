@@ -35,19 +35,19 @@ export interface BlockquoteProps
   icon?: React.ReactNode;
 
   /** Controls icon `width` and `height`, numbers are converted to rem @default 40 */
-  iconSize?: number | string;
+  iconSize?: number | string | undefined;
 
   /** Key of `theme.colors` or any valid CSS color @default theme.primaryColor */
-  color?: MantineColor;
+  color?: MantineColor | undefined;
 
   /** Key of `theme.radius` or any valid CSS value to set `border-radius` @default theme.defaultRadius */
-  radius?: MantineRadius;
+  radius?: MantineRadius | undefined;
 
   /** Reference to a cited quote */
   cite?: React.ReactNode;
 
   /** Controls `text-wrap` CSS property */
-  textWrap?: 'wrap' | 'nowrap' | 'balance' | 'pretty' | 'stable';
+  textWrap?: 'wrap' | 'nowrap' | 'balance' | 'pretty' | 'stable' | undefined;
 }
 
 export type BlockquoteFactory = Factory<{

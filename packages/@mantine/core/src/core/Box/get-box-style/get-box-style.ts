@@ -5,7 +5,7 @@ interface GetBoxStyleOptions {
   theme: MantineTheme;
   styleProps: React.CSSProperties;
   style?: MantineStyleProp;
-  vars?: CssVarsProp;
+  vars?: CssVarsProp | undefined;
 }
 
 function mergeStyles(

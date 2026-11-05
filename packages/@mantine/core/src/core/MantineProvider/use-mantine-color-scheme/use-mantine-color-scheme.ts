@@ -19,7 +19,9 @@ function disableTransition(nonce: string | undefined) {
   return clear;
 }
 
-export function useMantineColorScheme({ keepTransitions }: { keepTransitions?: boolean } = {}) {
+export function useMantineColorScheme({
+  keepTransitions,
+}: { keepTransitions?: boolean | undefined } = {}) {
   const clearStylesRef = useRef<() => void>(noop);
   const timeoutRef = useRef<number>(-1);
   const ctx = use(MantineContext);

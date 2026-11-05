@@ -26,34 +26,34 @@ export type MarqueeCssVariables = {
 export interface MarqueeProps
   extends BoxProps, StylesApiProps<MarqueeFactory>, ElementProps<'div'> {
   /** Reverses animation direction @default false */
-  reverse?: boolean;
+  reverse?: boolean | undefined;
 
   /** Pauses animation on hover @default false */
-  pauseOnHover?: boolean;
+  pauseOnHover?: boolean | undefined;
 
   /** Content to scroll */
   children: React.ReactNode;
 
   /** Scroll orientation @default 'horizontal' */
-  orientation?: 'horizontal' | 'vertical';
+  orientation?: 'horizontal' | 'vertical' | undefined;
 
   /** Number of times children are repeated inline for seamless scrolling @default 4 */
-  repeat?: number;
+  repeat?: number | undefined;
 
   /** Animation duration in ms @default 100000 */
-  duration?: number;
+  duration?: number | undefined;
 
   /** Gap between repeated children, key of `theme.spacing` or any valid CSS value @default 'md' */
-  gap?: MantineSpacing;
+  gap?: MantineSpacing | undefined;
 
   /** Whether to show gradient fade on edges, @default true */
-  fadeEdges?: boolean;
+  fadeEdges?: boolean | undefined;
 
   /** Color of the fade gradient, @default 'var(--mantine-color-body)' */
-  fadeEdgeColor?: string;
+  fadeEdgeColor?: string | undefined;
 
   /** Size of the fade gradient, @default '5%' */
-  fadeEdgeSize?: string;
+  fadeEdgeSize?: string | undefined;
 }
 
 export type MarqueeFactory = Factory<{

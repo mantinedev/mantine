@@ -16,20 +16,20 @@ import {
 import { useTourState } from './use-tour-state';
 
 export interface UseTourInput {
-  active?: boolean;
-  onClose?: () => void;
-  step?: number;
-  defaultStep?: number;
-  onStepChange?: (step: number) => void;
-  onStepOpen?: (step: number) => void;
-  onStepClose?: (step: number) => void;
-  mode?: 'guided' | 'beacon';
-  withKeyboardNavigation?: boolean;
-  withScrollIntoView?: boolean;
-  scrollToHandler?: (element: HTMLElement) => void;
-  closeOnEscape?: boolean;
-  maxWidth?: number;
-  stepTransitionDuration?: number;
+  active?: boolean | undefined;
+  onClose?: (() => void) | undefined;
+  step?: number | undefined;
+  defaultStep?: number | undefined;
+  onStepChange?: ((step: number) => void) | undefined;
+  onStepOpen?: ((step: number) => void) | undefined;
+  onStepClose?: ((step: number) => void) | undefined;
+  mode?: 'guided' | 'beacon' | undefined;
+  withKeyboardNavigation?: boolean | undefined;
+  withScrollIntoView?: boolean | undefined;
+  scrollToHandler?: ((element: HTMLElement) => void) | undefined;
+  closeOnEscape?: boolean | undefined;
+  maxWidth?: number | undefined;
+  stepTransitionDuration?: number | undefined;
   children?: React.ReactNode;
   stepComponent: React.ComponentType<any>;
 }

@@ -21,31 +21,31 @@ export interface MenuRadioItemProps
     BoxProps,
     CompoundStylesApiProps<MenuRadioItemFactory>,
     ElementProps<'button', 'color' | 'onChange' | 'value'> {
-  'data-disabled'?: boolean;
+  'data-disabled'?: boolean | undefined;
 
   /** Item label */
   children?: React.ReactNode;
 
   /** Key of `theme.colors` or any valid CSS color */
-  color?: MantineColor;
+  color?: MantineColor | undefined;
 
   /** If set, closes the menu when this item is clicked. By default, radio items do not close the menu. */
-  closeMenuOnClick?: boolean;
+  closeMenuOnClick?: boolean | undefined;
 
   /** Section displayed at the end of the label */
   rightSection?: React.ReactNode;
 
   /** Sets disabled attribute, applies disabled styles */
-  disabled?: boolean;
+  disabled?: boolean | undefined;
 
   /** Value of the radio item. Used by the parent `Menu.RadioGroup` to determine which item is selected. */
   value: string;
 
   /** Overrides selected state determined by the parent `Menu.RadioGroup`. */
-  checked?: boolean;
+  checked?: boolean | undefined;
 
   /** Called with the item value when item is selected. Overrides `onChange` of the parent `Menu.RadioGroup`. */
-  onChange?: (value: string) => void;
+  onChange?: ((value: string) => void) | undefined;
 
   /** Replaces the default radio indicator rendered when the item is selected. Overrides `checkIcon` set on `Menu`. */
   checkIcon?: React.ReactNode;

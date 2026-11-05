@@ -32,40 +32,42 @@ export type PaginationCssVariables = PaginationRootCssVariables;
 
 export interface PaginationProps extends PaginationRootProps {
   /** If set, first/last controls are displayed @default false */
-  withEdges?: boolean;
+  withEdges?: boolean | undefined;
 
   /** If set, next/previous controls are displayed @default true */
-  withControls?: boolean;
+  withControls?: boolean | undefined;
 
   /** Props passed down to next/previous/first/last controls */
-  getControlProps?: (control: 'first' | 'previous' | 'last' | 'next') => Record<string, any>;
+  getControlProps?:
+    | ((control: 'first' | 'previous' | 'last' | 'next') => Record<string, any>)
+    | undefined;
 
   /** Next control icon component */
-  nextIcon?: PaginationIcon;
+  nextIcon?: PaginationIcon | undefined;
 
   /** Previous control icon component */
-  previousIcon?: PaginationIcon;
+  previousIcon?: PaginationIcon | undefined;
 
   /** Last control icon component */
-  lastIcon?: PaginationIcon;
+  lastIcon?: PaginationIcon | undefined;
 
   /** First control icon component */
-  firstIcon?: PaginationIcon;
+  firstIcon?: PaginationIcon | undefined;
 
   /** Dots icon component */
-  dotsIcon?: PaginationIcon;
+  dotsIcon?: PaginationIcon | undefined;
 
   /** Key of `theme.spacing`, gap between controls @default 8 */
-  gap?: MantineSpacing;
+  gap?: MantineSpacing | undefined;
 
   /** If set, the pagination is hidden when only one page is available (`total={1}`) @default false */
-  hideWithOnePage?: boolean;
+  hideWithOnePage?: boolean | undefined;
 
   /** If set to `false`, page number buttons are hidden, only next/previous controls remain @default `true` */
-  withPages?: boolean;
+  withPages?: boolean | undefined;
 
   /** Function to format the label text displayed in responsive mode */
-  formatLabel?: PaginationFormatLabel;
+  formatLabel?: PaginationFormatLabel | undefined;
 }
 
 export type PaginationFactory = Factory<{

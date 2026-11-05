@@ -46,46 +46,46 @@ export interface NavLinkProps extends BoxProps, StylesApiProps<NavLinkFactory> {
   rightSection?: React.ReactNode;
 
   /** Determines whether the link should have active styles @default false */
-  active?: boolean;
+  active?: boolean | undefined;
 
   /** Key of `theme.colors` or any valid CSS color to control active styles @default theme.primaryColor */
-  color?: MantineColor;
+  color?: MantineColor | undefined;
 
   /** If set, label and description are truncated with ellipsis instead of wrapping @default false */
-  noWrap?: boolean;
+  noWrap?: boolean | undefined;
 
   /** Child `NavLink` components */
   children?: React.ReactNode;
 
   /** Controlled nested items collapse state */
-  opened?: boolean;
+  opened?: boolean | undefined;
 
   /** Uncontrolled nested items collapse initial state */
-  defaultOpened?: boolean;
+  defaultOpened?: boolean | undefined;
 
   /** Called when open state changes */
-  onChange?: (opened: boolean) => void;
+  onChange?: ((opened: boolean) => void) | undefined;
 
   /** If set, right section will not be rotated when collapse is opened @default false */
-  disableRightSectionRotation?: boolean;
+  disableRightSectionRotation?: boolean | undefined;
 
   /** Controls indentation of nested NavLink components, key of `theme.spacing` or any valid CSS value @default 'lg' */
-  childrenOffset?: MantineSpacing;
+  childrenOffset?: MantineSpacing | undefined;
 
   /** If set, disabled styles will be added to the root element @default false */
-  disabled?: boolean;
+  disabled?: boolean | undefined;
 
   /** If set, adjusts text color based on background color for `filled` variant */
-  autoContrast?: boolean;
+  autoContrast?: boolean | undefined;
 
   /** Called when the root element is clicked */
-  onClick?: React.MouseEventHandler<HTMLElement>;
+  onClick?: React.MouseEventHandler<HTMLElement> | undefined;
 
   /** Called on keydown of the root element */
-  onKeyDown?: React.KeyboardEventHandler<HTMLElement>;
+  onKeyDown?: React.KeyboardEventHandler<HTMLElement> | undefined;
 
   /** If set to `false`, child `NavLinks` are unmounted when collapsed */
-  keepMounted?: boolean;
+  keepMounted?: boolean | undefined;
 }
 
 export type NavLinkFactory = PolymorphicFactory<{

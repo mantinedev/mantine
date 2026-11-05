@@ -25,9 +25,9 @@ export interface ComboboxChevronProps
     BoxProps,
     StylesApiProps<ComboboxChevronFactory>,
     ElementProps<'svg', 'opacity' | 'display'> {
-  size?: MantineSize | (string & {});
+  size?: MantineSize | (string & {}) | undefined;
   error?: React.ReactNode;
-  color?: MantineColor;
+  color?: MantineColor | undefined;
 }
 
 export type ComboboxChevronFactory = Factory<{

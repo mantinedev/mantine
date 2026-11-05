@@ -9,25 +9,25 @@ export interface ComboboxEventsTargetProps {
   children: React.ReactNode;
 
   /** Key of the prop is used to access element ref */
-  refProp?: string;
+  refProp?: string | undefined;
 
   /** If set, the component responds to the keyboard events @default true */
-  withKeyboardNavigation?: boolean;
+  withKeyboardNavigation?: boolean | undefined;
 
   /** If set, the target has `aria-` attributes @default true */
-  withAriaAttributes?: boolean;
+  withAriaAttributes?: boolean | undefined;
 
   /** If set, the target has `aria-expanded` attribute @default false */
-  withExpandedAttribute?: boolean;
+  withExpandedAttribute?: boolean | undefined;
 
   /** Determines which events should be handled by the target element.
    * `button` target type handles `Space` and `Enter` keys to toggle dropdown opened state.
    * @default input
    * */
-  targetType?: 'button' | 'input';
+  targetType?: 'button' | 'input' | undefined;
 
   /** Input autocomplete attribute */
-  autoComplete?: string;
+  autoComplete?: string | undefined;
 }
 
 const defaultProps = {

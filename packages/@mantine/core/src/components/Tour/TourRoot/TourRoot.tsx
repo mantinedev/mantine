@@ -23,76 +23,76 @@ import classes from '../Tour.module.css';
 export interface TourRootProps
   extends BoxProps, StylesApiProps<TourRootFactory>, ElementProps<'div'> {
   /** Whether the tour is active @default false */
-  active?: boolean;
+  active?: boolean | undefined;
 
   /** Total number of steps, used by `Tour.Navigation` and keyboard navigation to detect the last step */
   stepsCount: number;
 
   /** Called when the tour is closed */
-  onClose?: () => void;
+  onClose?: (() => void) | undefined;
 
   /** Controlled current step index */
-  step?: number;
+  step?: number | undefined;
 
   /** Uncontrolled default step index @default 0 */
-  defaultStep?: number;
+  defaultStep?: number | undefined;
 
   /** Called when step changes */
-  onStepChange?: (step: number) => void;
+  onStepChange?: ((step: number) => void) | undefined;
 
   /** Called when a step opens */
-  onStepOpen?: (step: number) => void;
+  onStepOpen?: ((step: number) => void) | undefined;
 
   /** Called when a step closes */
-  onStepClose?: (step: number) => void;
+  onStepClose?: ((step: number) => void) | undefined;
 
   /** Whether `Tour.Overlay` is rendered @default true */
-  withOverlay?: boolean;
+  withOverlay?: boolean | undefined;
 
   /** Whether pointer events pass through the spotlight cutout to the target element, the rest of the overlay keeps blocking clicks @default false */
-  withOverlayInteraction?: boolean;
+  withOverlayInteraction?: boolean | undefined;
 
   /** Whether `Tour.CloseButton` is rendered @default true */
-  withCloseButton?: boolean;
+  withCloseButton?: boolean | undefined;
 
   /** Whether arrow keys navigate between steps @default true */
-  withKeyboardNavigation?: boolean;
+  withKeyboardNavigation?: boolean | undefined;
 
   /** Padding around the spotlight cutout in px @default 8 */
-  spotlightPadding?: number;
+  spotlightPadding?: number | undefined;
 
   /** Border radius of the spotlight cutout in px @default 4 */
-  spotlightRadius?: number;
+  spotlightRadius?: number | undefined;
 
   /** Whether pressing Escape closes the tour @default true */
-  closeOnEscape?: boolean;
+  closeOnEscape?: boolean | undefined;
 
   /** Whether clicking the overlay closes the tour, with `withOverlayInteraction` only clicks outside the spotlight cutout close it @default false */
-  closeOnOverlayClick?: boolean;
+  closeOnOverlayClick?: boolean | undefined;
 
   /** Labels for tour UI elements */
-  labels?: Partial<TourLabels>;
+  labels?: Partial<TourLabels> | undefined;
 
   /** Whether to render inside a portal @default true */
-  withinPortal?: boolean;
+  withinPortal?: boolean | undefined;
 
   /** Props passed to the Portal component */
-  portalProps?: Omit<PortalProps, 'children'>;
+  portalProps?: Omit<PortalProps, 'children'> | undefined;
 
   /** z-index of the tour @default 10000 */
-  zIndex?: string | number;
+  zIndex?: string | number | undefined;
 
   /** Default transition props of `Tour.Tooltip` @default { duration: 200, transition: 'fade' } */
-  transitionProps?: TransitionOverride;
+  transitionProps?: TransitionOverride | undefined;
 
   /** Tour step overlay color @default "rgba(0, 0, 0, 0.5)" */
-  overlayColor?: string;
+  overlayColor?: string | undefined;
 
   /** Key of `theme.colors` or any valid CSS color, controls `Tour.Beacon` color and `Tour.Navigation` next button color @default theme.primaryColor */
-  color?: MantineColor;
+  color?: MantineColor | undefined;
 
   /** Key of `theme.shadows` or any valid CSS box-shadow value, controls the tooltip shadow @default 'md' */
-  tooltipShadow?: string;
+  tooltipShadow?: string | undefined;
 
   /** Tour content: `Tour.Overlay`, `Tour.Tooltip`, `Tour.Beacon` and other compound components */
   children?: React.ReactNode;

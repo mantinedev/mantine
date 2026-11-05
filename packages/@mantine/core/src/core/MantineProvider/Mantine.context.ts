@@ -3,8 +3,8 @@ import { ConvertCSSVariablesInput } from './convert-css-variables';
 import type { MantineColorScheme, MantineTheme } from './theme.types';
 
 export interface MantineStylesTransform {
-  sx?: () => (sx: any) => string;
-  styles?: () => (styles: any, payload: any) => Record<string, string>;
+  sx?: (() => (sx: any) => string) | undefined;
+  styles?: (() => (styles: any, payload: any) => Record<string, string>) | undefined;
 }
 
 interface MantineContextValue {
@@ -13,14 +13,14 @@ interface MantineContextValue {
   clearColorScheme: () => void;
   getRootElement: () => HTMLElement | undefined;
   classNamesPrefix: string;
-  getStyleNonce?: () => string | undefined;
-  cssVariablesResolver?: (theme: MantineTheme) => ConvertCSSVariablesInput;
+  getStyleNonce?: (() => string | undefined) | undefined;
+  cssVariablesResolver?: ((theme: MantineTheme) => ConvertCSSVariablesInput) | undefined;
   cssVariablesSelector: string;
   withStaticClasses: boolean;
-  headless?: boolean;
-  stylesTransform?: MantineStylesTransform;
-  env?: 'default' | 'test';
-  deduplicateInlineStyles?: boolean;
+  headless?: boolean | undefined;
+  stylesTransform?: MantineStylesTransform | undefined;
+  env?: 'default' | 'test' | undefined;
+  deduplicateInlineStyles?: boolean | undefined;
 }
 
 export const MantineContext = createContext<MantineContextValue | null>(null);

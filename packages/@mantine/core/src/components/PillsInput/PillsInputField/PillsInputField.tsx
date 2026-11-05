@@ -19,10 +19,10 @@ export type PillsInputFieldStylesNames = 'field';
 export interface PillsInputFieldProps
   extends BoxProps, StylesApiProps<PillsInputFieldFactory>, ElementProps<'input', 'type'> {
   /** Controls input styles when focused. If `auto` the input is hidden when not focused. If `visible` the input will always remain visible. @default 'visible' */
-  type?: 'auto' | 'visible' | 'hidden';
+  type?: 'auto' | 'visible' | 'hidden' | undefined;
 
   /** If set, cursor is changed to pointer */
-  pointer?: boolean;
+  pointer?: boolean | undefined;
 }
 
 export type PillsInputFieldFactory = Factory<{

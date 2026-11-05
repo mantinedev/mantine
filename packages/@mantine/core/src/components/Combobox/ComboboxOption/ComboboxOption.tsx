@@ -20,13 +20,13 @@ export interface ComboboxOptionProps
   value: Primitive;
 
   /** Current active state */
-  active?: boolean;
+  active?: boolean | undefined;
 
   /** Disabled state */
-  disabled?: boolean;
+  disabled?: boolean | undefined;
 
   /** Current selected state */
-  selected?: boolean;
+  selected?: boolean | undefined;
 }
 
 export type ComboboxOptionFactory = Factory<{

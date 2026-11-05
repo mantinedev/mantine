@@ -18,7 +18,7 @@ export interface TabsListProps
   children: React.ReactNode;
 
   /** Determines whether tabs should take all available space @default false */
-  grow?: boolean;
+  grow?: boolean | undefined;
 
   /** Tabs alignment @default flex-start */
   justify?: React.CSSProperties['justifyContent'];

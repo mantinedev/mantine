@@ -9,10 +9,10 @@ export type ComboboxSearchStylesNames = InputStylesNames;
 
 export interface ComboboxSearchProps extends InputProps, ElementProps<'input', 'size'> {
   /** if set, the search input has `aria-` attribute @default true */
-  withAriaAttributes?: boolean;
+  withAriaAttributes?: boolean | undefined;
 
   /** if set, the search input handles keyboard navigation @default true */
-  withKeyboardNavigation?: boolean;
+  withKeyboardNavigation?: boolean | undefined;
 }
 
 export type ComboboxSearchFactory = Factory<{

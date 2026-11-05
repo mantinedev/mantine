@@ -24,31 +24,31 @@ export type LoadingOverlayCssVariables = {
 export interface LoadingOverlayProps
   extends BoxProps, StylesApiProps<LoadingOverlayFactory>, ElementProps<'div'> {
   /** Props passed down to `Transition` component. Set `duration` to create custom transition or override default transition. */
-  transitionProps?: TransitionOverride;
+  transitionProps?: TransitionOverride | undefined;
 
   /** Props passed down to `Loader` component */
-  loaderProps?: LoaderProps;
+  loaderProps?: LoaderProps | undefined;
 
   /** Props passed down to `Overlay` component. Use to customizing blur, opacity, color and other properties. */
-  overlayProps?: OverlayProps;
+  overlayProps?: OverlayProps | undefined;
 
   /** Controls overlay visibility. Typically used with state (useState, useDisclosure). @default false */
-  visible?: boolean;
+  visible?: boolean | undefined;
 
   /** Controls `z-index` of both the overlay and loader. The loader receives `z-index + 1`. @default 400 */
-  zIndex?: string | number;
+  zIndex?: string | number | undefined;
 
   /** Called when transition starts */
-  onEnter?: () => void;
+  onEnter?: (() => void) | undefined;
 
   /** Called when transition ends */
-  onEntered?: () => void;
+  onEntered?: (() => void) | undefined;
 
   /** Called when exit transition starts */
-  onExit?: () => void;
+  onExit?: (() => void) | undefined;
 
   /** Called when exit transition ends */
-  onExited?: () => void;
+  onExited?: (() => void) | undefined;
 }
 
 export type LoadingOverlayFactory = Factory<{

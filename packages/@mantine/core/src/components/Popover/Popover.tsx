@@ -45,25 +45,25 @@ export type PopoverCssVariables = {
 
 export interface __PopoverProps {
   /** Dropdown position relative to the target element @default 'bottom' */
-  position?: FloatingPosition;
+  position?: FloatingPosition | undefined;
 
   /** Offset of the dropdown element @default 8 */
-  offset?: number | FloatingAxesOffsets;
+  offset?: number | FloatingAxesOffsets | undefined;
 
   /** Called when dropdown position changes */
-  onPositionChange?: (position: FloatingPosition) => void;
+  onPositionChange?: ((position: FloatingPosition) => void) | undefined;
 
   /** Called when dropdown closes */
-  onClose?: () => void;
+  onClose?: (() => void) | undefined;
 
   /** Called when the popover is dismissed by clicking outside or by pressing escape */
-  onDismiss?: () => void;
+  onDismiss?: (() => void) | undefined;
 
   /** Called when dropdown opens */
-  onOpen?: () => void;
+  onOpen?: (() => void) | undefined;
 
   /** If set, the dropdown is not unmounted from the DOM when hidden. `display: none` styles are added instead. */
-  keepMounted?: boolean;
+  keepMounted?: boolean | undefined;
 
   /**
    * Controls how the dropdown is hidden when `keepMounted` is set:
@@ -71,110 +71,110 @@ export interface __PopoverProps {
    * `'display-none'` – hidden with `display: none` styles
    * @default 'activity'
    */
-  keepMountedMode?: 'activity' | 'display-none';
+  keepMountedMode?: 'activity' | 'display-none' | undefined;
 
   /** Props passed down to the `Transition` component. Use to configure duration and animation type. @default { duration: 150, transition: 'fade' } */
-  transitionProps?: TransitionOverride;
+  transitionProps?: TransitionOverride | undefined;
 
   /** Called when exit transition ends */
-  onExitTransitionEnd?: () => void;
+  onExitTransitionEnd?: (() => void) | undefined;
 
   /** Called when enter transition ends */
-  onEnterTransitionEnd?: () => void;
+  onEnterTransitionEnd?: (() => void) | undefined;
 
   /** Dropdown width, or `'target'` to make dropdown width the same as target element @default 'max-content' */
   width?: PopoverWidth;
 
   /** Floating ui middlewares to configure position handling @default { flip: true, shift: true, inline: false } */
-  middlewares?: PopoverMiddlewares;
+  middlewares?: PopoverMiddlewares | undefined;
 
   /** Determines whether component should have an arrow @default false */
-  withArrow?: boolean;
+  withArrow?: boolean | undefined;
 
   /** Determines whether the overlay should be displayed when the dropdown is opened @default false */
-  withOverlay?: boolean;
+  withOverlay?: boolean | undefined;
 
   /** Props passed down to `Overlay` component */
-  overlayProps?: OverlayProps & ElementProps<'div'>;
+  overlayProps?: (OverlayProps & ElementProps<'div'>) | undefined;
 
   /** Arrow size in px @default 7 */
-  arrowSize?: number;
+  arrowSize?: number | undefined;
 
   /** Arrow offset in px @default 5 */
-  arrowOffset?: number;
+  arrowOffset?: number | undefined;
 
   /** Arrow `border-radius` in px @default 0 */
-  arrowRadius?: number;
+  arrowRadius?: number | undefined;
 
   /** Arrow position */
-  arrowPosition?: ArrowPosition;
+  arrowPosition?: ArrowPosition | undefined;
 
   /** Determines whether dropdown should be rendered within the `Portal` @default true */
-  withinPortal?: boolean;
+  withinPortal?: boolean | undefined;
 
   /** Props to pass down to the `Portal` when `withinPortal` is true */
-  portalProps?: BasePortalProps;
+  portalProps?: BasePortalProps | undefined;
 
   /** Dropdown `z-index` @default 300 */
-  zIndex?: string | number;
+  zIndex?: string | number | undefined;
 
   /** Key of `theme.radius` or any valid CSS value to set border-radius @default theme.defaultRadius */
-  radius?: MantineRadius;
+  radius?: MantineRadius | undefined;
 
   /** Key of `theme.shadows` or any other valid CSS `box-shadow` value */
-  shadow?: MantineShadow;
+  shadow?: MantineShadow | undefined;
 
   /** If set, popover dropdown will not be rendered */
-  disabled?: boolean;
+  disabled?: boolean | undefined;
 
   /** Determines whether focus should be automatically returned to control when dropdown closes @default false */
-  returnFocus?: boolean;
+  returnFocus?: boolean | undefined;
 
   /** Changes floating ui [position strategy](https://floating-ui.com/docs/usefloating#strategy) @default 'absolute' */
-  floatingStrategy?: FloatingStrategy;
+  floatingStrategy?: FloatingStrategy | undefined;
 
   /** If set, the dropdown is hidden when the element is hidden with styles or not visible on the screen @default true */
-  hideDetached?: boolean;
+  hideDetached?: boolean | undefined;
 
   /** If `true`, the dropdown picks its side on open (flip runs once, preferring the `position` prop) and then never changes side — scrolling, resizing, and content size changes will not flip the dropdown. The side is recalculated fresh on the next open. Does not affect the `shift` middleware. Set to `false` to keep flip active and allow the dropdown to re-flip on every change. @default true */
-  preventPositionChangeWhenVisible?: boolean;
+  preventPositionChangeWhenVisible?: boolean | undefined;
 
   /** If set, outside click listeners are registered in the capture phase @default false */
-  clickOutsideCapture?: boolean;
+  clickOutsideCapture?: boolean | undefined;
 }
 
 export interface PopoverProps extends __PopoverProps, StylesApiProps<PopoverFactory> {
-  __staticSelector?: string;
+  __staticSelector?: string | undefined;
 
   /** `Popover.Target` and `Popover.Dropdown` components */
   children?: React.ReactNode;
 
   /** Initial opened state for uncontrolled component */
-  defaultOpened?: boolean;
+  defaultOpened?: boolean | undefined;
 
   /** Controlled dropdown opened state */
-  opened?: boolean;
+  opened?: boolean | undefined;
 
   /** Called with current state when dropdown opens or closes */
-  onChange?: (opened: boolean) => void;
+  onChange?: ((opened: boolean) => void) | undefined;
 
   /** Determines whether dropdown should be closed on outside clicks @default true */
-  closeOnClickOutside?: boolean;
+  closeOnClickOutside?: boolean | undefined;
 
   /** Events that trigger outside clicks */
-  clickOutsideEvents?: string[];
+  clickOutsideEvents?: string[] | undefined;
 
   /** Determines whether focus should be trapped within dropdown @default false */
-  trapFocus?: boolean;
+  trapFocus?: boolean | undefined;
 
   /** Determines whether dropdown should be closed when `Escape` key is pressed @default true */
-  closeOnEscape?: boolean;
+  closeOnEscape?: boolean | undefined;
 
   /** Id base to create accessibility connections */
-  id?: string;
+  id?: string | undefined;
 
   /** Determines whether dropdown and target elements should have accessible roles @default true */
-  withRoles?: boolean;
+  withRoles?: boolean | undefined;
 }
 
 export type PopoverFactory = Factory<{

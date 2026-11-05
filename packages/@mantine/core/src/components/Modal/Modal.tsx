@@ -19,28 +19,28 @@ export type ModalStylesNames = ModalRootStylesNames;
 export type ModalCssVariables = ModalRootCssVariables;
 
 export interface ModalProps extends ModalRootProps {
-  __staticSelector?: string;
+  __staticSelector?: string | undefined;
 
   /** Modal title */
   title?: React.ReactNode;
 
   /** If set, the overlay is rendered @default true */
-  withOverlay?: boolean;
+  withOverlay?: boolean | undefined;
 
   /** Props passed down to the `Overlay` component, use to configure opacity, `background-color`, styles and other properties */
-  overlayProps?: ModalBaseOverlayProps;
+  overlayProps?: ModalBaseOverlayProps | undefined;
 
   /** Modal content */
   children?: React.ReactNode;
 
   /** If set, the close button is rendered @default true */
-  withCloseButton?: boolean;
+  withCloseButton?: boolean | undefined;
 
   /** Props passed down to the close button */
-  closeButtonProps?: ModalBaseCloseButtonProps;
+  closeButtonProps?: ModalBaseCloseButtonProps | undefined;
 
   /** Id of the modal in the `Modal.Stack` */
-  stackId?: string;
+  stackId?: string | undefined;
 }
 
 export type ModalFactory = Factory<{

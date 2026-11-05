@@ -1,7 +1,7 @@
 import { rem } from '../../core';
 
 export interface RadioIconProps extends React.ComponentProps<'svg'> {
-  size?: string | number;
+  size?: string | number | undefined;
 }
 
 export function RadioIcon({ size, style, ...others }: RadioIconProps) {

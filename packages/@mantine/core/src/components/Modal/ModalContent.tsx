@@ -7,7 +7,7 @@ export type ModalContentStylesNames = 'content' | 'inner';
 
 export interface ModalContentProps
   extends ModalBaseContentProps, CompoundStylesApiProps<ModalContentFactory> {
-  __hidden?: boolean;
+  __hidden?: boolean | undefined;
 }
 
 export type ModalContentFactory = Factory<{

@@ -38,31 +38,31 @@ export type CheckboxIndicatorCssVariables = {
 export interface CheckboxIndicatorProps
   extends BoxProps, StylesApiProps<CheckboxIndicatorFactory>, ElementProps<'div'> {
   /** Key of `theme.colors` or any valid CSS color to set input background color in checked state @default theme.primaryColor */
-  color?: MantineColor;
+  color?: MantineColor | undefined;
 
   /** Controls size of the component @default 'sm' */
-  size?: MantineSize | (string & {}) | number;
+  size?: MantineSize | (string & {}) | number | undefined;
 
   /** Key of `theme.radius` or any valid CSS value to set `border-radius` @default theme.defaultRadius */
-  radius?: MantineRadius;
+  radius?: MantineRadius | undefined;
 
   /** Key of `theme.colors` or any valid CSS color to set icon color, by default value depends on `theme.autoContrast` */
-  iconColor?: MantineColor;
+  iconColor?: MantineColor | undefined;
 
   /** If set, adjusts icon color based on background color for `filled` variant */
-  autoContrast?: boolean;
+  autoContrast?: boolean | undefined;
 
   /** Indeterminate state of the checkbox. If set, `checked` prop is ignored. */
-  indeterminate?: boolean;
+  indeterminate?: boolean | undefined;
 
   /** Icon for checked or indeterminate state */
-  icon?: CheckboxIconComponent;
+  icon?: CheckboxIconComponent | undefined;
 
   /** Determines whether the component should have checked styles */
-  checked?: boolean;
+  checked?: boolean | undefined;
 
   /** Indicates disabled state */
-  disabled?: boolean;
+  disabled?: boolean | undefined;
 }
 
 export type CheckboxIndicatorFactory = Factory<{

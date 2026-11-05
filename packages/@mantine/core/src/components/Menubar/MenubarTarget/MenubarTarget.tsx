@@ -10,7 +10,7 @@ import { UnstyledButton } from '../../UnstyledButton';
 import { useMenubarContext, useMenubarMenuContext } from '../Menubar.context';
 
 export interface MenubarTargetProps extends ElementProps<'button'> {
-  'data-disabled'?: boolean;
+  'data-disabled'?: boolean | undefined;
 
   /** Target label */
   children: React.ReactNode;
@@ -19,7 +19,7 @@ export interface MenubarTargetProps extends ElementProps<'button'> {
   style?: MantineStyleProp;
 
   /** Key of the prop used to get element ref, useful for forwarding refs to custom components @default 'ref' */
-  refProp?: string;
+  refProp?: string | undefined;
 }
 
 const defaultProps = {

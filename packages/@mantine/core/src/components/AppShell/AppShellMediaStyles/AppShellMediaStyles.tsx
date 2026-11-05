@@ -10,8 +10,10 @@ interface AppShellMediaStylesProps {
   footer: AppShellProps['footer'] | undefined;
   padding: AppShellProps['padding'] | undefined;
   mode: 'fixed' | 'static';
-  selector?: string;
-  resize?: { sizes: AppShellResizeSizes; enabled: Partial<Record<AppShellResizeSection, boolean>> };
+  selector?: string | undefined;
+  resize?:
+    | { sizes: AppShellResizeSizes; enabled: Partial<Record<AppShellResizeSection, boolean>> }
+    | undefined;
 }
 
 export function AppShellMediaStyles({

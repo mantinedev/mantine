@@ -5,25 +5,25 @@ import { ComboboxDropdownEventSource, ComboboxStore } from './use-combobox';
 
 export interface UseVirtualizedComboboxOptions {
   /** Default value for `dropdownOpened`, `false` by default */
-  defaultOpened?: boolean;
+  defaultOpened?: boolean | undefined;
 
   /** Controlled `dropdownOpened` state */
-  opened?: boolean;
+  opened?: boolean | undefined;
 
   /** Called when `dropdownOpened` state changes */
-  onOpenedChange?: (opened: boolean) => void;
+  onOpenedChange?: ((opened: boolean) => void) | undefined;
 
   /** Called when dropdown closes */
-  onDropdownClose?: (eventSource: ComboboxDropdownEventSource) => void;
+  onDropdownClose?: ((eventSource: ComboboxDropdownEventSource) => void) | undefined;
 
   /** Called when dropdown opens */
-  onDropdownOpen?: (eventSource: ComboboxDropdownEventSource) => void;
+  onDropdownOpen?: ((eventSource: ComboboxDropdownEventSource) => void) | undefined;
 
   /** Determines whether arrow key presses should loop though items (first to last and last to first), `true` by default */
-  loop?: boolean;
+  loop?: boolean | undefined;
 
   /** Function to determine whether the option is disabled */
-  isOptionDisabled?: (optionIndex: number) => boolean;
+  isOptionDisabled?: ((optionIndex: number) => boolean) | undefined;
 
   /** Total number of options in the virtualized list. Required for proper keyboard navigation and index calculations. */
   totalOptionsCount: number;
@@ -38,7 +38,7 @@ export interface UseVirtualizedComboboxOptions {
   setSelectedOptionIndex: (index: number) => void;
 
   /** Currently active/highlighted option index. Used to determine which option to select when selectActiveOption is called. */
-  activeOptionIndex?: number;
+  activeOptionIndex?: number | undefined;
 
   /** Called when the selected option is submitted (e.g., via Enter key or clicking). Receives the selected option index. */
   onSelectedOptionSubmit: (index: number) => void;

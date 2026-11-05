@@ -44,13 +44,13 @@ export type RatingCssVariables = {
 export interface RatingProps
   extends BoxProps, StylesApiProps<RatingFactory>, ElementProps<'div', 'onChange'> {
   /** Uncontrolled component default value */
-  defaultValue?: number;
+  defaultValue?: number | undefined;
 
   /** Controlled component value */
-  value?: number;
+  value?: number | undefined;
 
   /** Called when value changes */
-  onChange?: (value: number) => void;
+  onChange?: ((value: number) => void) | undefined;
 
   /** Icon displayed for unselected rating items. Can be a function that receives the rating value. */
   emptySymbol?: React.ReactNode | ((value: number) => React.ReactNode);
@@ -59,34 +59,34 @@ export interface RatingProps
   fullSymbol?: React.ReactNode | ((value: number) => React.ReactNode);
 
   /** Number of fractions each item can be divided into, default is 1 */
-  fractions?: number;
+  fractions?: number | undefined;
 
   /** Controls component size @default 'sm' */
-  size?: MantineSize | number | (string & {});
+  size?: MantineSize | number | (string & {}) | undefined;
 
   /** Number of rating items (stars), default is 5 */
-  count?: number;
+  count?: number | undefined;
 
   /** Called when rating item is hovered. Receives -1 when hover ends. */
-  onHover?: (value: number) => void;
+  onHover?: ((value: number) => void) | undefined;
 
   /** Function to generate aria-label for each rating value. Receives the rating value as argument, default is (value) => String(value) */
-  getSymbolLabel?: (index: number) => string;
+  getSymbolLabel?: ((index: number) => string) | undefined;
 
   /** Name attribute for form submission. If not provided, a unique id will be generated. */
-  name?: string;
+  name?: string | undefined;
 
   /** When true, rating cannot be changed by user interaction, default is false */
-  readOnly?: boolean;
+  readOnly?: boolean | undefined;
 
   /** When true, clicking the same rating value clears the rating to 0, default is false */
-  allowClear?: boolean;
+  allowClear?: boolean | undefined;
 
   /** When true, only the clicked rating item is highlighted, not all items up to the selected value, default is false */
-  highlightSelectedOnly?: boolean;
+  highlightSelectedOnly?: boolean | undefined;
 
   /** Key of theme.colors or any CSS color value, default is 'yellow' */
-  color?: MantineColor;
+  color?: MantineColor | undefined;
 }
 
 export type RatingFactory = Factory<{

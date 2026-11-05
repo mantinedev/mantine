@@ -8,13 +8,13 @@ export interface FocusTrapProps {
   children: any;
 
   /** If set to `false`, disables focus trap */
-  active?: boolean;
+  active?: boolean | undefined;
 
   /** Prop that is used to access element ref @default 'ref' */
-  refProp?: string;
+  refProp?: string | undefined;
 
   /** Ref to combine with the focus trap ref */
-  innerRef?: React.Ref<any>;
+  innerRef?: React.Ref<any> | undefined;
 }
 
 export function FocusTrap({

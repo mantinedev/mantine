@@ -18,7 +18,7 @@ export interface EmptyStateTitleProps
   children?: React.ReactNode;
 
   /** Heading order, renders the title as `h1`–`h6` element. By default, the title is rendered as a `div` without semantic heading level */
-  order?: 1 | 2 | 3 | 4 | 5 | 6;
+  order?: 1 | 2 | 3 | 4 | 5 | 6 | undefined;
 }
 
 export type EmptyStateTitleFactory = Factory<{

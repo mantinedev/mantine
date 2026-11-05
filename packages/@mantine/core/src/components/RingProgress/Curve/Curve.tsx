@@ -4,14 +4,14 @@ import type { RingProgressFactory } from '../RingProgress';
 import { getCurveProps } from './get-curve-props';
 
 interface CurveProps extends React.ComponentProps<'circle'> {
-  value?: number;
+  value?: number | undefined;
   size: number;
   offset: number;
   sum: number;
   thickness: number;
   lineRoundCaps: boolean | undefined;
-  root?: boolean;
-  color?: MantineColor;
+  root?: boolean | undefined;
+  color?: MantineColor | undefined;
   tooltip?: React.ReactNode;
   getStyles: GetStylesApi<RingProgressFactory>;
 }

@@ -25,29 +25,29 @@ export interface FlatTreeNodeProps {
   tree: TreeController;
 
   /** If set, tree node with children is expanded on click @default true */
-  expandOnClick?: boolean;
+  expandOnClick?: boolean | undefined;
 
   /** If set, tree node is selected on click @default false */
-  selectOnClick?: boolean;
+  selectOnClick?: boolean | undefined;
 
   /** If set, tree node with children is expanded on space key press @default true */
-  expandOnSpace?: boolean;
+  expandOnSpace?: boolean | undefined;
 
   /** If set, tree node is checked on space key press @default false */
-  checkOnSpace?: boolean;
+  checkOnSpace?: boolean | undefined;
 
   /** A function to render tree node label */
-  renderNode?: RenderNode;
+  renderNode?: RenderNode | undefined;
 
   /** Style to apply to the root element, used for virtualizer positioning */
-  style?: React.CSSProperties;
+  style?: React.CSSProperties | undefined;
 
   /** Tab index for the node */
-  tabIndex?: number;
+  tabIndex?: number | undefined;
 
   /** Line state per ancestor + own level, computed by `flattenTreeData`.
    * When provided and the tree root has `data-with-lines`, connector lines are rendered. */
-  linesPath?: FlatTreeLineState[];
+  linesPath?: FlatTreeLineState[] | undefined;
 }
 
 export const FlatTreeNode = memo(function FlatTreeNode({

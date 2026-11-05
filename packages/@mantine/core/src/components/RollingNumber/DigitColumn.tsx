@@ -7,7 +7,7 @@ interface DigitColumnProps {
   digit: string;
   getStyles: ReturnType<typeof useStyles<RollingNumberFactory>>;
   previousDigit: string | null;
-  empty?: boolean;
+  empty?: boolean | undefined;
   valueDirection: 'up' | 'down';
 }
 

@@ -21,10 +21,10 @@ export type TourBeaconStylesNames = 'beacon' | 'beaconPulse';
 export interface TourBeaconProps
   extends BoxProps, CompoundStylesApiProps<TourBeaconFactory>, ElementProps<'button'> {
   /** CSS selector or ref to the target element */
-  target?: string | React.RefObject<HTMLElement | null>;
+  target?: string | React.RefObject<HTMLElement | null> | undefined;
 
   /** Called when the beacon is clicked */
-  onClick?: React.MouseEventHandler<HTMLButtonElement>;
+  onClick?: React.MouseEventHandler<HTMLButtonElement> | undefined;
 }
 
 export type TourBeaconFactory = Factory<{

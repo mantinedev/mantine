@@ -152,7 +152,7 @@ export type MantineThemeComponents = Record<string, MantineThemeComponent>;
 
 export interface HeadingStyle {
   fontSize: string;
-  fontWeight?: string;
+  fontWeight?: string | undefined;
   lineHeight: string;
 }
 
@@ -232,7 +232,7 @@ export interface MantineThemeOther {
 export interface MantineGradient {
   from: string;
   to: string;
-  deg?: number;
+  deg?: number | undefined;
 }
 
 export type MantineColorsTuple = readonly [

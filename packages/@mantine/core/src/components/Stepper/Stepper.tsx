@@ -61,7 +61,7 @@ export interface StepperProps
   children: React.ReactNode;
 
   /** Called when a clickable step is clicked with its 0-based index. Not called for the currently active step. */
-  onStepClick?: (stepIndex: number) => void;
+  onStepClick?: ((stepIndex: number) => void) | undefined;
 
   /** Index of the active step */
   active: number;
@@ -76,40 +76,40 @@ export interface StepperProps
   progressIcon?: React.ReactNode | StepFragmentComponent;
 
   /** Key of `theme.colors` or any valid CSS color, controls colors of active and progress steps @default theme.primaryColor */
-  color?: MantineColor;
+  color?: MantineColor | undefined;
 
   /** Controls size of the step icon, by default icon size is inferred from `size` prop */
-  iconSize?: number | string;
+  iconSize?: number | string | undefined;
 
   /** Key of `theme.spacing` or any valid CSS value to set `padding-top` of the content @default 'md' */
-  contentPadding?: MantineSpacing;
+  contentPadding?: MantineSpacing | undefined;
 
   /** Stepper orientation @default 'horizontal' */
-  orientation?: 'vertical' | 'horizontal';
+  orientation?: 'vertical' | 'horizontal' | undefined;
 
   /** Icon position relative to the step body. Ignored if `labelPosition="bottom"` is set – with the label below the icon there is no left/right to place it on. @default 'left' */
-  iconPosition?: 'right' | 'left';
+  iconPosition?: 'right' | 'left' | undefined;
 
   /** Controls size of various Stepper elements */
-  size?: MantineSize;
+  size?: MantineSize | undefined;
 
   /** Key of `theme.radius` or any valid CSS value to set steps border-radius @default "xl" */
-  radius?: MantineRadius;
+  radius?: MantineRadius | undefined;
 
   /** When true, users can click and jump to any step. When false, users can only navigate to completed steps @default true */
-  allowNextStepsSelect?: boolean;
+  allowNextStepsSelect?: boolean | undefined;
 
   /** Determines whether steps should wrap to the next line if no space is available @default true */
-  wrap?: boolean;
+  wrap?: boolean | undefined;
 
   /** Controls position of the step label and description relative to the step icon. Takes precedence over `iconPosition`. Ignored if `orientation="vertical"` is set. @default 'right' */
-  labelPosition?: 'right' | 'bottom';
+  labelPosition?: 'right' | 'bottom' | undefined;
 
   /** When true, automatically adjusts the icon color in completed steps to ensure sufficient contrast against the step background color */
-  autoContrast?: boolean;
+  autoContrast?: boolean | undefined;
 
   /** If set, all step content is kept mounted. React 19 `Activity` is used to preserve state while content is hidden. @default false */
-  keepMounted?: boolean;
+  keepMounted?: boolean | undefined;
 }
 
 export type StepperFactory = Factory<{

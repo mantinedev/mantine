@@ -23,10 +23,10 @@ export interface ActionIconGroupProps
   children?: React.ReactNode;
 
   /** Group orientation @default 'horizontal' */
-  orientation?: 'horizontal' | 'vertical';
+  orientation?: 'horizontal' | 'vertical' | undefined;
 
   /** `border-width` of the child components. @default 1 */
-  borderWidth?: number | string;
+  borderWidth?: number | string | undefined;
 }
 
 export type ActionIconGroupFactory = Factory<{

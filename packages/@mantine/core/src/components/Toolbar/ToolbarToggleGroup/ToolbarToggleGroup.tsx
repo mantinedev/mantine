@@ -23,7 +23,7 @@ interface ToolbarToggleGroupBaseProps
     CompoundStylesApiProps<ToolbarToggleGroupFactory>,
     Omit<ElementProps<'div'>, 'onChange' | 'value' | 'defaultValue'> {
   /** Disables all toggle items within this group */
-  disabled?: boolean;
+  disabled?: boolean | undefined;
 
   /** `Toolbar.ToggleItem` components */
   children: React.ReactNode;
@@ -34,13 +34,13 @@ export interface ToolbarToggleGroupSingleProps extends ToolbarToggleGroupBasePro
   type: 'single';
 
   /** Controlled value, `null` when no item is active */
-  value?: string | null;
+  value?: string | null | undefined;
 
   /** Uncontrolled default value */
-  defaultValue?: string | null;
+  defaultValue?: string | null | undefined;
 
   /** Called with the new value when an item is toggled, `null` when the active item is deselected */
-  onChange?: (value: string | null) => void;
+  onChange?: ((value: string | null) => void) | undefined;
 }
 
 export interface ToolbarToggleGroupMultipleProps extends ToolbarToggleGroupBaseProps {
@@ -48,13 +48,13 @@ export interface ToolbarToggleGroupMultipleProps extends ToolbarToggleGroupBaseP
   type: 'multiple';
 
   /** Controlled value, array of active item values */
-  value?: string[];
+  value?: string[] | undefined;
 
   /** Uncontrolled default value */
-  defaultValue?: string[];
+  defaultValue?: string[] | undefined;
 
   /** Called with the array of active item values when an item is toggled */
-  onChange?: (value: string[]) => void;
+  onChange?: ((value: string[]) => void) | undefined;
 }
 
 export type ToolbarToggleGroupProps =
@@ -102,9 +102,9 @@ export const ToolbarToggleGroup = factory<ToolbarToggleGroupFactory>((_props) =>
     ...others
   } = props as ToolbarToggleGroupBaseProps & {
     type: 'single' | 'multiple';
-    value?: string | string[] | null;
-    defaultValue?: string | string[] | null;
-    onChange?: (value: any) => void;
+    value?: string | string[] | null | undefined;
+    defaultValue?: string | string[] | null | undefined;
+    onChange?: ((value: any) => void) | undefined;
   };
 
   const ctx = useToolbarContext();

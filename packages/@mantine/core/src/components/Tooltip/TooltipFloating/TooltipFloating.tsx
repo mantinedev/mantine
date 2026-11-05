@@ -22,10 +22,10 @@ import classes from '../Tooltip.module.css';
 
 export interface TooltipFloatingProps extends TooltipBaseProps {
   /** Offset from mouse in px @default 10 */
-  offset?: number;
+  offset?: number | undefined;
 
   /** Uncontrolled tooltip initial opened state */
-  defaultOpened?: boolean;
+  defaultOpened?: boolean | undefined;
 }
 
 export type TooltipFloatingFactory = Factory<{

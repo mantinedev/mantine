@@ -4,13 +4,13 @@ import { MenuRadioGroupContext } from './MenuRadioGroup.context';
 
 export interface MenuRadioGroupProps {
   /** Controlled selected value */
-  value?: string | null;
+  value?: string | null | undefined;
 
   /** Uncontrolled default selected value */
-  defaultValue?: string | null;
+  defaultValue?: string | null | undefined;
 
   /** Called with the new value when a `Menu.RadioItem` is selected */
-  onChange?: (value: string) => void;
+  onChange?: ((value: string) => void) | undefined;
 
   /** `Menu.RadioItem` components and other elements */
   children?: React.ReactNode;

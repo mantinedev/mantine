@@ -38,12 +38,12 @@ function isValueChecked(value: Primitive | Primitive[] | undefined | null, optio
 
 interface OptionProps {
   data: ComboboxParsedItem<Primitive>;
-  withCheckIcon?: boolean;
-  withAlignedLabels?: boolean;
-  value?: Primitive | Primitive[] | null;
-  checkIconPosition?: 'left' | 'right';
+  withCheckIcon?: boolean | undefined;
+  withAlignedLabels?: boolean | undefined;
+  value?: Primitive | Primitive[] | null | undefined;
+  checkIconPosition?: 'left' | 'right' | undefined;
   unstyled: boolean | undefined;
-  renderOption?: (input: ComboboxLikeRenderOptionInput<any>) => React.ReactNode;
+  renderOption?: ((input: ComboboxLikeRenderOptionInput<any>) => React.ReactNode) | undefined;
 }
 
 function Option({
@@ -118,7 +118,7 @@ interface SearchableDropdownProps {
   withCheckIcon: boolean | undefined;
   withAlignedLabels: boolean | undefined;
   unstyled: boolean | undefined;
-  renderOption?: (input: ComboboxLikeRenderOptionInput<any>) => React.ReactNode;
+  renderOption?: ((input: ComboboxLikeRenderOptionInput<any>) => React.ReactNode) | undefined;
   scrollAreaProps: ScrollAreaProps | undefined;
   onSearchChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
 }
@@ -194,100 +194,102 @@ export interface ComboboxPopoverProps<
   Value extends Primitive = string,
 > extends StylesApiProps<ComboboxPopoverFactory> {
   /** If set, multiple items can be selected at the same time */
-  multiple?: Multiple;
+  multiple?: Multiple | undefined;
 
   /** Controlled component value */
-  value?: ComboboxPopoverValue<Multiple, Value>;
+  value?: ComboboxPopoverValue<Multiple, Value> | undefined;
 
   /** Uncontrolled component default value */
-  defaultValue?: ComboboxPopoverValue<Multiple, Value>;
+  defaultValue?: ComboboxPopoverValue<Multiple, Value> | undefined;
 
   /** Called when value changes */
-  onChange?: (value: ComboboxPopoverValue<Multiple, Value>) => void;
+  onChange?: ((value: ComboboxPopoverValue<Multiple, Value>) => void) | undefined;
 
   /** Data used to generate options */
-  data?: ComboboxData<Value>;
+  data?: ComboboxData<Value> | undefined;
 
   /** Controlled dropdown opened state */
-  dropdownOpened?: boolean;
+  dropdownOpened?: boolean | undefined;
 
   /** Uncontrolled dropdown initial opened state */
-  defaultDropdownOpened?: boolean;
+  defaultDropdownOpened?: boolean | undefined;
 
   /** Called when dropdown opens */
-  onDropdownOpen?: () => void;
+  onDropdownOpen?: (() => void) | undefined;
 
   /** Called when dropdown closes */
-  onDropdownClose?: () => void;
+  onDropdownClose?: (() => void) | undefined;
 
   /** Called when option is submitted from dropdown with mouse click or Enter key */
-  onOptionSubmit?: (value: Value) => void;
+  onOptionSubmit?: ((value: Value) => void) | undefined;
 
   /** Props passed down to Combobox component */
-  comboboxProps?: ComboboxProps;
+  comboboxProps?: ComboboxProps | undefined;
 
   /** Function based on which items are filtered and sorted */
-  filter?: OptionsFilter<Value>;
+  filter?: OptionsFilter<Value> | undefined;
 
   /** Maximum number of options displayed at a time @default Infinity */
-  limit?: number;
+  limit?: number | undefined;
 
   /** Determines whether the options should be wrapped with ScrollArea.AutoSize @default true */
-  withScrollArea?: boolean;
+  withScrollArea?: boolean | undefined;
 
   /** max-height of the dropdown @default 220 */
-  maxDropdownHeight?: number | string;
+  maxDropdownHeight?: number | string | undefined;
 
   /** If set, the first option is selected when dropdown opens @default false */
-  selectFirstOptionOnDropdownOpen?: boolean;
+  selectFirstOptionOnDropdownOpen?: boolean | undefined;
 
   /** Displays check icon near the selected option label @default true */
-  withCheckIcon?: boolean;
+  withCheckIcon?: boolean | undefined;
 
   /** Aligns unchecked labels with the checked one @default false */
-  withAlignedLabels?: boolean;
+  withAlignedLabels?: boolean | undefined;
 
   /** Position of the check icon relative to the option label @default 'left' */
-  checkIconPosition?: 'left' | 'right';
+  checkIconPosition?: 'left' | 'right' | undefined;
 
   /** Message displayed when no options match the search query or when there is no data */
   nothingFoundMessage?: React.ReactNode;
 
   /** Allows searching through options @default false */
-  searchable?: boolean;
+  searchable?: boolean | undefined;
 
   /** Controlled search value */
-  searchValue?: string;
+  searchValue?: string | undefined;
 
   /** Default search value */
-  defaultSearchValue?: string;
+  defaultSearchValue?: string | undefined;
 
   /** Called when search changes */
-  onSearchChange?: (value: string) => void;
+  onSearchChange?: ((value: string) => void) | undefined;
 
   /** Allows deselecting the selected option by clicking it (only for single mode) @default true */
-  allowDeselect?: boolean;
+  allowDeselect?: boolean | undefined;
 
   /** A function to render content of the option, replaces the default content of the option */
-  renderOption?: (item: ComboboxLikeRenderOptionInput<ComboboxItem>) => React.ReactNode;
+  renderOption?:
+    | ((item: ComboboxLikeRenderOptionInput<ComboboxItem>) => React.ReactNode)
+    | undefined;
 
   /** Props passed down to the underlying ScrollArea component in the dropdown */
-  scrollAreaProps?: ScrollAreaProps;
+  scrollAreaProps?: ScrollAreaProps | undefined;
 
   /** Props passed down to the hidden input */
-  hiddenInputProps?: Omit<React.ComponentProps<'input'>, 'value'>;
+  hiddenInputProps?: Omit<React.ComponentProps<'input'>, 'value'> | undefined;
 
   /** Hidden input name for form submission */
-  name?: string;
+  name?: string | undefined;
 
   /** Hidden input form for form submission */
-  form?: string;
+  form?: string | undefined;
 
   /** Content of the component */
   children?: React.ReactNode;
 
   /** Divider used to separate values in the hidden input value attribute @default ',' */
-  hiddenInputValuesDivider?: string;
+  hiddenInputValuesDivider?: string | undefined;
 }
 
 export type ComboboxPopoverFactory = Factory<{

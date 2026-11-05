@@ -23,19 +23,19 @@ export type ProgressRootCssVariables = {
 
 export interface __ProgressRootProps extends BoxProps, ElementProps<'div'> {
   /** Controls track height @default 'md' */
-  size?: MantineSize | (string & {}) | number;
+  size?: MantineSize | (string & {}) | number | undefined;
 
   /** Key of `theme.radius` or any valid CSS value to set `border-radius` @default theme.defaultRadius */
-  radius?: MantineRadius;
+  radius?: MantineRadius | undefined;
 
   /** If set, adjusts label text color based on section background color for readability */
-  autoContrast?: boolean;
+  autoContrast?: boolean | undefined;
 
   /** Controls sections width transition duration, value is specified in ms @default 100 */
-  transitionDuration?: number;
+  transitionDuration?: number | undefined;
 
   /** Controls orientation @default 'horizontal' */
-  orientation?: 'horizontal' | 'vertical';
+  orientation?: 'horizontal' | 'vertical' | undefined;
 }
 
 export interface ProgressRootProps

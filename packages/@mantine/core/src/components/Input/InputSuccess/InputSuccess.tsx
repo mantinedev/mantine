@@ -23,11 +23,11 @@ export type InputSuccessCssVariables = {
 
 export interface InputSuccessProps
   extends BoxProps, StylesApiProps<InputSuccessFactory>, ElementProps<'div'> {
-  __staticSelector?: string;
-  __inheritStyles?: boolean;
+  __staticSelector?: string | undefined;
+  __inheritStyles?: boolean | undefined;
 
   /** Controls success `font-size` @default 'sm' */
-  size?: MantineFontSize;
+  size?: MantineFontSize | undefined;
 }
 
 export type InputSuccessFactory = Factory<{

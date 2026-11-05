@@ -8,7 +8,7 @@ export interface UseResolvedStylesApiInput<Payload extends FactoryPayload> {
   classNames: ClassNames<Payload> | undefined;
   styles: Styles<Payload> | undefined;
   props: Record<string, any>;
-  stylesCtx?: Record<string, any>;
+  stylesCtx?: Record<string, any> | undefined;
 }
 
 export function useResolvedStylesApi<Payload extends FactoryPayload>({

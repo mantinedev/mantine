@@ -10,8 +10,8 @@ export interface VariantColorsResolverInput {
   color: MantineColor | undefined;
   theme: MantineTheme;
   variant: string;
-  gradient?: MantineGradient;
-  autoContrast?: boolean;
+  gradient?: MantineGradient | undefined;
+  autoContrast?: boolean | undefined;
 }
 
 export interface VariantColorResolverResult {
@@ -19,7 +19,7 @@ export interface VariantColorResolverResult {
   hover: string;
   color: string;
   border: string;
-  hoverColor?: string;
+  hoverColor?: string | undefined;
 }
 
 export type VariantColorsResolver = (

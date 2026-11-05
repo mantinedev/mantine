@@ -11,8 +11,8 @@ interface AssignFooterVariablesInput {
   minMediaStyles: MediaQueryVariables;
   footer: AppShellProps['footer'] | undefined;
   mode: 'fixed' | 'static';
-  resizedSize?: number;
-  resizable?: boolean;
+  resizedSize?: number | undefined;
+  resizable?: boolean | undefined;
 }
 
 export function assignFooterVariables({

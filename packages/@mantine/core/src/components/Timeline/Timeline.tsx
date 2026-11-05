@@ -36,28 +36,28 @@ export interface TimelineProps
   children?: React.ReactNode;
 
   /** Index of the active element */
-  active?: number;
+  active?: number | undefined;
 
   /** Key of `theme.colors` or any valid CSS color to control active item colors @default theme.primaryColor */
-  color?: MantineColor;
+  color?: MantineColor | undefined;
 
   /** Key of `theme.radius` or any valid CSS value to set `border-radius`, numbers are converted to rem @default 'xl' */
-  radius?: MantineRadius;
+  radius?: MantineRadius | undefined;
 
   /** Size of the bullet @default 20 */
-  bulletSize?: number | string;
+  bulletSize?: number | string | undefined;
 
   /** Position of content relative to the bullet @default 'left' */
-  align?: 'right' | 'left';
+  align?: 'right' | 'left' | undefined;
 
   /** Control width of the line */
-  lineWidth?: number | string;
+  lineWidth?: number | string | undefined;
 
   /** If set, the active items direction is reversed without reversing items order @default false */
-  reverseActive?: boolean;
+  reverseActive?: boolean | undefined;
 
   /** If set, adjusts text color based on background color for `filled` variant */
-  autoContrast?: boolean;
+  autoContrast?: boolean | undefined;
 }
 
 export type TimelineFactory = Factory<{

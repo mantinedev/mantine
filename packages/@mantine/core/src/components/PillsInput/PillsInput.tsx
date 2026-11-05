@@ -15,8 +15,8 @@ export interface PillsInputProps
     __BaseInputProps,
     StylesApiProps<PillsInputFactory>,
     ElementProps<'div', 'size'> {
-  __stylesApiProps?: Record<string, any>;
-  __staticSelector?: string;
+  __stylesApiProps?: Record<string, any> | undefined;
+  __staticSelector?: string | undefined;
 }
 
 export type PillsInputFactory = Factory<{

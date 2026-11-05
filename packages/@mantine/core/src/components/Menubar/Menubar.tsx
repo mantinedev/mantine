@@ -36,22 +36,22 @@ export interface MenubarProps
   children?: React.ReactNode;
 
   /** Index of the controlled opened menu, `null` closes all menus */
-  openIndex?: number | null;
+  openIndex?: number | null | undefined;
 
   /** Index of the opened menu for uncontrolled component @default `null` */
-  defaultOpenIndex?: number | null;
+  defaultOpenIndex?: number | null | undefined;
 
   /** Called when the opened menu changes with its index or `null` when all menus are closed */
-  onOpenChange?: (index: number | null) => void;
+  onOpenChange?: ((index: number | null) => void) | undefined;
 
   /** Event that opens a menu when none of the menus is opened. `'click'` opens a menu on target click and then switches menus on hover (desktop application pattern), `'hover'` opens a menu when the target is hovered @default `'click'` */
-  trigger?: 'click' | 'hover';
+  trigger?: 'click' | 'hover' | undefined;
 
   /** If set, arrow key navigation wraps from last to first menu and vice versa @default `true` */
-  loop?: boolean;
+  loop?: boolean | undefined;
 
   /** Dropdown position relative to the target element @default `'bottom-start'` */
-  position?: FloatingPosition;
+  position?: FloatingPosition | undefined;
 }
 
 const defaultProps = {

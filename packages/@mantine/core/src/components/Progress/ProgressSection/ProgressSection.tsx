@@ -23,16 +23,16 @@ export interface ProgressSectionProps
   value: number;
 
   /** Determines whether `aria-*` props should be added to the root element @default true */
-  withAria?: boolean;
+  withAria?: boolean | undefined;
 
   /** Key of `theme.colors` or any valid CSS value @default theme.primaryColor */
-  color?: MantineColor;
+  color?: MantineColor | undefined;
 
   /** If set, the section has stripes @default false */
-  striped?: boolean;
+  striped?: boolean | undefined;
 
   /** If set, the sections stripes are animated, `striped` prop is ignored @default false */
-  animated?: boolean;
+  animated?: boolean | undefined;
 }
 
 export type ProgressSectionFactory = Factory<{

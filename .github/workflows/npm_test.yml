@@ -29,6 +29,8 @@ jobs:
         run: npm run setup
       - name: Build public packages
         run: npm run build all
+      - name: Validate public types
+        run: npm run test:types
       - name: Validate esm entry points
         run: npm run test:esm-entrypoints
       - name: Compile MCP documentation data

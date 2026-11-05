@@ -1,9 +1,9 @@
 interface IsMarkFilled {
   mark: { value: number; label?: any };
-  offset?: number;
+  offset?: number | undefined;
   value: number;
-  inverted?: boolean;
-  startPointValue?: number;
+  inverted?: boolean | undefined;
+  startPointValue?: number | undefined;
 }
 
 export function isMarkFilled({

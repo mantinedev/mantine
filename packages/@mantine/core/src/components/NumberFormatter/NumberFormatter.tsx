@@ -3,31 +3,31 @@ import { ExtendComponent, Factory, MantineThemeComponent, useProps } from '../..
 
 export interface NumberFormatterProps extends React.ComponentProps<'span'> {
   /** Value to format */
-  value?: number | string;
+  value?: number | string | undefined;
 
   /** If set, negative values are allowed @default true */
-  allowNegative?: boolean;
+  allowNegative?: boolean | undefined;
 
   /** Limits the number of digits that are displayed after the decimal point @default Infinity */
-  decimalScale?: number;
+  decimalScale?: number | undefined;
 
   /** Character used as a decimal separator, `'.'` by default */
-  decimalSeparator?: string;
+  decimalSeparator?: string | undefined;
 
   /** If set, zeros are added after `decimalSeparator` to match given `decimalScale`. @default false */
-  fixedDecimalScale?: boolean;
+  fixedDecimalScale?: boolean | undefined;
 
   /** Prefix added before the value */
-  prefix?: string;
+  prefix?: string | undefined;
 
   /** Suffix added after the value */
-  suffix?: string;
+  suffix?: string | undefined;
 
   /** Defines the thousand grouping style */
-  thousandsGroupStyle?: 'thousand' | 'lakh' | 'wan' | 'none';
+  thousandsGroupStyle?: 'thousand' | 'lakh' | 'wan' | 'none' | undefined;
 
   /** A character used to separate thousands @default  ',' */
-  thousandSeparator?: string | boolean;
+  thousandSeparator?: string | boolean | undefined;
 }
 
 export type NumberFormatterFactory = Factory<{

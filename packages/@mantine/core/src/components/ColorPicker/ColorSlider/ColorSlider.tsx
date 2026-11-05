@@ -30,22 +30,22 @@ export interface __ColorSliderProps extends ElementProps<'div', 'onChange'> {
   value: number;
 
   /** Called when value changes */
-  onChange?: (value: number) => void;
+  onChange?: ((value: number) => void) | undefined;
 
   /** Called when user stops dragging the slider or uses keyboard to change value */
-  onChangeEnd?: (value: number) => void;
+  onChangeEnd?: ((value: number) => void) | undefined;
 
   /** Called when user starts dragging the slider */
-  onScrubStart?: () => void;
+  onScrubStart?: (() => void) | undefined;
 
   /** Called when user stops dragging the slider */
-  onScrubEnd?: () => void;
+  onScrubEnd?: (() => void) | undefined;
 
   /** Slider size @default 'md' */
-  size?: MantineSize | (string & {});
+  size?: MantineSize | (string & {}) | undefined;
 
   /** If set, slider thumb can be focused @default true */
-  focusable?: boolean;
+  focusable?: boolean | undefined;
 }
 
 export interface ColorSliderProps
@@ -54,11 +54,11 @@ export interface ColorSliderProps
     StylesApiProps<ColorSliderFactory>,
     __ColorSliderProps,
     ElementProps<'div', 'onChange'> {
-  __staticSelector?: string;
+  __staticSelector?: string | undefined;
   maxValue: number;
   overlays: React.CSSProperties[];
   round: boolean;
-  thumbColor?: string;
+  thumbColor?: string | undefined;
 }
 
 export type ColorSliderOptions = Omit<

@@ -61,49 +61,49 @@ export type SplitterCssVariables = {
 export interface SplitterProps
   extends BoxProps, StylesApiProps<SplitterFactory>, ElementProps<'div'> {
   /** Layout direction @default 'horizontal' */
-  orientation?: 'horizontal' | 'vertical';
+  orientation?: 'horizontal' | 'vertical' | undefined;
 
   /** Controlled sizes, each value keeps the unit it was declared in (number/`%` flexible, `px`/`rem` fixed) */
-  sizes?: SplitterPaneSize[];
+  sizes?: SplitterPaneSize[] | undefined;
 
   /** Called during resize with updated sizes, each value keeps its declared unit */
-  onSizeChange?: (sizes: SplitterPaneSize[]) => void;
+  onSizeChange?: ((sizes: SplitterPaneSize[]) => void) | undefined;
 
   /** Called when drag starts */
-  onResizeStart?: (handleIndex: number) => void;
+  onResizeStart?: ((handleIndex: number) => void) | undefined;
 
   /** Called when drag ends */
-  onResizeEnd?: (handleIndex: number, sizes: SplitterPaneSize[]) => void;
+  onResizeEnd?: ((handleIndex: number, sizes: SplitterPaneSize[]) => void) | undefined;
 
   /** Called when a panel collapses or expands */
-  onCollapseChange?: (panelIndex: number, collapsed: boolean) => void;
+  onCollapseChange?: ((panelIndex: number, collapsed: boolean) => void) | undefined;
 
   /** How to redistribute space when immediate neighbor is at its min/max */
-  redistribute?: 'nearest' | 'equal' | UseSplitterRedistributeFn;
+  redistribute?: 'nearest' | 'equal' | UseSplitterRedistributeFn | undefined;
 
   /** Keyboard step size, a `number`/`%` is a percentage, `px`/`rem` is resolved to pixels @default 1 */
-  step?: SplitterStep;
+  step?: SplitterStep | undefined;
 
   /** Shift+arrow step size, a `number`/`%` is a percentage, `px`/`rem` is resolved to pixels @default 10 */
-  shiftStep?: SplitterStep;
+  shiftStep?: SplitterStep | undefined;
 
   /** CSS value for separator line thickness between panes @default 2 */
-  lineSize?: number | string;
+  lineSize?: number | string | undefined;
 
   /** Key of `theme.colors` or any valid CSS color for the separator line */
-  handleColor?: MantineColor;
+  handleColor?: MantineColor | undefined;
 
   /** Custom icon displayed in the handle thumb, by default uses grip icon based on orientation */
   handleIcon?: React.ReactNode;
 
   /** Determines whether the thumb with grip icon is displayed on the handle @default true */
-  withHandle?: boolean;
+  withHandle?: boolean | undefined;
 
   /** Restore the two panes adjacent to a handle to their default ratio (preserving their combined size) when the handle is double-clicked @default true */
-  resetOnDoubleClick?: boolean;
+  resetOnDoubleClick?: boolean | undefined;
 
   /** Ref to imperative splitter API (sizes, collapse, expand, etc.) */
-  splitterRef?: React.RefObject<UseSplitterReturnValue | null>;
+  splitterRef?: React.RefObject<UseSplitterReturnValue | null> | undefined;
 
   /** Splitter panes */
   children?: React.ReactNode;

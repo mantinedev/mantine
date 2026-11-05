@@ -70,45 +70,47 @@ export interface __InputWrapperProps {
   success?: React.ReactNode;
 
   /** Adds required attribute to the input and a red asterisk on the right side of label @default false */
-  required?: boolean;
+  required?: boolean | undefined;
 
   /** If set, the required asterisk is displayed next to the label. Overrides `required` prop. Does not add required attribute to the input. @default false */
-  withAsterisk?: boolean;
+  withAsterisk?: boolean | undefined;
 
   /** Props passed down to the `Input.Label` component */
-  labelProps?: InputLabelProps & DataAttributes & PlaceholderPolymorphicProps;
+  labelProps?: (InputLabelProps & DataAttributes & PlaceholderPolymorphicProps) | undefined;
 
   /** Props passed down to the `Input.Description` component */
-  descriptionProps?: InputDescriptionProps & DataAttributes & PlaceholderPolymorphicProps;
+  descriptionProps?:
+    | (InputDescriptionProps & DataAttributes & PlaceholderPolymorphicProps)
+    | undefined;
 
   /** Props passed down to the `Input.Error` component */
-  errorProps?: InputErrorProps & DataAttributes & PlaceholderPolymorphicProps;
+  errorProps?: (InputErrorProps & DataAttributes & PlaceholderPolymorphicProps) | undefined;
 
   /** Props passed down to the `Input.Success` component */
-  successProps?: InputSuccessProps & DataAttributes & PlaceholderPolymorphicProps;
+  successProps?: (InputSuccessProps & DataAttributes & PlaceholderPolymorphicProps) | undefined;
 
   /** Render function to wrap the input element. Useful for adding tooltips, popovers, or other wrappers around the input. @default React.Fragment */
-  inputContainer?: (children: React.ReactNode) => React.ReactNode;
+  inputContainer?: ((children: React.ReactNode) => React.ReactNode) | undefined;
 
   /** Controls order and visibility of wrapper elements. Only elements included in this array will be rendered. @default ['label', 'description', 'input', 'error'] */
-  inputWrapperOrder?: ('label' | 'input' | 'description' | 'error')[];
+  inputWrapperOrder?: ('label' | 'input' | 'description' | 'error')[] | undefined;
 }
 
 export interface InputWrapperProps
   extends __InputWrapperProps, BoxProps, StylesApiProps<InputWrapperFactory>, ElementProps<'div'> {
-  __staticSelector?: string;
+  __staticSelector?: string | undefined;
 
   /** Props passed to Styles API context, replaces Input.Wrapper props */
-  __stylesApiProps?: Record<string, any>;
+  __stylesApiProps?: Record<string, any> | undefined;
 
   /** Static id used as base to generate `aria-` attributes, by default generates random id */
-  id?: string;
+  id?: string | undefined;
 
   /** Controls size of `Input.Label`, `Input.Description` and `Input.Error` components */
-  size?: MantineFontSize;
+  size?: MantineFontSize | undefined;
 
   /** Root element for the label. Use `'div'` when wrapper contains multiple input elements and you need to handle `htmlFor` manually. @default 'label' */
-  labelElement?: 'label' | 'div';
+  labelElement?: 'label' | 'div' | undefined;
 }
 
 export type InputWrapperFactory = Factory<{

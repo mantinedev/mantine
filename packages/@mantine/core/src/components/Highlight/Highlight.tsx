@@ -14,7 +14,7 @@ export interface HighlightTerm {
   text: string;
 
   /** Background color for this specific term. Key of `theme.colors` or any valid CSS color */
-  color?: MantineColor | string;
+  color?: MantineColor | string | undefined;
 }
 
 export interface HighlightProps extends Omit<TextProps, 'color'> {
@@ -37,10 +37,13 @@ export interface HighlightProps extends Omit<TextProps, 'color'> {
    * Can be overridden per term when using HighlightTerm objects.
    * @default 'yellow'
    */
-  color?: MantineColor | string;
+  color?: MantineColor | string | undefined;
 
   /** Styles applied to `mark` elements */
-  highlightStyles?: React.CSSProperties | ((theme: MantineTheme) => React.CSSProperties);
+  highlightStyles?:
+    | React.CSSProperties
+    | ((theme: MantineTheme) => React.CSSProperties)
+    | undefined;
 
   /** String in which to highlight substrings */
   children: string;
@@ -50,20 +53,20 @@ export interface HighlightProps extends Omit<TextProps, 'color'> {
    * When enabled, 'the' will not match 'there'.
    * @default false
    */
-  wholeWord?: boolean;
+  wholeWord?: boolean | undefined;
 
   /**
    * Perform case-insensitive matching.
    * @default true
    */
-  caseInsensitive?: boolean;
+  caseInsensitive?: boolean | undefined;
 
   /**
    * Perform accent-insensitive matching.
    * When enabled cafe will match cafe, café, cafè, etc.
    * @default true
    */
-  accentInsensitive?: boolean;
+  accentInsensitive?: boolean | undefined;
 }
 
 export type HighlightFactory = PolymorphicFactory<{

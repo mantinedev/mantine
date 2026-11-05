@@ -13,7 +13,7 @@ export interface UseCascaderInput {
   changeOnSelect: boolean | undefined;
   allowDeselect: boolean | undefined;
   expandTrigger: 'click' | 'hover' | undefined;
-  onLeafSelect?: () => void;
+  onLeafSelect?: (() => void) | undefined;
 }
 
 function pathsEqual(a: string[] | null, b: string[]): boolean {

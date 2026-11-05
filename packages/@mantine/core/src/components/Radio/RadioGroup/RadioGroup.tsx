@@ -31,28 +31,28 @@ export interface RadioGroupProps<Value extends Primitive = string> extends Omit<
   children: React.ReactNode;
 
   /** Controlled component value */
-  value?: Value | null;
+  value?: Value | null | undefined;
 
   /** Uncontrolled component default value */
-  defaultValue?: Value | null;
+  defaultValue?: Value | null | undefined;
 
   /** Called when value changes */
-  onChange?: (value: Value) => void;
+  onChange?: ((value: Value) => void) | undefined;
 
   /** Props passed down to the `Input.Wrapper` */
-  wrapperProps?: React.ComponentProps<'div'> & DataAttributes;
+  wrapperProps?: (React.ComponentProps<'div'> & DataAttributes) | undefined;
 
   /** Controls size of the `Input.Wrapper` @default 'sm' */
-  size?: MantineSize;
+  size?: MantineSize | undefined;
 
   /** `name` attribute of child radio inputs. By default, `name` is generated randomly. */
-  name?: string;
+  name?: string | undefined;
 
   /** If set, value cannot be changed */
-  readOnly?: boolean;
+  readOnly?: boolean | undefined;
 
   /** Sets `disabled` attribute, prevents interactions */
-  disabled?: boolean;
+  disabled?: boolean | undefined;
 }
 
 export type RadioGroupFactory = Factory<{

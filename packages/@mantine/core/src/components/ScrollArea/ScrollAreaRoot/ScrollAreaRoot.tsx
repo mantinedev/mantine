@@ -23,9 +23,9 @@ export interface ScrollAreaRootStylesCtx {
 
 export interface ScrollAreaRootProps extends BoxProps, ElementProps<'div'> {
   getStyles: GetStylesApi<ScrollAreaFactory>;
-  type?: 'auto' | 'always' | 'scroll' | 'hover' | 'never';
-  scrollbars?: 'x' | 'y' | 'xy' | false;
-  scrollHideDelay?: number;
+  type?: 'auto' | 'always' | 'scroll' | 'hover' | 'never' | undefined;
+  scrollbars?: 'x' | 'y' | 'xy' | false | undefined;
+  scrollHideDelay?: number | undefined;
 }
 
 export type ScrollAreaRootFactory = Factory<{

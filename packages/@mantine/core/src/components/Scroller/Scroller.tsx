@@ -28,19 +28,19 @@ export interface ScrollerProps
   children: React.ReactNode;
 
   /** Amount of pixels to scroll when clicking the control buttons, `200` by default */
-  scrollAmount?: number;
+  scrollAmount?: number | undefined;
 
   /** Size of the control buttons, @default 60px */
-  controlSize?: string | number;
+  controlSize?: string | number | undefined;
 
   /** Background color for the gradient fade on controls, `'var(--mantine-color-body)'` by default */
-  edgeGradientColor?: string;
+  edgeGradientColor?: string | undefined;
 
   /** Props passed to the start control button */
-  startControlProps?: React.ComponentProps<'button'>;
+  startControlProps?: React.ComponentProps<'button'> | undefined;
 
   /** Props passed to the end control button */
-  endControlProps?: React.ComponentProps<'button'>;
+  endControlProps?: React.ComponentProps<'button'> | undefined;
 
   /** Icon component for the start control, AccordionChevron by default */
   startControlIcon?: React.ReactNode;
@@ -49,16 +49,16 @@ export interface ScrollerProps
   endControlIcon?: React.ReactNode;
 
   /** Determines whether start control should always be visible regardless of scroll position, `false` by default */
-  showStartControl?: boolean;
+  showStartControl?: boolean | undefined;
 
   /** Determines whether end control should always be visible regardless of scroll position, `false` by default */
-  showEndControl?: boolean;
+  showEndControl?: boolean | undefined;
 
   /** Determines whether content can be scrolled by dragging with mouse, `true` by default */
-  draggable?: boolean;
+  draggable?: boolean | undefined;
 
   /** Ref for the scroll container element */
-  ref?: Ref<HTMLDivElement>;
+  ref?: Ref<HTMLDivElement> | undefined;
 }
 
 export type ScrollerFactory = Factory<{

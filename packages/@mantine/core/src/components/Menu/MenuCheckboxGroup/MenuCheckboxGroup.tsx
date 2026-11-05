@@ -5,13 +5,13 @@ import { MenuCheckboxGroupContext } from './MenuCheckboxGroup.context';
 
 export interface MenuCheckboxGroupProps {
   /** Controlled selected values */
-  value?: string[];
+  value?: string[] | undefined;
 
   /** Uncontrolled default selected values */
-  defaultValue?: string[];
+  defaultValue?: string[] | undefined;
 
   /** Called with the new array of selected values when a `Menu.CheckboxItem` is toggled */
-  onChange?: (value: string[]) => void;
+  onChange?: ((value: string[]) => void) | undefined;
 
   /** `Menu.CheckboxItem` components and other elements */
   children?: React.ReactNode;

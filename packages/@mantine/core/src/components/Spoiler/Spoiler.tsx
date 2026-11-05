@@ -22,7 +22,7 @@ export type SpoilerCssVariables = {
 export interface SpoilerProps
   extends BoxProps, StylesApiProps<SpoilerFactory>, ElementProps<'div'> {
   /** Maximum height of visible content in px. When content exceeds this height, the toggle control appears @default 100 */
-  maxHeight?: number;
+  maxHeight?: number | undefined;
 
   /** Content displayed in the toggle button when content is collapsed (to expand) */
   showLabel: React.ReactNode;
@@ -31,25 +31,25 @@ export interface SpoilerProps
   hideLabel: React.ReactNode;
 
   /** Ref of the toggle button element */
-  controlRef?: React.Ref<HTMLButtonElement>;
+  controlRef?: React.Ref<HTMLButtonElement> | undefined;
 
   /** Initial expanded state in uncontrolled mode. If `true`, content starts expanded. If `false`, content starts collapsed @default false */
-  defaultExpanded?: boolean;
+  defaultExpanded?: boolean | undefined;
 
   /** Controlled expanded state value */
-  expanded?: boolean;
+  expanded?: boolean | undefined;
 
   /** Called when expanded state changes (when spoiler visibility is toggled by the user) */
-  onExpandedChange?: (expanded: boolean) => void;
+  onExpandedChange?: ((expanded: boolean) => void) | undefined;
 
   /** Spoiler reveal transition duration in ms. Set to 0 to disable animation @default 200 */
-  transitionDuration?: number;
+  transitionDuration?: number | undefined;
 
   /** Accessible label for the toggle button when collapsed. If not set, `showLabel` is used */
-  showAriaLabel?: string;
+  showAriaLabel?: string | undefined;
 
   /** Accessible label for the toggle button when expanded. If not set, `hideLabel` is used */
-  hideAriaLabel?: string;
+  hideAriaLabel?: string | undefined;
 }
 
 export type SpoilerFactory = Factory<{

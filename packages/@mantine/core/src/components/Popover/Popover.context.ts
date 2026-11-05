@@ -19,7 +19,7 @@ export interface PopoverContextValue {
   arrowY: number | undefined;
   arrowRef: React.RefObject<HTMLDivElement | null>;
   opened: boolean;
-  transitionProps?: TransitionOverride;
+  transitionProps?: TransitionOverride | undefined;
   reference: (node: HTMLElement) => void;
   floating: (node: HTMLElement) => void;
   width?: PopoverWidth;
@@ -31,13 +31,13 @@ export interface PopoverContextValue {
   trapFocus: boolean | undefined;
   placement: FloatingPosition;
   withinPortal: boolean | undefined;
-  portalProps?: BasePortalProps;
+  portalProps?: BasePortalProps | undefined;
   closeOnEscape: boolean | undefined;
   zIndex: string | number | undefined;
   radius?: MantineRadius | undefined;
   shadow?: MantineShadow | undefined;
-  onClose?: () => void;
-  onDismiss?: () => void;
+  onClose?: (() => void) | undefined;
+  onDismiss?: (() => void) | undefined;
   getDropdownId: () => string;
   getTargetId: () => string;
   controlled: boolean;

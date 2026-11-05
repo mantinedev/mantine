@@ -4,12 +4,14 @@ import { useMergedRef } from '@mantine/hooks';
 type TextareaProps = React.TextareaHTMLAttributes<HTMLTextAreaElement>;
 
 export interface TextareaAutosizeProps extends Omit<TextareaProps, 'style'> {
-  ref?: React.Ref<HTMLTextAreaElement>;
-  maxRows?: number;
-  minRows?: number;
-  style?: Omit<NonNullable<TextareaProps['style']>, 'maxHeight' | 'minHeight'> & {
-    height?: number;
-  };
+  ref?: React.Ref<HTMLTextAreaElement> | undefined;
+  maxRows?: number | undefined;
+  minRows?: number | undefined;
+  style?:
+    | (Omit<NonNullable<TextareaProps['style']>, 'maxHeight' | 'minHeight'> & {
+        height?: number | undefined;
+      })
+    | undefined;
 }
 
 const SIZING_STYLE_KEYS = [

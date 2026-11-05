@@ -3,7 +3,7 @@ import { assignRef, useMergedRef } from '@mantine/hooks';
 import { Factory, genericFactory, useProps } from '../../core';
 
 export interface FileButtonProps<Multiple extends boolean = false> {
-  ref?: React.Ref<HTMLInputElement>;
+  ref?: React.Ref<HTMLInputElement> | undefined;
 
   /** Called when files are picked */
   onChange: (payload: Multiple extends true ? File[] : File | null) => void;
@@ -12,28 +12,28 @@ export interface FileButtonProps<Multiple extends boolean = false> {
   children: (props: { onClick: () => void }) => React.ReactNode;
 
   /** If set, user can pick more than one file */
-  multiple?: Multiple;
+  multiple?: Multiple | undefined;
 
   /** File input accept attribute, for example, `"image/png,image/jpeg"` */
-  accept?: string;
+  accept?: string | undefined;
 
   /** Input name attribute */
-  name?: string;
+  name?: string | undefined;
 
   /** Input form attribute */
-  form?: string;
+  form?: string | undefined;
 
   /** Reference of the function that should be called when value changes to null or empty array */
-  resetRef?: React.Ref<() => void>;
+  resetRef?: React.Ref<() => void> | undefined;
 
   /** Disables file picker */
-  disabled?: boolean;
+  disabled?: boolean | undefined;
 
   /** Specifies that, optionally, a new file should be captured, and which device should be used to capture that new media of a type defined by the accept attribute. */
-  capture?: boolean | 'user' | 'environment';
+  capture?: boolean | 'user' | 'environment' | undefined;
 
   /** Passes down props to the input element used to capture files */
-  inputProps?: React.ComponentProps<'input'>;
+  inputProps?: React.ComponentProps<'input'> | undefined;
 }
 
 export type FileButtonFactory = Factory<{

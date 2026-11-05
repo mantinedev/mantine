@@ -25,21 +25,21 @@ import { TooltipGroupContext } from './TooltipGroup/TooltipGroup';
 
 interface UseTooltip {
   position: FloatingPosition;
-  closeDelay?: number;
-  openDelay?: number;
-  onPositionChange?: (position: FloatingPosition) => void;
-  opened?: boolean;
-  defaultOpened?: boolean;
-  disabled?: boolean;
+  closeDelay?: number | undefined;
+  openDelay?: number | undefined;
+  onPositionChange?: ((position: FloatingPosition) => void) | undefined;
+  opened?: boolean | undefined;
+  defaultOpened?: boolean | undefined;
+  disabled?: boolean | undefined;
   offset: number | FloatingAxesOffsets;
-  arrowRef?: React.RefObject<HTMLDivElement | null>;
-  arrowOffset?: number;
-  events?: { hover: boolean; focus: boolean; touch: boolean };
-  interactive?: boolean;
-  inline?: boolean;
-  strategy?: FloatingStrategy;
-  middlewares?: TooltipMiddlewares;
-  hideDetached?: boolean;
+  arrowRef?: React.RefObject<HTMLDivElement | null> | undefined;
+  arrowOffset?: number | undefined;
+  events?: { hover: boolean; focus: boolean; touch: boolean } | undefined;
+  interactive?: boolean | undefined;
+  inline?: boolean | undefined;
+  strategy?: FloatingStrategy | undefined;
+  middlewares?: TooltipMiddlewares | undefined;
+  hideDetached?: boolean | undefined;
 }
 
 function getDefaultMiddlewares(middlewares: TooltipMiddlewares | undefined): TooltipMiddlewares {

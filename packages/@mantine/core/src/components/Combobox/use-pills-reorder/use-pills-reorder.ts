@@ -16,7 +16,7 @@ export interface PillReorderProps {
 }
 
 export interface PillsReorderListProps {
-  ref?: (node: HTMLDivElement | null) => void;
+  ref?: ((node: HTMLDivElement | null) => void) | undefined;
 }
 
 export interface UsePillsReorderInput<T> {

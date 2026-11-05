@@ -3,7 +3,7 @@ import type { MantineBreakpoint } from '../../core';
 // Shared props of for Navbar, Aside, Header and Footer components
 export interface AppShellCompoundProps {
   /** If set, component haves a border, overrides `withBorder` prop on `AppShell` component */
-  withBorder?: boolean;
+  withBorder?: boolean | undefined;
 
   /** Sets `z-index`. Inherited from the `AppShell` by default. */
   zIndex?: React.CSSProperties['zIndex'];
@@ -12,12 +12,12 @@ export interface AppShellCompoundProps {
 export type AppShellSize = number | (string & {});
 
 export interface AppShellResponsiveSize {
-  base?: AppShellSize;
-  xs?: AppShellSize;
-  sm?: AppShellSize;
-  md?: AppShellSize;
-  lg?: AppShellSize;
-  xl?: AppShellSize;
+  base?: AppShellSize | undefined;
+  xs?: AppShellSize | undefined;
+  sm?: AppShellSize | undefined;
+  md?: AppShellSize | undefined;
+  lg?: AppShellSize | undefined;
+  xl?: AppShellSize | undefined;
   [key: string]: AppShellSize | undefined;
 }
 
@@ -26,43 +26,43 @@ export type AppShellMode = 'fixed' | 'static';
 export interface AppShellNavbarConfiguration {
   width: AppShellSize | AppShellResponsiveSize;
   breakpoint: MantineBreakpoint | (string & {}) | number;
-  collapsed?: { desktop?: boolean; mobile?: boolean };
+  collapsed?: { desktop?: boolean | undefined; mobile?: boolean | undefined } | undefined;
 }
 
 export interface AppShellAsideConfiguration {
   width: AppShellSize | AppShellResponsiveSize;
   breakpoint: MantineBreakpoint | (string & {}) | number;
-  collapsed?: { desktop?: boolean; mobile?: boolean };
+  collapsed?: { desktop?: boolean | undefined; mobile?: boolean | undefined } | undefined;
 }
 
 export interface AppShellHeaderConfiguration {
   height: AppShellSize | AppShellResponsiveSize;
-  collapsed?: boolean;
-  offset?: boolean;
+  collapsed?: boolean | undefined;
+  offset?: boolean | undefined;
 }
 
 export interface AppShellFooterConfiguration {
   height: AppShellSize | AppShellResponsiveSize;
-  collapsed?: boolean;
-  offset?: boolean;
+  collapsed?: boolean | undefined;
+  offset?: boolean | undefined;
 }
 
 export type AppShellResizeSection = 'navbar' | 'aside' | 'header' | 'footer';
 
-export type AppShellResizeSizes = Partial<Record<AppShellResizeSection, number>>;
+export type AppShellResizeSizes = Partial<Record<AppShellResizeSection, number | undefined>>;
 
 export interface AppShellResizeSectionOptions {
   /** Minimum size, in the same units as the section `width`/`height` configuration @default 0 */
-  min?: number;
+  min?: number | undefined;
 
   /** Maximum size, in the same units as the section `width`/`height` configuration @default viewport size */
-  max?: number;
+  max?: number | undefined;
 
   /** Size below which `onCollapseChange` reports the section as collapsed */
-  collapseThreshold?: number;
+  collapseThreshold?: number | undefined;
 
   /** `aria-label` of the resize handle @default 'Resize navbar' | 'Resize aside' | 'Resize header' | 'Resize footer' */
-  label?: string;
+  label?: string | undefined;
 }
 
 export interface AppShellResizeSectionController {
@@ -125,26 +125,26 @@ export interface AppShellResizeController {
 
 export interface UseAppShellResizeInput {
   /** `AppShell.Navbar` resize options, the section is resizable when set */
-  navbar?: AppShellResizeSectionOptions;
+  navbar?: AppShellResizeSectionOptions | undefined;
 
   /** `AppShell.Aside` resize options, the section is resizable when set */
-  aside?: AppShellResizeSectionOptions;
+  aside?: AppShellResizeSectionOptions | undefined;
 
   /** `AppShell.Header` resize options, the section is resizable when set */
-  header?: AppShellResizeSectionOptions;
+  header?: AppShellResizeSectionOptions | undefined;
 
   /** `AppShell.Footer` resize options, the section is resizable when set */
-  footer?: AppShellResizeSectionOptions;
+  footer?: AppShellResizeSectionOptions | undefined;
 
   /** Sizes applied to sections that have not been resized yet, usually restored from storage */
-  initialSizes?: AppShellResizeSizes;
+  initialSizes?: AppShellResizeSizes | undefined;
 
   /** Called on every pointer move during a resize */
-  onResize?: (sizes: AppShellResizeSizes) => void;
+  onResize?: ((sizes: AppShellResizeSizes) => void) | undefined;
 
   /** Called when a resize is committed */
-  onResizeEnd?: (sizes: AppShellResizeSizes) => void;
+  onResizeEnd?: ((sizes: AppShellResizeSizes) => void) | undefined;
 
   /** Called when a section is dragged across its `collapseThreshold` */
-  onCollapseChange?: (section: AppShellResizeSection, collapsed: boolean) => void;
+  onCollapseChange?: ((section: AppShellResizeSection, collapsed: boolean) => void) | undefined;
 }

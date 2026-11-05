@@ -43,16 +43,16 @@ export type StepperStepStylesNames =
 export interface StepperStepProps
   extends BoxProps, CompoundStylesApiProps<StepperStepFactory>, ElementProps<'button'> {
   /** 0-based step index, automatically set by Stepper component */
-  step?: number;
+  step?: number | undefined;
 
   /** Step state, automatically set by Stepper component based on active prop. stepInactive: not reached, stepProgress: current, stepCompleted: passed */
-  state?: 'stepInactive' | 'stepProgress' | 'stepCompleted';
+  state?: 'stepInactive' | 'stepProgress' | 'stepCompleted' | undefined;
 
   /** Key of `theme.colors`, by default controlled by Stepper component */
-  color?: MantineColor;
+  color?: MantineColor | undefined;
 
   /** When false, hides the step icon. Useful for creating compact steppers with only labels @default true */
-  withIcon?: boolean;
+  withIcon?: boolean | undefined;
 
   /** Step icon, defaults to `step index + 1` when rendered within Stepper */
   icon?: React.ReactNode | StepFragmentComponent;
@@ -70,25 +70,25 @@ export interface StepperStepProps
   description?: React.ReactNode | StepFragmentComponent;
 
   /** Icon wrapper size */
-  iconSize?: string | number;
+  iconSize?: string | number | undefined;
 
   /** Icon position relative to step body, controlled by Stepper component */
-  iconPosition?: 'right' | 'left';
+  iconPosition?: 'right' | 'left' | undefined;
 
   /** Indicates loading state of the step */
-  loading?: boolean;
+  loading?: boolean | undefined;
 
   /** Set to false to disable clicks on step */
-  allowStepClick?: boolean;
+  allowStepClick?: boolean | undefined;
 
   /** Should step selection be allowed */
-  allowStepSelect?: boolean;
+  allowStepSelect?: boolean | undefined;
 
   /** Static selector base */
-  __staticSelector?: string;
+  __staticSelector?: string | undefined;
 
   /** Component orientation */
-  orientation?: 'vertical' | 'horizontal';
+  orientation?: 'vertical' | 'horizontal' | undefined;
 }
 
 export type StepperStepFactory = Factory<{

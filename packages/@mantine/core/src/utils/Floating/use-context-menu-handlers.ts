@@ -13,7 +13,7 @@ interface UseContextMenuHandlersOptions {
   opened: boolean;
 
   /** Delay in ms before a touch long-press opens the dropdown, `500` by default */
-  longPressDelay?: number;
+  longPressDelay?: number | undefined;
 
   /** Sets the floating reference to a virtual element positioned at the cursor */
   setReference: (node: object) => void;

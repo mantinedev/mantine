@@ -3,7 +3,7 @@ import { InlineStylesInput, stylesToString } from './styles-to-string/styles-to-
 
 export interface InlineStylesProps
   extends InlineStylesInput, Omit<React.ComponentProps<'style'>, keyof InlineStylesInput> {
-  deduplicate?: boolean;
+  deduplicate?: boolean | undefined;
 }
 
 function simpleHash(str: string): string {

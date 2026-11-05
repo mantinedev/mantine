@@ -59,13 +59,13 @@ function getAccentInsensitiveChunks(value: string, re: RegExp): HighlightChunk[]
 export interface HighlightChunk {
   chunk: string;
   highlighted: boolean;
-  color?: string;
+  color?: string | undefined;
 }
 
 export interface HighlighterOptions {
-  wholeWord?: boolean;
-  caseInsensitive?: boolean;
-  accentInsensitive?: boolean;
+  wholeWord?: boolean | undefined;
+  caseInsensitive?: boolean | undefined;
+  accentInsensitive?: boolean | undefined;
 }
 
 export function highlighter(
