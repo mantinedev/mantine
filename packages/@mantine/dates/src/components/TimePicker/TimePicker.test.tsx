@@ -313,6 +313,36 @@ describe('@mantine/dates/TimePicker', () => {
     expect(spy).toHaveBeenLastCalledWith('13:34');
   });
 
+  it('syncs fields and hidden input with the clamped value when pasted time is below min', async () => {
+    const spy = jest.fn();
+    const { container } = render(
+      <TimePicker {...defaultProps} format="24h" min="09:00" name="time" onChange={spy} />
+    );
+
+    await userEvent.click(screen.getByLabelText('test-hours'));
+    await userEvent.paste('07:30');
+
+    expect(spy).toHaveBeenLastCalledWith('09:00');
+    expect(screen.getByLabelText('test-hours')).toHaveValue('09');
+    expect(screen.getByLabelText('test-minutes')).toHaveValue('00');
+    expect(container.querySelector('input[name="time"]')).toHaveValue('09:00');
+  });
+
+  it('syncs fields and hidden input with the clamped value when pasted time is above max', async () => {
+    const spy = jest.fn();
+    const { container } = render(
+      <TimePicker {...defaultProps} format="24h" max="17:00" name="time" onChange={spy} />
+    );
+
+    await userEvent.click(screen.getByLabelText('test-hours'));
+    await userEvent.paste('20:45');
+
+    expect(spy).toHaveBeenLastCalledWith('17:00');
+    expect(screen.getByLabelText('test-hours')).toHaveValue('17');
+    expect(screen.getByLabelText('test-minutes')).toHaveValue('00');
+    expect(container.querySelector('input[name="time"]')).toHaveValue('17:00');
+  });
+
   // https://github.com/mantinedev/mantine/issues/9041
   it('emits clamped value without seconds on blur when withSeconds is false', async () => {
     const spy = jest.fn();
