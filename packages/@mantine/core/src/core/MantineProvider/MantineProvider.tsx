@@ -12,55 +12,55 @@ import './global.css';
 
 export interface MantineProviderProps {
   /** Theme override object */
-  theme?: MantineThemeOverride;
+  theme?: MantineThemeOverride | undefined;
 
   /** Used to retrieve/set color scheme value in external storage, by default uses `window.localStorage` */
-  colorSchemeManager?: MantineColorSchemeManager;
+  colorSchemeManager?: MantineColorSchemeManager | undefined;
 
   /** Default color scheme value used when `colorSchemeManager` cannot retrieve value from external storage, `light` by default */
-  defaultColorScheme?: MantineColorScheme;
+  defaultColorScheme?: MantineColorScheme | undefined;
 
   /** Forces color scheme value, if set, MantineProvider ignores `colorSchemeManager` and `defaultColorScheme` */
-  forceColorScheme?: 'light' | 'dark';
+  forceColorScheme?: 'light' | 'dark' | undefined;
 
   /** CSS selector to which CSS variables should be added, by default variables are applied to `:root` and `:host` */
-  cssVariablesSelector?: string;
+  cssVariablesSelector?: string | undefined;
 
   /** Determines whether theme CSS variables should be added to given `cssVariablesSelector` @default true */
-  withCssVariables?: boolean;
+  withCssVariables?: boolean | undefined;
 
   /** Determines whether CSS variables should be deduplicated: if CSS variable has the same value as in default theme, it is not added in the runtime. @default true. */
-  deduplicateCssVariables?: boolean;
+  deduplicateCssVariables?: boolean | undefined;
 
   /** Function to resolve root element to set `data-mantine-color-scheme` attribute, must return undefined on server, `() => document.documentElement` by default */
-  getRootElement?: () => HTMLElement | undefined;
+  getRootElement?: (() => HTMLElement | undefined) | undefined;
 
   /** A prefix for components static classes (for example {selector}-Text-root), `mantine` by default */
-  classNamesPrefix?: string;
+  classNamesPrefix?: string | undefined;
 
   /** Function to generate nonce attribute added to all generated `style` tags */
-  getStyleNonce?: () => string;
+  getStyleNonce?: (() => string) | undefined;
 
   /** Function to generate CSS variables based on theme object */
-  cssVariablesResolver?: CSSVariablesResolver;
+  cssVariablesResolver?: CSSVariablesResolver | undefined;
 
   /** Determines whether components should have static classes, for example, `mantine-Button-root`. @default true */
-  withStaticClasses?: boolean;
+  withStaticClasses?: boolean | undefined;
 
   /** Determines whether global classes should be added with `<style />` tag. Global classes are required for `hiddenFrom`/`visibleFrom` and `lightHidden`/`darkHidden` props to work. @default true. */
-  withGlobalClasses?: boolean;
+  withGlobalClasses?: boolean | undefined;
 
   /** An object to transform `styles` and `sx` props into css classes, can be used with CSS-in-JS libraries */
-  stylesTransform?: MantineStylesTransform;
+  stylesTransform?: MantineStylesTransform | undefined;
 
   /** Determines whether inline styles with identical content should be deduplicated using React 19 style hoisting. When enabled, components with the same responsive style props share a single `<style />` tag instead of each generating their own. @default false */
-  deduplicateInlineStyles?: boolean;
+  deduplicateInlineStyles?: boolean | undefined;
 
   /** Your application */
   children?: React.ReactNode;
 
   /** Environment at which the provider is used, `'test'` environment disables all transitions and portals */
-  env?: 'default' | 'test';
+  env?: 'default' | 'test' | undefined;
 }
 
 export function MantineProvider({
@@ -129,13 +129,13 @@ MantineProvider.displayName = '@mantine/core/MantineProvider';
 
 export interface HeadlessMantineProviderProps {
   /** Theme override object */
-  theme?: MantineThemeOverride;
+  theme?: MantineThemeOverride | undefined;
 
   /** Your application */
   children?: React.ReactNode;
 
   /** Environment at which the provider is used, `'test'` environment disables all transitions and portals */
-  env?: 'default' | 'test';
+  env?: 'default' | 'test' | undefined;
 }
 
 export function HeadlessMantineProvider({ children, theme, env }: HeadlessMantineProviderProps) {

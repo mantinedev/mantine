@@ -60,31 +60,31 @@ export type ComboboxCSSVariables = {
 };
 
 export interface ComboboxProps extends __PopoverProps, StylesApiProps<ComboboxFactory> {
-  __staticSelector?: string;
+  __staticSelector?: string | undefined;
 
   /** Combobox content */
   children?: React.ReactNode;
 
   /** Combobox store, can be used to control combobox state */
-  store?: ComboboxStore;
+  store?: ComboboxStore | undefined;
 
   /** Called when item is selected with the `Enter` key or by clicking it */
-  onOptionSubmit?: (value: string, optionProps: ComboboxOptionProps) => void;
+  onOptionSubmit?: ((value: string, optionProps: ComboboxOptionProps) => void) | undefined;
 
   /** Controls items `font-size` and `padding` @default 'sm' */
-  size?: MantineSize | (string & {});
+  size?: MantineSize | (string & {}) | undefined;
 
   /** Controls `padding` of the dropdown @default 4 */
   dropdownPadding?: React.CSSProperties['padding'];
 
   /** Determines whether selection should be reset when option is hovered @default false */
-  resetSelectionOnOptionHover?: boolean;
+  resetSelectionOnOptionHover?: boolean | undefined;
 
   /** Determines whether the `Combobox` value can be changed */
-  readOnly?: boolean;
+  readOnly?: boolean | undefined;
 
   /** If set to `'viewport'`, the dropdown grows to fill the available vertical space in the viewport. Disables the `flip` middleware. */
-  floatingHeight?: 'viewport';
+  floatingHeight?: 'viewport' | undefined;
 }
 
 export type ComboboxFactory = Factory<{

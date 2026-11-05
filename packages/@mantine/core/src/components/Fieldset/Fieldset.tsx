@@ -25,7 +25,7 @@ export interface FieldsetProps
   legend?: React.ReactNode;
 
   /** Key of `theme.radius` or any valid CSS value to set `border-radius` @default theme.defaultRadius */
-  radius?: MantineRadius;
+  radius?: MantineRadius | undefined;
 }
 
 export type FieldsetFactory = Factory<{

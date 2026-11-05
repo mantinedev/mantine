@@ -15,10 +15,10 @@ export type PaginationControlStylesNames = 'control';
 export interface PaginationControlProps
   extends BoxProps, CompoundStylesApiProps<PaginationControlFactory>, ElementProps<'button'> {
   /** Applies active styles, adds `data-active` attribute */
-  active?: boolean;
+  active?: boolean | undefined;
 
   /** Applies padding @default true */
-  withPadding?: boolean;
+  withPadding?: boolean | undefined;
 }
 
 export type PaginationControlFactory = Factory<{

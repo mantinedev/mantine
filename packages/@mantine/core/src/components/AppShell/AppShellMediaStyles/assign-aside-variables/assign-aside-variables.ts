@@ -13,8 +13,8 @@ interface AssignAsideVariablesInput {
   aside: AppShellProps['aside'] | undefined;
   theme: MantineTheme;
   mode: 'fixed' | 'static';
-  resizedSize?: number;
-  resizable?: boolean;
+  resizedSize?: number | undefined;
+  resizable?: boolean | undefined;
 }
 
 export function assignAsideVariables({

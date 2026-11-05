@@ -7,9 +7,9 @@ export interface InlineStylesMediaQuery {
 
 export interface InlineStylesInput {
   selector: string;
-  styles?: React.CSSProperties;
-  media?: InlineStylesMediaQuery[];
-  container?: InlineStylesMediaQuery[];
+  styles?: React.CSSProperties | undefined;
+  media?: InlineStylesMediaQuery[] | undefined;
+  container?: InlineStylesMediaQuery[] | undefined;
 }
 
 export function stylesToString({ selector, styles, media, container }: InlineStylesInput) {

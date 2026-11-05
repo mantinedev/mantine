@@ -25,9 +25,9 @@ interface UseFloatingIndicatorInput {
   target: HTMLElement | null | undefined;
   parent: HTMLElement | null | undefined;
   ref: RefObject<HTMLElement | null>;
-  displayAfterTransitionEnd?: boolean;
-  onTransitionStart?: () => void;
-  onTransitionEnd?: () => void;
+  displayAfterTransitionEnd?: boolean | undefined;
+  onTransitionStart?: (() => void) | undefined;
+  onTransitionEnd?: (() => void) | undefined;
 }
 
 export function useFloatingIndicator({

@@ -9,8 +9,8 @@ interface GetV8ColorVariablesInput {
   theme: MantineTheme;
   color: string;
   colorScheme: 'light' | 'dark';
-  name?: string;
-  withColorValues?: boolean;
+  name?: string | undefined;
+  withColorValues?: boolean | undefined;
 }
 
 function getV8CSSColorVariables({

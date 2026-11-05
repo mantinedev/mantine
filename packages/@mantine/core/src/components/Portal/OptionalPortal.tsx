@@ -10,7 +10,7 @@ export interface OptionalPortalProps extends PortalProps {
    *
    * @default true
    */
-  withinPortal?: boolean;
+  withinPortal?: boolean | undefined;
 }
 
 export type OptionalPortalFactory = Factory<{

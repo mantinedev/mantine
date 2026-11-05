@@ -33,13 +33,13 @@ export type NotificationCssVariables = {
 export interface NotificationProps
   extends BoxProps, StylesApiProps<NotificationFactory>, ElementProps<'div', 'title'> {
   /** Called when the close button is clicked */
-  onClose?: () => void;
+  onClose?: (() => void) | undefined;
 
   /** Controls icon background color or notification accent line color, key of `theme.colors` or any valid CSS color. When `icon` is provided, sets the icon background color. When no icon is provided, sets the colored accent line on the left. @default theme.primaryColor */
-  color?: MantineColor;
+  color?: MantineColor | undefined;
 
   /** Key of `theme.radius` or any valid CSS value to set `border-radius` @default theme.defaultRadius */
-  radius?: MantineRadius;
+  radius?: MantineRadius | undefined;
 
   /** Notification icon, replaces color line */
   icon?: React.ReactNode;
@@ -51,19 +51,19 @@ export interface NotificationProps
   children?: React.ReactNode;
 
   /** If set, displays a `Loader` component instead of the icon. Takes precedence over the `icon` prop if both are provided. */
-  loading?: boolean;
+  loading?: boolean | undefined;
 
   /** Adds border to the root element */
-  withBorder?: boolean;
+  withBorder?: boolean | undefined;
 
   /** If set, the close button is visible @default true */
-  withCloseButton?: boolean;
+  withCloseButton?: boolean | undefined;
 
   /** Props passed down to the close button */
-  closeButtonProps?: __CloseButtonProps & ElementProps<'button'> & DataAttributes;
+  closeButtonProps?: (__CloseButtonProps & ElementProps<'button'> & DataAttributes) | undefined;
 
   /** Props passed down to the `Loader` component */
-  loaderProps?: LoaderProps;
+  loaderProps?: LoaderProps | undefined;
 }
 
 export type NotificationFactory = Factory<{

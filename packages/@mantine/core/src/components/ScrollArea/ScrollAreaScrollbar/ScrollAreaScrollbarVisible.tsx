@@ -14,7 +14,7 @@ export interface ScrollAreaScrollbarVisibleProps extends Omit<
   ScrollAreaScrollbarAxisProps,
   keyof ScrollAreaScrollbarAxisPrivateProps
 > {
-  orientation?: 'horizontal' | 'vertical';
+  orientation?: 'horizontal' | 'vertical' | undefined;
 }
 
 export function ScrollAreaScrollbarVisible(props: ScrollAreaScrollbarVisibleProps) {

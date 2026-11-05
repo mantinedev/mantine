@@ -22,7 +22,7 @@ export interface BasePortalProps extends React.ComponentProps<'div'> {
    *
    * Note: If selector doesn't match any element, portal will not render
    */
-  target?: HTMLElement | string;
+  target?: HTMLElement | string | undefined;
 
   /**
    * When true and target is not specified, all Portal instances share a single
@@ -33,7 +33,7 @@ export interface BasePortalProps extends React.ComponentProps<'div'> {
    *
    * @default true
    */
-  reuseTargetNode?: boolean;
+  reuseTargetNode?: boolean | undefined;
 }
 
 export interface PortalProps extends BasePortalProps {

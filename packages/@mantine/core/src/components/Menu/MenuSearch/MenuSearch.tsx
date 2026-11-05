@@ -55,7 +55,7 @@ export type MenuSearchStylesNames = 'search';
 
 export interface MenuSearchProps extends InputProps, ElementProps<'input', 'size'> {
   /** If set, clears the search value after the menu close transition completes. Requires a controlled `value`/`onChange` pair. @default true */
-  clearSearchOnClose?: boolean;
+  clearSearchOnClose?: boolean | undefined;
 }
 
 export type MenuSearchFactory = Factory<{

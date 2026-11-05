@@ -4,7 +4,7 @@ import { useTourContext } from '../Tour.context';
 
 export interface TourCloseButtonProps extends __CloseButtonProps {
   /** Called when the close button is clicked */
-  onClick?: React.MouseEventHandler<HTMLButtonElement>;
+  onClick?: React.MouseEventHandler<HTMLButtonElement> | undefined;
 }
 
 const defaultProps: Partial<TourCloseButtonProps> = {};

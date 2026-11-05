@@ -41,13 +41,13 @@ export interface GroupProps extends BoxProps, StylesApiProps<GroupFactory>, Elem
   wrap?: React.CSSProperties['flexWrap'];
 
   /** Key of `theme.spacing` or any valid CSS value for `gap`, numbers are converted to rem @default 'md' */
-  gap?: MantineSpacing;
+  gap?: MantineSpacing | undefined;
 
   /** Determines whether each child element should have `flex-grow: 1` style @default false */
-  grow?: boolean;
+  grow?: boolean | undefined;
 
   /** Determines whether children should take only dedicated amount of space (`max-width` style is set based on the number of children) @default true */
-  preventGrowOverflow?: boolean;
+  preventGrowOverflow?: boolean | undefined;
 }
 
 export type GroupFactory = Factory<{

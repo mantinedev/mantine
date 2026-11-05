@@ -72,10 +72,10 @@ export interface TreeSelectRenderPillPayload {
   onRemove: () => void;
 
   /** Value of the `disabled` prop passed to the component */
-  disabled?: boolean;
+  disabled?: boolean | undefined;
 
   /** Value of the `readOnly` prop passed to the component */
-  readOnly?: boolean;
+  readOnly?: boolean | undefined;
 }
 
 export interface TreeSelectProps<Mode extends TreeSelectMode = 'single'>
@@ -88,130 +88,130 @@ export interface TreeSelectProps<Mode extends TreeSelectMode = 'single'>
   data: TreeNodeData[];
 
   /** Selection mode: 'single', 'multiple', or 'checkbox' (with cascade) @default 'single' */
-  mode?: Mode;
+  mode?: Mode | undefined;
 
   /** Controlled value */
-  value?: TreeSelectValue<Mode>;
+  value?: TreeSelectValue<Mode> | undefined;
 
   /** Default value */
-  defaultValue?: TreeSelectValue<Mode>;
+  defaultValue?: TreeSelectValue<Mode> | undefined;
 
   /** Called when value changes */
-  onChange?: (value: TreeSelectValue<Mode>) => void;
+  onChange?: ((value: TreeSelectValue<Mode>) => void) | undefined;
 
   /** Disables parent-child cascade in checkbox mode @default false */
-  checkStrictly?: boolean;
+  checkStrictly?: boolean | undefined;
 
   /** Controls which checked nodes appear in value/pills in checkbox mode @default 'child' */
-  checkedStrategy?: CheckedStrategy;
+  checkedStrategy?: CheckedStrategy | undefined;
 
   /** Default expanded node values */
-  defaultExpandedValues?: string[];
+  defaultExpandedValues?: string[] | undefined;
 
   /** Expand all nodes by default @default false */
-  defaultExpandAll?: boolean;
+  defaultExpandAll?: boolean | undefined;
 
   /** Controlled expanded state */
-  expandedValues?: string[];
+  expandedValues?: string[] | undefined;
 
   /** Called when expanded state changes */
-  onExpandedChange?: (values: string[]) => void;
+  onExpandedChange?: ((values: string[]) => void) | undefined;
 
   /** Also toggle expand when clicking a parent node (not just the chevron). In `single` and `multiple` modes, parent clicks only expand; only leaves can be selected. In `checkbox` mode, parent clicks both check and expand. @default false */
-  expandOnClick?: boolean;
+  expandOnClick?: boolean | undefined;
 
   /** Enables search filtering @default false */
-  searchable?: boolean;
+  searchable?: boolean | undefined;
 
   /** Controlled search value */
-  searchValue?: string;
+  searchValue?: string | undefined;
 
   /** Default search value */
-  defaultSearchValue?: string;
+  defaultSearchValue?: string | undefined;
 
   /** Called when search changes */
-  onSearchChange?: (value: string) => void;
+  onSearchChange?: ((value: string) => void) | undefined;
 
   /** Custom filter function */
-  filter?: (query: string, node: TreeNodeData) => boolean;
+  filter?: ((query: string, node: TreeNodeData) => boolean) | undefined;
 
   /** Message when no nodes match search */
   nothingFoundMessage?: React.ReactNode;
 
   /** Allows deselecting in single mode @default true */
-  allowDeselect?: boolean;
+  allowDeselect?: boolean | undefined;
 
   /** Shows clear button @default false */
-  clearable?: boolean;
+  clearable?: boolean | undefined;
 
   /** Determines how the clear button and rightSection are rendered @default 'both' */
-  clearSectionMode?: ClearSectionMode;
+  clearSectionMode?: ClearSectionMode | undefined;
 
   /** Props for the clear button */
-  clearButtonProps?: InputClearButtonProps;
+  clearButtonProps?: InputClearButtonProps | undefined;
 
   /** Maximum selectable values (multiple/checkbox mode) */
-  maxValues?: number;
+  maxValues?: number | undefined;
 
   /** Maximum displayed pills before "+N more" */
-  maxDisplayedValues?: number;
+  maxDisplayedValues?: number | undefined;
 
   /** Content shown when values overflow maxDisplayedValues */
   maxDisplayedValuesContent?: React.ReactNode | ((overflow: number) => React.ReactNode);
 
   /** Called with removed value in multiple/checkbox mode */
-  onRemove?: (value: string) => void;
+  onRemove?: ((value: string) => void) | undefined;
 
   /** Called when clear button is clicked */
-  onClear?: () => void;
+  onClear?: (() => void) | undefined;
 
   /** Custom node rendering in the dropdown */
-  renderNode?: (payload: TreeSelectRenderNodePayload) => React.ReactNode;
+  renderNode?: ((payload: TreeSelectRenderNodePayload) => React.ReactNode) | undefined;
 
   /** Custom pill rendering in `multiple` and `checkbox` modes. Not called for the overflow pill displayed when `maxDisplayedValues` is exceeded. */
-  renderPill?: (payload: TreeSelectRenderPillPayload) => React.ReactNode;
+  renderPill?: ((payload: TreeSelectRenderPillPayload) => React.ReactNode) | undefined;
 
   /** Show tree connection lines between parent and child nodes @default true */
-  withLines?: boolean;
+  withLines?: boolean | undefined;
 
   /** Props for the hidden input */
-  hiddenInputProps?: Omit<React.ComponentProps<'input'>, 'value'>;
+  hiddenInputProps?: Omit<React.ComponentProps<'input'>, 'value'> | undefined;
 
   /** Divider for hidden input values @default ',' */
-  hiddenInputValuesDivider?: string;
+  hiddenInputValuesDivider?: string | undefined;
 
   /** Props for the ScrollArea in the dropdown */
-  scrollAreaProps?: ScrollAreaProps;
+  scrollAreaProps?: ScrollAreaProps | undefined;
 
   /** Controls the default chevron color */
-  chevronColor?: MantineColor;
+  chevronColor?: MantineColor | undefined;
 
   /** Max dropdown height @default 220 */
-  maxDropdownHeight?: number | string;
+  maxDropdownHeight?: number | string | undefined;
 
   /** Controlled dropdown state */
-  dropdownOpened?: boolean;
+  dropdownOpened?: boolean | undefined;
 
   /** Default dropdown state */
-  defaultDropdownOpened?: boolean;
+  defaultDropdownOpened?: boolean | undefined;
 
   /** Called when dropdown opens */
-  onDropdownOpen?: () => void;
+  onDropdownOpen?: (() => void) | undefined;
 
   /** Called when dropdown closes */
-  onDropdownClose?: () => void;
+  onDropdownClose?: (() => void) | undefined;
 
   /** Props passed to the underlying Combobox */
-  comboboxProps?: Record<string, any>;
+  comboboxProps?: Record<string, any> | undefined;
 
   /** Clear search on selection change @default true */
-  clearSearchOnChange?: boolean;
+  clearSearchOnChange?: boolean | undefined;
 
   /** Opens dropdown on focus (searchable mode) @default true */
-  openOnFocus?: boolean;
+  openOnFocus?: boolean | undefined;
 
   /** aria-label values for the expand/collapse chevron button */
-  chevronAriaLabels?: TreeSelectChevronAriaLabels;
+  chevronAriaLabels?: TreeSelectChevronAriaLabels | undefined;
 }
 
 export type TreeSelectFactory = Factory<{

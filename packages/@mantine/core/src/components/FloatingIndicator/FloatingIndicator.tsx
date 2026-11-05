@@ -32,20 +32,20 @@ export interface FloatingIndicatorProps
   parent: HTMLElement | null | undefined;
 
   /** Transition duration in ms @default 150 */
-  transitionDuration?: number | string;
+  transitionDuration?: number | string | undefined;
 
   /** Controls whether the indicator should be hidden initially and displayed after the parent's transition ends.
    * Set to `true` when the parent container has CSS transitions (e.g., `transform: scale()`) to prevent
    * the indicator from appearing at the wrong position during the parent's animation.
    * @default false
    * */
-  displayAfterTransitionEnd?: boolean;
+  displayAfterTransitionEnd?: boolean | undefined;
 
   /** Called when the indicator starts transitioning to a new position */
-  onTransitionStart?: () => void;
+  onTransitionStart?: (() => void) | undefined;
 
   /** Called when the indicator finishes transitioning to a new position */
-  onTransitionEnd?: () => void;
+  onTransitionEnd?: (() => void) | undefined;
 }
 
 export type FloatingIndicatorFactory = Factory<{

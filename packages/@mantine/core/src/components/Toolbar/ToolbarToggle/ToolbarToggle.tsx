@@ -14,13 +14,13 @@ export type ToolbarToggleStylesNames = 'toggle';
 export interface ToolbarToggleProps
   extends BoxComponentProps, CompoundStylesApiProps<ToolbarToggleFactory> {
   /** If set, the toggle is disabled */
-  disabled?: boolean;
+  disabled?: boolean | undefined;
 
   /** If set, the toggle is displayed in active state */
-  active?: boolean;
+  active?: boolean | undefined;
 
   /** If set, the toggle width adjusts to content instead of being square, `false` by default */
-  autoWidth?: boolean;
+  autoWidth?: boolean | undefined;
 }
 
 export type ToolbarToggleFactory = PolymorphicFactory<{
@@ -52,7 +52,7 @@ export const ToolbarToggle = polymorphicFactory<ToolbarToggleFactory>(
     } = props as typeof props & {
       children?: React.ReactNode;
       component?: any;
-      onClick?: React.MouseEventHandler<HTMLElement>;
+      onClick?: React.MouseEventHandler<HTMLElement> | undefined;
     };
     const ctx = useToolbarContext();
 

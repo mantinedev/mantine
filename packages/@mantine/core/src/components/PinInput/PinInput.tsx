@@ -35,73 +35,73 @@ export type PinInputCssVariables = {
 
 export interface PinInputProps
   extends BoxProps, StylesApiProps<PinInputFactory>, ElementProps<'div', 'onChange' | 'ref'> {
-  ref?: React.Ref<HTMLInputElement>;
+  ref?: React.Ref<HTMLInputElement> | undefined;
 
   /** Hidden input `name` attribute */
-  name?: string;
+  name?: string | undefined;
 
   /** Hidden input `form` attribute */
-  form?: string;
+  form?: string | undefined;
 
   /** Key of `theme.spacing` or any valid CSS value to set `gap` between inputs, numbers are converted to rem @default 'sm' */
-  gap?: MantineSpacing;
+  gap?: MantineSpacing | undefined;
 
   /** Key of `theme.radius` or any valid CSS value to set `border-radius`, numbers are converted to rem @default theme.defaultRadius */
-  radius?: MantineRadius;
+  radius?: MantineRadius | undefined;
 
   /** Controls inputs `width` and `height` @default 'sm' */
-  size?: MantineSize;
+  size?: MantineSize | undefined;
 
   /** If set, the first input is focused when component is mounted @default false */
-  autoFocus?: boolean;
+  autoFocus?: boolean | undefined;
 
   /** Controlled component value */
-  value?: string;
+  value?: string | undefined;
 
   /** Uncontrolled component default value */
-  defaultValue?: string;
+  defaultValue?: string | undefined;
 
   /** Called when value changes */
-  onChange?: (value: string) => void;
+  onChange?: ((value: string) => void) | undefined;
 
   /** Called when all inputs have value */
-  onComplete?: (value: string) => void;
+  onComplete?: ((value: string) => void) | undefined;
 
   /** Inputs placeholder @default '○' */
-  placeholder?: string;
+  placeholder?: string | undefined;
 
   /** Determines whether focus should be moved automatically to the next input once filled @default true */
-  manageFocus?: boolean;
+  manageFocus?: boolean | undefined;
 
   /** Determines whether `autocomplete="one-time-code"` attribute should be set on all inputs @default true */
-  oneTimeCode?: boolean;
+  oneTimeCode?: boolean | undefined;
 
   /** Base id used to generate unique ids for inputs */
-  id?: string;
+  id?: string | undefined;
 
   /** Adds disabled attribute to all inputs */
-  disabled?: boolean;
+  disabled?: boolean | undefined;
 
   /** Sets `aria-invalid` attribute and applies error styles to all inputs */
-  error?: boolean;
+  error?: boolean | undefined;
 
   /** Applies success styles to all inputs */
-  success?: boolean;
+  success?: boolean | undefined;
 
   /** Determines which values can be entered @default 'alphanumeric' */
-  type?: 'alphanumeric' | 'number' | RegExp;
+  type?: 'alphanumeric' | 'number' | RegExp | undefined;
 
   /** Changes input type to `"password"` @default false */
-  mask?: boolean;
+  mask?: boolean | undefined;
 
   /** Number of inputs @default 4 */
-  length?: number;
+  length?: number | undefined;
 
   /** If set, the user cannot edit the value */
-  readOnly?: boolean;
+  readOnly?: boolean | undefined;
 
   /** Inputs `type` attribute, inferred from the `type` prop if not specified */
-  inputType?: React.HTMLInputTypeAttribute;
+  inputType?: React.HTMLInputTypeAttribute | undefined;
 
   /** `inputmode` attribute, inferred from the `type` prop if not specified */
   inputMode?:
@@ -116,16 +116,18 @@ export interface PinInputProps
     | undefined;
 
   /** `aria-label` attribute */
-  ariaLabel?: string;
+  ariaLabel?: string | undefined;
 
   /** Props passed down to the hidden input */
-  hiddenInputProps?: React.ComponentProps<'input'>;
+  hiddenInputProps?: React.ComponentProps<'input'> | undefined;
 
   /** Assigns ref of the root element */
-  rootRef?: React.Ref<HTMLDivElement>;
+  rootRef?: React.Ref<HTMLDivElement> | undefined;
 
   /** Props added to the input element depending on its index */
-  getInputProps?: (index: number) => InputProps & ElementProps<'input', 'size'> & DataAttributes;
+  getInputProps?:
+    | ((index: number) => InputProps & ElementProps<'input', 'size'> & DataAttributes)
+    | undefined;
 }
 
 export type PinInputFactory = Factory<{

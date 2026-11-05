@@ -33,16 +33,16 @@ export type ActionIconGroupSectionCssVariables = {
 export interface ActionIconGroupSectionProps
   extends BoxProps, StylesApiProps<ActionIconGroupSectionFactory>, ElementProps<'div'> {
   /** Key of `theme.radius` or any valid CSS value to set `border-radius` @default theme.defaultRadius */
-  radius?: MantineRadius;
+  radius?: MantineRadius | undefined;
 
   /** Gradient values used with `variant="gradient"`. @default theme.defaultGradient */
-  gradient?: MantineGradient;
+  gradient?: MantineGradient | undefined;
 
   /** If set, adjusts text color based on background color for `filled` variant */
-  autoContrast?: boolean;
+  autoContrast?: boolean | undefined;
 
   /** Controls section `height`, `font-size` and horizontal `padding` @default 'sm' */
-  size?: MantineSize | (string & {}) | number;
+  size?: MantineSize | (string & {}) | number | undefined;
 }
 
 export type ActionIconGroupSectionFactory = Factory<{

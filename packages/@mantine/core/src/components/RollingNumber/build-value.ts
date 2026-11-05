@@ -2,12 +2,12 @@ import { getDigitParts } from './get-digit-parts';
 
 export interface BuildValueInput {
   value: number;
-  prefix?: string;
-  suffix?: string;
-  decimalSeparator?: string;
-  thousandSeparator?: string | boolean;
-  decimalScale?: number;
-  fixedDecimalScale?: boolean;
+  prefix?: string | undefined;
+  suffix?: string | undefined;
+  decimalSeparator?: string | undefined;
+  thousandSeparator?: string | boolean | undefined;
+  decimalScale?: number | undefined;
+  fixedDecimalScale?: boolean | undefined;
 }
 
 export function buildValue({

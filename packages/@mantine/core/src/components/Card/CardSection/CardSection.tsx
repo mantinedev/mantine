@@ -13,10 +13,10 @@ export type CardSectionStylesNames = 'section';
 
 export interface CardSectionProps extends BoxProps, CompoundStylesApiProps<CardSectionFactory> {
   /** Adds border to the root element */
-  withBorder?: boolean;
+  withBorder?: boolean | undefined;
 
   /** If set, the section inherits padding from the parent `Card` */
-  inheritPadding?: boolean;
+  inheritPadding?: boolean | undefined;
 }
 
 export type CardSectionFactory = PolymorphicFactory<{

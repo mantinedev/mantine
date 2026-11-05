@@ -10,12 +10,12 @@ export interface ActionBarCloseButtonProps extends Omit<
   'classNames' | 'styles' | 'vars'
 > {
   /** Classes for the `closeButton` selector of the parent `ActionBar` */
-  classNames?: ClassNames<ActionBarCloseButtonFactory>;
+  classNames?: ClassNames<ActionBarCloseButtonFactory> | undefined;
 
   /** Styles for the `closeButton` selector of the parent `ActionBar` */
-  styles?: Styles<ActionBarCloseButtonFactory>;
+  styles?: Styles<ActionBarCloseButtonFactory> | undefined;
 
-  onClick?: React.MouseEventHandler<HTMLButtonElement>;
+  onClick?: React.MouseEventHandler<HTMLButtonElement> | undefined;
 }
 
 export type ActionBarCloseButtonFactory = Factory<{

@@ -23,22 +23,22 @@ export type CardCssVariables = {
 
 export interface CardProps extends BoxProps, StylesApiProps<CardFactory> {
   /** Key of `theme.shadows` or any valid CSS value to set `box-shadow` */
-  shadow?: MantineShadow;
+  shadow?: MantineShadow | undefined;
 
   /** Key of `theme.radius` or any valid CSS value to set border-radius, numbers are converted to rem @default theme.defaultRadius */
-  radius?: MantineRadius;
+  radius?: MantineRadius | undefined;
 
   /** Adds border to the card */
-  withBorder?: boolean;
+  withBorder?: boolean | undefined;
 
   /** Key of `theme.spacing` or any valid CSS value to set padding @default 'md' */
-  padding?: MantineSpacing;
+  padding?: MantineSpacing | undefined;
 
   /** Card content */
   children?: React.ReactNode;
 
   /** Card orientation @default 'vertical' */
-  orientation?: 'horizontal' | 'vertical';
+  orientation?: 'horizontal' | 'vertical' | undefined;
 }
 
 export type CardFactory = PolymorphicFactory<{

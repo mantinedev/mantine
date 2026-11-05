@@ -20,7 +20,7 @@ export interface TabsPanelProps
   children: React.ReactNode;
 
   /** If set, the content is kept mounted, even if `keepMounted` is set `false` in the parent `Tabs` component */
-  keepMounted?: boolean;
+  keepMounted?: boolean | undefined;
 
   /** Value of associated control */
   value: string;

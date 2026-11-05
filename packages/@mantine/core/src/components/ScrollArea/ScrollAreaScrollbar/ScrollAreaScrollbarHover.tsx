@@ -3,7 +3,7 @@ import { useScrollAreaContext } from '../ScrollArea.context';
 import { ScrollAreaScrollbarAuto, ScrollAreaScrollbarAutoProps } from './ScrollAreaScrollbarAuto';
 
 interface ScrollAreaScrollbarHoverProps extends ScrollAreaScrollbarAutoProps {
-  forceMount?: true;
+  forceMount?: true | undefined;
 }
 
 export function ScrollAreaScrollbarHover(props: ScrollAreaScrollbarHoverProps) {

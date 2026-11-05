@@ -13,7 +13,7 @@ export type UnstyledButtonStylesNames = 'root';
 
 export interface UnstyledButtonProps
   extends Omit<BoxComponentProps, 'vars' | 'variant'>, StylesApiProps<UnstyledButtonFactory> {
-  __staticSelector?: string;
+  __staticSelector?: string | undefined;
 }
 
 const defaultProps = {

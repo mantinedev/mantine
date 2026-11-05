@@ -48,43 +48,43 @@ export type ChipCssVariables = {
 export interface ChipProps
   extends BoxProps, StylesApiProps<ChipFactory>, ElementProps<'input', 'size' | 'onChange'> {
   /** Key of `theme.radius` or any valid CSS value to set `border-radius` @default 'xl' */
-  radius?: MantineRadius;
+  radius?: MantineRadius | undefined;
 
   /** Controls various properties related to the component size @default 'sm' */
-  size?: MantineSize;
+  size?: MantineSize | undefined;
 
   /** Chip input type @default 'checkbox' */
-  type?: 'radio' | 'checkbox';
+  type?: 'radio' | 'checkbox' | undefined;
 
   /** `label` element associated with the input */
   children: React.ReactNode;
 
   /** Controlled checked state */
-  checked?: boolean;
+  checked?: boolean | undefined;
 
   /** Uncontrolled checked state initial value */
-  defaultChecked?: boolean;
+  defaultChecked?: boolean | undefined;
 
   /** Calls when checked state changes */
-  onChange?: (checked: boolean) => void;
+  onChange?: ((checked: boolean) => void) | undefined;
 
   /** Key of `theme.colors` or any valid CSS color. @default theme.primaryColor */
-  color?: MantineColor;
+  color?: MantineColor | undefined;
 
   /** Unique input id, generated randomly if not provided */
-  id?: string;
+  id?: string | undefined;
 
   /** Props passed down to the root element */
-  wrapperProps?: React.ComponentProps<'div'> & DataAttributes;
+  wrapperProps?: (React.ComponentProps<'div'> & DataAttributes) | undefined;
 
   /** Any element or component to replace the default icon */
   icon?: React.ReactNode;
 
   /** Assigns ref of the root element */
-  rootRef?: React.Ref<HTMLDivElement>;
+  rootRef?: React.Ref<HTMLDivElement> | undefined;
 
   /** If set, adjusts text color based on the chip background color for `filled` variant */
-  autoContrast?: boolean;
+  autoContrast?: boolean | undefined;
 }
 
 export type ChipFactory = Factory<{

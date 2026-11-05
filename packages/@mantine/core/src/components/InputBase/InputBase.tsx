@@ -9,17 +9,17 @@ import { __BaseInputProps, __InputStylesNames, Input, InputVariant, useInputProp
 
 export interface InputBaseProps
   extends BoxProps, __BaseInputProps, StylesApiProps<InputBaseFactory> {
-  __staticSelector?: string;
-  __stylesApiProps?: Record<string, any>;
+  __staticSelector?: string | undefined;
+  __stylesApiProps?: Record<string, any> | undefined;
 
   /** Props passed down to the root element (`Input.Wrapper` component) */
-  wrapperProps?: React.ComponentProps<'div'> & DataAttributes;
+  wrapperProps?: (React.ComponentProps<'div'> & DataAttributes) | undefined;
 
   /** If set, the input can have multiple lines, for example when `component="textarea"` @default false */
-  multiline?: boolean;
+  multiline?: boolean | undefined;
 
   /** If set, `aria-` and other accessibility attributes are added to the input @default true */
-  withAria?: boolean;
+  withAria?: boolean | undefined;
 }
 
 export type InputBaseFactory = PolymorphicFactory<{

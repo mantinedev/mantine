@@ -2,7 +2,7 @@ import React from 'react';
 
 export interface CloseIconProps extends React.ComponentProps<'svg'> {
   /** Icon width and height, `var(--icon-size)` by default */
-  size?: string;
+  size?: string | undefined;
 }
 
 export function CloseIcon({ size = 'var(--cb-icon-size, 70%)', style, ...others }: CloseIconProps) {

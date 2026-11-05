@@ -5,7 +5,7 @@ import { getMergedVariables } from './get-merged-variables';
 import { removeDefaultVariables } from './remove-default-variables';
 
 interface MantineCssVariablesProps {
-  cssVariablesSelector?: string;
+  cssVariablesSelector?: string | undefined;
   deduplicateCssVariables: boolean;
 }
 

@@ -23,19 +23,19 @@ export type CloseButtonCssVariables = {
 };
 
 export interface __CloseButtonProps {
-  'data-disabled'?: boolean;
+  'data-disabled'?: boolean | undefined;
 
   /** Controls width and height of the button. Numbers are converted to rem. @default 'md' */
-  size?: MantineSize | (string & {}) | number;
+  size?: MantineSize | (string & {}) | number | undefined;
 
   /** Key of `theme.radius` or any valid CSS value to set border-radius. Numbers are converted to rem. @default theme.defaultRadius */
-  radius?: MantineRadius;
+  radius?: MantineRadius | undefined;
 
   /** Sets `disabled` attribute, assigns disabled styles */
-  disabled?: boolean;
+  disabled?: boolean | undefined;
 
   /** `X` icon `width` and `height` @default 70% */
-  iconSize?: number | string;
+  iconSize?: number | string | undefined;
 
   /** Content rendered inside the button. For example `VisuallyHidden` with label for screen readers. */
   children?: React.ReactNode;
@@ -46,7 +46,7 @@ export interface __CloseButtonProps {
 
 export interface CloseButtonProps
   extends __CloseButtonProps, BoxProps, StylesApiProps<CloseButtonFactory> {
-  __staticSelector?: string;
+  __staticSelector?: string | undefined;
 }
 
 export type CloseButtonFactory = PolymorphicFactory<{

@@ -8,13 +8,13 @@ import classes from './ModalBase.module.css';
 
 export interface ModalBaseContentProps extends BoxProps, ElementProps<'div'> {
   /** Props passed down to the `Transition` component */
-  transitionProps?: TransitionOverride;
+  transitionProps?: TransitionOverride | undefined;
 
   /** Key of `theme.shadows` or any valid CSS value to set `box-shadow` */
-  shadow?: MantineShadow;
+  shadow?: MantineShadow | undefined;
 
   /** Key of `theme.radius` or any valid CSS value to set border-radius, numbers are converted to rem @default theme.defaultRadius */
-  radius?: MantineRadius;
+  radius?: MantineRadius | undefined;
 }
 
 interface _ModalBaseContentProps extends ModalBaseContentProps {

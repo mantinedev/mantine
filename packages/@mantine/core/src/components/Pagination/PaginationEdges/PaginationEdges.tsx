@@ -18,7 +18,7 @@ export interface CreateEdgeComponent {
 
 export interface PaginationEdgeProps extends BoxProps {
   /** An icon component to replace the default icon */
-  icon?: React.FC<PaginationIconProps>;
+  icon?: React.FC<PaginationIconProps> | undefined;
 }
 
 export function createEdgeComponent({ icon, name, action, type }: CreateEdgeComponent) {

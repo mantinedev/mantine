@@ -16,12 +16,12 @@ interface UseTransition {
   exitDuration: number;
   timingFunction: string;
   mounted: boolean;
-  onEnter?: () => void;
-  onExit?: () => void;
-  onEntered?: () => void;
-  onExited?: () => void;
-  enterDelay?: number;
-  exitDelay?: number;
+  onEnter?: (() => void) | undefined;
+  onExit?: (() => void) | undefined;
+  onEntered?: (() => void) | undefined;
+  onExited?: (() => void) | undefined;
+  enterDelay?: number | undefined;
+  exitDelay?: number | undefined;
 }
 
 export function useTransition({

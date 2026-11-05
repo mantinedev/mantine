@@ -9,7 +9,9 @@ export type MantineStyleProp = MantineStyle | MantineStyle[] | MantineStyleProp[
 
 export type CssVariable = `--${string}`;
 
-export type CssVariables<Variable extends string = CssVariable> = Partial<Record<Variable, string>>;
+export type CssVariables<Variable extends string = CssVariable> = Partial<
+  Record<Variable, string | undefined>
+>;
 
 export type CssVars<Variable extends string = CssVariable> =
   | CssVariables<Variable>

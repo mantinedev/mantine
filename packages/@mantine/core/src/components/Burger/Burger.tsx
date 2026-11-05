@@ -30,22 +30,22 @@ export type BurgerCssVariables = {
 export interface BurgerProps
   extends BoxProps, StylesApiProps<BurgerFactory>, ElementProps<'button'> {
   /** Controls burger `width` and `height`, numbers are converted to rem @default 'md' */
-  size?: MantineSize | (string & {}) | number;
+  size?: MantineSize | (string & {}) | number | undefined;
 
   /** Controls height of lines, by default calculated based on `size` prop */
-  lineSize?: string | number;
+  lineSize?: string | number | undefined;
 
   /** Key of `theme.colors` of any valid CSS value, by default `theme.white` in dark color scheme and `theme.black` in light */
-  color?: MantineColor;
+  color?: MantineColor | undefined;
 
   /** State of the burger, when `true` burger is transformed into X @default false */
-  opened?: boolean;
+  opened?: boolean | undefined;
 
   /** `transition-duration` property value in ms @default 300 */
-  transitionDuration?: number;
+  transitionDuration?: number | undefined;
 
   /** `transition-timing-function` property value @default 'ease' */
-  transitionTimingFunction?: string;
+  transitionTimingFunction?: string | undefined;
 }
 
 export type BurgerFactory = Factory<{

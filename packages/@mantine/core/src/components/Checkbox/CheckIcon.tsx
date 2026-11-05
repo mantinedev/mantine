@@ -5,7 +5,7 @@ export interface CheckboxIconProps extends React.ComponentProps<'svg'> {
 }
 
 export interface CheckIconProps extends React.ComponentProps<'svg'> {
-  size?: number | string;
+  size?: number | string | undefined;
 }
 
 export function CheckIcon({ size, style, ...others }: CheckIconProps) {

@@ -25,9 +25,9 @@ export type TimelineItemStylesNames =
 
 export interface TimelineItemProps
   extends BoxProps, CompoundStylesApiProps<TimelineItemFactory>, ElementProps<'div', 'title'> {
-  __active?: boolean;
-  __lineActive?: boolean;
-  __align?: 'right' | 'left';
+  __active?: boolean | undefined;
+  __lineActive?: boolean | undefined;
+  __align?: 'right' | 'left' | undefined;
 
   /** Item title, displayed next to the bullet */
   title?: React.ReactNode;
@@ -42,16 +42,16 @@ export interface TimelineItemProps
   opposite?: React.ReactNode;
 
   /** If set, switches the position of content and opposite @default false */
-  alternate?: boolean;
+  alternate?: boolean | undefined;
 
   /** Key of `theme.radius` or any valid CSS value to set `border-radius`, numbers are converted to rem @default 'xl' */
-  radius?: MantineRadius;
+  radius?: MantineRadius | undefined;
 
   /** Key of `theme.colors` or any valid CSS color to control active item colors @default theme.primaryColor */
-  color?: MantineColor;
+  color?: MantineColor | undefined;
 
   /** Controls line border style @default 'solid' */
-  lineVariant?: 'solid' | 'dashed' | 'dotted';
+  lineVariant?: 'solid' | 'dashed' | 'dotted' | undefined;
 }
 
 export type TimelineItemFactory = Factory<{

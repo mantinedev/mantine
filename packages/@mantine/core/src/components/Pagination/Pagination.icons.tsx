@@ -1,7 +1,7 @@
 interface _PaginationIconProps {
   path: string;
   stroke?: any;
-  style?: React.CSSProperties;
+  style?: React.CSSProperties | undefined;
   className?: string | undefined;
   children?: React.ReactNode;
 }

@@ -20,7 +20,7 @@ export type PolymorphicComponentWithProps<Payload extends PolymorphicFactoryPayl
 };
 
 export function polymorphicFactory<Payload extends PolymorphicFactoryPayload>(
-  ui: (props: Payload['props'] & { ref?: React.Ref<any> }) => React.ReactNode
+  ui: (props: Payload['props'] & { ref?: React.Ref<any> | undefined }) => React.ReactNode
 ) {
   type ComponentProps<C> = PolymorphicComponentProps<C, Payload['props']>;
 

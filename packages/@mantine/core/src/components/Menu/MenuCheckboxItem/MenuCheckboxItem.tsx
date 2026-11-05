@@ -22,34 +22,34 @@ export interface MenuCheckboxItemProps
     BoxProps,
     CompoundStylesApiProps<MenuCheckboxItemFactory>,
     ElementProps<'button', 'color' | 'onChange' | 'value'> {
-  'data-disabled'?: boolean;
+  'data-disabled'?: boolean | undefined;
 
   /** Item label */
   children?: React.ReactNode;
 
   /** Key of `theme.colors` or any valid CSS color */
-  color?: MantineColor;
+  color?: MantineColor | undefined;
 
   /** If set, closes the menu when this item is clicked. By default, checkbox items do not close the menu. */
-  closeMenuOnClick?: boolean;
+  closeMenuOnClick?: boolean | undefined;
 
   /** Section displayed at the end of the label */
   rightSection?: React.ReactNode;
 
   /** Sets disabled attribute, applies disabled styles */
-  disabled?: boolean;
+  disabled?: boolean | undefined;
 
   /** Value of the checkbox item. When used inside `Menu.CheckboxGroup`, determines whether the item is checked and what value is added/removed on toggle. */
-  value?: string;
+  value?: string | undefined;
 
   /** Controlled checked state. Overrides selection derived from the parent `Menu.CheckboxGroup`. */
-  checked?: boolean;
+  checked?: boolean | undefined;
 
   /** Uncontrolled default checked state. Ignored when the item is used inside `Menu.CheckboxGroup`. */
-  defaultChecked?: boolean;
+  defaultChecked?: boolean | undefined;
 
   /** Called when checked state changes. Overrides `onChange` of the parent `Menu.CheckboxGroup`. */
-  onChange?: (checked: boolean) => void;
+  onChange?: ((checked: boolean) => void) | undefined;
 
   /** Replaces the default check icon rendered in the indicator slot when the item is checked. Overrides `checkIcon` set on `Menu`. */
   checkIcon?: React.ReactNode;

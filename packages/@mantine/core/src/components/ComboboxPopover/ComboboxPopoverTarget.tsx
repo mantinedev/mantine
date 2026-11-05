@@ -9,7 +9,7 @@ export interface ComboboxPopoverTargetProps {
   children: React.ReactNode;
 
   /** Key of the prop that is used to access element ref @default 'ref' */
-  refProp?: string;
+  refProp?: string | undefined;
 }
 
 const defaultProps = {

@@ -1,5 +1,5 @@
 export interface MantineTransitionStyles {
-  common?: React.CSSProperties;
+  common?: React.CSSProperties | undefined;
   in: React.CSSProperties;
   out: React.CSSProperties;
   transitionProperty: React.CSSProperties['transitionProperty'];

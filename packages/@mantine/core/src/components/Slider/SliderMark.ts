@@ -8,5 +8,5 @@ export interface SliderMark {
   label?: React.ReactNode;
 
   /** If true, the mark will not be displayed on the track but can still be used with restrictToMarks for snapping */
-  hidden?: boolean;
+  hidden?: boolean | undefined;
 }

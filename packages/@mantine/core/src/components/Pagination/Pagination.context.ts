@@ -6,8 +6,8 @@ export interface PaginationContextValue {
   range: (number | 'dots')[];
   active: number;
   disabled: boolean | undefined;
-  layout?: 'default' | 'responsive';
-  getItemProps?: (page: number) => Record<string, any>;
+  layout?: 'default' | 'responsive' | undefined;
+  getItemProps?: ((page: number) => Record<string, any>) | undefined;
   onChange: (page: number) => void;
   onNext: () => void;
   onPrevious: () => void;

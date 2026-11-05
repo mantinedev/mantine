@@ -47,25 +47,25 @@ export type ToolbarCssVariables = {
 export interface ToolbarProps
   extends BoxProps, StylesApiProps<ToolbarFactory>, ElementProps<'div'> {
   /** Toolbar orientation, `'horizontal'` by default */
-  orientation?: 'horizontal' | 'vertical';
+  orientation?: 'horizontal' | 'vertical' | undefined;
 
   /** Whether arrow key navigation wraps from last to first item, `true` by default */
-  loop?: boolean;
+  loop?: boolean | undefined;
 
   /** Controls size of toggle components, padding, and gap, `'md'` by default */
-  size?: MantineSize | (string & {});
+  size?: MantineSize | (string & {}) | undefined;
 
   /** Key of `theme.radius` or any valid CSS value to set `border-radius`, propagated to all children, `theme.defaultRadius` by default */
-  radius?: MantineRadius;
+  radius?: MantineRadius | undefined;
 
   /** Determines whether the toolbar has a border, `true` by default */
-  withBorder?: boolean;
+  withBorder?: boolean | undefined;
 
   /** Key of `theme.colors` or any valid CSS color, controls color of child toggle components */
-  color?: MantineColor;
+  color?: MantineColor | undefined;
 
   /** Determines whether icon color with filled variant should be changed based on the given `color` prop */
-  autoContrast?: boolean;
+  autoContrast?: boolean | undefined;
 
   /** Toolbar content */
   children: React.ReactNode;

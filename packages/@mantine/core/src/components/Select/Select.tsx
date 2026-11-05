@@ -46,70 +46,72 @@ export interface SelectProps<Value extends Primitive = string>
     StylesApiProps<SelectFactory>,
     ElementProps<'input', 'onChange' | 'size' | 'value' | 'defaultValue'> {
   /** Controlled component value */
-  value?: Value | null;
+  value?: Value | null | undefined;
 
   /** Uncontrolled component default value */
-  defaultValue?: Value | null;
+  defaultValue?: Value | null | undefined;
 
   /** Called when value changes */
-  onChange?: (value: Value | null, option: ComboboxItem<Value> | null) => void;
+  onChange?: ((value: Value | null, option: ComboboxItem<Value> | null) => void) | undefined;
 
   /** Called when the clear button is clicked */
-  onClear?: () => void;
+  onClear?: (() => void) | undefined;
 
   /** Determines whether the select should be searchable @default false */
-  searchable?: boolean;
+  searchable?: boolean | undefined;
 
   /** Displays check icon near the selected option label @default true */
-  withCheckIcon?: boolean;
+  withCheckIcon?: boolean | undefined;
 
   /** Aligns unchecked labels with the checked one @default false */
-  withAlignedLabels?: boolean;
+  withAlignedLabels?: boolean | undefined;
 
   /** Position of the check icon relative to the option label @default 'left' */
-  checkIconPosition?: 'left' | 'right';
+  checkIconPosition?: 'left' | 'right' | undefined;
 
   /** Message displayed when no options match the search query or when there is no data */
   nothingFoundMessage?: React.ReactNode;
 
   /** Controlled search value */
-  searchValue?: string;
+  searchValue?: string | undefined;
 
   /** Default search value */
-  defaultSearchValue?: string;
+  defaultSearchValue?: string | undefined;
 
   /** Called when search changes */
-  onSearchChange?: (value: string) => void;
+  onSearchChange?: ((value: string) => void) | undefined;
 
   /** Allows deselecting the selected option by clicking it @default true */
-  allowDeselect?: boolean;
+  allowDeselect?: boolean | undefined;
 
   /** Displays clear button in the right section when component has value @default false */
-  clearable?: boolean;
+  clearable?: boolean | undefined;
 
   /** Determines how the clear button and rightSection are rendered @default 'both' */
-  clearSectionMode?: ClearSectionMode;
+  clearSectionMode?: ClearSectionMode | undefined;
 
   /** Props passed down to the clear button */
-  clearButtonProps?: InputClearButtonProps;
+  clearButtonProps?: InputClearButtonProps | undefined;
 
   /** Props passed down to the hidden input */
-  hiddenInputProps?: Omit<React.ComponentProps<'input'>, 'value'>;
+  hiddenInputProps?: Omit<React.ComponentProps<'input'>, 'value'> | undefined;
 
   /** A function to render content of the option, replaces the default content of the option */
-  renderOption?: (item: ComboboxLikeRenderOptionInput<ComboboxItem<Value>>) => React.ReactNode;
+  renderOption?:
+    | ((item: ComboboxLikeRenderOptionInput<ComboboxItem<Value>>) => React.ReactNode)
+    | undefined;
 
   /** Props passed down to the underlying `ScrollArea` component in the dropdown */
-  scrollAreaProps?: ScrollAreaProps;
+  scrollAreaProps?: ScrollAreaProps | undefined;
 
   /** Controls color of the default chevron, by default depends on the color scheme */
-  chevronColor?: MantineColor;
+  chevronColor?: MantineColor | undefined;
 
   /** Automatically selects the highlighted option when input loses focus @default false */
-  autoSelectOnBlur?: boolean;
+  autoSelectOnBlur?: boolean | undefined;
 
   /** Opens dropdown when input receives focus (requires searchable={true}) @default true */
-  openOnFocus?: boolean;
+  openOnFocus?: boolean | undefined;
 }
 
 export type SelectFactory = Factory<{

@@ -11,7 +11,7 @@ interface UseModalInput {
   trapFocus: boolean | undefined;
   closeOnEscape: boolean | undefined;
   returnFocus: boolean | undefined;
-  handledEscapeEvents?: WeakSet<KeyboardEvent>;
+  handledEscapeEvents?: WeakSet<KeyboardEvent> | undefined;
 }
 
 export function useModal({

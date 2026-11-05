@@ -20,10 +20,10 @@ export type CodeCssVariables = {
 
 export interface CodeProps extends BoxProps, StylesApiProps<CodeFactory>, ElementProps<'code'> {
   /** Key of `theme.colors` or any valid CSS color, controls `background-color` of the code. By default, calculated based on the color scheme. */
-  color?: MantineColor;
+  color?: MantineColor | undefined;
 
   /** If set, code is rendered in `pre` */
-  block?: boolean;
+  block?: boolean | undefined;
 }
 
 export type CodeFactory = Factory<{

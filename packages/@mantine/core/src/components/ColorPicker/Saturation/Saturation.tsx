@@ -10,12 +10,12 @@ export interface SaturationProps extends ElementProps<'div', 'onChange'> {
   value: HsvaColor;
   onChange: (color: Partial<HsvaColor>) => void;
   onChangeEnd: (color: Partial<HsvaColor>) => void;
-  onScrubStart?: () => void;
-  onScrubEnd?: () => void;
-  saturationLabel?: string;
+  onScrubStart?: (() => void) | undefined;
+  onScrubEnd?: (() => void) | undefined;
+  saturationLabel?: string | undefined;
   size: MantineSize | (string & {});
   color: string;
-  focusable?: boolean;
+  focusable?: boolean | undefined;
 }
 
 export function Saturation({

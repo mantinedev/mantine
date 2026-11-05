@@ -5,16 +5,16 @@ import { useTourContext } from '../Tour.context';
 
 export interface TourOverlayProps {
   /** Rectangle describing the target element position */
-  targetRect?: { top: number; left: number; width: number; height: number } | null;
+  targetRect?: { top: number; left: number; width: number; height: number } | null | undefined;
 
   /** Overlay fill color */
-  color?: string;
+  color?: string | undefined;
 
   /** Whether pointer events pass through the spotlight cutout to the target element, the rest of the overlay keeps blocking clicks */
-  withInteraction?: boolean;
+  withInteraction?: boolean | undefined;
 
   /** Called when the overlay is clicked */
-  onClick?: React.MouseEventHandler<SVGSVGElement>;
+  onClick?: React.MouseEventHandler<SVGSVGElement> | undefined;
 }
 
 const defaultProps: Partial<TourOverlayProps> = {};

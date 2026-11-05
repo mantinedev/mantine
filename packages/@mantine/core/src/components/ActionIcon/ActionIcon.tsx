@@ -55,35 +55,35 @@ export type ActionIconCssVariables = {
 };
 
 export interface ActionIconProps extends BoxProps, StylesApiProps<ActionIconFactory> {
-  'data-disabled'?: boolean;
-  __staticSelector?: string;
+  'data-disabled'?: boolean | undefined;
+  __staticSelector?: string | undefined;
 
   /** If set, `Loader` component is displayed instead of the `children` */
-  loading?: boolean;
+  loading?: boolean | undefined;
 
   /** Props passed down to the `Loader` component. Ignored when `loading` prop is not set. */
-  loaderProps?: LoaderProps;
+  loaderProps?: LoaderProps | undefined;
 
   /** Controls width and height of the button. Numbers are converted to rem. @default 'md' */
-  size?: MantineSize | `input-${MantineSize}` | (string & {}) | number;
+  size?: MantineSize | `input-${MantineSize}` | (string & {}) | number | undefined;
 
   /** Key of `theme.colors` or any valid CSS color. @default theme.primaryColor */
-  color?: MantineColor;
+  color?: MantineColor | undefined;
 
   /** Key of `theme.radius` or any valid CSS value to set border-radius. Numbers are converted to rem. @default theme.defaultRadius */
-  radius?: MantineRadius;
+  radius?: MantineRadius | undefined;
 
   /** Gradient values used with `variant="gradient"`. @default theme.defaultGradient */
-  gradient?: MantineGradient;
+  gradient?: MantineGradient | undefined;
 
   /** Sets `disabled` attribute, prevents interactions */
-  disabled?: boolean;
+  disabled?: boolean | undefined;
 
   /** Icon element */
   children?: React.ReactNode;
 
   /** If set, adjusts text color based on background color for `filled` variant */
-  autoContrast?: boolean;
+  autoContrast?: boolean | undefined;
 }
 
 export type ActionIconFactory = PolymorphicFactory<{

@@ -32,7 +32,7 @@ export interface InlineInputProps
   disabled: boolean | undefined;
   error: React.ReactNode;
   size: MantineSize | (string & {}) | undefined;
-  labelPosition?: 'left' | 'right';
+  labelPosition?: 'left' | 'right' | undefined;
   bodyElement?: any;
   labelElement?: any;
 }

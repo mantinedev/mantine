@@ -55,19 +55,19 @@ interface GetElementsSiblingsInput {
   siblingSelector: string;
 
   /** Determines whether next/previous indices should loop */
-  loop?: boolean;
+  loop?: boolean | undefined;
 
   /** Determines which arrow keys will be used */
   orientation: 'vertical' | 'horizontal';
 
   /** Text direction */
-  dir?: 'rtl' | 'ltr';
+  dir?: 'rtl' | 'ltr' | undefined;
 
   /** Determines whether element should be clicked when focused with keyboard event */
-  activateOnFocus?: boolean;
+  activateOnFocus?: boolean | undefined;
 
   /** External keydown event */
-  onKeyDown?: (event: React.KeyboardEvent<HTMLButtonElement>) => void;
+  onKeyDown?: ((event: React.KeyboardEvent<HTMLButtonElement>) => void) | undefined;
 }
 
 export function createScopedKeydownHandler({

@@ -37,8 +37,8 @@ interface TreeNodeProps {
   controller: TreeController;
   expandOnClick: boolean | undefined;
   flatValues: string[];
-  isSubtree?: boolean;
-  level?: number;
+  isSubtree?: boolean | undefined;
+  level?: number | undefined;
   renderNode: RenderNode | undefined;
   selectOnClick: boolean | undefined;
   allowRangeSelection: boolean | undefined;

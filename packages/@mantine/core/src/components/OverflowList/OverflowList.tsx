@@ -37,22 +37,22 @@ export interface OverflowListProps<T = any>
   renderOverflow: (items: T[]) => React.ReactNode;
 
   /** Number of rows to display @default 1 */
-  maxRows?: number;
+  maxRows?: number | undefined;
 
   /** Maximum number of visible items @default Infinity */
-  maxVisibleItems?: number;
+  maxVisibleItems?: number | undefined;
 
   /** Key of `theme.spacing` or any valid CSS value for `gap`, numbers are converted to rem @default 'xs' */
-  gap?: MantineSpacing;
+  gap?: MantineSpacing | undefined;
 
   /** Direction from which items are collapsed when they overflow, `'end'` collapses last items, `'start'` collapses first items @default 'end' */
-  collapseFrom?: 'start' | 'end';
+  collapseFrom?: 'start' | 'end' | undefined;
 
   /** A function to resolve a unique key for each item. Used to detect when the contents of `data`
    * change (for example when items are reordered while the length stays the same) so the
    * visible/overflow split can be recomputed. Required to detect reordering when `data` contains
    * objects; for primitive items (strings, numbers) the item value is used by default. */
-  getItemKey?: (item: T, index: number) => React.Key;
+  getItemKey?: ((item: T, index: number) => React.Key) | undefined;
 }
 
 export type OverflowListFactory = Factory<{

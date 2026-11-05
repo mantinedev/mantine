@@ -61,7 +61,7 @@ export interface ComboboxStore {
    */
   updateSelectedOptionIndex: (
     target?: 'active' | 'selected' | number,
-    options?: { scrollIntoView?: boolean }
+    options?: { scrollIntoView?: boolean | undefined }
   ) => void;
 
   /** List id, used for `aria-*` attributes */
@@ -85,25 +85,25 @@ export interface ComboboxStore {
 
 export interface UseComboboxOptions {
   /** Default value for `dropdownOpened`, `false` by default. Used when the component is uncontrolled */
-  defaultOpened?: boolean;
+  defaultOpened?: boolean | undefined;
 
   /** Controlled `dropdownOpened` state. When set, the dropdown opened state is controlled by the parent component */
-  opened?: boolean;
+  opened?: boolean | undefined;
 
   /** Called when `dropdownOpened` state changes. Required for controlled mode */
-  onOpenedChange?: (opened: boolean) => void;
+  onOpenedChange?: ((opened: boolean) => void) | undefined;
 
   /** Called when dropdown closes with event source: keyboard, mouse or unknown. Useful for analytics or side effects on dropdown closure */
-  onDropdownClose?: (eventSource: ComboboxDropdownEventSource) => void;
+  onDropdownClose?: ((eventSource: ComboboxDropdownEventSource) => void) | undefined;
 
   /** Called when dropdown opens with event source: keyboard, mouse or unknown. Useful for analytics or side effects on dropdown opening */
-  onDropdownOpen?: (eventSource: ComboboxDropdownEventSource) => void;
+  onDropdownOpen?: ((eventSource: ComboboxDropdownEventSource) => void) | undefined;
 
   /** Determines whether arrow key presses should loop through items (first to last and last to first). Defaults to `true` */
-  loop?: boolean;
+  loop?: boolean | undefined;
 
   /** `behavior` passed down to `element.scrollIntoView`. Controls the scrolling animation when options are scrolled into view. Defaults to `'instant'` */
-  scrollBehavior?: ScrollBehavior;
+  scrollBehavior?: ScrollBehavior | undefined;
 }
 
 export function useCombobox({

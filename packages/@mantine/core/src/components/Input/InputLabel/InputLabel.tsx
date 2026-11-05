@@ -22,16 +22,16 @@ export type InputLabelCssVariables = {
 
 export interface InputLabelProps
   extends BoxProps, StylesApiProps<InputLabelFactory>, ElementProps<'label'> {
-  __staticSelector?: string;
+  __staticSelector?: string | undefined;
 
   /** If set, the required asterisk is displayed next to the label */
-  required?: boolean;
+  required?: boolean | undefined;
 
   /** Controls label `font-size` @default 'sm' */
-  size?: MantineFontSize;
+  size?: MantineFontSize | undefined;
 
   /** Root element of the label @default 'label' */
-  labelElement?: 'label' | 'div';
+  labelElement?: 'label' | 'div' | undefined;
 }
 
 export type InputLabelFactory = Factory<{
@@ -89,7 +89,8 @@ export const InputLabel = factory<InputLabelFactory>((_props) => {
 
   const ctx = use(InputWrapperContext);
   const getStyles = ctx?.getStyles || _getStyles;
-  const rootElement = (others as { component?: React.ElementType }).component || labelElement;
+  const rootElement =
+    (others as { component?: React.ElementType | undefined }).component || labelElement;
   const supportsHtmlFor = typeof rootElement !== 'string' || rootElement === 'label';
 
   return (

@@ -61,13 +61,13 @@ export interface GetClassNameOptions {
   stylesCtx?: Record<string, any> | undefined;
 
   /** Determines whether static classes should be added */
-  withStaticClasses?: boolean;
+  withStaticClasses?: boolean | undefined;
 
   /** If set, removes all Mantine classes */
-  headless?: boolean;
+  headless?: boolean | undefined;
 
   /** `styles` prop transformed into classes with CSS-in-JS library, for example, emotion */
-  transformedStyles?: Record<string, string>[];
+  transformedStyles?: Record<string, string>[] | undefined;
 }
 
 export function getClassName({

@@ -42,16 +42,16 @@ export interface DataListProps
   children?: React.ReactNode;
 
   /** Controls `font-size` and `line-height` @default 'sm' */
-  size?: MantineSize;
+  size?: MantineSize | undefined;
 
   /** Key of `theme.spacing` or any valid CSS value to set gap between items @default 'sm' */
-  gap?: MantineSpacing;
+  gap?: MantineSpacing | undefined;
 
   /** Controls arrangement of label and value within each item. `horizontal` renders label and value side by side, `vertical` stacks label on top of value @default 'horizontal' */
-  orientation?: 'horizontal' | 'vertical';
+  orientation?: 'horizontal' | 'vertical' | undefined;
 
   /** Adds border between items @default false */
-  withDivider?: boolean;
+  withDivider?: boolean | undefined;
 
   /** Controls min-width of the label (dt) element, any valid CSS value @default '120px' */
   labelWidth?: React.CSSProperties['minWidth'];

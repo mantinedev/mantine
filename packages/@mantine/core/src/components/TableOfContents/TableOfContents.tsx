@@ -40,7 +40,7 @@ export interface InitialTableOfContentsData {
   value: string;
 
   /** Heading id, must be unique, used as `key` */
-  id?: string;
+  id?: string | undefined;
 }
 
 export interface TableOfContentsGetControlPropsPayload {
@@ -54,36 +54,38 @@ export interface TableOfContentsGetControlPropsPayload {
 export interface TableOfContentsProps
   extends BoxProps, StylesApiProps<TableOfContentsFactory>, ElementProps<'div'> {
   /** Key of `theme.colors` or any valid CSS color value @default theme.primaryColor */
-  color?: MantineColor;
+  color?: MantineColor | undefined;
 
   /** Controls font-size and padding of all elements @default 'md' */
-  size?: MantineSize | (string & {}) | number;
+  size?: MantineSize | (string & {}) | number | undefined;
 
   /** If set, adjusts text color based on background color for `filled` variant */
-  autoContrast?: boolean;
+  autoContrast?: boolean | undefined;
 
   /** Options passed down to `use-scroll-spy` hook */
-  scrollSpyOptions?: UseScrollSpyOptions;
+  scrollSpyOptions?: UseScrollSpyOptions | undefined;
 
   /** Data used to render content until actual values are retrieved from the DOM */
-  initialData?: InitialTableOfContentsData[];
+  initialData?: InitialTableOfContentsData[] | undefined;
 
   /** A function to pass props down to controls, accepts values from `use-scroll-spy` hook as an argument and active state. */
-  getControlProps?: (
-    payload: TableOfContentsGetControlPropsPayload
-  ) => UnstyledButtonProps & ElementProps<'button'> & Record<`data-${string}`, any>;
+  getControlProps?:
+    | ((
+        payload: TableOfContentsGetControlPropsPayload
+      ) => UnstyledButtonProps & ElementProps<'button'> & Record<`data-${string}`, any>)
+    | undefined;
 
   /** Minimum `depth` value that requires offset, `1` by default */
-  minDepthToOffset?: number;
+  minDepthToOffset?: number | undefined;
 
   /** Controls padding on the left side of control, multiplied by (`depth` - `minDepthToOffset`), `20px` by default  */
-  depthOffset?: number | string;
+  depthOffset?: number | string | undefined;
 
   /** Key of `theme.radius` or any valid CSS value to set `border-radius` @default theme.defaultRadius */
-  radius?: MantineRadius;
+  radius?: MantineRadius | undefined;
 
   /** A function to reinitialize headings from `use-scroll-spy` hook */
-  reinitializeRef?: React.RefObject<() => void>;
+  reinitializeRef?: React.RefObject<() => void> | undefined;
 }
 
 export type TableOfContentsFactory = Factory<{

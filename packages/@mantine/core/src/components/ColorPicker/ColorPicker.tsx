@@ -52,34 +52,34 @@ export type ColorPickerCssVariables = {
 
 export interface __ColorPickerProps {
   /** Controlled component value */
-  value?: string;
+  value?: string | undefined;
 
   /** Uncontrolled component default value */
-  defaultValue?: string;
+  defaultValue?: string | undefined;
 
   /** Called when value changes */
-  onChange?: (value: string) => void;
+  onChange?: ((value: string) => void) | undefined;
 
   /** Called when the user stops dragging one of the sliders or changes the value with keyboard */
-  onChangeEnd?: (value: string) => void;
+  onChangeEnd?: ((value: string) => void) | undefined;
 
   /** Color format. `hexa`, `rgba`, `hsla` values render alpha channel slider @default 'hex' */
-  format?: ColorFormat;
+  format?: ColorFormat | undefined;
 
   /** If `false`, the component displays only swatches @default true */
-  withPicker?: boolean;
+  withPicker?: boolean | undefined;
 
   /** A list of colors used to display swatches list below the color picker */
-  swatches?: string[];
+  swatches?: string[] | undefined;
 
   /** Number of swatches per row @default 7 */
-  swatchesPerRow?: number;
+  swatchesPerRow?: number | undefined;
 
   /** Component size @default 'md' */
-  size?: MantineSize | (string & {});
+  size?: MantineSize | (string & {}) | undefined;
 
   /** If set, the component takes 100% width of its container @default false */
-  fullWidth?: boolean;
+  fullWidth?: boolean | undefined;
 }
 
 export interface ColorPickerProps
@@ -88,28 +88,28 @@ export interface ColorPickerProps
     __ColorPickerProps,
     StylesApiProps<ColorPickerFactory>,
     ElementProps<'div', 'onChange' | 'value' | 'defaultValue'> {
-  __staticSelector?: string;
+  __staticSelector?: string | undefined;
 
   /** If set, interactive elements (sliders thumbs and swatches) are focusable with keyboard @default true */
-  focusable?: boolean;
+  focusable?: boolean | undefined;
 
   /** Saturation slider `aria-label` */
-  saturationLabel?: string;
+  saturationLabel?: string | undefined;
 
   /** Hue slider `aria-label` */
-  hueLabel?: string;
+  hueLabel?: string | undefined;
 
   /** Alpha slider `aria-label` */
-  alphaLabel?: string;
+  alphaLabel?: string | undefined;
 
   /** Called when one of the color swatches is clicked */
-  onColorSwatchClick?: (color: string) => void;
+  onColorSwatchClick?: ((color: string) => void) | undefined;
 
   /** Hidden input `name` attribute, if not set, the input will not be rendered */
-  name?: string;
+  name?: string | undefined;
 
   /** Props spread to the hidden input */
-  hiddenInputProps?: React.ComponentProps<'input'> & DataAttributes;
+  hiddenInputProps?: (React.ComponentProps<'input'> & DataAttributes) | undefined;
 }
 
 export type ColorPickerFactory = Factory<{

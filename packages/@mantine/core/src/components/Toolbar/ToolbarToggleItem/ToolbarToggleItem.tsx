@@ -19,10 +19,10 @@ export interface ToolbarToggleItemProps
   value: string;
 
   /** If set, the toggle item is disabled */
-  disabled?: boolean;
+  disabled?: boolean | undefined;
 
   /** If set, the toggle item width adjusts to content instead of being square, `false` by default */
-  autoWidth?: boolean;
+  autoWidth?: boolean | undefined;
 }
 
 export type ToolbarToggleItemFactory = Factory<{

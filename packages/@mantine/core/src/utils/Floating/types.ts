@@ -5,7 +5,7 @@ export type ArrowPosition = 'center' | 'side' | 'merge';
 export type FloatingStrategy = 'absolute' | 'fixed';
 
 export interface FloatingAxesOffsets {
-  mainAxis?: number;
-  crossAxis?: number;
-  alignmentAxis?: number | null;
+  mainAxis?: number | undefined;
+  crossAxis?: number | undefined;
+  alignmentAxis?: number | null | undefined;
 }

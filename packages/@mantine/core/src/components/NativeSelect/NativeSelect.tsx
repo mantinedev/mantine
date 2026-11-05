@@ -14,7 +14,7 @@ export interface NativeSelectProps
    * Data used to render options. Accepts strings, objects with label/value,
    * or grouped options. If `children` prop is provided, `data` will be ignored.
    */
-  data?: ComboboxStringGroupData;
+  data?: ComboboxStringGroupData | undefined;
 }
 
 export type NativeSelectFactory = Factory<{

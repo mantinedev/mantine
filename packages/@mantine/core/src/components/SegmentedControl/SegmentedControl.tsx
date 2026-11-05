@@ -46,7 +46,7 @@ export type SegmentedControlCssVariables = {
 export interface SegmentedControlItem<Value = string> {
   value: Value;
   label: React.ReactNode;
-  disabled?: boolean;
+  disabled?: boolean | undefined;
 }
 
 export interface SegmentedControlProps<Value extends Primitive = string>
@@ -58,49 +58,49 @@ export interface SegmentedControlProps<Value extends Primitive = string>
   data: (Value | SegmentedControlItem<Value>)[];
 
   /** Controlled component value */
-  value?: Value;
+  value?: Value | undefined;
 
   /** Uncontrolled component default value */
-  defaultValue?: Value;
+  defaultValue?: Value | undefined;
 
   /** Called when value changes */
-  onChange?: (value: Value) => void;
+  onChange?: ((value: Value) => void) | undefined;
 
   /** Determines whether the component is disabled */
-  disabled?: boolean;
+  disabled?: boolean | undefined;
 
   /** Name attribute for the radio group. A random name is auto-generated if not provided */
-  name?: string;
+  name?: string | undefined;
 
   /** Determines whether the component should take 100% width of its parent @default false */
-  fullWidth?: boolean;
+  fullWidth?: boolean | undefined;
 
   /** Key of `theme.colors` or any valid CSS color, changes indicator background color. By default, uses white in light mode and dark.5 in dark mode */
-  color?: MantineColor;
+  color?: MantineColor | undefined;
 
   /** Controls `font-size`, `padding` and `height` properties @default 'sm' */
-  size?: MantineSize | (string & {});
+  size?: MantineSize | (string & {}) | undefined;
 
   /** Key of `theme.radius` or any valid CSS value to set `border-radius`, numbers are converted to rem @default theme.defaultRadius */
-  radius?: MantineRadius;
+  radius?: MantineRadius | undefined;
 
   /** Indicator `transition-duration` in ms, set `0` to turn off transitions @default 200 */
-  transitionDuration?: number;
+  transitionDuration?: number | undefined;
 
   /** Indicator `transition-timing-function` property @default ease */
-  transitionTimingFunction?: string;
+  transitionTimingFunction?: string | undefined;
 
   /** Component orientation @default 'horizontal' */
-  orientation?: 'vertical' | 'horizontal';
+  orientation?: 'vertical' | 'horizontal' | undefined;
 
   /** If set, value cannot be changed */
-  readOnly?: boolean;
+  readOnly?: boolean | undefined;
 
   /** If set, automatically adjusts label text color for optimal contrast against the indicator background color */
-  autoContrast?: boolean;
+  autoContrast?: boolean | undefined;
 
   /** Determines whether there should be borders between items @default true */
-  withItemsBorders?: boolean;
+  withItemsBorders?: boolean | undefined;
 }
 
 export type SegmentedControlFactory = Factory<{

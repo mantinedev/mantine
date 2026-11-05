@@ -9,7 +9,7 @@ type PropsOf<C extends ElementType> = React.JSX.LibraryManagedAttributes<
 >;
 
 type ComponentProp<C> = {
-  component?: C;
+  component?: C | undefined;
 };
 
 type InheritedProps<C extends ElementType, Props = {}> = ExtendedProps<PropsOf<C>, Props>;
@@ -20,10 +20,13 @@ export type PolymorphicRef<C> = C extends React.ElementType
 
 export type PolymorphicComponentProps<C, Props = {}> = C extends React.ElementType
   ? InheritedProps<C, Props & ComponentProp<C>> & {
-      ref?: PolymorphicRef<C>;
-      renderRoot?: (props: any) => any;
+      ref?: PolymorphicRef<C> | undefined;
+      renderRoot?: ((props: any) => any) | undefined;
     }
-  : Props & { component: React.ElementType; renderRoot?: (props: Record<string, any>) => any };
+  : Props & {
+      component: React.ElementType;
+      renderRoot?: ((props: Record<string, any>) => any) | undefined;
+    };
 
 export function createPolymorphicComponent<
   ComponentDefaultType,

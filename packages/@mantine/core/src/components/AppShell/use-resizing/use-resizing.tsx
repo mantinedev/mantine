@@ -4,7 +4,7 @@ import { useIsomorphicEffect, useWindowEvent } from '@mantine/hooks';
 interface UseResizingInput {
   transitionDuration: number | undefined;
   disabled: boolean | undefined;
-  resizeKey?: string;
+  resizeKey?: string | undefined;
 }
 
 export function useResizing({ transitionDuration, disabled, resizeKey }: UseResizingInput) {

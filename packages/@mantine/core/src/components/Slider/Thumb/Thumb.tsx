@@ -10,19 +10,19 @@ export interface ThumbProps extends Omit<React.ComponentProps<'div'>, 'value'> {
   position: number;
   dragging: boolean;
   label: React.ReactNode;
-  thumbValueText?: string | ((value: number) => string);
-  onKeyDownCapture?: (event: React.KeyboardEvent<HTMLDivElement>) => void;
-  onMouseDown?: (event: any) => void;
+  thumbValueText?: string | ((value: number) => string) | undefined;
+  onKeyDownCapture?: ((event: React.KeyboardEvent<HTMLDivElement>) => void) | undefined;
+  onMouseDown?: ((event: any) => void) | undefined;
   labelTransitionProps: TransitionOverride | undefined;
   labelAlwaysOn: boolean | undefined;
   thumbLabel: string | undefined;
   showLabelOnHover: boolean | undefined;
-  isHovered?: boolean;
+  isHovered?: boolean | undefined;
   children?: React.ReactNode;
   disabled: boolean | undefined;
-  orientation?: 'horizontal' | 'vertical';
+  orientation?: 'horizontal' | 'vertical' | undefined;
   className?: string | undefined;
-  style?: React.CSSProperties;
+  style?: React.CSSProperties | undefined;
 }
 
 export function Thumb({

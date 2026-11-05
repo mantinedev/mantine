@@ -7,7 +7,7 @@ export type DrawerContentStylesNames = 'content' | 'inner';
 
 export interface DrawerContentProps
   extends ModalBaseContentProps, CompoundStylesApiProps<DrawerContentFactory> {
-  __hidden?: boolean;
+  __hidden?: boolean | undefined;
 }
 
 export type DrawerContentFactory = Factory<{

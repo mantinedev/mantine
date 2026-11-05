@@ -1,7 +1,9 @@
 import { assignRef, useMask, useMergedRef } from '@mantine/hooks';
 import type { MaskInputProps } from './MaskInput';
 
-export function useMaskInputProps(props: MaskInputProps & { ref?: React.Ref<HTMLInputElement> }) {
+export function useMaskInputProps(
+  props: MaskInputProps & { ref?: React.Ref<HTMLInputElement> | undefined }
+) {
   const {
     mask,
     tokens,

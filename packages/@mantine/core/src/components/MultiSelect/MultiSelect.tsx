@@ -65,88 +65,90 @@ export interface MultiSelectProps<Value extends Primitive = string>
     StylesApiProps<MultiSelectFactory>,
     ElementProps<'input', 'size' | 'value' | 'defaultValue' | 'onChange'> {
   /** Controlled component value */
-  value?: Value[];
+  value?: Value[] | undefined;
 
   /** Uncontrolled component default value */
-  defaultValue?: Value[];
+  defaultValue?: Value[] | undefined;
 
   /** Called when value changes */
-  onChange?: (value: Value[]) => void;
+  onChange?: ((value: Value[]) => void) | undefined;
 
   /** Called with `value` of the removed item */
-  onRemove?: (value: Value) => void;
+  onRemove?: ((value: Value) => void) | undefined;
 
   /** Called when the clear button is clicked */
-  onClear?: () => void;
+  onClear?: (() => void) | undefined;
 
   /** Called when user attempts to select more values than allowed */
-  onMaxValues?: () => void;
+  onMaxValues?: (() => void) | undefined;
 
   /** Controlled search value */
-  searchValue?: string;
+  searchValue?: string | undefined;
 
   /** Default search value */
-  defaultSearchValue?: string;
+  defaultSearchValue?: string | undefined;
 
   /** Called when search changes */
-  onSearchChange?: (value: string) => void;
+  onSearchChange?: ((value: string) => void) | undefined;
 
   /** Maximum number of values, no limit if not set */
-  maxValues?: number;
+  maxValues?: number | undefined;
 
   /** Allows searching through options by user input @default false */
-  searchable?: boolean;
+  searchable?: boolean | undefined;
 
   /** Message displayed when no options match the search query (when searchable is enabled) or when the data array is empty. If not set, the dropdown will be hidden instead. */
   nothingFoundMessage?: React.ReactNode;
 
   /** If set, the check icon is displayed near the selected option label @default true */
-  withCheckIcon?: boolean;
+  withCheckIcon?: boolean | undefined;
 
   /** If set, unchecked labels are aligned with checked ones @default false */
-  withAlignedLabels?: boolean;
+  withAlignedLabels?: boolean | undefined;
 
   /** Position of the checkmark icon shown next to selected options in the dropdown @default 'left' */
-  checkIconPosition?: 'left' | 'right';
+  checkIconPosition?: 'left' | 'right' | undefined;
 
   /** When enabled, selected options are hidden from the dropdown list @default false */
-  hidePickedOptions?: boolean;
+  hidePickedOptions?: boolean | undefined;
 
   /** When enabled, displays a clear button to remove all selected values (hidden when component is empty, disabled, or read-only) @default false */
-  clearable?: boolean;
+  clearable?: boolean | undefined;
 
   /** Determines how the clear button and rightSection are rendered @default 'both' */
-  clearSectionMode?: ClearSectionMode;
+  clearSectionMode?: ClearSectionMode | undefined;
 
   /** Props passed down to the clear button */
-  clearButtonProps?: InputClearButtonProps;
+  clearButtonProps?: InputClearButtonProps | undefined;
 
   /** Props passed down to the hidden input */
-  hiddenInputProps?: Omit<React.ComponentProps<'input'>, 'value'>;
+  hiddenInputProps?: Omit<React.ComponentProps<'input'>, 'value'> | undefined;
 
   /** Divider used to separate values in the hidden input `value` attribute @default ',' */
-  hiddenInputValuesDivider?: string;
+  hiddenInputValuesDivider?: string | undefined;
 
   /** A function to render content of the option, replaces the default content of the option */
-  renderOption?: (item: ComboboxLikeRenderOptionInput<ComboboxItem<Value>>) => React.ReactNode;
+  renderOption?:
+    | ((item: ComboboxLikeRenderOptionInput<ComboboxItem<Value>>) => React.ReactNode)
+    | undefined;
 
   /** A function to render content of the pill */
-  renderPill?: (props: ComboboxRenderPillInput<Value>) => React.ReactNode;
+  renderPill?: ((props: ComboboxRenderPillInput<Value>) => React.ReactNode) | undefined;
 
   /** Props passed down to the underlying `ScrollArea` component in the dropdown */
-  scrollAreaProps?: ScrollAreaProps;
+  scrollAreaProps?: ScrollAreaProps | undefined;
 
   /** Controls color of the default chevron */
-  chevronColor?: MantineColor;
+  chevronColor?: MantineColor | undefined;
 
   /** Clear search value when item is selected @default true */
-  clearSearchOnChange?: boolean;
+  clearSearchOnChange?: boolean | undefined;
 
   /** Controls whether dropdown opens when the input receives focus @default true */
-  openOnFocus?: boolean;
+  openOnFocus?: boolean | undefined;
 
   /** If set, selected values can be reordered by dragging pills. Disabled when `disabled` or `readOnly` is set. @default false */
-  withPillsReorder?: boolean;
+  withPillsReorder?: boolean | undefined;
 }
 
 export type MultiSelectFactory = Factory<{

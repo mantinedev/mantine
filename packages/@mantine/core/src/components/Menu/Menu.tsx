@@ -63,67 +63,67 @@ export type MenuFactory = Factory<{
 }>;
 
 export interface MenuProps extends __PopoverProps, StylesApiProps<MenuFactory> {
-  variant?: string;
+  variant?: string | undefined;
 
   /** Menu children */
   children?: React.ReactNode;
 
   /** Controlled menu opened state */
-  opened?: boolean;
+  opened?: boolean | undefined;
 
   /** Uncontrolled menu initial opened state */
-  defaultOpened?: boolean;
+  defaultOpened?: boolean | undefined;
 
   /** If set, focus is trapped within the menu dropdown when it is opened */
-  trapFocus?: boolean;
+  trapFocus?: boolean | undefined;
 
   /** Called when menu opened state changes */
-  onChange?: (opened: boolean) => void;
+  onChange?: ((opened: boolean) => void) | undefined;
 
   /** Called when Menu is opened */
-  onOpen?: () => void;
+  onOpen?: (() => void) | undefined;
 
   /** Called when Menu is closed */
-  onClose?: () => void;
+  onClose?: (() => void) | undefined;
 
   /** If set, the Menu is closed when one of the items is clicked. Can be overridden per item with `closeMenuOnClick` prop */
-  closeOnItemClick?: boolean;
+  closeOnItemClick?: boolean | undefined;
 
   /** If set, arrow key presses wrap around from last item to first and vice versa */
-  loop?: boolean;
+  loop?: boolean | undefined;
 
   /** If set, the dropdown is closed when the `Escape` key is pressed @default true */
-  closeOnEscape?: boolean;
+  closeOnEscape?: boolean | undefined;
 
   /** Event trigger to open menu. Note: 'hover' is not keyboard accessible; prefer 'click-hover' for accessible hover menus */
-  trigger?: 'click' | 'hover' | 'click-hover';
+  trigger?: 'click' | 'hover' | 'click-hover' | undefined;
 
   /** Open delay in ms, applicable only to `trigger="hover"` variant */
-  openDelay?: number;
+  openDelay?: number | undefined;
 
   /** Close delay in ms, applicable only to `trigger="hover"` variant */
-  closeDelay?: number;
+  closeDelay?: number | undefined;
 
   /** If set, the dropdown is closed on outside clicks */
-  closeOnClickOutside?: boolean;
+  closeOnClickOutside?: boolean | undefined;
 
   /** Events that trigger outside click detection. Includes mousedown for desktop clicks, touchstart for mobile, and keydown for Escape key handling @default ['mousedown', 'touchstart', 'keydown'] */
-  clickOutsideEvents?: string[];
+  clickOutsideEvents?: string[] | undefined;
 
   /** Id base to create accessibility connections */
-  id?: string;
+  id?: string | undefined;
 
   /** Set the `tabindex` on all menu items. Use `0` to allow Tab key navigation through menu items (required for navigation menus following WAI-ARIA disclosure pattern). @default -1 */
-  menuItemTabIndex?: -1 | 0;
+  menuItemTabIndex?: -1 | 0 | undefined;
 
   /** Adds a hidden focusable element at the start of the dropdown to prevent unexpected focus jumps when opening with keyboard. Set to false if you need custom focus management. @default true */
-  withInitialFocusPlaceholder?: boolean;
+  withInitialFocusPlaceholder?: boolean | undefined;
 
   /** Determines whether focus should be automatically returned to control when dropdown closes @default `true` */
-  returnFocus?: boolean;
+  returnFocus?: boolean | undefined;
 
   /** Controls how indicator slot space is reserved on menu items for label alignment. `'all'` reserves space on every `Menu.Item`, `'with-indicators'` reserves space only on `Menu.CheckboxItem` and `Menu.RadioItem`, `'none'` reserves space only on items that currently display an indicator. @default 'with-indicators' */
-  alignItemsLabels?: 'all' | 'with-indicators' | 'none';
+  alignItemsLabels?: 'all' | 'with-indicators' | 'none' | undefined;
 
   /** Custom icon rendered as the indicator of checked `Menu.CheckboxItem` and selected `Menu.RadioItem`. Can be overridden per item with the `checkIcon` prop. */
   checkIcon?: React.ReactNode;

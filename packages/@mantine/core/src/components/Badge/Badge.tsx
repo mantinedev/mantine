@@ -42,19 +42,19 @@ export type BadgeCssVariables = {
 
 export interface BadgeProps extends BoxProps, StylesApiProps<BadgeFactory> {
   /** Controls `font-size`, `height` and horizontal `padding` @default 'md' */
-  size?: MantineSize | (string & {});
+  size?: MantineSize | (string & {}) | undefined;
 
   /** If set, badge `min-width` becomes equal to its `height` and horizontal padding is removed */
-  circle?: boolean;
+  circle?: boolean | undefined;
 
   /** Key of `theme.radius` or any valid CSS value to set `border-radius` @default 'xl' */
-  radius?: MantineRadius;
+  radius?: MantineRadius | undefined;
 
   /** Key of `theme.colors` or any valid CSS color @default theme.primaryColor */
-  color?: MantineColor;
+  color?: MantineColor | undefined;
 
   /** Gradient configuration used when `variant=\"gradient\"` @default theme.defaultGradient */
-  gradient?: MantineGradient;
+  gradient?: MantineGradient | undefined;
 
   /** Content displayed on the left side of the badge label */
   leftSection?: React.ReactNode;
@@ -63,13 +63,13 @@ export interface BadgeProps extends BoxProps, StylesApiProps<BadgeFactory> {
   rightSection?: React.ReactNode;
 
   /** Determines whether Badge should take 100% of its parent width @default false */
-  fullWidth?: boolean;
+  fullWidth?: boolean | undefined;
 
   /** Main badge content */
   children?: React.ReactNode;
 
   /** If set, adjusts text color based on background color for `filled` variant */
-  autoContrast?: boolean;
+  autoContrast?: boolean | undefined;
 }
 
 export type BadgeFactory = PolymorphicFactory<{

@@ -29,52 +29,52 @@ export interface FileInputProps<Multiple = false>
   component?: any;
 
   /** Called when value changes */
-  onChange?: (payload: Multiple extends true ? File[] : File | null) => void;
+  onChange?: ((payload: Multiple extends true ? File[] : File | null) => void) | undefined;
 
   /** Controlled component value */
-  value?: Multiple extends true ? File[] : File | null;
+  value?: (Multiple extends true ? File[] : File | null) | undefined;
 
   /** Uncontrolled component default value */
-  defaultValue?: Multiple extends true ? File[] : File | null;
+  defaultValue?: (Multiple extends true ? File[] : File | null) | undefined;
 
   /** If set, user can pick more than one file @default false */
-  multiple?: Multiple;
+  multiple?: Multiple | undefined;
 
   /** File input accept attribute, for example, `"image/png,image/jpeg"` */
-  accept?: string;
+  accept?: string | undefined;
 
   /** Input name attribute */
-  name?: string;
+  name?: string | undefined;
 
   /** Input form attribute */
-  form?: string;
+  form?: string | undefined;
 
   /** Value renderer. By default, displays file name. */
-  valueComponent?: React.FC<{ value: null | File | File[] }>;
+  valueComponent?: React.FC<{ value: null | File | File[] }> | undefined;
 
   /** If set, the clear button is displayed in the right section @default false */
-  clearable?: boolean;
+  clearable?: boolean | undefined;
 
   /** Determines how the clear button and rightSection are rendered @default 'both' */
-  clearSectionMode?: ClearSectionMode;
+  clearSectionMode?: ClearSectionMode | undefined;
 
   /** Props passed down to the clear button */
-  clearButtonProps?: React.ComponentProps<'button'>;
+  clearButtonProps?: React.ComponentProps<'button'> | undefined;
 
   /** If set, the input value cannot be changed  */
-  readOnly?: boolean;
+  readOnly?: boolean | undefined;
 
   /** Specifies that, optionally, a new file should be captured, and which device should be used to capture that new media of a type defined by the accept attribute. */
-  capture?: boolean | 'user' | 'environment';
+  capture?: boolean | 'user' | 'environment' | undefined;
 
   /** Props passed down to the hidden `input[type="file"]` */
-  fileInputProps?: React.ComponentProps<'input'>;
+  fileInputProps?: React.ComponentProps<'input'> | undefined;
 
   /** Input placeholder */
   placeholder?: React.ReactNode;
 
   /** Reference of the function that should be called when value changes to null or empty array */
-  resetRef?: React.Ref<() => void>;
+  resetRef?: React.Ref<() => void> | undefined;
 }
 
 export type FileInputFactory = Factory<{

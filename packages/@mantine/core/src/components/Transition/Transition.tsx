@@ -6,7 +6,7 @@ import { useTransition } from './use-transition';
 
 export interface TransitionProps {
   /** If set, the element is kept in the DOM when hidden. React 19 `Activity` is used to preserve state while the element is not visible. */
-  keepMounted?: boolean;
+  keepMounted?: boolean | undefined;
 
   /**
    * Controls how the element is hidden when `keepMounted` is set:
@@ -14,19 +14,19 @@ export interface TransitionProps {
    * `'display-none'` - hidden with `display: none` styles
    * @default 'activity'
    */
-  keepMountedMode?: 'activity' | 'display-none';
+  keepMountedMode?: 'activity' | 'display-none' | undefined;
 
   /** Transition name or object */
-  transition?: MantineTransition;
+  transition?: MantineTransition | undefined;
 
   /** Transition duration in ms @default 250 */
-  duration?: number;
+  duration?: number | undefined;
 
   /** Exit transition duration in ms @default 250 */
-  exitDuration?: number;
+  exitDuration?: number | undefined;
 
   /** Transition timing function @default theme.transitionTimingFunction */
-  timingFunction?: string;
+  timingFunction?: string | undefined;
 
   /** Determines whether component should be mounted to the DOM */
   mounted: boolean;
@@ -35,22 +35,22 @@ export interface TransitionProps {
   children: (styles: React.CSSProperties) => React.JSX.Element;
 
   /** Called when exit transition ends */
-  onExited?: () => void;
+  onExited?: (() => void) | undefined;
 
   /** Called when exit transition starts */
-  onExit?: () => void;
+  onExit?: (() => void) | undefined;
 
   /** Called when enter transition starts */
-  onEnter?: () => void;
+  onEnter?: (() => void) | undefined;
 
   /** Called when enter transition ends */
-  onEntered?: () => void;
+  onEntered?: (() => void) | undefined;
 
   /** Delay in ms before enter transition starts */
-  enterDelay?: number;
+  enterDelay?: number | undefined;
 
   /** Delay in ms before exit transition starts */
-  exitDelay?: number;
+  exitDelay?: number | undefined;
 }
 
 export type TransitionOverride = Partial<Omit<TransitionProps, 'mounted'>>;

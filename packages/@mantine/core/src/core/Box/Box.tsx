@@ -30,25 +30,25 @@ export interface BoxProps extends MantineStyleProps {
   style?: MantineStyleProp;
 
   /** CSS variables defined on root component element */
-  __vars?: CssVarsProp;
+  __vars?: CssVarsProp | undefined;
 
   /** `size` property passed down the HTML element */
-  __size?: string;
+  __size?: string | undefined;
 
   /** Breakpoint above which the component is hidden with `display: none` */
-  hiddenFrom?: MantineBreakpoint;
+  hiddenFrom?: MantineBreakpoint | undefined;
 
   /** Breakpoint below which the component is hidden with `display: none` */
-  visibleFrom?: MantineBreakpoint;
+  visibleFrom?: MantineBreakpoint | undefined;
 
   /** Determines whether component should be hidden in light color scheme with `display: none` */
-  lightHidden?: boolean;
+  lightHidden?: boolean | undefined;
 
   /** Determines whether component should be hidden in dark color scheme with `display: none` */
-  darkHidden?: boolean;
+  darkHidden?: boolean | undefined;
 
   /** Element modifiers transformed into `data-` attributes, for example, `{ 'data-size': 'xl' }`, falsy values are removed */
-  mod?: BoxMod;
+  mod?: BoxMod | undefined;
 }
 
 export type ElementProps<
@@ -58,10 +58,10 @@ export type ElementProps<
 
 export interface BoxComponentProps extends BoxProps {
   /** Variant passed from parent component, sets `data-variant` */
-  variant?: string;
+  variant?: string | undefined;
 
   /** Size passed from parent component, sets `data-size` if value is not number like */
-  size?: string | number;
+  size?: string | number | undefined;
 }
 
 function _Box({

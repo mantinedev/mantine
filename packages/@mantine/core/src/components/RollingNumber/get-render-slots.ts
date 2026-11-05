@@ -20,10 +20,10 @@ export type RenderSlot = DigitSlot | CharSlot;
 export interface GetRenderSlotsInput {
   current: DigitParts;
   previous: DigitParts;
-  prefix?: string;
-  suffix?: string;
-  decimalSeparator?: string;
-  thousandSeparator?: string | boolean;
+  prefix?: string | undefined;
+  suffix?: string | undefined;
+  decimalSeparator?: string | undefined;
+  thousandSeparator?: string | boolean | undefined;
 }
 
 function padLeft(arr: string[], length: number): (string | null)[] {
@@ -122,12 +122,12 @@ export function getRenderSlots({
 export interface GetRenderSlotsFromValuesInput {
   value: number;
   previousValue: number;
-  prefix?: string;
-  suffix?: string;
-  decimalSeparator?: string;
-  thousandSeparator?: string | boolean;
-  decimalScale?: number;
-  fixedDecimalScale?: boolean;
+  prefix?: string | undefined;
+  suffix?: string | undefined;
+  decimalSeparator?: string | undefined;
+  thousandSeparator?: string | boolean | undefined;
+  decimalScale?: number | undefined;
+  fixedDecimalScale?: boolean | undefined;
 }
 
 export function getRenderSlotsFromValues({

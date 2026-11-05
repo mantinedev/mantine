@@ -3,13 +3,13 @@ import { Popover } from '../../Popover';
 import { useComboboxContext } from '../Combobox.context';
 
 export interface ComboboxDropdownTargetProps {
-  ref?: React.RefObject<HTMLElement>;
+  ref?: React.RefObject<HTMLElement> | undefined;
 
   /** Target element */
   children: React.ReactNode;
 
   /** Key of the prop that should be used to access element ref */
-  refProp?: string;
+  refProp?: string | undefined;
 }
 
 const defaultProps = {

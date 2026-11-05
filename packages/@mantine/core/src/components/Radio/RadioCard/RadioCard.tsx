@@ -30,19 +30,19 @@ export type RadioCardCssVariables = {
 export interface RadioCardProps
   extends BoxProps, StylesApiProps<RadioCardFactory>, ElementProps<'button', 'onChange'> {
   /** Checked state */
-  checked?: boolean;
+  checked?: boolean | undefined;
 
   /** Adds border to the root element */
-  withBorder?: boolean;
+  withBorder?: boolean | undefined;
 
   /** Key of `theme.radius` or any valid CSS value to set `border-radius`, numbers are converted to rem @default theme.defaultRadius */
-  radius?: MantineRadius;
+  radius?: MantineRadius | undefined;
 
   /** Value of the radio, used with Radio.Group */
-  value?: string;
+  value?: string | undefined;
 
   /** Value used to associate all related radio cards, required for accessibility if used outside of `Radio.Group` */
-  name?: string;
+  name?: string | undefined;
 }
 
 export type RadioCardFactory = Factory<{

@@ -8,7 +8,7 @@ import {
 } from './ScrollAreaScrollbarVisible';
 
 export interface ScrollAreaScrollbarAutoProps extends ScrollAreaScrollbarVisibleProps {
-  forceMount?: true;
+  forceMount?: true | undefined;
 }
 
 export function ScrollAreaScrollbarAuto(props: ScrollAreaScrollbarAutoProps) {

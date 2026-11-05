@@ -12,10 +12,10 @@ const OPTION_GAP = 6;
 
 export interface TreeSelectChevronAriaLabels {
   /** aria-label for the expand button when the node is collapsed @default 'Expand' */
-  expand?: string;
+  expand?: string | undefined;
 
   /** aria-label for the expand button when the node is expanded @default 'Collapse' */
-  collapse?: string;
+  collapse?: string | undefined;
 }
 
 export interface TreeSelectOptionProps {
@@ -31,8 +31,8 @@ export interface TreeSelectOptionProps {
   lineGuides: boolean[];
   withLines: boolean;
   onToggleExpand: (value: string) => void;
-  renderNode?: (payload: TreeSelectRenderNodePayload) => React.ReactNode;
-  chevronAriaLabels?: TreeSelectChevronAriaLabels;
+  renderNode?: ((payload: TreeSelectRenderNodePayload) => React.ReactNode) | undefined;
+  chevronAriaLabels?: TreeSelectChevronAriaLabels | undefined;
 }
 
 export interface TreeSelectRenderNodePayload {

@@ -11,12 +11,12 @@ import { useSliderContext } from '../Slider.context';
 export interface SliderRootProps extends BoxProps, ElementProps<'div'> {
   size: MantineSize | (string & {}) | number;
   children: React.ReactNode;
-  color?: MantineColor;
+  color?: MantineColor | undefined;
   disabled: boolean | undefined;
-  variant?: string;
-  thumbSize?: string | number;
-  radius?: MantineRadius;
-  orientation?: 'horizontal' | 'vertical';
+  variant?: string | undefined;
+  thumbSize?: string | number | undefined;
+  radius?: MantineRadius | undefined;
+  orientation?: 'horizontal' | 'vertical' | undefined;
 }
 
 export function SliderRoot({

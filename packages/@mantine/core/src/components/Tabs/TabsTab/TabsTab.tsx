@@ -34,7 +34,7 @@ export interface TabsTabProps
   leftSection?: React.ReactNode;
 
   /** Key of `theme.colors` or any valid CSS color, controls tab color based on `variant` */
-  color?: MantineColor;
+  color?: MantineColor | undefined;
 }
 
 export type TabsTabFactory = Factory<{

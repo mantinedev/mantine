@@ -7,7 +7,7 @@ interface GetContrastColorInput {
   color: string | null | undefined;
   theme: MantineTheme;
   autoContrast?: boolean | undefined | null;
-  colorScheme?: MantineColorScheme;
+  colorScheme?: MantineColorScheme | undefined;
 }
 
 export function getContrastColor({

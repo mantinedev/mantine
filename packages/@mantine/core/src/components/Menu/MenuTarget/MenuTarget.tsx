@@ -8,7 +8,7 @@ export interface MenuTargetProps {
   children: React.ReactNode;
 
   /** Key of the prop used to get element ref, useful for forwarding refs to custom components @default 'ref' */
-  refProp?: string;
+  refProp?: string | undefined;
 }
 
 const defaultProps = {

@@ -4,17 +4,17 @@ import { useSliderContext } from '../Slider.context';
 
 export interface TrackProps {
   filled: number;
-  offset?: number;
-  marksOffset?: number;
+  offset?: number | undefined;
+  marksOffset?: number | undefined;
   marks: { value: number; label?: React.ReactNode }[] | undefined;
   min: number;
   max: number;
   value: number;
-  startPointValue?: number;
+  startPointValue?: number | undefined;
   children: React.ReactNode;
   disabled: boolean | undefined;
   inverted: boolean | undefined;
-  containerProps?: React.ComponentProps<'div'>;
+  containerProps?: React.ComponentProps<'div'> | undefined;
 }
 
 export function Track({

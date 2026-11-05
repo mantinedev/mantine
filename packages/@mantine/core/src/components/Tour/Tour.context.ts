@@ -59,7 +59,7 @@ export interface TourContextValue {
   withCloseButton: boolean;
 
   /** Key of `theme.colors` or any valid CSS color passed to `Tour.Navigation` next button */
-  color?: MantineColor;
+  color?: MantineColor | undefined;
 
   /** Padding around the spotlight cutout in px */
   spotlightPadding: number;
