@@ -27,6 +27,12 @@ describe('@mantine/core/lighten', () => {
     expect(lighten('hsla(120, 100%, 50%, 0)', 0.5)).toBe('rgba(128, 255, 128, 0)');
   });
 
+  it('supports oklch colors', () => {
+    expect(lighten('oklch(49.72% 0.1888 251.59)', 0.1)).toBe(
+      'color-mix(in srgb, oklch(49.72% 0.1888 251.59), white 10%)'
+    );
+  });
+
   it('supports css variables', () => {
     expect(lighten('var(--color-primary)', 0.1)).toBe(
       'color-mix(in srgb, var(--color-primary), white 10%)'

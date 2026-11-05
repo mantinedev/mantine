@@ -27,6 +27,12 @@ describe('@mantine/core/darken', () => {
     expect(darken('hsla(120, 100%, 50%, 0)', 0.5)).toBe('rgba(0, 128, 0, 0)');
   });
 
+  it('supports oklch colors', () => {
+    expect(darken('oklch(49.72% 0.1888 251.59)', 0.1)).toBe(
+      'color-mix(in srgb, oklch(49.72% 0.1888 251.59), black 10%)'
+    );
+  });
+
   it('supports css variables', () => {
     expect(darken('var(--color-primary)', 0.1)).toBe(
       'color-mix(in srgb, var(--color-primary), black 10%)'
