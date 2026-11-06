@@ -140,6 +140,9 @@ export const ColorInput = factory<ColorInputFactory>((_props) => {
     rightSection,
     swatchesPerRow,
     fullWidth,
+    saturationLabel,
+    hueLabel,
+    alphaLabel,
     ...others
   } = useInputProps('ColorInput', defaultProps, _props);
 
@@ -310,6 +313,9 @@ export const ColorInput = factory<ColorInputFactory>((_props) => {
             onColorSwatchClick={() => closeOnColorSwatchClick && setDropdownOpened(false)}
             attributes={wrapperProps.attributes}
             fullWidth={fullWidth}
+            saturationLabel={saturationLabel}
+            hueLabel={hueLabel}
+            alphaLabel={alphaLabel}
           />
         </Popover.Dropdown>
       </Popover>

@@ -47,4 +47,21 @@ describe('@mantine/core/ColorInput', () => {
       container.querySelector('.mantine-ColorInput-dropdown [data-full-width]')
     ).toBeInTheDocument();
   });
+
+  it('passes slider labels to ColorPicker', () => {
+    const { getByRole } = render(
+      <MantineProvider>
+        <ColorInput
+          popoverProps={{ opened: true, withinPortal: false }}
+          format="rgba"
+          saturationLabel="test-saturation"
+          hueLabel="test-hue"
+          alphaLabel="test-alpha"
+        />
+      </MantineProvider>
+    );
+    expect(getByRole('slider', { name: 'test-saturation' })).toBeInTheDocument();
+    expect(getByRole('slider', { name: 'test-hue' })).toBeInTheDocument();
+    expect(getByRole('slider', { name: 'test-alpha' })).toBeInTheDocument();
+  });
 });
