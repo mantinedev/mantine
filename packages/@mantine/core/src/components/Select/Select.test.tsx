@@ -3,6 +3,7 @@ import {
   externalInputFill,
   inputDefaultProps,
   inputStylesApiSelectors,
+  inputWrapperQueries,
   render,
   screen,
   tests,
@@ -566,6 +567,38 @@ describe('@mantine/core/Select', () => {
     );
     expect(screen.getByRole('listbox')).toHaveAttribute('aria-labelledby', 'custom-label-id');
     expect(screen.getByRole('listbox')).toHaveAccessibleName('Test label');
+  });
+
+  it('keeps the error element mounted when a validation message is cleared', () => {
+    const props = {
+      label: 'Bank',
+      data: [{ value: '1', label: 'Bank A' }],
+    } as const;
+
+    const { container, rerender } = render(<Select {...props} />);
+    const errorElement = inputWrapperQueries.getError(container);
+    expect(errorElement).toHaveAttribute('data-empty');
+    expect(errorElement).toHaveAttribute('aria-live', 'polite');
+
+    rerender(
+      <>
+        <Select {...props} error="Required field" />
+      </>
+    );
+
+    expect(inputWrapperQueries.getError(container)).toBe(errorElement);
+    expect(errorElement).toHaveTextContent('Required field');
+    expect(errorElement).not.toHaveAttribute('data-empty');
+
+    rerender(
+      <>
+        <Select {...props} error={null} />
+      </>
+    );
+
+    expect(inputWrapperQueries.getError(container)).toBe(errorElement);
+    expect(errorElement).toBeEmptyDOMElement();
+    expect(errorElement).toHaveAttribute('data-empty');
   });
 
   it('does not reference label in aria-labelledby when label is excluded from inputWrapperOrder', () => {
