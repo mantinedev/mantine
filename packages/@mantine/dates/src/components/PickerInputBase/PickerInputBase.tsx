@@ -17,7 +17,7 @@ import {
   StylesApiProps,
   useInputProps,
 } from '@mantine/core';
-import { useDisclosure } from '@mantine/hooks';
+import { useDisclosure, useId } from '@mantine/hooks';
 import { DatePickerType } from '../../types';
 import { DateFormatter } from '../../utils';
 import { HiddenDatesInput, HiddenDatesInputValue } from '../HiddenDatesInput';
@@ -129,6 +129,8 @@ export const PickerInputBase = factory<PickerInputBaseFactory>((_props) => {
     ...others
   } = useInputProps('PickerInputBase', { size: 'sm' }, _props);
 
+  const _id = useId(inputProps.id);
+
   const clearButton = (
     <Input.ClearButton onClick={onClear} unstyled={unstyled} {...clearButtonProps} />
   );
@@ -158,8 +160,9 @@ export const PickerInputBase = factory<PickerInputBaseFactory>((_props) => {
         </Modal>
       )}
 
-      <Input.Wrapper {...wrapperProps}>
+      <Input.Wrapper {...wrapperProps} id={_id}>
         <Popover
+          id={_id}
           position="bottom-start"
           opened={dropdownOpened}
           trapFocus
