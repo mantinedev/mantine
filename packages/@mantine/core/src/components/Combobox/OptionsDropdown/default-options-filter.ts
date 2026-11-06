@@ -24,14 +24,15 @@ export function defaultOptionsFilter({
     }
 
     if (isOptionsGroup(item)) {
-      result.push({
-        group: item.group,
-        items: defaultOptionsFilter({
-          options: item.items,
-          search,
-          limit: limit - result.length,
-        }) as ComboboxItem[],
-      });
+      const filteredItems = defaultOptionsFilter({
+        options: item.items,
+        search,
+        limit: limit - result.length,
+      }) as ComboboxItem[];
+
+      if (filteredItems.length > 0) {
+        result.push({ group: item.group, items: filteredItems });
+      }
     }
 
     if (!isOptionsGroup(item)) {
