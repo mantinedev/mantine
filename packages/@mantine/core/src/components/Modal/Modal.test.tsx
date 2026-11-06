@@ -79,6 +79,22 @@ describe('@mantine/core/Modal', () => {
     expect(container.querySelector('.mantine-Modal-title')).toHaveTextContent('test-title');
   });
 
+  it('does not treat the floating portal host as modal body content', () => {
+    const { container } = render(
+      <Modal {...defaultProps} title={null} withCloseButton={false}>
+        <span>modal-content</span>
+      </Modal>
+    );
+    const body = container.querySelector('.mantine-Modal-body');
+    const portal = container.querySelector('[data-mantine-modal-floating-portal]');
+
+    expect(body).toHaveTextContent('modal-content');
+    expect(body?.parentElement?.childElementCount).toBe(1);
+    expect(portal).toBeInTheDocument();
+    expect(body?.parentElement?.contains(portal)).toBe(false);
+    expect(container.querySelector('[role="dialog"]')?.contains(portal)).toBe(true);
+  });
+
   it('exposes compound components', () => {
     expect(Modal.Root).toBe(ModalRoot);
     expect(Modal.Overlay).toBe(ModalOverlay);

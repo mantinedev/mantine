@@ -54,3 +54,13 @@
     padding-top: 0;
   }
 }
+
+.floatingContent {
+  display: contents;
+}
+
+.floatingPortal {
+  & > * {
+    pointer-events: auto;
+  }
+}
