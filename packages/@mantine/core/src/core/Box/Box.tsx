@@ -99,6 +99,9 @@ function _Box({
       ? hashStyleProps(parsedStyleProps.styles, parsedStyleProps.media)
       : randomClassName;
 
+  const hasModifierClasses =
+    parsedStyleProps.hasResponsiveStyles || lightHidden || darkHidden || hiddenFrom || visibleFrom;
+
   const props = {
     ref,
     style: getBoxStyle({
@@ -107,13 +110,15 @@ function _Box({
       vars: __vars,
       styleProps: parsedStyleProps.inlineStyles,
     }),
-    className: cx(className, transformedSx, {
-      [responsiveClassName]: parsedStyleProps.hasResponsiveStyles,
-      'mantine-light-hidden': lightHidden,
-      'mantine-dark-hidden': darkHidden,
-      [`mantine-hidden-from-${hiddenFrom}`]: hiddenFrom,
-      [`mantine-visible-from-${visibleFrom}`]: visibleFrom,
-    }),
+    className: hasModifierClasses
+      ? cx(className, transformedSx, {
+          [responsiveClassName]: parsedStyleProps.hasResponsiveStyles,
+          'mantine-light-hidden': lightHidden,
+          'mantine-dark-hidden': darkHidden,
+          [`mantine-hidden-from-${hiddenFrom}`]: hiddenFrom,
+          [`mantine-visible-from-${visibleFrom}`]: visibleFrom,
+        })
+      : cx(className, transformedSx),
     'data-variant': variant,
     'data-size': isNumberLike(size) ? undefined : size || undefined,
     size: __size,

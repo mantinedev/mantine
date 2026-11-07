@@ -51,4 +51,31 @@ describe('@mantine/core/Box', () => {
     expect(screen.getByText('test')).toHaveAttribute('data-test-2', 'test-2');
     expect(screen.getByText('test')).not.toHaveAttribute('data-test-3');
   });
+
+  it('applies specific style props after shorthand ones regardless of prop order', () => {
+    render(
+      <Box mt="xl" m="xs">
+        test
+      </Box>
+    );
+    expect(screen.getByText('test').style.marginTop).toBe('var(--mantine-spacing-xl)');
+  });
+
+  it('merges className with visibility classes', () => {
+    const { rerender } = render(<Box className="custom">test</Box>);
+    expect(screen.getByText('test')).toHaveAttribute('class', 'custom');
+
+    rerender(
+      <>
+        <Box className="custom" hiddenFrom="sm" lightHidden>
+          test
+        </Box>
+      </>
+    );
+    expect(screen.getByText('test')).toHaveClass(
+      'custom',
+      'mantine-hidden-from-sm',
+      'mantine-light-hidden'
+    );
+  });
 });

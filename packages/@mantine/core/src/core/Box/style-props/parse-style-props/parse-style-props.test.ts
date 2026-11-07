@@ -155,4 +155,15 @@ describe('@mantine/core/Box/parse-style-props', () => {
       media: [],
     });
   });
+
+  it('returns empty result when there are no style props', () => {
+    expect(
+      parseStyleProps({ data: STYLE_PROPS_DATA, styleProps: {}, theme: DEFAULT_THEME })
+    ).toStrictEqual({
+      hasResponsiveStyles: false,
+      inlineStyles: {},
+      styles: {},
+      media: [],
+    });
+  });
 });

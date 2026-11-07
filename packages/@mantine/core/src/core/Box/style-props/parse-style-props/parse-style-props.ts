@@ -65,8 +65,14 @@ export function parseStyleProps({
   data,
   theme,
 }: ParseStylePropsOptions): SortMediaQueriesResult {
+  const stylePropsKeys = keys(styleProps);
+
+  if (stylePropsKeys.length === 0) {
+    return { hasResponsiveStyles: false, styles: {}, inlineStyles: {}, media: [] };
+  }
+
   return sortMediaQueries(
-    keys(styleProps).reduce<{
+    stylePropsKeys.reduce<{
       hasResponsiveStyles: boolean;
       inlineStyles: Record<string, unknown>;
       styles: Record<string, unknown>;
