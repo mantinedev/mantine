@@ -41,7 +41,7 @@
   text-transform: uppercase;
   font-weight: var(--mantine-font-weight-bold);
   letter-spacing: 0.25px;
-  cursor: default;
+  cursor: inherit;
   text-overflow: ellipsis;
   overflow: hidden;
   color: var(--badge-color);
