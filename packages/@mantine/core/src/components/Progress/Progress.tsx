@@ -24,13 +24,13 @@ export interface ProgressProps extends __ProgressRootProps, StylesApiProps<Progr
   value: number;
 
   /** Key of `theme.colors` or any valid CSS value @default theme.primaryColor */
-  color?: MantineColor;
+  color?: MantineColor | undefined;
 
   /** If set, the section has stripes @default false */
-  striped?: boolean;
+  striped?: boolean | undefined;
 
   /** If set, the sections stripes are animated (automatically enables striped) @default false */
-  animated?: boolean;
+  animated?: boolean | undefined;
 }
 
 export type ProgressFactory = Factory<{

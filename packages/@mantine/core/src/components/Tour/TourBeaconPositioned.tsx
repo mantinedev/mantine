@@ -9,11 +9,11 @@ interface TourBeaconPositionedProps {
   target: TourTarget;
   onClick: () => void;
   ariaLabel: string;
-  className?: string;
-  style?: React.CSSProperties;
-  pulseStyles?: Record<string, unknown>;
-  withInitialFocus?: boolean;
-  onInitialFocus?: () => void;
+  className?: string | undefined;
+  style?: React.CSSProperties | undefined;
+  pulseStyles?: Record<string, unknown> | undefined;
+  withInitialFocus?: boolean | undefined;
+  onInitialFocus?: (() => void) | undefined;
 }
 
 export function TourBeaconPositioned({

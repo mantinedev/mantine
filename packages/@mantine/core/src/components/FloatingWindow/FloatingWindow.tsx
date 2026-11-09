@@ -35,28 +35,28 @@ export interface FloatingWindowProps
     StylesApiProps<FloatingWindowFactory>,
     ElementProps<'div', keyof UseFloatingWindowOptions> {
   /** Assigns ref to set position programmatically */
-  setPositionRef?: React.RefObject<SetFloatingWindowPosition | null>;
+  setPositionRef?: React.RefObject<SetFloatingWindowPosition | null> | undefined;
 
   /** Determines whether the window should be rendered inside `Portal` @default true */
-  withinPortal?: boolean;
+  withinPortal?: boolean | undefined;
 
   /** Props passed down to `Portal` component */
-  portalProps?: Omit<PortalProps, 'children'>;
+  portalProps?: Omit<PortalProps, 'children'> | undefined;
 
   /** `z-index` of the root element @default 400 */
   zIndex?: React.CSSProperties['zIndex'];
 
   /** Dimensions configuration for resizable floating window */
-  dimensions?: FloatingWindowDimensions;
+  dimensions?: FloatingWindowDimensions | undefined;
 
   /** Called when the window is resized with `FloatingWindow.ResizeHandle` */
-  onSizeChange?: (size: FloatingWindowSize) => void;
+  onSizeChange?: ((size: FloatingWindowSize) => void) | undefined;
 
   /** Called when the resize with `FloatingWindow.ResizeHandle` starts. Not called for keyboard resize. */
-  onResizeStart?: () => void;
+  onResizeStart?: (() => void) | undefined;
 
   /** Called when the resize with `FloatingWindow.ResizeHandle` stops. Not called for keyboard resize. */
-  onResizeEnd?: () => void;
+  onResizeEnd?: (() => void) | undefined;
 }
 
 export type FloatingWindowFactory = Factory<{

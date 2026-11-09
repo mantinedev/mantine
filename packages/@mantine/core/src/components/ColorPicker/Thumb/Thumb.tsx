@@ -1,7 +1,7 @@
 import { Box } from '../../../core';
 
 export interface ThumbProps extends React.ComponentProps<'div'> {
-  variant?: string;
+  variant?: string | undefined;
   position: { x: number; y: number };
 }
 

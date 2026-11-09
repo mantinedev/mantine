@@ -24,19 +24,19 @@ export type DividerCssVariables = {
 export interface DividerProps
   extends BoxProps, StylesApiProps<DividerFactory>, ElementProps<'div'> {
   /** Key of `theme.colors` or any valid CSS color value */
-  color?: MantineColor;
+  color?: MantineColor | undefined;
 
   /** Controls width/height (depends on orientation) @default 'xs' */
-  size?: MantineSize | number | (string & {});
+  size?: MantineSize | number | (string & {}) | undefined;
 
   /** Divider label, visible only with `orientation="horizontal"` */
   label?: React.ReactNode;
 
   /** Label position @default 'center' */
-  labelPosition?: 'left' | 'center' | 'right';
+  labelPosition?: 'left' | 'center' | 'right' | undefined;
 
   /** Divider orientation @default 'horizontal' */
-  orientation?: 'horizontal' | 'vertical';
+  orientation?: 'horizontal' | 'vertical' | undefined;
 }
 
 export type DividerFactory = Factory<{

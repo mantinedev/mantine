@@ -32,31 +32,31 @@ export type ToggleCssVariables = {
 export interface ToggleProps
   extends BoxProps, StylesApiProps<ToggleFactory>, ElementProps<'button'> {
   /** Controlled active state */
-  active?: boolean;
+  active?: boolean | undefined;
 
   /** Uncontrolled default active state */
-  defaultActive?: boolean;
+  defaultActive?: boolean | undefined;
 
   /** Called when active state changes */
-  onActiveChange?: (active: boolean) => void;
+  onActiveChange?: ((active: boolean) => void) | undefined;
 
   /** If set, the toggle is disabled */
-  disabled?: boolean;
+  disabled?: boolean | undefined;
 
   /** Controls toggle height and min-width, `'md'` by default */
-  size?: MantineSize | (string & {});
+  size?: MantineSize | (string & {}) | undefined;
 
   /** Key of `theme.radius` or any valid CSS value to set `border-radius`, `theme.defaultRadius` by default */
-  radius?: MantineRadius;
+  radius?: MantineRadius | undefined;
 
   /** If set, the toggle width adjusts to content instead of being square, `false` by default */
-  autoWidth?: boolean;
+  autoWidth?: boolean | undefined;
 
   /** Key of `theme.colors` or any valid CSS color, `theme.primaryColor` by default */
-  color?: MantineColor;
+  color?: MantineColor | undefined;
 
   /** Determines whether icon color with filled variant should be changed based on the given `color` prop */
-  autoContrast?: boolean;
+  autoContrast?: boolean | undefined;
 }
 
 export type ToggleFactory = PolymorphicFactory<{

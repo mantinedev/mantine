@@ -33,31 +33,31 @@ export interface ListProps
   children?: React.ReactNode;
 
   /** List type @default 'unordered' */
-  type?: 'ordered' | 'unordered';
+  type?: 'ordered' | 'unordered' | undefined;
 
   /** Adds extra horizontal padding to the list, useful for nested lists @default false */
-  withPadding?: boolean;
+  withPadding?: boolean | undefined;
 
   /** Controls `font-size` and `line-height` @default 'md' */
-  size?: MantineSize;
+  size?: MantineSize | undefined;
 
   /** Icon to replace default list markers. Applied to all items unless overridden on individual List.Item components */
   icon?: React.ReactNode;
 
   /** Key of `theme.spacing` or any valid CSS value to set spacing between items @default 0 */
-  spacing?: MantineSpacing;
+  spacing?: MantineSpacing | undefined;
 
   /** Vertically centers list items with their icons @default false */
-  center?: boolean;
+  center?: boolean | undefined;
 
   /** Controls CSS `list-style-type` property. Overrides the default list marker style based on list type */
   listStyleType?: React.CSSProperties['listStyleType'];
 
   /** Starting value for ordered list numbering (only works with type="ordered") */
-  start?: number;
+  start?: number | undefined;
 
   /** Reverses the order of list items (only works with type="ordered") */
-  reversed?: boolean;
+  reversed?: boolean | undefined;
 }
 
 export type ListFactory = Factory<{

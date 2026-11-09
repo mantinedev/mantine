@@ -7,27 +7,27 @@ export interface FactoryPayload {
   props: Record<string, any>;
   ctx?: any;
   ref?: any;
-  stylesNames?: string;
+  stylesNames?: string | undefined;
   vars?: any;
-  variant?: string;
-  staticComponents?: Record<string, any>;
+  variant?: string | undefined;
+  staticComponents?: Record<string, any> | undefined;
 
   // Compound components cannot have classNames, styles and vars on MantineProvider
-  compound?: boolean;
+  compound?: boolean | undefined;
 
   // Component signature, used only for generic components
   signature?: any;
 }
 
 export interface ExtendCompoundComponent<Payload extends FactoryPayload> {
-  defaultProps?: Partial<Payload['props']> & DataAttributes;
+  defaultProps?: (Partial<Payload['props']> & DataAttributes) | undefined;
 }
 
 export interface ExtendsRootComponent<Payload extends FactoryPayload> {
-  defaultProps?: Partial<Payload['props']> & DataAttributes & { component?: any };
-  classNames?: ClassNames<Payload>;
-  styles?: Styles<Payload>;
-  vars?: PartialVarsResolver<Payload>;
+  defaultProps?: (Partial<Payload['props']> & DataAttributes & { component?: any }) | undefined;
+  classNames?: ClassNames<Payload> | undefined;
+  styles?: Styles<Payload> | undefined;
+  vars?: PartialVarsResolver<Payload> | undefined;
 }
 
 export type ExtendComponent<Payload extends FactoryPayload> = Payload['compound'] extends true
@@ -54,7 +54,7 @@ export type MantineComponentStaticProperties<Payload extends FactoryPayload> =
 
 export interface PlaceholderPolymorphicProps {
   component?: any;
-  renderRoot?: (props: Record<string, any>) => React.ReactNode;
+  renderRoot?: ((props: Record<string, any>) => React.ReactNode) | undefined;
 }
 
 export type FactoryComponentWithProps<Payload extends FactoryPayload> = {
@@ -72,7 +72,7 @@ export type MantineComponent<Payload extends FactoryPayload> = React.NamedExotic
   Payload['props'] &
     React.RefAttributes<Payload['ref']> & {
       component?: any;
-      renderRoot?: (props: Record<string, any>) => React.ReactNode;
+      renderRoot?: ((props: Record<string, any>) => React.ReactNode) | undefined;
     }
 > &
   MantineComponentStaticProperties<Payload>;
@@ -82,7 +82,7 @@ export function identity<T>(value: T): T {
 }
 
 export function factory<Payload extends FactoryPayload>(
-  ui: (props: Payload['props'] & { ref?: React.Ref<Payload['ref']> }) => React.ReactNode
+  ui: (props: Payload['props'] & { ref?: React.Ref<Payload['ref']> | undefined }) => React.ReactNode
 ) {
   const Component = ui as any;
   Component.extend = identity as any;
@@ -98,5 +98,5 @@ export function factory<Payload extends FactoryPayload>(
 
 export function genericFactory<Payload extends FactoryPayload>(ui: Payload['signature']) {
   return factory(ui as any) as Payload['signature'] &
-    MantineComponentStaticProperties<Payload> & { displayName?: string };
+    MantineComponentStaticProperties<Payload> & { displayName?: string | undefined };
 }

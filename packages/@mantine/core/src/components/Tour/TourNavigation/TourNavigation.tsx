@@ -5,7 +5,7 @@ import { useTourContext } from '../Tour.context';
 
 export interface TourNavigationProps {
   /** Called when the navigation container is clicked (fires for clicks on any of its buttons and the step counter) */
-  onClick?: React.MouseEventHandler<HTMLDivElement>;
+  onClick?: React.MouseEventHandler<HTMLDivElement> | undefined;
 }
 
 const defaultProps: Partial<TourNavigationProps> = {};

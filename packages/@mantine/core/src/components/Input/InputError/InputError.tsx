@@ -23,11 +23,11 @@ export type InputErrorCssVariables = {
 
 export interface InputErrorProps
   extends BoxProps, StylesApiProps<InputErrorFactory>, ElementProps<'div'> {
-  __staticSelector?: string;
-  __inheritStyles?: boolean;
+  __staticSelector?: string | undefined;
+  __inheritStyles?: boolean | undefined;
 
   /** Controls error `font-size` @default 'sm' */
-  size?: MantineFontSize;
+  size?: MantineFontSize | undefined;
 }
 
 export type InputErrorFactory = Factory<{

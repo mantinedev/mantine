@@ -5,7 +5,7 @@ import { PaginationDots } from '../PaginationDots/PaginationDots';
 
 export interface PaginationItemsProps {
   /** Dots icon component */
-  dotsIcon?: PaginationIcon;
+  dotsIcon?: PaginationIcon | undefined;
 }
 
 export function PaginationItems({ dotsIcon }: PaginationItemsProps) {

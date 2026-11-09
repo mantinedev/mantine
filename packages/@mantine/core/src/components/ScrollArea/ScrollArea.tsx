@@ -36,7 +36,7 @@ export type ScrollAreaCssVariables = {
 export interface ScrollAreaProps
   extends BoxProps, StylesApiProps<ScrollAreaFactory>, ElementProps<'div'> {
   /** Scrollbar size, any valid CSS value for width/height, numbers are converted to rem, default value is 12px (0.75rem) */
-  scrollbarSize?: number | string;
+  scrollbarSize?: number | string | undefined;
 
   /**
    * Defines scrollbars behavior
@@ -47,10 +47,10 @@ export interface ScrollAreaProps
    * - `'never'` – scrollbars always hidden
    * @default 'hover'
    * */
-  type?: 'auto' | 'always' | 'scroll' | 'hover' | 'never';
+  type?: 'auto' | 'always' | 'scroll' | 'hover' | 'never' | undefined;
 
   /** Scroll hide delay in ms, applicable only when type is set to `hover` or `scroll` @default 1000 */
-  scrollHideDelay?: number;
+  scrollHideDelay?: number | undefined;
 
   /**
    * Axis at which scrollbars must be rendered
@@ -60,7 +60,7 @@ export interface ScrollAreaProps
    * - `false` - no scrollbars rendered (content remains scrollable via mouse/touch)
    * @default 'xy'
    */
-  scrollbars?: 'x' | 'y' | 'xy' | false;
+  scrollbars?: 'x' | 'y' | 'xy' | false | undefined;
 
   /**
    * Determines whether scrollbars should be offset with padding on given axis
@@ -70,47 +70,47 @@ export interface ScrollAreaProps
    * - `'present'` - adds padding only when scrollbars are visible (dynamic)
    * @default false
    */
-  offsetScrollbars?: boolean | 'x' | 'y' | 'present';
+  offsetScrollbars?: boolean | 'x' | 'y' | 'present' | undefined;
 
   /** Assigns viewport element (scrollable container) ref */
-  viewportRef?: React.Ref<HTMLDivElement>;
+  viewportRef?: React.Ref<HTMLDivElement> | undefined;
 
   /** Props passed down to the viewport element */
-  viewportProps?: React.ComponentProps<'div'>;
+  viewportProps?: React.ComponentProps<'div'> | undefined;
 
   /** Called with current position (`x` and `y` coordinates) when viewport is scrolled */
-  onScrollPositionChange?: (position: { x: number; y: number }) => void;
+  onScrollPositionChange?: ((position: { x: number; y: number }) => void) | undefined;
 
   /**
    * Called when scrollarea is scrolled to the bottom (within 0.8px tolerance for sub-pixel rendering)
    */
-  onBottomReached?: () => void;
+  onBottomReached?: (() => void) | undefined;
 
   /** Called when scrollarea is scrolled all the way to the top */
-  onTopReached?: () => void;
+  onTopReached?: (() => void) | undefined;
 
   /** Called when scrollarea is scrolled to the left (within 0.8px tolerance for sub-pixel rendering) */
-  onLeftReached?: () => void;
+  onLeftReached?: (() => void) | undefined;
 
   /** Called when scrollarea is scrolled to the right (within 0.8px tolerance for sub-pixel rendering) */
-  onRightReached?: () => void;
+  onRightReached?: (() => void) | undefined;
 
   /** Defines `overscroll-behavior` of the viewport */
   overscrollBehavior?: React.CSSProperties['overscrollBehavior'];
 
   /** Initial scroll position set on mount */
-  startScrollPosition?: { x?: number; y?: number };
+  startScrollPosition?: { x?: number | undefined; y?: number | undefined } | undefined;
 
   /**
    * Pins the vertical scrollbar to a physical side (`left` or `right`) regardless of direction.
    * By default, the scrollbar follows the inline-end edge (right in LTR, left in RTL).
    */
-  verticalScrollbarPosition?: 'left' | 'right';
+  verticalScrollbarPosition?: 'left' | 'right' | undefined;
 }
 
 export interface ScrollAreaAutosizeProps extends ScrollAreaProps {
   /** Called when content overflows due to max-height, making the container scrollable */
-  onOverflowChange?: (overflowing: boolean) => void;
+  onOverflowChange?: ((overflowing: boolean) => void) | undefined;
 }
 
 export type ScrollAreaFactory = Factory<{

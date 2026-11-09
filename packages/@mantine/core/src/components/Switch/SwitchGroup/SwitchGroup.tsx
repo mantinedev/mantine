@@ -15,7 +15,7 @@ export interface SwitchGroupContextValue<Value extends Primitive = string> {
   value: Value[];
   onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
   size: MantineSize | (string & {}) | undefined;
-  isDisabled?: (value: Value) => boolean;
+  isDisabled?: ((value: Value) => boolean) | undefined;
 }
 
 export const SwitchGroupContext = createContext<SwitchGroupContextValue | null>(null);
@@ -30,37 +30,37 @@ export interface SwitchGroupProps<Value extends Primitive = string> extends Omit
   children: React.ReactNode;
 
   /** Controlled component value */
-  value?: Value[];
+  value?: Value[] | undefined;
 
   /** Default value for uncontrolled component */
-  defaultValue?: Value[];
+  defaultValue?: Value[] | undefined;
 
   /** Called when value changes */
-  onChange?: (value: Value[]) => void;
+  onChange?: ((value: Value[]) => void) | undefined;
 
   /** Props passed down to the `Input.Wrapper` */
-  wrapperProps?: React.ComponentProps<'div'> & DataAttributes;
+  wrapperProps?: (React.ComponentProps<'div'> & DataAttributes) | undefined;
 
   /** Controls size of the `Input.Wrapper` @default 'sm' */
-  size?: MantineSize | (string & {});
+  size?: MantineSize | (string & {}) | undefined;
 
   /** If set, value cannot be changed */
-  readOnly?: boolean;
+  readOnly?: boolean | undefined;
 
   /** `name` attribute of the hidden input for uncontrolled forms */
-  name?: string;
+  name?: string | undefined;
 
   /** Props passed down to the hidden input for uncontrolled forms */
-  hiddenInputProps?: React.ComponentProps<'input'> & DataAttributes;
+  hiddenInputProps?: (React.ComponentProps<'input'> & DataAttributes) | undefined;
 
   /** Separator for values in the hidden input for uncontrolled forms @default ',' */
-  hiddenInputValuesSeparator?: string;
+  hiddenInputValuesSeparator?: string | undefined;
 
   /** Maximum number of switches that can be selected. When the limit is reached, unselected switches will be disabled */
-  maxSelectedValues?: number;
+  maxSelectedValues?: number | undefined;
 
   /** Sets `disabled` attribute, prevents interactions */
-  disabled?: boolean;
+  disabled?: boolean | undefined;
 }
 
 export type SwitchGroupFactory = Factory<{

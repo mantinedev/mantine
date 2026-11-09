@@ -57,82 +57,84 @@ export interface TagsInputProps
     StylesApiProps<TagsInputFactory>,
     ElementProps<'input', 'size' | 'value' | 'defaultValue' | 'onChange'> {
   /** Data displayed in the dropdown. Values must be unique. */
-  data?: ComboboxGenericData;
+  data?: ComboboxGenericData | undefined;
 
   /** Controlled component value */
-  value?: string[];
+  value?: string[] | undefined;
 
   /** Uncontrolled component default value */
-  defaultValue?: string[];
+  defaultValue?: string[] | undefined;
 
   /** Called when value changes */
-  onChange?: (value: string[]) => void;
+  onChange?: ((value: string[]) => void) | undefined;
 
   /** Called when tag is removed */
-  onRemove?: (value: string) => void;
+  onRemove?: ((value: string) => void) | undefined;
 
   /** Called when the clear button is clicked */
-  onClear?: () => void;
+  onClear?: (() => void) | undefined;
 
   /** Controlled search value */
-  searchValue?: string;
+  searchValue?: string | undefined;
 
   /** Default search value */
-  defaultSearchValue?: string;
+  defaultSearchValue?: string | undefined;
 
   /** Called when search changes */
-  onSearchChange?: (value: string) => void;
+  onSearchChange?: ((value: string) => void) | undefined;
 
   /** Maximum number of tags @default Infinity */
-  maxTags?: number;
+  maxTags?: number | undefined;
 
   /** Called when user tries to add more tags than maxTags */
-  onMaxTags?: (value: string) => void;
+  onMaxTags?: ((value: string) => void) | undefined;
 
   /** If set, duplicate tags are allowed @default false */
-  allowDuplicates?: boolean;
+  allowDuplicates?: boolean | undefined;
 
   /** Called when user tries to submit a duplicated tag */
-  onDuplicate?: (value: string) => void;
+  onDuplicate?: ((value: string) => void) | undefined;
 
   /** Characters that should trigger tags split, `[',']` by default */
-  splitChars?: string[];
+  splitChars?: string[] | undefined;
 
   /** If set, the clear button is displayed in the right section when the component has value @default false */
-  clearable?: boolean;
+  clearable?: boolean | undefined;
 
   /** Determines how the clear button and rightSection are rendered @default 'both' */
-  clearSectionMode?: ClearSectionMode;
+  clearSectionMode?: ClearSectionMode | undefined;
 
   /** Props passed down to the clear button */
-  clearButtonProps?: InputClearButtonProps;
+  clearButtonProps?: InputClearButtonProps | undefined;
 
   /** Props passed down to the hidden input */
-  hiddenInputProps?: Omit<React.ComponentProps<'input'>, 'value'>;
+  hiddenInputProps?: Omit<React.ComponentProps<'input'>, 'value'> | undefined;
 
   /** Divider used to separate values in the hidden input `value` attribute @default ',' */
-  hiddenInputValuesDivider?: string;
+  hiddenInputValuesDivider?: string | undefined;
 
   /** A function to render content of the option, replaces the default content of the option */
-  renderOption?: (input: ComboboxLikeRenderOptionInput<ComboboxGenericItem>) => React.ReactNode;
+  renderOption?:
+    | ((input: ComboboxLikeRenderOptionInput<ComboboxGenericItem>) => React.ReactNode)
+    | undefined;
 
   /** A function to render content of the pill, replaces the default content of the pill */
-  renderPill?: (props: ComboboxRenderPillInput) => React.ReactNode;
+  renderPill?: ((props: ComboboxRenderPillInput) => React.ReactNode) | undefined;
 
   /** Props passed down to the underlying `ScrollArea` component in the dropdown */
-  scrollAreaProps?: ScrollAreaProps;
+  scrollAreaProps?: ScrollAreaProps | undefined;
 
   /** If set, the value typed in by the user but not submitted is accepted when the input is blurred @default true */
-  acceptValueOnBlur?: boolean;
+  acceptValueOnBlur?: boolean | undefined;
 
   /** Custom function to determine if a tag is duplicate. Accepts tag value and array of current values. By default, checks if the tag exists case-insensitively. */
-  isDuplicate?: (value: string, currentValues: string[]) => boolean;
+  isDuplicate?: ((value: string, currentValues: string[]) => boolean) | undefined;
 
   /** If set, the dropdown opens when the input receives focus @default true */
-  openOnFocus?: boolean;
+  openOnFocus?: boolean | undefined;
 
   /** If set, tags can be reordered by dragging pills. Disabled when `disabled` or `readOnly` is set. @default false */
-  withPillsReorder?: boolean;
+  withPillsReorder?: boolean | undefined;
 }
 
 export type TagsInputFactory = Factory<{

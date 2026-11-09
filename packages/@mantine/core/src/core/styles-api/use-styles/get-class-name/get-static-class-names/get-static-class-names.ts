@@ -2,7 +2,7 @@ interface GetStaticClassNamesInput {
   themeName: string[];
   selector: string;
   classNamesPrefix: string;
-  withStaticClass?: boolean;
+  withStaticClass?: boolean | undefined;
 }
 
 /** Returns static component classes, for example, `.mantine-Input-wrapper` */

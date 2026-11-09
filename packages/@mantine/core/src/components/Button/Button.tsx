@@ -62,13 +62,13 @@ export type ButtonCssVariables = {
 };
 
 export interface ButtonProps extends BoxProps, StylesApiProps<ButtonFactory> {
-  'data-disabled'?: boolean;
+  'data-disabled'?: boolean | undefined;
 
   /** Controls button `height`, `font-size` and horizontal `padding` @default 'sm' */
-  size?: ButtonSize;
+  size?: ButtonSize | undefined;
 
   /** Key of `theme.colors` or any valid CSS color @default theme.primaryColor */
-  color?: MantineColor;
+  color?: MantineColor | undefined;
 
   /** Sets `justify-content` of `inner` element, can be used to change distribution of sections and label @default 'center' */
   justify?: React.CSSProperties['justifyContent'];
@@ -80,28 +80,28 @@ export interface ButtonProps extends BoxProps, StylesApiProps<ButtonFactory> {
   rightSection?: React.ReactNode;
 
   /** Sets `width: 100%` @default false */
-  fullWidth?: boolean;
+  fullWidth?: boolean | undefined;
 
   /** Key of `theme.radius` or any valid CSS value to set `border-radius` @default theme.defaultRadius */
-  radius?: MantineRadius;
+  radius?: MantineRadius | undefined;
 
   /** Gradient configuration used for `variant="gradient"` @default theme.defaultGradient */
-  gradient?: MantineGradient;
+  gradient?: MantineGradient | undefined;
 
   /** Sets `disabled` attribute, applies disabled styles */
-  disabled?: boolean;
+  disabled?: boolean | undefined;
 
   /** Button content */
   children?: React.ReactNode;
 
   /** If set, the `Loader` component is displayed over the button */
-  loading?: boolean;
+  loading?: boolean | undefined;
 
   /** Props added to the `Loader` component (only visible when `loading` prop is set) */
-  loaderProps?: LoaderProps;
+  loaderProps?: LoaderProps | undefined;
 
   /** If set, adjusts text color based on background color for `filled` variant */
-  autoContrast?: boolean;
+  autoContrast?: boolean | undefined;
 }
 
 export type ButtonFactory = PolymorphicFactory<{

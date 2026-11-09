@@ -75,12 +75,12 @@ export type TableCaptionFactory = Factory<{
 }>;
 
 interface TableElementOptions {
-  columnBorder?: true;
-  rowBorder?: true;
-  striped?: true;
-  highlightOnHover?: true;
-  captionSide?: true;
-  stickyHeader?: true;
+  columnBorder?: true | undefined;
+  rowBorder?: true | undefined;
+  striped?: true | undefined;
+  highlightOnHover?: true | undefined;
+  captionSide?: true | undefined;
+  stickyHeader?: true | undefined;
 }
 
 function getDataAttributes(ctx: TableContextValue, options?: TableElementOptions) {

@@ -1,10 +1,10 @@
 interface GetChangeValue {
   value: number;
-  containerWidth?: number;
+  containerWidth?: number | undefined;
   min: number;
   max: number;
   step: number;
-  precision?: number;
+  precision?: number | undefined;
 }
 
 export function getChangeValue({

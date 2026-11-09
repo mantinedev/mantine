@@ -21,7 +21,7 @@ export type SkeletonCssVariables = {
 export interface SkeletonProps
   extends BoxProps, StylesApiProps<SkeletonFactory>, ElementProps<'div'> {
   /** Determines whether Skeleton overlay should be displayed @default true */
-  visible?: boolean;
+  visible?: boolean | undefined;
 
   /** Skeleton `height`, numbers are converted to rem @default auto */
   height?: React.CSSProperties['height'];
@@ -30,13 +30,13 @@ export interface SkeletonProps
   width?: React.CSSProperties['width'];
 
   /** If set, Skeleton `width` and `border-radius` are equal to its `height` @default false */
-  circle?: boolean;
+  circle?: boolean | undefined;
 
   /** Key of `theme.radius` or any valid CSS value to set border-radius. Numbers are converted to rem. @default theme.defaultRadius */
   radius?: React.CSSProperties['borderRadius'];
 
   /** Enables animation @default true */
-  animate?: boolean;
+  animate?: boolean | undefined;
 }
 
 export type SkeletonFactory = Factory<{

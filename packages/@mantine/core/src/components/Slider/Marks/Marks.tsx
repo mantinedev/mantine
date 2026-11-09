@@ -12,7 +12,7 @@ export interface MarksProps {
   offset: number | undefined;
   disabled: boolean | undefined;
   inverted: boolean | undefined;
-  startPointValue?: number;
+  startPointValue?: number | undefined;
 }
 
 export function Marks({

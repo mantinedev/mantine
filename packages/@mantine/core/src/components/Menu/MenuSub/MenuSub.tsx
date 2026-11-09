@@ -31,28 +31,28 @@ export interface MenuSubProps extends Omit<__PopoverProps, 'withinPortal' | 'por
   children: React.ReactNode;
 
   /** Controlled opened state */
-  opened?: boolean;
+  opened?: boolean | undefined;
 
   /** Called with current state when dropdown opens or closes */
-  onChange?: (opened: boolean) => void;
+  onChange?: ((opened: boolean) => void) | undefined;
 
   /** Open delay in ms, applicable when hover trigger is used */
-  openDelay?: number;
+  openDelay?: number | undefined;
 
   /** Close delay in ms, applicable when hover trigger is used */
-  closeDelay?: number;
+  closeDelay?: number | undefined;
 
   /** Dropdown position relative to the target element @default 'right-start' */
-  position?: FloatingPosition;
+  position?: FloatingPosition | undefined;
 
   /** Offset of the dropdown element @default 0 */
-  offset?: number | FloatingAxesOffsets;
+  offset?: number | FloatingAxesOffsets | undefined;
 
   /** Props passed down to the `Transition` component that used to animate dropdown presence, use to configure duration and animation type @default { duration: 0 } */
-  transitionProps?: TransitionOverride;
+  transitionProps?: TransitionOverride | undefined;
 
   /** Determines whether submenu stays open while the cursor moves toward its dropdown. Pass an object to configure safe polygon behavior. @default true */
-  safeAreaPolygon?: boolean | SafePolygonOptions;
+  safeAreaPolygon?: boolean | SafePolygonOptions | undefined;
 }
 
 const defaultProps = {

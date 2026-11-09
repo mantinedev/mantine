@@ -9,10 +9,10 @@ export interface PopoverTargetProps {
   children: React.ReactNode;
 
   /** Key of the prop that should be used to access element ref */
-  refProp?: string;
+  refProp?: string | undefined;
 
   /** Popup accessible type @default 'dialog' */
-  popupType?: string;
+  popupType?: string | undefined;
 }
 
 const defaultProps = {

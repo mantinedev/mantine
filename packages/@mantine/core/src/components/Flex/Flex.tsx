@@ -24,13 +24,13 @@ export type FlexStylesNames = 'root';
 
 export interface FlexProps extends BoxProps, StylesApiProps<FlexFactory>, ElementProps<'div'> {
   /** `gap` CSS property */
-  gap?: StyleProp<MantineSpacing>;
+  gap?: StyleProp<MantineSpacing> | undefined;
 
   /** `row-gap` CSS property */
-  rowGap?: StyleProp<MantineSpacing>;
+  rowGap?: StyleProp<MantineSpacing> | undefined;
 
   /** `column-gap` CSS property */
-  columnGap?: StyleProp<MantineSpacing>;
+  columnGap?: StyleProp<MantineSpacing> | undefined;
 
   /** `align-items` CSS property */
   align?: StyleProp<React.CSSProperties['alignItems']>;

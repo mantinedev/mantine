@@ -16,16 +16,16 @@ export type AccordionPanelStylesNames = 'panel' | 'content';
 export interface AccordionPanelProps
   extends BoxProps, CompoundStylesApiProps<AccordionPanelFactory>, ElementProps<'div'> {
   /** Called when the panel animation completes */
-  onTransitionEnd?: () => void;
+  onTransitionEnd?: (() => void) | undefined;
 
   /** Called when the panel animation starts */
-  onTransitionStart?: () => void;
+  onTransitionStart?: (() => void) | undefined;
 
   /** If set, overrides the Accordion-level `keepMounted` value. When undefined (default), uses Accordion's `keepMounted` setting. */
-  keepMounted?: boolean;
+  keepMounted?: boolean | undefined;
 
   /** If set, overrides the Accordion-level `keepMountedMode` value. When undefined (default), uses Accordion's `keepMountedMode` setting. */
-  keepMountedMode?: 'activity' | 'display-none';
+  keepMountedMode?: 'activity' | 'display-none' | undefined;
 }
 
 export type AccordionPanelFactory = Factory<{

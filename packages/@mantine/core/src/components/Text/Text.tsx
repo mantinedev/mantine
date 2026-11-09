@@ -37,31 +37,31 @@ export type TextCssVariables = {
 };
 
 export interface TextProps extends BoxProps, StylesApiProps<TextFactory> {
-  __staticSelector?: string;
+  __staticSelector?: string | undefined;
 
   /** Controls `font-size` and `line-height` @default 'md' */
-  size?: MantineFontSize | MantineLineHeight;
+  size?: MantineFontSize | MantineLineHeight | undefined;
 
   /** Number of lines after which Text will be truncated */
-  lineClamp?: number;
+  lineClamp?: number | undefined;
 
   /** Side on which Text must be truncated, if `true`, text is truncated from the start */
-  truncate?: TextTruncate;
+  truncate?: TextTruncate | undefined;
 
   /** Sets `line-height` to 1 for centering @default false */
-  inline?: boolean;
+  inline?: boolean | undefined;
 
   /** Determines whether font properties should be inherited from the parent @default false */
-  inherit?: boolean;
+  inherit?: boolean | undefined;
 
   /** Gradient configuration, ignored when `variant` is not `gradient` @default theme.defaultGradient */
-  gradient?: MantineGradient;
+  gradient?: MantineGradient | undefined;
 
   /** Shorthand for `component="span"` */
-  span?: boolean;
+  span?: boolean | undefined;
 
   /** Controls `text-wrap` CSS property */
-  textWrap?: 'wrap' | 'nowrap' | 'balance' | 'pretty' | 'stable';
+  textWrap?: 'wrap' | 'nowrap' | 'balance' | 'pretty' | 'stable' | undefined;
 }
 
 export type TextFactory = PolymorphicFactory<{

@@ -60,10 +60,10 @@ export type TableCssVariables = {
 };
 
 export interface TableData {
-  head?: React.ReactNode[];
-  body?: React.ReactNode[][];
-  foot?: React.ReactNode[];
-  caption?: string;
+  head?: React.ReactNode[] | undefined;
+  body?: React.ReactNode[][] | undefined;
+  foot?: React.ReactNode[] | undefined;
+  caption?: string | undefined;
 }
 
 export interface TableProps extends BoxProps, StylesApiProps<TableFactory>, ElementProps<'table'> {
@@ -71,49 +71,49 @@ export interface TableProps extends BoxProps, StylesApiProps<TableFactory>, Elem
   layout?: React.CSSProperties['tableLayout'];
 
   /** Side of the `Table.Caption` @default bottom */
-  captionSide?: 'top' | 'bottom';
+  captionSide?: 'top' | 'bottom' | undefined;
 
   /** Color of table borders, key of `theme.colors` or any valid CSS color */
-  borderColor?: MantineColor;
+  borderColor?: MantineColor | undefined;
 
   /** If set, the table has the outer border @default false */
-  withTableBorder?: boolean;
+  withTableBorder?: boolean | undefined;
 
   /** If set, the table has borders between columns @default false */
-  withColumnBorders?: boolean;
+  withColumnBorders?: boolean | undefined;
 
   /** If set, the table has borders between rows @default true */
-  withRowBorders?: boolean;
+  withRowBorders?: boolean | undefined;
 
   /** Horizontal cells spacing, key of `theme.spacing` or any valid CSS value for padding, numbers are converted to rem @default xs */
-  horizontalSpacing?: MantineSpacing;
+  horizontalSpacing?: MantineSpacing | undefined;
 
   /** Vertical cells spacing, key of `theme.spacing` or any valid CSS value for padding, numbers are converted to rem @default xs */
-  verticalSpacing?: MantineSpacing;
+  verticalSpacing?: MantineSpacing | undefined;
 
   /** If set, every odd/even row background changes to `stripedColor`, if set to `true`, then `odd` value will be used @default false  */
-  striped?: boolean | 'odd' | 'even';
+  striped?: boolean | 'odd' | 'even' | undefined;
 
   /** Background color of striped rows, key of `theme.colors` or any valid CSS color */
-  stripedColor?: MantineColor;
+  stripedColor?: MantineColor | undefined;
 
   /** If set, table rows background changes to `highlightOnHoverColor` when hovered @default false */
-  highlightOnHover?: boolean;
+  highlightOnHover?: boolean | undefined;
 
   /** Background color of table rows when hovered, key of `theme.colors` or any valid CSS color */
-  highlightOnHoverColor?: MantineColor;
+  highlightOnHoverColor?: MantineColor | undefined;
 
   /** Data used to generate table, ignored if `children` prop is set */
-  data?: TableData;
+  data?: TableData | undefined;
 
   /** If set, `Table.Thead` is sticky @default false */
-  stickyHeader?: boolean;
+  stickyHeader?: boolean | undefined;
 
   /** Offset from top at which `Table.Thead` should become sticky @default 0 */
-  stickyHeaderOffset?: number | string;
+  stickyHeaderOffset?: number | string | undefined;
 
   /** If set, `font-variant-numeric: tabular-nums` style is applied @default false */
-  tabularNums?: boolean;
+  tabularNums?: boolean | undefined;
 }
 
 export type TableFactory = Factory<{

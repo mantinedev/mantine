@@ -23,11 +23,11 @@ export type InputDescriptionCssVariables = {
 
 export interface InputDescriptionProps
   extends BoxProps, StylesApiProps<InputDescriptionFactory>, ElementProps<'div'> {
-  __staticSelector?: string;
-  __inheritStyles?: boolean;
+  __staticSelector?: string | undefined;
+  __inheritStyles?: boolean | undefined;
 
   /** Controls description `font-size` @default 'sm' */
-  size?: MantineFontSize;
+  size?: MantineFontSize | undefined;
 }
 
 export type InputDescriptionFactory = Factory<{

@@ -14,13 +14,13 @@ export interface ResizeSectionConfig {
   offsetVariable: string;
 
   /** CSS variable that controls the grid track size in `mode="static"` */
-  gridWidthVariable?: string;
+  gridWidthVariable?: string | undefined;
 
   /** CSS variable that controls whether the resize handle is displayed */
   handleDisplayVariable: string;
 
   /** CSS variable that exposes a safe-area inset baked into the section's measured size, if any */
-  safeAreaVariable?: string;
+  safeAreaVariable?: string | undefined;
 
   /** `1` when moving towards the end of the axis grows the section, `-1` otherwise */
   sign: 1 | -1;

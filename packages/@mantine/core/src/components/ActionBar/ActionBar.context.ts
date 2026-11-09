@@ -2,7 +2,7 @@ import { createSafeContext, GetStylesApi } from '../../core';
 import type { ActionBarFactory } from './ActionBar';
 
 export interface ActionBarContextValue {
-  onClose?: () => void;
+  onClose?: (() => void) | undefined;
   getStyles: GetStylesApi<ActionBarFactory>;
   unstyled: boolean | undefined;
 }

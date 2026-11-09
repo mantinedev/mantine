@@ -20,10 +20,10 @@ export function useMantineTheme() {
 
 export interface MantineThemeProviderProps {
   /** Determines whether theme should be inherited from parent MantineProvider @default true */
-  inherit?: boolean;
+  inherit?: boolean | undefined;
 
   /** Theme override object */
-  theme?: MantineThemeOverride;
+  theme?: MantineThemeOverride | undefined;
 
   /** Your application or part of the application that requires different theme */
   children?: React.ReactNode;

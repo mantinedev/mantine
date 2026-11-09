@@ -33,10 +33,10 @@ export type AlertCssVariables = {
 export interface AlertProps
   extends BoxProps, StylesApiProps<AlertFactory>, ElementProps<'div', 'title'> {
   /** Key of `theme.radius` or any valid CSS value to set border-radius @default theme.defaultRadius */
-  radius?: MantineRadius;
+  radius?: MantineRadius | undefined;
 
   /** Key of `theme.colors` or any valid CSS color @default theme.primaryColor  */
-  color?: MantineColor;
+  color?: MantineColor | undefined;
 
   /** Alert title */
   title?: React.ReactNode;
@@ -45,16 +45,16 @@ export interface AlertProps
   icon?: React.ReactNode;
 
   /** Determines whether close button should be displayed @default false */
-  withCloseButton?: boolean;
+  withCloseButton?: boolean | undefined;
 
   /** Called when the close button is clicked */
-  onClose?: () => void;
+  onClose?: (() => void) | undefined;
 
   /** Close button `aria-label` */
-  closeButtonLabel?: string;
+  closeButtonLabel?: string | undefined;
 
   /** If set, adjusts text color based on background color for `filled` variant */
-  autoContrast?: boolean;
+  autoContrast?: boolean | undefined;
 }
 
 export type AlertFactory = Factory<{

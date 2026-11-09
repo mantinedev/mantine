@@ -3,9 +3,9 @@ import { __BaseInputProps } from './Input';
 
 interface BaseProps
   extends __BaseInputProps, BoxProps, StylesApiProps<{ props: any; stylesNames: string }> {
-  __staticSelector?: string;
-  __stylesApiProps?: Record<string, any>;
-  id?: string;
+  __staticSelector?: string | undefined;
+  __stylesApiProps?: Record<string, any> | undefined;
+  id?: string | undefined;
 }
 
 export function useInputProps<T extends BaseProps, U extends Partial<T> | null>(

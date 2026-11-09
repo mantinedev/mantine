@@ -2,22 +2,22 @@ import { createSafeContext } from '../../core';
 
 export interface FloatingWindowDimensions {
   /** Initial width of the floating window in px */
-  initialWidth?: number;
+  initialWidth?: number | undefined;
 
   /** Minimum width of the floating window in px */
-  minWidth?: number;
+  minWidth?: number | undefined;
 
   /** Maximum width of the floating window in px */
-  maxWidth?: number;
+  maxWidth?: number | undefined;
 
   /** Initial height of the floating window in px */
-  initialHeight?: number;
+  initialHeight?: number | undefined;
 
   /** Minimum height of the floating window in px */
-  minHeight?: number;
+  minHeight?: number | undefined;
 
   /** Maximum height of the floating window in px */
-  maxHeight?: number;
+  maxHeight?: number | undefined;
 }
 
 export interface FloatingWindowSize {

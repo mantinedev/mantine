@@ -40,94 +40,94 @@ import classes from '../Slider.module.css';
 export interface SliderProps
   extends BoxProps, StylesApiProps<SliderFactory>, ElementProps<'div', 'onChange'> {
   /** Key of `theme.colors` or any valid CSS color, controls color of track and thumb @default theme.primaryColor */
-  color?: MantineColor;
+  color?: MantineColor | undefined;
 
   /** Key of `theme.radius` or any valid CSS value to set `border-radius`, numbers are converted to rem @default 'xl' */
-  radius?: MantineRadius;
+  radius?: MantineRadius | undefined;
 
   /** Controls size of the track @default 'md' */
-  size?: MantineSize | (string & {}) | number;
+  size?: MantineSize | (string & {}) | number | undefined;
 
   /** Minimal possible value @default 0 */
-  min?: number;
+  min?: number | undefined;
 
   /** Maximum possible value @default 100 */
-  max?: number;
+  max?: number | undefined;
 
   /** Domain of the slider, defines the selectable value range independently of min/max. Useful when you want to display a wider track range (min/max) but restrict actual selection to a subset (domain). @default [min, max] */
-  domain?: [number, number];
+  domain?: [number, number] | undefined;
 
   /** Number by which value will be incremented/decremented with thumb drag and arrows @default 1 */
-  step?: number;
+  step?: number | undefined;
 
   /** Number of significant digits after the decimal point */
-  precision?: number;
+  precision?: number | undefined;
 
   /** Controlled component value */
-  value?: number;
+  value?: number | undefined;
 
   /** Uncontrolled component default value */
-  defaultValue?: number;
+  defaultValue?: number | undefined;
 
   /** Called when value changes */
-  onChange?: (value: number) => void;
+  onChange?: ((value: number) => void) | undefined;
 
   /** Called when user stops dragging slider or changes value with arrows */
-  onChangeEnd?: (value: number) => void;
+  onChangeEnd?: ((value: number) => void) | undefined;
 
   /** Hidden input name, use with uncontrolled component */
-  name?: string;
+  name?: string | undefined;
 
   /** Marks displayed on the track */
-  marks?: SliderMark[];
+  marks?: SliderMark[] | undefined;
 
   /** Function to generate label or any react node to render instead, set to null to disable label */
   label?: React.ReactNode | ((value: number) => React.ReactNode);
 
   /** Props passed down to the `Transition` component @default { transition: 'fade', duration: 0 } */
-  labelTransitionProps?: TransitionOverride;
+  labelTransitionProps?: TransitionOverride | undefined;
 
   /** Determines whether the label should be visible when the slider is not being dragged or hovered @default false */
-  labelAlwaysOn?: boolean;
+  labelAlwaysOn?: boolean | undefined;
 
   /** Thumb `aria-label` */
-  thumbLabel?: string;
+  thumbLabel?: string | undefined;
 
   /** Thumb `aria-valuetext`. When a function is provided, it receives the scaled value. */
-  thumbValueText?: string | ((value: number) => string);
+  thumbValueText?: string | ((value: number) => string) | undefined;
 
   /** Determines whether the label should be displayed when the slider is hovered @default true */
-  showLabelOnHover?: boolean;
+  showLabelOnHover?: boolean | undefined;
 
   /** Content rendered inside thumb */
   thumbChildren?: React.ReactNode;
 
   /** Disables slider */
-  disabled?: boolean;
+  disabled?: boolean | undefined;
 
   /** Thumb `width` and `height`, by default value is computed based on `size` prop */
-  thumbSize?: number | string;
+  thumbSize?: number | string | undefined;
 
   /** A transformation function to change the scale of the slider */
-  scale?: (value: number) => number;
+  scale?: ((value: number) => number) | undefined;
 
   /** Determines whether track value representation should be inverted @default false */
-  inverted?: boolean;
+  inverted?: boolean | undefined;
 
   /** Value at which the filled bar starts. When set, the bar extends from this point toward the current value. Ignored when `inverted` is set. */
-  startPointValue?: number;
+  startPointValue?: number | undefined;
 
   /** Slider orientation @default 'horizontal' */
-  orientation?: 'horizontal' | 'vertical';
+  orientation?: 'horizontal' | 'vertical' | undefined;
 
   /** Props passed down to the hidden input */
-  hiddenInputProps?: React.ComponentProps<'input'>;
+  hiddenInputProps?: React.ComponentProps<'input'> | undefined;
 
   /** Determines whether the selection should be only allowed from the given marks array @default false */
-  restrictToMarks?: boolean;
+  restrictToMarks?: boolean | undefined;
 
   /** Props passed down to thumb element */
-  thumbProps?: React.ComponentProps<'div'>;
+  thumbProps?: React.ComponentProps<'div'> | undefined;
 }
 
 export type SliderFactory = Factory<{

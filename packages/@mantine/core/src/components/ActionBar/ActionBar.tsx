@@ -39,25 +39,25 @@ export interface ActionBarProps
   opened: boolean;
 
   /** Called when close button is clicked or Escape is pressed */
-  onClose?: () => void;
+  onClose?: (() => void) | undefined;
 
   /** Props passed down to the `Transition` component, `{ transition: 'pop', duration: 200 }` by default */
-  transitionProps?: TransitionOverride;
+  transitionProps?: TransitionOverride | undefined;
 
   /** Key of `theme.shadows` or any valid CSS `box-shadow` value */
-  shadow?: MantineShadow;
+  shadow?: MantineShadow | undefined;
 
   /** Key of `theme.radius` or any valid CSS value to set `border-radius` */
-  radius?: MantineRadius;
+  radius?: MantineRadius | undefined;
 
   /** Determines whether the action bar should be closed when `Escape` key is pressed, `false` by default */
-  closeOnEscape?: boolean;
+  closeOnEscape?: boolean | undefined;
 
   /** `aria-label` of the actions group, `'Actions'` by default */
-  'aria-label'?: string;
+  'aria-label'?: string | undefined;
 
   /** If set, the action bar is kept in the DOM when closed. React `Activity` is used to preserve its state while it is hidden, `false` by default */
-  keepMounted?: boolean;
+  keepMounted?: boolean | undefined;
 
   children: React.ReactNode;
 }

@@ -63,16 +63,16 @@ export type EmptyStateCssVariables = {
 export interface EmptyStateProps
   extends BoxProps, StylesApiProps<EmptyStateFactory>, ElementProps<'div', 'title'> {
   /** Controls indicator size, gap between elements and font sizes of title and description @default 'md' */
-  size?: MantineSize;
+  size?: MantineSize | undefined;
 
   /** Content alignment. `center` stacks the content in a centered column, `left`/`right` place the indicator on the side with the content next to it @default 'center' */
-  align?: 'left' | 'center' | 'right';
+  align?: 'left' | 'center' | 'right' | undefined;
 
   /** Controls the indicator appearance. `filled` and `light` display a colored circular background behind the icon. If not set, the icon is displayed with dimmed color */
-  variant?: EmptyStateVariant;
+  variant?: EmptyStateVariant | undefined;
 
   /** Key of `theme.colors` or any valid CSS color, used by `filled` and `light` variants @default theme.primaryColor */
-  color?: MantineColor;
+  color?: MantineColor | undefined;
 
   /** Title content, rendered inside `EmptyState.Title` */
   title?: React.ReactNode;
@@ -84,7 +84,7 @@ export interface EmptyStateProps
   icon?: React.ReactNode;
 
   /** If set, a neutral circular background is displayed behind the indicator. Setting `variant` always displays a colored background regardless of this prop @default false */
-  withIndicatorBackground?: boolean;
+  withIndicatorBackground?: boolean | undefined;
 
   /** `EmptyState` compound components, rendered after the shorthand props content */
   children?: React.ReactNode;

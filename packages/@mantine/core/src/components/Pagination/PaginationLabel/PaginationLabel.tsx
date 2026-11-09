@@ -16,7 +16,7 @@ export type PaginationLabelStylesNames = 'label';
 export interface PaginationLabelProps
   extends BoxProps, CompoundStylesApiProps<PaginationLabelFactory>, ElementProps<'div'> {
   /** Function to format the label text */
-  formatLabel?: PaginationFormatLabel;
+  formatLabel?: PaginationFormatLabel | undefined;
 }
 
 export type PaginationLabelFactory = Factory<{

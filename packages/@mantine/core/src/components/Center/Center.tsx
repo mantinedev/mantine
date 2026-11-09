@@ -16,7 +16,7 @@ export interface CenterProps extends BoxProps, StylesApiProps<CenterFactory> {
   children?: React.ReactNode;
 
   /** If set, `inline-flex` is used instead of `flex` */
-  inline?: boolean;
+  inline?: boolean | undefined;
 }
 
 export type CenterFactory = PolymorphicFactory<{

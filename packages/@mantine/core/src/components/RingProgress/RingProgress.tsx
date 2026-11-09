@@ -38,13 +38,13 @@ export interface RingProgressProps
   label?: React.ReactNode;
 
   /** Ring thickness in pixels. Cannot exceed size / 4 and will be automatically clamped if necessary @default 12 */
-  thickness?: number;
+  thickness?: number | undefined;
 
   /** Width and height of the progress ring @default 120 */
-  size?: number;
+  size?: number | undefined;
 
   /** Applies rounded line caps to the start and end of visible sections @default false */
-  roundCaps?: boolean;
+  roundCaps?: boolean | undefined;
 
   /**
    * Array of sections to display in the ring. Each section should have a `value` (0-100),
@@ -53,16 +53,16 @@ export interface RingProgressProps
   sections: RingProgressSection[];
 
   /** Color of the unfilled portion of the ring (background). Defaults to gray-2 in light mode, dark-4 in dark mode */
-  rootColor?: MantineColor;
+  rootColor?: MantineColor | undefined;
 
   /** Transition duration in milliseconds for section value and color changes @default 0 */
-  transitionDuration?: number;
+  transitionDuration?: number | undefined;
 
   /** Gap between sections in degrees. Reduces the visual size of each section @default 0 */
-  sectionGap?: number;
+  sectionGap?: number | undefined;
 
   /** Starting angle in degrees. 0 = right, 90 = bottom, 180 = left, 270 = top @default 270 */
-  startAngle?: number;
+  startAngle?: number | undefined;
 }
 
 export type RingProgressFactory = Factory<{

@@ -20,13 +20,13 @@ export type ColSpan = number | 'auto' | 'content';
 export interface GridColProps
   extends BoxProps, CompoundStylesApiProps<GridColFactory>, ElementProps<'div'> {
   /** Column span @default 12 */
-  span?: StyleProp<ColSpan>;
+  span?: StyleProp<ColSpan> | undefined;
 
   /** Column order, use to reorder columns at different viewport sizes */
-  order?: StyleProp<number>;
+  order?: StyleProp<number> | undefined;
 
   /** Column start offset – number of empty columns before this column */
-  offset?: StyleProp<number>;
+  offset?: StyleProp<number> | undefined;
 
   /** Vertical alignment of the column, controls `align-self` CSS property */
   align?: StyleProp<React.CSSProperties['alignSelf']>;

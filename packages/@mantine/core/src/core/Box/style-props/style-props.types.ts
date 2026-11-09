@@ -10,65 +10,67 @@ export type StyleProp<Value> = Value | Partial<Record<MantineBreakpoint | (strin
 
 export interface MantineStyleProps {
   /** Margin, theme key: theme.spacing */
-  m?: StyleProp<MantineSpacing>;
+  m?: StyleProp<MantineSpacing> | undefined;
   /** MarginBlock, theme key: theme.spacing */
-  my?: StyleProp<MantineSpacing>;
+  my?: StyleProp<MantineSpacing> | undefined;
   /** MarginInline, theme key: theme.spacing */
-  mx?: StyleProp<MantineSpacing>;
+  mx?: StyleProp<MantineSpacing> | undefined;
   /** MarginTop, theme key: theme.spacing */
-  mt?: StyleProp<MantineSpacing>;
+  mt?: StyleProp<MantineSpacing> | undefined;
   /** MarginBottom, theme key: theme.spacing */
-  mb?: StyleProp<MantineSpacing>;
+  mb?: StyleProp<MantineSpacing> | undefined;
   /** MarginInlineStart, theme key: theme.spacing */
-  ms?: StyleProp<MantineSpacing>;
+  ms?: StyleProp<MantineSpacing> | undefined;
   /** MarginInlineEnd, theme key: theme.spacing */
-  me?: StyleProp<MantineSpacing>;
+  me?: StyleProp<MantineSpacing> | undefined;
   /** MarginInlineStart, theme key: theme.spacing */
-  mis?: StyleProp<MantineSpacing>;
+  mis?: StyleProp<MantineSpacing> | undefined;
   /** MarginInlineEnd, theme key: theme.spacing */
-  mie?: StyleProp<MantineSpacing>;
+  mie?: StyleProp<MantineSpacing> | undefined;
   /** MarginLeft, theme key: theme.spacing */
-  ml?: StyleProp<MantineSpacing>;
+  ml?: StyleProp<MantineSpacing> | undefined;
   /** MarginRight, theme key: theme.spacing */
-  mr?: StyleProp<MantineSpacing>;
+  mr?: StyleProp<MantineSpacing> | undefined;
   /** Padding, theme key: theme.spacing */
 
-  p?: StyleProp<MantineSpacing>;
+  p?: StyleProp<MantineSpacing> | undefined;
   /** PaddingBlock, theme key: theme.spacing */
-  py?: StyleProp<MantineSpacing>;
+  py?: StyleProp<MantineSpacing> | undefined;
   /** PaddingInline, theme key: theme.spacing */
-  px?: StyleProp<MantineSpacing>;
+  px?: StyleProp<MantineSpacing> | undefined;
   /** PaddingTop, theme key: theme.spacing */
-  pt?: StyleProp<MantineSpacing>;
+  pt?: StyleProp<MantineSpacing> | undefined;
   /** PaddingBottom, theme key: theme.spacing */
-  pb?: StyleProp<MantineSpacing>;
+  pb?: StyleProp<MantineSpacing> | undefined;
   /** PaddingInlineStart, theme key: theme.spacing */
-  ps?: StyleProp<MantineSpacing>;
+  ps?: StyleProp<MantineSpacing> | undefined;
   /** PaddingInlineEnd, theme key: theme.spacing */
-  pe?: StyleProp<MantineSpacing>;
+  pe?: StyleProp<MantineSpacing> | undefined;
   /** PaddingInlineStart, theme key: theme.spacing */
-  pis?: StyleProp<MantineSpacing>;
+  pis?: StyleProp<MantineSpacing> | undefined;
   /** PaddingInlineEnd, theme key: theme.spacing */
-  pie?: StyleProp<MantineSpacing>;
+  pie?: StyleProp<MantineSpacing> | undefined;
   /** PaddingLeft, theme key: theme.spacing */
-  pl?: StyleProp<MantineSpacing>;
+  pl?: StyleProp<MantineSpacing> | undefined;
   /** PaddingRight, theme key: theme.spacing */
-  pr?: StyleProp<MantineSpacing>;
+  pr?: StyleProp<MantineSpacing> | undefined;
 
   /** Border */
   bd?: StyleProp<React.CSSProperties['border']>;
   /** BorderRadius, theme key: theme.radius */
-  bdrs?: StyleProp<MantineSpacing>;
+  bdrs?: StyleProp<MantineSpacing> | undefined;
   /** Background, theme key: theme.colors */
-  bg?: StyleProp<MantineColor>;
+  bg?: StyleProp<MantineColor> | undefined;
   /** Color */
-  c?: StyleProp<MantineColor>;
+  c?: StyleProp<MantineColor> | undefined;
   opacity?: StyleProp<React.CSSProperties['opacity']>;
 
   /** FontFamily */
-  ff?: StyleProp<'monospace' | 'text' | 'heading' | (string & {})>;
+  ff?: StyleProp<'monospace' | 'text' | 'heading' | (string & {})> | undefined;
   /** FontSize, theme key: theme.fontSizes */
-  fz?: StyleProp<MantineFontSize | `h${1 | 2 | 3 | 4 | 5 | 6}` | number | (string & {})>;
+  fz?:
+    | StyleProp<MantineFontSize | `h${1 | 2 | 3 | 4 | 5 | 6}` | number | (string & {})>
+    | undefined;
   /** FontWeight */
   fw?: StyleProp<React.CSSProperties['fontWeight']>;
   /** LetterSpacing */
@@ -76,7 +78,9 @@ export interface MantineStyleProps {
   /** TextAlign */
   ta?: StyleProp<React.CSSProperties['textAlign']>;
   /** LineHeight, theme key: lineHeights */
-  lh?: StyleProp<MantineLineHeight | `h${1 | 2 | 3 | 4 | 5 | 6}` | number | (string & {})>;
+  lh?:
+    | StyleProp<MantineLineHeight | `h${1 | 2 | 3 | 4 | 5 | 6}` | number | (string & {})>
+    | undefined;
   /** FontStyle */
   fs?: StyleProp<React.CSSProperties['fontStyle']>;
   /** TextTransform */

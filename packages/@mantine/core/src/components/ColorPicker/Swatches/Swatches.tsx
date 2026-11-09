@@ -5,12 +5,12 @@ import { ColorSwatch } from '../../ColorSwatch';
 import { ColorPickerContext } from '../ColorPicker.context';
 
 export interface SwatchesProps extends ElementProps<'div'> {
-  size?: string | number;
+  size?: string | number | undefined;
   data: string[];
-  swatchesPerRow?: number;
-  focusable?: boolean;
-  value?: string;
-  onChangeEnd?: (color: string) => void;
+  swatchesPerRow?: number | undefined;
+  focusable?: boolean | undefined;
+  value?: string | undefined;
+  onChangeEnd?: ((color: string) => void) | undefined;
   setValue: (value: string) => void;
 }
 

@@ -7,8 +7,8 @@ export interface DigitParts {
 
 export interface GetDigitPartsInput {
   value: number;
-  decimalScale?: number;
-  fixedDecimalScale?: boolean;
+  decimalScale?: number | undefined;
+  fixedDecimalScale?: boolean | undefined;
 }
 
 const PLAIN_FORMAT = new Intl.NumberFormat('en-US', {

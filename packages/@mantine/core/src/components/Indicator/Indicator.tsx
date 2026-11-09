@@ -42,46 +42,46 @@ export type IndicatorCssVariables = {
 export interface IndicatorProps
   extends BoxProps, StylesApiProps<IndicatorFactory>, ElementProps<'div'> {
   /** Indicator position relative to the target element @default 'top-end' */
-  position?: IndicatorPosition;
+  position?: IndicatorPosition | undefined;
 
   /** Distance in pixels to offset the indicator from its default position, useful for elements with border-radius. Can be a number for uniform offset or an object with `x` and `y` properties for separate horizontal and vertical offsets @default 0 */
-  offset?: number | { x: number; y: number };
+  offset?: number | { x: number; y: number } | undefined;
 
   /** Changes container display from block to inline-block, use when wrapping elements with fixed width @default false */
-  inline?: boolean;
+  inline?: boolean | undefined;
 
   /** Indicator width and height @default 10 */
-  size?: number | string;
+  size?: number | string | undefined;
 
   /** Label displayed inside the indicator, for example, notification count */
   label?: React.ReactNode;
 
   /** Key of `theme.radius` or any valid CSS value to set `border-radius` @default 100 */
-  radius?: MantineRadius;
+  radius?: MantineRadius | undefined;
 
   /** Key of `theme.colors` or any valid CSS color value @default theme.primaryColor */
-  color?: MantineColor;
+  color?: MantineColor | undefined;
 
   /** Adds border to the root element */
-  withBorder?: boolean;
+  withBorder?: boolean | undefined;
 
   /** Hides the indicator when set */
-  disabled?: boolean;
+  disabled?: boolean | undefined;
 
   /** If set, the indicator has processing animation @default false */
-  processing?: boolean;
+  processing?: boolean | undefined;
 
   /** Indicator z-index @default 200 */
-  zIndex?: string | number;
+  zIndex?: string | number | undefined;
 
   /** If set, adjusts text color based on background color */
-  autoContrast?: boolean;
+  autoContrast?: boolean | undefined;
 
   /** Maximum value to display. If label is a number greater than this value, it will be displayed as `{maxValue}+` */
-  maxValue?: number;
+  maxValue?: number | undefined;
 
   /** Determines whether indicator with label `0` should be displayed @default true */
-  showZero?: boolean;
+  showZero?: boolean | undefined;
 }
 
 export type IndicatorFactory = Factory<{

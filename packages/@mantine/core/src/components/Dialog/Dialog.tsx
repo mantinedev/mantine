@@ -29,13 +29,13 @@ export interface DialogProps
     StylesApiProps<DialogFactory>,
     ElementProps<'div'> {
   /** If set, the component uses `display: none` to hide the root element instead of removing the DOM node @default false */
-  keepMounted?: boolean;
+  keepMounted?: boolean | undefined;
 
   /** If set, displays the close button @default false */
-  withCloseButton?: boolean;
+  withCloseButton?: boolean | undefined;
 
   /** Called on close button click */
-  onClose?: () => void;
+  onClose?: (() => void) | undefined;
 
   /** Dialog content */
   children?: React.ReactNode;
@@ -44,10 +44,10 @@ export interface DialogProps
   opened: boolean;
 
   /** Props passed down to the underlying `Transition` component @default { transition: 'pop-top-right', duration: 200 } */
-  transitionProps?: TransitionOverride;
+  transitionProps?: TransitionOverride | undefined;
 
   /** Controls `width` of the dialog @default 'md' */
-  size?: MantineSize | (string & {}) | number;
+  size?: MantineSize | (string & {}) | number | undefined;
 }
 
 export type DialogFactory = Factory<{

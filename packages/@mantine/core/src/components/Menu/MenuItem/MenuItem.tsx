@@ -21,16 +21,16 @@ import classes from '../Menu.module.css';
 export type MenuItemStylesNames = 'item' | 'itemLabel' | 'itemSection' | 'itemIndicator';
 
 export interface MenuItemProps extends BoxProps, CompoundStylesApiProps<MenuItemFactory> {
-  'data-disabled'?: boolean;
+  'data-disabled'?: boolean | undefined;
 
   /** Item label */
   children?: React.ReactNode;
 
   /** Key of `theme.colors` or any valid CSS color */
-  color?: MantineColor;
+  color?: MantineColor | undefined;
 
   /** Controls whether the menu closes when this item is clicked. When undefined, inherits from Menu's `closeOnItemClick` prop. When true or false, overrides the Menu-level setting */
-  closeMenuOnClick?: boolean;
+  closeMenuOnClick?: boolean | undefined;
 
   /** Section displayed at the start of the label */
   leftSection?: React.ReactNode;
@@ -39,7 +39,7 @@ export interface MenuItemProps extends BoxProps, CompoundStylesApiProps<MenuItem
   rightSection?: React.ReactNode;
 
   /** Sets disabled attribute, applies disabled styles */
-  disabled?: boolean;
+  disabled?: boolean | undefined;
 }
 
 export type MenuItemFactory = PolymorphicFactory<{

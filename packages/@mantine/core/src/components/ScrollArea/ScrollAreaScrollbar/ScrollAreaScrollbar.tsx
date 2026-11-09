@@ -9,7 +9,7 @@ import {
 } from './ScrollAreaScrollbarVisible';
 
 interface ScrollAreaScrollbarProps extends ScrollAreaScrollbarVisibleProps {
-  forceMount?: true;
+  forceMount?: true | undefined;
 }
 
 export function ScrollAreaScrollbar(props: ScrollAreaScrollbarProps) {

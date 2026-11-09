@@ -83,50 +83,50 @@ function getAllNodeValues(data: TreeNodeData[]): string[] {
 
 export interface UseTreeInput {
   /** Initial expanded state of all nodes, uncontrolled state */
-  initialExpandedState?: TreeExpandedState;
+  initialExpandedState?: TreeExpandedState | undefined;
 
   /** Expanded state of all nodes, controlled state */
-  expandedState?: TreeExpandedState;
+  expandedState?: TreeExpandedState | undefined;
 
   /** Called when the tree expanded state changes */
-  onExpandedStateChange?: (expandedState: TreeExpandedState) => void;
+  onExpandedStateChange?: ((expandedState: TreeExpandedState) => void) | undefined;
 
   /** Initial selected state of nodes */
-  initialSelectedState?: string[];
+  initialSelectedState?: string[] | undefined;
 
   /** Selected state of all nodes, controlled state */
-  selectedState?: string[];
+  selectedState?: string[] | undefined;
 
   /** Called when the tree selected state changes */
-  onSelectedStateChange?: (selectedState: string[]) => void;
+  onSelectedStateChange?: ((selectedState: string[]) => void) | undefined;
 
   /** Initial checked state of nodes */
-  initialCheckedState?: string[];
+  initialCheckedState?: string[] | undefined;
 
   /** Checked state of all nodes, controlled state */
-  checkedState?: string[];
+  checkedState?: string[] | undefined;
 
   /** Called when the tree checked state changes */
-  onCheckedStateChange?: (checkedState: string[]) => void;
+  onCheckedStateChange?: ((checkedState: string[]) => void) | undefined;
 
   /** Determines whether multiple node can be selected at a time */
-  multiple?: boolean;
+  multiple?: boolean | undefined;
 
   /** Called with the node value when it is expanded */
-  onNodeExpand?: (value: string) => void;
+  onNodeExpand?: ((value: string) => void) | undefined;
 
   /** Called with the node value when it is collapsed */
-  onNodeCollapse?: (value: string) => void;
+  onNodeCollapse?: ((value: string) => void) | undefined;
 
   /** Called when a node with `hasChildren: true` is expanded for the first time.
    * The callback should update the tree data with loaded children.
    */
-  onLoadChildren?: (nodeValue: string) => Promise<void>;
+  onLoadChildren?: ((nodeValue: string) => Promise<void>) | undefined;
 
   /** When `true`, checking a parent does not affect children and vice versa.
    * Each node's checked state is fully independent. @default false
    */
-  checkStrictly?: boolean;
+  checkStrictly?: boolean | undefined;
 }
 
 export interface UseTreeReturnType {

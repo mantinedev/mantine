@@ -18,7 +18,7 @@ import classes from './CheckboxCard.module.css';
 
 export interface CheckboxCardContextValue {
   checked: boolean;
-  indeterminate?: boolean;
+  indeterminate?: boolean | undefined;
 }
 
 export const CheckboxCardContext = createContext<CheckboxCardContextValue | null>(null);
@@ -31,25 +31,25 @@ export type CheckboxCardCssVariables = {
 export interface CheckboxCardProps
   extends BoxProps, StylesApiProps<CheckboxCardFactory>, ElementProps<'button', 'onChange'> {
   /** Controlled component value */
-  checked?: boolean;
+  checked?: boolean | undefined;
 
   /** Uncontrolled component default value */
-  defaultChecked?: boolean;
+  defaultChecked?: boolean | undefined;
 
   /** Called when value changes */
-  onChange?: (checked: boolean) => void;
+  onChange?: ((checked: boolean) => void) | undefined;
 
   /** Indeterminate state of the checkbox. If set, `checked` prop is ignored and `aria-checked` is set to `mixed` */
-  indeterminate?: boolean;
+  indeterminate?: boolean | undefined;
 
   /** Adds border to the root element */
-  withBorder?: boolean;
+  withBorder?: boolean | undefined;
 
   /** Key of `theme.radius` or any valid CSS value to set `border-radius`, numbers are converted to rem @default theme.defaultRadius */
-  radius?: MantineRadius;
+  radius?: MantineRadius | undefined;
 
   /** Value of the checkbox, used with `Checkbox.Group` */
-  value?: string;
+  value?: string | undefined;
 }
 
 export type CheckboxCardFactory = Factory<{

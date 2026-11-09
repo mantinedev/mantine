@@ -9,7 +9,7 @@ export interface CopyButtonProps {
   value: string;
 
   /** Copied status timeout in ms @default 1000 */
-  timeout?: number;
+  timeout?: number | undefined;
 }
 
 const defaultProps = {

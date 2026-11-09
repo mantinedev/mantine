@@ -13,35 +13,35 @@ import {
 
 export interface CollapseProps extends BoxProps, Omit<React.ComponentProps<'div'>, keyof BoxProps> {
   /** Collapse orientation @default 'vertical' */
-  orientation?: 'vertical' | 'horizontal';
+  orientation?: 'vertical' | 'horizontal' | undefined;
 
   /** Expanded state */
   expanded: boolean;
 
   /** Called when the transition ends */
-  onTransitionEnd?: () => void;
+  onTransitionEnd?: (() => void) | undefined;
 
   /** Called when transition starts */
-  onTransitionStart?: () => void;
+  onTransitionStart?: (() => void) | undefined;
 
   /** Transition duration in ms @default 200 */
-  transitionDuration?: number;
+  transitionDuration?: number | undefined;
 
   /** Transition timing function @default ease */
-  transitionTimingFunction?: string;
+  transitionTimingFunction?: string | undefined;
 
   /** Determines whether the opacity is animated @default true */
-  animateOpacity?: boolean;
+  animateOpacity?: boolean | undefined;
 
   /** If set, the element is kept in the DOM when collapsed. When `true`, React 19 `Activity` is used to preserve state while collapsed. When `false`, the element is unmounted after the exit animation. @default true */
-  keepMounted?: boolean;
+  keepMounted?: boolean | undefined;
 
   /** Controls how the element is hidden when `keepMounted` is set:
    * `'activity'` – hidden with React 19 `Activity` component,
    * `'display-none'` – hidden with `display: none` styles
    * @default 'activity'
    */
-  keepMountedMode?: 'activity' | 'display-none';
+  keepMountedMode?: 'activity' | 'display-none' | undefined;
 }
 
 export type CollapseFactory = Factory<{

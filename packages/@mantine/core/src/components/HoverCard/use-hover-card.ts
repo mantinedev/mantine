@@ -13,18 +13,18 @@ import { useId } from '@mantine/hooks';
 import { HoverCardGroupContext } from './HoverCardGroup/HoverCardGroup';
 
 interface UseHoverCard {
-  openDelay?: number;
-  closeDelay?: number;
-  opened?: boolean;
-  defaultOpened?: boolean;
-  onOpen?: () => void;
-  onClose?: () => void;
+  openDelay?: number | undefined;
+  closeDelay?: number | undefined;
+  opened?: boolean | undefined;
+  defaultOpened?: boolean | undefined;
+  onOpen?: (() => void) | undefined;
+  onClose?: (() => void) | undefined;
   events: { hover: boolean; focus: boolean; touch: boolean };
   interactive: boolean;
   closeOnEscape: boolean;
   closeOnClickOutside: boolean;
-  onDismiss?: () => void;
-  id?: string;
+  onDismiss?: (() => void) | undefined;
+  id?: string | undefined;
 }
 
 export function useHoverCard(settings: UseHoverCard) {

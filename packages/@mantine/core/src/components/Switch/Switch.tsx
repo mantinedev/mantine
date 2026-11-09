@@ -51,7 +51,7 @@ export type SwitchCssVariables = {
 export interface SwitchProps
   extends BoxProps, StylesApiProps<SwitchFactory>, ElementProps<'input', 'size' | 'children'> {
   /** Id used to bind input and label, if not passed, unique id will be generated instead */
-  id?: string;
+  id?: string | undefined;
 
   /** Content of the label associated with the switch */
   label?: React.ReactNode;
@@ -63,22 +63,22 @@ export interface SwitchProps
   onLabel?: React.ReactNode;
 
   /** Key of `theme.colors` or any valid CSS color to set input color in checked state @default theme.primaryColor */
-  color?: MantineColor;
+  color?: MantineColor | undefined;
 
   /** Controls size of all elements */
-  size?: MantineSize | (string & {});
+  size?: MantineSize | (string & {}) | undefined;
 
   /** Key of `theme.radius` or any valid CSS value to set `border-radius` @default 'xl' */
-  radius?: MantineRadius;
+  radius?: MantineRadius | undefined;
 
   /** Props passed down to the root element */
-  wrapperProps?: React.ComponentProps<'div'> & DataAttributes;
+  wrapperProps?: (React.ComponentProps<'div'> & DataAttributes) | undefined;
 
   /** Icon inside the thumb of the switch */
   thumbIcon?: React.ReactNode;
 
   /** Position of the label relative to the input @default 'right' */
-  labelPosition?: 'left' | 'right';
+  labelPosition?: 'left' | 'right' | undefined;
 
   /** Description displayed below the label */
   description?: React.ReactNode;
@@ -87,10 +87,10 @@ export interface SwitchProps
   error?: React.ReactNode;
 
   /** Assigns ref of the root element */
-  rootRef?: React.Ref<HTMLDivElement>;
+  rootRef?: React.Ref<HTMLDivElement> | undefined;
 
   /** If set, displays a colored dot inside the thumb that matches the track background color @default true */
-  withThumbIndicator?: boolean;
+  withThumbIndicator?: boolean | undefined;
 }
 
 export type SwitchFactory = Factory<{

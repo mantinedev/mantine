@@ -67,25 +67,25 @@ export type CheckboxIconComponent = React.FC<{
 export interface CheckboxProps
   extends BoxProps, StylesApiProps<CheckboxFactory>, ElementProps<'input', 'size' | 'children'> {
   /** Unique input id */
-  id?: string;
+  id?: string | undefined;
 
   /** `label` associated with the checkbox */
   label?: React.ReactNode;
 
   /** Key of `theme.colors` or any valid CSS color to set input background color in checked state @default theme.primaryColor */
-  color?: MantineColor;
+  color?: MantineColor | undefined;
 
   /** Controls size of the component @default 'sm' */
-  size?: MantineSize | (string & {});
+  size?: MantineSize | (string & {}) | undefined;
 
   /** Key of `theme.radius` or any valid CSS value to set `border-radius` @default theme.defaultRadius */
-  radius?: MantineRadius;
+  radius?: MantineRadius | undefined;
 
   /** Props passed down to the root element */
-  wrapperProps?: React.ComponentProps<'div'> & DataAttributes;
+  wrapperProps?: (React.ComponentProps<'div'> & DataAttributes) | undefined;
 
   /** Position of the label relative to the input @default 'right' */
-  labelPosition?: 'left' | 'right';
+  labelPosition?: 'left' | 'right' | undefined;
 
   /** Description below the label */
   description?: React.ReactNode;
@@ -94,22 +94,22 @@ export interface CheckboxProps
   error?: React.ReactNode;
 
   /** Indeterminate state of the checkbox. If set, `checked` prop is dismissed. */
-  indeterminate?: boolean;
+  indeterminate?: boolean | undefined;
 
   /** Icon for checked or indeterminate state */
-  icon?: CheckboxIconComponent;
+  icon?: CheckboxIconComponent | undefined;
 
   /** Root element ref */
-  rootRef?: React.Ref<HTMLDivElement>;
+  rootRef?: React.Ref<HTMLDivElement> | undefined;
 
   /** Key of `theme.colors` or any valid CSS color to set icon color. By default, depends on `theme.autoContrast`. */
-  iconColor?: MantineColor;
+  iconColor?: MantineColor | undefined;
 
   /** If set, adjusts icon color based on background color for `filled` variant */
-  autoContrast?: boolean;
+  autoContrast?: boolean | undefined;
 
   /** If set, applies error styles to the checkbox when `error` prop is set @default true */
-  withErrorStyles?: boolean;
+  withErrorStyles?: boolean | undefined;
 }
 
 export type CheckboxFactory = Factory<{

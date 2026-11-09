@@ -23,16 +23,16 @@ export type GridCssVariables = {
 
 export interface GridProps extends BoxProps, StylesApiProps<GridFactory>, ElementProps<'div'> {
   /** Gap between columns and rows, key of `theme.spacing` or any valid CSS value @default 'md' */
-  gap?: StyleProp<MantineSpacing>;
+  gap?: StyleProp<MantineSpacing> | undefined;
 
   /** Row gap, overrides `gap` for vertical spacing */
-  rowGap?: StyleProp<MantineSpacing>;
+  rowGap?: StyleProp<MantineSpacing> | undefined;
 
   /** Column gap, overrides `gap` for horizontal spacing */
-  columnGap?: StyleProp<MantineSpacing>;
+  columnGap?: StyleProp<MantineSpacing> | undefined;
 
   /** If set, columns in the last row expand to fill all available space @default false */
-  grow?: boolean;
+  grow?: boolean | undefined;
 
   /** Sets `justify-content` @default flex-start */
   justify?: React.CSSProperties['justifyContent'];
@@ -41,16 +41,16 @@ export interface GridProps extends BoxProps, StylesApiProps<GridFactory>, Elemen
   align?: React.CSSProperties['alignItems'];
 
   /** Number of columns in each row @default 12 */
-  columns?: number;
+  columns?: number | undefined;
 
   /** Sets `overflow` CSS property on the root element @default 'visible' */
   overflow?: React.CSSProperties['overflow'];
 
   /** Type of queries used for responsive styles @default 'media' */
-  type?: 'media' | 'container';
+  type?: 'media' | 'container' | undefined;
 
   /** Breakpoints values, only used with `type="container"` */
-  breakpoints?: GridBreakpoints;
+  breakpoints?: GridBreakpoints | undefined;
 }
 
 export type GridFactory = Factory<{

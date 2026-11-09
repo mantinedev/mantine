@@ -22,9 +22,9 @@ import classes from './Tree.module.css';
 export interface TreeNodeData {
   label: React.ReactNode;
   value: string;
-  nodeProps?: Record<string, any>;
-  children?: TreeNodeData[];
-  hasChildren?: boolean;
+  nodeProps?: Record<string, any> | undefined;
+  children?: TreeNodeData[] | undefined;
+  hasChildren?: boolean | undefined;
 }
 
 export interface RenderTreeNodePayload {
@@ -62,12 +62,12 @@ export interface RenderTreeNodePayload {
     onClick: (event: React.MouseEvent) => void;
     'data-selected': boolean | undefined;
     'data-value': string;
-    draggable?: boolean;
-    onDragStart?: (event: React.DragEvent) => void;
-    onDragOver?: (event: React.DragEvent) => void;
-    onDragLeave?: (event: React.DragEvent) => void;
-    onDrop?: (event: React.DragEvent) => void;
-    onDragEnd?: (event: React.DragEvent) => void;
+    draggable?: boolean | undefined;
+    onDragStart?: ((event: React.DragEvent) => void) | undefined;
+    onDragOver?: ((event: React.DragEvent) => void) | undefined;
+    onDragLeave?: ((event: React.DragEvent) => void) | undefined;
+    onDrop?: ((event: React.DragEvent) => void) | undefined;
+    onDragEnd?: ((event: React.DragEvent) => void) | undefined;
   };
 
   /** Props to spread into the drag handle element when `withDragHandle` is set on `Tree`.
@@ -92,48 +92,48 @@ export interface TreeProps extends BoxProps, StylesApiProps<TreeFactory>, Elemen
   data: TreeNodeData[];
 
   /** Horizontal padding of each subtree level, key of `theme.spacing` or any valid CSS value @default 'lg' */
-  levelOffset?: MantineSpacing;
+  levelOffset?: MantineSpacing | undefined;
 
   /** If set, tree node with children is expanded on click @default true */
-  expandOnClick?: boolean;
+  expandOnClick?: boolean | undefined;
 
   /** If set, tree node with children is expanded on space key press @default true */
-  expandOnSpace?: boolean;
+  expandOnSpace?: boolean | undefined;
 
   /** If set, tree node is checked on space key press @default false */
-  checkOnSpace?: boolean;
+  checkOnSpace?: boolean | undefined;
 
   /** If set, tree node is selected on click @default false */
-  selectOnClick?: boolean;
+  selectOnClick?: boolean | undefined;
 
   /** Use-tree hook instance that can be used to manipulate component state */
-  tree?: TreeController;
+  tree?: TreeController | undefined;
 
   /** A function to render tree node label */
-  renderNode?: RenderNode;
+  renderNode?: RenderNode | undefined;
 
   /** If set, selection is cleared when user clicks outside of the tree @default false */
-  clearSelectionOnOutsideClick?: boolean;
+  clearSelectionOnOutsideClick?: boolean | undefined;
 
   /** If set, tree nodes range can be selected with click when `Shift` key is pressed @default true */
-  allowRangeSelection?: boolean;
+  allowRangeSelection?: boolean | undefined;
 
   /** If set, subtree content is kept mounted when collapsed. React 19 `Activity` is used to preserve state. @default false */
-  keepMounted?: boolean;
+  keepMounted?: boolean | undefined;
 
   /** Called when a node is dropped on another node, enables drag-and-drop when provided */
-  onDragDrop?: (payload: TreeDragDropPayload) => void;
+  onDragDrop?: ((payload: TreeDragDropPayload) => void) | undefined;
 
   /** Called for each potential drop target to determine whether a drop is allowed.
    * When it returns `false`, the drop indicator is hidden and the drop is rejected. */
-  allowDrop?: TreeAllowDrop;
+  allowDrop?: TreeAllowDrop | undefined;
 
   /** If set, drag-and-drop must be initiated from an element that spreads `dragHandleProps`
    * from the `renderNode` payload, rather than anywhere on the node. @default false */
-  withDragHandle?: boolean;
+  withDragHandle?: boolean | undefined;
 
   /** If set, connecting lines are rendered showing parent-child relationships @default false */
-  withLines?: boolean;
+  withLines?: boolean | undefined;
 }
 
 function getFlatValues(data: TreeNodeData[]): string[] {

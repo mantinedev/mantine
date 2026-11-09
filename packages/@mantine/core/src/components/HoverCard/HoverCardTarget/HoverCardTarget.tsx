@@ -11,7 +11,7 @@ export interface HoverCardTargetProps extends PopoverTargetProps {
    * For example, some components expect `componentProps={{ onMouseEnter, onMouseLeave }}`.
    * @default undefined (event listeners passed directly to component)
    */
-  eventPropsWrapperName?: string;
+  eventPropsWrapperName?: string | undefined;
 }
 
 const defaultProps = {

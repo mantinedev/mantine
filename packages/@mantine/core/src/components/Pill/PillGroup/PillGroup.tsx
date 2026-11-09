@@ -30,13 +30,13 @@ export type PillGroupCssVariables = {
 export interface PillGroupProps
   extends BoxProps, StylesApiProps<PillGroupFactory>, ElementProps<'div'> {
   /** Controls spacing between pills, by default controlled by `size` */
-  gap?: MantineSize | (string & {}) | number;
+  gap?: MantineSize | (string & {}) | number | undefined;
 
   /** Controls size of the child `Pill` components and gap between them @default 'sm' */
-  size?: MantineSize | (string & {});
+  size?: MantineSize | (string & {}) | undefined;
 
   /** If set, adds disabled to all child `Pill` components */
-  disabled?: boolean;
+  disabled?: boolean | undefined;
 }
 
 export type PillGroupFactory = Factory<{

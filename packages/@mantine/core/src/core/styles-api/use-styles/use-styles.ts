@@ -32,13 +32,13 @@ export interface UseStylesInput<Payload extends FactoryPayload> {
   className?: string | undefined;
   style?: MantineStyleProp;
   rootSelector?: Payload['stylesNames'];
-  unstyled?: boolean;
-  classNames?: ClassNames<Payload> | ClassNamesArray<Payload>;
-  styles?: Styles<Payload>;
-  vars?: PartialVarsResolver<Payload>;
-  varsResolver?: VarsResolver<Payload>;
-  attributes?: Attributes<Payload>;
-  stable?: boolean;
+  unstyled?: boolean | undefined;
+  classNames?: ClassNames<Payload> | ClassNamesArray<Payload> | undefined;
+  styles?: Styles<Payload> | undefined;
+  vars?: PartialVarsResolver<Payload> | undefined;
+  varsResolver?: VarsResolver<Payload> | undefined;
+  attributes?: Attributes<Payload> | undefined;
+  stable?: boolean | undefined;
 }
 
 export type GetStylesApi<Payload extends FactoryPayload> = (

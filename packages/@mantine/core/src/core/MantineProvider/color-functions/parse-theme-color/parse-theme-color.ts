@@ -6,7 +6,7 @@ import { isLightColor } from '../luminance/luminance';
 interface ParseThemeColorOptions {
   color: unknown;
   theme: MantineTheme;
-  colorScheme?: MantineColorScheme;
+  colorScheme?: MantineColorScheme | undefined;
 }
 
 interface ParseThemeColorResult {

@@ -68,7 +68,7 @@ export function Thumb(props: ThumbProps) {
 Thumb.displayName = '@mantine/core/ScrollAreaThumb';
 
 interface ScrollAreaThumbProps extends ThumbProps {
-  forceMount?: true;
+  forceMount?: true | undefined;
 }
 
 export function ScrollAreaThumb(props: ScrollAreaThumbProps) {

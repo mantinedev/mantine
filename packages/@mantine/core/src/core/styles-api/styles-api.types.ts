@@ -6,13 +6,13 @@ import { PartialVarsResolver } from './create-vars-resolver/create-vars-resolver
 export interface GetStylesApiOptions {
   className?: string | undefined;
   style?: MantineStyleProp;
-  focusable?: boolean;
-  active?: boolean;
-  classNames?: ClassNames<{ props: any; stylesNames: string }>;
-  styles?: Styles<{ props: any; stylesNames: string }>;
-  variant?: string;
-  props?: Record<string, any>;
-  withStaticClass?: boolean;
+  focusable?: boolean | undefined;
+  active?: boolean | undefined;
+  classNames?: ClassNames<{ props: any; stylesNames: string }> | undefined;
+  styles?: Styles<{ props: any; stylesNames: string }> | undefined;
+  variant?: string | undefined;
+  props?: Record<string, any> | undefined;
+  withStaticClass?: boolean | undefined;
 }
 
 export type StylesApiRecord<
@@ -45,20 +45,22 @@ export type ClassNamesArray<Payload extends FactoryPayload> = (
 export type Attributes<Payload extends FactoryPayload> = Payload['stylesNames'] extends string
   ? Payload['compound'] extends true
     ? never
-    : { [K in Payload['stylesNames']]?: Record<string, any> }
+    : { [K in Payload['stylesNames']]?: Record<string, any> | undefined }
   : never;
 
 export type StylesRecord<StylesNames extends string, Payload> = Partial<
-  Record<StylesNames, Payload>
+  Record<StylesNames, Payload | undefined>
 >;
 
 export interface StylesApiProps<Payload extends FactoryPayload> {
-  unstyled?: boolean;
-  variant?: Payload['variant'] extends string ? Payload['variant'] | (string & {}) : string;
-  classNames?: ClassNames<Payload>;
-  styles?: Styles<Payload>;
-  vars?: PartialVarsResolver<Payload>;
-  attributes?: Attributes<Payload>;
+  unstyled?: boolean | undefined;
+  variant?:
+    | (Payload['variant'] extends string ? Payload['variant'] | (string & {}) : string)
+    | undefined;
+  classNames?: ClassNames<Payload> | undefined;
+  styles?: Styles<Payload> | undefined;
+  vars?: PartialVarsResolver<Payload> | undefined;
+  attributes?: Attributes<Payload> | undefined;
 }
 
 export interface CompoundStylesApiProps<Payload extends FactoryPayload> extends Omit<

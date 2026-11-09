@@ -19,22 +19,22 @@ export interface SplitterPaneProps
   defaultSize: SplitterPaneSize;
 
   /** Minimum size in the same units as `defaultSize` @default 0 */
-  min?: SplitterPaneSize;
+  min?: SplitterPaneSize | undefined;
 
   /** Maximum size in the same units as `defaultSize`, no limit by default */
-  max?: SplitterPaneSize;
+  max?: SplitterPaneSize | undefined;
 
   /** Whether this pane can be collapsed @default false */
-  collapsible?: boolean;
+  collapsible?: boolean | undefined;
 
   /** Size below which the pane snaps to collapsed, defaults to `min` */
-  collapseThreshold?: SplitterPaneSize;
+  collapseThreshold?: SplitterPaneSize | undefined;
 
   /** Pane content */
   children?: React.ReactNode;
 
   /** @internal Index set by parent */
-  __index?: number;
+  __index?: number | undefined;
 }
 
 export type SplitterPaneFactory = Factory<{

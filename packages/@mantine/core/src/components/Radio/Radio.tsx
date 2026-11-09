@@ -68,19 +68,19 @@ export interface RadioProps
   label?: React.ReactNode;
 
   /** Key of theme.colors or any valid CSS color to set radio background color in checked state @default theme.primaryColor */
-  color?: MantineColor;
+  color?: MantineColor | undefined;
 
   /** Controls size of the component @default 'sm' */
-  size?: MantineSize | (string & {});
+  size?: MantineSize | (string & {}) | undefined;
 
   /** A component that replaces the default radio icon (centered dot) */
-  icon?: React.FC<RadioIconProps>;
+  icon?: React.FC<RadioIconProps> | undefined;
 
   /** Props passed down to the root element */
-  wrapperProps?: React.ComponentProps<'div'> & DataAttributes;
+  wrapperProps?: (React.ComponentProps<'div'> & DataAttributes) | undefined;
 
   /** Position of the label relative to the input @default 'right' */
-  labelPosition?: 'left' | 'right';
+  labelPosition?: 'left' | 'right' | undefined;
 
   /** Description displayed below the label */
   description?: React.ReactNode;
@@ -89,19 +89,19 @@ export interface RadioProps
   error?: React.ReactNode;
 
   /** Key of `theme.radius` or any valid CSS value to set `border-radius` @default 'xl' */
-  radius?: MantineRadius;
+  radius?: MantineRadius | undefined;
 
   /** Assigns ref of the root element */
-  rootRef?: React.Ref<HTMLDivElement>;
+  rootRef?: React.Ref<HTMLDivElement> | undefined;
 
   /** Key of theme.colors or any valid CSS color to set icon color. When not set, icon color is determined automatically based on theme.autoContrast setting */
-  iconColor?: MantineColor;
+  iconColor?: MantineColor | undefined;
 
   /** If set, adjusts text color based on background color for `filled` variant */
-  autoContrast?: boolean;
+  autoContrast?: boolean | undefined;
 
   /** If set, applies error styles to the radio when `error` prop is set @default true */
-  withErrorStyles?: boolean;
+  withErrorStyles?: boolean | undefined;
 }
 
 export type RadioFactory = Factory<{

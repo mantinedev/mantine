@@ -1,8 +1,8 @@
 export interface NormalizePastedValueOptions {
   decimalSeparator: string;
-  thousandSeparator?: string;
+  thousandSeparator?: string | undefined;
   allowedDecimalSeparators: string[];
-  thousandsGroupStyle?: 'thousand' | 'lakh' | 'wan' | 'none';
+  thousandsGroupStyle?: 'thousand' | 'lakh' | 'wan' | 'none' | undefined;
 }
 
 function countTrailingDigits(value: string, from: number) {

@@ -21,10 +21,10 @@ export type AffixCssVariables = {
 };
 
 export interface AffixPosition {
-  top?: MantineSize | (string & {}) | number;
-  left?: MantineSize | (string & {}) | number;
-  bottom?: MantineSize | (string & {}) | number;
-  right?: MantineSize | (string & {}) | number;
+  top?: MantineSize | (string & {}) | number | undefined;
+  left?: MantineSize | (string & {}) | number | undefined;
+  bottom?: MantineSize | (string & {}) | number | undefined;
+  right?: MantineSize | (string & {}) | number | undefined;
 }
 
 export interface AffixBaseProps {
@@ -32,13 +32,13 @@ export interface AffixBaseProps {
   zIndex?: React.CSSProperties['zIndex'];
 
   /** Determines whether the component is rendered within `Portal` @default true */
-  withinPortal?: boolean;
+  withinPortal?: boolean | undefined;
 
   /** Props passed down to the `Portal` component. Ignored when `withinPortal` is `false`. */
-  portalProps?: BasePortalProps;
+  portalProps?: BasePortalProps | undefined;
 
   /** Affix position on screen @default { bottom: 0, right: 0 } */
-  position?: AffixPosition;
+  position?: AffixPosition | undefined;
 }
 
 export interface AffixProps

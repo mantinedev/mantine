@@ -9,10 +9,10 @@ export interface ModalBaseOverlayProps
     Omit<OverlayProps, 'styles' | 'classNames' | 'variant' | 'vars'>,
     ElementProps<'div', 'color'> {
   /** Props passed down to the `Transition` component */
-  transitionProps?: TransitionOverride;
+  transitionProps?: TransitionOverride | undefined;
 
   /** Determines whether the overlay should be visible. By default, has the same value as `opened` state. */
-  visible?: boolean;
+  visible?: boolean | undefined;
 }
 
 export function ModalBaseOverlay({

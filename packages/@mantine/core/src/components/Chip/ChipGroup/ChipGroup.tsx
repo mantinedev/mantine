@@ -7,16 +7,16 @@ export interface ChipGroupProps<
   Value extends Primitive = string,
 > {
   /** If set, multiple values can be selected */
-  multiple?: Multiple;
+  multiple?: Multiple | undefined;
 
   /** Controlled component value */
-  value?: Multiple extends true ? Value[] : Value | null;
+  value?: (Multiple extends true ? Value[] : Value | null) | undefined;
 
   /** Uncontrolled component initial value */
-  defaultValue?: Multiple extends true ? Value[] : Value | null;
+  defaultValue?: (Multiple extends true ? Value[] : Value | null) | undefined;
 
   /** Called when value changes. If `multiple` prop is set, called with an array of selected values. If not, called with a string value of selected chip. */
-  onChange?: (value: Multiple extends true ? Value[] : Value) => void;
+  onChange?: ((value: Multiple extends true ? Value[] : Value) => void) | undefined;
 
   /** `Chip` components and any other elements */
   children?: React.ReactNode;

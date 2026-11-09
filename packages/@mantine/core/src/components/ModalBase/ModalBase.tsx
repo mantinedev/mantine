@@ -18,18 +18,18 @@ import { useModal } from './use-modal';
 type RemoveScrollProps = Omit<React.ComponentProps<typeof RemoveScroll>, 'children'>;
 
 export interface ModalBaseProps extends BoxProps, ElementProps<'div', 'title'> {
-  unstyled?: boolean;
-  __handledEscapeEvents?: WeakSet<KeyboardEvent>;
+  unstyled?: boolean | undefined;
+  __handledEscapeEvents?: WeakSet<KeyboardEvent> | undefined;
 
   /** If set modal/drawer is not unmounted from the DOM when hidden. `display: none` styles are applied instead. @default false */
-  keepMounted?: boolean;
+  keepMounted?: boolean | undefined;
 
   /** Controls how the modal/drawer is hidden when `keepMounted` is set:
    * `'activity'` - hidden with React 19 `Activity` component,
    * `'display-none'` - hidden with `display: none` styles
    * @default 'activity'
    */
-  keepMountedMode?: 'activity' | 'display-none';
+  keepMountedMode?: 'activity' | 'display-none' | undefined;
 
   /** Controls opened state */
   opened: boolean;
@@ -38,55 +38,55 @@ export interface ModalBaseProps extends BoxProps, ElementProps<'div', 'title'> {
   onClose: () => void;
 
   /** Id used to connect modal/drawer with body and title */
-  id?: string;
+  id?: string | undefined;
 
   /** If set, scroll is locked when `opened={true}` @default true */
-  lockScroll?: boolean;
+  lockScroll?: boolean | undefined;
 
   /** If set, focus is trapped within the modal/drawer @default true */
-  trapFocus?: boolean;
+  trapFocus?: boolean | undefined;
 
   /** If set, the component is rendered inside `Portal` @default true */
-  withinPortal?: boolean;
+  withinPortal?: boolean | undefined;
 
   /** Props passed down to the Portal component when `withinPortal` is set */
-  portalProps?: BasePortalProps;
+  portalProps?: BasePortalProps | undefined;
 
   /** Modal/drawer content */
   children?: React.ReactNode;
 
   /** If set, the modal/drawer is closed when user clicks on the overlay @default true */
-  closeOnClickOutside?: boolean;
+  closeOnClickOutside?: boolean | undefined;
 
   /** Props added to the `Transition` component that used to animate overlay and body, use to configure duration and animation type, `{ duration: 200, transition: 'fade-down' }` by default */
-  transitionProps?: TransitionOverride;
+  transitionProps?: TransitionOverride | undefined;
 
   /** Called when exit transition ends */
-  onExitTransitionEnd?: () => void;
+  onExitTransitionEnd?: (() => void) | undefined;
 
   /** Called when enter transition ends */
-  onEnterTransitionEnd?: () => void;
+  onEnterTransitionEnd?: (() => void) | undefined;
 
   /** If set, `onClose` is called when user presses the escape key @default true */
-  closeOnEscape?: boolean;
+  closeOnEscape?: boolean | undefined;
 
   /** If set, focus is returned to the last active element when `onClose` is called @default true */
-  returnFocus?: boolean;
+  returnFocus?: boolean | undefined;
 
   /** `z-index` CSS property of the root element @default 200 */
-  zIndex?: string | number;
+  zIndex?: string | number | undefined;
 
   /** Key of `theme.shadows` or any valid CSS box-shadow value @default 'xl' */
-  shadow?: MantineShadow;
+  shadow?: MantineShadow | undefined;
 
   /** Key of `theme.spacing` or any valid CSS value to set content, header and footer padding @default 'md' */
-  padding?: MantineSpacing;
+  padding?: MantineSpacing | undefined;
 
   /** Controls width of the content area @default 'md' */
-  size?: MantineSize | (string & {}) | number;
+  size?: MantineSize | (string & {}) | number | undefined;
 
   /** Props passed down to react-remove-scroll, can be used to customize scroll lock behavior */
-  removeScrollProps?: RemoveScrollProps;
+  removeScrollProps?: RemoveScrollProps | undefined;
 }
 
 export function ModalBase({

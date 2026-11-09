@@ -24,22 +24,22 @@ export interface DrawerProps extends DrawerRootProps {
   title?: React.ReactNode;
 
   /** If set, the overlay is displayed @default true */
-  withOverlay?: boolean;
+  withOverlay?: boolean | undefined;
 
   /** Props passed down to the `Overlay` component, can be used to configure opacity, `background-color`, styles and other properties */
-  overlayProps?: ModalBaseOverlayProps;
+  overlayProps?: ModalBaseOverlayProps | undefined;
 
   /** Drawer content */
   children?: React.ReactNode;
 
   /** If set, the close button is displayed @default true */
-  withCloseButton?: boolean;
+  withCloseButton?: boolean | undefined;
 
   /** Props passed down to the close button */
-  closeButtonProps?: ModalBaseCloseButtonProps;
+  closeButtonProps?: ModalBaseCloseButtonProps | undefined;
 
   /** Id of the drawer in the `Drawer.Stack` */
-  stackId?: string;
+  stackId?: string | undefined;
 }
 
 export type DrawerFactory = Factory<{

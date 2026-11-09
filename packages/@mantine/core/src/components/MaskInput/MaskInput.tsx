@@ -13,46 +13,50 @@ export interface MaskInputProps
   mask: string | Array<string | RegExp>;
 
   /** Override or extend the default token map */
-  tokens?: Record<string, RegExp>;
+  tokens?: Record<string, RegExp> | undefined;
 
   /** Called before masking on each keystroke, can return overrides for mask options */
-  modify?: (
-    value: string
-  ) => Partial<Pick<MaskInputProps, 'mask' | 'tokens' | 'slotChar' | 'separate'>> | undefined;
+  modify?:
+    | ((
+        value: string
+      ) => Partial<Pick<MaskInputProps, 'mask' | 'tokens' | 'slotChar' | 'separate'>> | undefined)
+    | undefined;
 
   /** When true, raw and display values are decoupled */
-  separate?: boolean;
+  separate?: boolean | undefined;
 
   /** Character displayed in unfilled slots, `"_"` by default */
-  slotChar?: string | null;
+  slotChar?: string | null | undefined;
 
   /** Show mask pattern even when field is empty and unfocused */
-  alwaysShowMask?: boolean;
+  alwaysShowMask?: boolean | undefined;
 
   /** Show mask placeholder on focus, `true` by default */
-  showMaskOnFocus?: boolean;
+  showMaskOnFocus?: boolean | undefined;
 
   /** Transform each character before validation and insertion */
-  transform?: (char: string) => string;
+  transform?: ((char: string) => string) | undefined;
 
   /** Clear value on blur when mask is incomplete, `false` by default */
-  autoClear?: boolean;
+  autoClear?: boolean | undefined;
 
   /** Called on every change with raw and masked values */
-  onChangeRaw?: (rawValue: string, maskedValue: string) => void;
+  onChangeRaw?: ((rawValue: string, maskedValue: string) => void) | undefined;
 
   /** Called when all required mask slots are filled */
-  onComplete?: (maskedValue: string, rawValue: string) => void;
+  onComplete?: ((maskedValue: string, rawValue: string) => void) | undefined;
 
   /** Escape hatch for advanced cursor/value manipulation */
-  beforeMaskedStateChange?: (states: {
-    previousState: { value: string; selection: { start: number; end: number } | null };
-    currentState: { value: string; selection: { start: number; end: number } | null };
-    nextState: { value: string; selection: { start: number; end: number } | null };
-  }) => { value: string; selection: { start: number; end: number } | null };
+  beforeMaskedStateChange?:
+    | ((states: {
+        previousState: { value: string; selection: { start: number; end: number } | null };
+        currentState: { value: string; selection: { start: number; end: number } | null };
+        nextState: { value: string; selection: { start: number; end: number } | null };
+      }) => { value: string; selection: { start: number; end: number } | null })
+    | undefined;
 
   /** Assigns a function that clears the input value to the given ref */
-  resetRef?: React.RefObject<(() => void) | null>;
+  resetRef?: React.RefObject<(() => void) | null> | undefined;
 }
 
 export type MaskInputFactory = Factory<{

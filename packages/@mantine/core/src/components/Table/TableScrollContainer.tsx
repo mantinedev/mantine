@@ -27,10 +27,10 @@ export interface TableScrollContainerProps
   maxHeight?: React.CSSProperties['maxHeight'];
 
   /** Type of the scroll container, `native` to use native scrollbars, `scrollarea` to use `ScrollArea` component @default 'scrollarea' */
-  type?: 'native' | 'scrollarea';
+  type?: 'native' | 'scrollarea' | undefined;
 
   /** Props passed down to `ScrollArea` component, not applicable with `type="native"` */
-  scrollAreaProps?: ScrollAreaProps;
+  scrollAreaProps?: ScrollAreaProps | undefined;
 }
 
 export type TableScrollContainerFactory = Factory<{

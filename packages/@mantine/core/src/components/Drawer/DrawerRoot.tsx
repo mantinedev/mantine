@@ -51,16 +51,16 @@ export type DrawerRootCssVariables = {
 
 export interface DrawerRootProps extends StylesApiProps<DrawerRootFactory>, ModalBaseProps {
   /** Scroll area component @default 'div' */
-  scrollAreaComponent?: ScrollAreaComponent;
+  scrollAreaComponent?: ScrollAreaComponent | undefined;
 
   /** Side of the screen on which drawer will be opened @default 'left' */
-  position?: DrawerPosition;
+  position?: DrawerPosition | undefined;
 
   /** Key of `theme.radius` or any valid CSS value to set `border-radius`, numbers are converted to rem @default 0 */
-  radius?: MantineRadius;
+  radius?: MantineRadius | undefined;
 
   /** Drawer container offset from the viewport end @default 0 */
-  offset?: number | string;
+  offset?: number | string | undefined;
 }
 
 export type DrawerRootFactory = Factory<{

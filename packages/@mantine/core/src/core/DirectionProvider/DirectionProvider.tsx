@@ -24,10 +24,10 @@ export interface DirectionProviderProps {
   children: React.ReactNode;
 
   /** Direction set as a default value, `ltr` by default */
-  initialDirection?: Direction;
+  initialDirection?: Direction | undefined;
 
   /** Determines whether direction should be updated on mount based on `dir` attribute set on root element (usually html element) @default true  */
-  detectDirection?: boolean;
+  detectDirection?: boolean | undefined;
 }
 
 export function DirectionProvider({

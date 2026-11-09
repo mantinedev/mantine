@@ -15,7 +15,7 @@ export interface CheckboxGroupContextValue<Value extends Primitive = string> {
   value: Value[];
   onChange: (event: React.ChangeEvent<HTMLInputElement> | string) => void;
   size: MantineSize | (string & {}) | undefined;
-  isDisabled?: (value: Value) => boolean;
+  isDisabled?: ((value: Value) => boolean) | undefined;
 }
 
 export const CheckboxGroupContext = createContext<CheckboxGroupContextValue | null>(null);
@@ -30,38 +30,38 @@ export interface CheckboxGroupProps<Value extends Primitive = string> extends Om
   children: React.ReactNode;
 
   /** Controlled component value */
-  value?: Value[];
+  value?: Value[] | undefined;
 
   /** Default value for uncontrolled component */
-  defaultValue?: Value[];
+  defaultValue?: Value[] | undefined;
 
   /** Called with an array of selected checkboxes values when value changes */
-  onChange?: (value: Value[]) => void;
+  onChange?: ((value: Value[]) => void) | undefined;
 
   /** Props passed down to the root element (`Input.Wrapper` component) */
-  wrapperProps?: React.ComponentProps<'div'> & DataAttributes;
+  wrapperProps?: (React.ComponentProps<'div'> & DataAttributes) | undefined;
 
   /** Controls size of the `Input.Wrapper` @default 'sm' */
-  size?: MantineSize | (string & {});
+  size?: MantineSize | (string & {}) | undefined;
 
   /** If set, value cannot be changed */
-  readOnly?: boolean;
+  readOnly?: boolean | undefined;
 
   /** `name` attribute of the hidden input for uncontrolled forms */
-  name?: string;
+  name?: string | undefined;
 
   /** Props passed down to the hidden input for uncontrolled forms */
-  hiddenInputProps?: React.ComponentProps<'input'> & DataAttributes;
+  hiddenInputProps?: (React.ComponentProps<'input'> & DataAttributes) | undefined;
 
   /** Separator for values in the hidden input for uncontrolled forms @default ',' */
-  hiddenInputValuesSeparator?: string;
+  hiddenInputValuesSeparator?: string | undefined;
 
   /** Maximum number of checkboxes that can be selected. When the limit is reached, unselected checkboxes will be disabled */
 
-  maxSelectedValues?: number;
+  maxSelectedValues?: number | undefined;
 
   /** Sets `disabled` attribute, prevents interactions */
-  disabled?: boolean;
+  disabled?: boolean | undefined;
 }
 
 export type CheckboxGroupFactory = Factory<{

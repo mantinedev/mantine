@@ -20,19 +20,19 @@ export type ImageCssVariables = {
 
 export interface ImageProps extends BoxProps, StylesApiProps<ImageFactory> {
   /** Key of `theme.radius` or any valid CSS value to set `border-radius` @default 0 */
-  radius?: MantineRadius;
+  radius?: MantineRadius | undefined;
 
   /** Controls `object-fit` style @default 'cover' */
   fit?: React.CSSProperties['objectFit'];
 
   /** Image url used as a fallback if the image cannot be loaded */
-  fallbackSrc?: string;
+  fallbackSrc?: string | undefined;
 
   /** Image url */
   src?: any;
 
   /** Called when image fails to load */
-  onError?: (event: React.SyntheticEvent<HTMLImageElement, Event>) => void;
+  onError?: ((event: React.SyntheticEvent<HTMLImageElement, Event>) => void) | undefined;
 }
 
 export type ImageFactory = PolymorphicFactory<{

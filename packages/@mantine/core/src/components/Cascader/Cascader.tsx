@@ -39,10 +39,10 @@ export interface CascaderOption {
   label?: React.ReactNode;
 
   /** Nested options */
-  children?: CascaderOption[];
+  children?: CascaderOption[] | undefined;
 
   /** If set, the option cannot be selected or expanded */
-  disabled?: boolean;
+  disabled?: boolean | undefined;
 }
 
 export interface CascaderFormatValueInput {
@@ -81,121 +81,121 @@ export interface CascaderProps
   data: CascaderOption[];
 
   /** Controlled selected path from root to node */
-  value?: string[] | null;
+  value?: string[] | null | undefined;
 
   /** Uncontrolled selected path from root to node */
-  defaultValue?: string[] | null;
+  defaultValue?: string[] | null | undefined;
 
   /** Called when the selected path changes with the path and the resolved option chain */
-  onChange?: (value: string[] | null, options: CascaderOption[]) => void;
+  onChange?: ((value: string[] | null, options: CascaderOption[]) => void) | undefined;
 
   /** If set, any intermediate option can be selected, not only leaf options @default false */
-  changeOnSelect?: boolean;
+  changeOnSelect?: boolean | undefined;
 
   /** Determines whether the dropdown should be closed when a value is selected, defaults to `!allowDeselect` */
-  closeOnSelect?: boolean;
+  closeOnSelect?: boolean | undefined;
 
   /** If set, the selected value can be deselected by selecting it again @default true */
-  allowDeselect?: boolean;
+  allowDeselect?: boolean | undefined;
 
   /** If set, the check icon is displayed on the selected option @default true */
-  withCheckIcon?: boolean;
+  withCheckIcon?: boolean | undefined;
 
   /** Position of the check icon relative to the option label @default 'right' */
-  checkIconPosition?: 'left' | 'right';
+  checkIconPosition?: 'left' | 'right' | undefined;
 
   /** Renders the dropdown as cascading columns. When `false`, options are rendered as a flat list of paths, the same way as search results (useful for narrow/mobile layouts) @default true */
-  withColumns?: boolean;
+  withColumns?: boolean | undefined;
 
   /** Determines how the next column is opened @default 'click' */
-  expandTrigger?: 'click' | 'hover';
+  expandTrigger?: 'click' | 'hover' | undefined;
 
   /** Determines whether the next column stays open while the cursor moves toward it, applicable only when `expandTrigger="hover"`. Pass an object to configure safe polygon behavior. @default true */
-  safeAreaPolygon?: boolean | CascaderSafeAreaPolygonOptions;
+  safeAreaPolygon?: boolean | CascaderSafeAreaPolygonOptions | undefined;
 
   /** If set, options can be searched by their flattened paths @default false */
-  searchable?: boolean;
+  searchable?: boolean | undefined;
 
   /** Controlled search value */
-  searchValue?: string;
+  searchValue?: string | undefined;
 
   /** Uncontrolled search value */
-  defaultSearchValue?: string;
+  defaultSearchValue?: string | undefined;
 
   /** Called when the search value changes */
-  onSearchChange?: (value: string) => void;
+  onSearchChange?: ((value: string) => void) | undefined;
 
   /** Custom search filter, matched against the full option path */
-  filter?: (query: string, options: CascaderOption[]) => boolean;
+  filter?: ((query: string, options: CascaderOption[]) => boolean) | undefined;
 
   /** Custom rendering of a search result row */
-  renderSearchOption?: (query: string, options: CascaderOption[]) => React.ReactNode;
+  renderSearchOption?: ((query: string, options: CascaderOption[]) => React.ReactNode) | undefined;
 
   /** A function to format the selected path displayed in the input, should return a string */
-  formatValue?: CascaderFormatValue;
+  formatValue?: CascaderFormatValue | undefined;
 
   /** Custom rendering of an option in columns */
-  renderOption?: (option: CascaderOption, level: number) => React.ReactNode;
+  renderOption?: ((option: CascaderOption, level: number) => React.ReactNode) | undefined;
 
   /** Path separator displayed in the input and search results @default '/' */
   separator?: React.ReactNode;
 
   /** Width of each column */
-  columnWidth?: number | string;
+  columnWidth?: number | string | undefined;
 
   /** Maximum number of columns (levels) displayed next to each other, deeper levels replace earlier ones @default 3 */
-  maxDisplayedLevels?: number;
+  maxDisplayedLevels?: number | undefined;
 
   /** `aria-label` and `title` of the control that reveals levels hidden before the visible ones by `maxDisplayedLevels` @default 'Show previous levels' */
-  previousLevelsControlLabel?: string;
+  previousLevelsControlLabel?: string | undefined;
 
   /** `aria-label` and `title` of the control that reveals levels hidden after the visible ones by `maxDisplayedLevels` @default 'Show next levels' */
-  nextLevelsControlLabel?: string;
+  nextLevelsControlLabel?: string | undefined;
 
   /** Max height of a column before it becomes scrollable @default 260 */
-  maxDropdownHeight?: number | string;
+  maxDropdownHeight?: number | string | undefined;
 
   /** Message displayed when there are no options or search results */
   nothingFoundMessage?: React.ReactNode;
 
   /** If set, the clear button is displayed when a value is selected @default false */
-  clearable?: boolean;
+  clearable?: boolean | undefined;
 
   /** Determines how the clear button and `rightSection` are rendered @default 'both' */
-  clearSectionMode?: ClearSectionMode;
+  clearSectionMode?: ClearSectionMode | undefined;
 
   /** Props passed down to the clear button */
-  clearButtonProps?: InputClearButtonProps;
+  clearButtonProps?: InputClearButtonProps | undefined;
 
   /** Called when the clear button is clicked */
-  onClear?: () => void;
+  onClear?: (() => void) | undefined;
 
   /** Controlled dropdown opened state */
-  dropdownOpened?: boolean;
+  dropdownOpened?: boolean | undefined;
 
   /** Uncontrolled dropdown opened state */
-  defaultDropdownOpened?: boolean;
+  defaultDropdownOpened?: boolean | undefined;
 
   /** Called when the dropdown opens */
-  onDropdownOpen?: () => void;
+  onDropdownOpen?: (() => void) | undefined;
 
   /** Called when the dropdown closes */
-  onDropdownClose?: () => void;
+  onDropdownClose?: (() => void) | undefined;
 
   /** Props passed down to the underlying `Combobox` component */
-  comboboxProps?: Record<string, any>;
+  comboboxProps?: Record<string, any> | undefined;
 
   /** Props passed down to the dropdown `ScrollArea` */
-  scrollAreaProps?: ScrollAreaProps;
+  scrollAreaProps?: ScrollAreaProps | undefined;
 
   /** Controls the default chevron color */
-  chevronColor?: MantineColor;
+  chevronColor?: MantineColor | undefined;
 
   /** Props passed down to the hidden input */
-  hiddenInputProps?: Omit<React.ComponentProps<'input'>, 'value'>;
+  hiddenInputProps?: Omit<React.ComponentProps<'input'>, 'value'> | undefined;
 
   /** Opens the dropdown when the input is focused in `searchable` mode @default true */
-  openOnFocus?: boolean;
+  openOnFocus?: boolean | undefined;
 }
 
 export type CascaderFactory = Factory<{

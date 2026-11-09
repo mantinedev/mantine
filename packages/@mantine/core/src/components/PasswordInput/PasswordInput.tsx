@@ -42,22 +42,22 @@ export interface PasswordInputProps
     StylesApiProps<PasswordInputFactory>,
     ElementProps<'input', 'size'> {
   /** A component to replace the visibility toggle icon */
-  visibilityToggleIcon?: React.FC<{ reveal: boolean }>;
+  visibilityToggleIcon?: React.FC<{ reveal: boolean }> | undefined;
 
   /** Props passed down to the visibility toggle button */
-  visibilityToggleButtonProps?: Record<string, any>;
+  visibilityToggleButtonProps?: Record<string, any> | undefined;
 
   /** If set, the visibility toggle button is focusable with keyboard @default `false` */
-  visibilityToggleFocusable?: boolean;
+  visibilityToggleFocusable?: boolean | undefined;
 
   /** If set, the input value is visible */
-  visible?: boolean;
+  visible?: boolean | undefined;
 
   /** If set, the input value is visible by default */
-  defaultVisible?: boolean;
+  defaultVisible?: boolean | undefined;
 
   /** Called when visibility changes */
-  onVisibilityChange?: (visible: boolean) => void;
+  onVisibilityChange?: ((visible: boolean) => void) | undefined;
 }
 
 export type PasswordInputFactory = Factory<{

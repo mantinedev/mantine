@@ -5,8 +5,8 @@ interface GetColorVariablesInput {
   theme: MantineTheme;
   color: MantineColor;
   colorScheme: 'light' | 'dark';
-  name?: string;
-  withColorValues?: boolean;
+  name?: string | undefined;
+  withColorValues?: boolean | undefined;
 }
 
 export function getCSSColorVariables({
