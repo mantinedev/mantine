@@ -4366,8 +4366,8 @@ __metadata:
     react: "npm:19.3.1"
     react-dom: "npm:19.3.1"
   peerDependencies:
-    "@mantine/core": 9.0.1
-    "@mantine/hooks": 9.0.1
+    "@mantine/core": 9.7.5
+    "@mantine/hooks": 9.7.5
     react: ^19.2.0
     react-dom: ^19.2.0
   languageName: unknown
@@ -6523,12 +6523,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@tiptap/extension-image@npm:3.31.3":
-  version: 3.31.3
-  resolution: "@tiptap/extension-image@npm:3.31.3"
+"@tiptap/extension-image@npm:3.32.0":
+  version: 3.32.0
+  resolution: "@tiptap/extension-image@npm:3.32.0"
   peerDependencies:
-    "@tiptap/core": 3.31.3
-  checksum: 10c0/c7cf7bb8412558e52677115507ff960155c53808cddaddc707b0f4c24cbf2522d6d44c042cbfd150388b751b336835863995617e6dfbbdb7de7d78b2d6788680
+    "@tiptap/core": 3.32.0
+  checksum: 10c0/858e285341e2bd8d443cba67f9d735085e1d24c85a4a4798cb54c2ec3854f9da2c67497b75f1f223811d6a1169b6a01274851634e02b9bddac967bb504b74d73
   languageName: node
   linkType: hard
 
