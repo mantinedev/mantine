@@ -1,3 +1,4 @@
+import { useRef } from 'react';
 import cx from 'clsx';
 import {
   __BaseInputProps,
@@ -17,7 +18,7 @@ import {
   StylesApiProps,
   useInputProps,
 } from '@mantine/core';
-import { useDisclosure } from '@mantine/hooks';
+import { useDidUpdate, useDisclosure, useMergedRef } from '@mantine/hooks';
 import { DatePickerType } from '../../types';
 import { DateFormatter } from '../../utils';
 import { HiddenDatesInput, HiddenDatesInputValue } from '../HiddenDatesInput';
@@ -87,6 +88,9 @@ export interface PickerInputBaseProps
   type: DatePickerType;
   size?: MantineSize;
   withTime?: boolean;
+
+  /** Set when the dropdown content includes presets, reduces dropdown start padding */
+  withPresets?: boolean;
 }
 
 export type PickerInputBaseFactory = Factory<{
@@ -126,8 +130,35 @@ export const PickerInputBase = factory<PickerInputBaseFactory>((_props) => {
     type,
     onDropdownClose,
     withTime,
+    withPresets,
+    ref,
     ...others
   } = useInputProps('PickerInputBase', { size: 'sm' }, _props);
+
+  const inputRef = useRef<HTMLButtonElement>(null);
+  const dropdownRef = useRef<HTMLDivElement>(null);
+  const keyboardInteractionRef = useRef(false);
+
+  useDidUpdate(() => {
+    if (dropdownOpened) {
+      keyboardInteractionRef.current = false;
+      return;
+    }
+
+    if (!keyboardInteractionRef.current) {
+      return;
+    }
+
+    const activeElement = document.activeElement;
+    const focusLost =
+      !activeElement ||
+      activeElement === document.body ||
+      !!dropdownRef.current?.contains(activeElement);
+
+    if (focusLost) {
+      inputRef.current?.focus({ preventScroll: true });
+    }
+  }, [dropdownOpened]);
 
   const clearButton = (
     <Input.ClearButton onClick={onClear} unstyled={unstyled} {...clearButtonProps} />
@@ -194,6 +225,7 @@ export const PickerInputBase = factory<PickerInputBaseFactory>((_props) => {
               {...inputProps}
               classNames={{ ...classNames, input: cx(classes.input, (classNames as any)?.input) }}
               {...others}
+              ref={useMergedRef(inputRef, ref)}
             >
               {formattedValue || (
                 <Input.Placeholder
@@ -209,7 +241,20 @@ export const PickerInputBase = factory<PickerInputBaseFactory>((_props) => {
             </Input>
           </Popover.Target>
 
-          <Popover.Dropdown data-dates-dropdown>{children}</Popover.Dropdown>
+          <Popover.Dropdown
+            data-dates-dropdown
+            data-with-presets={withPresets || undefined}
+            className={unstyled ? undefined : classes.dropdown}
+            ref={dropdownRef}
+            onKeyDown={() => {
+              keyboardInteractionRef.current = true;
+            }}
+            onPointerDown={() => {
+              keyboardInteractionRef.current = false;
+            }}
+          >
+            {children}
+          </Popover.Dropdown>
         </Popover>
       </Input.Wrapper>
       <HiddenDatesInput value={value} name={name} form={form} type={type} withTime={withTime} />

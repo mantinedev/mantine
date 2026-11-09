@@ -53,13 +53,13 @@
     "react-dom": "^19.2.0"
   },
   "dependencies": {
-    "react-dropzone": "20.1.2"
+    "react-dropzone": "20.1.4"
   },
   "devDependencies": {
     "@mantine-tests/core": "workspace:*",
     "@mantine/core": "workspace:*",
     "@mantine/hooks": "workspace:*",
-    "react": "19.3.0",
-    "react-dom": "19.3.0"
+    "react": "19.3.1",
+    "react-dom": "19.3.1"
   }
 }

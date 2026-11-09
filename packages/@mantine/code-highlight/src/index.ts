@@ -20,6 +20,7 @@ import type {
   CodeHighlightTabsProps,
   CodeHighlightTabsStylesNames,
 } from './CodeHighlightTabs/CodeHighlightTabs.js';
+import type { DiffCssVariables, DiffFactory, DiffProps, DiffStylesNames } from './Diff/Diff.js';
 import type {
   JsonViewerCssVariables,
   JsonViewerFactory,
@@ -35,6 +36,7 @@ export { CodeHighlightTabs } from './CodeHighlightTabs/CodeHighlightTabs.js';
 export { CodeHighlightControl } from './CodeHighlight/CodeHighlightControl/CodeHighlightControl.js';
 export { useCodeHighlightContext } from './CodeHighlight/CodeHighlight.context.js';
 export { JsonViewer, serializePath as serializeJsonViewerPath } from './JsonViewer/JsonViewer.js';
+export { Diff } from './Diff/Diff.js';
 
 export {
   CodeHighlightAdapterProvider,
@@ -73,5 +75,9 @@ export type {
   JsonViewerCssVariables,
   JsonViewerFactory,
   JsonViewerHighlightType,
+  DiffProps,
+  DiffStylesNames,
+  DiffCssVariables,
+  DiffFactory,
   NormalizeCodeOptions,
 };

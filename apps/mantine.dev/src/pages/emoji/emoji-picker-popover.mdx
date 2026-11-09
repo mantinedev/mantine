@@ -1,0 +1,97 @@
+import { EmojiPickerPopoverDemos } from '@docs/demos';
+import { Layout } from '@/layout';
+import { MDX_DATA } from '@/mdx';
+
+export default Layout(MDX_DATA.EmojiPickerPopover);
+
+## Usage
+
+`EmojiPickerPopover` combines `EmojiPicker` with Mantine `Popover`.
+The child element is used as the popover target – the popover is toggled when it is clicked.
+
+<Demo data={EmojiPickerPopoverDemos.usage} />
+
+## Close on select
+
+By default, the popover closes when an emoji is selected. Set `closeOnSelect={false}` to keep it open:
+
+<Demo data={EmojiPickerPopoverDemos.closeOnSelect} />
+
+## EmojiPicker props
+
+All `EmojiPicker` props are supported directly on `EmojiPickerPopover`.
+For example, you can change the number of columns and hide the preview and category navigation:
+
+<Demo data={EmojiPickerPopoverDemos.pickerProps} />
+
+## onEmojiSelect
+
+`onEmojiSelect` is called with the full emoji object when an emoji is selected:
+
+```tsx
+import { useState } from 'react';
+import { ActionIcon } from '@mantine/core';
+import { EmojiPickerPopover } from '@mantine/emoji';
+import { emojiData } from './emoji-data';
+
+function Demo() {
+  const [emoji, setEmoji] = useState<string | null>(null);
+
+  return (
+    <EmojiPickerPopover data={emojiData} onEmojiSelect={(e) => setEmoji(e.emoji)}>
+      <ActionIcon variant="default" size="lg">
+        {emoji || '☺'}
+      </ActionIcon>
+    </EmojiPickerPopover>
+  );
+}
+```
+
+## Controlled state
+
+Use `opened` and `onOpenedChange` props to control the popover state. A controlled popover
+is not toggled when the target is clicked, add an `onClick` handler to the target element:
+
+```tsx
+import { useState } from 'react';
+import { ActionIcon } from '@mantine/core';
+import { EmojiPickerPopover } from '@mantine/emoji';
+import { emojiData } from './emoji-data';
+
+function Demo() {
+  const [opened, setOpened] = useState(false);
+
+  return (
+    <EmojiPickerPopover
+      data={emojiData}
+      opened={opened}
+      onOpenedChange={setOpened}
+    >
+      <ActionIcon variant="default" size="lg" onClick={() => setOpened((o) => !o)}>
+        ☺
+      </ActionIcon>
+    </EmojiPickerPopover>
+  );
+}
+```
+
+## Popover props
+
+Use the `popoverProps` prop to pass props to the underlying `Popover` component:
+
+```tsx
+import { ActionIcon } from '@mantine/core';
+import { EmojiPickerPopover } from '@mantine/emoji';
+import { emojiData } from './emoji-data';
+
+function Demo() {
+  return (
+    <EmojiPickerPopover
+      data={emojiData}
+      popoverProps={{ position: 'bottom-end', shadow: 'md', offset: 8 }}
+    >
+      <ActionIcon variant="default" size="lg">☺</ActionIcon>
+    </EmojiPickerPopover>
+  );
+}
+```

@@ -386,6 +386,7 @@ class MantineLLMCompiler {
       x: '@mantine/x',
       form: '@mantine/form',
       schedule: '@mantine/schedule',
+      emoji: '@mantine/emoji',
       guides: null,
       theming: null,
       styles: null,
@@ -424,6 +425,7 @@ class MantineLLMCompiler {
       x: [] as string[],
       form: [] as string[],
       schedule: [] as string[],
+      emoji: [] as string[],
       other: [] as string[],
     };
 
@@ -978,6 +980,7 @@ npm install ${packageList}
         '@mantine/spotlight',
         '@mantine/tiptap',
         '@mantine/dropzone',
+        '@mantine/emoji',
         '@mantine/carousel',
         '@mantine/lightbox',
         '@mantine/nprogress',
@@ -2066,6 +2069,7 @@ Additional information about ${component} component.`;
       'charts',
       'schedule',
       'code-highlight',
+      'emoji',
       'guides',
       'theming',
       'styles',

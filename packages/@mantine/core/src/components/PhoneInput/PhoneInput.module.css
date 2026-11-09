@@ -1,0 +1,72 @@
+.countryButton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  gap: 4px;
+  padding: 0 4px;
+  color: inherit;
+  height: 100%;
+  white-space: nowrap;
+  font-size: var(--input-fz, var(--mantine-font-size-sm));
+  border-radius: calc(var(--input-radius) - 1px);
+  margin-inline-end: 4px;
+
+  & [data-combobox-chevron] {
+    width: 12px;
+    height: 12px;
+  }
+
+  @mixin hover {
+    @mixin where-light {
+      &:where(:not(:disabled)) {
+        background-color: var(--mantine-color-gray-0);
+      }
+    }
+
+    @mixin where-dark {
+      &:where(:not(:disabled)) {
+        background-color: var(--mantine-color-dark-5);
+      }
+    }
+  }
+}
+
+.countryButton:disabled {
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+.countryButtonFlag {
+  display: flex;
+  align-items: center;
+
+  & img {
+    width: 20px;
+    height: 20px;
+  }
+}
+
+.countryButtonCode {
+  font-weight: 500;
+}
+
+.countryOption {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.optionName {
+  flex: 1;
+}
+
+.optionDialCode {
+  opacity: 0.5;
+  font-size: var(--mantine-font-size-xs);
+}
+
+.divider {
+  border-top: 1px solid var(--mantine-color-default-border);
+  margin: 4px 0;
+}

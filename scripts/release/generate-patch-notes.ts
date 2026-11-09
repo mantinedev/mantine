@@ -1,5 +1,5 @@
 import fs from 'fs-extra';
-import simpleGit from 'simple-git';
+import { simpleGit } from 'simple-git';
 import packageJson from '../../package.json';
 import { getPath } from '../utils/get-path';
 import { createLogger } from '../utils/signale';

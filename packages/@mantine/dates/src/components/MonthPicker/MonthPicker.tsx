@@ -9,7 +9,6 @@ import {
   getFontSize,
   MantineComponentStaticProperties,
   StylesApiProps,
-  UnstyledButton,
   useProps,
   useResolvedStylesApi,
   useStyles,
@@ -25,6 +24,7 @@ import {
 import { Calendar, CalendarBaseProps, pickCalendarProps } from '../Calendar';
 import { DecadeLevelBaseSettings } from '../DecadeLevel';
 import { DecadeLevelGroupStylesNames } from '../DecadeLevelGroup';
+import { PresetsList } from '../PresetsList';
 import { YearLevelBaseSettings } from '../YearLevel';
 import { YearLevelGroupStylesNames } from '../YearLevelGroup';
 import classes from './MonthPicker.module.css';
@@ -224,21 +224,15 @@ export const MonthPicker: MonthPickerComponent = factory<MonthPickerFactory>((_p
     }
   };
 
-  const presetButtons = presets.map((preset, index) => (
-    <UnstyledButton
-      key={index}
-      {...getStyles('presetButton')}
-      onClick={() => handlePresetSelect(preset.value)}
-      onMouseDown={(event) => event.preventDefault()}
-      data-mantine-stop-propagation={__stopPropagation || undefined}
-    >
-      {preset.label}
-    </UnstyledButton>
-  ));
-
   return (
     <Box {...getStyles('monthPickerRoot')} size={size} {...others}>
-      <div {...getStyles('presetsList')}>{presetButtons}</div>
+      <PresetsList
+        {...getStyles('presetsList')}
+        presets={presets}
+        onPresetSelect={handlePresetSelect}
+        buttonProps={getStyles('presetButton')}
+        stopPropagation={__stopPropagation}
+      />
       {calendar}
     </Box>
   );

@@ -1,7 +1,7 @@
 import path from 'node:path';
 import chalk from 'chalk';
 import fs from 'fs-extra';
-import simpleGit from 'simple-git';
+import { simpleGit } from 'simple-git';
 import { PackageJson } from 'type-fest';
 import { getNextVersion } from 'version-next';
 import { hideBin } from 'yargs/helpers';

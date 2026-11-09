@@ -63,6 +63,11 @@ export const Demo_autoCloseProgress = {
   render: renderDemo(demos.autoCloseProgress),
 };
 
+export const Demo_autoCloseProgressPosition = {
+  name: '⭐ Demo: autoCloseProgressPosition',
+  render: renderDemo(demos.autoCloseProgressPosition),
+};
+
 export const Demo_promise = {
   name: '⭐ Demo: promise',
   render: renderDemo(demos.promise),

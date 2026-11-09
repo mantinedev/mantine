@@ -48,8 +48,8 @@
     "@mantine/code-highlight": "workspace:*",
     "@mantine/core": "workspace:*",
     "@mantine/hooks": "workspace:*",
-    "react": "19.3.0",
-    "react-dom": "19.3.0",
-    "shiki": "^4.4.3"
+    "react": "19.3.1",
+    "react-dom": "19.3.1",
+    "shiki": "^4.5.0"
   }
 }

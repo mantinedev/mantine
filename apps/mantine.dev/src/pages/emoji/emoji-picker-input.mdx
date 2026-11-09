@@ -1,0 +1,133 @@
+import { EmojiPickerInputDemos } from '@docs/demos';
+import { Layout } from '@/layout';
+import { MDX_DATA } from '@/mdx';
+
+export default Layout(MDX_DATA.EmojiPickerInput);
+
+## Usage
+
+<InputFeatures component="EmojiPickerInput" element="button" />
+
+<Demo data={EmojiPickerInputDemos.usage} />
+
+## Controlled
+
+The `value` is an emoji ID (a key in `data.emojis`). Use `value` and `onChange` to control it.
+When the value is not selected in the picker, the input displays the emoji without skin tone:
+
+```tsx
+import { useState } from 'react';
+import { EmojiPickerInput } from '@mantine/emoji';
+import { emojiData } from './emoji-data';
+
+function Demo() {
+  const [value, setValue] = useState<string | null>(null);
+
+  return (
+    <EmojiPickerInput
+      data={emojiData}
+      value={value}
+      onChange={setValue}
+      placeholder="Select emoji"
+    />
+  );
+}
+```
+
+## Clearable
+
+Set `clearable` to display a clear button when an emoji is selected. The clear button
+has `aria-label="Clear emoji"` by default, use `clearButtonProps` to change it or pass
+other props to the button:
+
+<Demo data={EmojiPickerInputDemos.clearable} />
+
+## Close on select
+
+By default, the dropdown closes when an emoji is selected.
+Set `closeOnSelect={false}` to keep it open:
+
+<Demo data={EmojiPickerInputDemos.closeOnSelect} />
+
+## Disabled
+
+<Demo data={EmojiPickerInputDemos.disabled} />
+
+## Read only
+
+<Demo data={EmojiPickerInputDemos.readOnly} />
+
+## EmojiPicker props
+
+Use the `pickerProps` prop to pass props to the underlying `EmojiPicker`,
+for example to change the number of columns or hide sections:
+
+<Demo data={EmojiPickerInputDemos.pickerProps} />
+
+## Controlled dropdown
+
+Use `opened` and `onOpenedChange` props to control the dropdown state:
+
+```tsx
+import { useState } from 'react';
+import { EmojiPickerInput } from '@mantine/emoji';
+import { emojiData } from './emoji-data';
+
+function Demo() {
+  const [opened, setOpened] = useState(false);
+
+  return (
+    <EmojiPickerInput
+      data={emojiData}
+      opened={opened}
+      onOpenedChange={setOpened}
+      placeholder="Select emoji"
+    />
+  );
+}
+```
+
+## onEmojiSelect
+
+`onChange` is called with the emoji ID. Use `onEmojiSelect` to get the full emoji object
+with name, keywords and skin variants:
+
+```tsx
+import { EmojiPickerInput } from '@mantine/emoji';
+import { emojiData } from './emoji-data';
+
+function Demo() {
+  return (
+    <EmojiPickerInput
+      data={emojiData}
+      placeholder="Select emoji"
+      onEmojiSelect={(emoji) => console.log(emoji)}
+    />
+  );
+}
+```
+
+## Popover props
+
+Use the `popoverProps` prop to pass props to the underlying `Popover` component:
+
+```tsx
+import { EmojiPickerInput } from '@mantine/emoji';
+import { emojiData } from './emoji-data';
+
+function Demo() {
+  return (
+    <EmojiPickerInput
+      data={emojiData}
+      placeholder="Select emoji"
+      popoverProps={{ position: 'bottom-end', shadow: 'md', offset: 8 }}
+    />
+  );
+}
+```
+
+<StylesApiSelectors component="EmojiPickerInput" />
+
+<GetElementRef component="EmojiPickerInput" refType="button" package="@mantine/emoji" />
+
+<InputAccessibility component="EmojiPickerInput" package="@mantine/emoji" />

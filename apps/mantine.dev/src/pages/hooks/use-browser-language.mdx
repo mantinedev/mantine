@@ -1,0 +1,42 @@
+import { UseBrowserLanguageDemos } from '@docs/demos';
+import { Layout } from '@/layout';
+import { MDX_DATA } from '@/mdx';
+
+export default Layout(MDX_DATA.useBrowserLanguage);
+
+## Usage
+
+`use-browser-language` returns the browser language from
+[navigator.language](https://developer.mozilla.org/en-US/docs/Web/API/Navigator/language).
+The value is updated when the user changes the preferred language in the browser
+or operating system settings:
+
+<Demo data={UseBrowserLanguageDemos.usage} />
+
+## usePreferredLanguages
+
+`usePreferredLanguages` returns the list of the user's preferred languages from
+[navigator.languages](https://developer.mozilla.org/en-US/docs/Web/API/Navigator/languages),
+the most preferred language is first. Use it to find the best match with the locales
+that your application supports:
+
+<Demo data={UseBrowserLanguageDemos.languages} />
+
+## Definition
+
+```tsx
+function useBrowserLanguage(): string | undefined;
+function usePreferredLanguages(): readonly string[];
+```
+
+## Reacting to changes
+
+Both hooks subscribe to the window
+[languagechange](https://developer.mozilla.org/en-US/docs/Web/API/Window/languagechange_event)
+event and update the value when it fires.
+
+## Server-side rendering
+
+During server-side rendering and the first client render, `useBrowserLanguage`
+returns `undefined` and `usePreferredLanguages` returns an empty array. The values are set
+after the component is mounted.
