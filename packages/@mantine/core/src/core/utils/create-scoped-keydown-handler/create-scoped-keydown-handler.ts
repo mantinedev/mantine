@@ -144,7 +144,9 @@ export function createScopedKeydownHandler({
         event.preventDefault();
         const firstElement = elements[getNextIndex(-1, elements, false)];
         firstElement?.focus();
-        activateOnFocus && firstElement?.click();
+        if (activateOnFocus && firstElement?.getAttribute('aria-selected') !== 'true') {
+          firstElement?.click();
+        }
         break;
       }
 
@@ -153,7 +155,9 @@ export function createScopedKeydownHandler({
         event.preventDefault();
         const lastElement = elements[getPreviousIndex(elements.length, elements, false)];
         lastElement?.focus();
-        activateOnFocus && lastElement?.click();
+        if (activateOnFocus && lastElement?.getAttribute('aria-selected') !== 'true') {
+          lastElement?.click();
+        }
         break;
       }
     }
