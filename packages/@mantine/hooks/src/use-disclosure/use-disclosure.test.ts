@@ -1,3 +1,4 @@
+import React, { StrictMode } from 'react';
 import { act, renderHook } from '@testing-library/react';
 import { useDisclosure } from './use-disclosure';
 
@@ -70,6 +71,51 @@ describe('@mantine/hooks/use-disclosure', () => {
 
     act(() => hook.result.current[1].toggle());
     expect(onOpen).toHaveBeenCalledTimes(2);
+    expect(onClose).toHaveBeenCalledTimes(1);
+  });
+
+  it('calls onOpen once in StrictMode when open is called', () => {
+    const onOpen = jest.fn();
+    const hook = renderHook(() => useDisclosure(false, { onOpen }), {
+      wrapper: ({ children }: { children: React.ReactNode }) =>
+        React.createElement(StrictMode, null, children),
+    });
+
+    act(() => hook.result.current[1].open());
+
+    expect(hook.result.current[0]).toBe(true);
+    expect(onOpen).toHaveBeenCalledTimes(1);
+  });
+
+  it('calls onClose once in StrictMode when close is called', () => {
+    const onClose = jest.fn();
+    const hook = renderHook(() => useDisclosure(true, { onClose }), {
+      wrapper: ({ children }: { children: React.ReactNode }) =>
+        React.createElement(StrictMode, null, children),
+    });
+
+    act(() => hook.result.current[1].close());
+
+    expect(hook.result.current[0]).toBe(false);
+    expect(onClose).toHaveBeenCalledTimes(1);
+  });
+
+  it('calls toggle callbacks once per toggle in StrictMode', () => {
+    const onOpen = jest.fn();
+    const onClose = jest.fn();
+    const hook = renderHook(() => useDisclosure(false, { onOpen, onClose }), {
+      wrapper: ({ children }: { children: React.ReactNode }) =>
+        React.createElement(StrictMode, null, children),
+    });
+
+    act(() => hook.result.current[1].toggle());
+    expect(hook.result.current[0]).toBe(true);
+    expect(onOpen).toHaveBeenCalledTimes(1);
+    expect(onClose).toHaveBeenCalledTimes(0);
+
+    act(() => hook.result.current[1].toggle());
+    expect(hook.result.current[0]).toBe(false);
+    expect(onOpen).toHaveBeenCalledTimes(1);
     expect(onClose).toHaveBeenCalledTimes(1);
   });
 });
