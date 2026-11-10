@@ -3,7 +3,7 @@ import { useElementSize, useResizeObserver } from './use-resize-observer';
 
 function Demo({ box = 'border-box' }: { box?: ResizeObserverBoxOptions }) {
   const [ref, rect] = useResizeObserver({ box });
-  return <div ref={ref}>{rect.width}</div>;
+  return <div ref={ref}>{{ ...rect }.width}</div>;
 }
 
 function ElementSizeDemo() {
@@ -62,6 +62,28 @@ describe('@mantine/hooks/use-resize-observer', () => {
       expect(disconnect).toHaveBeenCalledTimes(1);
     }
   );
+
+  it('reports content dimensions when content-box is explicitly selected', () => {
+    const { container } = render(<Demo box="content-box" />);
+
+    act(() => {
+      callback(
+        [
+          {
+            target: container.firstElementChild!,
+            contentRect: new DOMRectReadOnly(0, 0, 80, 30),
+            borderBoxSize: [{ inlineSize: 100, blockSize: 50 }],
+            contentBoxSize: [{ inlineSize: 80, blockSize: 30 }],
+            devicePixelContentBoxSize: [{ inlineSize: 160, blockSize: 60 }],
+          },
+        ],
+        observer
+      );
+      jest.advanceTimersToNextFrame();
+    });
+
+    expect(screen.getByText('80')).toBeInTheDocument();
+  });
 
   it('reconnects when the box option changes', () => {
     const { container, rerender } = render(<Demo />);
