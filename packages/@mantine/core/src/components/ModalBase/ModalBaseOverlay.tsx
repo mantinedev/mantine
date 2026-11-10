@@ -24,17 +24,18 @@ export function ModalBaseOverlay({
 }: ModalBaseOverlayProps) {
   const ctx = useModalBaseContext();
   const transition = useModalTransition(transitionProps);
+  const isMounted = visible !== undefined ? visible : ctx.opened;
 
   return (
     <Transition
-      mounted={visible !== undefined ? visible : ctx.opened}
+      mounted={isMounted}
       {...transition}
       transition="fade"
     >
       {(transitionStyles) => (
         <Overlay
           fixed
-          style={[style, transitionStyles]}
+          style={[style, transitionStyles, !isMounted ? { pointerEvents: 'none' } : undefined]}
           zIndex={ctx.zIndex}
           unstyled={ctx.unstyled}
           onClick={(event) => {

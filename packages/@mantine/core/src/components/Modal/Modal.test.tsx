@@ -124,6 +124,23 @@ describe('@mantine/core/Modal', () => {
       display: 'none',
     });
   });
+
+  it('sets pointer-events: none on overlay when opened is false', () => {
+    const { container } = render(
+      <Modal
+        {...defaultProps}
+        opened={false}
+        keepMounted
+        transitionProps={{ duration: 0 }}
+      />,
+      undefined,
+      { env: 'default' }
+    );
+
+    expect(container.querySelector('.mantine-Modal-overlay')).toHaveStyle({
+      pointerEvents: 'none',
+    });
+  });
 });
 
 describe('@mantine/core/ModalRoot', () => {
