@@ -22,6 +22,10 @@ export interface UseListStateHandlers<T> {
 
 export type UseListStateReturnValue<T> = [T[], UseListStateHandlers<T>];
 
+function isListIndex(index: number, length: number) {
+  return Number.isInteger(index) && index >= 0 && index < length;
+}
+
 export function useListState<T>(initialValue: T[] | (() => T[]) = []): UseListStateReturnValue<T> {
   const [state, setState] = useState(initialValue);
 
@@ -70,6 +74,10 @@ export function useListState<T>(initialValue: T[] | (() => T[]) = []): UseListSt
   const reorder = useCallback(
     ({ from, to }: { from: number; to: number }) =>
       setState((current) => {
+        if (!isListIndex(from, current.length)) {
+          return current;
+        }
+
         const cloned = [...current];
         const item = current[from];
 
@@ -84,6 +92,10 @@ export function useListState<T>(initialValue: T[] | (() => T[]) = []): UseListSt
   const swap = useCallback(
     ({ from, to }: { from: number; to: number }) =>
       setState((current) => {
+        if (!isListIndex(from, current.length) || !isListIndex(to, current.length)) {
+          return current;
+        }
+
         const cloned = [...current];
         const fromItem = cloned[from];
         const toItem = cloned[to];
