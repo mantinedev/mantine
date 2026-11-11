@@ -65,6 +65,35 @@ Area codes, for example `+1 204` for Canada, are detected only with the prop:
 
 <Demo data={PhoneInputDemos.countryAutoDetect} />
 
+## Shared dial codes
+
+Countries sharing a dial code are selected by area code and priority by default.
+Use `resolveCountry` to choose one by ISO2 code, or return `undefined` to keep the default:
+
+```tsx
+<PhoneInput
+  defaultCountry="ru"
+  withCountryAutoDetect
+  resolveCountry={(value, countries) =>
+    value.startsWith('+77') && countries.some((country) => country.iso2 === 'kz') ? 'kz' : undefined
+  }
+/>
+```
+
+## National prefixes
+
+`PhoneInput` removes known trunk prefixes from pasted national numbers. For example, pasting
+`8 999 123-45-67` with Russia selected produces `+79991234567`. Clearing the input emits `''`.
+
+Ambiguous digits typed after a dial code are preserved by default. Set `nationalPrefixBehavior="strip"`
+when users should enter numbers in national form, or `"preserve"` to disable prefix removal.
+
+With `"strip"`, unprefixed numbers use the selected country. Include `+` to enter another country's dial code:
+
+```tsx
+<PhoneInput defaultCountry="ru" nationalPrefixBehavior="strip" />
+```
+
 ## Localization
 
 Use `renderCountryOption` to customize how countries are displayed in the dropdown.
