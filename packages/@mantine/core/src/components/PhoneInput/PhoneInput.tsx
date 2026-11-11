@@ -18,7 +18,11 @@ import { UnstyledButton } from '../UnstyledButton';
 import { buildRawValue } from './build-raw-value/build-raw-value';
 import { computeCursorPosition } from './compute-cursor-position/compute-cursor-position';
 import { CountryOptionContent } from './CountryOptionContent';
-import { clampToMask, formatPhoneNumber } from './format-phone-number/format-phone-number';
+import {
+  clampToMask,
+  formatPhoneNumber,
+  getMaskDigitCount,
+} from './format-phone-number/format-phone-number';
 import { filterCountries, getCountries } from './get-countries/get-countries';
 import { getDigits } from './get-digits/get-digits';
 import { guessCountry, matchesAreaCode } from './guess-country/guess-country';
@@ -74,6 +78,9 @@ export interface PhoneInputProps
   /** Called when selected country changes */
   onCountryChange?: (country: PhoneInputCountryData) => void;
 
+  /** Selects a country by ISO2 code when multiple countries share the detected dial code; return undefined to use the default area-code and priority detection */
+  resolveCountry?: (rawValue: string, countries: PhoneInputCountryData[]) => string | undefined;
+
   /** Enable search in country dropdown @default true */
   searchable?: boolean;
 
@@ -82,6 +89,9 @@ export interface PhoneInputProps
 
   /** Auto-detect country from typed dial code digits @default false */
   withCountryAutoDetect?: boolean;
+
+  /** Handling of national trunk prefixes: 'auto' preserves ambiguous typed digits, 'strip' removes a typed prefix, 'preserve' disables prefix removal (the mask still applies) @default 'auto' */
+  nationalPrefixBehavior?: 'auto' | 'strip' | 'preserve';
 
   /** Custom flag renderer for country selector button and dropdown options, receives null when no country is selected */
   renderFlag?: (country: PhoneInputCountryData | null) => React.ReactNode;
@@ -139,6 +149,7 @@ const defaultProps = {
   size: 'sm',
   searchable: true,
   international: true,
+  nationalPrefixBehavior: 'auto',
   maxDropdownHeight: 250,
   searchPlaceholder: 'Search countries',
   selectCountryLabel: 'Select country',
@@ -159,9 +170,11 @@ export const PhoneInput = factory<PhoneInputFactory>((_props) => {
     onlyCountries,
     excludeCountries,
     onCountryChange,
+    resolveCountry,
     searchable,
     international,
     withCountryAutoDetect,
+    nationalPrefixBehavior,
     renderFlag,
     renderCountryOption,
     readOnly,
@@ -203,7 +216,10 @@ export const PhoneInput = factory<PhoneInputFactory>((_props) => {
   const internalRef = useRef<HTMLInputElement>(null);
   const inputRef = useMergedRef(ref, internalRef);
   const countryLockedRef = useRef(false);
+  const nationalPrefixConsumedRef = useRef(false);
   const lastEmittedValueRef = useRef<string | undefined>(undefined);
+  const lastEmittedResolverRef = useRef(resolveCountry);
+  const lastEmittedDetectedCountryRef = useRef<string | undefined>(undefined);
 
   const { countries: filteredCountries, preferredList } = useMemo(
     () =>
@@ -220,16 +236,37 @@ export const PhoneInput = factory<PhoneInputFactory>((_props) => {
     [filteredCountries]
   );
 
+  const detectCountry = useCallback(
+    (rawValue: string) => {
+      const detected = guessCountry(rawValue, filteredCountries);
+      if (!detected || !resolveCountry) {
+        return { country: detected, resolvedByCallback: false };
+      }
+
+      const candidates = filteredCountries.filter(
+        (country) => country.dialCode === detected.dialCode
+      );
+      if (candidates.length < 2) {
+        return { country: detected, resolvedByCallback: false };
+      }
+
+      const iso2 = resolveCountry(rawValue, candidates);
+      const resolved = candidates.find((country) => country.iso2 === iso2?.toLowerCase());
+      return { country: resolved ?? detected, resolvedByCallback: !!resolved };
+    },
+    [filteredCountries, resolveCountry]
+  );
+
   const initialValue = value ?? defaultValue;
-  const inferredFromValue = initialValue
-    ? guessCountry(initialValue, filteredCountries)
-    : undefined;
+  const initialDetection = initialValue ? detectCountry(initialValue) : undefined;
+  const inferredFromValue = initialDetection?.country;
   const defaultCountryData = defaultCountry ? findCountryByIso2(defaultCountry) : undefined;
   const initialCountry = inferredFromValue || defaultCountryData || null;
 
   const [selectedCountry, setSelectedCountry] = useState<PhoneInputCountryData | null>(
     initialCountry
   );
+  const countryResolvedByCallbackRef = useRef(initialDetection?.resolvedByCallback ?? false);
   const [search, setSearch] = useState('');
   const [activeOptionId, setActiveOptionId] = useState<string | null>(null);
 
@@ -260,31 +297,47 @@ export const PhoneInput = factory<PhoneInputFactory>((_props) => {
   const isDetectedCountryDifferent = (
     detected: PhoneInputCountryData,
     current: PhoneInputCountryData | null,
-    rawValue: string
+    rawValue: string,
+    resolvedByCallback = false
   ) =>
     detected.iso2 !== current?.iso2 &&
-    (detected.dialCode !== current?.dialCode || matchesAreaCode(detected, rawValue));
+    (detected.dialCode !== current?.dialCode ||
+      matchesAreaCode(detected, rawValue) ||
+      resolvedByCallback ||
+      countryResolvedByCallbackRef.current);
 
   useEffect(() => {
-    const isOwnEcho = value !== undefined && value === lastEmittedValueRef.current;
-    const detected = value && !isOwnEcho ? guessCountry(value, filteredCountries) : undefined;
+    const isOwnEcho =
+      value !== undefined &&
+      value === lastEmittedValueRef.current &&
+      (countryLockedRef.current ||
+        resolveCountry === lastEmittedResolverRef.current ||
+        detectCountry(value).country?.iso2 === lastEmittedDetectedCountryRef.current);
+    const { country: detected, resolvedByCallback } =
+      value && !isOwnEcho
+        ? detectCountry(value)
+        : { country: undefined, resolvedByCallback: false };
 
     if (detected) {
-      if (isDetectedCountryDifferent(detected, selectedCountry, value ?? '')) {
+      if (isDetectedCountryDifferent(detected, selectedCountry, value ?? '', resolvedByCallback)) {
+        countryResolvedByCallbackRef.current = resolvedByCallback;
         setSelectedCountry(detected);
         onCountryChange?.(detected);
+      } else if (detected.iso2 === selectedCountry?.iso2) {
+        countryResolvedByCallbackRef.current = resolvedByCallback;
       }
       return;
     }
 
     if (selectedCountry && !filteredCountries.find((c) => c.iso2 === selectedCountry.iso2)) {
       const fallback = filteredCountries[0] || null;
+      countryResolvedByCallbackRef.current = false;
       setSelectedCountry(fallback);
       if (fallback) {
         onCountryChange?.(fallback);
       }
     }
-  }, [value, filteredCountries]);
+  }, [value, filteredCountries, detectCountry]);
 
   useEffect(() => {
     if (combobox.dropdownOpened) {
@@ -320,6 +373,8 @@ export const PhoneInput = factory<PhoneInputFactory>((_props) => {
 
   const emitChange = (rawValue: string, details: PhoneInputChangeDetails) => {
     lastEmittedValueRef.current = rawValue;
+    lastEmittedResolverRef.current = resolveCountry;
+    lastEmittedDetectedCountryRef.current = detectCountry(rawValue).country?.iso2;
     setValue(rawValue);
     onChange?.(rawValue, details);
   };
@@ -340,6 +395,7 @@ export const PhoneInput = factory<PhoneInputFactory>((_props) => {
     const canAutoDetect = autoDetectEnabled && !countryLockedRef.current;
 
     if (!digitsOnly) {
+      nationalPrefixConsumedRef.current = false;
       if (withCountryAutoDetect || !selectedCountry) {
         countryLockedRef.current = false;
       }
@@ -349,17 +405,8 @@ export const PhoneInput = factory<PhoneInputFactory>((_props) => {
         requestAnimationFrame(() => {
           input.setSelectionRange(1, 1);
         });
-      } else if (withCountryAutoDetect || !selectedCountry) {
-        handleValueChange('', selectedCountry);
-      } else if (!international) {
-        handleValueChange('', selectedCountry);
       } else {
-        const minRaw = `+${selectedCountry.dialCode}`;
-        handleValueChange(minRaw, selectedCountry);
-        const minFormatted = formatPhoneNumber(minRaw, selectedCountry);
-        requestAnimationFrame(() => {
-          input.setSelectionRange(minFormatted.length, minFormatted.length);
-        });
+        handleValueChange('', selectedCountry);
       }
       return;
     }
@@ -369,7 +416,7 @@ export const PhoneInput = factory<PhoneInputFactory>((_props) => {
     const dialCodeTyped = hasInternationalPrefix || (autoDetectEnabled && international);
     const typedCountry =
       selectedCountry && dialCodeTyped && (countryLockedRef.current || !autoDetectEnabled)
-        ? guessCountry(typedRaw, filteredCountries)
+        ? detectCountry(typedRaw).country
         : undefined;
     const dialCodeChanged = !!typedCountry && typedCountry.dialCode !== selectedCountry?.dialCode;
     const dialCodeIncomplete = hasInternationalPrefix && !canAutoDetect && !typedCountry;
@@ -379,23 +426,82 @@ export const PhoneInput = factory<PhoneInputFactory>((_props) => {
       countryLockedRef.current = false;
     }
 
+    const preferSelectedCountry =
+      nationalPrefixBehavior === 'strip' && !!selectedCountry && !hasInternationalPrefix;
+    const detectedFromDigits =
+      detectNow && international && !hasInternationalPrefix && !preferSelectedCountry
+        ? detectCountry(typedRaw).country
+        : undefined;
+    const inputCountry =
+      detectedFromDigits && detectedFromDigits.dialCode !== selectedCountry?.dialCode
+        ? null
+        : selectedCountry;
+
+    const nationalDigits =
+      international && typedRaw.startsWith(`+${selectedCountry?.dialCode}`)
+        ? typedRaw.slice((selectedCountry?.dialCode.length ?? 0) + 1)
+        : typedRaw.replace(/^\+/, '');
+    const hasNationalPrefix =
+      !!inputCountry?.nationalPrefix && nationalDigits.startsWith(inputCountry.nationalPrefix);
+    const previousDisplay = selectedCountry
+      ? toDisplayValue(formatPhoneNumber(_value, selectedCountry), selectedCountry)
+      : _value;
+    const addedLength = inputValue.length - previousDisplay.length;
+    const isInsertion =
+      addedLength > 0 &&
+      Array.from({ length: previousDisplay.length + 1 }, (_, index) => index).some(
+        (index) =>
+          inputValue.slice(0, index) + inputValue.slice(index + addedLength) === previousDisplay
+      );
+    const replacesValue =
+      !inputValue.startsWith(previousDisplay) &&
+      !previousDisplay.startsWith(inputValue) &&
+      !isInsertion;
+    const forceNationalPrefix =
+      nationalPrefixBehavior === 'strip' &&
+      hasNationalPrefix &&
+      !nationalPrefixConsumedRef.current &&
+      (!_value ||
+        _value === `+${inputCountry.dialCode}` ||
+        (replacesValue &&
+          (nationalDigits.length === inputCountry.nationalPrefix?.length ||
+            inputValue[0] !== previousDisplay[0]))) &&
+      (!hasInternationalPrefix || nationalDigits === inputCountry.nationalPrefix);
+    const normalizeNationalPrefix =
+      nationalPrefixBehavior !== 'preserve' &&
+      (!hasNationalPrefix ||
+        inputCountry.nationalPrefix === '0' ||
+        forceNationalPrefix ||
+        (nationalDigits.length > getMaskDigitCount(inputCountry.format) &&
+          (!_value || _value === `+${inputCountry.dialCode}` || replacesValue)));
+
     const fullRaw = buildRawValue(inputValue, {
       canAutoDetect: detectNow,
       international,
-      selectedCountry,
+      selectedCountry: inputCountry,
+      normalizeNationalPrefix,
+      forceNationalPrefix,
+      preferSelectedCountry,
     });
     let country = selectedCountry;
 
     if (detectNow) {
-      const detected = guessCountry(fullRaw, filteredCountries);
-      if (detected && isDetectedCountryDifferent(detected, selectedCountry, fullRaw)) {
+      const { country: detected, resolvedByCallback } = detectCountry(fullRaw);
+      if (
+        detected &&
+        isDetectedCountryDifferent(detected, selectedCountry, fullRaw, resolvedByCallback)
+      ) {
         country = detected;
+        countryResolvedByCallbackRef.current = resolvedByCallback;
         setSelectedCountry(detected);
         onCountryChange?.(detected);
+      } else if (detected?.iso2 === country?.iso2) {
+        countryResolvedByCallbackRef.current = resolvedByCallback;
       }
     }
 
     const newRaw = detectNow ? fullRaw : clampToMask(fullRaw, country);
+    nationalPrefixConsumedRef.current = forceNationalPrefix && newRaw === `+${country?.dialCode}`;
     const newFormatted = country ? formatPhoneNumber(newRaw, country) : newRaw;
     const newDisplayRaw =
       international || !country ? newRaw : newRaw.slice(country.dialCode.length + 1);
@@ -441,6 +547,8 @@ export const PhoneInput = factory<PhoneInputFactory>((_props) => {
     }
 
     countryLockedRef.current = true;
+    countryResolvedByCallbackRef.current = false;
+    nationalPrefixConsumedRef.current = false;
     setSelectedCountry(country);
     onCountryChange?.(country);
 

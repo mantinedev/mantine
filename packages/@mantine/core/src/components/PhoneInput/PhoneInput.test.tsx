@@ -76,6 +76,585 @@ describe('@mantine/core/PhoneInput', () => {
     });
   });
 
+  it('normalizes pasted national numbers with trunk prefixes', () => {
+    const onChange = jest.fn();
+    const { rerender } = render(<PhoneInput defaultCountry="ru" onChange={onChange} />);
+    const input = screen.getByRole('textbox') as HTMLInputElement;
+
+    fireEvent.change(input, { target: { value: '8 (999) 123-45-67' } });
+    expect(onChange).toHaveBeenLastCalledWith(
+      '+79991234567',
+      expect.objectContaining({ formattedValue: '+7 (999) 123-45-67' })
+    );
+
+    rerender(<PhoneInput defaultCountry="gb" onChange={onChange} key="gb" />);
+    fireEvent.change(screen.getByRole('textbox'), { target: { value: '020 7946 0958' } });
+    expect(onChange).toHaveBeenLastCalledWith(
+      '+442079460958',
+      expect.objectContaining({ formattedValue: '+44 2079 460958' })
+    );
+  });
+
+  it('normalizes a zero-prefix number while typing', async () => {
+    const onChange = jest.fn();
+    render(<PhoneInput defaultCountry="gb" onChange={onChange} />);
+
+    await userEvent.type(screen.getByRole('textbox'), '02079460958');
+
+    expect(onChange).toHaveBeenLastCalledWith('+442079460958', expect.anything());
+  });
+
+  it('preserves leading national digits on subsequent edits in national mode', () => {
+    const onChange = jest.fn();
+    render(
+      <PhoneInput
+        defaultCountry="ru"
+        international={false}
+        defaultValue="+78001234567"
+        onChange={onChange}
+      />
+    );
+
+    fireEvent.change(screen.getByRole('textbox'), { target: { value: '(800) 123-45-68' } });
+
+    expect(onChange).toHaveBeenLastCalledWith('+78001234568', expect.anything());
+  });
+
+  it('preserves an international Russian number with a leading 8 on subsequent edits', () => {
+    const onChange = jest.fn();
+    render(<PhoneInput defaultCountry="ru" onChange={onChange} />);
+    const input = screen.getByRole('textbox') as HTMLInputElement;
+
+    fireEvent.change(input, { target: { value: '+78121234567' } });
+    expect(onChange).toHaveBeenLastCalledWith('+78121234567', expect.anything());
+
+    fireEvent.change(input, { target: { value: '+7 (812) 123-45-68' } });
+    expect(onChange).toHaveBeenLastCalledWith('+78121234568', expect.anything());
+  });
+
+  it('preserves a legitimate leading 8 while typing an international number', async () => {
+    const onChange = jest.fn();
+    render(<PhoneInput defaultCountry="ru" onChange={onChange} />);
+
+    await userEvent.type(screen.getByRole('textbox'), '8121234567');
+
+    expect(onChange).toHaveBeenLastCalledWith('+78121234567', expect.anything());
+  });
+
+  it('does not remove a valid leading 8 when another digit is added to a complete number', () => {
+    const onChange = jest.fn();
+    render(<PhoneInput defaultCountry="ru" defaultValue="+78121234567" onChange={onChange} />);
+
+    fireEvent.change(screen.getByRole('textbox'), {
+      target: { value: '+7 (812) 123-45-678' },
+    });
+
+    expect(onChange).toHaveBeenLastCalledWith('+78121234567', expect.anything());
+  });
+
+  it('preserves a valid leading 8 when a digit is inserted into a complete number', () => {
+    const onChange = jest.fn();
+    render(<PhoneInput defaultCountry="ru" defaultValue="+78121234567" onChange={onChange} />);
+
+    fireEvent.change(screen.getByRole('textbox'), {
+      target: { value: '+7 (812) 9123-45-67' },
+    });
+
+    expect(onChange).toHaveBeenLastCalledWith('+78129123456', expect.anything());
+  });
+
+  it('preserves a valid leading 8 when multiple digits are inserted into a complete number', () => {
+    const onChange = jest.fn();
+    render(<PhoneInput defaultCountry="ru" defaultValue="+78121234567" onChange={onChange} />);
+
+    fireEvent.change(screen.getByRole('textbox'), {
+      target: { value: '+7 (812) 99123-45-67' },
+    });
+
+    expect(onChange).toHaveBeenLastCalledWith('+78129912345', expect.anything());
+  });
+
+  it('preserves a typed Russian area code starting with 8 when the mask is full', async () => {
+    const onChange = jest.fn();
+    render(<PhoneInput defaultCountry="ru" onChange={onChange} />);
+    const input = screen.getByRole('textbox');
+
+    await userEvent.type(input, '8431234567');
+    await userEvent.type(input, '8');
+
+    expect(onChange).toHaveBeenLastCalledWith('+78431234567', expect.anything());
+  });
+
+  it('does not strip a legitimate Russian 879 area code when the mask is full', async () => {
+    const onChange = jest.fn();
+    render(<PhoneInput defaultCountry="ru" onChange={onChange} />);
+    const input = screen.getByRole('textbox');
+
+    await userEvent.type(input, '8793123456');
+    await userEvent.type(input, '7');
+
+    expect(onChange).toHaveBeenLastCalledWith('+78793123456', expect.anything());
+  });
+
+  it('normalizes a national number pasted after the displayed dial code', () => {
+    const onChange = jest.fn();
+    render(<PhoneInput defaultCountry="ru" onChange={onChange} />);
+
+    fireEvent.change(screen.getByRole('textbox'), { target: { value: '+7 89991234567' } });
+
+    expect(onChange).toHaveBeenLastCalledWith('+79991234567', expect.anything());
+  });
+
+  it.each([true, false])(
+    'normalizes a national number pasted over an existing value (international=%s)',
+    (international) => {
+      const onChange = jest.fn();
+      render(
+        <PhoneInput
+          defaultCountry="ru"
+          defaultValue="+79991234567"
+          international={international}
+          onChange={onChange}
+        />
+      );
+
+      fireEvent.change(screen.getByRole('textbox'), { target: { value: '89991234567' } });
+
+      expect(onChange).toHaveBeenLastCalledWith('+79991234567', expect.anything());
+    }
+  );
+
+  it('keeps foreign dial-code detection when national trunk prefix matches its first digit', () => {
+    const onChange = jest.fn();
+    render(<PhoneInput defaultCountry="ru" withCountryAutoDetect onChange={onChange} />);
+
+    fireEvent.change(screen.getByRole('textbox'), { target: { value: '8613812345678' } });
+
+    expect(onChange).toHaveBeenLastCalledWith(
+      '+8613812345678',
+      expect.objectContaining({ country: expect.objectContaining({ iso2: 'cn' }) })
+    );
+    expect(screen.getByRole('button', { name: /China/ })).toBeInTheDocument();
+  });
+
+  it('still normalizes a Russian trunk prefix with country auto-detection enabled', () => {
+    const onChange = jest.fn();
+    render(<PhoneInput defaultCountry="ru" withCountryAutoDetect onChange={onChange} />);
+
+    fireEvent.change(screen.getByRole('textbox'), { target: { value: '89991234567' } });
+
+    expect(onChange).toHaveBeenLastCalledWith(
+      '+79991234567',
+      expect.objectContaining({ country: expect.objectContaining({ iso2: 'ru' }) })
+    );
+  });
+
+  it('uses the default country detection when resolveCountry returns undefined', () => {
+    render(
+      <PhoneInput
+        defaultValue="+77011234567"
+        resolveCountry={() => undefined}
+        onlyCountries={['ru', 'kz']}
+      />
+    );
+
+    expect(screen.getByRole('button', { name: /Russia/ })).toBeInTheDocument();
+  });
+
+  it('uses resolveCountry to choose among countries sharing a dial code', () => {
+    const resolveCountry = jest.fn(() => 'kz');
+    render(
+      <PhoneInput
+        defaultValue="+77011234567"
+        resolveCountry={resolveCountry}
+        onlyCountries={['ru', 'kz']}
+      />
+    );
+
+    expect(screen.getByRole('button', { name: /Kazakhstan/ })).toBeInTheDocument();
+    expect(resolveCountry).toHaveBeenCalledWith(
+      '+77011234567',
+      expect.arrayContaining([
+        expect.objectContaining({ iso2: 'ru' }),
+        expect.objectContaining({ iso2: 'kz' }),
+      ])
+    );
+  });
+
+  it('ignores a resolved country that is not among the detected dial-code candidates', () => {
+    render(
+      <PhoneInput
+        defaultValue="+77011234567"
+        resolveCountry={() => 'gb'}
+        onlyCountries={['ru', 'kz', 'gb']}
+      />
+    );
+
+    expect(screen.getByRole('button', { name: /Russia/ })).toBeInTheDocument();
+  });
+
+  it('re-resolves a controlled value when its shared-dial-code preference changes', () => {
+    const onCountryChange = jest.fn();
+    const { rerender } = render(
+      <PhoneInput
+        value="+77011234567"
+        onChange={jest.fn()}
+        resolveCountry={() => 'ru'}
+        onCountryChange={onCountryChange}
+      />
+    );
+
+    rerender(
+      <>
+        <PhoneInput
+          value="+77011234567"
+          onChange={jest.fn()}
+          resolveCountry={() => 'kz'}
+          onCountryChange={onCountryChange}
+        />
+      </>
+    );
+
+    expect(screen.getByRole('button', { name: /Kazakhstan/ })).toBeInTheDocument();
+    expect(onCountryChange).toHaveBeenCalledWith(expect.objectContaining({ iso2: 'kz' }));
+  });
+
+  it('restores default country detection when a resolver stops overriding', () => {
+    const onCountryChange = jest.fn();
+    const { rerender } = render(
+      <PhoneInput
+        value="+79991234567"
+        onChange={jest.fn()}
+        resolveCountry={() => 'kz'}
+        onCountryChange={onCountryChange}
+      />
+    );
+    expect(screen.getByRole('button', { name: /Kazakhstan/ })).toBeInTheDocument();
+
+    rerender(
+      <>
+        <PhoneInput
+          value="+79991234567"
+          onChange={jest.fn()}
+          resolveCountry={() => undefined}
+          onCountryChange={onCountryChange}
+        />
+      </>
+    );
+
+    expect(screen.getByRole('button', { name: /Russia/ })).toBeInTheDocument();
+    expect(onCountryChange).toHaveBeenCalledWith(expect.objectContaining({ iso2: 'ru' }));
+  });
+
+  it('restores default detection after a resolver keeps the current country', () => {
+    const onCountryChange = jest.fn();
+    const { rerender } = render(
+      <PhoneInput value="+77172123456" onChange={jest.fn()} onCountryChange={onCountryChange} />
+    );
+    expect(screen.getByRole('button', { name: /Kazakhstan/ })).toBeInTheDocument();
+
+    rerender(
+      <>
+        <PhoneInput
+          value="+79991234567"
+          onChange={jest.fn()}
+          resolveCountry={() => 'kz'}
+          onCountryChange={onCountryChange}
+        />
+      </>
+    );
+    expect(screen.getByRole('button', { name: /Kazakhstan/ })).toBeInTheDocument();
+
+    rerender(
+      <>
+        <PhoneInput
+          value="+79991234567"
+          onChange={jest.fn()}
+          resolveCountry={() => undefined}
+          onCountryChange={onCountryChange}
+        />
+      </>
+    );
+
+    expect(screen.getByRole('button', { name: /Russia/ })).toBeInTheDocument();
+    expect(onCountryChange).toHaveBeenCalledWith(expect.objectContaining({ iso2: 'ru' }));
+  });
+
+  it('re-resolves an echoed controlled value when the country resolver changes', () => {
+    const onCountryChange = jest.fn();
+    const resolveRussia = () => 'ru';
+    const resolveKazakhstan = () => 'kz';
+
+    function Controlled({ resolveCountry }: { resolveCountry: PhoneInputProps['resolveCountry'] }) {
+      const [value, setValue] = useState('+7');
+      return (
+        <PhoneInput
+          value={value}
+          onChange={setValue}
+          resolveCountry={resolveCountry}
+          onCountryChange={onCountryChange}
+        />
+      );
+    }
+
+    const { rerender } = render(<Controlled resolveCountry={resolveRussia} />);
+    fireEvent.change(screen.getByRole('textbox'), { target: { value: '+77011234567' } });
+    expect(screen.getByRole('button', { name: /Russia/ })).toBeInTheDocument();
+
+    rerender(
+      <>
+        <Controlled resolveCountry={resolveKazakhstan} />
+      </>
+    );
+
+    expect(screen.getByRole('button', { name: /Kazakhstan/ })).toBeInTheDocument();
+    expect(onCountryChange).toHaveBeenCalledWith(expect.objectContaining({ iso2: 'kz' }));
+  });
+
+  it('keeps a manually selected country with a controlled inline resolver', async () => {
+    function Controlled() {
+      const [value, setValue] = useState('+79991234567');
+      return (
+        <PhoneInput
+          value={value}
+          onChange={setValue}
+          resolveCountry={() => 'ru'}
+          onlyCountries={['ru', 'kz']}
+        />
+      );
+    }
+
+    render(<Controlled />);
+    await userEvent.click(screen.getByRole('button', { name: /Russia/ }));
+    await userEvent.click(screen.getByRole('option', { name: /Kazakhstan/ }));
+    await userEvent.type(screen.getByRole('textbox'), '8');
+
+    expect(screen.getByRole('button', { name: /Kazakhstan/ })).toBeInTheDocument();
+  });
+
+  it('does not re-detect a shared area code from an inline resolver echo', () => {
+    function Controlled() {
+      const [value, setValue] = useState('+1');
+      return (
+        <PhoneInput
+          defaultCountry="us"
+          value={value}
+          onChange={setValue}
+          resolveCountry={() => undefined}
+        />
+      );
+    }
+
+    render(<Controlled />);
+    fireEvent.change(screen.getByRole('textbox'), { target: { value: '+12045551234' } });
+
+    expect(screen.getByRole('button', { name: /United States/ })).toBeInTheDocument();
+  });
+
+  it('switches to a resolved country sharing the selected dial code during auto-detection', () => {
+    const onChange = jest.fn();
+    const onCountryChange = jest.fn();
+    render(
+      <PhoneInput
+        defaultCountry="ru"
+        withCountryAutoDetect
+        resolveCountry={(rawValue) => (rawValue.startsWith('+77') ? 'kz' : undefined)}
+        onChange={onChange}
+        onCountryChange={onCountryChange}
+      />
+    );
+
+    fireEvent.change(screen.getByRole('textbox'), { target: { value: '+77011234567' } });
+
+    expect(screen.getByRole('button', { name: /Kazakhstan/ })).toBeInTheDocument();
+    expect(onCountryChange).toHaveBeenCalledWith(expect.objectContaining({ iso2: 'kz' }));
+    expect(onChange).toHaveBeenLastCalledWith(
+      '+77011234567',
+      expect.objectContaining({ country: expect.objectContaining({ iso2: 'kz' }) })
+    );
+  });
+
+  it.each([true, false])(
+    'strips a typed Russian trunk prefix when opted in (international=%s)',
+    async (international) => {
+      const onChange = jest.fn();
+      render(
+        <PhoneInput
+          defaultCountry="ru"
+          international={international}
+          nationalPrefixBehavior="strip"
+          onChange={onChange}
+        />
+      );
+
+      await userEvent.type(screen.getByRole('textbox'), '89991234567');
+
+      expect(onChange).toHaveBeenLastCalledWith('+79991234567', expect.anything());
+    }
+  );
+
+  it('preserves the first national digit after an opted-in trunk prefix', async () => {
+    const onChange = jest.fn();
+    render(<PhoneInput defaultCountry="ru" nationalPrefixBehavior="strip" onChange={onChange} />);
+
+    await userEvent.type(screen.getByRole('textbox'), '88001234567');
+
+    expect(onChange).toHaveBeenLastCalledWith('+78001234567', expect.anything());
+  });
+
+  it('strips a national prefix when typing over an existing number', async () => {
+    const onChange = jest.fn();
+    render(
+      <PhoneInput
+        defaultCountry="ru"
+        defaultValue="+78121234567"
+        nationalPrefixBehavior="strip"
+        onChange={onChange}
+      />
+    );
+    const input = screen.getByRole('textbox');
+
+    fireEvent.change(input, { target: { value: '8' } });
+    await userEvent.type(input, '9991234567');
+
+    expect(onChange).toHaveBeenLastCalledWith('+79991234567', expect.anything());
+  });
+
+  it('keeps a valid leading digit when editing a national number in strip mode', () => {
+    const onChange = jest.fn();
+    render(
+      <PhoneInput
+        defaultCountry="ru"
+        international={false}
+        defaultValue="+78001234567"
+        nationalPrefixBehavior="strip"
+        onChange={onChange}
+      />
+    );
+
+    fireEvent.change(screen.getByRole('textbox'), { target: { value: '(800) 123-45-68' } });
+
+    expect(onChange).toHaveBeenLastCalledWith('+78001234568', expect.anything());
+  });
+
+  it.each([false, true])(
+    'keeps Kazakhstan national digits after clearing the input (autoDetect=%s)',
+    async (withCountryAutoDetect) => {
+      const onChange = jest.fn();
+      render(
+        <PhoneInput
+          defaultCountry="kz"
+          withCountryAutoDetect={withCountryAutoDetect}
+          onChange={onChange}
+        />
+      );
+      const input = screen.getByRole('textbox');
+
+      await userEvent.clear(input);
+      await userEvent.type(input, '7011234567');
+
+      expect(onChange).toHaveBeenLastCalledWith(
+        '+77011234567',
+        expect.objectContaining({ country: expect.objectContaining({ iso2: 'kz' }) })
+      );
+    }
+  );
+
+  it('detects an unprefixed complete international number without duplicating its dial code', () => {
+    const onChange = jest.fn();
+    render(<PhoneInput defaultCountry="us" withCountryAutoDetect onChange={onChange} />);
+
+    fireEvent.change(screen.getByRole('textbox'), { target: { value: '12025551234' } });
+
+    expect(onChange).toHaveBeenLastCalledWith('+12025551234', expect.anything());
+  });
+
+  it('keeps a short unprefixed international number with its selected dial code', () => {
+    const onChange = jest.fn();
+    render(<PhoneInput defaultCountry="de" onChange={onChange} />);
+
+    fireEvent.change(screen.getByRole('textbox'), { target: { value: '4930123456' } });
+
+    expect(onChange).toHaveBeenLastCalledWith('+4930123456', expect.anything());
+  });
+
+  it('prefers a selected country trunk prefix over an unprefixed foreign dial code when opted in', () => {
+    const onChange = jest.fn();
+    render(
+      <PhoneInput
+        defaultCountry="ru"
+        withCountryAutoDetect
+        nationalPrefixBehavior="strip"
+        onChange={onChange}
+      />
+    );
+
+    fireEvent.change(screen.getByRole('textbox'), { target: { value: '84951234567' } });
+
+    expect(onChange).toHaveBeenLastCalledWith(
+      '+74951234567',
+      expect.objectContaining({ country: expect.objectContaining({ iso2: 'ru' }) })
+    );
+  });
+
+  it('keeps national digits with auto-detection enabled in strip mode', () => {
+    const onChange = jest.fn();
+    render(
+      <PhoneInput
+        defaultCountry="ru"
+        withCountryAutoDetect
+        nationalPrefixBehavior="strip"
+        onChange={onChange}
+      />
+    );
+
+    fireEvent.change(screen.getByRole('textbox'), { target: { value: '9121234567' } });
+
+    expect(onChange).toHaveBeenLastCalledWith(
+      '+79121234567',
+      expect.objectContaining({ country: expect.objectContaining({ iso2: 'ru' }) })
+    );
+  });
+
+  it('still detects explicitly international numbers in strip mode', () => {
+    const onChange = jest.fn();
+    render(
+      <PhoneInput
+        defaultCountry="ru"
+        withCountryAutoDetect
+        nationalPrefixBehavior="strip"
+        onChange={onChange}
+      />
+    );
+
+    fireEvent.change(screen.getByRole('textbox'), { target: { value: '+919876543210' } });
+
+    expect(onChange).toHaveBeenLastCalledWith(
+      '+919876543210',
+      expect.objectContaining({ country: expect.objectContaining({ iso2: 'in' }) })
+    );
+  });
+
+  it('keeps an explicitly entered international number when strip is enabled', () => {
+    const onChange = jest.fn();
+    render(<PhoneInput defaultCountry="ru" nationalPrefixBehavior="strip" onChange={onChange} />);
+
+    fireEvent.change(screen.getByRole('textbox'), { target: { value: '+78121234567' } });
+
+    expect(onChange).toHaveBeenLastCalledWith('+78121234567', expect.anything());
+  });
+
+  it('preserves pasted national prefixes when opted out', () => {
+    const onChange = jest.fn();
+    render(
+      <PhoneInput defaultCountry="ru" nationalPrefixBehavior="preserve" onChange={onChange} />
+    );
+
+    fireEvent.change(screen.getByRole('textbox'), { target: { value: '8999' } });
+
+    expect(onChange).toHaveBeenLastCalledWith('+78999', expect.anything());
+  });
+
   it('supports controlled value', () => {
     const spy = jest.fn();
     render(<PhoneInput {...testProps} value="+12025551234" onChange={spy} />);
@@ -277,7 +856,7 @@ describe('@mantine/core/PhoneInput', () => {
     const input = screen.getByRole('textbox') as HTMLInputElement;
 
     await userEvent.clear(input);
-    expect(onChange).toHaveBeenLastCalledWith('+1', expect.anything());
+    expect(onChange).toHaveBeenLastCalledWith('', expect.anything());
 
     await userEvent.type(input, '+');
     expect(input.value).toBe('+');
@@ -484,6 +1063,25 @@ describe('@mantine/core/PhoneInput', () => {
 
     expect(screen.getByRole('button', { name: /United States/ })).toBeInTheDocument();
     expect(onCountryChange).not.toHaveBeenCalled();
+  });
+
+  it('keeps the selected country for national input with auto-detection enabled', () => {
+    const onChange = jest.fn();
+    render(
+      <PhoneInput
+        defaultCountry="us"
+        international={false}
+        withCountryAutoDetect
+        onChange={onChange}
+      />
+    );
+
+    fireEvent.change(screen.getByRole('textbox'), { target: { value: '2025551234' } });
+
+    expect(onChange).toHaveBeenLastCalledWith(
+      '+12025551234',
+      expect.objectContaining({ country: expect.objectContaining({ iso2: 'us' }) })
+    );
   });
 
   it('keeps the picked country on an area code match while locked', async () => {
@@ -744,7 +1342,7 @@ describe('@mantine/core/PhoneInput', () => {
     expect(screen.getByRole('button', { name: /United Kingdom/ })).toBeInTheDocument();
   });
 
-  it('restores dial code when input is cleared without withCountryAutoDetect', async () => {
+  it('emits an empty value when input is cleared without withCountryAutoDetect', async () => {
     const onChange = jest.fn();
     render(<PhoneInput {...testProps} onChange={onChange} />);
 
@@ -752,10 +1350,25 @@ describe('@mantine/core/PhoneInput', () => {
     await userEvent.type(input, '2025551234');
     await userEvent.clear(input);
 
-    expect(onChange).toHaveBeenLastCalledWith(
-      '+1',
-      expect.objectContaining({ country: expect.objectContaining({ iso2: 'us' }) })
-    );
+    expect(onChange).toHaveBeenLastCalledWith('', {
+      formattedValue: '',
+      country: expect.objectContaining({ iso2: 'us' }),
+    });
+    expect((input as HTMLInputElement).value).toBe('');
+  });
+
+  it('keeps a controlled input empty after clearing its national digits', async () => {
+    function Controlled() {
+      const [value, setValue] = useState('+79991234567');
+      return <PhoneInput defaultCountry="ru" value={value} onChange={setValue} />;
+    }
+
+    render(<Controlled />);
+    const input = screen.getByRole('textbox') as HTMLInputElement;
+    await userEvent.clear(input);
+
+    expect(input.value).toBe('');
+    expect(screen.getByRole('button', { name: /Russia/ })).toBeInTheDocument();
   });
 
   it('calls onChange with empty string when input is cleared with withCountryAutoDetect', async () => {

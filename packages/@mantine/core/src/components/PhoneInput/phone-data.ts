@@ -1,6 +1,6 @@
 // Country data ported from react-phone-input-2
-// Format: [name, iso2, dialCode, format?, priority?, areaCodes?]
-export type RawCountryData = [string, string, string, string?, number?, string[]?];
+// Format: [name, iso2, dialCode, format?, priority?, areaCodes?, nationalPrefix?]
+export type RawCountryData = [string, string, string, string?, number?, string[]?, string?];
 
 export const RAW_COUNTRIES: RawCountryData[] = [
   ['Afghanistan', 'af', '93'],
@@ -154,13 +154,13 @@ export const RAW_COUNTRIES: RawCountryData[] = [
   ['Ethiopia', 'et', '251'],
   ['Fiji', 'fj', '679'],
   ['Finland', 'fi', '358', '.. ... .. ..'],
-  ['France', 'fr', '33', '. .. .. .. ..'],
+  ['France', 'fr', '33', '. .. .. .. ..', 0, undefined, '0'],
   ['French Guiana', 'gf', '594'],
   ['French Polynesia', 'pf', '689'],
   ['Gabon', 'ga', '241'],
   ['Gambia', 'gm', '220'],
   ['Georgia', 'ge', '995'],
-  ['Germany', 'de', '49', '.... ........'],
+  ['Germany', 'de', '49', '.... ........', 0, undefined, '0'],
   ['Ghana', 'gh', '233'],
   ['Greece', 'gr', '30'],
   ['Grenada', 'gd', '1473'],
@@ -207,6 +207,7 @@ export const RAW_COUNTRIES: RawCountryData[] = [
       '7172',
       '73622',
     ],
+    '8',
   ],
   ['Kenya', 'ke', '254'],
   ['Kiribati', 'ki', '686'],
@@ -269,7 +270,7 @@ export const RAW_COUNTRIES: RawCountryData[] = [
   ['Qatar', 'qa', '974'],
   ['Réunion', 're', '262'],
   ['Romania', 'ro', '40'],
-  ['Russia', 'ru', '7', '(...) ...-..-..', 0],
+  ['Russia', 'ru', '7', '(...) ...-..-..', 0, undefined, '8'],
   ['Rwanda', 'rw', '250'],
   ['Saint Kitts and Nevis', 'kn', '1869'],
   ['Saint Lucia', 'lc', '1758'],
@@ -313,7 +314,7 @@ export const RAW_COUNTRIES: RawCountryData[] = [
   ['Uganda', 'ug', '256'],
   ['Ukraine', 'ua', '380', '(..) ... .. ..'],
   ['United Arab Emirates', 'ae', '971'],
-  ['United Kingdom', 'gb', '44', '.... ......'],
+  ['United Kingdom', 'gb', '44', '.... ......', 0, undefined, '0'],
   [
     'United States',
     'us',
@@ -615,18 +616,21 @@ export interface PhoneInputCountryData {
   priority: number;
   /** Area codes for countries sharing same dial code */
   areaCodes: string[] | null;
+  /** National trunk prefix omitted from international phone numbers */
+  nationalPrefix?: string;
 }
 
 export const DEFAULT_MASK = '... ... ... ... ..';
 
 export function parseCountryData(rawData: RawCountryData[]): PhoneInputCountryData[] {
-  return rawData.map(([name, iso2, dialCode, format, priority, areaCodes]) => ({
+  return rawData.map(([name, iso2, dialCode, format, priority, areaCodes, nationalPrefix]) => ({
     name,
     iso2,
     dialCode,
     format: format || DEFAULT_MASK,
     priority: priority ?? 0,
     areaCodes: areaCodes ?? null,
+    nationalPrefix,
   }));
 }
 
