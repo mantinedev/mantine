@@ -76,6 +76,18 @@ describe('@mantine/core/PhoneInput', () => {
     });
   });
 
+  it('strips national trunk prefix from a typed national number', async () => {
+    const onChange = jest.fn();
+    render(<PhoneInput {...testProps} defaultCountry="ru" onChange={onChange} />);
+    const input = screen.getByRole('textbox');
+    await userEvent.type(input, '89991234567');
+    expect(onChange).toHaveBeenLastCalledWith('+79991234567', {
+      formattedValue: '+7 (999) 123-45-67',
+      country: expect.objectContaining({ iso2: 'ru', dialCode: '7' }),
+    });
+    expect(input).toHaveValue('+7 (999) 123-45-67');
+  });
+
   it('supports controlled value', () => {
     const spy = jest.fn();
     render(<PhoneInput {...testProps} value="+12025551234" onChange={spy} />);

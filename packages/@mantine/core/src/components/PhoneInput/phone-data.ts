@@ -615,7 +615,19 @@ export interface PhoneInputCountryData {
   priority: number;
   /** Area codes for countries sharing same dial code */
   areaCodes: string[] | null;
+  /** National (trunk) prefix dialed before the national number within the country, for example `8` in Russia or `0` in the United Kingdom */
+  nationalPrefix?: string | null;
 }
+
+export const NATIONAL_PREFIXES: Record<string, string> = {
+  ru: '8',
+  kz: '8',
+  gb: '0',
+  je: '0',
+  de: '0',
+  fr: '0',
+  ua: '0',
+};
 
 export const DEFAULT_MASK = '... ... ... ... ..';
 
@@ -627,6 +639,7 @@ export function parseCountryData(rawData: RawCountryData[]): PhoneInputCountryDa
     format: format || DEFAULT_MASK,
     priority: priority ?? 0,
     areaCodes: areaCodes ?? null,
+    nationalPrefix: NATIONAL_PREFIXES[iso2] ?? null,
   }));
 }
 
