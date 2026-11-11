@@ -12,7 +12,7 @@
   align-items: center;
   border: 1px solid;
   border-radius: var(--toggle-radius, var(--mantine-radius-default));
-  cursor: pointer;
+  cursor: var(--mantine-cursor-type);
   appearance: none;
   text-decoration: none;
   line-height: 1;

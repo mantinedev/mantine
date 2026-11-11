@@ -13,7 +13,7 @@
   justify-content: center;
   align-items: center;
   user-select: none;
-  cursor: pointer;
+  cursor: var(--mantine-cursor-type);
   background-color: transparent;
   color: var(--mantine-color-text);
   opacity: 1;

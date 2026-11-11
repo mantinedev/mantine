@@ -52,7 +52,7 @@
   }
 
   &[data-pointer] {
-    --input-cursor: pointer;
+    --input-cursor: var(--mantine-cursor-type);
   }
 
   &[data-with-bottom-section] {

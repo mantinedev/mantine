@@ -96,7 +96,7 @@
   );
   border: 0;
   padding: 0;
-  cursor: pointer;
+  cursor: var(--mantine-cursor-type);
   z-index: 1;
 }
 

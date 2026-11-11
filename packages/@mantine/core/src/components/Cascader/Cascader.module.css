@@ -31,7 +31,7 @@
   align-self: stretch;
   padding-inline: calc(var(--combobox-padding) / 2);
   color: var(--mantine-color-dimmed);
-  cursor: pointer;
+  cursor: var(--mantine-cursor-type);
   border-inline-end: rem(1px) solid var(--popover-border-color, var(--mantine-color-default-border));
 
   @mixin hover {
@@ -88,7 +88,7 @@
   font-size: var(--combobox-option-fz, var(--mantine-font-size-sm));
   border-radius: var(--combobox-option-radius, var(--mantine-radius-default));
   color: var(--mantine-color-text);
-  cursor: pointer;
+  cursor: var(--mantine-cursor-type);
 
   @mixin hover {
     &:where(:not([data-disabled], [data-active])) {

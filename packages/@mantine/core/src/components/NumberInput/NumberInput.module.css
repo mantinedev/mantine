@@ -36,7 +36,7 @@
   justify-content: center;
   color: var(--mantine-color-text);
   background-color: transparent;
-  cursor: pointer;
+  cursor: var(--mantine-cursor-type);
 
   &:where(:disabled) {
     background-color: transparent;

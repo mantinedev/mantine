@@ -1,5 +1,5 @@
 .input {
-  cursor: pointer;
+  cursor: var(--mantine-cursor-type);
   line-height: unset;
 
   &:where([data-read-only]) {

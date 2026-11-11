@@ -1,7 +1,7 @@
 .monthsList {
   border-collapse: collapse;
   border-width: 0;
-  cursor: pointer;
+  cursor: var(--mantine-cursor-type);
 
   &[data-full-width] {
     width: 100%;

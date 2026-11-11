@@ -35,7 +35,7 @@
   overflow: hidden;
 
   width: auto;
-  cursor: pointer;
+  cursor: var(--mantine-cursor-type);
   display: inline-block;
   border-radius: var(--button-radius, var(--mantine-radius-default));
   font-size: var(--button-fz, var(--mantine-font-size-sm));

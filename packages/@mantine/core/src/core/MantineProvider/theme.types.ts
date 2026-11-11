@@ -111,9 +111,9 @@ export interface MantineTheme {
   /** Determines whether user OS settings to reduce motion should be respected, `false` by default */
   respectReducedMotion: boolean;
 
-  /** Determines which cursor type will be used for interactive elements
-   * - `default` – cursor that is used by native HTML elements, for example, `input[type="checkbox"]` has `cursor: default` styles
-   * - `pointer` – sets `cursor: pointer` on interactive elements that do not have these styles by default
+  /** Determines the cursor used by interactive elements
+   * - `default` – uses the default cursor
+   * - `pointer` – uses the pointer cursor
    */
   cursorType: 'default' | 'pointer';
 

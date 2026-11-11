@@ -40,7 +40,7 @@
   font-weight: inherit;
   color: inherit;
   border-radius: var(--mantine-radius-default);
-  cursor: pointer;
+  cursor: var(--mantine-cursor-type);
 
   &:where(:disabled, [data-disabled]) {
     cursor: not-allowed;

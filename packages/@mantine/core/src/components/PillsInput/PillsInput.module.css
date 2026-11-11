@@ -36,7 +36,7 @@
   }
 
   &:where([data-pointer]:not([data-disabled], :disabled)) {
-    cursor: pointer;
+    cursor: var(--mantine-cursor-type);
   }
 
   &:where([data-disabled], :disabled) {

@@ -24,7 +24,7 @@
   min-width: var(--_ts-expand-icon-size);
   height: var(--_ts-expand-icon-size);
   border-radius: var(--mantine-radius-sm);
-  cursor: pointer;
+  cursor: var(--mantine-cursor-type);
   color: var(--mantine-color-dimmed);
   transform: rotate(-90deg);
 
