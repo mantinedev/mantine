@@ -36,6 +36,71 @@ function tests(mode: FormMode) {
     });
   });
 
+  it.each([
+    { from: 0, to: 2, order: ['B', 'C', 'A', 'D'] },
+    { from: 2, to: 0, order: ['C', 'A', 'B', 'D'] },
+    { from: 0, to: 1, order: ['B', 'A', 'C', 'D'] },
+    { from: 1, to: 1, order: ['A', 'B', 'C', 'D'] },
+  ])('keeps row errors with values when moving $from to $to', ({ from, to, order }) => {
+    const records = ['A', 'B', 'C', 'D'].map((id) => ({ id, name: id, nested: { value: id } }));
+    const hook = renderHook(() =>
+      useForm({
+        mode,
+        initialValues: { items: records },
+        initialErrors: {
+          'items.0': 'A row',
+          'items.0.name': 'A name',
+          'items.0.nested.value': 'A nested',
+          'items.1': 'B row',
+          'items.1.name': 'B name',
+          'items.1.nested.value': 'B nested',
+          'items.2': 'C row',
+          'items.2.name': 'C name',
+          'items.2.nested.value': 'C nested',
+          'items.3': 'D row',
+          'items.3.name': 'D name',
+          'items.3.nested.value': 'D nested',
+          unrelated: 'Other error',
+        },
+      })
+    );
+
+    act(() => hook.result.current.reorderListItem('items', { from, to }));
+
+    expect(hook.result.current.getValues().items.map((item) => item.id)).toStrictEqual(order);
+    order.forEach((id, index) => {
+      expect(hook.result.current.getInputProps(`items.${index}`).error).toBe(`${id} row`);
+      expect(hook.result.current.getInputProps(`items.${index}.name`).error).toBe(`${id} name`);
+      expect(hook.result.current.getInputProps(`items.${index}.nested.value`).error).toBe(
+        `${id} nested`
+      );
+    });
+    expect(hook.result.current.errors.unrelated).toBe('Other error');
+  });
+
+  it.each([
+    { from: 0, to: 2, order: ['B', 'C', 'A'], errors: ['B error', undefined, undefined] },
+    { from: 2, to: 0, order: ['C', 'A', 'B'], errors: [undefined, undefined, 'B error'] },
+  ])('moves sparse nested errors from $from to $to', ({ from, to, order, errors }) => {
+    const hook = renderHook(() =>
+      useForm({
+        mode,
+        initialValues: { group: { items: [{ name: 'A' }, { name: 'B' }, { name: 'C' }] } },
+        initialErrors: { 'group.items.1.name': 'B error', 'group.other.1.name': 'Other error' },
+      })
+    );
+
+    act(() => hook.result.current.reorderListItem('group.items', { from, to }));
+
+    expect(hook.result.current.getValues().group.items.map((item) => item.name)).toStrictEqual(
+      order
+    );
+    expect(
+      order.map((_, index) => hook.result.current.getInputProps(`group.items.${index}.name`).error)
+    ).toStrictEqual(errors);
+    expect(hook.result.current.getInputProps('group.other.1.name').error).toBe('Other error');
+  });
+
   it('calls onValuesChange when reorderListItem is called', () => {
     const spy = jest.fn();
     const hook = renderHook(() =>
