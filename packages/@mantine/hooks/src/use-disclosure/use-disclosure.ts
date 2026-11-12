@@ -1,4 +1,4 @@
-import { useCallback, useState } from 'react';
+import { useCallback, useRef, useState } from 'react';
 
 export interface UseDisclosureOptions {
   onOpen?: () => void;
@@ -19,32 +19,34 @@ export function useDisclosure(
   options: UseDisclosureOptions = {}
 ): UseDisclosureReturnValue {
   const [opened, setOpened] = useState(initialState);
+  const openedRef = useRef(initialState);
+
+  const setOpen = useCallback((value: boolean) => {
+    openedRef.current = value;
+    setOpened(value);
+  }, []);
 
   const open = useCallback(() => {
-    setOpened((isOpened) => {
-      if (!isOpened) {
-        options.onOpen?.();
-        return true;
-      }
-      return isOpened;
-    });
-  }, [options.onOpen]);
+    if (openedRef.current) {
+      return;
+    }
+    options.onOpen?.();
+    setOpen(true);
+  }, [options.onOpen, setOpen]);
 
   const close = useCallback(() => {
-    setOpened((isOpened) => {
-      if (isOpened) {
-        options.onClose?.();
-        return false;
-      }
-      return isOpened;
-    });
-  }, [options.onClose]);
+    if (!openedRef.current) {
+      return;
+    }
+    options.onClose?.();
+    setOpen(false);
+  }, [options.onClose, setOpen]);
 
   const toggle = useCallback(() => {
-    opened ? close() : open();
-  }, [close, open, opened]);
+    openedRef.current ? close() : open();
+  }, [close, open]);
 
-  return [opened, { open, close, toggle, set: setOpened }];
+  return [opened, { open, close, toggle, set: setOpen }];
 }
 
 export namespace useDisclosure {
