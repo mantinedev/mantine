@@ -125,18 +125,20 @@ describe('@mantine/core/Modal', () => {
     });
   });
 
-  it('sets pointer-events: none on overlay when opened is false', () => {
-    const { container } = render(
-      <Modal
-        {...defaultProps}
-        opened={false}
-        keepMounted
-        transitionProps={{ duration: 0 }}
-      />,
+  it('does not intercept pointer events when the overlay is kept mounted after closing', () => {
+    const { container, rerender } = render(
+      <Modal {...defaultProps} keepMounted transitionProps={{ duration: 0 }} />,
       undefined,
       { env: 'default' }
     );
 
+    expect(container.querySelector('.mantine-Modal-overlay')).not.toHaveStyle({
+      pointerEvents: 'none',
+    });
+
+    rerender(
+      <Modal {...defaultProps} opened={false} keepMounted transitionProps={{ duration: 0 }} />
+    );
     expect(container.querySelector('.mantine-Modal-overlay')).toHaveStyle({
       pointerEvents: 'none',
     });

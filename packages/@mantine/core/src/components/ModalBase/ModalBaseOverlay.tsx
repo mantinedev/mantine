@@ -27,11 +27,7 @@ export function ModalBaseOverlay({
   const isMounted = visible !== undefined ? visible : ctx.opened;
 
   return (
-    <Transition
-      mounted={isMounted}
-      {...transition}
-      transition="fade"
-    >
+    <Transition mounted={isMounted} {...transition} transition="fade">
       {(transitionStyles) => (
         <Overlay
           fixed
