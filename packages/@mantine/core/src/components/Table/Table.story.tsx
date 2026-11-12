@@ -144,6 +144,46 @@ export function StickyHeaderBorderVariants() {
   );
 }
 
+function SpanningHeaderTable({ stickyHeader }: { stickyHeader?: boolean }) {
+  return (
+    <div style={{ padding: 40, maxWidth: 720 }}>
+      <div style={{ maxHeight: 220, overflow: 'auto' }}>
+        <Table stickyHeader={stickyHeader} withColumnBorders withTableBorder>
+          <Table.Thead>
+            <Table.Tr>
+              <Table.Th rowSpan={2}>Position</Table.Th>
+              <Table.Th colSpan={2}>Identity</Table.Th>
+              <Table.Th rowSpan={2}>Mass</Table.Th>
+            </Table.Tr>
+            <Table.Tr>
+              <Table.Th>Name</Table.Th>
+              <Table.Th>Symbol</Table.Th>
+            </Table.Tr>
+          </Table.Thead>
+          <Table.Tbody>
+            {Array.from({ length: 20 }, (_, index) => (
+              <Table.Tr key={index}>
+                <Table.Td>{index + 1}</Table.Td>
+                <Table.Td>Carbon</Table.Td>
+                <Table.Td>C</Table.Td>
+                <Table.Td>12.011</Table.Td>
+              </Table.Tr>
+            ))}
+          </Table.Tbody>
+        </Table>
+      </div>
+    </div>
+  );
+}
+
+export function StickyHeaderWithSpans() {
+  return <SpanningHeaderTable stickyHeader />;
+}
+
+export function NonStickyHeaderWithSpans() {
+  return <SpanningHeaderTable />;
+}
+
 export function VerticalVariant() {
   return (
     <div style={{ padding: 40 }}>
