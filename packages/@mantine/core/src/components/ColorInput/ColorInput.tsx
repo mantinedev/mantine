@@ -245,7 +245,9 @@ export const ColorInput = factory<ColorInputFactory>((_props) => {
         unstyled={unstyled}
         withRoles={false}
         disabled={
-          readOnly || (withPicker === false && (!Array.isArray(swatches) || swatches.length === 0))
+          disabled ||
+          readOnly ||
+          (withPicker === false && (!Array.isArray(swatches) || swatches.length === 0))
         }
       >
         <Popover.Target>
