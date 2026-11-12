@@ -188,6 +188,31 @@ describe('@mantine/core/Tabs', () => {
     expectActiveTab('tab-1');
   });
 
+  it('handles Home and End keys correctly', async () => {
+    render(<Tabs {...defaultProps} defaultValue="tab-1" />);
+
+    await userEvent.type(getTab('tab-1'), '{end}');
+    expect(getTab('tab-3')).toHaveFocus();
+    expectActiveTab('tab-3');
+
+    await userEvent.type(getTab('tab-3'), '{home}');
+    expect(getTab('tab-1')).toHaveFocus();
+    expectActiveTab('tab-1');
+  });
+
+  it('does not deactivate a selected tab with repeated Home or End keys', async () => {
+    render(<Tabs {...defaultProps} defaultValue="tab-1" allowTabDeactivation />);
+
+    await userEvent.type(getTab('tab-1'), '{home}');
+    expectActiveTab('tab-1');
+
+    await userEvent.type(getTab('tab-1'), '{end}{end}');
+    expectActiveTab('tab-3');
+
+    await userEvent.type(getTab('tab-3'), '{home}{home}');
+    expectActiveTab('tab-1');
+  });
+
   it('does not display any tab if value in null', async () => {
     render(<Tabs {...defaultProps} value={null} />);
     expectActiveTab(null);

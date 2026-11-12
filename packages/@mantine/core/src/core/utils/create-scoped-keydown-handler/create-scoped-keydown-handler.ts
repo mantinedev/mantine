@@ -142,14 +142,22 @@ export function createScopedKeydownHandler({
       case 'Home': {
         event.stopPropagation();
         event.preventDefault();
-        elements[getNextIndex(-1, elements, false)]?.focus();
+        const firstElement = elements[getNextIndex(-1, elements, false)];
+        firstElement?.focus();
+        if (activateOnFocus && firstElement?.getAttribute('aria-selected') !== 'true') {
+          firstElement?.click();
+        }
         break;
       }
 
       case 'End': {
         event.stopPropagation();
         event.preventDefault();
-        elements[getPreviousIndex(elements.length, elements, false)]?.focus();
+        const lastElement = elements[getPreviousIndex(elements.length, elements, false)];
+        lastElement?.focus();
+        if (activateOnFocus && lastElement?.getAttribute('aria-selected') !== 'true') {
+          lastElement?.click();
+        }
         break;
       }
     }
