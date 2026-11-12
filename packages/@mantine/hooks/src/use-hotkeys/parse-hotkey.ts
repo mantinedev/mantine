@@ -37,7 +37,7 @@ const keyNameMap: Record<string, string> = {
 };
 
 function normalizeKey(key: string): string {
-  const lowerKey = key.replace('Key', '').toLowerCase();
+  const lowerKey = key.replace(/^Key/i, '').toLowerCase();
   return keyNameMap[key] || lowerKey;
 }
 
