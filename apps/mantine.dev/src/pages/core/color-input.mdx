@@ -129,3 +129,21 @@ and `rightSection` props:
 <GetElementRef component="ColorInput" refType="input" />
 
 <InputAccessibility component="ColorInput" />
+
+To set `aria-label` on the saturation, hue and alpha sliders in the dropdown, use `saturationLabel`,
+`hueLabel` and `alphaLabel` props:
+
+```tsx
+import { ColorInput } from '@mantine/core';
+
+function Demo() {
+  return (
+    <ColorInput
+      label="Color"
+      saturationLabel="Saturation"
+      hueLabel="Hue"
+      alphaLabel="Alpha"
+    />
+  );
+}
+```
