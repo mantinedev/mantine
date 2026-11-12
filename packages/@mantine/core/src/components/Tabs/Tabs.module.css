@@ -217,11 +217,9 @@
 }
 
 .tab--outline {
-  border-top: 1px solid transparent;
-  border-bottom: 1px solid transparent;
-  border-inline: 1px solid transparent;
-  border-top-color: var(--tab-border-top-color);
-  border-bottom-color: var(--tab-border-bottom-color);
+  border-width: 1px;
+  border-style: solid;
+  border-color: var(--tab-border-top-color) transparent var(--tab-border-bottom-color);
   border-radius: var(--tab-radius);
   position: relative;
 
