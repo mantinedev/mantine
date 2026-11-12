@@ -1,4 +1,4 @@
-import { useRef } from 'react';
+import { useEffect, useRef } from 'react';
 import cx from 'clsx';
 import {
   __BaseInputProps,
@@ -139,6 +139,14 @@ export const PickerInputBase = factory<PickerInputBaseFactory>((_props) => {
   const dropdownRef = useRef<HTMLDivElement>(null);
   const keyboardInteractionRef = useRef(false);
 
+  const { close } = dropdownHandlers;
+
+  useEffect(() => {
+    if (disabled) {
+      close();
+    }
+  }, [disabled, close]);
+
   useDidUpdate(() => {
     if (dropdownOpened) {
       keyboardInteractionRef.current = false;
@@ -175,7 +183,7 @@ export const PickerInputBase = factory<PickerInputBaseFactory>((_props) => {
 
   return (
     <>
-      {dropdownType === 'modal' && !readOnly && (
+      {dropdownType === 'modal' && !readOnly && !disabled && (
         <Modal
           opened={dropdownOpened}
           onClose={handleClose}
@@ -198,7 +206,7 @@ export const PickerInputBase = factory<PickerInputBaseFactory>((_props) => {
           unstyled={unstyled}
           onClose={onDropdownClose}
           {...popoverProps}
-          disabled={popoverProps?.disabled || dropdownType === 'modal' || readOnly}
+          disabled={disabled || popoverProps?.disabled || dropdownType === 'modal' || readOnly}
           onChange={(_opened) => {
             if (!_opened) {
               popoverProps?.onClose?.();
