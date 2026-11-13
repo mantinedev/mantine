@@ -905,7 +905,6 @@ export const WeekView = factory<WeekViewFactory>((_props) => {
       ref={(node) => {
         weekdaysRef.current[dayIndex] = node!;
       }}
-      aria-label={`${getLabel('weekday', labels)} ${dayjs(day).format('YYYY-MM-DD')}`}
       mod={{
         today: dayjs(day).isSame(now, 'day') && !!highlightToday,
         weekend: ctx.getWeekendDays(weekendDays).includes(dayjs(day).day() as DayOfWeek),
