@@ -7,3 +7,8 @@ export const Demo_usage = {
   name: '⭐ Demo: usage',
   render: renderDemo(demos.usage),
 };
+
+export const Demo_richContent = {
+  name: '⭐ Demo: richContent',
+  render: renderDemo(demos.richContent),
+};
