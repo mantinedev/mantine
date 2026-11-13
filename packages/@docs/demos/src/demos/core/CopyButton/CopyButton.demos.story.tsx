@@ -12,3 +12,8 @@ export const Demo_timeout = {
   name: '⭐ Demo: timeout',
   render: renderDemo(demos.timeout),
 };
+
+export const Demo_richContent = {
+  name: '⭐ Demo: richContent',
+  render: renderDemo(demos.richContent),
+};
