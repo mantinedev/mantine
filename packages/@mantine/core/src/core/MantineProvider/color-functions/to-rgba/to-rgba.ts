@@ -47,8 +47,9 @@ function hexToRgba(color: string): RGBA {
 
 function rgbStringToRgba(color: string): RGBA {
   const [r, g, b, a] = color
-    .replace(/[^0-9,./]/g, '')
-    .split(/[/,]/)
+    .replace(/[^0-9,./\s]/g, '')
+    .trim()
+    .split(/\s*[/,]\s*|\s+/)
     .map(Number);
 
   return { r, g, b, a: a === undefined ? 1 : a };

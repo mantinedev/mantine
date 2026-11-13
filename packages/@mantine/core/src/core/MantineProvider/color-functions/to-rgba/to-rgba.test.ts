@@ -40,6 +40,13 @@ describe('@mantine/core/to-rgba', () => {
     expect(toRgba('rgb(112, 72, 232 / .2)')).toStrictEqual({ r: 112, g: 72, b: 232, a: 0.2 });
   });
 
+  it('returns the correct rgba values when given a space-separated rgb string', () => {
+    expect(toRgba('rgb(240 62 62)')).toStrictEqual({ r: 240, g: 62, b: 62, a: 1 });
+    expect(toRgba('rgb(240 62 62 / 0.8)')).toStrictEqual({ r: 240, g: 62, b: 62, a: 0.8 });
+    expect(toRgba('rgba(112 72 232/.2)')).toStrictEqual({ r: 112, g: 72, b: 232, a: 0.2 });
+    expect(toRgba('rgba( 214 , 51 , 108 )')).toStrictEqual({ r: 214, g: 51, b: 108, a: 1 });
+  });
+
   it('preserves zero alpha in hsla colors', () => {
     expect(toRgba('hsla(120, 100%, 50%, 0)')).toStrictEqual({ r: 0, g: 255, b: 0, a: 0 });
     expect(toRgba('hsla(240, 100%, 50%, 0.0)')).toStrictEqual({ r: 0, g: 0, b: 255, a: 0 });
