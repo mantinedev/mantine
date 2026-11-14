@@ -408,8 +408,8 @@ export function Popover(_props: PopoverProps) {
         <Transition
           transition="fade"
           mounted={popover.opened}
-          duration={transitionProps?.duration || 250}
-          exitDuration={transitionProps?.exitDuration || 250}
+          duration={transitionProps?.duration ?? 250}
+          exitDuration={transitionProps?.exitDuration ?? transitionProps?.duration ?? 250}
         >
           {(transitionStyles) => (
             <OptionalPortal withinPortal={withinPortal}>

@@ -236,6 +236,22 @@ describe('@mantine/core/Popover', () => {
     offsetHeight.mockRestore();
   });
 
+  it('removes overlay without delay when transition duration is 0', async () => {
+    const { container, rerender } = render(<TestContainer opened withOverlay />, undefined, {
+      env: 'default',
+    });
+    await act(() => Promise.resolve());
+    expect(container.querySelector('.mantine-Popover-overlay')).toBeInTheDocument();
+
+    rerender(
+      <>
+        <TestContainer opened={false} withOverlay />
+      </>
+    );
+    await act(() => Promise.resolve());
+    expect(container.querySelector('.mantine-Popover-overlay')).not.toBeInTheDocument();
+  });
+
   it('exposes PopoverTarget and PopoverDropdown as static properties', () => {
     expect(Popover.Dropdown).toBe(PopoverDropdown);
     expect(Popover.Target).toBe(PopoverTarget);
