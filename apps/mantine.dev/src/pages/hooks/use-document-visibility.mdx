@@ -11,9 +11,35 @@ The `use-document-visibility` hook returns the current [document.visibilityState
 
 <Demo data={UseDocumentVisibilityDemos.usage} />
 
+In client-only rendering, the hook returns the browser's current visibility from the first
+render. If the page opens in a background tab, the initial value is `'hidden'`. The value updates
+when the tab visibility changes.
+
+## Server-side rendering
+
+During server rendering and initial hydration, the hook returns `'visible'` by default.
+The server cannot determine the visibility of the browser tab. Pass `'hidden'` to use a
+different fallback:
+
+```tsx
+import { useDocumentVisibility } from '@mantine/hooks';
+
+function Demo() {
+  const visibility = useDocumentVisibility('hidden');
+
+  return <div>Document visibility: {visibility}</div>;
+}
+```
+
+Use the same fallback on the server and client to avoid hydration mismatches.
+After hydration, the hook updates to the browser's current visibility without waiting for a
+`visibilitychange` event. The fallback does not affect client-only rendering.
+
 ## Definition
 
 ```tsx
 // DocumentVisibilityState is 'visible' | 'hidden'
-function useDocumentVisibility(): DocumentVisibilityState;
+function useDocumentVisibility(
+  serverSnapshot?: DocumentVisibilityState
+): DocumentVisibilityState;
 ```
