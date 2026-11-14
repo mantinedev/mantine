@@ -31,4 +31,17 @@ describe('@mantine/form/isInRange', () => {
     expect(clampValidator(8)).toBe(TEST_ERROR);
     expect(clampValidator(0)).toBe(TEST_ERROR);
   });
+
+  it('detects non-finite numbers as invalid', () => {
+    const clampValidator = isInRange({ min: 1, max: 5 }, TEST_ERROR);
+    expect(clampValidator(NaN)).toBe(TEST_ERROR);
+    expect(clampValidator(Infinity)).toBe(TEST_ERROR);
+
+    const minValidator = isInRange({ min: 1 }, TEST_ERROR);
+    expect(minValidator(Infinity)).toBe(TEST_ERROR);
+
+    const maxValidator = isInRange({ max: 5 }, TEST_ERROR);
+    expect(maxValidator(-Infinity)).toBe(TEST_ERROR);
+    expect(maxValidator(NaN)).toBe(TEST_ERROR);
+  });
 });

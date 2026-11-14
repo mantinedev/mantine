@@ -45,18 +45,26 @@ function hexToRgba(color: string): RGBA {
   };
 }
 
+function parseAlpha(value: string | undefined): number {
+  if (value === undefined || value === '') {
+    return 1;
+  }
+
+  return value.endsWith('%') ? parseFloat(value) / 100 : parseFloat(value);
+}
+
 function rgbStringToRgba(color: string): RGBA {
   const [r, g, b, a] = color
-    .replace(/[^0-9,./]/g, '')
-    .split(/[/,]/)
-    .map(Number);
+    .replace(/[^0-9,./%\s]/g, '')
+    .trim()
+    .split(/\s*[/,]\s*|\s+/);
 
-  return { r, g, b, a: a === undefined ? 1 : a };
+  return { r: Number(r), g: Number(g), b: Number(b), a: parseAlpha(a) };
 }
 
 function hslStringToRgba(hslaString: string): RGBA {
   const hslaRegex =
-    /^hsla?\(\s*(\d+)\s*,\s*(\d+%)\s*,\s*(\d+%)\s*(,\s*(0?\.\d+|\d+(\.\d+)?))?\s*\)$/i;
+    /^hsla?\(\s*([+-]?(?:\d+\.?\d*|\.\d+))\s*,\s*(\d+\.?\d*|\.\d+)%\s*,\s*(\d+\.?\d*|\.\d+)%\s*(?:,\s*(\d+\.?\d*%?|\.\d+%?)\s*)?\)$/i;
 
   const matches = hslaString.match(hslaRegex);
   if (!matches) {
@@ -68,10 +76,10 @@ function hslStringToRgba(hslaString: string): RGBA {
     };
   }
 
-  const h = parseInt(matches[1], 10);
-  const s = parseInt(matches[2], 10) / 100;
-  const l = parseInt(matches[3], 10) / 100;
-  const a = matches[5] ? parseFloat(matches[5]) : undefined;
+  const h = ((parseFloat(matches[1]) % 360) + 360) % 360;
+  const s = parseFloat(matches[2]) / 100;
+  const l = parseFloat(matches[3]) / 100;
+  const a = parseAlpha(matches[4]);
 
   const chroma = (1 - Math.abs(2 * l - 1)) * s;
   const huePrime = h / 60;
@@ -112,7 +120,7 @@ function hslStringToRgba(hslaString: string): RGBA {
     r: Math.round((r + m) * 255),
     g: Math.round((g + m) * 255),
     b: Math.round((b + m) * 255),
-    a: a === undefined ? 1 : a,
+    a,
   };
 }
 

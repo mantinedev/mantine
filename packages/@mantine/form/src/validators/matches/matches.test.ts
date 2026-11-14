@@ -15,4 +15,17 @@ describe('@mantine/form/matches', () => {
     expect(validator('1')).toBe(null);
     expect(validator('1234')).toBe(null);
   });
+
+  it('returns the same result on repeated calls with global and sticky regexps', () => {
+    const globalValidator = matches(/^\d+$/g, TEST_ERROR);
+    expect(globalValidator('123')).toBe(null);
+    expect(globalValidator('123')).toBe(null);
+    expect(globalValidator('123')).toBe(null);
+    expect(globalValidator('test')).toBe(TEST_ERROR);
+    expect(globalValidator('123')).toBe(null);
+
+    const stickyValidator = matches(/\d+/y, TEST_ERROR);
+    expect(stickyValidator('123')).toBe(null);
+    expect(stickyValidator('123')).toBe(null);
+  });
 });

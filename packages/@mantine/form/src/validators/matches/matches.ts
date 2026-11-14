@@ -8,6 +8,7 @@ export function matches(regexp: RegExp, error?: SyncReactNode) {
       return _error;
     }
 
+    regexp.lastIndex = 0;
     return regexp.test(value) ? null : _error;
   };
 }
