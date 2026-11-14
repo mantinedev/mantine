@@ -9,7 +9,7 @@ export function isInRange({ min, max }: IsInRangePayload, error?: SyncReactNode)
   const _error = error || true;
 
   return (value: unknown): SyncReactNode => {
-    if (typeof value !== 'number') {
+    if (typeof value !== 'number' || !Number.isFinite(value)) {
       return _error;
     }
 

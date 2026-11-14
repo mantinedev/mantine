@@ -40,6 +40,17 @@ describe('@mantine/core/to-rgba', () => {
     expect(toRgba('rgb(112, 72, 232 / .2)')).toStrictEqual({ r: 112, g: 72, b: 232, a: 0.2 });
   });
 
+  it('returns the correct rgba values when given a space-separated rgb string', () => {
+    expect(toRgba('rgb(255 0 0)')).toStrictEqual({ r: 255, g: 0, b: 0, a: 1 });
+    expect(toRgba('rgb(240 62 62 / 0.8)')).toStrictEqual({ r: 240, g: 62, b: 62, a: 0.8 });
+    expect(toRgba('rgba(112 72 232/.2)')).toStrictEqual({ r: 112, g: 72, b: 232, a: 0.2 });
+  });
+
+  it('converts percentage alpha in rgb strings', () => {
+    expect(toRgba('rgba(255, 0, 0, 50%)')).toStrictEqual({ r: 255, g: 0, b: 0, a: 0.5 });
+    expect(toRgba('rgb(255 0 0 / 25%)')).toStrictEqual({ r: 255, g: 0, b: 0, a: 0.25 });
+  });
+
   it('preserves zero alpha in hsla colors', () => {
     expect(toRgba('hsla(120, 100%, 50%, 0)')).toStrictEqual({ r: 0, g: 255, b: 0, a: 0 });
     expect(toRgba('hsla(240, 100%, 50%, 0.0)')).toStrictEqual({ r: 0, g: 0, b: 255, a: 0 });
@@ -50,5 +61,21 @@ describe('@mantine/core/to-rgba', () => {
     expect(toRgba('hsl(120, 100%, 50%)')).toStrictEqual({ r: 0, g: 255, b: 0, a: 1 });
     expect(toRgba('hsla(240, 100%, 50%, 0.5)')).toStrictEqual({ r: 0, g: 0, b: 255, a: 0.5 });
     expect(toRgba('hsla(300, 50%, 25%, 0.75)')).toStrictEqual({ r: 96, g: 32, b: 96, a: 0.75 });
+  });
+
+  it('wraps hsl hue values outside of 0-360 range', () => {
+    expect(toRgba('hsl(480, 100%, 50%)')).toStrictEqual({ r: 0, g: 255, b: 0, a: 1 });
+    expect(toRgba('hsl(360, 100%, 50%)')).toStrictEqual({ r: 255, g: 0, b: 0, a: 1 });
+    expect(toRgba('hsl(-120, 100%, 50%)')).toStrictEqual({ r: 0, g: 0, b: 255, a: 1 });
+  });
+
+  it('supports decimal values in hsl strings', () => {
+    expect(toRgba('hsl(30.5, 100%, 50%)')).toStrictEqual({ r: 255, g: 130, b: 0, a: 1 });
+    expect(toRgba('hsl(210, 50.5%, 40%)')).toStrictEqual({ r: 50, g: 102, b: 154, a: 1 });
+    expect(toRgba('hsla(120, 100%, 50%, .5)')).toStrictEqual({ r: 0, g: 255, b: 0, a: 0.5 });
+  });
+
+  it('converts percentage alpha in hsla strings', () => {
+    expect(toRgba('hsla(120, 100%, 50%, 50%)')).toStrictEqual({ r: 0, g: 255, b: 0, a: 0.5 });
   });
 });

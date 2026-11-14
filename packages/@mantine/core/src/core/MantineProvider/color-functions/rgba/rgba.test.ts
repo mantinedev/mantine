@@ -18,6 +18,10 @@ describe('@mantine/core/rgba', () => {
     expect(rgba('rgba(1, 23, 124, 0.5)', 0.3)).toBe('rgba(1, 23, 124, 0.3)');
   });
 
+  it('sets correct opacity in space-separated rgb color', () => {
+    expect(rgba('rgb(255 0 0)', 0.5)).toBe('rgba(255, 0, 0, 0.5)');
+  });
+
   it('returns black color for incorrect values', () => {
     expect(rgba(null as any, 0.74)).toBe('rgba(0, 0, 0, 1)');
     expect(rgba('#000000', -12)).toBe('rgba(0, 0, 0, 1)');

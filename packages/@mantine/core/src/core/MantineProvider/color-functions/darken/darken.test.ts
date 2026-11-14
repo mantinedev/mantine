@@ -27,6 +27,10 @@ describe('@mantine/core/darken', () => {
     expect(darken('hsla(120, 100%, 50%, 0)', 0.5)).toBe('rgba(0, 128, 0, 0)');
   });
 
+  it('supports hsl colors with decimal values', () => {
+    expect(darken('hsl(210, 50.5%, 40%)', 0.1)).toBe('rgba(45, 92, 139, 1)');
+  });
+
   it('supports css variables', () => {
     expect(darken('var(--color-primary)', 0.1)).toBe(
       'color-mix(in srgb, var(--color-primary), black 10%)'
