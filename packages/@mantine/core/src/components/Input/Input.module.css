@@ -370,6 +370,19 @@
 .error {
   color: var(--mantine-color-error);
   font-size: var(--input-error-size, calc(var(--mantine-font-size-sm) - rem(2px)));
+
+  &:where([data-empty]) {
+    border: 0;
+    clip: rect(0 0 0 0);
+    height: 1px;
+    width: 1px;
+    margin: -1px;
+    overflow: hidden;
+    padding: 0;
+    position: absolute;
+    white-space: nowrap;
+    pointer-events: none;
+  }
 }
 
 .success {
