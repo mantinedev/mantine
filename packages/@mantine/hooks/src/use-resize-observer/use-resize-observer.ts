@@ -45,10 +45,13 @@ export function useResizeObserver<T extends HTMLElement = any>(
         if (entry) {
           cancelAnimationFrame(frameID.current);
           frameID.current = requestAnimationFrame(() => {
-            const boxSize = entry.borderBoxSize?.[0] || entry.contentBoxSize?.[0];
-            if (boxSize) {
-              const width = boxSize.inlineSize;
-              const height = boxSize.blockSize;
+            const useContentBox = options?.box === 'content-box';
+            const boxSize = useContentBox
+              ? undefined
+              : entry.borderBoxSize?.[0] || entry.contentBoxSize?.[0];
+            if (useContentBox || boxSize) {
+              const width = boxSize?.inlineSize ?? entry.contentRect.width;
+              const height = boxSize?.blockSize ?? entry.contentRect.height;
               setRect({
                 width,
                 height,
