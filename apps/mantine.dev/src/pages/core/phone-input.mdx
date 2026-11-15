@@ -30,6 +30,14 @@ receives the raw value and a details object containing the formatted value and c
 
 <Demo data={PhoneInputDemos.controlled} />
 
+## Phone extensions
+
+Set `withExtension` to allow extensions separated by `x`, for example `+12025551234x1234`.
+The extension is included in `value` and available separately as `details.extension` in `onChange`.
+With this prop, `details.extension` is an empty string when no extension digits are entered:
+
+<Demo data={PhoneInputDemos.extension} />
+
 ## Preferred countries
 
 Use `preferredCountries` prop to pin countries to the top of the dropdown.
