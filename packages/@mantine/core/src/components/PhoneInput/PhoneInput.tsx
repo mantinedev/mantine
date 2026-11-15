@@ -26,6 +26,7 @@ import {
 import { filterCountries, getCountries } from './get-countries/get-countries';
 import { getDigits } from './get-digits/get-digits';
 import { guessCountry, matchesAreaCode } from './guess-country/guess-country';
+import { parsePhoneValue } from './parse-phone-value/parse-phone-value';
 import { ALL_COUNTRIES, PhoneInputCountryData } from './phone-data';
 import classes from './PhoneInput.module.css';
 
@@ -46,6 +47,8 @@ export interface PhoneInputChangeDetails {
   formattedValue: string;
   /** Country data for the currently selected country, null when no country is selected */
   country: PhoneInputCountryData | null;
+  /** Extension digits when `withExtension` is enabled, empty string when no extension is entered */
+  extension?: string;
 }
 
 export interface PhoneInputProps
@@ -54,7 +57,7 @@ export interface PhoneInputProps
     __BaseInputProps,
     StylesApiProps<PhoneInputFactory>,
     ElementProps<'input', 'onChange' | 'size' | 'value' | 'defaultValue'> {
-  /** Controlled value — raw digits with + prefix, e.g. "+12025551234" */
+  /** Controlled value — raw digits with + prefix, e.g. "+12025551234", with an optional "x1234" suffix when `withExtension` is enabled */
   value?: string;
 
   /** Uncontrolled default value */
@@ -86,6 +89,9 @@ export interface PhoneInputProps
 
   /** Show +dialCode in input @default true */
   international?: boolean;
+
+  /** Allow a phone extension separated by "x", e.g. "+12025551234x1234" @default false */
+  withExtension?: boolean;
 
   /** Auto-detect country from typed dial code digits @default false */
   withCountryAutoDetect?: boolean;
@@ -173,6 +179,7 @@ export const PhoneInput = factory<PhoneInputFactory>((_props) => {
     resolveCountry,
     searchable,
     international,
+    withExtension,
     withCountryAutoDetect,
     nationalPrefixBehavior,
     renderFlag,
@@ -238,7 +245,8 @@ export const PhoneInput = factory<PhoneInputFactory>((_props) => {
 
   const detectCountry = useCallback(
     (rawValue: string) => {
-      const detected = guessCountry(rawValue, filteredCountries);
+      const { phoneNumber } = parsePhoneValue(rawValue, withExtension);
+      const detected = guessCountry(phoneNumber, filteredCountries);
       if (!detected || !resolveCountry) {
         return { country: detected, resolvedByCallback: false };
       }
@@ -250,11 +258,11 @@ export const PhoneInput = factory<PhoneInputFactory>((_props) => {
         return { country: detected, resolvedByCallback: false };
       }
 
-      const iso2 = resolveCountry(rawValue, candidates);
+      const iso2 = resolveCountry(phoneNumber, candidates);
       const resolved = candidates.find((country) => country.iso2 === iso2?.toLowerCase());
       return { country: resolved ?? detected, resolvedByCallback: !!resolved };
     },
-    [filteredCountries, resolveCountry]
+    [filteredCountries, resolveCountry, withExtension]
   );
 
   const initialValue = value ?? defaultValue;
@@ -276,6 +284,14 @@ export const PhoneInput = factory<PhoneInputFactory>((_props) => {
     finalValue: initialCountry && international ? `+${initialCountry.dialCode}` : '',
     onChange: () => {},
   });
+  const { phoneNumber: phoneValue, extension } = parsePhoneValue(_value, withExtension);
+
+  const formatValue = (rawValue: string, country: PhoneInputCountryData | null) => {
+    const { phoneNumber, extension: phoneExtension } = parsePhoneValue(rawValue, withExtension);
+    const formatted =
+      phoneNumber === '+' ? '+' : country ? formatPhoneNumber(phoneNumber, country) : phoneNumber;
+    return phoneExtension === undefined ? formatted : `${formatted.trimEnd()} x${phoneExtension}`;
+  };
 
   const combobox = useCombobox({
     opened: dropdownOpened,
@@ -302,7 +318,7 @@ export const PhoneInput = factory<PhoneInputFactory>((_props) => {
   ) =>
     detected.iso2 !== current?.iso2 &&
     (detected.dialCode !== current?.dialCode ||
-      matchesAreaCode(detected, rawValue) ||
+      matchesAreaCode(detected, parsePhoneValue(rawValue, withExtension).phoneNumber) ||
       resolvedByCallback ||
       countryResolvedByCallbackRef.current);
 
@@ -376,11 +392,16 @@ export const PhoneInput = factory<PhoneInputFactory>((_props) => {
     lastEmittedResolverRef.current = resolveCountry;
     lastEmittedDetectedCountryRef.current = detectCountry(rawValue).country?.iso2;
     setValue(rawValue);
-    onChange?.(rawValue, details);
+    onChange?.(
+      rawValue,
+      withExtension
+        ? { ...details, extension: parsePhoneValue(rawValue, true).extension ?? '' }
+        : details
+    );
   };
 
   const handleValueChange = (rawValue: string, country: PhoneInputCountryData | null) => {
-    const formattedValue = country ? formatPhoneNumber(rawValue, country) : rawValue;
+    const formattedValue = formatValue(rawValue, country);
     emitChange(rawValue, { formattedValue, country });
   };
 
@@ -388,9 +409,13 @@ export const PhoneInput = factory<PhoneInputFactory>((_props) => {
     const input = event.currentTarget;
     const restartIndex = Math.max(input.value.lastIndexOf('+'), 0);
     const inputValue = input.value.slice(restartIndex);
+    const { phoneNumber: inputNumber, extension: inputExtension } = parsePhoneValue(
+      inputValue,
+      withExtension
+    );
     const cursorPos = Math.max((input.selectionStart ?? input.value.length) - restartIndex, 0);
-    const digitsOnly = getDigits(inputValue).replace(/^\+/, '');
-    const hasPlus = inputValue.includes('+');
+    const digitsOnly = getDigits(inputNumber).replace(/^\+/, '');
+    const hasPlus = inputNumber.includes('+');
     const autoDetectEnabled = withCountryAutoDetect || !selectedCountry;
     const canAutoDetect = autoDetectEnabled && !countryLockedRef.current;
 
@@ -411,7 +436,7 @@ export const PhoneInput = factory<PhoneInputFactory>((_props) => {
       return;
     }
 
-    const typedRaw = getDigits(inputValue);
+    const typedRaw = getDigits(inputNumber);
     const hasInternationalPrefix = typedRaw.startsWith('+');
     const dialCodeTyped = hasInternationalPrefix || (autoDetectEnabled && international);
     const typedCountry =
@@ -444,28 +469,28 @@ export const PhoneInput = factory<PhoneInputFactory>((_props) => {
     const hasNationalPrefix =
       !!inputCountry?.nationalPrefix && nationalDigits.startsWith(inputCountry.nationalPrefix);
     const previousDisplay = selectedCountry
-      ? toDisplayValue(formatPhoneNumber(_value, selectedCountry), selectedCountry)
-      : _value;
-    const addedLength = inputValue.length - previousDisplay.length;
+      ? toDisplayValue(formatPhoneNumber(phoneValue, selectedCountry), selectedCountry)
+      : phoneValue;
+    const addedLength = inputNumber.length - previousDisplay.length;
     const isInsertion =
       addedLength > 0 &&
       Array.from({ length: previousDisplay.length + 1 }, (_, index) => index).some(
         (index) =>
-          inputValue.slice(0, index) + inputValue.slice(index + addedLength) === previousDisplay
+          inputNumber.slice(0, index) + inputNumber.slice(index + addedLength) === previousDisplay
       );
     const replacesValue =
-      !inputValue.startsWith(previousDisplay) &&
-      !previousDisplay.startsWith(inputValue) &&
+      !inputNumber.startsWith(previousDisplay) &&
+      !previousDisplay.startsWith(inputNumber) &&
       !isInsertion;
     const forceNationalPrefix =
       nationalPrefixBehavior === 'strip' &&
       hasNationalPrefix &&
       !nationalPrefixConsumedRef.current &&
-      (!_value ||
-        _value === `+${inputCountry.dialCode}` ||
+      (!phoneValue ||
+        phoneValue === `+${inputCountry.dialCode}` ||
         (replacesValue &&
           (nationalDigits.length === inputCountry.nationalPrefix?.length ||
-            inputValue[0] !== previousDisplay[0]))) &&
+            inputNumber[0] !== previousDisplay[0]))) &&
       (!hasInternationalPrefix || nationalDigits === inputCountry.nationalPrefix);
     const normalizeNationalPrefix =
       nationalPrefixBehavior !== 'preserve' &&
@@ -473,9 +498,9 @@ export const PhoneInput = factory<PhoneInputFactory>((_props) => {
         inputCountry.nationalPrefix === '0' ||
         forceNationalPrefix ||
         (nationalDigits.length > getMaskDigitCount(inputCountry.format) &&
-          (!_value || _value === `+${inputCountry.dialCode}` || replacesValue)));
+          (!phoneValue || phoneValue === `+${inputCountry.dialCode}` || replacesValue)));
 
-    const fullRaw = buildRawValue(inputValue, {
+    const fullRaw = buildRawValue(inputNumber, {
       canAutoDetect: detectNow,
       international,
       selectedCountry: inputCountry,
@@ -502,17 +527,25 @@ export const PhoneInput = factory<PhoneInputFactory>((_props) => {
 
     const newRaw = detectNow ? fullRaw : clampToMask(fullRaw, country);
     nationalPrefixConsumedRef.current = forceNationalPrefix && newRaw === `+${country?.dialCode}`;
-    const newFormatted = country ? formatPhoneNumber(newRaw, country) : newRaw;
+    const newValue = inputExtension === undefined ? newRaw : `${newRaw}x${inputExtension}`;
+    const newFormatted = formatValue(newValue, country);
+    const formattedNumber = country ? formatPhoneNumber(newRaw, country) : newRaw;
     const newDisplayRaw =
       international || !country ? newRaw : newRaw.slice(country.dialCode.length + 1);
-    const newCursor = computeCursorPosition(
-      inputValue,
-      cursorPos,
-      newDisplayRaw,
-      toDisplayValue(newFormatted, country)
-    );
+    const extensionIndex = inputExtension === undefined ? -1 : inputValue.search(/x/i);
+    const newCursor =
+      inputExtension !== undefined && cursorPos > extensionIndex
+        ? toDisplayValue(newFormatted, country).length -
+          inputExtension.length +
+          inputValue.slice(extensionIndex + 1, cursorPos).replace(/\D/g, '').length
+        : computeCursorPosition(
+            inputNumber,
+            Math.min(cursorPos, inputNumber.length),
+            newDisplayRaw,
+            toDisplayValue(formattedNumber, country)
+          );
 
-    emitChange(newRaw, { formattedValue: newFormatted, country });
+    emitChange(newValue, { formattedValue: newFormatted, country });
 
     requestAnimationFrame(() => {
       input.setSelectionRange(newCursor, newCursor);
@@ -552,7 +585,7 @@ export const PhoneInput = factory<PhoneInputFactory>((_props) => {
     setSelectedCountry(country);
     onCountryChange?.(country);
 
-    const currentDigits = _value.replace(/\D/g, '');
+    const currentDigits = phoneValue.replace(/\D/g, '');
     const oldDialCode = selectedCountry?.dialCode;
     let newRaw: string;
 
@@ -563,13 +596,12 @@ export const PhoneInput = factory<PhoneInputFactory>((_props) => {
     }
 
     const clamped = clampToMask(newRaw, country);
-    handleValueChange(clamped, country);
+    handleValueChange(extension === undefined ? clamped : `${clamped}x${extension}`, country);
     combobox.closeDropdown();
     focusInputAfterDialCode(country, clamped);
   };
 
-  const formattedValue =
-    _value === '+' ? '+' : selectedCountry ? formatPhoneNumber(_value, selectedCountry) : _value;
+  const formattedValue = formatValue(_value, selectedCountry);
   const displayValue = toDisplayValue(formattedValue, selectedCountry);
 
   const preferredIso2Set = useMemo(
@@ -619,6 +651,7 @@ export const PhoneInput = factory<PhoneInputFactory>((_props) => {
         <InputBase
           ref={inputRef}
           type="tel"
+          inputMode={withExtension ? 'text' : undefined}
           __staticSelector="PhoneInput"
           autoComplete={autoComplete ?? 'off'}
           aria-controls={combobox.dropdownOpened && combobox.listId ? combobox.listId : undefined}
