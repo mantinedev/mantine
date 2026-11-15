@@ -481,6 +481,46 @@ describe('@mantine/schedule/MobileMonthView', () => {
     expect(hiddenDays).toHaveLength(0);
   });
 
+  it('shows event indicators on visible outside days', () => {
+    const events: ScheduleEventData[] = [
+      {
+        id: 'outside',
+        title: 'Outside event',
+        start: '2025-11-01 10:00:00',
+        end: '2025-11-01 11:00:00',
+        color: 'red',
+        payload: {},
+      },
+    ];
+
+    render(<MobileMonthView {...defaultProps} date="2025-10-01" events={events} withOutsideDays />);
+
+    const outsideDay = screen.getByRole('button', { name: 'November 1, 2025' });
+    expect(
+      outsideDay.querySelectorAll('.mantine-MobileMonthView-mobileMonthViewDayIndicator')
+    ).toHaveLength(1);
+  });
+
+  it('expands recurring events on visible outside days', () => {
+    const events: ScheduleEventData[] = [
+      {
+        id: 'recurring-outside',
+        title: 'Recurring outside event',
+        start: '2025-10-30 10:00:00',
+        end: '2025-10-30 11:00:00',
+        color: 'blue',
+        recurrence: { rrule: 'FREQ=DAILY;COUNT=3' },
+      },
+    ];
+
+    render(<MobileMonthView {...defaultProps} events={events} withOutsideDays />);
+
+    const outsideDay = screen.getByRole('button', { name: 'October 31, 2025' });
+    expect(
+      outsideDay.querySelectorAll('.mantine-MobileMonthView-mobileMonthViewDayIndicator')
+    ).toHaveLength(1);
+  });
+
   it('supports static mode', () => {
     const { container } = render(<MobileMonthView {...defaultProps} mode="static" />);
     const staticDays = container.querySelectorAll(
