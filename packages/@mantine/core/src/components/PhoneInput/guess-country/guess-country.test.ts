@@ -54,8 +54,14 @@ describe('guessCountry', () => {
   });
 
   it('detects Kazakhstan when area code matches', () => {
-    const result = guessCountry('+7312', ALL_COUNTRIES);
-    expect(result?.iso2).toBe('kz');
+    expect(guessCountry('+7701', ALL_COUNTRIES)?.iso2).toBe('kz');
+    expect(guessCountry('+7727', ALL_COUNTRIES)?.iso2).toBe('kz');
+    expect(guessCountry('+77172', ALL_COUNTRIES)?.iso2).toBe('kz');
+  });
+
+  it('keeps Russian numbers with 3xx area codes in Russia', () => {
+    expect(guessCountry('+7343', ALL_COUNTRIES)?.iso2).toBe('ru');
+    expect(guessCountry('+7312', ALL_COUNTRIES)?.iso2).toBe('ru');
   });
 
   it('falls back to defaultCountry when no match', () => {

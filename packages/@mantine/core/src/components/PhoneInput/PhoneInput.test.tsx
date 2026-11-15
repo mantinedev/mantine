@@ -252,7 +252,7 @@ describe('@mantine/core/PhoneInput', () => {
   it('uses the default country detection when resolveCountry returns undefined', () => {
     render(
       <PhoneInput
-        defaultValue="+77011234567"
+        defaultValue="+79991234567"
         resolveCountry={() => undefined}
         onlyCountries={['ru', 'kz']}
       />
@@ -265,7 +265,7 @@ describe('@mantine/core/PhoneInput', () => {
     const resolveCountry = jest.fn(() => 'kz');
     render(
       <PhoneInput
-        defaultValue="+77011234567"
+        defaultValue="+79991234567"
         resolveCountry={resolveCountry}
         onlyCountries={['ru', 'kz']}
       />
@@ -273,7 +273,7 @@ describe('@mantine/core/PhoneInput', () => {
 
     expect(screen.getByRole('button', { name: /Kazakhstan/ })).toBeInTheDocument();
     expect(resolveCountry).toHaveBeenCalledWith(
-      '+77011234567',
+      '+79991234567',
       expect.arrayContaining([
         expect.objectContaining({ iso2: 'ru' }),
         expect.objectContaining({ iso2: 'kz' }),
@@ -284,7 +284,7 @@ describe('@mantine/core/PhoneInput', () => {
   it('ignores a resolved country that is not among the detected dial-code candidates', () => {
     render(
       <PhoneInput
-        defaultValue="+77011234567"
+        defaultValue="+79991234567"
         resolveCountry={() => 'gb'}
         onlyCountries={['ru', 'kz', 'gb']}
       />
