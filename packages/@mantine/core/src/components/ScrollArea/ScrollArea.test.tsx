@@ -88,6 +88,44 @@ describe('@mantine/core/ScrollArea', () => {
     expect(spy).toHaveBeenCalledTimes(1);
   });
 
+  it('calls onBottomReached when rounded dimensions leave a 1px difference at the bottom', () => {
+    const spy = jest.fn();
+    const { container } = render(
+      <ScrollArea h={100} onBottomReached={spy}>
+        <div style={{ height: 500 }}>Content</div>
+      </ScrollArea>
+    );
+
+    const viewport = getViewport(container);
+
+    Object.defineProperty(viewport, 'scrollHeight', { value: 2789, configurable: true });
+    Object.defineProperty(viewport, 'clientHeight', { value: 416, configurable: true });
+    Object.defineProperty(viewport, 'scrollTop', { value: 2372, configurable: true });
+
+    fireEvent.scroll(viewport);
+
+    expect(spy).toHaveBeenCalledTimes(1);
+  });
+
+  it('does not call onBottomReached when more than 1px away from the bottom', () => {
+    const spy = jest.fn();
+    const { container } = render(
+      <ScrollArea h={100} onBottomReached={spy}>
+        <div style={{ height: 500 }}>Content</div>
+      </ScrollArea>
+    );
+
+    const viewport = getViewport(container);
+
+    Object.defineProperty(viewport, 'scrollHeight', { value: 500, configurable: true });
+    Object.defineProperty(viewport, 'clientHeight', { value: 100, configurable: true });
+    Object.defineProperty(viewport, 'scrollTop', { value: 398.9, configurable: true });
+
+    fireEvent.scroll(viewport);
+
+    expect(spy).not.toHaveBeenCalled();
+  });
+
   it('calls onTopReached when scrolled to top', () => {
     const spy = jest.fn();
     const { container } = render(
@@ -139,6 +177,25 @@ describe('@mantine/core/ScrollArea', () => {
     Object.defineProperty(viewport, 'scrollWidth', { value: 500, configurable: true });
     Object.defineProperty(viewport, 'clientWidth', { value: 100, configurable: true });
     Object.defineProperty(viewport, 'scrollLeft', { value: 400, configurable: true });
+
+    fireEvent.scroll(viewport);
+
+    expect(spy).toHaveBeenCalledTimes(1);
+  });
+
+  it('calls onRightReached when rounded dimensions leave a 1px difference at the right edge', () => {
+    const spy = jest.fn();
+    const { container } = render(
+      <ScrollArea w={100} onRightReached={spy}>
+        <div style={{ width: 500 }}>Content</div>
+      </ScrollArea>
+    );
+
+    const viewport = getViewport(container);
+
+    Object.defineProperty(viewport, 'scrollWidth', { value: 500, configurable: true });
+    Object.defineProperty(viewport, 'clientWidth', { value: 100, configurable: true });
+    Object.defineProperty(viewport, 'scrollLeft', { value: 399, configurable: true });
 
     fireEvent.scroll(viewport);
 
