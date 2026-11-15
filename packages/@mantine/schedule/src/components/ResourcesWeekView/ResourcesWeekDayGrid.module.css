@@ -1,0 +1,15 @@
+.resourcesWeekView {
+  --resources-week-view-radius: var(--schedule-radius, var(--mantine-radius-default));
+  --resources-week-view-row-height: 64px;
+  --resources-week-view-group-label-width: 80px;
+  --resources-week-view-day-width: 120px;
+  --resources-week-view-resource-label-width: 120px;
+
+  &[data-layout='days'] {
+    --resources-month-view-radius: var(--resources-week-view-radius);
+    --resources-month-view-row-height: var(--resources-week-view-row-height);
+    --resources-month-view-group-label-width: var(--resources-week-view-group-label-width);
+    --resources-month-view-day-width: var(--resources-week-view-day-width);
+    --resources-month-view-resource-label-width: var(--resources-week-view-resource-label-width);
+  }
+}
