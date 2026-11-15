@@ -4,6 +4,7 @@ export interface ScheduleLabels {
   month: string;
   year: string;
   allDay: string;
+  /** @deprecated Not used, `WeekView` weekday buttons are labelled by their visible text */
   weekday: string;
   timeSlot: string;
   today: string;
