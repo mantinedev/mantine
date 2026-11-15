@@ -647,50 +647,58 @@ export const PhoneInput = factory<PhoneInputFactory>((_props) => {
       onOptionSubmit={handleCountrySelect}
       {...comboboxProps}
     >
-      <Combobox.Target targetType="input" withKeyboardNavigation={false} withAriaAttributes={false}>
-        <InputBase
-          ref={inputRef}
-          type="tel"
-          inputMode={withExtension ? 'text' : undefined}
-          __staticSelector="PhoneInput"
-          autoComplete={autoComplete ?? 'off'}
-          aria-controls={combobox.dropdownOpened && combobox.listId ? combobox.listId : undefined}
-          aria-activedescendant={combobox.dropdownOpened ? activeOptionId || undefined : undefined}
-          data-expanded={combobox.dropdownOpened || undefined}
-          data-mantine-stop-propagation={combobox.dropdownOpened || undefined}
-          leftSection={
-            <UnstyledButton
-              type="button"
-              disabled={disabled || readOnly}
-              onClick={() => combobox.toggleDropdown()}
-              aria-label={countryButtonLabel}
-              aria-haspopup="listbox"
-              aria-expanded={combobox.dropdownOpened}
-              aria-controls={
-                combobox.dropdownOpened && combobox.listId ? combobox.listId : undefined
-              }
-              {...getStyles('countryButton', { focusable: true })}
-            >
-              {countryButtonContent}
-              {withChevron && <Combobox.Chevron size={size} />}
-            </UnstyledButton>
-          }
-          leftSectionPointerEvents="all"
-          leftSectionWidth={leftSectionWidth[size]}
+      <Combobox.DropdownTarget refProp="rootRef">
+        <Combobox.EventsTarget
+          targetType="input"
+          withKeyboardNavigation={false}
+          withAriaAttributes={false}
           {...others}
-          size={size}
-          classNames={resolvedClassNames}
-          styles={resolvedStyles}
-          unstyled={unstyled}
-          disabled={disabled}
-          readOnly={readOnly}
-          error={error}
-          value={displayValue}
-          onChange={handleInputChange}
-          onKeyDown={handleInputKeyDown}
-          attributes={attributes}
-        />
-      </Combobox.Target>
+        >
+          <InputBase
+            ref={inputRef}
+            type="tel"
+            inputMode={withExtension ? 'text' : undefined}
+            __staticSelector="PhoneInput"
+            autoComplete={autoComplete ?? 'off'}
+            aria-controls={combobox.dropdownOpened && combobox.listId ? combobox.listId : undefined}
+            aria-activedescendant={
+              combobox.dropdownOpened ? activeOptionId || undefined : undefined
+            }
+            data-expanded={combobox.dropdownOpened || undefined}
+            data-mantine-stop-propagation={combobox.dropdownOpened || undefined}
+            leftSection={
+              <UnstyledButton
+                type="button"
+                disabled={disabled || readOnly}
+                onClick={() => combobox.toggleDropdown()}
+                aria-label={countryButtonLabel}
+                aria-haspopup="listbox"
+                aria-expanded={combobox.dropdownOpened}
+                aria-controls={
+                  combobox.dropdownOpened && combobox.listId ? combobox.listId : undefined
+                }
+                {...getStyles('countryButton', { focusable: true })}
+              >
+                {countryButtonContent}
+                {withChevron && <Combobox.Chevron size={size} />}
+              </UnstyledButton>
+            }
+            leftSectionPointerEvents="all"
+            leftSectionWidth={leftSectionWidth[size]}
+            size={size}
+            classNames={resolvedClassNames}
+            styles={resolvedStyles}
+            unstyled={unstyled}
+            disabled={disabled}
+            readOnly={readOnly}
+            error={error}
+            value={displayValue}
+            onChange={handleInputChange}
+            onKeyDown={handleInputKeyDown}
+            attributes={attributes}
+          />
+        </Combobox.EventsTarget>
+      </Combobox.DropdownTarget>
 
       <Combobox.Dropdown hidden={readOnly || disabled}>
         {searchable && (

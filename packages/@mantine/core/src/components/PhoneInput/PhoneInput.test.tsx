@@ -671,6 +671,68 @@ describe('@mantine/core/PhoneInput', () => {
     expect(screen.getByRole('listbox')).toBeVisible();
   });
 
+  it.each([
+    { searchable: true, withinPortal: true },
+    { searchable: true, withinPortal: false },
+    { searchable: false, withinPortal: true },
+    { searchable: false, withinPortal: false },
+  ])(
+    'toggles the country dropdown once per click (searchable=$searchable, withinPortal=$withinPortal)',
+    async ({ searchable, withinPortal }) => {
+      const user = userEvent.setup();
+      const onDropdownOpen = jest.fn();
+      const onDropdownClose = jest.fn();
+      render(
+        <PhoneInput
+          {...testProps}
+          searchable={searchable}
+          comboboxProps={{ withinPortal, clickOutsideCapture: true }}
+          onDropdownOpen={onDropdownOpen}
+          onDropdownClose={onDropdownClose}
+        />
+      );
+      const button = screen.getByRole('button', { name: /United States/ });
+
+      await user.click(button);
+      expect(button).toHaveAttribute('aria-expanded', 'true');
+      expect(onDropdownOpen).toHaveBeenCalledTimes(1);
+
+      await user.pointer({ target: button, keys: '[MouseLeft>]' });
+      expect(button).toHaveAttribute('aria-expanded', 'true');
+      expect(onDropdownClose).not.toHaveBeenCalled();
+
+      await user.pointer({ target: button, keys: '[/MouseLeft]' });
+      expect(button).toHaveAttribute('aria-expanded', 'false');
+      expect(screen.queryByRole('listbox')).not.toBeInTheDocument();
+      expect(onDropdownClose).toHaveBeenCalledTimes(1);
+      expect(onDropdownOpen).toHaveBeenCalledTimes(1);
+
+      await user.click(button);
+      expect(button).toHaveAttribute('aria-expanded', 'true');
+      expect(onDropdownOpen).toHaveBeenCalledTimes(2);
+
+      await user.click(document.body);
+      expect(button).toHaveAttribute('aria-expanded', 'false');
+      expect(onDropdownClose).toHaveBeenCalledTimes(2);
+    }
+  );
+
+  it('does not dismiss the dropdown on touchstart inside the country button', async () => {
+    const onDropdownClose = jest.fn();
+    render(<PhoneInput {...testProps} onDropdownClose={onDropdownClose} />);
+    const button = screen.getByRole('button', { name: /United States/ });
+
+    await userEvent.click(button);
+    fireEvent.touchStart(button);
+    expect(button).toHaveAttribute('aria-expanded', 'true');
+    expect(onDropdownClose).not.toHaveBeenCalled();
+
+    fireEvent.touchEnd(button);
+    fireEvent.click(button);
+    expect(button).toHaveAttribute('aria-expanded', 'false');
+    expect(onDropdownClose).toHaveBeenCalledTimes(1);
+  });
+
   it('selects country from dropdown', async () => {
     render(<PhoneInput {...testProps} onlyCountries={['us', 'gb']} />);
     await userEvent.click(screen.getByRole('button', { name: /United States/ }));
