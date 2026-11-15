@@ -44,6 +44,17 @@ describe('@mantine/dates/PickerInputBase', () => {
     expect(screen.getByText('test-children')).toBeInTheDocument();
   });
 
+  it('labels the dropdown with the input label', () => {
+    render(<PickerInputBase {...defaultProps} label="test-label" dropdownOpened />);
+    expect(screen.getByRole('dialog', { name: 'test-label' })).toBeInTheDocument();
+  });
+
+  it('labels the dropdown with the input label when id is set', () => {
+    render(<PickerInputBase {...defaultProps} id="test-id" label="test-label" dropdownOpened />);
+    expect(screen.getByRole('button', { name: 'test-label' })).toHaveAttribute('id', 'test-id');
+    expect(screen.getByRole('dialog', { name: 'test-label' })).toBeInTheDocument();
+  });
+
   it('supports onClick handler', async () => {
     const spy = jest.fn();
     render(<PickerInputBase {...defaultProps} onClick={spy} />);
