@@ -1,43 +1,25 @@
 import { ReorderPayload } from '../types';
 
-function isItemKey(key: string, keyStart: string) {
-  return key === keyStart || key.startsWith(`${keyStart}.`);
-}
-
 export function reorderErrors<T>(path: unknown, { from, to }: ReorderPayload, errors: T): T {
-  const oldKeyStart = `${path}.${from}`;
-  const newKeyStart = `${path}.${to}`;
-
+  const pathStart = `${path}.`;
   const clone: any = { ...errors };
-  const processedKeys = new Set<string>();
+  const movedErrors: any = {};
 
   Object.keys(errors as any).forEach((key) => {
-    if (processedKeys.has(key)) {
+    if (!key.startsWith(pathStart)) {
       return;
     }
 
-    let oldKey;
-    let newKey;
+    const keyParts = key.slice(pathStart.length).split('.');
+    const index = Number(keyParts[0]);
 
-    if (isItemKey(key, oldKeyStart)) {
-      oldKey = key;
-      newKey = key.replace(oldKeyStart, newKeyStart);
-    } else if (isItemKey(key, newKeyStart)) {
-      oldKey = key.replace(newKeyStart, oldKeyStart);
-      newKey = key;
-    }
-
-    if (oldKey && newKey) {
-      const value1 = clone[oldKey];
-      const value2 = clone[newKey];
-
-      value2 === undefined ? delete clone[oldKey] : (clone[oldKey] = value2);
-      value1 === undefined ? delete clone[newKey] : (clone[newKey] = value1);
-
-      processedKeys.add(oldKey);
-      processedKeys.add(newKey);
+    if (keyParts[0] === `${index}` && index >= Math.min(from, to) && index <= Math.max(from, to)) {
+      const newIndex = index === from ? to : index + (from < to ? -1 : 1);
+      keyParts[0] = `${newIndex}`;
+      movedErrors[`${pathStart}${keyParts.join('.')}`] = (errors as any)[key];
+      delete clone[key];
     }
   });
 
-  return clone;
+  return { ...clone, ...movedErrors };
 }
