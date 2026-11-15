@@ -30,6 +30,21 @@ Set `defaultView="week"` to open the schedule in week view by default.
 
 <Demo data={ResourcesScheduleDemos.weekView} />
 
+## Week day cells
+
+Set `weekViewProps={{ layout: 'days' }}` to show a compact [day-cell week](/schedule/resources-week-view/#day-cells).
+Use `onDayClick` to handle cell clicks:
+
+```tsx
+<ResourcesSchedule
+  resources={resources}
+  events={events}
+  defaultView="week"
+  weekViewProps={{ layout: 'days', dayWidth: 120 }}
+  onDayClick={({ date, resourceId }) => console.log(date, resourceId)}
+/>
+```
+
 ## View-specific props
 
 Use `dayViewProps`, `weekViewProps`, and `monthViewProps` to pass props specific to each view.
@@ -53,8 +68,8 @@ receives the `resourceId` of the target resource.
 ## Event resize
 
 Enable event resizing with `withEventResize` prop. Events can be resized by dragging their left or
-right edges in all three views. In week view, an event cannot be resized to span multiple days. In
-month view, resizing snaps to whole days and keeps the time of day.
+right edges in all three views. In the time layout, week events cannot be resized across days.
+In month view and the week day-cell layout, resizing snaps to whole days and keeps the time of day.
 
 <Demo data={ResourcesScheduleDemos.eventResize} />
 

@@ -1,4 +1,5 @@
 export { usage } from './ResourcesWeekView.demo.usage';
+export { dayCells } from './ResourcesWeekView.demo.dayCells';
 export { allDayEvents } from './ResourcesWeekView.demo.allDayEvents';
 export { interactiveBackgroundEvents } from './ResourcesWeekView.demo.interactiveBackgroundEvents';
 export { dragDrop } from './ResourcesWeekView.demo.dragDrop';
