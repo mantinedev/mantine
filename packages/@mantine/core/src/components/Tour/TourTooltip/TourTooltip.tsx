@@ -82,7 +82,7 @@ export const TourTooltip = factory<TourTooltipFactory>((_props) => {
     elements: { reference: targetElement },
     placement: getFloatingPosition(dir, position!),
     whileElementsMounted: pressAwareAutoUpdate,
-    middleware: [offset(12), flip(), shift({ padding: 8 })],
+    middleware: [offset(12), flip(), shift({ padding: 8, crossAxis: true })],
   });
 
   const trapActive = !!mounted && ctx.withOverlay && !ctx.withOverlayInteraction;
