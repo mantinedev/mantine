@@ -68,6 +68,35 @@ export function PreferredCountries() {
   );
 }
 
+function NationalPrefixInput({ behavior }: { behavior: 'auto' | 'strip' }) {
+  const [value, setValue] = useState('');
+  return (
+    <div style={{ marginBottom: 20 }}>
+      <PhoneInput
+        label={`National prefix: ${behavior}`}
+        defaultCountry="ru"
+        withCountryAutoDetect
+        nationalPrefixBehavior={behavior}
+        value={value}
+        onChange={setValue}
+      />
+      <div>Raw value: {value}</div>
+      <button type="button" onClick={() => setValue('')}>
+        Reset {behavior}
+      </button>
+    </div>
+  );
+}
+
+export function NationalPrefixes() {
+  return (
+    <div style={{ padding: 40, maxWidth: 340 }}>
+      <NationalPrefixInput behavior="auto" />
+      <NationalPrefixInput behavior="strip" />
+    </div>
+  );
+}
+
 export function OnlyCountries() {
   return (
     <div style={{ padding: 40, maxWidth: 340 }}>

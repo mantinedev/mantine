@@ -159,6 +159,29 @@ describe('buildRawValue', () => {
   });
 
   describe('with national trunk prefixes', () => {
+    it.each([false, true])(
+      'distinguishes Russian dial codes from Kazakhstan national digits (canAutoDetect=%s)',
+      (canAutoDetect) => {
+        const options = { canAutoDetect, international: true };
+        expect(buildRawValue('7', { ...options, selectedCountry: findCountry('ru') })).toBe('+7');
+        expect(buildRawValue('7', { ...options, selectedCountry: findCountry('kz') })).toBe('+77');
+        expect(
+          buildRawValue('7', {
+            ...options,
+            selectedCountry: findCountry('ru'),
+            preferSelectedCountry: true,
+          })
+        ).toBe('+7');
+        expect(
+          buildRawValue('701', {
+            ...options,
+            selectedCountry: findCountry('kz'),
+            preferSelectedCountry: true,
+          })
+        ).toBe('+7701');
+      }
+    );
+
     it.each([
       ['ru', '89991234567', '+79991234567'],
       ['kz', '87011234567', '+77011234567'],
