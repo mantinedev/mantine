@@ -655,6 +655,77 @@ describe('@mantine/core/PhoneInput', () => {
     expect(onChange).toHaveBeenLastCalledWith('+78999', expect.anything());
   });
 
+  describe('number typed into an empty controlled input', () => {
+    function ControlledRussianInput(props: Partial<PhoneInputProps>) {
+      const [value, setValue] = useState('');
+      return (
+        <PhoneInput
+          defaultCountry="ru"
+          withCountryAutoDetect
+          value={value}
+          onChange={setValue}
+          {...props}
+        />
+      );
+    }
+
+    it.each(['+78121234567', '+78001002247'])(
+      'keeps a leading 8 after a typed dial code in strip mode (%s)',
+      async (number) => {
+        render(<ControlledRussianInput nationalPrefixBehavior="strip" />);
+        const input = screen.getByRole('textbox') as HTMLInputElement;
+
+        await userEvent.type(input, number);
+
+        expect(input.value).toBe(
+          number === '+78121234567' ? '+7 (812) 123-45-67' : '+7 (800) 100-22-47'
+        );
+      }
+    );
+
+    it.each([
+      ['88121234567', '+7 (812) 123-45-67'],
+      ['89991234567', '+7 (999) 123-45-67'],
+    ])('strips a typed trunk prefix in auto mode (%s)', async (number, expected) => {
+      render(<ControlledRussianInput nationalPrefixBehavior="auto" />);
+      const input = screen.getByRole('textbox') as HTMLInputElement;
+
+      await userEvent.type(input, number);
+
+      expect(input.value).toBe(expected);
+    });
+
+    it.each(['auto', 'strip'] as const)(
+      'treats a leading dial code typed without a plus as the dial code (%s)',
+      async (nationalPrefixBehavior) => {
+        render(<ControlledRussianInput nationalPrefixBehavior={nationalPrefixBehavior} />);
+        const input = screen.getByRole('textbox') as HTMLInputElement;
+
+        await userEvent.type(input, '79991234567');
+
+        expect(input.value).toBe('+7 (999) 123-45-67');
+      }
+    );
+
+    it('keeps a ten-digit number with an 8 area code in auto mode', async () => {
+      render(<ControlledRussianInput nationalPrefixBehavior="auto" />);
+      const input = screen.getByRole('textbox') as HTMLInputElement;
+
+      await userEvent.type(input, '8121234567');
+
+      expect(input.value).toBe('+7 (812) 123-45-67');
+    });
+  });
+
+  it('keeps a leading 8 after a dial code typed over the prefilled one in strip mode', async () => {
+    const onChange = jest.fn();
+    render(<PhoneInput defaultCountry="ru" nationalPrefixBehavior="strip" onChange={onChange} />);
+
+    await userEvent.type(screen.getByRole('textbox'), '+78121234567');
+
+    expect(onChange).toHaveBeenLastCalledWith('+78121234567', expect.anything());
+  });
+
   it('supports controlled value', () => {
     const spy = jest.fn();
     render(<PhoneInput {...testProps} value="+12025551234" onChange={spy} />);
