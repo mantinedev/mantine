@@ -224,6 +224,8 @@ export const PhoneInput = factory<PhoneInputFactory>((_props) => {
   const inputRef = useMergedRef(ref, internalRef);
   const countryLockedRef = useRef(false);
   const nationalPrefixConsumedRef = useRef(false);
+  const dialCodeTypedRef = useRef(false);
+  const typedNumberCountryRef = useRef<string | null>(null);
   const lastEmittedValueRef = useRef<string | undefined>(undefined);
   const lastEmittedResolverRef = useRef(resolveCountry);
   const lastEmittedDetectedCountryRef = useRef<string | undefined>(undefined);
@@ -421,6 +423,8 @@ export const PhoneInput = factory<PhoneInputFactory>((_props) => {
 
     if (!digitsOnly) {
       nationalPrefixConsumedRef.current = false;
+      dialCodeTypedRef.current = false;
+      typedNumberCountryRef.current = null;
       if (withCountryAutoDetect || !selectedCountry) {
         countryLockedRef.current = false;
       }
@@ -482,6 +486,27 @@ export const PhoneInput = factory<PhoneInputFactory>((_props) => {
       !inputNumber.startsWith(previousDisplay) &&
       !previousDisplay.startsWith(inputNumber) &&
       !isInsertion;
+    const editsAtEnd =
+      inputNumber.startsWith(previousDisplay) || previousDisplay.startsWith(inputNumber);
+    const dialCodeTypedByUser =
+      hasInternationalPrefix &&
+      (restartIndex > 0 ||
+        !phoneValue ||
+        phoneValue === '+' ||
+        (dialCodeTypedRef.current && editsAtEnd));
+    const typedNumberCountry =
+      !phoneValue && !hasInternationalPrefix
+        ? (selectedCountry?.iso2 ?? null)
+        : editsAtEnd && !dialCodeTypedByUser
+          ? typedNumberCountryRef.current
+          : null;
+    const continuesTypedNumber =
+      !!inputCountry &&
+      typedNumberCountry === inputCountry.iso2 &&
+      nationalDigits.length > getMaskDigitCount(inputCountry.format) &&
+      (hasNationalPrefix || nationalDigits.startsWith(inputCountry.dialCode));
+    dialCodeTypedRef.current = dialCodeTypedByUser;
+    typedNumberCountryRef.current = typedNumberCountry;
     const forceNationalPrefix =
       nationalPrefixBehavior === 'strip' &&
       hasNationalPrefix &&
@@ -491,16 +516,20 @@ export const PhoneInput = factory<PhoneInputFactory>((_props) => {
         (replacesValue &&
           (nationalDigits.length === inputCountry.nationalPrefix?.length ||
             inputNumber[0] !== previousDisplay[0]))) &&
-      (!hasInternationalPrefix || nationalDigits === inputCountry.nationalPrefix);
+      (!hasInternationalPrefix ||
+        (nationalDigits === inputCountry.nationalPrefix && !dialCodeTypedByUser));
     const normalizeNationalPrefix =
       nationalPrefixBehavior !== 'preserve' &&
       (!hasNationalPrefix ||
         inputCountry.nationalPrefix === '0' ||
         forceNationalPrefix ||
         (nationalDigits.length > getMaskDigitCount(inputCountry.format) &&
-          (!phoneValue || phoneValue === `+${inputCountry.dialCode}` || replacesValue)));
+          (!phoneValue ||
+            phoneValue === `+${inputCountry.dialCode}` ||
+            replacesValue ||
+            continuesTypedNumber)));
 
-    const fullRaw = buildRawValue(inputNumber, {
+    const fullRaw = buildRawValue(continuesTypedNumber ? nationalDigits : inputNumber, {
       canAutoDetect: detectNow,
       international,
       selectedCountry: inputCountry,
@@ -582,6 +611,8 @@ export const PhoneInput = factory<PhoneInputFactory>((_props) => {
     countryLockedRef.current = true;
     countryResolvedByCallbackRef.current = false;
     nationalPrefixConsumedRef.current = false;
+    dialCodeTypedRef.current = false;
+    typedNumberCountryRef.current = null;
     setSelectedCountry(country);
     onCountryChange?.(country);
 
