@@ -36,10 +36,33 @@ describe('@mantine/form/isUrl', () => {
     expect(validator('http://localhost:3000')).toBe(TEST_ERROR);
   });
 
+  it('rejects loopback addresses and localhost aliases by default', () => {
+    const validator = isUrl(TEST_ERROR);
+    expect(validator('http://127.0.0.1')).toBe(TEST_ERROR);
+    expect(validator('http://127.0.0.1:3000/path')).toBe(TEST_ERROR);
+    expect(validator('http://127.1.2.3')).toBe(TEST_ERROR);
+    expect(validator('http://127.1')).toBe(TEST_ERROR);
+    expect(validator('http://[::1]:8080')).toBe(TEST_ERROR);
+    expect(validator('http://LOCALHOST')).toBe(TEST_ERROR);
+    expect(validator('http://localhost.')).toBe(TEST_ERROR);
+    expect(validator('http://app.localhost')).toBe(TEST_ERROR);
+  });
+
+  it('does not treat hosts that only contain localhost or 127 as loopback', () => {
+    const validator = isUrl(TEST_ERROR);
+    expect(validator('https://localhost.example.com')).toBe(null);
+    expect(validator('https://mylocalhost.com')).toBe(null);
+    expect(validator('https://127.example.com')).toBe(null);
+    expect(validator('http://128.0.0.1')).toBe(null);
+  });
+
   it('allows localhost when option is set', () => {
     const validator = isUrl({ allowLocalhost: true }, TEST_ERROR);
     expect(validator('http://localhost')).toBe(null);
     expect(validator('http://localhost:3000')).toBe(null);
+    expect(validator('http://127.0.0.1:3000')).toBe(null);
+    expect(validator('http://[::1]')).toBe(null);
+    expect(validator('http://app.localhost')).toBe(null);
   });
 
   it('validates protocols', () => {
