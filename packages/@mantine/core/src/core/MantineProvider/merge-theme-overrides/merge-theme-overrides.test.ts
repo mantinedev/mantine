@@ -1,6 +1,14 @@
 import { mergeThemeOverrides } from './merge-theme-overrides';
 
 describe('@mantine/merge-theme-overrides', () => {
+  it('merges own properties of a class instance theme override', () => {
+    class ThemeOverride {
+      primaryColor = 'red';
+    }
+
+    expect(mergeThemeOverrides(new ThemeOverride())).toStrictEqual({ primaryColor: 'red' });
+  });
+
   it('preserves DOM elements in component default props', () => {
     const boundary = document.createElement('div');
     const result = mergeThemeOverrides(

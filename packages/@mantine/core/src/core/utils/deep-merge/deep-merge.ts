@@ -1,3 +1,7 @@
+function isObject(item: unknown) {
+  return item && typeof item === 'object' && !Array.isArray(item);
+}
+
 function isPlainObject(item: unknown) {
   if (!item || typeof item !== 'object') {
     return false;
@@ -17,7 +21,7 @@ export function deepMerge<T extends object>(target: T, source: any): T {
   const result: Record<string, any> = { ...target };
   const _source: Record<string, any> = source;
 
-  if (isPlainObject(target) && isPlainObject(source)) {
+  if (isObject(target) && isObject(source)) {
     Object.keys(source).forEach((key) => {
       if (isPlainObject(_source[key]) && isPlainObject(result[key])) {
         result[key] = deepMerge(result[key], _source[key]);

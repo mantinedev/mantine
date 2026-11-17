@@ -6,6 +6,14 @@ import {
 } from './merge-mantine-theme';
 
 describe('@mantine/core/merge-mantine-theme', () => {
+  it('merges own properties of a class instance theme override', () => {
+    class ThemeOverride {
+      primaryColor = 'red';
+    }
+
+    expect(mergeMantineTheme(DEFAULT_THEME, new ThemeOverride()).primaryColor).toBe('red');
+  });
+
   it('preserves DOM elements when merging an inherited theme', () => {
     const boundary = document.createElement('div');
     const parent = mergeMantineTheme(DEFAULT_THEME, {

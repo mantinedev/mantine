@@ -74,4 +74,17 @@ describe('@mantine/core/deep-merge', () => {
     expect(target.nested.boundary).toBe('clippingAncestors');
     expect(source.nested.boundary).toBe(boundary);
   });
+
+  it('merges own properties of class instances at the root', () => {
+    class ThemeOverride {
+      primaryColor = 'red';
+    }
+
+    expect(deepMerge({ primaryColor: 'blue' }, new ThemeOverride())).toStrictEqual({
+      primaryColor: 'red',
+    });
+    expect(deepMerge(new ThemeOverride(), { primaryColor: 'blue' })).toStrictEqual({
+      primaryColor: 'blue',
+    });
+  });
 });
