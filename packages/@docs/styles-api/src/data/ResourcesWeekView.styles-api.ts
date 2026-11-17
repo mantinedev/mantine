@@ -10,6 +10,8 @@ export const ResourcesWeekViewStylesApi: StylesApiData<ResourcesWeekViewFactory>
     resourcesWeekViewHeaderContent: 'Container for day labels and time labels rows',
     resourcesWeekViewDayLabelsRow: 'Row containing day labels',
     resourcesWeekViewDayLabel: 'Individual day label element',
+    resourcesWeekViewDayLabelWeekday: 'Day label text in days layout',
+    resourcesWeekViewCell: 'Individual day cell in days layout',
     resourcesWeekViewTimeLabelsRow: 'Row containing time labels',
     resourcesWeekViewScrollArea: 'Scroll area component',
     resourcesWeekViewCorner: 'Top-left corner element',
@@ -47,6 +49,7 @@ export const ResourcesWeekViewStylesApi: StylesApiData<ResourcesWeekViewFactory>
     resourcesWeekView: {
       '--resources-week-view-radius': 'Controls `border-radius` of the view',
       '--resources-week-view-slot-width': 'Controls `width` of each time slot column',
+      '--resources-week-view-day-width': 'Controls `width` of each day column in days layout',
       '--resources-week-view-row-height': 'Controls `height` of each resource row',
       '--resources-week-view-group-label-width': 'Controls `width` of the group label column',
       '--resources-week-view-business-hours-bg':

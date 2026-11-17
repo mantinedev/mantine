@@ -655,6 +655,192 @@ describe('@mantine/core/PhoneInput', () => {
     expect(onChange).toHaveBeenLastCalledWith('+78999', expect.anything());
   });
 
+  describe.each(['auto', 'strip'] as const)(
+    'empty controlled input with %s prefix handling',
+    (nationalPrefixBehavior) => {
+      it.each([
+        ['+78121234567', '+78121234567', '+7 (812) 123-45-67'],
+        ['+78001002247', '+78001002247', '+7 (800) 100-22-47'],
+        ['88121234567', '+78121234567', '+7 (812) 123-45-67'],
+        ['89991234567', '+79991234567', '+7 (999) 123-45-67'],
+        ['79991234567', '+79991234567', '+7 (999) 123-45-67'],
+      ])('normalizes typed %s', async (typedValue, expectedValue, expectedDisplay) => {
+        const onChange = jest.fn();
+
+        function Controlled() {
+          const [value, setValue] = useState('');
+          return (
+            <PhoneInput
+              value={value}
+              onChange={(rawValue, details) => {
+                setValue(rawValue);
+                onChange(rawValue, details);
+              }}
+              defaultCountry="ru"
+              withCountryAutoDetect
+              nationalPrefixBehavior={nationalPrefixBehavior}
+            />
+          );
+        }
+
+        render(<Controlled />);
+        const input = screen.getByRole('textbox');
+        await userEvent.type(input, typedValue);
+
+        expect(input).toHaveValue(expectedDisplay);
+        expect(onChange).toHaveBeenLastCalledWith(
+          expectedValue,
+          expect.objectContaining({ country: expect.objectContaining({ iso2: 'ru' }) })
+        );
+      });
+
+      it('normalizes a pasted national number', async () => {
+        const onChange = jest.fn();
+        const user = userEvent.setup();
+
+        function Controlled() {
+          const [value, setValue] = useState('');
+          return (
+            <PhoneInput
+              value={value}
+              onChange={(rawValue, details) => {
+                setValue(rawValue);
+                onChange(rawValue, details);
+              }}
+              defaultCountry="ru"
+              withCountryAutoDetect
+              nationalPrefixBehavior={nationalPrefixBehavior}
+            />
+          );
+        }
+
+        render(<Controlled />);
+        const input = screen.getByRole('textbox');
+        await user.click(input);
+        await user.paste('8 800 100 22 47');
+
+        expect(input).toHaveValue('+7 (800) 100-22-47');
+        expect(onChange).toHaveBeenLastCalledWith(
+          '+78001002247',
+          expect.objectContaining({ country: expect.objectContaining({ iso2: 'ru' }) })
+        );
+      });
+    }
+  );
+
+  it.each([false, true])(
+    'preserves explicit dial codes after clearing an uncontrolled input (autoDetect=%s)',
+    async (withCountryAutoDetect) => {
+      const onChange = jest.fn();
+      render(
+        <PhoneInput
+          defaultCountry="ru"
+          nationalPrefixBehavior="strip"
+          withCountryAutoDetect={withCountryAutoDetect}
+          onChange={onChange}
+        />
+      );
+      const input = screen.getByRole('textbox');
+
+      await userEvent.clear(input);
+      await userEvent.type(input, '+78121234567');
+      expect(input).toHaveValue('+7 (812) 123-45-67');
+      expect(onChange).toHaveBeenLastCalledWith('+78121234567', expect.anything());
+
+      await userEvent.clear(input);
+      await userEvent.type(input, '78001002247');
+      expect(input).toHaveValue('+7 (800) 100-22-47');
+      expect(onChange).toHaveBeenLastCalledWith('+78001002247', expect.anything());
+    }
+  );
+
+  it.each([false, true])(
+    'strips a trunk prefix after a prop-prefilled dial code (controlled=%s)',
+    async (controlled) => {
+      function Controlled() {
+        const [value, setValue] = useState('+7');
+        return (
+          <PhoneInput
+            value={controlled ? value : undefined}
+            defaultValue={controlled ? undefined : '+7'}
+            onChange={setValue}
+            defaultCountry="ru"
+            nationalPrefixBehavior="strip"
+          />
+        );
+      }
+
+      render(<Controlled />);
+      const input = screen.getByRole('textbox');
+      await userEvent.type(input, '88121234567');
+      expect(input).toHaveValue('+7 (812) 123-45-67');
+    }
+  );
+
+  it.each(['', '+7'])(
+    'resets prefix handling when a controlled value is set to "%s" externally',
+    async (resetValue) => {
+      function Controlled() {
+        const [value, setValue] = useState('');
+        return (
+          <>
+            <PhoneInput
+              value={value}
+              onChange={setValue}
+              defaultCountry="ru"
+              nationalPrefixBehavior="strip"
+            />
+            <button type="button" onClick={() => setValue(resetValue)}>
+              Reset
+            </button>
+          </>
+        );
+      }
+
+      render(<Controlled />);
+      const input = screen.getByRole('textbox');
+      await userEvent.type(input, '+78121234567');
+      expect(input).toHaveValue('+7 (812) 123-45-67');
+
+      await userEvent.click(screen.getByRole('button', { name: 'Reset' }));
+      await userEvent.type(input, '88121234567');
+      expect(input).toHaveValue('+7 (812) 123-45-67');
+    }
+  );
+
+  it('resets prefix handling when the country selector prefills a dial code', async () => {
+    render(
+      <PhoneInput
+        defaultCountry="ru"
+        defaultValue=""
+        onlyCountries={['ru', 'kz']}
+        nationalPrefixBehavior="strip"
+      />
+    );
+    const input = screen.getByRole('textbox');
+    await userEvent.type(input, '+7');
+    await userEvent.click(screen.getByRole('button', { name: /Russia/ }));
+    await userEvent.click(screen.getByRole('option', { name: /Russia/ }));
+    await userEvent.type(input, '88121234567');
+
+    expect(input).toHaveValue('+7 (812) 123-45-67');
+  });
+
+  it('preserves a national prefix typed into an empty input when opted out', async () => {
+    const onChange = jest.fn();
+    render(
+      <PhoneInput
+        defaultCountry="ru"
+        defaultValue=""
+        nationalPrefixBehavior="preserve"
+        onChange={onChange}
+      />
+    );
+
+    await userEvent.type(screen.getByRole('textbox'), '8800');
+    expect(onChange).toHaveBeenLastCalledWith('+78800', expect.anything());
+  });
+
   it('supports controlled value', () => {
     const spy = jest.fn();
     render(<PhoneInput {...testProps} value="+12025551234" onChange={spy} />);
@@ -669,6 +855,68 @@ describe('@mantine/core/PhoneInput', () => {
     await userEvent.click(screen.getByRole('button', { name: /United States/ }));
 
     expect(screen.getByRole('listbox')).toBeVisible();
+  });
+
+  it.each([
+    { searchable: true, withinPortal: true },
+    { searchable: true, withinPortal: false },
+    { searchable: false, withinPortal: true },
+    { searchable: false, withinPortal: false },
+  ])(
+    'toggles the country dropdown once per click (searchable=$searchable, withinPortal=$withinPortal)',
+    async ({ searchable, withinPortal }) => {
+      const user = userEvent.setup();
+      const onDropdownOpen = jest.fn();
+      const onDropdownClose = jest.fn();
+      render(
+        <PhoneInput
+          {...testProps}
+          searchable={searchable}
+          comboboxProps={{ withinPortal, clickOutsideCapture: true }}
+          onDropdownOpen={onDropdownOpen}
+          onDropdownClose={onDropdownClose}
+        />
+      );
+      const button = screen.getByRole('button', { name: /United States/ });
+
+      await user.click(button);
+      expect(button).toHaveAttribute('aria-expanded', 'true');
+      expect(onDropdownOpen).toHaveBeenCalledTimes(1);
+
+      await user.pointer({ target: button, keys: '[MouseLeft>]' });
+      expect(button).toHaveAttribute('aria-expanded', 'true');
+      expect(onDropdownClose).not.toHaveBeenCalled();
+
+      await user.pointer({ target: button, keys: '[/MouseLeft]' });
+      expect(button).toHaveAttribute('aria-expanded', 'false');
+      expect(screen.queryByRole('listbox')).not.toBeInTheDocument();
+      expect(onDropdownClose).toHaveBeenCalledTimes(1);
+      expect(onDropdownOpen).toHaveBeenCalledTimes(1);
+
+      await user.click(button);
+      expect(button).toHaveAttribute('aria-expanded', 'true');
+      expect(onDropdownOpen).toHaveBeenCalledTimes(2);
+
+      await user.click(document.body);
+      expect(button).toHaveAttribute('aria-expanded', 'false');
+      expect(onDropdownClose).toHaveBeenCalledTimes(2);
+    }
+  );
+
+  it('does not dismiss the dropdown on touchstart inside the country button', async () => {
+    const onDropdownClose = jest.fn();
+    render(<PhoneInput {...testProps} onDropdownClose={onDropdownClose} />);
+    const button = screen.getByRole('button', { name: /United States/ });
+
+    await userEvent.click(button);
+    fireEvent.touchStart(button);
+    expect(button).toHaveAttribute('aria-expanded', 'true');
+    expect(onDropdownClose).not.toHaveBeenCalled();
+
+    fireEvent.touchEnd(button);
+    fireEvent.click(button);
+    expect(button).toHaveAttribute('aria-expanded', 'false');
+    expect(onDropdownClose).toHaveBeenCalledTimes(1);
   });
 
   it('selects country from dropdown', async () => {

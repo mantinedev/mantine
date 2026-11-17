@@ -23,6 +23,11 @@ export const Demo_controlled = {
   render: renderDemo(demos.controlled),
 };
 
+export const Demo_extension = {
+  name: '⭐ Demo: extension',
+  render: renderDemo(demos.extension),
+};
+
 export const Demo_preferredCountries = {
   name: '⭐ Demo: preferredCountries',
   render: renderDemo(demos.preferredCountries),

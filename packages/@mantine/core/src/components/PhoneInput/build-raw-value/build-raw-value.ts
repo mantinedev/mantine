@@ -22,6 +22,12 @@ export function buildRawValue(inputValue: string, options: BuildRawValueOptions)
   } = options;
   const raw = getDigits(inputValue);
   const digitsOnly = raw.replace(/^\+/, '');
+  const startsWithDialCode =
+    !!selectedCountry &&
+    digitsOnly.startsWith(selectedCountry.dialCode) &&
+    (raw.startsWith('+') ||
+      selectedCountry.iso2 !== 'kz' ||
+      digitsOnly.length > getMaskDigitCount(selectedCountry.format));
   const stripNationalPrefix = (digits: string) =>
     normalizeNationalPrefix &&
     selectedCountry?.nationalPrefix &&
@@ -37,7 +43,11 @@ export function buildRawValue(inputValue: string, options: BuildRawValueOptions)
   }
 
   if (preferSelectedCountry && selectedCountry && !raw.startsWith('+')) {
-    return `+${selectedCountry.dialCode}${stripNationalPrefix(digitsOnly)}`;
+    const nationalDigits =
+      international && startsWithDialCode
+        ? digitsOnly.slice(selectedCountry.dialCode.length)
+        : digitsOnly;
+    return `+${selectedCountry.dialCode}${stripNationalPrefix(nationalDigits)}`;
   }
 
   if (canAutoDetect || !selectedCountry) {
@@ -53,20 +63,15 @@ export function buildRawValue(inputValue: string, options: BuildRawValueOptions)
       selectedCountry &&
       !raw.startsWith('+') &&
       digitsOnly.startsWith(selectedCountry.dialCode) &&
-      selectedCountry.nationalPrefix === '8' &&
-      digitsOnly.length <= getMaskDigitCount(selectedCountry.format)
+      !startsWithDialCode
     ) {
       return `+${selectedCountry.dialCode}${stripNationalPrefix(digitsOnly)}`;
     }
     return raw.startsWith('+') ? raw : `+${raw}`;
   }
 
-  const nationalDigits =
-    digitsOnly.startsWith(selectedCountry.dialCode) &&
-    (raw.startsWith('+') ||
-      selectedCountry.nationalPrefix !== '8' ||
-      digitsOnly.length > getMaskDigitCount(selectedCountry.format))
-      ? digitsOnly.slice(selectedCountry.dialCode.length)
-      : digitsOnly;
+  const nationalDigits = startsWithDialCode
+    ? digitsOnly.slice(selectedCountry.dialCode.length)
+    : digitsOnly;
   return `+${selectedCountry.dialCode}${stripNationalPrefix(nationalDigits)}`;
 }

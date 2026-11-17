@@ -13,6 +13,17 @@ via the `resourceId` property on event data.
 
 <Demo data={ResourcesWeekViewDemos.usage} />
 
+## Day cells
+
+Set `layout="days"` to display one cell per resource per day, with stacked events and weekly navigation.
+Use `dayWidth` to set column width and `onDayClick` to handle cell clicks.
+
+Dragging preserves event times; resizing snaps to whole days.
+Time-axis settings and the current time indicator apply only to the default time layout.
+Background events appear as regular events, matching the month view:
+
+<Demo data={ResourcesWeekViewDemos.dayCells} />
+
 ## All-day events
 
 Events that span a whole day (start at `00:00:00` and end at the next day `00:00:00`) are

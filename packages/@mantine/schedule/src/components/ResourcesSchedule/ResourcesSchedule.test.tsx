@@ -27,6 +27,32 @@ const testEvents = [
 ];
 
 describe('@mantine/schedule/ResourcesSchedule', () => {
+  it('supports day-cell weeks, navigation, view switching and top-level day clicks', async () => {
+    const onDayClick = jest.fn();
+    render(
+      <ResourcesSchedule
+        {...defaultProps}
+        defaultDate="2026-10-28"
+        defaultView="week"
+        weekViewProps={{ layout: 'days', withWeekendDays: false }}
+        onDayClick={onDayClick}
+      />
+    );
+    await userEvent.click(screen.getByRole('button', { name: 'Room A October 30, 2026' }));
+    expect(onDayClick).toHaveBeenCalledWith(
+      expect.objectContaining({ date: '2026-10-30', resourceId: 'room-a' })
+    );
+    await userEvent.click(screen.getByRole('button', { name: 'Next' }));
+    expect(screen.getByRole('button', { name: 'Room A November 2, 2026' })).toBeInTheDocument();
+    await userEvent.click(screen.getByRole('tab', { name: 'Switch to month view' }));
+    expect(screen.getByRole('button', { name: 'Room A November 30, 2026' })).toBeInTheDocument();
+    await userEvent.click(screen.getByRole('tab', { name: 'Switch to week view' }));
+    expect(screen.getByRole('button', { name: 'Room A November 2, 2026' })).toBeInTheDocument();
+    expect(
+      screen.queryByRole('button', { name: 'Room A November 30, 2026' })
+    ).not.toBeInTheDocument();
+  });
+
   it('renders ResourcesDayView by default (defaultView="day")', () => {
     const { container } = render(<ResourcesSchedule {...defaultProps} />);
     expect(

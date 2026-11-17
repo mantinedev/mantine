@@ -159,7 +159,7 @@ export interface ResourcesScheduleProps
     resourceId?: string | number;
   }) => void;
 
-  /** Called when day is clicked in month view */
+  /** Called when a day cell is clicked in month view or week view with `layout="days"` */
   onDayClick?: (data: {
     date: DateStringValue;
     nativeEvent: React.MouseEvent<HTMLButtonElement>;
@@ -189,7 +189,7 @@ export interface ResourcesScheduleProps
     resourceId?: string | number;
   }) => void;
 
-  /** If true, events can be resized by dragging their edges, resizing snaps to whole days in month view @default false */
+  /** If true, events can be resized by dragging their edges. Resizing snaps to whole days in month view and week view with `layout="days"`. @default false */
   withEventResize?: boolean;
 
   /** Called when event is resized */
@@ -218,7 +218,7 @@ export interface ResourcesScheduleProps
   /** Called when a drop or resize is rejected */
   onEventPlacementRejected?: (data: ScheduleEventPlacementRejectedData) => void;
 
-  /** If set, background events (`display: 'background'`) can be clicked and trigger `onEventClick`. Applies to `day` and `week` views only – `ResourcesMonthView` does not render background events separately. Combined with `withEventResize`, timed background events can also be resized by dragging their edges. @default false */
+  /** If set, background events (`display: 'background'`) can be clicked and trigger `onEventClick`. Applies to time layouts only – day-cell layouts do not render background events separately. Combined with `withEventResize`, timed background events can also be resized by dragging their edges. @default false */
   withInteractiveBackgroundEvents?: boolean;
 
   /** Max number of generated recurring instances @default 2000 */
@@ -380,6 +380,7 @@ export const ResourcesSchedule = factory<ResourcesScheduleFactory>((_props) => {
         return (
           <ResourcesWeekView
             {...commonProps}
+            onDayClick={onDayClick}
             onTimeSlotClick={onTimeSlotClick}
             withEventResize={mode === 'static' ? false : withEventResize}
             onEventResize={onEventResize}

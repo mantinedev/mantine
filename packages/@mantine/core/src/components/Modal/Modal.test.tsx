@@ -124,6 +124,25 @@ describe('@mantine/core/Modal', () => {
       display: 'none',
     });
   });
+
+  it('does not intercept pointer events when the overlay is kept mounted after closing', () => {
+    const { container, rerender } = render(
+      <Modal {...defaultProps} keepMounted transitionProps={{ duration: 0 }} />,
+      undefined,
+      { env: 'default' }
+    );
+
+    expect(container.querySelector('.mantine-Modal-overlay')).not.toHaveStyle({
+      pointerEvents: 'none',
+    });
+
+    rerender(
+      <Modal {...defaultProps} opened={false} keepMounted transitionProps={{ duration: 0 }} />
+    );
+    expect(container.querySelector('.mantine-Modal-overlay')).toHaveStyle({
+      pointerEvents: 'none',
+    });
+  });
 });
 
 describe('@mantine/core/ModalRoot', () => {

@@ -41,7 +41,7 @@ describe('@mantine/schedule/WeekView', () => {
   it('renders view of the given week', () => {
     const { container } = render(<WeekView {...defaultProps} />);
     expect(container.querySelectorAll('.mantine-WeekView-weekViewDay')).toHaveLength(7);
-    expect(screen.getByRole('button', { name: 'Weekday 2025-11-03' })).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: 'Mon 3' })).toBeInTheDocument();
     expect(screen.getByRole('button', { name: 'All day 2025-11-05' })).toBeInTheDocument();
     expect(
       screen.getByRole('button', { name: 'Time slot 2025-11-09 10:00:00 - 11:00:00' })
@@ -158,10 +158,8 @@ describe('@mantine/schedule/WeekView', () => {
   it('supports custom firstDayOfWeek (prop)', () => {
     const { container } = render(<WeekView {...defaultProps} firstDayOfWeek={0} />);
     expect(
-      container
-        .querySelectorAll('.mantine-WeekView-weekViewDayLabel')[0]
-        ?.getAttribute('aria-label')
-    ).toBe('Weekday 2025-11-02');
+      container.querySelectorAll('.mantine-WeekView-weekViewDayLabel')[0]
+    ).toHaveAccessibleName('Sun 2');
   });
 
   it('supports custom firstDayOfWeek (DatesProvider)', () => {
@@ -172,10 +170,8 @@ describe('@mantine/schedule/WeekView', () => {
     );
 
     expect(
-      container
-        .querySelectorAll('.mantine-WeekView-weekViewDayLabel')[0]
-        ?.getAttribute('aria-label')
-    ).toBe('Weekday 2025-11-02');
+      container.querySelectorAll('.mantine-WeekView-weekViewDayLabel')[0]
+    ).toHaveAccessibleName('Sun 2');
   });
 
   it('supports custom weekdayFormat (dayjs string)', () => {
@@ -201,8 +197,8 @@ describe('@mantine/schedule/WeekView', () => {
     const { container } = render(<WeekView {...defaultProps} weekendDays={[1, 2]} />);
     const weekends = container.querySelectorAll('.mantine-WeekView-weekViewDayLabel[data-weekend]');
     expect(weekends).toHaveLength(2);
-    expect(weekends[0]?.getAttribute('aria-label')).toBe('Weekday 2025-11-03');
-    expect(weekends[1]?.getAttribute('aria-label')).toBe('Weekday 2025-11-04');
+    expect(weekends[0]).toHaveAccessibleName('Mon 3');
+    expect(weekends[1]).toHaveAccessibleName('Tue 4');
   });
 
   it('supports weekendDays (DatesProvider)', () => {
@@ -214,24 +210,41 @@ describe('@mantine/schedule/WeekView', () => {
 
     const weekends = container.querySelectorAll('.mantine-WeekView-weekViewDayLabel[data-weekend]');
     expect(weekends).toHaveLength(2);
-    expect(weekends[0]?.getAttribute('aria-label')).toBe('Weekday 2025-11-03');
-    expect(weekends[1]?.getAttribute('aria-label')).toBe('Weekday 2025-11-04');
+    expect(weekends[0]).toHaveAccessibleName('Mon 3');
+    expect(weekends[1]).toHaveAccessibleName('Tue 4');
   });
 
   it('supports withWeekendDays={false}', () => {
     const { container, rerender } = render(<WeekView {...defaultProps} withWeekendDays={false} />);
     const days = container.querySelectorAll('.mantine-WeekView-weekViewDayLabel');
     expect(days).toHaveLength(5);
-    expect(days[0]?.getAttribute('aria-label')).toBe('Weekday 2025-11-03');
-    expect(days[4]?.getAttribute('aria-label')).toBe('Weekday 2025-11-07');
+    expect(days[0]).toHaveAccessibleName('Mon 3');
+    expect(days[4]).toHaveAccessibleName('Fri 7');
 
     rerender(<WeekView {...defaultProps} withWeekendDays={false} weekendDays={[1, 2, 3]} />);
     const daysWithCustomWeekend = container.querySelectorAll('.mantine-WeekView-weekViewDayLabel');
     expect(daysWithCustomWeekend).toHaveLength(4);
-    expect(daysWithCustomWeekend[0].getAttribute('aria-label')).toBe('Weekday 2025-11-06');
-    expect(daysWithCustomWeekend[daysWithCustomWeekend.length - 1].getAttribute('aria-label')).toBe(
-      'Weekday 2025-11-09'
+    expect(daysWithCustomWeekend[0]).toHaveAccessibleName('Thu 6');
+    expect(daysWithCustomWeekend[daysWithCustomWeekend.length - 1]).toHaveAccessibleName('Sun 9');
+  });
+
+  it('names weekday buttons by their visible text', () => {
+    const { container } = render(<WeekView {...defaultProps} />);
+    const weekdays = container.querySelectorAll('.mantine-WeekView-weekViewDayLabel');
+    expect(weekdays).toHaveLength(7);
+    weekdays.forEach((weekday) => expect(weekday).not.toHaveAttribute('aria-label'));
+    expect(weekdays[0]).toHaveAccessibleName('Mon 3');
+    expect(weekdays[6]).toHaveAccessibleName('Sun 9');
+  });
+
+  it('supports weekday button aria-label override with attributes', () => {
+    render(
+      <WeekView
+        {...defaultProps}
+        attributes={{ weekViewDayLabel: { 'aria-label': 'Custom weekday label' } }}
+      />
     );
+    expect(screen.getAllByRole('button', { name: 'Custom weekday label' })).toHaveLength(7);
   });
 
   it('passes props down to ScrollArea', () => {
@@ -611,36 +624,30 @@ describe('@mantine/schedule/WeekView', () => {
     it('only first weekday should be in tab order', () => {
       render(<WeekView {...defaultProps} />);
 
-      expect(screen.getByRole('button', { name: 'Weekday 2025-11-03' })).toHaveAttribute(
-        'tabIndex',
-        '0'
-      );
-      expect(screen.getByRole('button', { name: 'Weekday 2025-11-04' })).toHaveAttribute(
-        'tabIndex',
-        '-1'
-      );
+      expect(screen.getByRole('button', { name: 'Mon 3' })).toHaveAttribute('tabIndex', '0');
+      expect(screen.getByRole('button', { name: 'Tue 4' })).toHaveAttribute('tabIndex', '-1');
     });
 
     it('supports ArrowRight/ArrowLeft to navigate between weekdays', async () => {
       render(<WeekView {...defaultProps} />);
 
-      screen.getByRole('button', { name: 'Weekday 2025-11-03' }).focus();
+      screen.getByRole('button', { name: 'Mon 3' }).focus();
       await userEvent.keyboard('{ArrowRight}');
-      expect(screen.getByRole('button', { name: 'Weekday 2025-11-04' })).toHaveFocus();
+      expect(screen.getByRole('button', { name: 'Tue 4' })).toHaveFocus();
 
       await userEvent.keyboard('{ArrowLeft}');
-      expect(screen.getByRole('button', { name: 'Weekday 2025-11-03' })).toHaveFocus();
+      expect(screen.getByRole('button', { name: 'Mon 3' })).toHaveFocus();
     });
 
     it('does not move focus past boundaries', async () => {
       render(<WeekView {...defaultProps} />);
 
-      const firstWeekday = screen.getByRole('button', { name: 'Weekday 2025-11-03' });
+      const firstWeekday = screen.getByRole('button', { name: 'Mon 3' });
       firstWeekday.focus();
       await userEvent.keyboard('{ArrowLeft}');
       expect(firstWeekday).toHaveFocus();
 
-      const lastWeekday = screen.getByRole('button', { name: 'Weekday 2025-11-09' });
+      const lastWeekday = screen.getByRole('button', { name: 'Sun 9' });
       lastWeekday.focus();
       await userEvent.keyboard('{ArrowRight}');
       expect(lastWeekday).toHaveFocus();
@@ -648,10 +655,7 @@ describe('@mantine/schedule/WeekView', () => {
 
     it('does not navigate weekdays in static mode', () => {
       render(<WeekView {...defaultProps} mode="static" />);
-      expect(screen.getByRole('button', { name: 'Weekday 2025-11-03' })).toHaveAttribute(
-        'tabIndex',
-        '-1'
-      );
+      expect(screen.getByRole('button', { name: 'Mon 3' })).toHaveAttribute('tabIndex', '-1');
     });
   });
 

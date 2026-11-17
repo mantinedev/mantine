@@ -173,6 +173,24 @@ describe('@mantine/core/Select', () => {
     expect(screen.getByText('Nothing found')).toBeVisible();
   });
 
+  it('does not render group labels whose items were filtered out by search', async () => {
+    render(
+      <Select
+        {...defaultProps}
+        searchable
+        data={[
+          { group: 'Europe', items: ['Germany', 'Georgia'] },
+          { group: 'Asia', items: ['Japan', 'China'] },
+        ]}
+      />
+    );
+    await userEvent.click(screen.getByRole('combobox'));
+    await userEvent.type(screen.getByRole('combobox'), 'Jap');
+    expect(screen.getByRole('option', { name: 'Japan' })).toBeVisible();
+    expect(screen.queryByText('Europe')).toBe(null);
+    expect(screen.getByText('Asia')).toBeVisible();
+  });
+
   it('displays the nothing found message if there is no data', async () => {
     render(<Select {...defaultProps} data={[]} nothingFoundMessage="No data" />);
     await userEvent.click(screen.getByRole('combobox'));

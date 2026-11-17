@@ -30,6 +30,14 @@ receives the raw value and a details object containing the formatted value and c
 
 <Demo data={PhoneInputDemos.controlled} />
 
+## Phone extensions
+
+Set `withExtension` to allow extensions separated by `x`, for example `+12025551234x1234`.
+The extension is included in `value` and available separately as `details.extension` in `onChange`.
+With this prop, `details.extension` is an empty string when no extension digits are entered:
+
+<Demo data={PhoneInputDemos.extension} />
+
 ## Preferred countries
 
 Use `preferredCountries` prop to pin countries to the top of the dropdown.
@@ -85,7 +93,10 @@ Use `resolveCountry` to choose one by ISO2 code, or return `undefined` to keep t
 `PhoneInput` removes known trunk prefixes from pasted national numbers. For example, pasting
 `8 999 123-45-67` with Russia selected produces `+79991234567`. Clearing the input emits `''`.
 
-Ambiguous digits typed after a dial code are preserved by default. Set `nationalPrefixBehavior="strip"`
+In an empty international input, a typed leading trunk prefix is also removed.
+Typing an explicit dial code, such as `+7`, preserves the national digits that follow in both `"auto"` and `"strip"` modes.
+
+Ambiguous digits typed after a prefilled dial code are preserved by default. Set `nationalPrefixBehavior="strip"`
 when users should enter numbers in national form, or `"preserve"` to disable prefix removal.
 
 With `"strip"`, unprefixed numbers use the selected country. Include `+` to enter another country's dial code:

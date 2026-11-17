@@ -2,6 +2,7 @@ export { usage } from './PhoneInput.demo.usage';
 export { configurator } from './PhoneInput.demo.configurator';
 export { loading } from './PhoneInput.demo.loading';
 export { controlled } from './PhoneInput.demo.controlled';
+export { extension } from './PhoneInput.demo.extension';
 export { preferredCountries } from './PhoneInput.demo.preferredCountries';
 export { onlyCountries } from './PhoneInput.demo.onlyCountries';
 export { excludeCountries } from './PhoneInput.demo.excludeCountries';
