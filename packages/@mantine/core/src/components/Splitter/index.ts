@@ -1,6 +1,7 @@
 import type {
   SplitterCssVariables,
   SplitterFactory,
+  SplitterHandleProps,
   SplitterProps,
   SplitterStylesNames,
 } from './Splitter';
@@ -16,6 +17,7 @@ export type {
   SplitterStylesNames,
   SplitterCssVariables,
   SplitterFactory,
+  SplitterHandleProps,
   SplitterPaneProps,
   SplitterPaneStylesNames,
   SplitterContextValue,
@@ -26,6 +28,7 @@ export namespace Splitter {
   export type StylesNames = SplitterStylesNames;
   export type CssVariables = SplitterCssVariables;
   export type Factory = SplitterFactory;
+  export type HandleProps = SplitterHandleProps;
   export type ContextValue = SplitterContextValue;
 
   export namespace Pane {

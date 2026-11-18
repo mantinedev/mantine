@@ -59,6 +59,88 @@ describe('@mantine/core/Splitter', () => {
     expect(screen.getByRole('separator')).toHaveAttribute('data-orientation', 'horizontal');
   });
 
+  it('merges per-handle styles and props and overrides thumb visibility independently', () => {
+    const onKeyDown = jest.fn();
+    const onDoubleClick = jest.fn();
+    render(
+      <Splitter
+        withHandle={false}
+        classNames={{ handle: 'shared-handle' }}
+        styles={{ handle: { color: 'red' } }}
+        getHandleProps={(index) => ({
+          className: `handle-${index}`,
+          style: { backgroundColor: 'blue' },
+          mod: { locked: index === 0 },
+          withHandle: index === 1,
+          disabled: index === 0,
+          tabIndex: 2,
+          'aria-label': `Resize pane ${index + 1}`,
+          onKeyDown,
+          onDoubleClick,
+        })}
+      >
+        <Splitter.Pane defaultSize={20}>A</Splitter.Pane>
+        <Splitter.Pane defaultSize={30}>B</Splitter.Pane>
+        <Splitter.Pane defaultSize={50}>C</Splitter.Pane>
+      </Splitter>
+    );
+
+    const [first, second] = screen.getAllByRole('separator');
+    expect(first).toHaveClass('shared-handle', 'handle-0');
+    expect(first).toHaveStyle({ color: 'rgb(255, 0, 0)', backgroundColor: 'rgb(0, 0, 255)' });
+    expect(first).toHaveAttribute('data-locked');
+    expect(first).toHaveAttribute('data-disabled');
+    expect(first).toHaveAttribute('aria-disabled', 'true');
+    expect(first).toHaveAttribute('aria-label', 'Resize pane 1');
+    expect(first).toHaveAttribute('tabindex', '-1');
+    expect(first).toHaveAttribute('data-index', '0');
+    expect(first.children).toHaveLength(0);
+    expect(second).toHaveAttribute('data-index', '1');
+    expect(second).toHaveAttribute('tabindex', '2');
+    expect(second.children).toHaveLength(1);
+
+    fireEvent.keyDown(first, { key: 'ArrowRight' });
+    expect(first).toHaveAttribute('aria-valuenow', '20');
+    fireEvent.keyDown(second, { key: 'ArrowRight' });
+    expect(second).toHaveAttribute('aria-valuenow', '31');
+    expect(onKeyDown).toHaveBeenCalledTimes(2);
+    fireEvent.doubleClick(second);
+    expect(second).toHaveAttribute('aria-valuenow', '30');
+    expect(onDoubleClick).toHaveBeenCalledTimes(1);
+  });
+
+  it('uses the root thumb visibility unless a handle overrides it', () => {
+    const { rerender } = render(<Splitter {...defaultProps} getHandleProps={() => ({})} />);
+    expect(screen.getByRole('separator').children).toHaveLength(1);
+    rerender(<Splitter {...defaultProps} getHandleProps={() => ({ withHandle: false })} />);
+    expect(screen.getByRole('separator').children).toHaveLength(0);
+  });
+
+  it('preserves keyed pane content when an earlier pane is removed', () => {
+    const panes = [
+      <Splitter.Pane key="first" defaultSize={20}>
+        First
+      </Splitter.Pane>,
+      <Splitter.Pane key="second" defaultSize={30}>
+        Second
+      </Splitter.Pane>,
+      <Splitter.Pane key="transcript" defaultSize={50}>
+        <input aria-label="Transcript" defaultValue="Initial transcript" />
+      </Splitter.Pane>,
+    ];
+    const { rerender } = render(<Splitter sizes={[20, 30, 50]}>{panes}</Splitter>);
+    const transcript = screen.getByRole('textbox');
+    fireEvent.change(transcript, { target: { value: 'Updated transcript' } });
+
+    rerender(
+      <>
+        <Splitter sizes={[40, 60]}>{panes.slice(1)}</Splitter>
+      </>
+    );
+    expect(screen.getByRole('textbox')).toBe(transcript);
+    expect(transcript).toHaveValue('Updated transcript');
+  });
+
   it('sets vertical orientation on handles', () => {
     render(<Splitter {...defaultProps} orientation="vertical" />);
     expect(screen.getByRole('separator')).toHaveAttribute('data-orientation', 'vertical');
