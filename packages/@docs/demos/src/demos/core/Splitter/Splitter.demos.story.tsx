@@ -52,3 +52,8 @@ export const Demo_withHandle = {
   name: '⭐ Demo: withHandle',
   render: renderDemo(demos.withHandle),
 };
+
+export const Demo_handleProps = {
+  name: '⭐ Demo: handleProps',
+  render: renderDemo(demos.handleProps),
+};
