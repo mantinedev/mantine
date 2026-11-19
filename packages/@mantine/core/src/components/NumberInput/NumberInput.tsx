@@ -707,7 +707,7 @@ export const NumberInput = genericFactory<NumberInputFactory>(
     const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
       onKeyDown?.(event);
 
-      if (readOnly || !withKeyboardEvents) {
+      if (event.defaultPrevented || readOnly || !withKeyboardEvents) {
         return;
       }
 
