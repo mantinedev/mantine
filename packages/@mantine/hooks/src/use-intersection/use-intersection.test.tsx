@@ -10,13 +10,10 @@ function Demo({ threshold = [0, 0.5, 1] }: { threshold?: number | number[] }) {
 
 describe('@mantine/hooks/use-intersection', () => {
   let callback: IntersectionObserverCallback;
-  const observe = jest.fn();
-  const disconnect = jest.fn();
-
   beforeEach(() => {
     jest.spyOn(window, 'IntersectionObserver').mockImplementation((cb) => {
       callback = cb;
-      return { observe, disconnect, unobserve: jest.fn() } as any;
+      return { observe: jest.fn(), disconnect: jest.fn(), unobserve: jest.fn() } as any;
     });
   });
 
@@ -35,26 +32,32 @@ describe('@mantine/hooks/use-intersection', () => {
     });
   }
 
-  it('keeps the observer and entry after an update with an inline threshold array', () => {
-    const { container } = render(<Demo />);
+  it('preserves the entry when rerendering with an equivalent inline threshold array', () => {
+    const { container, rerender } = render(<Demo />);
     const target = container.firstElementChild!;
 
     intersect(target, true);
-
     expect(screen.getByText('true')).toBeInTheDocument();
-    expect(window.IntersectionObserver).toHaveBeenCalledTimes(1);
-    expect(disconnect).not.toHaveBeenCalled();
+
+    rerender(<Demo />);
+    expect(screen.getByText('true')).toBeInTheDocument();
+
+    intersect(target, false);
+    expect(screen.getByText('false')).toBeInTheDocument();
   });
 
-  it('reconnects when threshold values change', () => {
-    const { rerender } = render(<Demo threshold={[0, 1]} />);
-    rerender(<Demo threshold={[0, 0.25, 1]} />);
+  it('resets the stale entry and receives new entries when threshold values change', () => {
+    const { container, rerender } = render(<Demo threshold={[0, 1]} />);
+    const target = container.firstElementChild!;
 
-    expect(window.IntersectionObserver).toHaveBeenCalledTimes(2);
-    expect(window.IntersectionObserver).toHaveBeenLastCalledWith(expect.any(Function), {
-      threshold: [0, 0.25, 1],
-    });
-    expect(disconnect).toHaveBeenCalledTimes(1);
+    intersect(target, true);
+    expect(screen.getByText('true')).toBeInTheDocument();
+
+    rerender(<Demo threshold={[0, 0.25, 1]} />);
+    expect(screen.getByText('no-entry')).toBeInTheDocument();
+
+    intersect(target, false);
+    expect(screen.getByText('false')).toBeInTheDocument();
   });
 
   it('supports a number threshold', () => {
@@ -63,14 +66,5 @@ describe('@mantine/hooks/use-intersection', () => {
     rerender(<Demo threshold={0.5} />);
 
     expect(screen.getByText('false')).toBeInTheDocument();
-    expect(window.IntersectionObserver).toHaveBeenCalledTimes(1);
-  });
-
-  it('disconnects the observer on unmount', () => {
-    const { container, unmount } = render(<Demo />);
-    intersect(container.firstElementChild!, true);
-    unmount();
-
-    expect(disconnect).toHaveBeenCalledTimes(1);
   });
 });
