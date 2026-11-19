@@ -20,19 +20,31 @@ export function useSet<T>(values?: T[]): Set<T> {
   setRef.current = set;
 
   set.add = (...args) => {
+    if (setRef.current.has(args[0])) {
+      return setRef.current;
+    }
+
     const res = Set.prototype.add.apply(setRef.current, args);
     setSet(new Set(setRef.current));
     return res;
   };
 
   set.clear = (...args) => {
+    if (setRef.current.size === 0) {
+      return;
+    }
+
     Set.prototype.clear.apply(setRef.current, args);
     setSet(new Set(setRef.current));
   };
 
   set.delete = (...args) => {
     const res = Set.prototype.delete.apply(setRef.current, args);
-    setSet(new Set(setRef.current));
+
+    if (res) {
+      setSet(new Set(setRef.current));
+    }
+
     return res;
   };
 
