@@ -33,6 +33,7 @@ import {
   useResolvedStylesApi,
   useStyles,
 } from '@mantine/core';
+import { ChartAnnouncer } from '../ChartAnnouncer/ChartAnnouncer';
 import { ChartBrush } from '../ChartBrush';
 import { ChartLegend, ChartLegendStylesNames } from '../ChartLegend';
 import { ChartTooltip, ChartTooltipStylesNames } from '../ChartTooltip';
@@ -426,6 +427,9 @@ export const BarChart = factory<BarChartFactory>((_props) => {
           accessibilityLayer={accessibilityLayer}
           {...barChartProps}
         >
+          {(barChartProps?.accessibilityLayer ?? accessibilityLayer) && (
+            <ChartAnnouncer series={series} unit={unit} valueFormatter={valueFormatter} />
+          )}
           {referenceAreasItems}
           {withLegend && (
             <Legend

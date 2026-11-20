@@ -29,6 +29,7 @@ import {
   useProps,
   useStyles,
 } from '@mantine/core';
+import { ChartAnnouncer } from '../ChartAnnouncer/ChartAnnouncer';
 import classes from '../grid-chart.module.css';
 
 function getDomain(data: Record<string, any>[], key: string) {
@@ -196,6 +197,12 @@ export const BubbleChart = factory<BubbleChartFactory>((_props) => {
     <Box {...getStyles('root')} {...others}>
       <ResponsiveContainer>
         <ScatterChart accessibilityLayer={accessibilityLayer}>
+          {accessibilityLayer && (
+            <ChartAnnouncer
+              labelKey={dataKey.x}
+              series={[{ name: dataKey.y }, { name: dataKey.z, valueFormatter }]}
+            />
+          )}
           <XAxis
             type="category"
             dataKey={dataKey.x}

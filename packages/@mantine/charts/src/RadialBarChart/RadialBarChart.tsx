@@ -26,6 +26,7 @@ import {
   useResolvedStylesApi,
   useStyles,
 } from '@mantine/core';
+import { ChartAnnouncer } from '../ChartAnnouncer/ChartAnnouncer';
 import { ChartLegend, ChartLegendStylesNames } from '../ChartLegend';
 import { getLegendPosition } from '../utils';
 import classes from './RadialBarChart.module.css';
@@ -190,6 +191,9 @@ export const RadialBarChart = factory<RadialBarChartFactory>((_props) => {
           accessibilityLayer={accessibilityLayer}
           {...radialBarChartProps}
         >
+          {(radialBarChartProps?.accessibilityLayer ?? accessibilityLayer) && (
+            <ChartAnnouncer labelKey="name" series={[{ name: dataKey }]} />
+          )}
           <RadialBar
             label={
               withLabels

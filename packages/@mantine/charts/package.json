@@ -34,6 +34,9 @@
     "type": "git",
     "directory": "packages/@mantine/charts"
   },
+  "dependencies": {
+    "es-toolkit": "^1.39.3"
+  },
   "peerDependencies": {
     "@mantine/core": "9.8.1",
     "@mantine/hooks": "9.8.1",

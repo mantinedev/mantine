@@ -4258,6 +4258,7 @@ __metadata:
     "@mantine-tests/core": "workspace:*"
     "@mantine/core": "workspace:*"
     "@mantine/hooks": "workspace:*"
+    es-toolkit: "npm:^1.39.3"
     react: "npm:19.3.1"
     react-dom: "npm:19.3.1"
   peerDependencies:

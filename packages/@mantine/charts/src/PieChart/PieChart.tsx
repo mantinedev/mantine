@@ -26,6 +26,7 @@ import {
   useResolvedStylesApi,
   useStyles,
 } from '@mantine/core';
+import { ChartAnnouncer } from '../ChartAnnouncer/ChartAnnouncer';
 import { ChartLegend, ChartLegendStylesNames } from '../ChartLegend';
 import { ChartTooltip, ChartTooltipStylesNames } from '../ChartTooltip/ChartTooltip';
 import { getLegendPosition, getPieChartData } from '../utils';
@@ -286,6 +287,13 @@ export const PieChart = factory<PieChartFactory>((_props) => {
     <Box size={size} {...getStyles('root')} {...others}>
       <ResponsiveContainer>
         <ReChartsPieChart accessibilityLayer={accessibilityLayer} {...pieChartProps}>
+          {(pieChartProps?.accessibilityLayer ?? accessibilityLayer) && (
+            <ChartAnnouncer
+              labelKey="name"
+              series={[{ name: 'value' }]}
+              valueFormatter={valueFormatter}
+            />
+          )}
           <Pie
             data={pieData as any}
             innerRadius={0}

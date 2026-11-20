@@ -30,6 +30,7 @@ import {
   useResolvedStylesApi,
   useStyles,
 } from '@mantine/core';
+import { ChartAnnouncer } from '../ChartAnnouncer/ChartAnnouncer';
 import { ChartLegend, ChartLegendStylesNames } from '../ChartLegend';
 import { ChartTooltip, ChartTooltipStylesNames } from '../ChartTooltip';
 import { MantineChartDotProps } from '../types';
@@ -260,6 +261,9 @@ export const RadarChart = factory<RadarChartFactory>((_props) => {
           accessibilityLayer={accessibilityLayer}
           {...radarChartProps}
         >
+          {(radarChartProps?.accessibilityLayer ?? accessibilityLayer) && (
+            <ChartAnnouncer series={series} labelKey={dataKey} />
+          )}
           {withPolarGrid && <PolarGrid stroke="var(--chart-grid-color)" {...polarGridProps} />}
           {withPolarAngleAxis && <PolarAngleAxis dataKey={dataKey} {...polarAngleAxisProps} />}
           {withPolarRadiusAxis && (

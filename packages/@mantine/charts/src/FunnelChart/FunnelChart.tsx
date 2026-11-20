@@ -26,6 +26,7 @@ import {
   useResolvedStylesApi,
   useStyles,
 } from '@mantine/core';
+import { ChartAnnouncer } from '../ChartAnnouncer/ChartAnnouncer';
 import { ChartLegend, ChartLegendStylesNames } from '../ChartLegend';
 import { ChartTooltip, ChartTooltipStylesNames } from '../ChartTooltip/ChartTooltip';
 import { getLegendPosition } from '../utils';
@@ -184,7 +185,18 @@ export const FunnelChart = factory<FunnelChartFactory>((_props) => {
   return (
     <Box size={size} {...getStyles('root')} {...others}>
       <ResponsiveContainer>
-        <RechartsFunnelChart accessibilityLayer={accessibilityLayer} {...funnelChartProps}>
+        <RechartsFunnelChart
+          data={data}
+          accessibilityLayer={accessibilityLayer}
+          {...funnelChartProps}
+        >
+          {(funnelChartProps?.accessibilityLayer ?? accessibilityLayer) && (
+            <ChartAnnouncer
+              labelKey="name"
+              series={[{ name: 'value' }]}
+              valueFormatter={valueFormatter}
+            />
+          )}
           <Funnel
             data={data.map((entry, index) => ({
               ...entry,
