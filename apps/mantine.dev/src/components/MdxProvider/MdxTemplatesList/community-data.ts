@@ -45,6 +45,12 @@ export const COMMUNITY_TEMPLATES_DATA: Template[] = [
   },
   {
     type: 'next',
+    name: 'mdx-documentation-template',
+    link: 'https://github.com/gfazioli/next-app-mantine-docs-template',
+    description: 'Next.js MDX + Mantine template, no docs framework',
+  },
+  {
+    type: 'next',
     name: 'next-saas-template',
     link: 'https://github.com/AshutoshDash1999/nextjs-mantine-boilerplate',
     description: 'Next.js SaaS boilerplate with Mantine',
