@@ -1,6 +1,7 @@
 {
   "include": [
     "./scripts",
+    "./.storybook/**/*",
     "./@types",
     "./packages/@mantine-tests/*/src",
     "./packages/@docs/*/src",
