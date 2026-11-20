@@ -11,6 +11,10 @@ The `use-document-visibility` hook returns the current [document.visibilityState
 
 <Demo data={UseDocumentVisibilityDemos.usage} />
 
+## Server-side rendering
+
+The hook returns `'visible'` on the server and during the first hydration render. After hydration, it reports the actual browser state.
+
 ## Definition
 
 ```tsx

@@ -1,4 +1,6 @@
-import { act, renderHook } from '@testing-library/react';
+import { createElement, useEffect } from 'react';
+import { act, render, renderHook } from '@testing-library/react';
+import { renderToString } from 'react-dom/server';
 import { useDocumentVisibility } from './use-document-visibility';
 
 function setVisibilityState(value: DocumentVisibilityState) {
@@ -16,6 +18,36 @@ describe('@mantine/hooks/use-document-visibility', () => {
   it('returns visible as the initial state', () => {
     const { result } = renderHook(() => useDocumentVisibility());
     expect(result.current).toBe('visible');
+  });
+
+  it('reports hidden to the first consumer effect when mounted in a hidden tab', () => {
+    setVisibilityState('hidden');
+    const observed = jest.fn();
+
+    renderHook(() => {
+      const visibility = useDocumentVisibility();
+      useEffect(() => {
+        observed(visibility);
+      }, [visibility]);
+    });
+
+    expect(observed.mock.calls).toEqual([['hidden']]);
+  });
+
+  it('renders visible on the server and updates to the browser state after hydration', () => {
+    setVisibilityState('hidden');
+    function Visibility() {
+      return createElement('span', null, useDocumentVisibility());
+    }
+
+    const container = document.createElement('div');
+    container.innerHTML = renderToString(createElement(Visibility));
+    const serverElement = container.firstChild;
+    expect(container.textContent).toBe('visible');
+
+    render(createElement(Visibility), { container, hydrate: true });
+    expect(container.firstChild).toBe(serverElement);
+    expect(container.textContent).toBe('hidden');
   });
 
   it('updates to hidden when visibilitychange fires', () => {
