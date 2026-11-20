@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { render, screen } from '@testing-library/react';
+import { fireEvent, render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { useClickOutside } from './use-click-outside';
 
@@ -26,6 +26,31 @@ describe('@mantine/hooks/use-click-outside', () => {
   afterAll(() => {
     jest.clearAllMocks();
   });
+
+  it.each([false, true])(
+    'ignores events without a body and resumes when it returns (nodes=%s)',
+    (withNodes) => {
+      const handler = jest.fn();
+      const body = document.body;
+      const { unmount } = render(
+        <Target handler={handler} nodes={withNodes ? [document.createElement('div')] : undefined} />
+      );
+      body.remove();
+
+      try {
+        fireEvent.mouseDown(document.documentElement);
+        fireEvent.touchStart(document.documentElement);
+        expect(handler).not.toHaveBeenCalled();
+      } finally {
+        document.documentElement.append(body);
+      }
+
+      fireEvent.mouseDown(document.documentElement);
+      fireEvent.touchStart(document.body);
+      expect(handler).toHaveBeenCalledTimes(2);
+      unmount();
+    }
+  );
 
   it('calls `handler` function when clicked outside target (no `events` given)', async () => {
     const handler = jest.fn();

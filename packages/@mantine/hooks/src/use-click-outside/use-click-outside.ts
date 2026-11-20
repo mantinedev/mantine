@@ -15,6 +15,10 @@ export function useClickOutside<T extends HTMLElement = any>(
   const eventsList = events || DEFAULT_EVENTS;
 
   const listener = useEffectEvent((event: Event) => {
+    if (!document.body) {
+      return;
+    }
+
     const { target } = event ?? {};
     const shouldIgnore =
       !document.body.contains(target as Node) && (target as Element)?.tagName !== 'HTML';
