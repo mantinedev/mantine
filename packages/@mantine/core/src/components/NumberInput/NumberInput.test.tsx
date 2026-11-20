@@ -388,6 +388,30 @@ describe('@mantine/core/NumberInput', () => {
     expectValue('5');
   });
 
+  it('does not step when onKeyDown prevents the default action', async () => {
+    const spy = jest.fn();
+    render(
+      <NumberInput
+        defaultValue={5}
+        onChange={spy}
+        onKeyDown={(event) => {
+          if (event.key === 'ArrowUp') {
+            event.preventDefault();
+          }
+        }}
+      />
+    );
+
+    focusInput();
+    await enterText('{arrowup}');
+    expect(spy).not.toHaveBeenCalled();
+    expectValue('5');
+
+    await enterText('{arrowdown}');
+    expect(spy).toHaveBeenLastCalledWith(4);
+    expectValue('4');
+  });
+
   it('respects max when using arrow up key', async () => {
     const spy = jest.fn();
     render(<NumberInput defaultValue={9} max={10} onChange={spy} />);
