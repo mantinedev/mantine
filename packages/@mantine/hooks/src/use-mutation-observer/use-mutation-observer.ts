@@ -1,10 +1,17 @@
 import { useCallback, useEffect, useRef } from 'react';
+import { useCallbackRef } from '../utils';
+
+function getOptionsKey(options: MutationObserverInit) {
+  return JSON.stringify(options ?? {});
+}
 
 export function useMutationObserver<T extends HTMLElement = any>(
   callback: MutationCallback,
   options: MutationObserverInit
 ): React.RefCallback<T | null> {
   const observer = useRef<MutationObserver | null>(null);
+  const handleCallback = useCallbackRef(callback);
+  const optionsKey = getOptionsKey(options);
 
   const refCallback: React.RefCallback<T | null> = useCallback(
     (node) => {
@@ -14,7 +21,7 @@ export function useMutationObserver<T extends HTMLElement = any>(
       }
 
       if (node) {
-        observer.current = new MutationObserver(callback);
+        observer.current = new MutationObserver(handleCallback);
         observer.current.observe(node, options);
       }
 
@@ -25,7 +32,7 @@ export function useMutationObserver<T extends HTMLElement = any>(
         }
       };
     },
-    [callback, options]
+    [handleCallback, optionsKey]
   );
 
   return refCallback;
@@ -37,25 +44,42 @@ export function useMutationObserverTarget(
   target?: HTMLElement | (() => HTMLElement) | null
 ): void {
   const observer = useRef<MutationObserver | null>(null);
+  const observedTarget = useRef<HTMLElement | null>(null);
+  const observedOptionsKey = useRef<string | null>(null);
+  const handleCallback = useCallbackRef(callback);
+  const optionsKey = getOptionsKey(options);
 
   useEffect(() => {
+    const targetElement = (typeof target === 'function' ? target() : target) ?? null;
+
+    if (targetElement === observedTarget.current && optionsKey === observedOptionsKey.current) {
+      return;
+    }
+
     if (observer.current) {
       observer.current.disconnect();
       observer.current = null;
     }
 
-    const targetElement = typeof target === 'function' ? target() : target;
+    observedTarget.current = targetElement;
+    observedOptionsKey.current = optionsKey;
 
     if (targetElement) {
-      observer.current = new MutationObserver(callback);
+      observer.current = new MutationObserver(handleCallback);
       observer.current.observe(targetElement, options);
     }
+  });
 
-    return () => {
+  useEffect(
+    () => () => {
       if (observer.current) {
         observer.current.disconnect();
         observer.current = null;
       }
-    };
-  }, [callback, options, target]);
+
+      observedTarget.current = null;
+      observedOptionsKey.current = null;
+    },
+    []
+  );
 }
