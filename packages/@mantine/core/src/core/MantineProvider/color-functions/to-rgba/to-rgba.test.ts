@@ -52,6 +52,31 @@ describe('@mantine/core/to-rgba', () => {
     expect(toRgba('hsla(240, 100%, 50%, 0.0)')).toStrictEqual({ r: 0, g: 0, b: 255, a: 0 });
   });
 
+  it('normalizes hsl hue to a full turn', () => {
+    expect(toRgba('hsl(480, 100%, 50%)')).toStrictEqual({ r: 0, g: 255, b: 0, a: 1 });
+    expect(toRgba('hsl(-240, 100%, 50%)')).toStrictEqual({ r: 0, g: 255, b: 0, a: 1 });
+    expect(toRgba('hsl(720, 100%, 50%)')).toStrictEqual({ r: 255, g: 0, b: 0, a: 1 });
+  });
+
+  it('parses decimal hsl channels', () => {
+    expect(toRgba('hsl(30.5, 100%, 50%)')).toStrictEqual({ r: 255, g: 130, b: 0, a: 1 });
+    expect(toRgba('hsl(210, 50.5%, 40%)')).toStrictEqual({ r: 50, g: 102, b: 154, a: 1 });
+    expect(toRgba('hsla(0, 0%, 50.5%, .25)')).toStrictEqual({ r: 129, g: 129, b: 129, a: 0.25 });
+    expect(toRgba('hsl(.5, 100%, 50%)')).toStrictEqual({ r: 255, g: 2, b: 0, a: 1 });
+  });
+
+  it.each(['50%', '50.5%', '0%'])('parses percentage alpha %s', (alpha) => {
+    const expected = { r: 255, g: 0, b: 0, a: parseFloat(alpha) / 100 };
+    expect(toRgba(`rgba(255, 0, 0, ${alpha})`)).toStrictEqual(expected);
+    expect(toRgba(`rgb(255 0 0 / ${alpha})`)).toStrictEqual(expected);
+    expect(toRgba(`hsla(0, 100%, 50%, ${alpha})`)).toStrictEqual(expected);
+  });
+
+  it('converts percentage rgb channels to the 0–255 range', () => {
+    expect(toRgba('rgb(100%, 0%, 50%)')).toStrictEqual({ r: 255, g: 0, b: 127.5, a: 1 });
+    expect(toRgba('rgb(100% 0% 50% / 50%)')).toStrictEqual({ r: 255, g: 0, b: 127.5, a: 0.5 });
+  });
+
   it('returns the correct rgba values when given an hsl string', () => {
     expect(toRgba('hsl(0, 0%, 0%)')).toStrictEqual({ r: 0, g: 0, b: 0, a: 1 });
     expect(toRgba('hsl(120, 100%, 50%)')).toStrictEqual({ r: 0, g: 255, b: 0, a: 1 });
