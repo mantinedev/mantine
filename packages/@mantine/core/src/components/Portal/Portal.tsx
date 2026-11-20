@@ -54,7 +54,7 @@ function getTargetNode({ target, reuseTargetNode, ...others }: BasePortalProps):
 
   if (reuseTargetNode) {
     if (cachedSharedPortalNode) {
-      if (document.body.contains(cachedSharedPortalNode)) {
+      if (document.body?.contains(cachedSharedPortalNode)) {
         return cachedSharedPortalNode;
       }
 
@@ -70,7 +70,7 @@ function getTargetNode({ target, reuseTargetNode, ...others }: BasePortalProps):
 
     const node = createPortalNode(others);
     node.setAttribute('data-mantine-shared-portal-node', 'true');
-    document.body.appendChild(node);
+    document.body?.appendChild(node);
     cachedSharedPortalNode = node;
     return node;
   }
@@ -103,12 +103,12 @@ export const Portal = factory<PortalFactory>((props) => {
     assignRef(ref, nodeRef.current);
 
     if (!target && !reuseTargetNode && nodeRef.current) {
-      document.body.appendChild(nodeRef.current);
+      document.body?.appendChild(nodeRef.current);
     }
 
     return () => {
       if (!target && !reuseTargetNode && nodeRef.current) {
-        document.body.removeChild(nodeRef.current);
+        nodeRef.current.parentNode?.removeChild(nodeRef.current);
       }
     };
   }, [target]);

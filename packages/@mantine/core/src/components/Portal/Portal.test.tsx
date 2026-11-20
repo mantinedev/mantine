@@ -1,8 +1,17 @@
+import { act } from '@testing-library/react';
+import { createRoot } from 'react-dom/client';
 import { render, tests } from '@mantine-tests/core';
+import { MantineProvider } from '../../core';
 import { Portal } from './Portal';
 
 function removeSharedPortalNodes() {
   document.querySelectorAll('[data-mantine-shared-portal-node]').forEach((node) => node.remove());
+}
+
+function restoreDocumentBody(body: HTMLElement) {
+  if (!document.body) {
+    document.documentElement.append(body);
+  }
 }
 
 describe('@mantine/core/Portal', () => {
@@ -85,4 +94,41 @@ describe('@mantine/core/Portal', () => {
       document.querySelectorAll('[data-portal]:not([data-mantine-shared-portal-node])')
     ).toHaveLength(2);
   });
+
+  it.each([true, false])(
+    'does not throw when document.body is absent (reuseTargetNode=%s)',
+    async (reuseTargetNode) => {
+      removeSharedPortalNodes();
+      const body = document.body!;
+      const container = document.createElement('div');
+      body.append(container);
+      const errors: unknown[] = [];
+      const root = createRoot(container, {
+        onUncaughtError: (error) => {
+          errors.push(error);
+        },
+      });
+
+      body.remove();
+      expect(document.body).toBeNull();
+
+      try {
+        await act(async () => {
+          root.render(
+            <MantineProvider env="test">
+              <Portal reuseTargetNode={reuseTargetNode}>test-portal</Portal>
+            </MantineProvider>
+          );
+        });
+        expect(errors).toHaveLength(0);
+      } finally {
+        restoreDocumentBody(body);
+        await act(async () => {
+          root.unmount();
+        });
+        container.remove();
+        removeSharedPortalNodes();
+      }
+    }
+  );
 });

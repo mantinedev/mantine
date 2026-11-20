@@ -287,4 +287,29 @@ describe('@mantine/hooks/use-click-outside', () => {
     expect(spy).toHaveBeenCalledWith('touchstart', expect.any(Function), true);
     spy.mockRestore();
   });
+
+  it('does not throw when document.body is absent during an outside click', () => {
+    const handler = jest.fn();
+    const { unmount } = render(
+      <>
+        <Target handler={handler} />
+        <div data-testid="outside-target" />
+      </>
+    );
+
+    const body = document.body!;
+    body.remove();
+    expect(document.body).toBeNull();
+
+    try {
+      expect(() => {
+        document.documentElement.dispatchEvent(new MouseEvent('mousedown', { bubbles: true }));
+      }).not.toThrow();
+    } finally {
+      if (!document.body) {
+        document.documentElement.append(body);
+      }
+      unmount();
+    }
+  });
 });
