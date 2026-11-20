@@ -40,10 +40,13 @@ export function useTimeout(
   useEffect(() => {
     if (options.autoInvoke) {
       start();
+      return clear;
     }
 
-    return clear;
+    return undefined;
   }, [clear, start]);
+
+  useEffect(() => clear, [clear]);
 
   return { start, clear };
 }
