@@ -28,12 +28,8 @@ function getDigitsAfterDot(value: number) {
 
 export function normalizeRadialValue(degree: number, step: number) {
   const clamped = clamp(degree, 0, 360);
-  const high = Math.ceil(clamped / step);
-  const low = Math.round(clamped / step);
-  return toFixed(
-    high >= clamped / step ? (high * step === 360 ? 0 : high * step) : low * step,
-    getDigitsAfterDot(step)
-  );
+  const normalized = Math.round(clamped / step) * step;
+  return toFixed(normalized >= 360 ? 0 : normalized, getDigitsAfterDot(step));
 }
 
 export interface UseRadialMoveOptions {
