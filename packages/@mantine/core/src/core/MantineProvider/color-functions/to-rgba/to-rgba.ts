@@ -59,7 +59,7 @@ function rgbStringToRgba(color: string): RGBA {
 
 function hslStringToRgba(hslaString: string): RGBA {
   const hslaRegex =
-    /^hsla?\(\s*([-+]?(?:\d*\.)?\d+)\s*,\s*((?:\d*\.)?\d+%)\s*,\s*((?:\d*\.)?\d+%)\s*(?:,\s*((?:\d*\.)?\d+%?))?\s*\)$/i;
+    /^hsla?\(\s*([-+]?(?:\d*\.)?\d+)(?:\s*,\s*|\s+)((?:\d*\.)?\d+%)(?:\s*,\s*|\s+)((?:\d*\.)?\d+%)(?:\s*(?:,\s*|\/\s*)((?:\d*\.)?\d+%?))?\s*\)$/i;
 
   const matches = hslaString.match(hslaRegex);
   if (!matches) {
