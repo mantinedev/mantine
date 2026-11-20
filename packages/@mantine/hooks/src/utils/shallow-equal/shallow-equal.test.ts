@@ -23,4 +23,11 @@ describe('@mantine/hooks/shallow-equal', () => {
     expect(shallowEqual(object, object)).toBe(true);
     expect(shallowEqual(object, { a: 1, b: 2, c: { a: 1 } })).toBe(false);
   });
+
+  it('compares own keys instead of inherited keys', () => {
+    const withInheritedKey = Object.assign(Object.create({ a: 1 }), { b: 2 });
+
+    expect(shallowEqual({ a: 1 }, withInheritedKey)).toBe(false);
+    expect(shallowEqual(withInheritedKey, { a: 1 })).toBe(false);
+  });
 });
