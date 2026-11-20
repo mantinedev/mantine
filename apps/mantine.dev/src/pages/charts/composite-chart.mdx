@@ -20,7 +20,7 @@ is hovered, the corresponding data series is highlighted in the chart.
 
 ## Legend position
 
-You can pass props down to the recharts [Legend](https://recharts.org/en-US/api/Legend)
+You can pass props down to the recharts [Legend](https://recharts.github.io/en-US/api/Legend)
 component with the `legendProps` prop. For example, setting `legendProps={{ position: 'bottom' }}`
 will render the legend at the bottom of the chart.
 
@@ -42,8 +42,8 @@ only for `Line` and `Area` charts:
 
 ## X and Y axis props
 
-Use `xAxisProps` and `yAxisProps` to pass props down to the recharts [XAxis](https://recharts.org/en-US/api/XAxis)
-and [YAxis](https://recharts.org/en-US/api/YAxis) components. For example, these props
+Use `xAxisProps` and `yAxisProps` to pass props down to the recharts [XAxis](https://recharts.github.io/en-US/api/XAxis)
+and [YAxis](https://recharts.github.io/en-US/api/YAxis) components. For example, these props
 can be used to change the orientation of the axis:
 
 <Demo data={CompositeChartDemos.axisProps} />
@@ -70,7 +70,7 @@ your data will always be in the range of 0 to 100, you can set the domain to `[0
 ## Right Y axis
 
 To display an additional Y axis on the right side of the chart, set the `withRightYAxis` prop.
-You can pass props down to the recharts [YAxis](https://recharts.org/en-US/api/YAxis)
+You can pass props down to the recharts [YAxis](https://recharts.github.io/en-US/api/YAxis)
 component with the `rightYAxisProps` prop and assign a label to the right Y axis with
 the `rightYAxisLabel` prop. Note that you need to bind data series to the right Y axis
 by setting `yAxisId` in the `series` object.
@@ -163,7 +163,7 @@ Set `unit` prop to render a unit label next to the y-axis ticks and tooltip valu
 
 ## Custom tooltip
 
-Use `tooltipProps.content` to pass custom tooltip renderer to recharts [Tooltip](https://recharts.org/en-US/api/Tooltip)
+Use `tooltipProps.content` to pass custom tooltip renderer to recharts [Tooltip](https://recharts.github.io/en-US/api/Tooltip)
 component. Note that it is required to filter recharts payload with `getFilteredChartTooltipPayload`
 function to remove empty values that are used for styling purposes only.
 
@@ -191,7 +191,7 @@ Use `strokeWidth` prop to control the stroke width of all areas/lines:
 
 ## Sync multiple charts
 
-You can pass props down to recharts [ComposedChart](https://recharts.org/en-US/api/ComposedChart)
+You can pass props down to recharts [ComposedChart](https://recharts.github.io/en-US/api/ComposedChart)
 component with `composedChartProps` prop. For example, setting `composedChartProps={{ syncId: 'any-id' }}`
 will sync tooltip of multiple `CompositeChart` components with the same `syncId` prop.
 
@@ -232,7 +232,7 @@ top of the chart series.
 
 Set the `withBrush` prop to display a brush (range selector) under the chart. Drag the
 brush handles to zoom into a subset of the data. Use the `brushProps` prop to pass props
-down to the underlying recharts [Brush](https://recharts.org/en-US/api/Brush) component,
+down to the underlying recharts [Brush](https://recharts.github.io/en-US/api/Brush) component,
 or render the `ChartBrush` component as a child for full control.
 
 <Demo data={CompositeChartDemos.brush} />
