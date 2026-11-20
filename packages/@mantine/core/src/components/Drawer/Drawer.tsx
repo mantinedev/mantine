@@ -104,7 +104,7 @@ export const Drawer = factory<DrawerFactory>((_props) => {
   useEffect(() => {
     if (ctx && stackId) {
       opened
-        ? ctx.addModal(stackId, zIndex || getDefaultZIndex('modal'))
+        ? ctx.addModal(stackId, zIndex ?? getDefaultZIndex('modal'))
         : ctx.removeModal(stackId);
     }
   }, [opened, stackId, zIndex]);

@@ -58,6 +58,15 @@ describe('@mantine/core/Drawer', () => {
     expect(container.querySelector('.mantine-Drawer-header')).not.toBeInTheDocument();
   });
 
+  it('applies zIndex={0} to both root and overlay', () => {
+    const { container } = render(<Drawer {...defaultProps} zIndex={0} />);
+    const root = container.querySelector<HTMLElement>('.mantine-Drawer-root')!;
+    const overlay = container.querySelector<HTMLElement>('.mantine-Drawer-overlay')!;
+
+    expect(root.style.getPropertyValue('--mb-z-index')).toBe('0');
+    expect(overlay.style.getPropertyValue('--overlay-z-index')).toBe('0');
+  });
+
   it('renders given title', () => {
     const { container } = render(<Drawer {...defaultProps} title="test-title" />);
     expect(container.querySelector('.mantine-Drawer-title')).toHaveTextContent('test-title');
