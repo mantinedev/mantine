@@ -220,6 +220,27 @@ describe('@mantine/core/Slider', () => {
     expectInputValue('70', container);
   });
 
+  it('keeps keyboard navigation within min and max when domain is wider', async () => {
+    const { container } = render(
+      <Slider defaultValue={80} min={10} max={90} domain={[0, 100]} step={10} />
+    );
+
+    await pressArrow('right');
+    expectInputValue('90', container);
+
+    await pressArrow('right');
+    expectInputValue('90', container);
+
+    await userEvent.type(screen.getByRole('slider'), '{home}');
+    expectInputValue('10', container);
+
+    await pressArrow('left');
+    expectInputValue('10', container);
+
+    await userEvent.type(screen.getByRole('slider'), '{end}');
+    expectInputValue('90', container);
+  });
+
   it('renders marks with labels', () => {
     const { container } = render(
       <Slider

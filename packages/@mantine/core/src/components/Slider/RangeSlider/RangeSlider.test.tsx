@@ -248,6 +248,29 @@ describe('@mantine/core/RangeSlider', () => {
     expectInputValue('40', container, 1);
   });
 
+  it('does not push the other thumb outside of min and max when domain is wider', async () => {
+    const { container } = render(
+      <RangeSlider
+        defaultValue={[70, 80]}
+        min={10}
+        max={90}
+        domain={[0, 100]}
+        minRange={10}
+        step={10}
+        pushOnOverlap
+      />
+    );
+
+    const sliders = getSliders();
+    await act(async () => {
+      sliders[0].focus();
+    });
+    await userEvent.keyboard('{ArrowRight}');
+    await userEvent.keyboard('{ArrowRight}');
+    expectInputValue('80', container, 0);
+    expectInputValue('90', container, 1);
+  });
+
   it('renders marks with labels', () => {
     render(
       <RangeSlider

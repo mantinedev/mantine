@@ -237,6 +237,8 @@ export const Slider = factory<SliderFactory>((_props) => {
   const root = useRef<HTMLDivElement>(null);
   const thumb = useRef<HTMLDivElement>(null);
   const [domainMin, domainMax] = domain || [min, max];
+  const minValue = Math.max(min!, domainMin);
+  const maxValue = Math.min(max!, domainMax);
   const position = getPosition({ value: _value, min: domainMin, max: domainMax });
   const scaledValue = scale!(_value);
   const _label = typeof label === 'function' ? label(scaledValue) : label;
@@ -317,7 +319,7 @@ export const Slider = factory<SliderFactory>((_props) => {
           }
 
           const nextValue = getFloatingValue(
-            Math.min(Math.max(_value + step, domainMin), domainMax),
+            Math.min(Math.max(_value + step, minValue), maxValue),
             precision
           );
           setValue(nextValue);
@@ -338,7 +340,7 @@ export const Slider = factory<SliderFactory>((_props) => {
           }
 
           const nextValue = getFloatingValue(
-            Math.min(Math.max(dir === 'rtl' ? _value - step : _value + step, domainMin), domainMax),
+            Math.min(Math.max(dir === 'rtl' ? _value - step : _value + step, minValue), maxValue),
             precision
           );
           setValue(nextValue);
@@ -358,7 +360,7 @@ export const Slider = factory<SliderFactory>((_props) => {
           }
 
           const nextValue = getFloatingValue(
-            Math.min(Math.max(_value - step, domainMin), domainMax),
+            Math.min(Math.max(_value - step, minValue), maxValue),
             precision
           );
           setValue(nextValue);
@@ -379,7 +381,7 @@ export const Slider = factory<SliderFactory>((_props) => {
           }
 
           const nextValue = getFloatingValue(
-            Math.min(Math.max(dir === 'rtl' ? _value + step : _value - step, domainMin), domainMax),
+            Math.min(Math.max(dir === 'rtl' ? _value + step : _value - step, minValue), maxValue),
             precision
           );
           setValue(nextValue);
@@ -397,8 +399,8 @@ export const Slider = factory<SliderFactory>((_props) => {
             break;
           }
 
-          setValue(min);
-          callOnChangeEnd(min);
+          setValue(minValue);
+          callOnChangeEnd(minValue);
           break;
         }
 
@@ -412,8 +414,8 @@ export const Slider = factory<SliderFactory>((_props) => {
             break;
           }
 
-          setValue(max);
-          callOnChangeEnd(max);
+          setValue(maxValue);
+          callOnChangeEnd(maxValue);
           break;
         }
 
