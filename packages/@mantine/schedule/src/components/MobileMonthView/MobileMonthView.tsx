@@ -288,15 +288,6 @@ export const MobileMonthView = factory<MobileMonthViewFactory>((_props) => {
   );
   const columnsCount = 7 - hiddenColumns.size;
 
-  const expandedEvents = expandRecurringEvents({
-    events,
-    rangeStart: dayjs(date).startOf('month').toDate(),
-    rangeEnd: dayjs(date).endOf('month').toDate(),
-    expansionLimit: recurrenceExpansionLimit,
-  });
-
-  const groupedEvents = getMobileMonthViewEvents({ date, events: expandedEvents });
-
   const weekdays = withWeekDays
     ? getWeekdaysNames({
         locale: ctx.getLocale(locale),
@@ -327,6 +318,30 @@ export const MobileMonthView = factory<MobileMonthViewFactory>((_props) => {
       withWeekendDays,
     }),
   }));
+
+  const visibleDays = monthWeeks.flatMap(({ visibleDays }) => visibleDays);
+  const rangeStart =
+    withOutsideDays && visibleDays.length > 0
+      ? dayjs(visibleDays[0]).startOf('day')
+      : dayjs(date).startOf('month');
+  const rangeEnd =
+    withOutsideDays && visibleDays.length > 0
+      ? dayjs(visibleDays[visibleDays.length - 1]).endOf('day')
+      : dayjs(date).endOf('month');
+
+  const expandedEvents = expandRecurringEvents({
+    events,
+    rangeStart: rangeStart.toDate(),
+    rangeEnd: rangeEnd.toDate(),
+    expansionLimit: recurrenceExpansionLimit,
+  });
+
+  const groupedEvents = getMobileMonthViewEvents({
+    date,
+    events: expandedEvents,
+    rangeStart: rangeStart.toDate(),
+    rangeEnd: rangeEnd.toDate(),
+  });
 
   const firstDayPosition = (() => {
     for (let weekIndex = 0; weekIndex < monthWeeks.length; weekIndex++) {

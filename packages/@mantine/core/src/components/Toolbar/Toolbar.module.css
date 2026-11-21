@@ -113,7 +113,7 @@
   justify-content: center;
   align-items: center;
   border-radius: var(--toolbar-toggle-radius);
-  cursor: pointer;
+  cursor: var(--mantine-cursor-type);
   appearance: none;
   text-decoration: none;
   line-height: 1;

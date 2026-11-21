@@ -3,6 +3,14 @@ import { isInRange } from './is-in-range';
 const TEST_ERROR = 'is-in-range-error';
 
 describe('@mantine/form/isInRange', () => {
+  it.each([NaN, Infinity, -Infinity])('rejects non-finite value %s', (value) => {
+    expect(isInRange({ min: 1, max: 5 }, TEST_ERROR)(value)).toBe(TEST_ERROR);
+    expect(isInRange({ min: 1 }, TEST_ERROR)(value)).toBe(TEST_ERROR);
+    expect(isInRange({ max: 5 }, TEST_ERROR)(value)).toBe(TEST_ERROR);
+    expect(isInRange({}, TEST_ERROR)(value)).toBe(TEST_ERROR);
+    expect(isInRange({})(value)).toBe(true);
+  });
+
   it('detects valid value', () => {
     const minValidator = isInRange({ min: 2 }, TEST_ERROR);
     expect(minValidator(2)).toBe(null);

@@ -251,7 +251,7 @@ export const CalendarHeader = factory<CalendarHeaderFactory>((_props) => {
 
   const nativeLevelControl =
     withNativeLevelSelect && __date && __onDateChange && __calendarLevel !== 'decade' ? (
-      <div {...getStyles('calendarHeaderLevel')} key="level" data-static data-native-level-select>
+      <div key="level" {...getStyles('calendarHeaderLevel')} data-static data-native-level-select>
         {__calendarLevel === 'month' && (
           <select
             {...getStyles('calendarHeaderSelect')}
@@ -306,6 +306,7 @@ export const CalendarHeader = factory<CalendarHeaderFactory>((_props) => {
       component={hasNextLevel ? 'button' : 'div'}
       {...getStyles('calendarHeaderLevel')}
       key="level"
+      data-level-control
       onClick={hasNextLevel ? onLevelClick : undefined}
       unstyled={unstyled}
       onMouseDown={hasNextLevel ? preventFocus : undefined}

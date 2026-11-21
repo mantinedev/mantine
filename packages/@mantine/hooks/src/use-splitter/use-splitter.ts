@@ -96,19 +96,22 @@ export interface UseSplitterReturnValue<T extends HTMLElement = any> {
   collapsed: boolean[];
   /** Index of handle being dragged, or -1 */
   activeHandle: number;
-  /** Get props to spread on each resize handle */
-  getHandleProps: (input: { index: number }) => {
+  /** Get props to spread on each resize handle, optionally disabling its pointer and keyboard interactions */
+  getHandleProps: (input: { index: number; disabled?: boolean }) => {
     ref: React.RefCallback<HTMLElement>;
     role: 'separator';
     'aria-orientation': 'horizontal' | 'vertical';
     'aria-valuenow': number;
     'aria-valuemin': number;
     'aria-valuemax': number;
+    'aria-disabled': boolean | undefined;
     tabIndex: number;
     onKeyDown: React.KeyboardEventHandler;
     onDoubleClick: React.MouseEventHandler;
     'data-active': boolean | undefined;
     'data-orientation': 'horizontal' | 'vertical';
+    'data-index': number;
+    'data-disabled': boolean | undefined;
   };
   /** Programmatically set sizes, each value keeps its declared unit */
   setSizes: (sizes: SplitterPaneSize[]) => void;
@@ -869,13 +872,36 @@ export function useSplitter<T extends HTMLElement = any>(
     };
   }, [pixelMode, orientation]);
 
-  const handleRefCallbacks = useRef<Map<number, (node: HTMLElement | null) => void>>(new Map());
+  const handleRefCallbacks = useRef<Map<string, (node: HTMLElement | null) => void>>(new Map());
   const handleElementControllers = useRef<Map<number, AbortController>>(new Map());
 
+  const stopDragging = useCallback(() => {
+    const s = internalStateRef.current;
+    if (!s.isDragging) {
+      return;
+    }
+
+    cancelAnimationFrame(frameRef.current);
+    s.isDragging = false;
+    const finishedHandle = s.handleIndex;
+    s.handleIndex = -1;
+
+    setActiveHandle(-1);
+    document.body.style.userSelect = '';
+    document.body.style.webkitUserSelect = '';
+    document.body.style.cursor = '';
+
+    documentControllerRef.current?.abort();
+    documentControllerRef.current = null;
+
+    optionsRef.current.onResizeEnd?.(finishedHandle, [...currentSizesRef.current]);
+  }, []);
+
   const getHandleRefCallback = useCallback(
-    (handleIndex: number): React.RefCallback<HTMLElement> => {
-      if (handleRefCallbacks.current.has(handleIndex)) {
-        return handleRefCallbacks.current.get(handleIndex)!;
+    (handleIndex: number, disabled: boolean): React.RefCallback<HTMLElement> => {
+      const key = `${handleIndex}-${disabled}`;
+      if (handleRefCallbacks.current.has(key)) {
+        return handleRefCallbacks.current.get(key)!;
       }
 
       const callback = (node: HTMLElement | null) => {
@@ -886,6 +912,9 @@ export function useSplitter<T extends HTMLElement = any>(
         }
 
         if (!node) {
+          if (internalStateRef.current.handleIndex === handleIndex) {
+            stopDragging();
+          }
           return;
         }
 
@@ -893,7 +922,7 @@ export function useSplitter<T extends HTMLElement = any>(
         handleElementControllers.current.set(handleIndex, elementController);
 
         const onPointerDown = (event: PointerEvent) => {
-          if (optionsRef.current.enabled === false) {
+          if (disabled || optionsRef.current.enabled === false) {
             return;
           }
           if (event.button !== 0) {
@@ -947,7 +976,7 @@ export function useSplitter<T extends HTMLElement = any>(
 
         const flushResize = (pointerEvent: PointerEvent) => {
           const s = internalStateRef.current;
-          if (!s.containerSize) {
+          if (!s.containerSize || disabled || optionsRef.current.enabled === false) {
             return;
           }
           const opts = optionsRef.current;
@@ -1010,19 +1039,7 @@ export function useSplitter<T extends HTMLElement = any>(
           cancelAnimationFrame(frameRef.current);
           flushResize(event);
 
-          s.isDragging = false;
-          const finishedHandle = s.handleIndex;
-          s.handleIndex = -1;
-
-          setActiveHandle(-1);
-          document.body.style.userSelect = '';
-          document.body.style.webkitUserSelect = '';
-          document.body.style.cursor = '';
-
-          documentControllerRef.current?.abort();
-          documentControllerRef.current = null;
-
-          optionsRef.current.onResizeEnd?.(finishedHandle, [...currentSizesRef.current]);
+          stopDragging();
         };
 
         node.addEventListener('pointerdown', onPointerDown, {
@@ -1030,15 +1047,16 @@ export function useSplitter<T extends HTMLElement = any>(
         });
       };
 
-      handleRefCallbacks.current.set(handleIndex, callback);
+      handleRefCallbacks.current.set(key, callback);
       return callback;
     },
-    [setCurrentSizes]
+    [setCurrentSizes, stopDragging]
   );
 
   const getHandleProps = useCallback(
-    (input: { index: number }) => {
+    (input: { index: number; disabled?: boolean }) => {
       const { index } = input;
+      const disabled = !enabled || !!input.disabled;
       const orient = orientation;
       const rootFontSize = rootFontSizeRef.current;
       const working = resolveWorkingSizes(currentSizes, pixelMode, containerSize, rootFontSize);
@@ -1049,15 +1067,16 @@ export function useSplitter<T extends HTMLElement = any>(
       const beforePanel = resolvedPanels[index];
 
       return {
-        ref: getHandleRefCallback(index),
+        ref: getHandleRefCallback(index, disabled),
         role: 'separator' as const,
         'aria-orientation': orient,
         'aria-valuenow': Math.round(beforeSize),
         'aria-valuemin': Math.round(getMin(beforePanel)),
         'aria-valuemax': Math.round(getMax(beforePanel)),
-        tabIndex: 0,
+        'aria-disabled': disabled || undefined,
+        tabIndex: disabled ? -1 : 0,
         onKeyDown: (event: React.KeyboardEvent) => {
-          if (!enabled) {
+          if (disabled) {
             return;
           }
 
@@ -1166,13 +1185,15 @@ export function useSplitter<T extends HTMLElement = any>(
           }
         },
         onDoubleClick: () => {
-          if (!enabled || !resetOnDoubleClick) {
+          if (disabled || !resetOnDoubleClick) {
             return;
           }
           reset(index);
         },
         'data-active': activeHandle === index || undefined,
         'data-orientation': orient,
+        'data-index': index,
+        'data-disabled': disabled || undefined,
       };
     },
     [

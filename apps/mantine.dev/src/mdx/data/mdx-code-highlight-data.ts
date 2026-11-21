@@ -46,4 +46,17 @@ export const MDX_CODE_HIGHLIGHT_DATA: Record<string, Frontmatter> = {
     docs: 'code-highlight/json-viewer.mdx',
     searchTags: 'json tree, json explorer, json view',
   },
+
+  Diff: {
+    title: 'Diff',
+    package: '@mantine/code-highlight',
+    slug: '/code-highlight/diff',
+    props: ['Diff'],
+    styles: ['Diff'],
+    description: 'Highlight differences between two strings',
+    source: '@mantine/code-highlight/src/Diff/Diff.tsx',
+    license: 'MIT',
+    docs: 'code-highlight/diff.mdx',
+    searchTags: 'diff, compare, changes, code review, side by side',
+  },
 };

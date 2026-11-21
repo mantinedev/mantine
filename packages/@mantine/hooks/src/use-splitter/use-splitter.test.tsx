@@ -1,13 +1,16 @@
 import { act, fireEvent, render, renderHook, screen } from '@testing-library/react';
 import { useSplitter, UseSplitterOptions, UseSplitterReturnValue } from './use-splitter';
 
-function TestComponent(props: UseSplitterOptions) {
+function TestComponent(props: UseSplitterOptions & { disabled?: boolean }) {
   const splitter = useSplitter(props);
 
   return (
     <div ref={splitter.ref} data-testid="container" style={{ width: 1000, height: 600 }}>
       <div data-testid="panel-0" style={{ width: `${splitter.sizes[0]}%` }} />
-      <div data-testid="handle-0" {...splitter.getHandleProps({ index: 0 })} />
+      <div
+        data-testid="handle-0"
+        {...splitter.getHandleProps({ index: 0, disabled: props.disabled })}
+      />
       <div data-testid="panel-1" style={{ width: `${splitter.sizes[1]}%` }} />
       {props.panels.length > 2 && (
         <>
@@ -280,6 +283,88 @@ describe('useSplitter', () => {
     fireEvent.keyDown(handle, { key: 'ArrowRight' });
 
     expect(handle.getAttribute('aria-valuenow')).toBe('50');
+  });
+
+  it('disables only the specified handle and restores its keyboard and reset interactions', () => {
+    const props = {
+      panels: [{ defaultSize: 20, collapsible: true }, { defaultSize: 30 }, { defaultSize: 50 }],
+    };
+    const { rerender } = render(<TestComponent {...props} disabled />);
+    const handle = screen.getByTestId('handle-0');
+    const otherHandle = screen.getByTestId('handle-1');
+
+    expect(handle).toHaveAttribute('data-index', '0');
+    expect(otherHandle).toHaveAttribute('data-index', '1');
+    expect(handle).toHaveAttribute('aria-disabled', 'true');
+    expect(handle).toHaveAttribute('data-disabled');
+    expect(handle).toHaveAttribute('tabindex', '-1');
+    expect(otherHandle).not.toHaveAttribute('aria-disabled');
+    expect(otherHandle).toHaveAttribute('tabindex', '0');
+
+    fireEvent.keyDown(otherHandle, { key: 'ArrowRight' });
+    expect(otherHandle).toHaveAttribute('aria-valuenow', '31');
+
+    for (const key of ['ArrowRight', 'Home', 'End', 'Enter']) {
+      fireEvent.keyDown(handle, { key });
+      expect(handle).toHaveAttribute('aria-valuenow', '20');
+    }
+    fireEvent.doubleClick(handle);
+    expect(handle).toHaveAttribute('aria-valuenow', '20');
+
+    rerender(<TestComponent {...props} disabled={false} />);
+    expect(handle).not.toHaveAttribute('aria-disabled');
+    expect(handle).not.toHaveAttribute('data-disabled');
+    expect(handle).toHaveAttribute('tabindex', '0');
+    fireEvent.keyDown(handle, { key: 'ArrowRight' });
+    expect(handle).toHaveAttribute('aria-valuenow', '21');
+    fireEvent.doubleClick(handle);
+    expect(handle).toHaveAttribute('aria-valuenow', '20');
+  });
+
+  it('blocks disabled pointer drags and cancels a drag when its handle becomes disabled', async () => {
+    const onSizeChange = jest.fn();
+    const onResizeStart = jest.fn();
+    const onResizeEnd = jest.fn();
+    const props = { panels: defaultPanels, onSizeChange, onResizeStart, onResizeEnd };
+    const { rerender } = render(<TestComponent {...props} disabled />);
+    const handle = screen.getByTestId('handle-0');
+    jest.spyOn(screen.getByTestId('container'), 'getBoundingClientRect').mockReturnValue({
+      width: 1000,
+      height: 600,
+    } as DOMRect);
+
+    const pointerDown = () =>
+      fireEvent(handle, new MouseEvent('pointerdown', { bubbles: true, button: 0, clientX: 500 }));
+    const pointerUp = () =>
+      fireEvent(document, new MouseEvent('pointerup', { bubbles: true, clientX: 600 }));
+
+    pointerDown();
+    pointerUp();
+    expect(onResizeStart).not.toHaveBeenCalled();
+    expect(onSizeChange).not.toHaveBeenCalled();
+
+    rerender(<TestComponent {...props} disabled={false} />);
+    pointerDown();
+    pointerUp();
+    expect(onSizeChange).toHaveBeenLastCalledWith([60, 40]);
+    expect(onResizeEnd).toHaveBeenLastCalledWith(0, [60, 40]);
+    onSizeChange.mockClear();
+    onResizeEnd.mockClear();
+
+    pointerDown();
+    expect(handle).toHaveAttribute('data-active');
+    fireEvent(document, new MouseEvent('pointermove', { bubbles: true, clientX: 700 }));
+    rerender(<TestComponent {...props} disabled />);
+    await act(() => new Promise<void>((resolve) => requestAnimationFrame(() => resolve())));
+
+    expect(handle).not.toHaveAttribute('data-active');
+    expect(document.body.style.cursor).toBe('');
+    expect(document.body.style.userSelect).toBe('');
+    expect(onResizeEnd).toHaveBeenCalledTimes(1);
+    expect(onResizeEnd).toHaveBeenCalledWith(0, [60, 40]);
+    pointerUp();
+    expect(onSizeChange).not.toHaveBeenCalled();
+    expect(onResizeEnd).toHaveBeenCalledTimes(1);
   });
 
   it('handles 3 panels correctly', () => {

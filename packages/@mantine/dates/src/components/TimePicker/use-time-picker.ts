@@ -199,11 +199,12 @@ export function useTimePicker({
         max || defaultMax,
         withSeconds
       );
+      const clampedTime = getParsedTime({ time: clamped.timeString, amPmLabels, format });
       onChange?.(clamped.timeString);
-      setHours(parsedTime.hours);
-      setMinutes(parsedTime.minutes);
-      setSeconds(parsedTime.seconds);
-      setAmPm(parsedTime.amPm);
+      setHours(clampedTime.hours);
+      setMinutes(clampedTime.minutes);
+      setSeconds(clampedTime.seconds);
+      setAmPm(clampedTime.amPm);
     }
   };
 

@@ -61,7 +61,7 @@
 
 .label {
   display: block;
-  cursor: pointer;
+  cursor: var(--mantine-cursor-type);
   position: absolute;
   top: 0;
   left: 0;

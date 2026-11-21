@@ -47,16 +47,19 @@ function hexToRgba(color: string): RGBA {
 
 function rgbStringToRgba(color: string): RGBA {
   const [r, g, b, a] = color
-    .replace(/[^0-9,./]/g, '')
-    .split(/[/,]/)
-    .map(Number);
+    .replace(/[^0-9,./%\s]/g, '')
+    .trim()
+    .split(/\s*[/,]\s*|\s+/)
+    .map((value, index) =>
+      value.endsWith('%') ? (parseFloat(value) / 100) * (index === 3 ? 1 : 255) : Number(value)
+    );
 
   return { r, g, b, a: a === undefined ? 1 : a };
 }
 
 function hslStringToRgba(hslaString: string): RGBA {
   const hslaRegex =
-    /^hsla?\(\s*(\d+)\s*,\s*(\d+%)\s*,\s*(\d+%)\s*(,\s*(0?\.\d+|\d+(\.\d+)?))?\s*\)$/i;
+    /^hsla?\(\s*([-+]?(?:\d*\.)?\d+)\s*,\s*((?:\d*\.)?\d+%)\s*,\s*((?:\d*\.)?\d+%)\s*(?:,\s*((?:\d*\.)?\d+%?))?\s*\)$/i;
 
   const matches = hslaString.match(hslaRegex);
   if (!matches) {
@@ -68,10 +71,10 @@ function hslStringToRgba(hslaString: string): RGBA {
     };
   }
 
-  const h = parseInt(matches[1], 10);
-  const s = parseInt(matches[2], 10) / 100;
-  const l = parseInt(matches[3], 10) / 100;
-  const a = matches[5] ? parseFloat(matches[5]) : undefined;
+  const h = ((parseFloat(matches[1]) % 360) + 360) % 360;
+  const s = parseFloat(matches[2]) / 100;
+  const l = parseFloat(matches[3]) / 100;
+  const a = matches[4] ? parseFloat(matches[4]) / (matches[4].endsWith('%') ? 100 : 1) : undefined;
 
   const chroma = (1 - Math.abs(2 * l - 1)) * s;
   const huePrime = h / 60;

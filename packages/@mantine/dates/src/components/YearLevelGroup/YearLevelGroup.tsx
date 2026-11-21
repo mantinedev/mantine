@@ -9,8 +9,9 @@ import {
   useDirection,
   useProps,
 } from '@mantine/core';
+import { usePendingControlFocus } from '../../hooks';
 import { DateStringValue } from '../../types';
-import { handleControlKeyDown } from '../../utils';
+import { ControlEdgeCrossPayload, handleControlKeyDown } from '../../utils';
 import { LevelsGroup, LevelsGroupStylesNames } from '../LevelsGroup';
 import { YearLevel, YearLevelSettings, YearLevelStylesNames } from '../YearLevel';
 
@@ -106,6 +107,43 @@ export const YearLevelGroup = factory<YearLevelGroupFactory>((_props) => {
 
   const controlsRef = useRef<HTMLButtonElement[][][]>([]);
 
+  const requestControlFocus = usePendingControlFocus({ controlsRef, period: year });
+
+  const _previousDisabled =
+    typeof previousDisabled === 'boolean'
+      ? previousDisabled
+      : minDate
+        ? !dayjs(year).startOf('year').isAfter(minDate)
+        : false;
+
+  const _nextDisabled =
+    typeof nextDisabled === 'boolean'
+      ? nextDisabled
+      : maxDate
+        ? !dayjs(year)
+            .add(numberOfColumns - 1, 'years')
+            .endOf('year')
+            .isBefore(maxDate)
+        : false;
+
+  const handleEdgeCross = ({ edge, direction, cellIndex }: ControlEdgeCrossPayload) => {
+    const handler = edge === 'previous' ? onPrevious : onNext;
+    const disabled = edge === 'previous' ? _previousDisabled : _nextDisabled;
+
+    if (!handler || disabled) {
+      return;
+    }
+
+    requestControlFocus({
+      direction,
+      levelIndex: edge === 'previous' ? 'last' : 0,
+      rowIndex: edge === 'previous' ? 'last' : 0,
+      cellIndex:
+        direction === 'up' || direction === 'down' ? cellIndex : edge === 'previous' ? 'last' : 0,
+    });
+    handler();
+  };
+
   const years = Array(numberOfColumns)
     .fill(0)
     .map((_, yearIndex) => {
@@ -130,6 +168,7 @@ export const YearLevelGroup = factory<YearLevelGroupFactory>((_props) => {
               cellIndex: payload.cellIndex,
               event,
               controlsRef,
+              onEdgeCross: handleEdgeCross,
               dir,
             })
           }

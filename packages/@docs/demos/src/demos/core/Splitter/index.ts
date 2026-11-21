@@ -8,3 +8,4 @@ export { nested } from './Splitter.demo.nested';
 export { redistribute } from './Splitter.demo.redistribute';
 export { lineSize } from './Splitter.demo.lineSize';
 export { withHandle } from './Splitter.demo.withHandle';
+export { handleProps } from './Splitter.demo.handleProps';

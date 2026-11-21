@@ -1827,6 +1827,103 @@ describe('@mantine/core/Notifications', () => {
       expect(progress).not.toHaveAttribute('data-paused');
     });
 
+    it('renders the progress line at the bottom by default', () => {
+      jest.useFakeTimers();
+      const store = createNotificationsStore();
+      const { container } = render(
+        <Notifications
+          store={store}
+          withinPortal={false}
+          autoClose={1000}
+          transitionDuration={10}
+          withAutoCloseProgress
+        />
+      );
+
+      act(() => {
+        notifications.show({ id: 'progress', message: 'With progress' }, store);
+      });
+
+      expect(getProgress(container)).toHaveAttribute('data-position', 'bottom');
+    });
+
+    it('renders the progress line at the top when autoCloseProgressPosition="top" is set on Notifications', () => {
+      jest.useFakeTimers();
+      const store = createNotificationsStore();
+      const { container } = render(
+        <Notifications
+          store={store}
+          withinPortal={false}
+          autoClose={1000}
+          transitionDuration={10}
+          withAutoCloseProgress
+          autoCloseProgressPosition="top"
+        />
+      );
+
+      act(() => {
+        notifications.show({ id: 'progress', message: 'With progress' }, store);
+      });
+
+      expect(getProgress(container)).toHaveAttribute('data-position', 'top');
+    });
+
+    it('lets the notification override autoCloseProgressPosition from Notifications', () => {
+      jest.useFakeTimers();
+      const store = createNotificationsStore();
+      const { container } = render(
+        <Notifications
+          store={store}
+          withinPortal={false}
+          autoClose={1000}
+          transitionDuration={10}
+          withAutoCloseProgress
+          autoCloseProgressPosition="top"
+        />
+      );
+
+      act(() => {
+        notifications.show(
+          { id: 'progress', message: 'With progress', autoCloseProgressPosition: 'bottom' },
+          store
+        );
+      });
+
+      expect(getProgress(container)).toHaveAttribute('data-position', 'bottom');
+
+      act(() => {
+        notifications.update(
+          { id: 'progress', message: 'With progress', autoCloseProgressPosition: 'top' },
+          store
+        );
+      });
+
+      expect(getProgress(container)).toHaveAttribute('data-position', 'top');
+    });
+
+    it('does not pass autoCloseProgressPosition to the notification element', () => {
+      jest.useFakeTimers();
+      const store = createNotificationsStore();
+      const { container } = render(
+        <Notifications
+          store={store}
+          withinPortal={false}
+          autoClose={1000}
+          transitionDuration={10}
+        />
+      );
+
+      act(() => {
+        notifications.show(
+          { id: 'progress', message: 'With progress', autoCloseProgressPosition: 'top' },
+          store
+        );
+      });
+
+      expect(container.querySelector('[autoCloseProgressPosition]')).toBeNull();
+      expect(container.querySelector('[autocloseprogressposition]')).toBeNull();
+    });
+
     it('uses the notification auto close timeout for the progress line duration', () => {
       jest.useFakeTimers();
       const store = createNotificationsStore();

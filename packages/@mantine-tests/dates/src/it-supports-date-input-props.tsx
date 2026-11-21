@@ -14,6 +14,8 @@ import {
 interface Options {
   component: React.ComponentType<any>;
   props: Record<string, any>;
+  /** Index of the control clicked second; use a control on another row for pickers whose rows map to one value, such as a week picker */
+  secondControlIndex?: number;
 }
 
 export function itSupportsDateInputProps(options: Options, name = 'supports date input props') {
@@ -46,7 +48,7 @@ export function itSupportsDateInputProps(options: Options, name = 'supports date
       const selectedValue = getInputValue(container);
       expect(selectedValue).not.toBe('test-placeholder');
 
-      await clickControl(container, 3);
+      await clickControl(container, options.secondControlIndex ?? 3);
       expect(getInputValue(container)).not.toBe(selectedValue);
       expect(getInputValue(container)).not.toBe('test-placeholder');
     });
@@ -62,7 +64,7 @@ export function itSupportsDateInputProps(options: Options, name = 'supports date
       const selectedValue = getInputValue(container);
       expect(selectedValue).not.toBe('test-placeholder');
 
-      await clickControl(container, 3);
+      await clickControl(container, options.secondControlIndex ?? 3);
       expect(getInputValue(container)).not.toBe(selectedValue);
       expect(getInputValue(container)).not.toBe('test-placeholder');
     });
@@ -110,7 +112,7 @@ export function itSupportsDateInputProps(options: Options, name = 'supports date
       await clickControl(container, 0);
       expectOpenedPopover(container);
 
-      await clickControl(container, 3);
+      await clickControl(container, options.secondControlIndex ?? 3);
       expectNoPopover(container);
     });
 

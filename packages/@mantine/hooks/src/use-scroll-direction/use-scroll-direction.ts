@@ -2,6 +2,10 @@ import { useEffect, useEffectEvent, useRef, useState } from 'react';
 
 export type ScrollDirection = 'up' | 'down' | 'unknown';
 
+function getScrollTop() {
+  return window.scrollY || document.documentElement.scrollTop;
+}
+
 export function useScrollDirection(): ScrollDirection {
   const lastScrollTopRef = useRef(0);
   const [scrollDirection, setScrollDirection] = useState<ScrollDirection>('unknown');
@@ -9,16 +13,20 @@ export function useScrollDirection(): ScrollDirection {
   const resizeTimerRef = useRef<number | undefined>(undefined);
 
   const handleScroll = useEffectEvent(() => {
-    if (isResizingRef.current) {
+    const currentScrollTop = getScrollTop();
+    const previousScrollTop = lastScrollTopRef.current;
+    lastScrollTopRef.current = currentScrollTop;
+
+    if (isResizingRef.current || currentScrollTop === previousScrollTop) {
       return;
     }
 
-    const currentScrollTop = window.scrollY || document.documentElement.scrollTop;
-    setScrollDirection(currentScrollTop < lastScrollTopRef.current ? 'up' : 'down');
-    lastScrollTopRef.current = currentScrollTop;
+    setScrollDirection(currentScrollTop < previousScrollTop ? 'up' : 'down');
   });
 
   useEffect(() => {
+    lastScrollTopRef.current = getScrollTop();
+
     const handleResize = () => {
       isResizingRef.current = true;
       window.clearTimeout(resizeTimerRef.current);

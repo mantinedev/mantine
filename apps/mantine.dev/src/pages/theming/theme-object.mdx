@@ -119,9 +119,9 @@ interface MantineTheme {
   /** Determines whether user OS settings to reduce motion should be respected; `false` by default */
   respectReducedMotion: boolean;
 
-  /** Determines which cursor type will be used for interactive elements
-   * - `default` – cursor that is used by native HTML elements, for example, `input[type="checkbox"]` has `cursor: default` styles
-   * - `pointer` – sets `cursor: pointer` on interactive elements that do not have these styles by default
+  /** Determines the cursor used by interactive elements
+   * - `default` – uses the default cursor
+   * - `pointer` – uses the pointer cursor
    */
   cursorType: 'default' | 'pointer';
 
@@ -291,8 +291,8 @@ You can learn more about rem conversion in the [rem units guide](/styles/rem).
 
 ### cursorType
 
-`theme.cursorType` controls the default cursor type for interactive elements
-that do not have `cursor: pointer` styles by default. For example, [Checkbox](/core/checkbox) and [NativeSelect](/core/native-select).
+`theme.cursorType` controls the cursor of interactive elements such as Button and Checkbox.
+By default, they use the `default` cursor. Set it to `pointer` to use the pointer cursor instead:
 
 <Demo data={ThemingDemos.cursorType} />
 

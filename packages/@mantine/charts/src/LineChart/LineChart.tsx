@@ -30,6 +30,7 @@ import {
   useStyles,
 } from '@mantine/core';
 import { useId } from '@mantine/hooks';
+import { ChartAnnouncer } from '../ChartAnnouncer/ChartAnnouncer';
 import { ChartBrush } from '../ChartBrush';
 import { ChartLegend, ChartLegendStylesNames } from '../ChartLegend';
 import { ChartTooltip, ChartTooltipStylesNames } from '../ChartTooltip';
@@ -400,6 +401,9 @@ export const LineChart = factory<LineChartFactory>((_props) => {
           accessibilityLayer={accessibilityLayer}
           {...lineChartProps}
         >
+          {(lineChartProps?.accessibilityLayer ?? accessibilityLayer) && (
+            <ChartAnnouncer series={series} unit={unit} valueFormatter={valueFormatter} />
+          )}
           {referenceAreasItems}
           {type === 'gradient' && (
             <defs>

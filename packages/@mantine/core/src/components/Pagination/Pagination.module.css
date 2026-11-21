@@ -25,7 +25,7 @@
   align-items: center;
   justify-content: center;
   border: 1px solid;
-  cursor: pointer;
+  cursor: var(--mantine-cursor-type);
   color: var(--mantine-color-text);
   height: var(--pagination-control-size);
   min-width: var(--pagination-control-size);

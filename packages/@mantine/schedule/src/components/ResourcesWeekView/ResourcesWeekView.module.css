@@ -24,7 +24,7 @@
   }
 }
 
-.resourcesWeekViewRoot {
+:where([data-layout='time']) .resourcesWeekViewRoot {
   border: 1px solid var(--resources-week-view-border-color);
   border-radius: var(--resources-week-view-radius);
   overflow: hidden;
@@ -32,7 +32,7 @@
   position: relative;
 }
 
-.resourcesWeekViewScrollArea {
+:where([data-layout='time']) .resourcesWeekViewScrollArea {
   :where([data-mantine-scrollbar]) {
     z-index: 20;
   }
@@ -42,7 +42,7 @@
   }
 }
 
-.resourcesWeekViewInner {
+:where([data-layout='time']) .resourcesWeekViewInner {
   display: inline-flex;
   flex-direction: column;
   position: relative;
@@ -79,12 +79,12 @@
   flex-direction: column;
 }
 
-.resourcesWeekViewDayLabelsRow {
+:where([data-layout='time']) .resourcesWeekViewDayLabelsRow {
   display: flex;
   border-bottom: 1px solid var(--resources-week-view-border-color);
 }
 
-.resourcesWeekViewDayLabel {
+:where([data-layout='time']) .resourcesWeekViewDayLabel {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -153,12 +153,12 @@
   }
 }
 
-.resourcesWeekViewRow {
+:where([data-layout='time']) .resourcesWeekViewRow {
   display: flex;
   border-top: 1px solid var(--resources-week-view-border-color);
 }
 
-.resourcesWeekViewResourceLabel {
+:where([data-layout='time']) .resourcesWeekViewResourceLabel {
   flex: 0 0 var(--resources-week-view-resource-label-width);
   min-width: var(--resources-week-view-resource-label-width);
   display: flex;
@@ -185,7 +185,7 @@
   }
 }
 
-.resourcesWeekViewGroupColumn {
+:where([data-layout='time']) .resourcesWeekViewGroupColumn {
   flex: 0 0 var(--resources-week-view-group-label-width);
   min-width: var(--resources-week-view-group-label-width);
   min-height: var(--resources-week-view-row-height);
@@ -216,7 +216,7 @@
   }
 }
 
-.resourcesWeekViewGroupColumnEmpty {
+:where([data-layout='time']) .resourcesWeekViewGroupColumnEmpty {
   flex: 0 0 var(--resources-week-view-group-label-width);
   min-width: var(--resources-week-view-group-label-width);
   min-height: var(--resources-week-view-row-height);
@@ -227,7 +227,7 @@
   border-inline-end: 1px solid var(--resources-week-view-border-color);
 }
 
-.resourcesWeekViewRowSlots {
+:where([data-layout='time']) .resourcesWeekViewRowSlots {
   display: flex;
   position: relative;
   min-height: var(--resources-week-view-row-height);
@@ -381,7 +381,7 @@
   z-index: 2;
 }
 
-.resourcesWeekViewResizeHandle {
+:where([data-layout='time']) .resourcesWeekViewResizeHandle {
   position: absolute;
   top: 20%;
   width: 4px;
@@ -409,7 +409,7 @@
   }
 }
 
-.resourcesWeekViewEventWrapper {
+:where([data-layout='time']) .resourcesWeekViewEventWrapper {
   position: absolute;
   z-index: 3;
 
@@ -478,7 +478,7 @@
   }
 }
 
-.resourcesWeekView:where([data-resizing]) {
+.resourcesWeekView:where([data-layout='time'][data-resizing]) {
   & * {
     cursor: ew-resize !important;
   }

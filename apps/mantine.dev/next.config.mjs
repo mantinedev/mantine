@@ -15,6 +15,7 @@ const withMDX = createMdx({
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  agentRules: false,
   pageExtensions: ['tsx', 'mdx'],
   reactStrictMode: true,
   trailingSlash: true,
@@ -33,6 +34,7 @@ const nextConfig = {
       '@mantine/lightbox',
       '@mantine/code-highlight',
       '@mantine/dropzone',
+      '@mantine/emoji',
       '@mantine/modals',
       '@mantine/notifications',
       '@mantine/nprogress',

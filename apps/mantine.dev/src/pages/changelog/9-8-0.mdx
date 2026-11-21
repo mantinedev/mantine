@@ -1,0 +1,134 @@
+import {
+  DiffDemos,
+  EmojiPickerDemos,
+  EmojiPickerInputDemos,
+  EmojiPickerPopoverDemos,
+  MaskedDateInputDemos,
+  MentionsDemos,
+  PhoneInputDemos,
+  QuarterPickerDemos,
+  QuarterPickerInputDemos,
+  UseActiveElementDemos,
+  UseBrowserLanguageDemos,
+  WeekPickerDemos,
+  WeekPickerInputDemos,
+} from '@docs/demos';
+import { Layout } from '@/layout';
+import { MDX_DATA } from '@/mdx';
+
+export default Layout(MDX_DATA.Changelog980);
+
+## Support Mantine development
+
+You can now sponsor Mantine development with [OpenCollective](https://opencollective.com/mantinedev).
+All funds are used to improve Mantine and create new features and components.
+
+<SponsorButton />
+
+## @mantine/emoji package
+
+New `@mantine/emoji` package provides emoji picker components. It works with any emoji
+data source through adapters, [emoji-mart](https://www.npmjs.com/package/@emoji-mart/data)
+and [emojibase-data](https://www.npmjs.com/package/emojibase-data) adapters are included.
+
+## EmojiPicker
+
+[EmojiPicker](/emoji/emoji-picker) displays a searchable emoji grid with category navigation,
+skin tone selector, and emoji preview.
+
+<Demo data={EmojiPickerDemos.usage} />
+
+## EmojiPickerInput
+
+[EmojiPickerInput](/emoji/emoji-picker-input) is an input with an emoji picker dropdown.
+It supports all standard input features like labels, descriptions, error messages, and sizes.
+
+<Demo data={EmojiPickerInputDemos.usage} />
+
+## EmojiPickerPopover
+
+[EmojiPickerPopover](/emoji/emoji-picker-popover) renders an emoji picker inside a popover dropdown.
+Use it to build custom emoji picker triggers.
+
+<Demo data={EmojiPickerPopoverDemos.usage} />
+
+## Diff component
+
+New [Diff](/code-highlight/diff) component highlights differences between two strings.
+It supports unified and split (side-by-side) display modes, configurable diff
+granularity (characters, words, or lines), and context line collapsing.
+
+<Demo data={DiffDemos.usage} />
+
+## PhoneInput component
+
+New [PhoneInput](/core/phone-input) component provides an international phone number input
+with country selector, auto-detection, and formatting masks.
+
+<Demo data={PhoneInputDemos.usage} />
+
+## MaskedDateInput component
+
+New [MaskedDateInput](/dates/masked-date-input) component provides a date input with
+individual masked fields for day, month, and year. It supports configurable field order,
+custom separators, optional time fields, and a calendar dropdown for date selection.
+
+<Demo data={MaskedDateInputDemos.usage} />
+
+## QuarterPicker and QuarterPickerInput components
+
+New [QuarterPicker](/dates/quarter-picker) and [QuarterPickerInput](/dates/quarter-picker-input) components
+allow picking quarters, multiple quarters and quarters ranges. They work the same way as `MonthPicker`
+and `MonthPickerInput`; the value is the first day of the selected quarter in `YYYY-MM-DD` format.
+
+<Demo data={QuarterPickerDemos.usage} />
+
+<br />
+
+<Demo data={QuarterPickerInputDemos.usage} />
+
+## WeekPicker and WeekPickerInput components
+
+New [WeekPicker](/dates/week-picker) and [WeekPickerInput](/dates/week-picker-input) components
+allow picking weeks, multiple weeks and weeks ranges. Clicking any day selects the whole week,
+the value is the first day of the week according to `firstDayOfWeek` in `YYYY-MM-DD` format.
+
+<Demo data={WeekPickerDemos.usage} />
+
+<br />
+
+<Demo data={WeekPickerInputDemos.usage} />
+
+## use-active-element hook
+
+New [use-active-element](/hooks/use-active-element) hook tracks the element that currently has focus.
+Use it to build focus-aware UI or to disable global keyboard shortcuts while the user is typing:
+
+<Demo data={UseActiveElementDemos.usage} />
+
+## use-browser-language hook
+
+New [use-browser-language](/hooks/use-browser-language) hook returns the browser language and
+updates when the user changes it. Use it to pick a default locale for formatting or translations:
+
+<Demo data={UseBrowserLanguageDemos.usage} />
+
+## Mentions component
+
+New [Mentions](/core/mentions) component is a textarea that opens a suggestions dropdown when
+the user types `@` or any other trigger. Picked mentions are stored in the value as `@[Display](id)`
+markup, the user sees only the display text:
+
+<Demo data={MentionsDemos.usage} />
+
+## Other changes
+
+- [DayView](/schedule/day-view/#slot-label-interval) and [WeekView](/schedule/week-view/#slot-label-interval) support `slotLabelInterval` prop to display time labels more often than once per hour
+- [DayView](/schedule/day-view/#business-hours) and [WeekView](/schedule/week-view/#business-hours) `businessHours` prop accepts exact minutes, business hours colors can be changed with CSS variables
+- [MobileMonthView](/schedule/mobile-month-view/#hide-weekend-days) supports `withWeekendDays` prop to hide weekend days
+- [ScrollArea](/core/scroll-area/#offset-size) supports `--scrollarea-offset-size` CSS variable to change the gap reserved by `offsetScrollbars`
+- [Popover](/core/popover/#click-outside) and components based on it support `clickOutsideCapture` prop to close the dropdown when the click target stops event propagation
+- `getUploadImageExtension` in [@mantine/tiptap](/x/tiptap/#pasted-html-content) uploads images embedded in pasted HTML, use `shouldUploadPastedImage` option to control which images are uploaded
+- Keyboard navigation in [DatePicker](/dates/date-picker) and other `@mantine/dates` pickers has been improved: arrow keys move focus across months and focus returns to the input when the dropdown closes
+- `@mantine/form` exports `UseContextForm` type
+- [Notifications](/x/notifications/#auto-close-progress-position) support `autoCloseProgressPosition` prop to display the auto close progress line at the top of the notification

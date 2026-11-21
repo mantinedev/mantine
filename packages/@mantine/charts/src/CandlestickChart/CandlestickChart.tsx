@@ -27,6 +27,7 @@ import {
   useResolvedStylesApi,
   useStyles,
 } from '@mantine/core';
+import { ChartAnnouncer } from '../ChartAnnouncer/ChartAnnouncer';
 import { ChartTooltip, ChartTooltipStylesNames } from '../ChartTooltip';
 import type { BaseChartStylesNames, GridChartBaseProps } from '../types';
 import { getCandleGeometry } from './get-candle-geometry/get-candle-geometry';
@@ -385,6 +386,16 @@ export const CandlestickChart = factory<CandlestickChartFactory>((_props) => {
           accessibilityLayer={accessibilityLayer}
           {...composedChartProps}
         >
+          {(composedChartProps?.accessibilityLayer ?? accessibilityLayer) && (
+            <ChartAnnouncer
+              series={Object.entries(seriesKeys).map(([key, name]) => ({
+                name,
+                label: seriesLabels[key as keyof CandlestickChartDataKeys],
+              }))}
+              valueFormatter={valueFormatter}
+              unit={unit}
+            />
+          )}
           {referenceAreasItems}
 
           <XAxis

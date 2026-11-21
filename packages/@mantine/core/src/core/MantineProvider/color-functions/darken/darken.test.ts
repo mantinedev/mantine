@@ -27,6 +27,11 @@ describe('@mantine/core/darken', () => {
     expect(darken('hsla(120, 100%, 50%, 0)', 0.5)).toBe('rgba(0, 128, 0, 0)');
   });
 
+  it('darkens decimal hsl colors and preserves percentage alpha', () => {
+    expect(darken('hsl(210, 50.5%, 40%)', 0.1)).toBe('rgba(45, 92, 139, 1)');
+    expect(darken('rgba(255, 0, 0, 50%)', 0.1)).toBe('rgba(230, 0, 0, 0.5)');
+  });
+
   it('supports oklch colors', () => {
     expect(darken('oklch(49.72% 0.1888 251.59)', 0.1)).toBe(
       'color-mix(in srgb, oklch(49.72% 0.1888 251.59), black 10%)'

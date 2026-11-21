@@ -11,6 +11,8 @@ export function useIntersection<T extends HTMLElement = any>(
   const [entry, setEntry] = useState<IntersectionObserverEntry | null>(null);
 
   const observer = useRef<IntersectionObserver | null>(null);
+  const threshold = options?.threshold;
+  const thresholdKey = Array.isArray(threshold) ? threshold.join(',') : threshold;
 
   const ref: React.RefCallback<T | null> = useCallback(
     (element) => {
@@ -31,7 +33,7 @@ export function useIntersection<T extends HTMLElement = any>(
 
       observer.current.observe(element);
     },
-    [options?.rootMargin, options?.root, options?.threshold]
+    [options?.rootMargin, options?.root, thresholdKey]
   );
 
   return { ref, entry };

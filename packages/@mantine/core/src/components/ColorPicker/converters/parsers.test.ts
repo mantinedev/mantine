@@ -1,6 +1,22 @@
-import { parseHex, parseHexa } from './parsers';
+import { isColorValid, parseColor, parseHex, parseHexa } from './parsers';
 
 describe('@mantine/core/ColorPicker/converters/parsers', () => {
+  it('validates hsl colors', () => {
+    expect(isColorValid('hsl(210, 50%, 40%)')).toBe(true);
+    expect(isColorValid('hsl( 210 , 50.5%, 40%)')).toBe(true);
+    expect(isColorValid('HSL(210, 50%, 40%)')).toBe(true);
+  });
+
+  it('does not treat strings that only contain an hsl color as valid', () => {
+    expect(isColorValid('hsl(210, 50%, 40%)abc')).toBe(false);
+    expect(isColorValid('abc hsl(210, 50%, 40%)')).toBe(false);
+    expect(isColorValid('not a color: hsl(210, 50%, 40%);')).toBe(false);
+  });
+
+  it('does not parse strings that only contain an hsl color', () => {
+    expect(parseColor('hsl(210, 50%, 40%)abc')).toStrictEqual({ h: 0, s: 0, v: 0, a: 1 });
+  });
+
   it('distinguishably parses nearly identical 24bit hex colors', () => {
     expect(parseHex('#123456')).not.toStrictEqual(parseHex('#123457'));
     expect(parseHex('#123456')).not.toStrictEqual(parseHex('#123455'));

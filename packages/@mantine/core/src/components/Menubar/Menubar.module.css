@@ -11,7 +11,7 @@
   color: var(--mantine-color-text);
   background-color: transparent;
   user-select: none;
-  cursor: pointer;
+  cursor: var(--mantine-cursor-type);
 
   &:where([data-disabled], :disabled) {
     color: var(--mantine-color-disabled-color);

@@ -89,6 +89,10 @@ export const MonthLevel = factory<MonthLevelFactory>((_props) => {
     withCellSpacing,
     highlightToday,
     withWeekNumbers,
+    __withWeekControls,
+    __getWeekControlProps,
+    __getWeekControlRef,
+    __onWeekControlKeyDown,
 
     // CalendarHeader settings
     __preventFocus,
@@ -213,6 +217,10 @@ export const MonthLevel = factory<MonthLevelFactory>((_props) => {
         withCellSpacing={withCellSpacing}
         highlightToday={highlightToday}
         withWeekNumbers={withWeekNumbers}
+        __withWeekControls={__withWeekControls}
+        __getWeekControlProps={__getWeekControlProps}
+        __getWeekControlRef={__getWeekControlRef}
+        __onWeekControlKeyDown={__onWeekControlKeyDown}
         fullWidth={fullWidth}
         {...stylesApiProps}
       />

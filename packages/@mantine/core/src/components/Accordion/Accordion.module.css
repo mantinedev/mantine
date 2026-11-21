@@ -24,7 +24,7 @@
   flex-direction: row-reverse;
   padding-inline: var(--mantine-spacing-md);
   opacity: 1;
-  cursor: pointer;
+  cursor: var(--mantine-cursor-type);
   background-color: transparent;
   color: var(--mantine-color-bright);
 

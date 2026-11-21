@@ -5,6 +5,7 @@ import '@mantine/charts/styles.css';
 import '@mantine/code-highlight/styles.css';
 import '@mantine/dates/styles.css';
 import '@mantine/dropzone/styles.css';
+import '@mantine/emoji/styles.css';
 import '@mantine/lightbox/styles.css';
 import '@mantine/notifications/styles.css';
 import '@mantine/nprogress/styles.css';

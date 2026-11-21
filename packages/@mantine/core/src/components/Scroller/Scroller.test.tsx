@@ -1,3 +1,4 @@
+import { act } from '@testing-library/react';
 import { render, screen, tests } from '@mantine-tests/core';
 import { Scroller, ScrollerProps, ScrollerStylesNames } from './Scroller';
 
@@ -89,5 +90,56 @@ describe('@mantine/core/Scroller', () => {
     render(<Scroller {...defaultProps} showStartControl showEndControl />);
     expect(screen.getByLabelText('Scroll left')).toHaveAttribute('data-position', 'start');
     expect(screen.getByLabelText('Scroll right')).toHaveAttribute('data-position', 'end');
+  });
+
+  it('updates controls when content width changes without resizing the container', () => {
+    const originalResizeObserver = window.ResizeObserver;
+    let notifyResize = (_target: Element) => {};
+
+    window.ResizeObserver = class implements ResizeObserver {
+      private targets = new Set<Element>();
+
+      constructor(private callback: ResizeObserverCallback) {
+        notifyResize = (target) => {
+          if (this.targets.has(target)) {
+            this.callback([], this);
+          }
+        };
+      }
+
+      observe(target: Element) {
+        this.targets.add(target);
+      }
+
+      unobserve(target: Element) {
+        this.targets.delete(target);
+      }
+
+      disconnect() {
+        this.targets.clear();
+      }
+    };
+
+    try {
+      const { container } = render(<Scroller>Changing content</Scroller>);
+      const viewport = container.querySelector('.mantine-Scroller-container') as HTMLElement;
+      const content = container.querySelector('.mantine-Scroller-content') as HTMLElement;
+      const endControl = screen.getByLabelText('Scroll right');
+
+      Object.defineProperty(viewport, 'clientWidth', { value: 100 });
+      Object.defineProperty(viewport, 'scrollWidth', { value: 100, writable: true });
+
+      expect(endControl).toHaveAttribute('data-hidden');
+
+      Object.defineProperty(viewport, 'scrollWidth', { value: 300, writable: true });
+      act(() => notifyResize(content));
+      expect(endControl).not.toHaveAttribute('data-hidden');
+
+      Object.defineProperty(viewport, 'scrollWidth', { value: 100, writable: true });
+      act(() => notifyResize(content));
+      expect(endControl).toHaveAttribute('data-hidden');
+    } finally {
+      window.ResizeObserver = originalResizeObserver;
+    }
   });
 });

@@ -70,7 +70,7 @@
   border: 4px solid;
   transform: translate(-50%, -50%);
   top: 50%;
-  cursor: pointer;
+  cursor: var(--mantine-cursor-type);
   border-radius: var(--slider-radius);
   align-items: center;
   justify-content: center;
@@ -133,7 +133,7 @@
   align-items: center;
   width: 100%;
   height: calc(var(--slider-size) * 2);
-  cursor: pointer;
+  cursor: var(--mantine-cursor-type);
 
   fieldset:disabled &,
   &:where([data-disabled]) {
@@ -258,7 +258,7 @@
   transform: translate(calc(-50% + var(--slider-size) / 2), calc(var(--mantine-spacing-xs) / 2));
   font-size: var(--mantine-font-size-sm);
   white-space: nowrap;
-  cursor: pointer;
+  cursor: var(--mantine-cursor-type);
   user-select: none;
 
   @mixin where-rtl {

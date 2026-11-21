@@ -1,14 +1,18 @@
-import { useEffect, useState } from 'react';
+import { useSyncExternalStore } from 'react';
+
+function subscribe(listener: () => void) {
+  document.addEventListener('visibilitychange', listener);
+  return () => document.removeEventListener('visibilitychange', listener);
+}
+
+function getSnapshot() {
+  return document.visibilityState;
+}
+
+function getServerSnapshot(): DocumentVisibilityState {
+  return 'visible';
+}
 
 export function useDocumentVisibility(): DocumentVisibilityState {
-  const [documentVisibility, setDocumentVisibility] = useState<DocumentVisibilityState>('visible');
-
-  useEffect(() => {
-    setDocumentVisibility(document.visibilityState);
-    const listener = () => setDocumentVisibility(document.visibilityState);
-    document.addEventListener('visibilitychange', listener);
-    return () => document.removeEventListener('visibilitychange', listener);
-  }, []);
-
-  return documentVisibility;
+  return useSyncExternalStore(subscribe, getSnapshot, getServerSnapshot);
 }

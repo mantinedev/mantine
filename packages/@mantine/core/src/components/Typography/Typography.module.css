@@ -251,7 +251,7 @@
       display: flex;
       align-items: center;
       gap: var(--mantine-spacing-xs);
-      cursor: pointer;
+      cursor: var(--mantine-cursor-type);
       font-weight: 600;
       list-style: none;
     }

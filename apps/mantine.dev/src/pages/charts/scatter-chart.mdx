@@ -21,7 +21,7 @@ is hovered, the corresponding data series is highlighted in the chart.
 
 ## Legend position
 
-You can pass props down to the recharts [Legend](https://recharts.org/en-US/api/Legend)
+You can pass props down to the recharts [Legend](https://recharts.github.io/en-US/api/Legend)
 component with the `legendProps` prop. For example, setting `legendProps={{ position: 'bottom' }}`
 will render the legend at the bottom of the chart.
 
@@ -29,8 +29,8 @@ will render the legend at the bottom of the chart.
 
 ## X and Y axis props
 
-Use `xAxisProps` and `yAxisProps` to pass props down to the recharts [XAxis](https://recharts.org/en-US/api/XAxis)
-and [YAxis](https://recharts.org/en-US/api/YAxis) components. For example, these props
+Use `xAxisProps` and `yAxisProps` to pass props down to the recharts [XAxis](https://recharts.github.io/en-US/api/XAxis)
+and [YAxis](https://recharts.github.io/en-US/api/YAxis) components. For example, these props
 can be used to change the orientation of the axis:
 
 <Demo data={ScatterChartDemos.axisProps} />
@@ -38,7 +38,7 @@ can be used to change the orientation of the axis:
 ## Right Y axis
 
 To display an additional Y axis on the right side of the chart, set the `withRightYAxis` prop.
-You can pass props down to the recharts [YAxis](https://recharts.org/en-US/api/YAxis)
+You can pass props down to the recharts [YAxis](https://recharts.github.io/en-US/api/YAxis)
 component with the `rightYAxisProps` prop and assign a label to the right Y axis with
 the `rightYAxisLabel` prop. Note that you need to bind data series to the right Y axis
 by setting `yAxisId: 'right'` in the `data` object – series that do not have `yAxisId`
@@ -112,7 +112,7 @@ To customize labels displayed in the tooltip, use the `labels` prop:
 
 ## Custom tooltip
 
-Use `tooltipProps.content` to pass a custom tooltip renderer to the recharts [Tooltip](https://recharts.org/en-US/api/Tooltip)
+Use `tooltipProps.content` to pass a custom tooltip renderer to the recharts [Tooltip](https://recharts.github.io/en-US/api/Tooltip)
 component:
 
 <Demo data={ScatterChartDemos.customTooltip} />
@@ -133,7 +133,7 @@ prop to a number of milliseconds to animate the tooltip position change.
 
 ## Customize dots
 
-You can use any shape as a dot by passing props to the recharts [Scatter](https://recharts.org/en-US/api/Scatter)
+You can use any shape as a dot by passing props to the recharts [Scatter](https://recharts.github.io/en-US/api/Scatter)
 component:
 
 <Demo data={ScatterChartDemos.dotSize} />

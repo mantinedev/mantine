@@ -14,6 +14,7 @@ export {
 export { Notifications } from './Notifications.js';
 
 export type {
+  NotificationAutoCloseProgressPosition,
   NotificationData,
   NotificationsState,
   NotificationsStore,

@@ -69,6 +69,7 @@ export * as MarqueeDemos from './demos/core/Marquee';
 export * as MaskInputDemos from './demos/core/MaskInput';
 export * as MenuDemos from './demos/core/Menu';
 export * as MenubarDemos from './demos/core/Menubar';
+export * as MentionsDemos from './demos/core/Mentions';
 export * as ModalDemos from './demos/core/Modal';
 export * as MultiSelectDemos from './demos/core/MultiSelect';
 export * as NativeSelectDemos from './demos/core/NativeSelect';
@@ -78,6 +79,7 @@ export * as OverflowListDemos from './demos/core/OverflowList';
 export * as PaginationDemos from './demos/core/Pagination';
 export * as PaperDemos from './demos/core/Paper';
 export * as PasswordInputDemos from './demos/core/PasswordInput';
+export * as PhoneInputDemos from './demos/core/PhoneInput';
 export * as PillDemos from './demos/core/Pill';
 export * as PillsInputDemos from './demos/core/PillsInput';
 export * as PinInputDemos from './demos/core/PinInput';
@@ -133,6 +135,10 @@ export * as YearPickerDemos from './demos/dates/YearPicker';
 export * as YearPickerInputDemos from './demos/dates/YearPickerInput';
 export * as MonthPickerDemos from './demos/dates/MonthPicker';
 export * as MonthPickerInputDemos from './demos/dates/MonthPickerInput';
+export * as QuarterPickerDemos from './demos/dates/QuarterPicker';
+export * as QuarterPickerInputDemos from './demos/dates/QuarterPickerInput';
+export * as WeekPickerDemos from './demos/dates/WeekPicker';
+export * as WeekPickerInputDemos from './demos/dates/WeekPickerInput';
 export * as DatePickerDemos from './demos/dates/DatePicker';
 export * as DatePickerInputDemos from './demos/dates/DatePickerInput';
 export * as TimeInputDemos from './demos/dates/TimeInput';
@@ -145,6 +151,7 @@ export * as TimePickerDemos from './demos/dates/TimePicker';
 export * as TimeValueDemos from './demos/dates/TimeValue';
 export * as TimeGridDemos from './demos/dates/TimeGrid';
 export * as MiniCalendarDemos from './demos/dates/MiniCalendar';
+export * as MaskedDateInputDemos from './demos/dates/MaskedDateInput';
 
 // @mantine/charts
 export * as AreaChartDemos from './demos/charts/AreaChart';
@@ -183,11 +190,18 @@ export * as ResourcesScheduleDemos from './demos/schedule/ResourcesSchedule';
 export * as ResourcesWeekViewDemos from './demos/schedule/ResourcesWeekView';
 export * as AgendaViewDemos from './demos/schedule/AgendaView';
 
+// Emoji demos
+export * as EmojiPickerDemos from './demos/emoji/EmojiPicker';
+export * as EmojiPickerPopoverDemos from './demos/emoji/EmojiPickerPopover';
+export * as EmojiPickerInputDemos from './demos/emoji/EmojiPickerInput';
+
 // Extensions demos
 export * as NotificationsDemos from './demos/notifications';
 export * as CarouselDemos from './demos/carousel';
 export * as LightboxDemos from './demos/lightbox';
 export * as SpotlightDemos from './demos/spotlight';
+export * as UseActiveElementDemos from './demos/hooks/use-active-element';
+export * as UseBrowserLanguageDemos from './demos/hooks/use-browser-language';
 export * as UseClickOutsideDemos from './demos/hooks/use-click-outside';
 export * as UseClipboardDemos from './demos/hooks/use-clipboard';
 export * as UseCollapseDemos from './demos/hooks/use-collapse';
@@ -258,6 +272,7 @@ export * as FormDemos from './demos/form';
 export * as FieldDemos from './demos/form-field';
 export * as NprogressDemos from './demos/nprogress';
 export * as CodeHighlightDemos from './demos/code-highlight';
+export * as DiffDemos from './demos/code-highlight/Diff';
 export * as JsonViewerDemos from './demos/json-viewer';
 export * as DropzoneDemos from './demos/dropzone';
 export * as ModalsDemos from './demos/modals';

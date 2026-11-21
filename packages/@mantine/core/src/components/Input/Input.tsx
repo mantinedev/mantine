@@ -134,7 +134,7 @@ export interface __InputProps {
   /** Controls input `height`, horizontal `padding`, and `font-size` @default 'sm' */
   size?: MantineSize | (string & {});
 
-  /** Determines whether the input should have `cursor: pointer` style. Use when input acts as a button-like trigger (e.g., `component="button"` for Select/DatePicker). @default false */
+  /** Determines whether the input should use the theme cursor type. Use when input acts as a button-like trigger (e.g., `component="button"` for Select/DatePicker). @default false */
   pointer?: boolean;
 
   /** Determines whether the input should have red border and red text color when the `error` prop is set @default true */

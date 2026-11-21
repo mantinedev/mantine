@@ -30,6 +30,7 @@ import { getNotificationStateStyles } from './get-notification-state-styles';
 import { NotificationContainer } from './NotificationContainer';
 import {
   hideNotification,
+  NotificationAutoCloseProgressPosition,
   NotificationData,
   NotificationPosition,
   notifications,
@@ -102,6 +103,9 @@ export interface NotificationsProps
 
   /** Determines whether a progress line that fills up until the notification auto closes is displayed at the bottom of every notification, can be overwritten for individual notifications in `notifications.show` and `notifications.update` functions @default false */
   withAutoCloseProgress?: boolean;
+
+  /** Position of the auto close progress line, can be overwritten for individual notifications in `notifications.show` and `notifications.update` functions @default 'bottom' */
+  autoCloseProgressPosition?: NotificationAutoCloseProgressPosition;
 }
 
 export type NotificationsFactory = Factory<{
@@ -135,6 +139,7 @@ const defaultProps = {
   pauseResetOnHover: 'all',
   layout: 'default',
   withAutoCloseProgress: false,
+  autoCloseProgressPosition: 'bottom',
 } satisfies Partial<NotificationsProps>;
 
 const varsResolver = createVarsResolver<NotificationsFactory>((_, { zIndex, containerWidth }) => ({
@@ -170,6 +175,7 @@ export const Notifications = factory<NotificationsFactory>((_props) => {
     renderNotification,
     layout,
     withAutoCloseProgress,
+    autoCloseProgressPosition,
     ...others
   } = props;
 
@@ -485,6 +491,7 @@ export const Notifications = factory<NotificationsFactory>((_props) => {
                 }
                 layout={layout}
                 withAutoCloseProgress={withAutoCloseProgress}
+                autoCloseProgressPosition={autoCloseProgressPosition}
                 progressProps={getStyles('progress')}
                 stackIndex={stackIndex}
                 stackSize={groupLength}

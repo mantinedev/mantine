@@ -71,9 +71,18 @@ function stripFencedCode(source: string) {
     .join('\n');
 }
 
+function stripTags(value: string) {
+  let result = value;
+  let previous: string;
+  do {
+    previous = result;
+    result = result.replace(/<[^>]+>/g, '');
+  } while (result !== previous);
+  return result;
+}
+
 function headingText(raw: string) {
-  return raw
-    .replace(/<[^>]+>/g, '')
+  return stripTags(raw)
     .replace(/`([^`]*)`/g, '$1')
     .replace(/\[([^\]]*)\]\([^)]*\)/g, '$1')
     .replace(/[*_~]/g, '')

@@ -1,8 +1,14 @@
 .input {
-  cursor: pointer;
+  cursor: var(--mantine-cursor-type);
   line-height: unset;
 
   &:where([data-read-only]) {
     cursor: default;
+  }
+}
+
+.dropdown {
+  &:where([data-with-presets]) {
+    padding-inline-start: rem(4px);
   }
 }
