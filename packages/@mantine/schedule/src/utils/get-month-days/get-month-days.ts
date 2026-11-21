@@ -7,12 +7,14 @@ interface GetMonthDaysInput {
   month: AnyDateValue;
   firstDayOfWeek: DayOfWeek | undefined;
   consistentWeeks: boolean | undefined;
+  startFromPreviousMonthDay?: boolean;
 }
 
 export function getMonthDays({
   month,
   firstDayOfWeek = 1,
   consistentWeeks,
+  startFromPreviousMonthDay,
 }: GetMonthDaysInput): DateStringValue[][] {
   const day = dayjs(month).subtract(dayjs(month).date() - 1, 'day');
   const start = dayjs(day.format('YYYY-MM-DD'));
@@ -21,7 +23,12 @@ export function getMonthDays({
   const endDate = getEndOfWeek(endOfMonth, firstDayOfWeek);
   const weeks: DateStringValue[][] = [];
 
-  let date = dayjs(getStartOfWeek({ date: startOfMonth, firstDayOfWeek }));
+  let date = dayjs(
+    getStartOfWeek({
+      date: startFromPreviousMonthDay ? start.subtract(1, 'day').format('YYYY-MM-DD') : startOfMonth,
+      firstDayOfWeek,
+    })
+  );
 
   while (dayjs(date).isBefore(endDate, 'day')) {
     const days: DateStringValue[] = [];

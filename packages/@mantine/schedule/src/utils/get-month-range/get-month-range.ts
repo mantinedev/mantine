@@ -8,6 +8,7 @@ interface GetMonthRangeInput {
   withOutsideDays: boolean | undefined;
   consistentWeeks: boolean | undefined;
   firstDayOfWeek: DayOfWeek;
+  startFromPreviousMonthDay?: boolean;
 }
 
 /** Returns start and end dates as displayed in MonthView */
@@ -16,6 +17,7 @@ export function getMonthRange({
   withOutsideDays,
   consistentWeeks,
   firstDayOfWeek,
+  startFromPreviousMonthDay,
 }: GetMonthRangeInput) {
   if (!withOutsideDays) {
     return {
@@ -24,7 +26,7 @@ export function getMonthRange({
     };
   }
 
-  const days = getMonthDays({ month, firstDayOfWeek, consistentWeeks });
+  const days = getMonthDays({ month, firstDayOfWeek, consistentWeeks, startFromPreviousMonthDay });
 
   return {
     start: days[0][0],
