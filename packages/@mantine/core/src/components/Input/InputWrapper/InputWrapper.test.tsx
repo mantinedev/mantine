@@ -36,9 +36,91 @@ describe('@mantine/core/InputWrapper', () => {
     props: { ...defaultProps, children: <Input /> },
   });
 
-  it('does not render error if error prop is boolean', () => {
+  it('does not display an error message if the error prop is boolean', () => {
     const { container } = render(<InputWrapper {...defaultProps} error />);
-    expect(inputWrapperQueries.getError(container)).toBe(null);
+    const errorElement = inputWrapperQueries.getError(container);
+    expect(errorElement).toBeEmptyDOMElement();
+    expect(errorElement).toHaveAttribute('data-empty');
+  });
+
+  it('keeps the error element mounted when the message changes so aria-live can announce it', () => {
+    const { container, rerender } = render(
+      <InputWrapper id="bank" label="Bank">
+        <Input />
+      </InputWrapper>
+    );
+
+    const errorElement = inputWrapperQueries.getError(container);
+    expect(errorElement).toBeEmptyDOMElement();
+    expect(errorElement).toHaveAttribute('data-empty');
+    expect(errorElement).toHaveAttribute('aria-live', 'polite');
+    expect(errorElement).toHaveAttribute('aria-atomic', 'true');
+    expect(container.querySelector('input')).not.toHaveAttribute('aria-describedby');
+
+    rerender(
+      <>
+        <InputWrapper id="bank" label="Bank" error="Required field">
+          <Input />
+        </InputWrapper>
+      </>
+    );
+
+    expect(inputWrapperQueries.getError(container)).toBe(errorElement);
+    expect(errorElement).toHaveTextContent('Required field');
+    expect(errorElement).not.toHaveAttribute('data-empty');
+    expect(container.querySelector('input')).toHaveAttribute('aria-describedby', 'bank-error');
+
+    rerender(
+      <>
+        <InputWrapper id="bank" label="Bank" error={null}>
+          <Input />
+        </InputWrapper>
+      </>
+    );
+
+    expect(inputWrapperQueries.getError(container)).toBe(errorElement);
+    expect(errorElement).toBeEmptyDOMElement();
+    expect(errorElement).toHaveAttribute('data-empty');
+    expect(container.querySelector('input')).not.toHaveAttribute('aria-describedby');
+  });
+
+  it('keeps the error element mounted while a success message is displayed', () => {
+    const { container, rerender } = render(
+      <InputWrapper id="field" label="Field" success="Saved">
+        <Input />
+      </InputWrapper>
+    );
+
+    const errorElement = inputWrapperQueries.getError(container);
+    expect(errorElement).toHaveAttribute('data-empty');
+    expect(errorElement).toBeEmptyDOMElement();
+    expect(inputWrapperQueries.getSuccess(container)).toHaveTextContent('Saved');
+    expect(container.querySelector('input')!.getAttribute('aria-describedby')).toBe(
+      'field-success'
+    );
+
+    rerender(
+      <>
+        <InputWrapper id="field" label="Field" error="Required field">
+          <Input />
+        </InputWrapper>
+      </>
+    );
+
+    expect(inputWrapperQueries.getError(container)).toBe(errorElement);
+    expect(errorElement).toHaveTextContent('Required field');
+    expect(inputWrapperQueries.getSuccess(container)).toBe(null);
+    expect(container.querySelector('input')).toHaveAttribute('aria-describedby', 'field-error');
+  });
+
+  it('allows errorProps to override the default aria-live attribute', () => {
+    const { container } = render(
+      <InputWrapper label="Bank" errorProps={{ 'aria-live': 'assertive' }}>
+        <Input />
+      </InputWrapper>
+    );
+
+    expect(inputWrapperQueries.getError(container)).toHaveAttribute('aria-live', 'assertive');
   });
 
   it('generates correct ids for description and error', () => {
