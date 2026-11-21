@@ -17,6 +17,24 @@ describe('@mantine/hooks/use-list-state', () => {
     expect(state).toStrictEqual(TEST_STATE);
   });
 
+  it('keeps the list when reorder is called with a missing source index', () => {
+    const { result } = renderHook(() => useListState(TEST_STATE));
+
+    act(() => result.current[1].reorder({ from: TEST_STATE.length, to: 0 }));
+
+    expect(result.current[0]).toBe(TEST_STATE);
+  });
+
+  it('keeps the list when either swap index is missing', () => {
+    const { result } = renderHook(() => useListState(TEST_STATE));
+
+    act(() => result.current[1].swap({ from: 0, to: TEST_STATE.length }));
+    expect(result.current[0]).toBe(TEST_STATE);
+
+    act(() => result.current[1].swap({ from: -1, to: 0 }));
+    expect(result.current[0]).toBe(TEST_STATE);
+  });
+
   it('sets state with given value or callback', () => {
     const withValue = renderHook(() => useListState(TEST_STATE));
     const withCallback = renderHook(() => useListState(TEST_STATE));
