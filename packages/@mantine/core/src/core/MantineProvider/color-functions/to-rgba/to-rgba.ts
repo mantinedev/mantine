@@ -49,7 +49,8 @@ function rgbStringToRgba(color: string): RGBA {
   const [r, g, b, a] = color
     .replace(/[^0-9,./%\s]/g, '')
     .trim()
-    .split(/\s*[/,]\s*|\s+/)
+    .replace(/\s+/g, ' ')
+    .split(/ ?[/,] ?| /, 4)
     .map((value, index) =>
       value.endsWith('%') ? (parseFloat(value) / 100) * (index === 3 ? 1 : 255) : Number(value)
     );
@@ -59,7 +60,7 @@ function rgbStringToRgba(color: string): RGBA {
 
 function hslStringToRgba(hslaString: string): RGBA {
   const hslaRegex =
-    /^hsla?\(\s*([-+]?(?:\d*\.)?\d+)\s*,\s*((?:\d*\.)?\d+%)\s*,\s*((?:\d*\.)?\d+%)\s*(?:,\s*((?:\d*\.)?\d+%?))?\s*\)$/i;
+    /^hsla?\(\s*([-+]?(?:\d*\.)?\d+)\s*,\s*((?:\d*\.)?\d+%)\s*,\s*((?:\d*\.)?\d+%)\s*(?:,\s*((?:\d*\.)?\d+%?)\s*)?\)$/i;
 
   const matches = hslaString.match(hslaRegex);
   if (!matches) {

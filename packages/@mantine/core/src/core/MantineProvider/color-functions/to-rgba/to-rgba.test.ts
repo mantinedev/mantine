@@ -52,6 +52,14 @@ describe('@mantine/core/to-rgba', () => {
     expect(toRgba('hsla(240, 100%, 50%, 0.0)')).toStrictEqual({ r: 0, g: 0, b: 255, a: 0 });
   });
 
+  it('handles mixed whitespace around color channels and alpha', () => {
+    const green = { r: 0, g: 255, b: 0, a: 1 };
+    expect(toRgba('rgb(0\t \n255  0 \t/ \n100%)')).toStrictEqual(green);
+    expect(toRgba('hsl(120, 100%, 50% \t\n)')).toStrictEqual(green);
+    expect(toRgba('hsla(120, 100%, 50% \t, 100% \n)')).toStrictEqual(green);
+    expect(toRgba('hsla(120, 100%, 50% \t, )')).toStrictEqual({ r: 0, g: 0, b: 0, a: 1 });
+  });
+
   it('normalizes hsl hue to a full turn', () => {
     expect(toRgba('hsl(480, 100%, 50%)')).toStrictEqual({ r: 0, g: 255, b: 0, a: 1 });
     expect(toRgba('hsl(-240, 100%, 50%)')).toStrictEqual({ r: 0, g: 255, b: 0, a: 1 });
