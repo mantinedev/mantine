@@ -42,7 +42,10 @@ export function EmojiPickerSkinTone({ skinTone, onSkinToneChange }: EmojiPickerS
           {SKIN_TONE_EMOJIS[skinTone]}
         </UnstyledButton>
       </Popover.Target>
-      <Popover.Dropdown {...ctx.getStyles('skinToneDropdown')}>
+      <Popover.Dropdown
+        {...ctx.getStyles('skinToneDropdown')}
+        data-mantine-stop-propagation={opened || undefined}
+      >
         <div {...ctx.getStyles('skinToneSelector')}>
           {SKIN_TONE_EMOJIS.map((emoji, index) => (
             <UnstyledButton

@@ -85,18 +85,28 @@ export const EmojiPickerPopover = factory<EmojiPickerPopoverFactory>((_props) =>
     [onEmojiSelect, closeOnSelect, setOpened]
   );
 
+  const handleDropdownKeyDown = (event: React.KeyboardEvent<any>) => {
+    if (
+      event.key === 'Escape' &&
+      !(event.target as HTMLElement)?.closest?.('[data-mantine-stop-propagation]')
+    ) {
+      setOpened(false);
+    }
+  };
+
   return (
     <Popover
       position="bottom-start"
       offset={5}
       trapFocus
       returnFocus
+      closeOnEscape={false}
       {...popoverProps}
       opened={opened}
       onChange={setOpened}
     >
       <Popover.Target>{target}</Popover.Target>
-      <Popover.Dropdown className={classes.dropdown}>
+      <Popover.Dropdown className={classes.dropdown} onKeyDownCapture={handleDropdownKeyDown}>
         <EmojiPicker
           {...pickerProps}
           skinTone={skinTone}

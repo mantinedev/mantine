@@ -1,3 +1,4 @@
+import { waitFor } from '@testing-library/react';
 import { render, userEvent } from '@mantine-tests/core';
 import { EmojiPickerPopover } from './EmojiPickerPopover';
 
@@ -188,5 +189,26 @@ describe('@mantine/emoji/EmojiPickerPopover', () => {
     await userEvent.click(getByText('Open'));
     await userEvent.click(getByText('Open'));
     expect(container.querySelector('[aria-label="Grinning Face"]')).toHaveTextContent('😀5');
+  });
+
+  it('closes only the skin tone dropdown on Escape and keeps the picker open', async () => {
+    const { getByText, container, queryByRole } = render(
+      <EmojiPickerPopover data={testData} popoverProps={popoverProps}>
+        <button type="button">Open</button>
+      </EmojiPickerPopover>
+    );
+    await userEvent.click(getByText('Open'));
+    expect(queryByRole('grid')).toBeInTheDocument();
+
+    await userEvent.click(container.querySelector('[aria-label="Skin tone"]')!);
+    await waitFor(() =>
+      expect(container.querySelector('[aria-label="Dark skin tone"]')).toBeInTheDocument()
+    );
+
+    await userEvent.keyboard('{Escape}');
+    await waitFor(() =>
+      expect(container.querySelector('[aria-label="Dark skin tone"]')).not.toBeInTheDocument()
+    );
+    expect(queryByRole('grid')).toBeInTheDocument();
   });
 });
