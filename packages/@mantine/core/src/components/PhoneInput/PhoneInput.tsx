@@ -567,7 +567,8 @@ export const PhoneInput = factory<PhoneInputFactory>((_props) => {
             inputNumber,
             Math.min(cursorPos, inputNumber.length),
             newDisplayRaw,
-            toDisplayValue(formattedNumber, country)
+            toDisplayValue(formattedNumber, country),
+            (event.nativeEvent as InputEvent).inputType?.startsWith('delete')
           );
 
     emitChange(newValue, { formattedValue: newFormatted, country });
@@ -580,7 +581,40 @@ export const PhoneInput = factory<PhoneInputFactory>((_props) => {
   const handleInputKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
     onKeyDown?.(event);
 
-    if (readOnly || !combobox.dropdownOpened || event.nativeEvent.isComposing) {
+    if (readOnly || event.defaultPrevented || event.nativeEvent.isComposing) {
+      return;
+    }
+
+    const input = event.currentTarget;
+    const cursor = input.selectionStart;
+    if (
+      cursor !== null &&
+      cursor === input.selectionEnd &&
+      !event.ctrlKey &&
+      !event.metaKey &&
+      !event.altKey &&
+      !event.shiftKey
+    ) {
+      if (event.key === 'Backspace' && cursor > 0) {
+        let start = cursor - 1;
+        while (start > 0 && !/[\d+x]/i.test(input.value[start])) {
+          start--;
+        }
+        input.setSelectionRange(start, cursor);
+      } else if (event.key === 'Delete' && cursor < input.value.length) {
+        let start = cursor;
+        while (start < input.value.length && !/[\dx]/i.test(input.value[start])) {
+          start++;
+        }
+        if (start < input.value.length) {
+          input.setSelectionRange(start, start + 1);
+        } else if (input.value !== '+') {
+          event.preventDefault();
+        }
+      }
+    }
+
+    if (!combobox.dropdownOpened) {
       return;
     }
 
