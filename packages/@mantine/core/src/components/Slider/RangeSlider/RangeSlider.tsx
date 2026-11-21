@@ -310,19 +310,19 @@ export const RangeSlider = factory<RangeSliderFactory>((_props) => {
         }
       }
     } else {
-      const clampedVal = clamp(val, min!, max!);
+      const clampedVal = clamp(val, domainMin, domainMax);
       clone[index] = clampedVal;
 
       if (index === 0) {
         if (clampedVal > clone[1] - (minRange - 0.000000001)) {
           if (pushOnOverlap) {
-            clone[1] = Math.min(val + minRange, max);
+            clone[1] = Math.min(val + minRange, domainMax);
           } else {
             clone[index] = valueRef.current[index];
           }
         }
 
-        if (clampedVal > (max - (minRange - 0.000000001) || min)) {
+        if (clampedVal > (domainMax - (minRange - 0.000000001) || domainMin)) {
           clone[index] = valueRef.current[index];
         }
 
@@ -338,7 +338,7 @@ export const RangeSlider = factory<RangeSliderFactory>((_props) => {
       if (index === 1) {
         if (clampedVal < clone[0] + minRange) {
           if (pushOnOverlap) {
-            clone[0] = Math.max(val - minRange, min);
+            clone[0] = Math.max(val - minRange, domainMin);
           } else {
             clone[index] = valueRef.current[index];
           }
