@@ -8,7 +8,7 @@
 }
 
 .monthYearSelectList {
-  flex: 1;
+  flex: auto;
 }
 
 .monthYearSelectDropdown {
