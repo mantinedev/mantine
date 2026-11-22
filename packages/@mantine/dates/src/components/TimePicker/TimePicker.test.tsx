@@ -313,6 +313,113 @@ describe('@mantine/dates/TimePicker', () => {
     expect(spy).toHaveBeenLastCalledWith('13:34');
   });
 
+  // https://github.com/mantinedev/mantine/issues/9469
+  it.each([
+    'Note: call back',
+    '9:30 AM',
+    'ab:30',
+    '10:cd',
+    '-1:00',
+    '1:-30',
+    '9.5:30',
+    'Infinity:30',
+  ])('ignores pasted text that is not a time (%s)', async (text) => {
+    const spy = jest.fn();
+    const { container } = render(
+      <TimePicker {...defaultProps} defaultValue="22:45" name="time" onChange={spy} />
+    );
+
+    await userEvent.click(screen.getByLabelText('test-hours'));
+    await userEvent.paste(text);
+
+    expect(spy).not.toHaveBeenCalled();
+    expect(screen.getByLabelText('test-hours')).toHaveValue('22');
+    expect(screen.getByLabelText('test-minutes')).toHaveValue('45');
+    expect(container.querySelector('input[name="time"]')).toHaveValue('22:45');
+  });
+
+  it('ignores pasted 12h time with am/pm label instead of setting NaN', async () => {
+    const spy = jest.fn();
+    render(<TimePicker {...defaultProps} format="12h" onChange={spy} />);
+
+    await userEvent.click(screen.getByLabelText('test-hours'));
+    await userEvent.paste('1:30 PM');
+
+    expect(spy).not.toHaveBeenCalled();
+    expect(screen.getByLabelText('test-hours')).toHaveValue('');
+    expect(screen.getByLabelText('test-minutes')).toHaveValue('');
+  });
+
+  it('ignores pasted time with invalid seconds when withSeconds is set', async () => {
+    const spy = jest.fn();
+    render(<TimePicker {...defaultProps} withSeconds defaultValue="22:45:10" onChange={spy} />);
+
+    await userEvent.click(screen.getByLabelText('test-hours'));
+    await userEvent.paste('10:30:xx');
+
+    expect(spy).not.toHaveBeenCalled();
+    expect(screen.getByLabelText('test-seconds')).toHaveValue('10');
+  });
+
+  it('ignores invalid pasted seconds when withSeconds is not set', async () => {
+    const spy = jest.fn();
+    render(<TimePicker {...defaultProps} onChange={spy} />);
+
+    await userEvent.click(screen.getByLabelText('test-hours'));
+    await userEvent.paste('10:30:xx');
+
+    expect(spy).toHaveBeenLastCalledWith('10:30');
+  });
+
+  it('ignores pasted Infinity in duration mode', async () => {
+    const spy = jest.fn();
+    render(<TimePicker {...defaultProps} type="duration" withSeconds onChange={spy} />);
+
+    await userEvent.click(screen.getByLabelText('test-hours'));
+    await userEvent.paste('Infinity:00:00');
+
+    expect(spy).not.toHaveBeenCalled();
+    expect(screen.getByLabelText('test-hours')).toHaveValue('');
+  });
+
+  it('ignores pasteSplit result with parts that are not whole numbers', async () => {
+    const spy = jest.fn();
+    render(
+      <TimePicker
+        {...defaultProps}
+        defaultValue="22:45"
+        pasteSplit={() => ({ hours: NaN, minutes: 30, seconds: null, amPm: null })}
+        onChange={spy}
+      />
+    );
+
+    await userEvent.click(screen.getByLabelText('test-hours'));
+    await userEvent.paste('anything');
+
+    expect(spy).not.toHaveBeenCalled();
+    expect(screen.getByLabelText('test-hours')).toHaveValue('22');
+  });
+
+  it.each([{ defaultValue: 'ab:cd' }, { value: 'ab:cd' }])(
+    'does not call onChange with NaN or an empty value when %o is not a time',
+    async (props) => {
+      const spy = jest.fn();
+      render(<TimePicker {...defaultProps} {...props} onChange={spy} />);
+
+      await userEvent.type(screen.getByLabelText('test-minutes'), '30');
+      await userEvent.type(screen.getByLabelText('test-hours'), '{ArrowUp}');
+      await userEvent.type(screen.getByLabelText('test-hours'), '{Backspace}');
+
+      expect(spy).not.toHaveBeenCalledWith('');
+      spy.mock.calls.forEach(([value]) => expect(value).not.toMatch(/NaN/));
+    }
+  );
+
+  it('does not submit NaN when defaultValue is not a time', () => {
+    const { container } = render(<TimePicker {...defaultProps} defaultValue="ab:cd" name="time" />);
+    expect(container.querySelector('input[name="time"]')).toHaveValue('');
+  });
+
   it('syncs fields and hidden input with the clamped value when pasted time is below min', async () => {
     const spy = jest.fn();
     const { container } = render(

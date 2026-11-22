@@ -29,6 +29,10 @@ function convertTo24HourFormat({
   return `${padTime(_hours)}:${padTime(minutes)}${withSeconds ? `:${padTime(seconds || 0)}` : ''}`;
 }
 
+function isTimePart(value: number | null): value is number {
+  return value !== null && Number.isInteger(value) && value >= 0;
+}
+
 interface GetTimeStringInput {
   hours: number | null;
   minutes: number | null;
@@ -48,11 +52,11 @@ export function getTimeString({
   amPm,
   amPmLabels,
 }: GetTimeStringInput) {
-  if (hours === null || minutes === null) {
+  if (!isTimePart(hours) || !isTimePart(minutes)) {
     return { valid: false, value: '' };
   }
 
-  if (withSeconds && seconds === null) {
+  if (withSeconds && !isTimePart(seconds)) {
     return { valid: false, value: '' };
   }
 
