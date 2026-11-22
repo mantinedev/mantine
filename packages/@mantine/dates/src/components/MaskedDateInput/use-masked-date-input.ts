@@ -4,6 +4,7 @@ import { useDidUpdate } from '@mantine/hooks';
 import { buildDateString } from './build-date-string/build-date-string';
 import { getDaysInMonth } from './get-days-in-month/get-days-in-month';
 import { parseDateString } from './parse-date-string/parse-date-string';
+import { parseDisplayedDateString } from './parse-displayed-date-string/parse-displayed-date-string';
 
 interface UseMaskedDateInputInput {
   value: string | null | undefined;
@@ -19,6 +20,7 @@ interface UseMaskedDateInputInput {
   readOnly: boolean | undefined;
   disabled: boolean | undefined;
   fieldsOrder: ('day' | 'month' | 'year')[];
+  dateSeparator: string;
   pasteSplit?: (value: string) => {
     day: number | null;
     month: number | null;
@@ -60,6 +62,7 @@ export function useMaskedDateInput({
   readOnly,
   disabled,
   fieldsOrder,
+  dateSeparator,
   pasteSplit,
   minDate,
   maxDate,
@@ -401,13 +404,33 @@ export function useMaskedDateInput({
       seconds?: number | null;
     };
 
+    const isIsoLike = /^\d{4}-/.test(pastedValue.trim());
+    const separator = dateSeparator.trim();
+    const readsDisplayed = !pasteSplit && !isIsoLike && separator !== '';
+
     if (pasteSplit) {
       parsed = pasteSplit(pastedValue);
+    } else if (readsDisplayed) {
+      const displayed = parseDisplayedDateString({
+        value: pastedValue,
+        fieldsOrder,
+        dateSeparator,
+        amPmLabels,
+      });
+      parsed = displayed.year === null ? parseDateString(pastedValue) : displayed;
     } else {
       parsed = parseDateString(pastedValue);
     }
 
     if (parsed.day === null || parsed.month === null || parsed.year === null) {
+      const looksLikeDate =
+        readsDisplayed &&
+        pastedValue.includes(separator) &&
+        (pastedValue.match(/\d+/g)?.length ?? 0) >= 3;
+
+      if (looksLikeDate) {
+        event.preventDefault();
+      }
       return;
     }
 

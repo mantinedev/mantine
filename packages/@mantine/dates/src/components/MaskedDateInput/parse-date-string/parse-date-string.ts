@@ -1,4 +1,4 @@
-interface ParsedDate {
+export interface ParsedDate {
   day: number | null;
   month: number | null;
   year: number | null;

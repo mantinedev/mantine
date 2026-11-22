@@ -100,9 +100,16 @@ for each time field when using arrow keys:
 
 ## Paste events
 
-By default, `MaskedDateInput` handles pasted values in `YYYY-MM-DD` and `YYYY-MM-DD HH:mm:ss`
-formats. With the `pasteSplit` prop you can provide a custom paste parser that extracts day,
-month, and year values from a pasted string:
+By default, `MaskedDateInput` reads pasted values in `YYYY-MM-DD` and `YYYY-MM-DD HH:mm:ss`
+formats, and dates pasted the way the input shows them, for example, `05/01/2026` or
+`05/01/2026 1:30 PM`:
+
+- day, month and year in `fieldsOrder`, separated by `dateSeparator`, with a four digit year
+- optionally followed by a time in `H:mm` or `H:mm:ss` format (`withSeconds` requires seconds)
+- optionally followed by an am/pm label from `amPmLabels` after the time
+
+With the `pasteSplit` prop you can provide a custom paste parser that extracts day, month, and
+year values from a pasted string:
 
 <Demo data={MaskedDateInputDemos.pasteSplit} />
 
