@@ -186,6 +186,10 @@ export function useTimePicker({
   };
 
   const onPaste = (event: React.ClipboardEvent<any>) => {
+    if (readOnly || disabled) {
+      return;
+    }
+
     event.preventDefault();
     const pastedValue = event.clipboardData.getData('text');
     const parsedTime = (pasteSplit || getParsedTime)({ time: pastedValue, format, amPmLabels });

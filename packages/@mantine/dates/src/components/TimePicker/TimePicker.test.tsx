@@ -672,6 +672,18 @@ describe('@mantine/dates/TimePicker', () => {
     expect(screen.getByLabelText('test-am-pm')).toHaveValue('');
   });
 
+  it('does not change value on paste when readOnly', async () => {
+    const spy = jest.fn();
+    render(<TimePicker {...defaultProps} readOnly defaultValue="12:45" onChange={spy} />);
+
+    await userEvent.click(screen.getByLabelText('test-hours'));
+    await userEvent.paste('13:30');
+
+    expect(screen.getByLabelText('test-hours')).toHaveValue('12');
+    expect(screen.getByLabelText('test-minutes')).toHaveValue('45');
+    expect(spy).not.toHaveBeenCalled();
+  });
+
   it('correctly handles disabled prop', async () => {
     const { rerender } = render(<TimePicker {...defaultProps} withSeconds disabled format="24h" />);
 
