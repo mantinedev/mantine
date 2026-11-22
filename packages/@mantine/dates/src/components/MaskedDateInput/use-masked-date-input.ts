@@ -404,9 +404,8 @@ export function useMaskedDateInput({
       seconds?: number | null;
     };
 
-    const isIsoLike = /^\d{4}-/.test(pastedValue.trim());
     const separator = dateSeparator.trim();
-    const readsDisplayed = !pasteSplit && !isIsoLike && separator !== '';
+    const readsDisplayed = !pasteSplit && separator !== '' && !/^\d{4}-/.test(pastedValue.trim());
 
     if (pasteSplit) {
       parsed = pasteSplit(pastedValue);
@@ -423,12 +422,11 @@ export function useMaskedDateInput({
     }
 
     if (parsed.day === null || parsed.month === null || parsed.year === null) {
-      const looksLikeDate =
+      if (
         readsDisplayed &&
         pastedValue.includes(separator) &&
-        (pastedValue.match(/\d+/g)?.length ?? 0) >= 3;
-
-      if (looksLikeDate) {
+        (pastedValue.match(/\d+/g)?.length ?? 0) >= 3
+      ) {
         event.preventDefault();
       }
       return;

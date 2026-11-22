@@ -7,18 +7,11 @@ interface ParseDisplayedDateStringInput {
   amPmLabels: { am: string; pm: string };
 }
 
-function normalizeLabel(label: string) {
-  return label.replace(/[^\p{L}]/gu, '').toLowerCase();
-}
-
 /**
- * Reads a date pasted in the shape the input displays: day, month and year in `fieldsOrder`
- * (year with 4 digits) separated by the trimmed `dateSeparator` with optional whitespace around it,
- * then optionally a space or a comma and a time in `H:mm` or `H:mm:ss` format (hours 0–23), then
- * optionally an am/pm label from `amPmLabels`, compared by letters only and ignoring case. Hours
- * with a label must be 1–12 and are returned in 24h format. A label is not read when the two labels
- * have the same letters or one has none. All fields are `null` when the whole value does not have
- * this shape.
+ * Reads the whole value as the input displays it: `fieldsOrder` fields (4-digit year) joined by the
+ * trimmed `dateSeparator`, then optionally `H:mm[:ss]` and an `amPmLabels` label, compared by letters
+ * ignoring case (hours 1–12, returned in 24h format; not read when both labels have the same letters
+ * or one has none). Returns all fields `null` for any other shape.
  */
 export function parseDisplayedDateString({
   value,
@@ -47,22 +40,19 @@ export function parseDisplayedDateString({
   const [hours, minutes, seconds] = match
     .slice(4, 7)
     .map((n) => (n === undefined ? null : Number(n)));
-  const label = match[7] === undefined ? null : normalizeLabel(match[7]);
-  const am = normalizeLabel(amPmLabels.am);
-  const pm = normalizeLabel(amPmLabels.pm);
   const parsed = { day, month, year, hours, minutes, seconds };
 
-  if (label === null || hours === null) {
+  if (hours === null || match[7] === undefined) {
     return parsed;
   }
 
-  if (hours < 1 || hours > 12 || !am || !pm || am === pm) {
+  const [label, am, pm] = [match[7], amPmLabels.am, amPmLabels.pm].map((text) =>
+    text.replace(/[^\p{L}]/gu, '').toLowerCase()
+  );
+
+  if (hours < 1 || hours > 12 || !am || !pm || am === pm || (label !== am && label !== pm)) {
     return empty;
   }
 
-  if (label === am) {
-    return { ...parsed, hours: hours % 12 };
-  }
-
-  return label === pm ? { ...parsed, hours: (hours % 12) + 12 } : empty;
+  return { ...parsed, hours: (hours % 12) + (label === pm ? 12 : 0) };
 }
