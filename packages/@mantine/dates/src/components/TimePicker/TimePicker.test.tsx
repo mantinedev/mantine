@@ -947,4 +947,20 @@ describe('@mantine/dates/TimePicker', () => {
     expect(screen.getByLabelText('test-hours')).toHaveValue('12');
     expect(screen.queryByText('15:45')).not.toBeInTheDocument();
   });
+
+  it.each([
+    ['24h', '1:30', '01:30'],
+    ['12h', '1:30 p', '13:30'],
+  ] as const)(
+    'moves to the next field when a separator is typed (%s)',
+    async (format, typed, expected) => {
+      const spy = jest.fn();
+      render(<TimePicker {...defaultProps} format={format} onChange={spy} />);
+
+      await userEvent.click(screen.getByLabelText('test-hours'));
+      await userEvent.keyboard(typed);
+
+      expect(spy).toHaveBeenLastCalledWith(expected);
+    }
+  );
 });

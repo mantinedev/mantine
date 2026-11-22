@@ -528,4 +528,16 @@ describe('@mantine/dates/MaskedDateInput', () => {
     await userEvent.click(screen.getByLabelText('test-day'));
     expect(screen.queryByText('June 2024')).not.toBeInTheDocument();
   });
+
+  it('moves to the next field when a separator is typed', async () => {
+    const spy = jest.fn();
+    render(
+      <MaskedDateInput {...defaultProps} fieldsOrder={['month', 'day', 'year']} onChange={spy} />
+    );
+
+    await userEvent.click(screen.getByLabelText('test-month'));
+    await userEvent.keyboard('1/5/2026');
+
+    expect(spy).toHaveBeenLastCalledWith('2026-01-05');
+  });
 });
