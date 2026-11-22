@@ -313,6 +313,19 @@ describe('@mantine/dates/TimePicker', () => {
     expect(spy).toHaveBeenLastCalledWith('13:34');
   });
 
+  // https://github.com/mantinedev/mantine/issues/9469
+  it('ignores pasted value with non-numeric time parts', async () => {
+    const spy = jest.fn();
+    render(<TimePicker {...defaultProps} format="12h" defaultValue="22:45" onChange={spy} />);
+
+    await userEvent.click(screen.getByLabelText('test-hours'));
+    await userEvent.paste('1:30 PM');
+
+    expect(screen.getByLabelText('test-hours')).toHaveValue('10');
+    expect(screen.getByLabelText('test-minutes')).toHaveValue('45');
+    expect(spy).not.toHaveBeenCalled();
+  });
+
   it('syncs fields and hidden input with the clamped value when pasted time is below min', async () => {
     const spy = jest.fn();
     const { container } = render(
