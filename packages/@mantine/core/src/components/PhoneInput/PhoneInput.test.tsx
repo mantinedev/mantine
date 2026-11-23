@@ -224,11 +224,11 @@ describe('@mantine/core/PhoneInput', () => {
     }
   );
 
-  it('keeps foreign dial-code detection when national trunk prefix matches its first digit', () => {
+  it('detects an explicit foreign dial code when its first digit matches the national prefix', () => {
     const onChange = jest.fn();
     render(<PhoneInput defaultCountry="ru" withCountryAutoDetect onChange={onChange} />);
 
-    fireEvent.change(screen.getByRole('textbox'), { target: { value: '8613812345678' } });
+    fireEvent.change(screen.getByRole('textbox'), { target: { value: '+8613812345678' } });
 
     expect(onChange).toHaveBeenLastCalledWith(
       '+8613812345678',
@@ -659,6 +659,8 @@ describe('@mantine/core/PhoneInput', () => {
     'empty controlled input with %s prefix handling',
     (nationalPrefixBehavior) => {
       it.each([
+        ['9161234567', '+79161234567', '+7 (916) 123-45-67'],
+        ['9961234567', '+79961234567', '+7 (996) 123-45-67'],
         ['+78121234567', '+78121234567', '+7 (812) 123-45-67'],
         ['+78001002247', '+78001002247', '+7 (800) 100-22-47'],
         ['88121234567', '+78121234567', '+7 (812) 123-45-67'],

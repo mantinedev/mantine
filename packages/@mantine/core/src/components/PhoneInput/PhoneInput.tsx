@@ -445,9 +445,8 @@ export const PhoneInput = factory<PhoneInputFactory>((_props) => {
 
     const typedRaw = getDigits(inputNumber);
     const hasInternationalPrefix = typedRaw.startsWith('+');
-    const dialCodeTyped = hasInternationalPrefix || (autoDetectEnabled && international);
     const typedCountry =
-      selectedCountry && dialCodeTyped && (countryLockedRef.current || !autoDetectEnabled)
+      selectedCountry && hasInternationalPrefix && (countryLockedRef.current || !autoDetectEnabled)
         ? detectCountry(typedRaw).country
         : undefined;
     const dialCodeChanged = !!typedCountry && typedCountry.dialCode !== selectedCountry?.dialCode;
@@ -458,31 +457,15 @@ export const PhoneInput = factory<PhoneInputFactory>((_props) => {
       countryLockedRef.current = false;
     }
 
-    const preferSelectedCountry =
-      !!selectedCountry &&
-      !hasInternationalPrefix &&
-      (nationalPrefixBehavior === 'strip' ||
-        (nationalPrefixBehavior === 'auto' &&
-          international &&
-          !!selectedCountry.nationalPrefix &&
-          typedRaw.startsWith(selectedCountry.nationalPrefix) &&
-          typedRaw.length <=
-            getMaskDigitCount(selectedCountry.format) + selectedCountry.nationalPrefix.length));
-    const detectedFromDigits =
-      detectNow && international && !hasInternationalPrefix && !preferSelectedCountry
-        ? detectCountry(typedRaw).country
-        : undefined;
-    const inputCountry =
-      detectedFromDigits && detectedFromDigits.dialCode !== selectedCountry?.dialCode
-        ? null
-        : selectedCountry;
+    const preferSelectedCountry = !!selectedCountry && !hasInternationalPrefix;
 
     const nationalDigits =
       international && typedRaw.startsWith(`+${selectedCountry?.dialCode}`)
         ? typedRaw.slice((selectedCountry?.dialCode.length ?? 0) + 1)
         : typedRaw.replace(/^\+/, '');
     const hasNationalPrefix =
-      !!inputCountry?.nationalPrefix && nationalDigits.startsWith(inputCountry.nationalPrefix);
+      !!selectedCountry?.nationalPrefix &&
+      nationalDigits.startsWith(selectedCountry.nationalPrefix);
     const previousDisplay = selectedCountry
       ? toDisplayValue(formatPhoneNumber(phoneValue, selectedCountry), selectedCountry)
       : phoneValue;
@@ -508,23 +491,23 @@ export const PhoneInput = factory<PhoneInputFactory>((_props) => {
       !userEnteredDialCodeRef.current &&
       !nationalPrefixConsumedRef.current &&
       (!phoneValue ||
-        phoneValue === `+${inputCountry.dialCode}` ||
+        phoneValue === `+${selectedCountry.dialCode}` ||
         (replacesValue &&
-          (nationalDigits.length === inputCountry.nationalPrefix?.length ||
+          (nationalDigits.length === selectedCountry.nationalPrefix?.length ||
             inputNumber[0] !== previousDisplay[0]))) &&
-      (!hasInternationalPrefix || nationalDigits === inputCountry.nationalPrefix);
+      (!hasInternationalPrefix || nationalDigits === selectedCountry.nationalPrefix);
     const normalizeNationalPrefix =
       nationalPrefixBehavior !== 'preserve' &&
       (!hasNationalPrefix ||
-        inputCountry.nationalPrefix === '0' ||
+        selectedCountry.nationalPrefix === '0' ||
         forceNationalPrefix ||
-        (nationalDigits.length > getMaskDigitCount(inputCountry.format) &&
-          (!phoneValue || phoneValue === `+${inputCountry.dialCode}` || replacesValue)));
+        (nationalDigits.length > getMaskDigitCount(selectedCountry.format) &&
+          (!phoneValue || phoneValue === `+${selectedCountry.dialCode}` || replacesValue)));
 
     const fullRaw = buildRawValue(inputNumber, {
       canAutoDetect: detectNow,
       international,
-      selectedCountry: inputCountry,
+      selectedCountry,
       normalizeNationalPrefix,
       forceNationalPrefix,
       preferSelectedCountry,
