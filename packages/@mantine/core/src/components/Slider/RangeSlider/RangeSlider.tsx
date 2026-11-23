@@ -318,7 +318,7 @@ export const RangeSlider = factory<RangeSliderFactory>((_props) => {
       if (index === 0) {
         if (clampedVal > clone[1] - (minRange - 0.000000001)) {
           if (pushOnOverlap) {
-            clone[1] = Math.min(val + minRange, maxValue);
+            clone[1] = Math.min(clampedVal + minRange, maxValue);
           } else {
             clone[index] = valueRef.current[index];
           }
@@ -328,9 +328,9 @@ export const RangeSlider = factory<RangeSliderFactory>((_props) => {
           clone[index] = valueRef.current[index];
         }
 
-        if (clone[1] - val > maxRange) {
+        if (clone[1] - clampedVal > maxRange) {
           if (pushOnOverlap) {
-            clone[1] = val + maxRange;
+            clone[1] = clampedVal + maxRange;
           } else {
             clone[index] = valueRef.current[index];
           }
@@ -340,7 +340,7 @@ export const RangeSlider = factory<RangeSliderFactory>((_props) => {
       if (index === 1) {
         if (clampedVal < clone[0] + minRange) {
           if (pushOnOverlap) {
-            clone[0] = Math.max(val - minRange, minValue);
+            clone[0] = Math.max(clampedVal - minRange, minValue);
           } else {
             clone[index] = valueRef.current[index];
           }
@@ -352,7 +352,7 @@ export const RangeSlider = factory<RangeSliderFactory>((_props) => {
 
         if (clampedVal - clone[0] > maxRange) {
           if (pushOnOverlap) {
-            clone[0] = val - maxRange;
+            clone[0] = clampedVal - maxRange;
           } else {
             clone[index] = valueRef.current[index];
           }

@@ -1,4 +1,4 @@
-import { act } from '@testing-library/react';
+import { act, fireEvent, waitFor } from '@testing-library/react';
 import { render, screen, tests, userEvent } from '@mantine-tests/core';
 import { SliderStylesNames } from '../Slider.context';
 import { RangeSlider, RangeSliderProps } from './RangeSlider';
@@ -269,6 +269,46 @@ describe('@mantine/core/RangeSlider', () => {
     await userEvent.keyboard('{ArrowRight}');
     expectInputValue('80', container, 0);
     expectInputValue('90', container, 1);
+  });
+
+  it.each<[number, [number, number]]>([
+    [0, [20, 30]],
+    [100, [70, 80]],
+  ])('keeps pushed values within min and max when clicking at %s', async (clientX, expected) => {
+    const onChange = jest.fn();
+    const { container } = render(
+      <RangeSlider
+        defaultValue={[50, 60]}
+        min={20}
+        max={80}
+        domain={[0, 100]}
+        minRange={10}
+        maxRange={10}
+        step={10}
+        pushOnOverlap
+        onChange={onChange}
+      />
+    );
+    const track = container.querySelector('.mantine-RangeSlider-trackContainer')!;
+    jest.spyOn(track, 'getBoundingClientRect').mockReturnValue({
+      x: 0,
+      y: 0,
+      left: 0,
+      top: 0,
+      right: 100,
+      bottom: 10,
+      width: 100,
+      height: 10,
+      toJSON: () => ({}),
+    });
+
+    fireEvent.mouseDown(track, { clientX, clientY: 5 });
+    await waitFor(() => expect(onChange).toHaveBeenCalled());
+    fireEvent.mouseUp(document);
+
+    expect(onChange).toHaveBeenLastCalledWith(expected);
+    expectInputValue(String(expected[0]), container, 0);
+    expectInputValue(String(expected[1]), container, 1);
   });
 
   it('renders marks with labels', () => {
