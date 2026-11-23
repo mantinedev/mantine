@@ -176,10 +176,10 @@ describe('@mantine/core/PhoneInput', () => {
 
   it('preserves a typed Russian area code starting with 8 when the mask is full', async () => {
     const onChange = jest.fn();
-    render(<PhoneInput defaultCountry="ru" onChange={onChange} />);
+    render(<PhoneInput defaultCountry="ru" defaultValue="" onChange={onChange} />);
     const input = screen.getByRole('textbox');
 
-    await userEvent.type(input, '8431234567');
+    await userEvent.type(input, '+78431234567');
     await userEvent.type(input, '8');
 
     expect(onChange).toHaveBeenLastCalledWith('+78431234567', expect.anything());
@@ -187,10 +187,10 @@ describe('@mantine/core/PhoneInput', () => {
 
   it('does not strip a legitimate Russian 879 area code when the mask is full', async () => {
     const onChange = jest.fn();
-    render(<PhoneInput defaultCountry="ru" onChange={onChange} />);
+    render(<PhoneInput defaultCountry="ru" defaultValue="" onChange={onChange} />);
     const input = screen.getByRole('textbox');
 
-    await userEvent.type(input, '8793123456');
+    await userEvent.type(input, '+78793123456');
     await userEvent.type(input, '7');
 
     expect(onChange).toHaveBeenLastCalledWith('+78793123456', expect.anything());
@@ -778,6 +778,68 @@ describe('@mantine/core/PhoneInput', () => {
       expect(input).toHaveValue('+7 (812) 123-45-67');
     }
   );
+
+  describe.each([false, true])('saved number with auto-detection=%s', (withCountryAutoDetect) => {
+    it.each([
+      ['89991234567', '+79991234567', '+7 (999) 123-45-67'],
+      ['8121234567', '+78121234567', '+7 (812) 123-45-67'],
+    ])(
+      'normalizes %s after deleting national digits',
+      async (digits, expectedValue, expectedDisplay) => {
+        const onChange = jest.fn();
+        function Controlled() {
+          const [value, setValue] = useState('+79022134012');
+          return (
+            <PhoneInput
+              value={value}
+              onChange={(rawValue, details) => {
+                setValue(rawValue);
+                onChange(rawValue, details);
+              }}
+              defaultCountry="ru"
+              withCountryAutoDetect={withCountryAutoDetect}
+            />
+          );
+        }
+
+        render(<Controlled />);
+        const input = screen.getByRole('textbox') as HTMLInputElement;
+        await userEvent.click(input);
+        input.setSelectionRange(3, input.value.length);
+        await userEvent.keyboard('{Backspace}');
+        await userEvent.type(input, digits);
+
+        expect(input).toHaveValue(expectedDisplay);
+        expect(onChange).toHaveBeenLastCalledWith(
+          expectedValue,
+          expect.objectContaining({ formattedValue: expectedDisplay })
+        );
+      }
+    );
+
+    it.each(['auto', 'strip', 'preserve'] as const)(
+      'does not emit hidden digits with %s prefix handling',
+      async (nationalPrefixBehavior) => {
+        const onChange = jest.fn();
+        render(
+          <PhoneInput
+            defaultValue="+79161234567"
+            defaultCountry="ru"
+            withCountryAutoDetect={withCountryAutoDetect}
+            nationalPrefixBehavior={nationalPrefixBehavior}
+            onChange={onChange}
+          />
+        );
+
+        await userEvent.type(screen.getByRole('textbox'), '89');
+        expect(screen.getByRole('textbox')).toHaveValue('+7 (916) 123-45-67');
+        expect(onChange).toHaveBeenLastCalledWith(
+          '+79161234567',
+          expect.objectContaining({ formattedValue: '+7 (916) 123-45-67' })
+        );
+      }
+    );
+  });
 
   it.each(['', '+7'])(
     'resets prefix handling when a controlled value is set to "%s" externally',

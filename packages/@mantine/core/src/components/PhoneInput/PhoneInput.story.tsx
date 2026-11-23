@@ -97,6 +97,22 @@ export function NationalPrefixes() {
   );
 }
 
+function SavedNumberInput({ autoDetect }: { autoDetect: boolean }) {
+  const [value, setValue] = useState('+79022134012');
+  return (
+    <div style={{ padding: 40, maxWidth: 340 }}>
+      <PhoneInput
+        label={`Saved number: ${autoDetect}`}
+        value={value}
+        onChange={setValue}
+        defaultCountry="ru"
+        withCountryAutoDetect={autoDetect}
+      />
+      <div>Raw value: {value}</div>
+    </div>
+  );
+}
+
 export function OnlyCountries() {
   return (
     <div style={{ padding: 40, maxWidth: 340 }}>
@@ -250,5 +266,14 @@ export function BottomOfThePage() {
       <PhoneInput label="Phone number" renderFlag={renderFlag} />
       <div style={{ height: 1200 }} />
     </div>
+  );
+}
+
+export function SavedNumber() {
+  return (
+    <>
+      <SavedNumberInput autoDetect={false} />
+      <SavedNumberInput autoDetect />
+    </>
   );
 }
