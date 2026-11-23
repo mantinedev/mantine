@@ -1,10 +1,45 @@
+import { useCallback, useState } from 'react';
 import cx from 'clsx';
 import { BoxProps, ElementProps, MantineRadius, MantineShadow } from '../../core';
 import { FocusTrap } from '../FocusTrap';
 import { Paper } from '../Paper';
 import { Transition, TransitionOverride } from '../Transition';
+import { ModalFloatingPortalProvider } from './modal-floating-portal.context';
 import { useModalBaseContext } from './ModalBase.context';
 import classes from './ModalBase.module.css';
+
+const floatingPortalStyle: React.CSSProperties = {
+  position: 'fixed',
+  top: 0,
+  left: 0,
+  right: 'auto',
+  bottom: 'auto',
+  width: 0,
+  height: 0,
+  minWidth: 0,
+  minHeight: 0,
+  margin: 0,
+  padding: 0,
+  border: 'none',
+  background: 'none',
+  overflow: 'visible',
+  pointerEvents: 'none',
+  boxShadow: 'none',
+};
+
+function openFloatingPortal(node: HTMLDivElement) {
+  if (typeof node.showPopover !== 'function') {
+    return;
+  }
+
+  try {
+    if (!node.matches(':popover-open')) {
+      node.showPopover();
+    }
+  } catch {
+    /* Popover API throws when the node is already open or not connected. */
+  }
+}
 
 export interface ModalBaseContentProps extends BoxProps, ElementProps<'div'> {
   /** Props passed down to the `Transition` component */
@@ -31,6 +66,13 @@ export function ModalBaseContent({
   ...others
 }: _ModalBaseContentProps) {
   const ctx = useModalBaseContext();
+  const [portalTarget, setPortalTarget] = useState<HTMLDivElement | null>(null);
+  const assignPortalNode = useCallback((node: HTMLDivElement | null) => {
+    if (node) {
+      openFloatingPortal(node);
+    }
+    setPortalTarget(node);
+  }, []);
 
   return (
     <Transition
@@ -65,7 +107,18 @@ export function ModalBaseContent({
               className={cx({ [classes.content]: !ctx.unstyled }, className)}
               unstyled={ctx.unstyled}
             >
-              {others.children}
+              <div className={classes.floatingContent}>
+                <ModalFloatingPortalProvider target={portalTarget}>
+                  {others.children}
+                </ModalFloatingPortalProvider>
+              </div>
+              <div
+                ref={assignPortalNode}
+                popover="manual"
+                className={classes.floatingPortal}
+                style={floatingPortalStyle}
+                data-mantine-modal-floating-portal
+              />
             </Paper>
           </FocusTrap>
         </div>

@@ -11,6 +11,7 @@ import {
   useProps,
   useStyles,
 } from '../../core';
+import { useModalFloatingPortal } from '../ModalBase/modal-floating-portal.context';
 import { __PopoverProps, Popover } from '../Popover';
 import { PopoverMiddlewares } from '../Popover/Popover.types';
 import { ComboboxProvider } from './Combobox.context';
@@ -152,8 +153,21 @@ export const Combobox = (_props: ComboboxProps) => {
     attributes,
     floatingHeight,
     middlewares,
+    withinPortal,
+    portalProps,
+    floatingStrategy,
     ...others
   } = props;
+
+  const modalFloatingPortal = useModalFloatingPortal();
+  const shouldPortalIntoModal =
+    modalFloatingPortal !== null && withinPortal !== false && portalProps?.target == null;
+  const modalPortalTarget = shouldPortalIntoModal ? modalFloatingPortal.target : null;
+  const resolvedWithinPortal = modalPortalTarget
+    ? true
+    : shouldPortalIntoModal
+      ? false
+      : withinPortal;
 
   const resolvedMiddlewares: PopoverMiddlewares | undefined =
     floatingHeight === 'viewport'
@@ -220,6 +234,11 @@ export const Combobox = (_props: ComboboxProps) => {
       <Popover
         opened={store.dropdownOpened}
         {...others}
+        withinPortal={resolvedWithinPortal}
+        portalProps={
+          modalPortalTarget ? { ...portalProps, target: modalPortalTarget } : portalProps
+        }
+        floatingStrategy={modalPortalTarget ? (floatingStrategy ?? 'fixed') : floatingStrategy}
         middlewares={resolvedMiddlewares}
         onChange={(_opened) => !_opened && onDropdownClose()}
         withRoles={false}
