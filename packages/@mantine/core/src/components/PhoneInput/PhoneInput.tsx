@@ -462,6 +462,7 @@ export const PhoneInput = factory<PhoneInputFactory>((_props) => {
       !!selectedCountry &&
       !hasInternationalPrefix &&
       (nationalPrefixBehavior === 'strip' ||
+        (international && typedRaw.length <= getMaskDigitCount(selectedCountry.format)) ||
         (nationalPrefixBehavior === 'auto' &&
           international &&
           !!selectedCountry.nationalPrefix &&
