@@ -199,6 +199,22 @@ describe('@mantine/dates/DateTimePicker', () => {
     expect(spy).toHaveBeenLastCalledWith('2022-04-03 00:00:00');
   });
 
+  // https://github.com/mantinedev/mantine/issues/9469
+  it('ignores pasted text that is not a time in the time input', async () => {
+    const spy = jest.fn();
+    const { container } = render(
+      <DateTimePicker {...defaultProps} defaultValue="2022-04-11 10:00:00" onChange={spy} />
+    );
+
+    await clickInput(container);
+    await userEvent.click(getTimePicker());
+    await userEvent.paste('9:30 AM');
+
+    expect(spy).not.toHaveBeenCalled();
+    expect(getTimePicker()).toHaveValue('10');
+    expectValue(container, '11/04/2022 10:00');
+  });
+
   it('displays correct value when withSeconds is set', () => {
     const { container } = render(
       <DateTimePicker {...defaultProps} value="2022-04-11T14:45:54" withSeconds />

@@ -26,6 +26,33 @@ describe('@mantine/dates/get-time-string', () => {
     ).toEqual({ valid: false, value: '' });
   });
 
+  it('returns valid: false if hours, minutes or seconds are not whole non-negative numbers', () => {
+    const base = {
+      hours: 10,
+      minutes: 10,
+      seconds: 10,
+      withSeconds: true,
+      amPm: 'am',
+      amPmLabels: { am: 'am', pm: 'pm' },
+    };
+    for (const format of ['24h', '12h'] as const) {
+      for (const invalid of [NaN, -1, Infinity, 9.5]) {
+        expect(getTimeString({ ...base, format, hours: invalid })).toEqual({
+          valid: false,
+          value: '',
+        });
+        expect(getTimeString({ ...base, format, minutes: invalid })).toEqual({
+          valid: false,
+          value: '',
+        });
+        expect(getTimeString({ ...base, format, seconds: invalid })).toEqual({
+          valid: false,
+          value: '',
+        });
+      }
+    }
+  });
+
   it('returns valid: false if seconds are null and withSeconds is true', () => {
     expect(
       getTimeString({
