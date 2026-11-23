@@ -3,6 +3,7 @@ import path from 'path';
 import fs from 'fs-extra';
 import { getPath } from '../utils/get-path';
 import { createLogger } from '../utils/signale';
+import { isSponsorEligible } from './is-sponsor-eligible';
 
 const logger = createLogger('fetch-sponsors');
 
@@ -16,8 +17,6 @@ interface Sponsor {
 
 const docgenPath = getPath('apps/mantine.dev/src/.docgen');
 
-const SPONSOR_TIER_AMOUNT = 200;
-
 async function fetchSponsors() {
   const response = await fetch('https://opencollective.com/mantinedev/members/all.json');
 
@@ -26,15 +25,7 @@ async function fetchSponsors() {
   const thirtyOneDaysAgo = dayjs().subtract(31, 'day');
 
   const sponsors = data
-    .filter((item: any) => {
-      const isActiveSponsor =
-        item.role === 'BACKER' &&
-        (item.tier === 'sponsor' || item.lastTransactionAmount >= SPONSOR_TIER_AMOUNT);
-      const hasRecentTransaction =
-        item.lastTransactionAt && dayjs(item.lastTransactionAt).isAfter(thirtyOneDaysAgo);
-      const hasPositiveTransaction = item.lastTransactionAmount > 0;
-      return isActiveSponsor && hasRecentTransaction && hasPositiveTransaction;
-    })
+    .filter((item: any) => isSponsorEligible(item, thirtyOneDaysAgo))
     .reduce((unique: Sponsor[], item: any) => {
       const sponsor: Sponsor = {
         name: item.name,

@@ -116,4 +116,104 @@ describe('@mantine/hooks/use-timeout', () => {
     expect(setTimeout).toHaveBeenCalled();
     expect(callback).toHaveBeenCalledWith(MOCK_CALLBACK_VALUE);
   });
+
+  it('can schedule the next timeout from its callback', () => {
+    const calls: number[] = [];
+    const hook = renderHook(() =>
+      useTimeout((value: number) => {
+        calls.push(value);
+        if (value === 1) {
+          hook.result.current.start(2);
+        }
+      }, 10)
+    );
+
+    hook.result.current.start(1);
+    jest.advanceTimersByTime(10);
+    expect(calls).toEqual([1]);
+
+    jest.advanceTimersByTime(10);
+    expect(calls).toEqual([1, 2]);
+  });
+
+  it('can clear a timeout restarted inside its callback', () => {
+    const fn = jest.fn(() => {
+      hook.result.current.clear();
+      hook.result.current.start();
+    });
+    const hook = renderHook(() => useTimeout(fn, 10));
+
+    hook.result.current.start();
+    jest.advanceTimersByTime(10);
+    expect(fn).toHaveBeenCalledTimes(1);
+
+    hook.result.current.clear();
+    jest.advanceTimersByTime(10);
+    expect(fn).toHaveBeenCalledTimes(1);
+  });
+
+  it('can start again after its callback throws', () => {
+    const error = new Error('callback failed');
+    const fn = jest.fn().mockImplementationOnce(() => {
+      throw error;
+    });
+    const hook = renderHook(() => useTimeout(fn, 10));
+
+    hook.result.current.start();
+    expect(() => jest.advanceTimersByTime(10)).toThrow(error);
+
+    hook.result.current.start();
+    jest.advanceTimersByTime(10);
+    expect(fn).toHaveBeenCalledTimes(2);
+  });
+
+  it('does not schedule duplicate pending timeouts', () => {
+    const fn = jest.fn();
+    const hook = renderHook(() => useTimeout(fn, 10));
+
+    hook.result.current.start('first');
+    hook.result.current.start('second');
+    jest.advanceTimersByTime(20);
+
+    expect(fn).toHaveBeenCalledTimes(1);
+    expect(fn).toHaveBeenCalledWith('first');
+  });
+
+  it('keeps a started timeout pending when delay changes', () => {
+    const fn = jest.fn();
+    const hook = renderHook(({ delay }) => useTimeout(fn, delay), {
+      initialProps: { delay: 100 },
+    });
+
+    hook.result.current.start();
+    hook.rerender({ delay: 200 });
+    jest.advanceTimersByTime(100);
+
+    expect(fn).toHaveBeenCalledTimes(1);
+  });
+
+  it('restarts the timeout with the new delay when delay changes and autoInvoke is true', () => {
+    const fn = jest.fn();
+    const hook = renderHook(({ delay }) => useTimeout(fn, delay, { autoInvoke: true }), {
+      initialProps: { delay: 100 },
+    });
+
+    hook.rerender({ delay: 200 });
+    jest.advanceTimersByTime(100);
+    expect(fn).not.toHaveBeenCalled();
+
+    jest.advanceTimersByTime(100);
+    expect(fn).toHaveBeenCalledTimes(1);
+  });
+
+  it('clears a pending timeout on unmount', () => {
+    const fn = jest.fn();
+    const hook = renderHook(() => useTimeout(fn, 100));
+
+    hook.result.current.start();
+    hook.unmount();
+    jest.advanceTimersByTime(100);
+
+    expect(fn).not.toHaveBeenCalled();
+  });
 });

@@ -132,6 +132,7 @@ const FILES_PATHS = getPaths([
   // ColorPicker
   'packages/@mantine/core/src/components/ColorPicker/AlphaSlider/AlphaSlider.tsx',
   'packages/@mantine/core/src/components/ColorPicker/HueSlider/HueSlider.tsx',
+  'packages/@mantine/core/src/components/Mentions/Mention.tsx',
 
   // Spotlight
   'packages/@mantine/spotlight/src/Spotlight.tsx',
@@ -152,9 +153,15 @@ const FILES_PATHS = getPaths([
   'packages/@mantine/code-highlight/src/CodeHighlightTabs/CodeHighlightTabs.tsx',
   'packages/@mantine/code-highlight/src/CodeHighlight/InlineCodeHighlight.tsx',
   'packages/@mantine/code-highlight/src/JsonViewer/JsonViewer.tsx',
+  'packages/@mantine/code-highlight/src/Diff/Diff.tsx',
 
   // Nprogress
   'packages/@mantine/nprogress/src/NavigationProgress.tsx',
+
+  // Emoji
+  'packages/@mantine/emoji/src/components/EmojiPicker/EmojiPicker.tsx',
+  'packages/@mantine/emoji/src/components/EmojiPickerInput/EmojiPickerInput.tsx',
+  'packages/@mantine/emoji/src/components/EmojiPickerPopover/EmojiPickerPopover.tsx',
 
   // Modals
   'packages/@mantine/modals/src/ModalsProvider.tsx',

@@ -30,6 +30,7 @@ import {
   useResolvedStylesApi,
   useStyles,
 } from '@mantine/core';
+import { ChartAnnouncer } from '../ChartAnnouncer/ChartAnnouncer';
 import { ChartLegend, ChartLegendStylesNames } from '../ChartLegend';
 import { ChartTooltip, ChartTooltipStylesNames } from '../ChartTooltip';
 import { BaseChartStylesNames, GridChartBaseProps } from '../types';
@@ -316,6 +317,17 @@ export const ScatterChart = factory<ScatterChartFactory>((_props) => {
           accessibilityLayer={accessibilityLayer}
           {...scatterChartProps}
         >
+          {(scatterChartProps?.accessibilityLayer ?? accessibilityLayer) && (
+            <ChartAnnouncer
+              labelKey="name"
+              series={(['x', 'y'] as const).map((axis) => ({
+                name: dataKey[axis],
+                label: labels?.[axis],
+                unit: unit?.[axis],
+                valueFormatter: getFormatter(axis),
+              }))}
+            />
+          )}
           {referenceAreasItems}
           <CartesianGrid
             strokeDasharray={strokeDasharray as string}

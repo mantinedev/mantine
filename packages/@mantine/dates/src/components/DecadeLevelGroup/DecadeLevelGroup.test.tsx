@@ -1,4 +1,5 @@
-import { render, screen, tests } from '@mantine-tests/core';
+import { DirectionProvider } from '@mantine/core';
+import { render, screen, tests, userEvent } from '@mantine-tests/core';
 import { datesTests } from '@mantine-tests/dates';
 import {
   DecadeLevelGroup,
@@ -91,5 +92,20 @@ describe('@mantine/dates/DecadeLevelGroup', () => {
     expect(container.querySelector('table button')).toHaveClass(
       'mantine-Calendar-yearsListControl'
     );
+  });
+
+  it('mirrors ArrowLeft and ArrowRight in rtl direction', async () => {
+    render(
+      <DirectionProvider initialDirection="rtl" detectDirection={false}>
+        <DecadeLevelGroup {...defaultProps} />
+      </DirectionProvider>
+    );
+    screen.getByText('2021').focus();
+
+    await userEvent.keyboard('{ArrowRight}');
+    expect(screen.getByText('2020')).toHaveFocus();
+
+    await userEvent.keyboard('{ArrowLeft}{ArrowLeft}');
+    expect(screen.getByText('2022')).toHaveFocus();
   });
 });

@@ -34,6 +34,8 @@ export const ResourcesScheduleStylesApi: StylesApiData<ResourcesScheduleFactory>
     resourcesWeekViewHeaderContent: 'ResourcesWeekView header content container',
     resourcesWeekViewDayLabelsRow: 'ResourcesWeekView day labels row',
     resourcesWeekViewDayLabel: 'ResourcesWeekView day label',
+    resourcesWeekViewDayLabelWeekday: 'ResourcesWeekView day label text in days layout',
+    resourcesWeekViewCell: 'ResourcesWeekView day cell in days layout',
     resourcesWeekViewTimeLabelsRow: 'ResourcesWeekView time labels row',
     resourcesWeekViewScrollArea: 'ResourcesWeekView scroll area',
     resourcesWeekViewCorner: 'ResourcesWeekView top-left corner',

@@ -278,4 +278,12 @@ describe('@mantine/core/PasswordInput', () => {
 
     expect(screen.getByLabelText('Password')).toHaveAttribute('aria-describedby', 'field-help');
   });
+
+  it('displays loader with loaderProps when loading prop is set', () => {
+    const { container } = render(
+      <PasswordInput loading loaderProps={{ className: 'test-loader' }} />
+    );
+    expect(container.querySelector('.test-loader')).toBeInTheDocument();
+    expect(container.querySelector('input')).not.toHaveAttribute('loading');
+  });
 });

@@ -1,5 +1,5 @@
 import chalk from 'chalk';
-import simpleGit from 'simple-git';
+import { simpleGit } from 'simple-git';
 import { getNextVersion } from 'version-next';
 import { hideBin } from 'yargs/helpers';
 import yargs from 'yargs/yargs';

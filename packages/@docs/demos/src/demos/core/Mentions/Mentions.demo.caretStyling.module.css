@@ -1,0 +1,10 @@
+.highlight {
+  background-color: var(--mantine-color-blue-light);
+  color: var(--mantine-color-blue-light-color);
+
+  &[data-mention-selection='inside'],
+  &[data-mention-selection='full'] {
+    background-color: var(--mantine-color-blue-filled);
+    color: var(--mantine-color-white);
+  }
+}

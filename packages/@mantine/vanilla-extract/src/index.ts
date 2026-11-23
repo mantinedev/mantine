@@ -1,2 +1,2 @@
-export type { MantineVars } from './types';
-export { themeToVars } from './theme-to-vars';
+export type { MantineVars } from './types.js';
+export { themeToVars } from './theme-to-vars.js';

@@ -32,6 +32,7 @@ describe('@mantine/dates/YearPicker', () => {
     component: YearPicker,
     props: {},
     listSelector: '.mantine-YearPicker-yearsList',
+    withPeriodChange: true,
   });
 
   it('can be uncontrolled (type="default")', async () => {

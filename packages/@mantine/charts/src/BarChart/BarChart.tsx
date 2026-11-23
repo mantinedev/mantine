@@ -33,6 +33,7 @@ import {
   useResolvedStylesApi,
   useStyles,
 } from '@mantine/core';
+import { ChartAnnouncer } from '../ChartAnnouncer/ChartAnnouncer';
 import { ChartBrush } from '../ChartBrush';
 import { ChartLegend, ChartLegendStylesNames } from '../ChartLegend';
 import { ChartTooltip, ChartTooltipStylesNames } from '../ChartTooltip';
@@ -148,22 +149,23 @@ function calculateCumulativeTotal(waterfallData: Record<string, any>[], dataKey:
   let start: number = 0;
   let end: number = 0;
   return waterfallData.map((item) => {
-    if (item.standalone) {
-      for (const prop in item) {
-        if (typeof item[prop] === 'number' && prop !== dataKey) {
-          item[prop] = [0, item[prop]];
+    const result = { ...item };
+    if (result.standalone) {
+      for (const prop in result) {
+        if (typeof result[prop] === 'number' && prop !== dataKey) {
+          result[prop] = [0, result[prop]];
         }
       }
     } else {
-      for (const prop in item) {
-        if (typeof item[prop] === 'number' && prop !== dataKey) {
-          end += item[prop];
-          item[prop] = [start, end];
+      for (const prop in result) {
+        if (typeof result[prop] === 'number' && prop !== dataKey) {
+          end += result[prop];
+          result[prop] = [start, end];
           start = end;
         }
       }
     }
-    return item;
+    return result;
   });
 }
 
@@ -425,6 +427,9 @@ export const BarChart = factory<BarChartFactory>((_props) => {
           accessibilityLayer={accessibilityLayer}
           {...barChartProps}
         >
+          {(barChartProps?.accessibilityLayer ?? accessibilityLayer) && (
+            <ChartAnnouncer series={series} unit={unit} valueFormatter={valueFormatter} />
+          )}
           {referenceAreasItems}
           {withLegend && (
             <Legend

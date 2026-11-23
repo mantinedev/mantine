@@ -1,6 +1,7 @@
 import dayjs from 'dayjs';
 import 'dayjs/locale/ru';
 import React from 'react';
+import { DirectionProvider } from '@mantine/core';
 import { DatesProvider } from '@mantine/dates';
 import { render, screen, tests, userEvent } from '@mantine-tests/core';
 import { ScheduleEventData } from '../../types';
@@ -361,6 +362,15 @@ describe('@mantine/schedule/MobileMonthView', () => {
     expect(screen.getByText('14:00 – 15:00')).toBeInTheDocument();
   });
 
+  it('supports eventTimeFormat prop', () => {
+    render(
+      <MobileMonthView {...defaultProps} selectedDate="2025-11-05" eventTimeFormat="h:mm A" />
+    );
+
+    expect(screen.getByText('10:00 AM – 11:00 AM')).toBeInTheDocument();
+    expect(screen.getByText('2:00 PM – 3:00 PM')).toBeInTheDocument();
+  });
+
   it('shows "All day" for all-day events', () => {
     render(<MobileMonthView {...defaultProps} selectedDate="2025-11-15" />);
 
@@ -469,6 +479,46 @@ describe('@mantine/schedule/MobileMonthView', () => {
       '.mantine-MobileMonthView-mobileMonthViewDay[data-hidden]'
     );
     expect(hiddenDays).toHaveLength(0);
+  });
+
+  it('shows event indicators on visible outside days', () => {
+    const events: ScheduleEventData[] = [
+      {
+        id: 'outside',
+        title: 'Outside event',
+        start: '2025-11-01 10:00:00',
+        end: '2025-11-01 11:00:00',
+        color: 'red',
+        payload: {},
+      },
+    ];
+
+    render(<MobileMonthView {...defaultProps} date="2025-10-01" events={events} withOutsideDays />);
+
+    const outsideDay = screen.getByRole('button', { name: 'November 1, 2025' });
+    expect(
+      outsideDay.querySelectorAll('.mantine-MobileMonthView-mobileMonthViewDayIndicator')
+    ).toHaveLength(1);
+  });
+
+  it('expands recurring events on visible outside days', () => {
+    const events: ScheduleEventData[] = [
+      {
+        id: 'recurring-outside',
+        title: 'Recurring outside event',
+        start: '2025-10-30 10:00:00',
+        end: '2025-10-30 11:00:00',
+        color: 'blue',
+        recurrence: { rrule: 'FREQ=DAILY;COUNT=3' },
+      },
+    ];
+
+    render(<MobileMonthView {...defaultProps} events={events} withOutsideDays />);
+
+    const outsideDay = screen.getByRole('button', { name: 'October 31, 2025' });
+    expect(
+      outsideDay.querySelectorAll('.mantine-MobileMonthView-mobileMonthViewDayIndicator')
+    ).toHaveLength(1);
   });
 
   it('supports static mode', () => {
@@ -785,6 +835,21 @@ describe('@mantine/schedule/MobileMonthView', () => {
         'tabIndex',
         '-1'
       );
+    });
+
+    it('mirrors ArrowLeft and ArrowRight in rtl direction', async () => {
+      render(
+        <DirectionProvider initialDirection="rtl" detectDirection={false}>
+          <MobileMonthView {...defaultProps} />
+        </DirectionProvider>
+      );
+
+      screen.getByRole('button', { name: 'November 1, 2025' }).focus();
+      await userEvent.keyboard('{ArrowLeft}');
+      expect(screen.getByRole('button', { name: 'November 2, 2025' })).toHaveFocus();
+
+      await userEvent.keyboard('{ArrowRight}');
+      expect(screen.getByRole('button', { name: 'November 1, 2025' })).toHaveFocus();
     });
 
     it('supports arrow keys to navigate between days', async () => {

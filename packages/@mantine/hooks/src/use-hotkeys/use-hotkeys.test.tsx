@@ -50,6 +50,13 @@ describe('@mantine/hooks/use-hotkey', () => {
     expect(handler).toHaveBeenCalled();
   });
 
+  it('correctly handles physical key assignments like KeyA', () => {
+    const handler = jest.fn();
+    renderHook(() => useHotkeys([['KeyA', handler, { usePhysicalKeys: true }]]));
+    dispatchEvent({ code: 'KeyA' });
+    expect(handler).toHaveBeenCalled();
+  });
+
   it('correctly ignores unclear numerical assignments when usePhyiscalKeys is true', () => {
     const handler = jest.fn();
     renderHook(() => useHotkeys([['1', handler, { usePhysicalKeys: true }]], [], true));

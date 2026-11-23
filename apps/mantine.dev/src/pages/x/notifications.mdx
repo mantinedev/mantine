@@ -97,6 +97,7 @@ import {
 - `onOpen` – called when the notification is mounted
 - `autoClose` – defines timeout in ms after which the notification will be automatically closed; use `false` to disable auto close
 - `withAutoCloseProgress` – determines whether a progress line that fills up until the notification auto closes is displayed at the bottom of the notification; overrides `withAutoCloseProgress` prop of the `Notifications` component
+- `autoCloseProgressPosition` – position of the auto close progress line, `top` or `bottom`; overrides `autoCloseProgressPosition` prop of the `Notifications` component
 - `priority` – display priority used when the number of active notifications exceeds `limit`; higher numbers are shown first, defaults to `0`
 - `message` – required notification body
 - `color, icon, title, radius, className, style, loading` – props passed down to the [Notification](/core/notification/) component
@@ -353,6 +354,15 @@ Note that:
 - Use `progress` [Styles API](/styles/styles-api/) selector of the `Notifications` component to customize the line, for example, to change its height or color
 
 <Demo data={NotificationsDemos.autoCloseProgress} />
+
+## Auto close progress position
+
+By default, the progress line is displayed at the bottom of the notification. Set
+`autoCloseProgressPosition="top"` prop on the `Notifications` component to display it at the top
+of every notification. The same option in `notifications.show` and `notifications.update`
+functions overrides the `Notifications` prop for an individual notification:
+
+<Demo data={NotificationsDemos.autoCloseProgressPosition} />
 
 ## Pause auto close on hover
 

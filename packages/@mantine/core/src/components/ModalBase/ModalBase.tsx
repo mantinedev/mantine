@@ -161,7 +161,7 @@ export function ModalBase({
             id={_id}
             __vars={{
               ...__vars,
-              '--mb-z-index': (zIndex || getDefaultZIndex('modal')).toString(),
+              '--mb-z-index': (zIndex ?? getDefaultZIndex('modal')).toString(),
               '--mb-shadow': getShadow(shadow),
               '--mb-padding': getSpacing(padding),
             }}

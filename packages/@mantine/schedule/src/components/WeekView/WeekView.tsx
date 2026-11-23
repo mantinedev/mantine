@@ -340,6 +340,9 @@ export interface WeekViewProps
 
   /** If set, displays an Agenda button in the header that opens an agenda list view @default false */
   withAgenda?: boolean;
+
+  /** Format of event start and end time in the agenda displayed with `withAgenda` @default 'HH:mm' */
+  eventTimeFormat?: DateLabelFormat;
 }
 
 export type WeekViewFactory = Factory<{
@@ -466,6 +469,7 @@ export const WeekView = factory<WeekViewFactory>((_props) => {
     recurrenceExpansionLimit,
     getTimeSlotProps,
     withAgenda,
+    eventTimeFormat,
     ...others
   } = props;
 
@@ -901,7 +905,6 @@ export const WeekView = factory<WeekViewFactory>((_props) => {
       ref={(node) => {
         weekdaysRef.current[dayIndex] = node!;
       }}
-      aria-label={`${getLabel('weekday', labels)} ${dayjs(day).format('YYYY-MM-DD')}`}
       mod={{
         today: dayjs(day).isSame(now, 'day') && !!highlightToday,
         weekend: ctx.getWeekendDays(weekendDays).includes(dayjs(day).day() as DayOfWeek),
@@ -1265,6 +1268,7 @@ export const WeekView = factory<WeekViewFactory>((_props) => {
           mode={mode}
           onEventClick={onEventClick}
           recurrenceExpansionLimit={recurrenceExpansionLimit}
+          eventTimeFormat={eventTimeFormat}
           {...stylesApiProps}
         />
       )}

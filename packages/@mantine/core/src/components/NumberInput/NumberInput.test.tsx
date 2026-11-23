@@ -388,6 +388,30 @@ describe('@mantine/core/NumberInput', () => {
     expectValue('5');
   });
 
+  it('does not step when onKeyDown prevents the default action', async () => {
+    const spy = jest.fn();
+    render(
+      <NumberInput
+        defaultValue={5}
+        onChange={spy}
+        onKeyDown={(event) => {
+          if (event.key === 'ArrowUp') {
+            event.preventDefault();
+          }
+        }}
+      />
+    );
+
+    focusInput();
+    await enterText('{arrowup}');
+    expect(spy).not.toHaveBeenCalled();
+    expectValue('5');
+
+    await enterText('{arrowdown}');
+    expect(spy).toHaveBeenLastCalledWith(4);
+    expectValue('4');
+  });
+
   it('respects max when using arrow up key', async () => {
     const spy = jest.fn();
     render(<NumberInput defaultValue={9} max={10} onChange={spy} />);
@@ -806,5 +830,19 @@ describe('@mantine/core/NumberInput', () => {
     await enterText('100.');
     blurInput();
     expectValue('50.');
+  });
+
+  it('supports inputMode prop', () => {
+    const { rerender } = render(<NumberInput />);
+    expect(getInput()).toHaveAttribute('inputmode', 'decimal');
+
+    rerender(<NumberInput inputMode="text" />);
+    expect(getInput()).toHaveAttribute('inputmode', 'text');
+
+    rerender(<NumberInput defaultValue={BigInt(0)} key="bigint" />);
+    expect(getInput()).toHaveAttribute('inputmode', 'numeric');
+
+    rerender(<NumberInput defaultValue={BigInt(0)} inputMode="text" key="bigint" />);
+    expect(getInput()).toHaveAttribute('inputmode', 'text');
   });
 });

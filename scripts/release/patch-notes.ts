@@ -16,8 +16,28 @@ export function formatGithubNotes(messages: string[]): string {
 }
 
 export function formatDiscordMessage(githubNotes: string, version: string): string {
-  const body = githubNotes.replace(/\(#\d+(?:,\s*#\d+)*\)/g, '').trim();
-  return `Patch ${version} is out:\n\n${body}\n\nView on GitHub – https://github.com/mantinedev/mantine/releases/tag/${version}`;
+  const title = `Patch ${version} is out:`;
+  const link = `View on GitHub – https://github.com/mantinedev/mantine/releases/tag/${version}`;
+  const messages = githubNotes
+    .replace(/\(#\d+(?:,\s*#\d+)*\)/g, '')
+    .trim()
+    .split('\n');
+  const maxMessagesLength = 2000 - title.length - link.length - 4;
+  const included: string[] = [];
+  let length = 0;
+
+  for (const message of messages) {
+    const nextLength = length + message.length + (included.length ? 1 : 0);
+
+    if (nextLength > maxMessagesLength) {
+      break;
+    }
+
+    included.push(message);
+    length = nextLength;
+  }
+
+  return [title, ...(included.length ? [included.join('\n')] : []), link].join('\n\n');
 }
 
 export function buildPatchNotes(

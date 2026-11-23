@@ -11,6 +11,7 @@ import {
   Box,
   BoxProps,
   createVarsResolver,
+  DataAttributes,
   ElementProps,
   factory,
   Factory,
@@ -58,6 +59,15 @@ export type SplitterCssVariables = {
   root: '--splitter-line-size' | '--splitter-handle-color';
 };
 
+export interface SplitterHandleProps
+  extends BoxProps, ElementProps<'div', 'ref' | 'children'>, DataAttributes {
+  /** Determines whether the thumb with grip icon is displayed, overrides the root `withHandle` prop */
+  withHandle?: boolean;
+
+  /** Disables dragging, keyboard resizing and double-click reset for this handle */
+  disabled?: boolean;
+}
+
 export interface SplitterProps
   extends BoxProps, StylesApiProps<SplitterFactory>, ElementProps<'div'> {
   /** Layout direction @default 'horizontal' */
@@ -98,6 +108,9 @@ export interface SplitterProps
 
   /** Determines whether the thumb with grip icon is displayed on the handle @default true */
   withHandle?: boolean;
+
+  /** Returns props for the handle between panes at `index` and `index + 1` */
+  getHandleProps?: (index: number) => SplitterHandleProps;
 
   /** Restore the two panes adjacent to a handle to their default ratio (preserving their combined size) when the handle is double-clicked @default true */
   resetOnDoubleClick?: boolean;
@@ -149,6 +162,7 @@ export const Splitter = factory<SplitterFactory>((_props) => {
     handleColor,
     handleIcon,
     withHandle,
+    getHandleProps,
     resetOnDoubleClick,
     splitterRef,
     children,
@@ -219,11 +233,37 @@ export const Splitter = factory<SplitterFactory>((_props) => {
 
   paneChildren.forEach((child, index) => {
     if (index > 0) {
-      const handleProps = splitter.getHandleProps({ index: index - 1 });
+      const {
+        className: handleClassName,
+        style: handleStyle,
+        mod: handleMod,
+        withHandle: handleWithHandle = withHandle,
+        disabled,
+        onKeyDown,
+        onDoubleClick,
+        tabIndex,
+        ...handleOthers
+      } = getHandleProps?.(index - 1) || {};
+      const handleProps = splitter.getHandleProps({ index: index - 1, disabled });
       const isActive = splitter.activeHandle === index - 1;
       items.push(
-        <Box {...getStyles('handle')} key={`handle-${index - 1}`} {...handleProps}>
-          {withHandle && (
+        <Box
+          {...getStyles('handle', { className: handleClassName, style: handleStyle })}
+          key={`handle-${index - 1}`}
+          mod={handleMod}
+          {...handleOthers}
+          {...handleProps}
+          tabIndex={disabled ? -1 : (tabIndex ?? handleProps.tabIndex)}
+          onKeyDown={(event) => {
+            onKeyDown?.(event);
+            handleProps.onKeyDown(event);
+          }}
+          onDoubleClick={(event) => {
+            onDoubleClick?.(event);
+            handleProps.onDoubleClick(event);
+          }}
+        >
+          {handleWithHandle && (
             <div
               {...getStyles('thumb')}
               data-orientation={orientation}
@@ -238,7 +278,7 @@ export const Splitter = factory<SplitterFactory>((_props) => {
 
     items.push(
       cloneElement(child, {
-        key: `pane-${index}`,
+        key: child.key ?? `pane-${index}`,
         __index: index,
       })
     );

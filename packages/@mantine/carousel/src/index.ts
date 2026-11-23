@@ -1,10 +1,10 @@
+import type { CarouselContextValue } from './Carousel.context.js';
 import type {
   CarouselCssVariables,
   CarouselFactory,
   CarouselProps,
   CarouselStylesNames,
-} from './Carousel';
-import type { CarouselContextValue } from './Carousel.context';
+} from './Carousel.js';
 
 export { Carousel } from './Carousel.js';
 export { useCarouselContext } from './Carousel.context.js';

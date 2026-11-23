@@ -1,3 +1,5 @@
+import { StrictMode } from 'react';
+import { act } from '@testing-library/react';
 import { render, tests } from '@mantine-tests/core';
 import { Portal } from './Portal';
 
@@ -85,4 +87,173 @@ describe('@mantine/core/Portal', () => {
       document.querySelectorAll('[data-portal]:not([data-mantine-shared-portal-node])')
     ).toHaveLength(2);
   });
+
+  it.each([true, false])(
+    'waits for the body before mounting children (reuseTargetNode=%s)',
+    async (reuseTargetNode) => {
+      const body = document.body;
+      const childRender = jest.fn();
+      const ref = jest.fn();
+      function Child() {
+        childRender();
+        return <span>deferred-content</span>;
+      }
+
+      const { rerender, unmount } = render(null);
+      body.remove();
+
+      try {
+        rerender(
+          <StrictMode>
+            <Portal reuseTargetNode={reuseTargetNode} ref={ref}>
+              <Child />
+            </Portal>
+          </StrictMode>
+        );
+        expect(childRender).not.toHaveBeenCalled();
+        expect(ref).not.toHaveBeenCalled();
+
+        await act(async () => {
+          document.documentElement.append(body);
+        });
+
+        expect(childRender).toHaveBeenCalled();
+        expect(ref).toHaveBeenCalledTimes(1);
+        expect(ref.mock.calls[0][0].textContent).toContain('deferred-content');
+        expect(body.contains(ref.mock.calls[0][0])).toBe(true);
+      } finally {
+        document.documentElement.append(body);
+        unmount();
+      }
+    }
+  );
+
+  it('uses one shared container when multiple waiting portals recover', async () => {
+    removeSharedPortalNodes();
+    const body = document.body;
+    const { rerender, unmount } = render(null);
+    body.remove();
+
+    try {
+      rerender(
+        <>
+          <Portal>first-deferred</Portal>
+          <Portal>second-deferred</Portal>
+        </>
+      );
+      await act(async () => {
+        document.documentElement.append(body);
+      });
+
+      const nodes = document.querySelectorAll('[data-mantine-shared-portal-node]');
+      expect(nodes).toHaveLength(1);
+      expect(nodes[0].textContent).toBe('first-deferredsecond-deferred');
+    } finally {
+      document.documentElement.append(body);
+      unmount();
+    }
+  });
+
+  it('cancels pending initialization when unmounted', async () => {
+    removeSharedPortalNodes();
+    const body = document.body;
+    const ref = jest.fn();
+    const { rerender, unmount } = render(null);
+    body.remove();
+
+    try {
+      rerender(<Portal ref={ref}>cancelled-content</Portal>);
+      unmount();
+      await act(async () => {
+        document.documentElement.append(body);
+      });
+
+      expect(ref).not.toHaveBeenCalled();
+      expect(document.querySelector('[data-mantine-shared-portal-node]')).toBeNull();
+    } finally {
+      document.documentElement.append(body);
+      unmount();
+    }
+  });
+
+  it.each(['element', 'selector'])(
+    'renders into an explicit %s target without a body',
+    (targetType) => {
+      const body = document.body;
+      const target = document.createElement('div');
+      target.id = 'explicit-portal-target';
+      document.documentElement.append(target);
+      const { rerender, unmount } = render(null);
+      body.remove();
+
+      try {
+        rerender(
+          <Portal target={targetType === 'element' ? target : '#explicit-portal-target'}>
+            explicit-content
+          </Portal>
+        );
+        expect(target.textContent).toBe('explicit-content');
+        unmount();
+        expect(target.isConnected).toBe(true);
+      } finally {
+        document.documentElement.append(body);
+        unmount();
+        target.remove();
+      }
+    }
+  );
+
+  it('cancels waiting when switched to an explicit target', async () => {
+    const body = document.body;
+    const target = document.createElement('div');
+    const ref = jest.fn();
+    const { rerender, unmount } = render(null);
+    body.remove();
+
+    try {
+      rerender(<Portal ref={ref}>waiting-content</Portal>);
+      rerender(
+        <Portal ref={ref} target={target}>
+          explicit-content
+        </Portal>
+      );
+      expect(target.textContent).toBe('explicit-content');
+      await act(async () => {
+        document.documentElement.append(body);
+      });
+      expect(ref).toHaveBeenCalledTimes(1);
+      expect(ref).toHaveBeenCalledWith(target);
+    } finally {
+      document.documentElement.append(body);
+      unmount();
+    }
+  });
+
+  it.each(['missing', 'replaced', 'reparented'])(
+    'removes its owned container when the body is %s',
+    (scenario) => {
+      const body = document.body;
+      const replacement = document.createElement('body');
+      const { unmount } = render(<Portal reuseTargetNode={false}>owned-content</Portal>);
+      const node = document.querySelector('[data-portal]:not([data-mantine-shared-portal-node])')!;
+
+      if (scenario === 'reparented') {
+        replacement.append(node);
+      } else {
+        body.remove();
+        if (scenario === 'replaced') {
+          document.documentElement.append(replacement);
+        }
+      }
+
+      try {
+        unmount();
+        expect(node.parentNode).toBeNull();
+      } finally {
+        replacement.remove();
+        document.documentElement.append(body);
+        unmount();
+      }
+    }
+  );
 });

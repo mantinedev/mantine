@@ -7,7 +7,7 @@ export { useField } from './use-field.js';
 export { schemaResolver } from './schema-resolver.js';
 export { formRootRule } from './validate/validate-values.js';
 
-export type * from './types';
-export type { UseFieldInput, UseFieldReturnType } from './use-field';
+export type * from './types.js';
+export type { UseFieldInput, UseFieldReturnType } from './use-field.js';
 export type { FormArrayElement, LooseKeys } from './paths.types.js';
 export type { FormProviderProps, UseContextForm } from './FormProvider/FormProvider.js';

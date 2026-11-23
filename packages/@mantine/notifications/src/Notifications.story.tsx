@@ -237,6 +237,65 @@ export function AutoCloseProgress() {
   );
 }
 
+const topProgressStore = createNotificationsStore();
+
+export function AutoCloseProgressTop() {
+  return (
+    <div style={{ padding: 40 }}>
+      <Notifications
+        store={topProgressStore}
+        autoClose={5000}
+        withAutoCloseProgress
+        autoCloseProgressPosition="top"
+      />
+      <Group>
+        <Button
+          onClick={() =>
+            showNotification(
+              { title: 'Top progress', message: 'Progress line at the top' },
+              topProgressStore
+            )
+          }
+        >
+          Show (top)
+        </Button>
+        <Button
+          variant="default"
+          onClick={() =>
+            showNotification(
+              {
+                title: 'Bottom progress',
+                message: 'autoCloseProgressPosition: bottom overrides the Notifications prop',
+                autoCloseProgressPosition: 'bottom',
+              },
+              topProgressStore
+            )
+          }
+        >
+          Show (bottom override)
+        </Button>
+        <Button
+          color="red"
+          onClick={() =>
+            showNotification(
+              {
+                title: 'With border',
+                message: 'Progress line at the top of a notification with border and icon',
+                icon: '✓',
+                color: 'red',
+                withBorder: true,
+              },
+              topProgressStore
+            )
+          }
+        >
+          Red with border
+        </Button>
+      </Group>
+    </div>
+  );
+}
+
 const stackedProgressStore = createNotificationsStore();
 
 export function AutoCloseProgressStacked() {

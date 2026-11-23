@@ -187,6 +187,9 @@ export function usePopover(options: UsePopoverOptions) {
     whileElementsMounted: !options.keepMounted ? autoUpdate : undefined,
   });
 
+  const placementRef = useRef(floating.placement);
+  placementRef.current = floating.placement;
+
   useEffect(() => {
     if (!options.keepMounted) {
       return undefined;
@@ -226,7 +229,8 @@ export function usePopover(options: UsePopoverOptions) {
     if (!measuredAfterShowRef.current) {
       measuredAfterShowRef.current = true;
       floating.update();
-      return;
+      const frame = requestAnimationFrame(() => setLockedPlacement(placementRef.current));
+      return () => cancelAnimationFrame(frame);
     }
 
     if (floating.isPositioned) {

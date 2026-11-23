@@ -78,6 +78,14 @@ between panes is still visible and draggable:
 
 <Demo data={SplitterDemos.withHandle} />
 
+## Per-handle props
+
+Use `getHandleProps(index)` to customize individual separators, identified by their zero-based `data-index` attribute.
+Set `disabled` to prevent dragging, keyboard resizing and double-click reset.
+Set `withHandle` to override thumb visibility for that separator:
+
+<Demo data={SplitterDemos.handleProps} />
+
 ## Imperative API
 
 Use `splitterRef` prop to access imperative splitter API:

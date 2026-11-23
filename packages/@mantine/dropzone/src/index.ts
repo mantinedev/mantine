@@ -1,19 +1,23 @@
 import type { FileRejection, FileWithPath } from 'react-dropzone';
+import {
+  Dropzone as _Dropzone,
+  type DropzoneCssVariables,
+  type DropzoneFactory,
+  type DropzoneProps,
+  type DropzoneStylesNames,
+  type DropzoneVariant,
+} from './Dropzone.js';
+import {
+  DropzoneFullScreen,
+  type DropzoneFullScreenFactory,
+  type DropzoneFullScreenProps,
+  type DropzoneFullScreenStylesNames,
+} from './DropzoneFullScreen.js';
 import type {
-  DropzoneCssVariables,
-  DropzoneFactory,
-  DropzoneProps,
-  DropzoneStylesNames,
-  DropzoneVariant,
-} from './Dropzone';
-import { Dropzone as _Dropzone } from './Dropzone.js';
-import type {
-  DropzoneFullScreenFactory,
-  DropzoneFullScreenProps,
-  DropzoneFullScreenStylesNames,
-} from './DropzoneFullScreen';
-import { DropzoneFullScreen } from './DropzoneFullScreen.js';
-import type { DropzoneAcceptProps, DropzoneIdleProps, DropzoneRejectProps } from './DropzoneStatus';
+  DropzoneAcceptProps,
+  DropzoneIdleProps,
+  DropzoneRejectProps,
+} from './DropzoneStatus.js';
 
 _Dropzone.FullScreen = DropzoneFullScreen;
 export const Dropzone = _Dropzone;

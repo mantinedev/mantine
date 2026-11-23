@@ -10,4 +10,5 @@ export { customize } from './Notifications.demo.customize';
 export { position } from './Notifications.demo.position';
 export { store } from './Notifications.demo.store';
 export { autoCloseProgress } from './Notifications.demo.autoCloseProgress';
+export { autoCloseProgressPosition } from './Notifications.demo.autoCloseProgressPosition';
 export { promise } from './Notifications.demo.promise';

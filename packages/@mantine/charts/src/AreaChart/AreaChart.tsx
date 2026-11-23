@@ -29,6 +29,7 @@ import {
   useResolvedStylesApi,
   useStyles,
 } from '@mantine/core';
+import { ChartAnnouncer } from '../ChartAnnouncer/ChartAnnouncer';
 import { ChartBrush } from '../ChartBrush';
 import { ChartLegend, ChartLegendStylesNames } from '../ChartLegend';
 import { ChartTooltip, ChartTooltipStylesNames } from '../ChartTooltip';
@@ -431,6 +432,9 @@ export const AreaChart = factory<AreaChartFactory>((_props) => {
           accessibilityLayer={accessibilityLayer}
           {...areaChartProps}
         >
+          {(areaChartProps?.accessibilityLayer ?? accessibilityLayer) && (
+            <ChartAnnouncer series={series} unit={unit} valueFormatter={valueFormatter} />
+          )}
           {referenceAreasItems}
           {withLegend && (
             <Legend

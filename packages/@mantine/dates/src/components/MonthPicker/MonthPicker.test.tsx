@@ -45,6 +45,7 @@ describe('@mantine/dates/MonthPicker', () => {
     component: MonthPicker,
     props: defaultProps,
     listSelector: '.mantine-MonthPicker-monthsList',
+    withPeriodChange: true,
   });
 
   it('can be uncontrolled (type="default")', async () => {

@@ -307,6 +307,9 @@ export interface DayViewProps
 
   /** If set, displays an Agenda button in the header that opens an agenda list view @default false */
   withAgenda?: boolean;
+
+  /** Format of event start and end time in the agenda displayed with `withAgenda` @default 'HH:mm' */
+  eventTimeFormat?: DateLabelFormat;
 }
 
 export type DayViewFactory = Factory<{
@@ -422,6 +425,7 @@ export const DayView = factory<DayViewFactory>((_props) => {
     recurrenceExpansionLimit,
     getTimeSlotProps,
     withAgenda,
+    eventTimeFormat,
     ...others
   } = props;
 
@@ -985,6 +989,7 @@ export const DayView = factory<DayViewFactory>((_props) => {
           mode={mode}
           onEventClick={onEventClick}
           recurrenceExpansionLimit={recurrenceExpansionLimit}
+          eventTimeFormat={eventTimeFormat}
           {...stylesApiProps}
         />
       )}

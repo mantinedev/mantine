@@ -1,0 +1,24 @@
+.inputEmoji {
+  line-height: 1;
+  flex-shrink: 0;
+}
+
+.inputEmojiName {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  min-width: 0;
+}
+
+.dropdown {
+  padding: 0;
+  border: none;
+  background: none;
+}
+
+.inputValue {
+  display: flex;
+  align-items: center;
+  gap: var(--mantine-spacing-xs);
+  overflow: hidden;
+}

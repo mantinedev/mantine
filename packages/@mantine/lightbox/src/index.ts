@@ -1,35 +1,38 @@
-import type { LightboxFactory, LightboxProps, LightboxStylesNames } from './Lightbox';
+import type { LightboxFactory, LightboxProps, LightboxStylesNames } from './Lightbox.js';
 import type {
   LightboxCaptionProps,
   LightboxCaptionStylesNames,
-} from './LightboxCaption/LightboxCaption';
+} from './LightboxCaption/LightboxCaption.js';
 import type {
   LightboxCloseButtonProps,
   LightboxCloseButtonStylesNames,
-} from './LightboxCloseButton/LightboxCloseButton';
+} from './LightboxCloseButton/LightboxCloseButton.js';
 import type {
   LightboxNavigationProps,
   LightboxNavigationStylesNames,
-} from './LightboxNavigation/LightboxNavigation';
-import type { LightboxProviderProps } from './LightboxProvider/LightboxProvider';
+} from './LightboxNavigation/LightboxNavigation.js';
+import type { LightboxProviderProps } from './LightboxProvider/LightboxProvider.js';
 import type {
   LightboxCssVariables,
   LightboxRootProps,
   LightboxRootStylesNames,
-} from './LightboxRoot/LightboxRoot';
-import type { LightboxSlideProps, LightboxSlideStylesNames } from './LightboxSlide/LightboxSlide';
+} from './LightboxRoot/LightboxRoot.js';
+import type {
+  LightboxSlideProps,
+  LightboxSlideStylesNames,
+} from './LightboxSlide/LightboxSlide.js';
 import type {
   LightboxSlidesProps,
   LightboxSlidesStylesNames,
-} from './LightboxSlides/LightboxSlides';
+} from './LightboxSlides/LightboxSlides.js';
 import type {
   LightboxThumbnailsProps,
   LightboxThumbnailsStylesNames,
-} from './LightboxThumbnails/LightboxThumbnails';
+} from './LightboxThumbnails/LightboxThumbnails.js';
 import type {
   LightboxToolbarProps,
   LightboxToolbarStylesNames,
-} from './LightboxToolbar/LightboxToolbar';
+} from './LightboxToolbar/LightboxToolbar.js';
 
 export {
   lightbox,

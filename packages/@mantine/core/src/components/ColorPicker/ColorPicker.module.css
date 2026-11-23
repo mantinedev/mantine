@@ -73,7 +73,7 @@
   min-width: 0 !important;
   min-height: 0 !important;
   margin: 2px;
-  cursor: pointer;
+  cursor: var(--mantine-cursor-type);
   padding-bottom: calc(var(--cp-swatch-size) - rem(4px));
   flex: 0 0 calc(var(--cp-swatch-size) - rem(4px));
 }

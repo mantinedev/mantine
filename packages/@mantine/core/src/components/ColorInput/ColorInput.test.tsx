@@ -1,4 +1,4 @@
-import { render } from '@testing-library/react';
+import { fireEvent, render } from '@testing-library/react';
 import { inputDefaultProps, inputStylesApiSelectors, tests } from '@mantine-tests/core';
 import { MantineProvider } from '../../core';
 import { __InputStylesNames } from '../Input';
@@ -35,6 +35,20 @@ describe('@mantine/core/ColorInput', () => {
     component: ColorInput,
     props: defaultProps,
     componentName: 'ColorInput',
+  });
+
+  it('restores the last valid value on blur when text is appended to an hsl color', () => {
+    const { container } = render(
+      <MantineProvider>
+        <ColorInput defaultValue="hsl(210, 50%, 40%)" format="hsl" />
+      </MantineProvider>
+    );
+
+    const input = container.querySelector('input')!;
+    fireEvent.change(input, { target: { value: 'hsl(210, 50%, 40%)abc' } });
+    fireEvent.blur(input);
+
+    expect(input).toHaveValue('hsl(210, 50%, 40%)');
   });
 
   it('passes fullWidth prop to ColorPicker', () => {

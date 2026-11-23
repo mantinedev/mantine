@@ -43,6 +43,7 @@ const GETTING_STARTED_PAGES_GROUP: MdxPagesCategory[] = [
   {
     category: 'Changelog',
     pages: [
+      MDX_DATA.Changelog980,
       MDX_DATA.Changelog970,
       MDX_DATA.Changelog960,
       MDX_DATA.Changelog950,
@@ -146,6 +147,7 @@ const HOOKS_PAGES_GROUP: MdxPagesCategory[] = sortCategoriesPages([
   {
     category: 'UI and Dom',
     pages: [
+      MDX_DATA.useActiveElement,
       MDX_DATA.useClickOutside,
       MDX_DATA.useCollapse,
       MDX_DATA.useColorScheme,
@@ -215,6 +217,7 @@ const HOOKS_PAGES_GROUP: MdxPagesCategory[] = sortCategoriesPages([
   {
     category: 'Utilities',
     pages: [
+      MDX_DATA.useBrowserLanguage,
       MDX_DATA.useClipboard,
       MDX_DATA.useDocumentTitle,
       MDX_DATA.useDocumentVisibility,
@@ -296,6 +299,7 @@ const COMPONENTS_PAGES_GROUP: MdxPagesCategory[] = sortCategoriesPages([
       MDX_DATA.FileInput,
       MDX_DATA.ColorInput,
       MDX_DATA.NumberInput,
+      MDX_DATA.PhoneInput,
       MDX_DATA.AngleSlider,
     ],
   },
@@ -309,6 +313,7 @@ const COMPONENTS_PAGES_GROUP: MdxPagesCategory[] = sortCategoriesPages([
       MDX_DATA.TagsInput,
       MDX_DATA.Select,
       MDX_DATA.MultiSelect,
+      MDX_DATA.Mentions,
       MDX_DATA.ComboboxPopover,
       MDX_DATA.TreeSelect,
       MDX_DATA.Cascader,
@@ -438,11 +443,16 @@ const EXTENSIONS_PAGES_GROUP: MdxPagesCategory[] = [
       MDX_DATA.GettingStartedDates,
       MDX_DATA.DatePicker,
       MDX_DATA.DatePickerInput,
+      MDX_DATA.WeekPicker,
+      MDX_DATA.WeekPickerInput,
       MDX_DATA.DateTimePicker,
       MDX_DATA.InlineDateTimePicker,
       MDX_DATA.DateInput,
+      MDX_DATA.MaskedDateInput,
       MDX_DATA.MonthPicker,
       MDX_DATA.MonthPickerInput,
+      MDX_DATA.QuarterPicker,
+      MDX_DATA.QuarterPickerInput,
       MDX_DATA.YearPicker,
       MDX_DATA.YearPickerInput,
       MDX_DATA.TimeInput,
@@ -505,7 +515,22 @@ const EXTENSIONS_PAGES_GROUP: MdxPagesCategory[] = [
 
   {
     category: 'Code highlight',
-    pages: [MDX_DATA.GettingStartedCodeHighlight, MDX_DATA.CodeHighlight, MDX_DATA.JsonViewer],
+    pages: [
+      MDX_DATA.GettingStartedCodeHighlight,
+      MDX_DATA.CodeHighlight,
+      MDX_DATA.JsonViewer,
+      MDX_DATA.Diff,
+    ],
+  },
+
+  {
+    category: 'Emoji',
+    pages: [
+      MDX_DATA.GettingStartedEmoji,
+      MDX_DATA.EmojiPicker,
+      MDX_DATA.EmojiPickerPopover,
+      MDX_DATA.EmojiPickerInput,
+    ],
   },
 
   {

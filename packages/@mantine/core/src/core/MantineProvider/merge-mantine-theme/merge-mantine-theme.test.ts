@@ -6,6 +6,32 @@ import {
 } from './merge-mantine-theme';
 
 describe('@mantine/core/merge-mantine-theme', () => {
+  it('merges own properties of a class instance theme override', () => {
+    class ThemeOverride {
+      primaryColor = 'red';
+    }
+
+    expect(mergeMantineTheme(DEFAULT_THEME, new ThemeOverride()).primaryColor).toBe('red');
+  });
+
+  it('preserves DOM elements when merging an inherited theme', () => {
+    const boundary = document.createElement('div');
+    const parent = mergeMantineTheme(DEFAULT_THEME, {
+      components: {
+        Combobox: { defaultProps: { middlewares: { size: { boundary: 'clippingAncestors' } } } },
+      },
+    });
+    const result = mergeMantineTheme(parent, {
+      components: { Combobox: { defaultProps: { middlewares: { size: { boundary } } } } },
+    });
+
+    expect(result.components.Combobox.defaultProps.middlewares.size.boundary).toBe(boundary);
+    expect(parent.components.Combobox.defaultProps.middlewares.size.boundary).toBe(
+      'clippingAncestors'
+    );
+    expect(DEFAULT_THEME.components.Combobox).toBeUndefined();
+  });
+
   it('throws error when theme.primaryColor is invalid', () => {
     expect(() => mergeMantineTheme({ ...DEFAULT_THEME, primaryColor: 'unknown' })).toThrow(
       INVALID_PRIMARY_COLOR_ERROR

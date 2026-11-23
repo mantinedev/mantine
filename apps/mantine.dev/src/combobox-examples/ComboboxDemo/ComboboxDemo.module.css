@@ -10,7 +10,7 @@
 
 .preview {
   background-color: light-dark(var(--mantine-color-gray-0), var(--mantine-color-dark-7));
-  height: var(--preview-size);
+  min-height: var(--preview-size);
 }
 
 .header {

@@ -64,3 +64,9 @@
     }
   }
 }
+
+@media (prefers-reduced-motion: reduce) {
+  [data-respect-reduced-motion] .indicator[data-processing]::before {
+    animation: none;
+  }
+}

@@ -30,7 +30,7 @@
   background: var(--ai-bg, var(--mantine-primary-color-filled));
   color: var(--ai-color, var(--mantine-color-white));
   border: var(--ai-bd, rem(1px) solid transparent);
-  cursor: pointer;
+  cursor: var(--mantine-cursor-type);
 
   @mixin hover {
     &:where(:not([data-loading], :disabled, [data-disabled])) {

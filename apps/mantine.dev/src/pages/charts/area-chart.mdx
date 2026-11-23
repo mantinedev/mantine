@@ -65,7 +65,7 @@ is hovered, the corresponding data series is highlighted in the chart.
 
 ## Legend position
 
-You can pass props down to the recharts [Legend](https://recharts.org/en-US/api/Legend)
+You can pass props down to the recharts [Legend](https://recharts.github.io/en-US/api/Legend)
 component with the `legendProps` prop. For example, setting `legendProps={{ position: 'bottom' }}`
 will render the legend at the bottom of the chart.
 
@@ -101,8 +101,8 @@ To display labels on data points, set `withPointLabels`:
 
 ## X and Y axis props
 
-Use `xAxisProps` and `yAxisProps` to pass props down to the recharts [XAxis](https://recharts.org/en-US/api/XAxis)
-and [YAxis](https://recharts.org/en-US/api/YAxis) components. For example, these props
+Use `xAxisProps` and `yAxisProps` to pass props down to the recharts [XAxis](https://recharts.github.io/en-US/api/XAxis)
+and [YAxis](https://recharts.github.io/en-US/api/YAxis) components. For example, these props
 can be used to change the orientation of the axis:
 
 <Demo data={AreaChartDemos.axisProps} />
@@ -129,7 +129,7 @@ your data will always be in the range of 0 to 100, you can set the domain to `[0
 ## Right Y axis
 
 To display an additional Y axis on the right side of the chart, set the `withRightYAxis` prop.
-You can pass props down to the recharts [YAxis](https://recharts.org/en-US/api/YAxis)
+You can pass props down to the recharts [YAxis](https://recharts.github.io/en-US/api/YAxis)
 component with the `rightYAxisProps` prop and assign a label to the right Y axis with
 the `rightYAxisLabel` prop. Note that you need to bind data series to the right Y axis
 by setting `yAxisId` in the `series` object.
@@ -223,7 +223,7 @@ Set the `unit` prop to render a unit label next to the y-axis ticks and tooltip 
 
 ## Custom tooltip
 
-Use `tooltipProps.content` to pass a custom tooltip renderer to the recharts [Tooltip](https://recharts.org/en-US/api/Tooltip)
+Use `tooltipProps.content` to pass a custom tooltip renderer to the recharts [Tooltip](https://recharts.github.io/en-US/api/Tooltip)
 component. Note that it is required to filter the recharts payload with the `getFilteredChartTooltipPayload`
 function to remove empty values that are used for styling purposes only.
 
@@ -257,7 +257,7 @@ Use the `fillOpacity` prop to control the fill opacity of all areas:
 
 ## Sync multiple AreaCharts
 
-You can pass props down to the recharts [AreaChart](https://recharts.org/en-US/api/AreaChart)
+You can pass props down to the recharts [AreaChart](https://recharts.github.io/en-US/api/AreaChart)
 component with the `areaChartProps` prop. For example, setting `areaChartProps={{ syncId: 'any-id' }}`
 will sync the tooltip of multiple `AreaChart` components with the same `syncId` prop.
 
@@ -313,7 +313,7 @@ and adapt to the color scheme. `withBrush` is `false` by default and is supporte
 
 ## Brush props
 
-Use the `brushProps` prop to pass props down to the underlying recharts [Brush](https://recharts.org/en-US/api/Brush)
+Use the `brushProps` prop to pass props down to the underlying recharts [Brush](https://recharts.github.io/en-US/api/Brush)
 component. For example, you can set the initially selected range with `startIndex`/`endIndex`,
 change the brush `height`, or subscribe to range changes with `onChange`:
 
@@ -323,7 +323,7 @@ change the brush `height`, or subscribe to range changes with `onChange`:
 
 For full control over the brush, render the `ChartBrush` component as a child of the chart
 instead of using the `withBrush` prop. `ChartBrush` accepts all recharts `Brush` props and
-applies Mantine theming – this is useful when you need a [custom traveller](https://recharts.org/en-US/api/Brush)
+applies Mantine theming – this is useful when you need a [custom traveller](https://recharts.github.io/en-US/api/Brush)
 or a panorama preview inside the brush:
 
 ```tsx

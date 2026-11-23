@@ -124,6 +124,34 @@ describe('@mantine/core/Modal', () => {
       display: 'none',
     });
   });
+
+  it('applies zIndex={0} to both root and overlay', () => {
+    const { container } = render(<Modal {...defaultProps} zIndex={0} />);
+    const root = container.querySelector<HTMLElement>('.mantine-Modal-root')!;
+    const overlay = container.querySelector<HTMLElement>('.mantine-Modal-overlay')!;
+
+    expect(root.style.getPropertyValue('--mb-z-index')).toBe('0');
+    expect(overlay.style.getPropertyValue('--overlay-z-index')).toBe('0');
+  });
+
+  it('does not intercept pointer events when the overlay is kept mounted after closing', () => {
+    const { container, rerender } = render(
+      <Modal {...defaultProps} keepMounted transitionProps={{ duration: 0 }} />,
+      undefined,
+      { env: 'default' }
+    );
+
+    expect(container.querySelector('.mantine-Modal-overlay')).not.toHaveStyle({
+      pointerEvents: 'none',
+    });
+
+    rerender(
+      <Modal {...defaultProps} opened={false} keepMounted transitionProps={{ duration: 0 }} />
+    );
+    expect(container.querySelector('.mantine-Modal-overlay')).toHaveStyle({
+      pointerEvents: 'none',
+    });
+  });
 });
 
 describe('@mantine/core/ModalRoot', () => {

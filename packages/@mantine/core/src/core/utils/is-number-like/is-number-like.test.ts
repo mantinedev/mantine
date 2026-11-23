@@ -23,6 +23,20 @@ describe('@mantine/core/isNumberLike', () => {
     expect(isNumberLike('-0.1')).toBe(true);
   });
 
+  it.each(['.5', '-.5', '+.5', '.5px', '-.5rem', '+.5em', '.5%', '.5cqw'])(
+    'returns true for a leading decimal in %s',
+    (value) => {
+      expect(isNumberLike(value)).toBe(true);
+    }
+  );
+
+  it.each(['.', '+.', '.px', '1.2.3rem', '.5xl'])(
+    'returns false for invalid numeric value %s',
+    (value) => {
+      expect(isNumberLike(value)).toBe(false);
+    }
+  );
+
   it('handles calc, var and values separated by space', () => {
     expect(isNumberLike('calc(10rem - 5px)')).toBe(true);
     expect(isNumberLike('var(--test-var)')).toBe(true);

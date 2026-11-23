@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react';
+import { useState } from 'react';
 import { createPortal } from 'react-dom';
 import { assignRef, useIsomorphicEffect } from '@mantine/hooks';
 import { Factory, factory, useProps } from '../../core';
@@ -94,30 +94,49 @@ export const Portal = factory<PortalFactory>((props) => {
     props
   );
 
-  const [mounted, setMounted] = useState(false);
-  const nodeRef = useRef<HTMLElement | null>(null);
+  const [node, setNode] = useState<HTMLElement | null>(null);
 
   useIsomorphicEffect(() => {
-    setMounted(true);
-    nodeRef.current = getTargetNode({ target, reuseTargetNode, ...others });
-    assignRef(ref, nodeRef.current);
+    let portalNode: HTMLElement | null = null;
+    let observer: MutationObserver | null = null;
 
-    if (!target && !reuseTargetNode && nodeRef.current) {
-      document.body.appendChild(nodeRef.current);
+    const initialize = () => {
+      if (!target && !document.body) {
+        return false;
+      }
+
+      portalNode = getTargetNode({ target, reuseTargetNode, ...others });
+
+      if (!target && !reuseTargetNode) {
+        document.body.appendChild(portalNode);
+      }
+
+      observer?.disconnect();
+      assignRef(ref, portalNode);
+      setNode(portalNode);
+      return true;
+    };
+
+    if (!initialize()) {
+      setNode(null);
+      observer = new MutationObserver(initialize);
+      observer.observe(document.documentElement, { childList: true });
     }
 
     return () => {
-      if (!target && !reuseTargetNode && nodeRef.current) {
-        document.body.removeChild(nodeRef.current);
+      observer?.disconnect();
+
+      if (!target && !reuseTargetNode) {
+        portalNode?.remove();
       }
     };
   }, [target]);
 
-  if (!mounted || !nodeRef.current) {
+  if (!node) {
     return null;
   }
 
-  return createPortal(<>{children}</>, nodeRef.current);
+  return createPortal(<>{children}</>, node);
 });
 
 Portal.displayName = '@mantine/core/Portal';

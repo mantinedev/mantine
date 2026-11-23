@@ -9,7 +9,6 @@ import {
   getFontSize,
   MantineComponentStaticProperties,
   StylesApiProps,
-  UnstyledButton,
   useProps,
   useResolvedStylesApi,
   useStyles,
@@ -25,6 +24,7 @@ import {
 import { Calendar, CalendarBaseProps, pickCalendarProps } from '../Calendar';
 import { DecadeLevelBaseSettings } from '../DecadeLevel';
 import { DecadeLevelGroupStylesNames } from '../DecadeLevelGroup';
+import { PresetsList } from '../PresetsList';
 import classes from './YearPicker.module.css';
 
 export interface YearPickerPreset<Type extends DatePickerType> {
@@ -207,21 +207,15 @@ export const YearPicker: YearPickerComponent = factory<YearPickerFactory>((_prop
     }
   };
 
-  const presetButtons = presets.map((preset, index) => (
-    <UnstyledButton
-      key={index}
-      {...getStyles('presetButton')}
-      onClick={() => handlePresetSelect(preset.value)}
-      onMouseDown={(event) => event.preventDefault()}
-      data-mantine-stop-propagation={__stopPropagation || undefined}
-    >
-      {preset.label}
-    </UnstyledButton>
-  ));
-
   return (
     <Box {...getStyles('yearPickerRoot')} size={size} {...others}>
-      <div {...getStyles('presetsList')}>{presetButtons}</div>
+      <PresetsList
+        {...getStyles('presetsList')}
+        presets={presets}
+        onPresetSelect={handlePresetSelect}
+        buttonProps={getStyles('presetButton')}
+        stopPropagation={__stopPropagation}
+      />
       {calendar}
     </Box>
   );

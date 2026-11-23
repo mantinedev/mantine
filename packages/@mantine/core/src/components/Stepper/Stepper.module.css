@@ -80,7 +80,7 @@
   cursor: default;
 
   &:where([data-allow-click]) {
-    cursor: pointer;
+    cursor: var(--mantine-cursor-type);
   }
 
   &:where([data-icon-position='left']) {

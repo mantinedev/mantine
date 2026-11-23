@@ -113,6 +113,16 @@ Handles follow the WAI-ARIA Window Splitter pattern:
 - End – grow the panel before the handle to its max
 - Enter – toggle collapse of the smaller adjacent collapsible panel
 
+## Disabled handles
+
+Pass `disabled` to `getHandleProps` to disable dragging, keyboard resizing and double-click reset for one handle:
+
+```tsx
+<div {...splitter.getHandleProps({ index: 0, disabled: true })} />
+```
+
+Set `enabled: false` in the hook options to disable all handles.
+
 ## Touch support
 
 The hook uses the Pointer Events API which handles both mouse and touch automatically.
@@ -205,7 +215,7 @@ interface UseSplitterReturnValue<T extends HTMLElement = any> {
   /** Index of handle being dragged, or -1 */
   activeHandle: number;
   /** Get props to spread on each resize handle */
-  getHandleProps: (input: { index: number }) => HandleProps;
+  getHandleProps: (input: { index: number; disabled?: boolean }) => HandleProps;
   /** Programmatically set sizes */
   setSizes: (sizes: SplitterPaneSize[]) => void;
   /** Collapse a panel */

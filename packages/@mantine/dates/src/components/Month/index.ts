@@ -1,4 +1,10 @@
-import type { MonthFactory, MonthProps, MonthSettings, MonthStylesNames } from './Month';
+import type {
+  MonthFactory,
+  MonthProps,
+  MonthSettings,
+  MonthStylesNames,
+  MonthWeekControlProps,
+} from './Month';
 
 export { getEndOfWeek } from './get-end-of-week/get-end-of-week';
 export { getStartOfWeek } from './get-start-of-week/get-start-of-week';
@@ -7,4 +13,4 @@ export { isSameMonth } from './is-same-month/is-same-month';
 
 export { Month } from './Month';
 
-export type { MonthProps, MonthSettings, MonthStylesNames, MonthFactory };
+export type { MonthProps, MonthSettings, MonthStylesNames, MonthFactory, MonthWeekControlProps };

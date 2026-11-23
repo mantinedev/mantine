@@ -17,7 +17,7 @@ import {
   useProps,
   useStyles,
 } from '../../core';
-import { Loader } from '../Loader/Loader';
+import { Loader, LoaderProps } from '../Loader/Loader';
 import { InputContext } from './Input.context';
 import {
   InputClearButton,
@@ -134,7 +134,7 @@ export interface __InputProps {
   /** Controls input `height`, horizontal `padding`, and `font-size` @default 'sm' */
   size?: MantineSize | (string & {});
 
-  /** Determines whether the input should have `cursor: pointer` style. Use when input acts as a button-like trigger (e.g., `component="button"` for Select/DatePicker). @default false */
+  /** Determines whether the input should use the theme cursor type. Use when input acts as a button-like trigger (e.g., `component="button"` for Select/DatePicker). @default false */
   pointer?: boolean;
 
   /** Determines whether the input should have red border and red text color when the `error` prop is set @default true */
@@ -163,6 +163,9 @@ export interface __InputProps {
 
   /** Position of the loading indicator @default 'right' */
   loadingPosition?: 'left' | 'right';
+
+  /** Props passed down to the `Loader` component displayed when `loading` prop is set */
+  loaderProps?: LoaderProps;
 
   /** Content section displayed at the bottom of the input, inside the border */
   __bottomSection?: React.ReactNode;
@@ -289,6 +292,7 @@ export const Input = polymorphicFactory<InputFactory>((_props) => {
     __defaultRightSection,
     loading,
     loadingPosition,
+    loaderProps,
     __bottomSection,
     __bottomSectionProps,
     rootRef,
@@ -333,6 +337,7 @@ export const Input = polymorphicFactory<InputFactory>((_props) => {
           ? 'calc(var(--input-left-section-size) / 2)'
           : 'calc(var(--input-right-section-size) / 2)'
       }
+      {...loaderProps}
     />
   ) : null;
 

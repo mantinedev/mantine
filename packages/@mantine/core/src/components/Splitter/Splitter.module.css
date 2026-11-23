@@ -33,6 +33,11 @@
   &:where([data-orientation='vertical']) {
     cursor: row-resize;
   }
+
+  &:where([data-disabled]) {
+    cursor: default;
+    touch-action: auto;
+  }
 }
 
 .thumb {

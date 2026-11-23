@@ -166,6 +166,9 @@ export interface MobileMonthViewProps
   /** Format for the events list header date @default 'dddd, MMMM D' */
   eventsHeaderFormat?: DateLabelFormat;
 
+  /** Format of event start and end time in the events list @default 'HH:mm' */
+  eventTimeFormat?: DateLabelFormat;
+
   /** Called when the year back button in the header is clicked */
   onYearClick?: () => void;
 
@@ -194,6 +197,7 @@ const defaultProps = {
   highlightToday: true,
   mode: 'default',
   eventsHeaderFormat: 'dddd, MMMM D',
+  eventTimeFormat: 'HH:mm',
 } satisfies Partial<MobileMonthViewProps>;
 
 const varsResolver = createVarsResolver<MobileMonthViewFactory>((_theme, { radius }) => ({
@@ -238,6 +242,7 @@ export const MobileMonthView = factory<MobileMonthViewFactory>((_props) => {
     mode,
     renderEvent,
     eventsHeaderFormat,
+    eventTimeFormat,
     onYearClick,
     onEventClick,
     renderHeader,
@@ -246,6 +251,7 @@ export const MobileMonthView = factory<MobileMonthViewFactory>((_props) => {
   } = props;
 
   const ctx = useDatesContext();
+  const { dir } = useDirection();
   const theme = useMantineTheme();
   const today = dayjs();
 
@@ -282,15 +288,6 @@ export const MobileMonthView = factory<MobileMonthViewFactory>((_props) => {
   );
   const columnsCount = 7 - hiddenColumns.size;
 
-  const expandedEvents = expandRecurringEvents({
-    events,
-    rangeStart: dayjs(date).startOf('month').toDate(),
-    rangeEnd: dayjs(date).endOf('month').toDate(),
-    expansionLimit: recurrenceExpansionLimit,
-  });
-
-  const groupedEvents = getMobileMonthViewEvents({ date, events: expandedEvents });
-
   const weekdays = withWeekDays
     ? getWeekdaysNames({
         locale: ctx.getLocale(locale),
@@ -321,6 +318,30 @@ export const MobileMonthView = factory<MobileMonthViewFactory>((_props) => {
       withWeekendDays,
     }),
   }));
+
+  const visibleDays = monthWeeks.flatMap(({ visibleDays }) => visibleDays);
+  const rangeStart =
+    withOutsideDays && visibleDays.length > 0
+      ? dayjs(visibleDays[0]).startOf('day')
+      : dayjs(date).startOf('month');
+  const rangeEnd =
+    withOutsideDays && visibleDays.length > 0
+      ? dayjs(visibleDays[visibleDays.length - 1]).endOf('day')
+      : dayjs(date).endOf('month');
+
+  const expandedEvents = expandRecurringEvents({
+    events,
+    rangeStart: rangeStart.toDate(),
+    rangeEnd: rangeEnd.toDate(),
+    expansionLimit: recurrenceExpansionLimit,
+  });
+
+  const groupedEvents = getMobileMonthViewEvents({
+    date,
+    events: expandedEvents,
+    rangeStart: rangeStart.toDate(),
+    rangeEnd: rangeEnd.toDate(),
+  });
 
   const firstDayPosition = (() => {
     for (let weekIndex = 0; weekIndex < monthWeeks.length; weekIndex++) {
@@ -377,6 +398,7 @@ export const MobileMonthView = factory<MobileMonthViewFactory>((_props) => {
           weekIndex,
           dayIndex,
           event,
+          dir,
         });
       };
 
@@ -454,8 +476,16 @@ export const MobileMonthView = factory<MobileMonthViewFactory>((_props) => {
     : [];
 
   const eventsList = selectedDateEvents.map((event) => {
-    const startTime = dayjs(event.start).format('HH:mm');
-    const endTime = dayjs(event.end).format('HH:mm');
+    const startTime = formatDate({
+      locale: ctx.getLocale(locale),
+      date: event.start,
+      format: eventTimeFormat,
+    });
+    const endTime = formatDate({
+      locale: ctx.getLocale(locale),
+      date: event.end,
+      format: eventTimeFormat,
+    });
     const isAllDay = isMultidayEvent(event) || isAllDayEvent({ event, date: _selectedDate! });
 
     const eventChildren = (
@@ -500,8 +530,6 @@ export const MobileMonthView = factory<MobileMonthViewFactory>((_props) => {
         format: eventsHeaderFormat,
       })
     : '';
-
-  const { dir } = useDirection();
 
   const headerLabel = formatDate({ locale: ctx.getLocale(locale), date, format: 'MMMM YYYY' });
 

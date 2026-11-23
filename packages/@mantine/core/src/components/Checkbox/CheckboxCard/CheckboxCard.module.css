@@ -4,7 +4,7 @@
   display: block;
   width: 100%;
   border-radius: var(--card-radius);
-  cursor: pointer;
+  cursor: var(--mantine-cursor-type);
 
   & :where(*) {
     cursor: inherit;

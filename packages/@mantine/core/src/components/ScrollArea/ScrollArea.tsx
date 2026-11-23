@@ -82,7 +82,7 @@ export interface ScrollAreaProps
   onScrollPositionChange?: (position: { x: number; y: number }) => void;
 
   /**
-   * Called when scrollarea is scrolled to the bottom (within 0.8px tolerance for sub-pixel rendering)
+   * Called when scrollarea is scrolled to the bottom (within 1px tolerance for sub-pixel rendering)
    */
   onBottomReached?: () => void;
 
@@ -92,7 +92,7 @@ export interface ScrollAreaProps
   /** Called when scrollarea is scrolled to the left (within 0.8px tolerance for sub-pixel rendering) */
   onLeftReached?: () => void;
 
-  /** Called when scrollarea is scrolled to the right (within 0.8px tolerance for sub-pixel rendering) */
+  /** Called when scrollarea is scrolled to the right (within 1px tolerance for sub-pixel rendering) */
   onRightReached?: () => void;
 
   /** Defines `overscroll-behavior` of the viewport */
@@ -264,8 +264,7 @@ export const ScrollArea = factory<ScrollAreaFactory>((_props) => {
             e.currentTarget;
 
           // Vertical boundaries
-          // threshold of -0.8 is required for some browsers that use sub-pixel rendering, specifically when zoomed out.
-          const isAtBottom = scrollTop - (scrollHeight - clientHeight) >= -0.8;
+          const isAtBottom = scrollTop - (scrollHeight - clientHeight) >= -1;
           const isAtTop = scrollTop === 0;
 
           if (isAtBottom && !prevAtBottomRef.current) {
@@ -279,7 +278,7 @@ export const ScrollArea = factory<ScrollAreaFactory>((_props) => {
           prevAtTopRef.current = isAtTop;
 
           // Horizontal boundaries
-          const isAtRight = scrollLeft - (scrollWidth - clientWidth) >= -0.8;
+          const isAtRight = scrollLeft - (scrollWidth - clientWidth) >= -1;
           const isAtLeft = scrollLeft === 0;
 
           if (isAtRight && !prevAtRightRef.current) {

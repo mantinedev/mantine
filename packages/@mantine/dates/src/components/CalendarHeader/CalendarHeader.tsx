@@ -227,7 +227,7 @@ export const CalendarHeader = factory<CalendarHeaderFactory>((_props) => {
     </UnstyledButton>
   );
 
-  const currentYear = new Date().getFullYear();
+  const currentYear = dayjs().year();
   const displayedYear = __date ? dayjs(__date).year() : currentYear;
   const rawMinYear =
     yearsSelectRange?.[0] ?? (__minDate ? dayjs(__minDate).year() : currentYear - 100);
@@ -251,7 +251,7 @@ export const CalendarHeader = factory<CalendarHeaderFactory>((_props) => {
 
   const nativeLevelControl =
     withNativeLevelSelect && __date && __onDateChange && __calendarLevel !== 'decade' ? (
-      <div {...getStyles('calendarHeaderLevel')} key="level" data-static data-native-level-select>
+      <div key="level" {...getStyles('calendarHeaderLevel')} data-static data-native-level-select>
         {__calendarLevel === 'month' && (
           <select
             {...getStyles('calendarHeaderSelect')}
@@ -306,6 +306,7 @@ export const CalendarHeader = factory<CalendarHeaderFactory>((_props) => {
       component={hasNextLevel ? 'button' : 'div'}
       {...getStyles('calendarHeaderLevel')}
       key="level"
+      data-level-control
       onClick={hasNextLevel ? onLevelClick : undefined}
       unstyled={unstyled}
       onMouseDown={hasNextLevel ? preventFocus : undefined}

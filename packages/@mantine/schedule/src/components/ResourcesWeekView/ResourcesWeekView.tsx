@@ -3,14 +3,11 @@ import { useCallback, useMemo, useRef, useState } from 'react';
 import {
   Box,
   BoxProps,
-  createVarsResolver,
   DataAttributes,
   ElementProps,
   factory,
   Factory,
-  getRadius,
   MantineRadius,
-  rem,
   ScrollArea,
   ScrollAreaProps,
   StylesApiProps,
@@ -71,6 +68,7 @@ import {
 import { getSlotLabelDate } from '../../utils/get-slot-label-date/get-slot-label-date';
 import { DragContext, DragContextValue } from '../DragContext/DragContext';
 import { MoreEvents, MoreEventsProps, MoreEventsStylesNames } from '../MoreEvents/MoreEvents';
+import type { ResourcesMonthViewProps } from '../ResourcesMonthView/ResourcesMonthView';
 import { ScheduleBackgroundEvent } from '../ScheduleBackgroundEvent';
 import { RenderEvent, RenderEventBody, ScheduleEvent } from '../ScheduleEvent/ScheduleEvent';
 import { CombinedScheduleHeaderStylesNames } from '../ScheduleHeader/ScheduleHeader';
@@ -78,6 +76,8 @@ import { ScheduleHeaderBase } from '../ScheduleHeader/ScheduleHeaderBase';
 import { ViewSelectProps } from '../ScheduleHeader/ViewSelect/ViewSelect';
 import { getWeekLabel } from '../WeekView/get-week-label/get-week-label';
 import { getResourcesWeekViewEvents } from './get-resources-week-view-events/get-resources-week-view-events';
+import { ResourcesWeekDayGrid, resourcesWeekDayGridClasses } from './ResourcesWeekDayGrid';
+import { resourcesWeekViewVarsResolver } from './ResourcesWeekView.vars';
 import { ResourcesWeekViewRow } from './ResourcesWeekViewRow';
 import classes from './ResourcesWeekView.module.css';
 
@@ -89,6 +89,8 @@ export type ResourcesWeekViewStylesNames =
   | 'resourcesWeekViewHeaderContent'
   | 'resourcesWeekViewDayLabelsRow'
   | 'resourcesWeekViewDayLabel'
+  | 'resourcesWeekViewDayLabelWeekday'
+  | 'resourcesWeekViewCell'
   | 'resourcesWeekViewTimeLabelsRow'
   | 'resourcesWeekViewScrollArea'
   | 'resourcesWeekViewCorner'
@@ -115,6 +117,7 @@ export type ResourcesWeekViewCssVariables = {
   resourcesWeekView:
     | '--resources-week-view-radius'
     | '--resources-week-view-slot-width'
+    | '--resources-week-view-day-width'
     | '--resources-week-view-row-height'
     | '--resources-week-view-group-label-width'
     | '--resources-week-view-business-hours-bg'
@@ -124,6 +127,18 @@ export type ResourcesWeekViewCssVariables = {
 export interface ResourcesWeekViewProps
   extends BoxProps, StylesApiProps<ResourcesWeekViewFactory>, ElementProps<'div'> {
   __staticSelector?: string;
+  /** Event layout: time slots or one cell per day @default 'time' */
+  layout?: 'time' | 'days';
+
+  /** Width of each day column in `layout="days"` @default 120px */
+  dayWidth?: React.CSSProperties['width'];
+
+  /** Date to scroll to on initial render in `layout="days"`, in `YYYY-MM-DD` format */
+  startScrollDate?: string;
+
+  /** Called when a day cell is clicked in `layout="days"` */
+  onDayClick?: ResourcesMonthViewProps['onDayClick'];
+
   date: Date | string;
   onDateChange?: (value: DateStringValue) => void;
   resources: ScheduleResourceData[];
@@ -184,10 +199,11 @@ export interface ResourcesWeekViewProps
     resourceId?: string | number;
   }) => void;
   canDragEvent?: (event: ScheduleEventData) => boolean;
-  /** Snap step for moving events by drag and drop, in minutes. Must divide evenly into an hour (e.g. `15`, `30`) or be a whole number of hours. When not set, `intervalMinutes` is used. @default intervalMinutes */
+  /** Snap step for moving events in the time layout, in minutes. Must divide evenly into an hour (e.g. `15`, `30`) or be a whole number of hours. When not set, `intervalMinutes` is used. @default intervalMinutes */
   eventDragInterval?: number;
   onEventDragStart?: (event: ScheduleEventData) => void;
   onEventDragEnd?: () => void;
+  /** Called when a time slot is clicked in `layout="time"` */
   onTimeSlotClick?: (data: {
     slotStart: DateTimeStringValue;
     slotEnd: DateTimeStringValue;
@@ -195,7 +211,7 @@ export interface ResourcesWeekViewProps
     resourceId?: string | number;
   }) => void;
   onEventClick?: (event: ScheduleEventData, e: React.MouseEvent<HTMLButtonElement>) => void;
-  /** If set, background events (`display: 'background'`) can be clicked and trigger `onEventClick`. Combined with `withEventResize`, timed background events can also be resized by dragging their edges. @default false */
+  /** If set, background events (`display: 'background'`) can be clicked and trigger `onEventClick` in the time layout. Combined with `withEventResize`, timed background events can also be resized by dragging their edges. @default false */
   withInteractiveBackgroundEvents?: boolean;
   withDragSlotSelect?: boolean;
   onSlotDragEnd?: (data: {
@@ -210,7 +226,7 @@ export interface ResourcesWeekViewProps
     resourceId?: string | number;
   }) => void;
 
-  /** If true, events can be resized by dragging their left/right edges @default false */
+  /** If true, events can be resized by dragging their left/right edges. In `layout="days"`, resizing snaps to whole days. @default false */
   withEventResize?: boolean;
 
   /** Called when event is resized */
@@ -239,12 +255,12 @@ export interface ResourcesWeekViewProps
   /** Called when a drop or resize is rejected */
   onEventPlacementRejected?: (data: ScheduleEventPlacementRejectedData) => void;
 
-  /** Snap step for resizing events, in minutes. Must divide evenly into an hour (e.g. `15`, `30`) or be a whole number of hours. When not set, `intervalMinutes` is used. @default intervalMinutes */
+  /** Snap step for resizing events in the time layout, in minutes. Must divide evenly into an hour (e.g. `15`, `30`) or be a whole number of hours. When not set, `intervalMinutes` is used. @default intervalMinutes */
   eventResizeInterval?: number;
 
   recurrenceExpansionLimit?: number;
 
-  /** Maximum number of events visible per time slot before "+more" indicator shows, minimum value is 1 @default 2 */
+  /** Maximum number of events visible per time slot or day cell before "+more" indicator shows. Minimum value is 1; the days layout also limits this value to 10. @default 2 */
   maxEventsPerTimeSlot?: number;
 
   /** Props passed down to `MoreEvents` component */
@@ -266,6 +282,7 @@ export type ResourcesWeekViewFactory = Factory<{
 
 const defaultProps = {
   __staticSelector: 'ResourcesWeekView',
+  layout: 'time',
   startTime: '00:00:00',
   endTime: '23:59:59',
   slotLabelFormat: 'HH:mm',
@@ -287,22 +304,14 @@ const defaultProps = {
   withInteractiveBackgroundEvents: false,
 } satisfies Partial<ResourcesWeekViewProps>;
 
-const varsResolver = createVarsResolver<ResourcesWeekViewFactory>(
-  (_theme, { radius, slotWidth, rowHeight, groupLabelWidth }) => ({
-    resourcesWeekView: {
-      '--resources-week-view-radius': radius ? getRadius(radius) : undefined,
-      '--resources-week-view-slot-width': rem(slotWidth),
-      '--resources-week-view-row-height': rem(rowHeight),
-      '--resources-week-view-group-label-width': rem(groupLabelWidth),
-      '--resources-week-view-business-hours-bg': undefined,
-      '--resources-week-view-non-business-hours-bg': undefined,
-    },
-  })
-);
-
-export const ResourcesWeekView = factory<ResourcesWeekViewFactory>((_props) => {
-  const props = useProps('ResourcesWeekView', defaultProps, _props);
+function ResourcesWeekTimeGrid(
+  props: ReturnType<typeof useProps<ResourcesWeekViewProps, typeof defaultProps>>
+) {
   const {
+    layout,
+    dayWidth,
+    startScrollDate,
+    onDayClick,
     classNames,
     className,
     style,
@@ -392,7 +401,7 @@ export const ResourcesWeekView = factory<ResourcesWeekViewFactory>((_props) => {
     styles,
     unstyled,
     vars,
-    varsResolver,
+    varsResolver: resourcesWeekViewVarsResolver,
     attributes,
     rootSelector: 'resourcesWeekView',
   });
@@ -1214,6 +1223,7 @@ export const ResourcesWeekView = factory<ResourcesWeekViewFactory>((_props) => {
 
   const content = (
     <Box
+      data-layout="time"
       {...getStyles('resourcesWeekView')}
       mod={{
         static: mode === 'static',
@@ -1331,8 +1341,18 @@ export const ResourcesWeekView = factory<ResourcesWeekViewFactory>((_props) => {
   }
 
   return content;
+}
+
+export const ResourcesWeekView = factory<ResourcesWeekViewFactory>((_props) => {
+  const props = useProps('ResourcesWeekView', defaultProps, _props);
+
+  if (props.layout === 'days') {
+    return <ResourcesWeekDayGrid {...props} />;
+  }
+
+  return <ResourcesWeekTimeGrid {...props} />;
 });
 
 ResourcesWeekView.displayName = '@mantine/schedule/ResourcesWeekView';
-ResourcesWeekView.classes = classes;
-ResourcesWeekView.varsResolver = varsResolver;
+ResourcesWeekView.classes = { ...resourcesWeekDayGridClasses, ...classes };
+ResourcesWeekView.varsResolver = resourcesWeekViewVarsResolver;

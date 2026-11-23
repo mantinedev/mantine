@@ -1,6 +1,6 @@
 /* oxlint-disable no-console */
 import chalk from 'chalk';
-import simpleGit from 'simple-git';
+import { simpleGit } from 'simple-git';
 import packageJson from '../../package.json';
 import { buildPatchNotes, findPreviousReleaseIndex } from '../release/patch-notes';
 

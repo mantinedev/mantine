@@ -24,7 +24,7 @@ export function getInputOnChange<T>(
 
 export type UseInputStateReturnValue<T> = [
   T,
-  (value: null | undefined | T | React.ChangeEvent<any>) => void,
+  (value: null | undefined | T | React.ChangeEvent<any> | ((current: T) => T)) => void,
 ];
 
 export function useInputState<T>(initialState: T): UseInputStateReturnValue<T> {

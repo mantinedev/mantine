@@ -12,6 +12,18 @@ describe('@mantine/core/to-rgba', () => {
     expect(toRgba('#F03E3E84')).toStrictEqual({ r: 240, g: 62, b: 62, a: 0.5176470588235295 });
   });
 
+  it('returns the correct rgba values when given a four-digit hex string', () => {
+    expect(toRgba('#f000')).toStrictEqual({ r: 255, g: 0, b: 0, a: 0 });
+    expect(toRgba('#0f0f')).toStrictEqual({ r: 0, g: 255, b: 0, a: 1 });
+    expect(toRgba('#1a28')).toStrictEqual({ r: 17, g: 170, b: 34, a: 136 / 255 });
+    expect(toRgba('#1A28')).toStrictEqual({ r: 17, g: 170, b: 34, a: 136 / 255 });
+    expect(toRgba('1a28')).toStrictEqual({ r: 17, g: 170, b: 34, a: 136 / 255 });
+  });
+
+  it('does not treat a five-digit hex string as a color', () => {
+    expect(toRgba('#12345')).toStrictEqual({ r: 0, g: 0, b: 0, a: 1 });
+  });
+
   it('returns the correct rgba values when given an rgb string', () => {
     expect(toRgba('rgb(240, 62, 62)')).toStrictEqual({ r: 240, g: 62, b: 62, a: 1 });
     expect(toRgba('rgb(214, 51, 108)')).toStrictEqual({ r: 214, g: 51, b: 108, a: 1 });
@@ -28,9 +40,49 @@ describe('@mantine/core/to-rgba', () => {
     expect(toRgba('rgb(112, 72, 232 / .2)')).toStrictEqual({ r: 112, g: 72, b: 232, a: 0.2 });
   });
 
+  it('returns the correct rgba values when given a space-separated rgb string', () => {
+    expect(toRgba('rgb(240 62 62)')).toStrictEqual({ r: 240, g: 62, b: 62, a: 1 });
+    expect(toRgba('rgb(240 62 62 / 0.8)')).toStrictEqual({ r: 240, g: 62, b: 62, a: 0.8 });
+    expect(toRgba('rgba(112 72 232/.2)')).toStrictEqual({ r: 112, g: 72, b: 232, a: 0.2 });
+    expect(toRgba('rgba( 214 , 51 , 108 )')).toStrictEqual({ r: 214, g: 51, b: 108, a: 1 });
+  });
+
   it('preserves zero alpha in hsla colors', () => {
     expect(toRgba('hsla(120, 100%, 50%, 0)')).toStrictEqual({ r: 0, g: 255, b: 0, a: 0 });
     expect(toRgba('hsla(240, 100%, 50%, 0.0)')).toStrictEqual({ r: 0, g: 0, b: 255, a: 0 });
+  });
+
+  it('handles mixed whitespace around color channels and alpha', () => {
+    const green = { r: 0, g: 255, b: 0, a: 1 };
+    expect(toRgba('rgb(0\t \n255  0 \t/ \n100%)')).toStrictEqual(green);
+    expect(toRgba('hsl(120, 100%, 50% \t\n)')).toStrictEqual(green);
+    expect(toRgba('hsla(120, 100%, 50% \t, 100% \n)')).toStrictEqual(green);
+    expect(toRgba('hsla(120, 100%, 50% \t, )')).toStrictEqual({ r: 0, g: 0, b: 0, a: 1 });
+  });
+
+  it('normalizes hsl hue to a full turn', () => {
+    expect(toRgba('hsl(480, 100%, 50%)')).toStrictEqual({ r: 0, g: 255, b: 0, a: 1 });
+    expect(toRgba('hsl(-240, 100%, 50%)')).toStrictEqual({ r: 0, g: 255, b: 0, a: 1 });
+    expect(toRgba('hsl(720, 100%, 50%)')).toStrictEqual({ r: 255, g: 0, b: 0, a: 1 });
+  });
+
+  it('parses decimal hsl channels', () => {
+    expect(toRgba('hsl(30.5, 100%, 50%)')).toStrictEqual({ r: 255, g: 130, b: 0, a: 1 });
+    expect(toRgba('hsl(210, 50.5%, 40%)')).toStrictEqual({ r: 50, g: 102, b: 154, a: 1 });
+    expect(toRgba('hsla(0, 0%, 50.5%, .25)')).toStrictEqual({ r: 129, g: 129, b: 129, a: 0.25 });
+    expect(toRgba('hsl(.5, 100%, 50%)')).toStrictEqual({ r: 255, g: 2, b: 0, a: 1 });
+  });
+
+  it.each(['50%', '50.5%', '0%'])('parses percentage alpha %s', (alpha) => {
+    const expected = { r: 255, g: 0, b: 0, a: parseFloat(alpha) / 100 };
+    expect(toRgba(`rgba(255, 0, 0, ${alpha})`)).toStrictEqual(expected);
+    expect(toRgba(`rgb(255 0 0 / ${alpha})`)).toStrictEqual(expected);
+    expect(toRgba(`hsla(0, 100%, 50%, ${alpha})`)).toStrictEqual(expected);
+  });
+
+  it('converts percentage rgb channels to the 0–255 range', () => {
+    expect(toRgba('rgb(100%, 0%, 50%)')).toStrictEqual({ r: 255, g: 0, b: 127.5, a: 1 });
+    expect(toRgba('rgb(100% 0% 50% / 50%)')).toStrictEqual({ r: 255, g: 0, b: 127.5, a: 0.5 });
   });
 
   it('returns the correct rgba values when given an hsl string', () => {

@@ -1,4 +1,5 @@
-import { render, screen, tests } from '@mantine-tests/core';
+import { DirectionProvider } from '@mantine/core';
+import { render, screen, tests, userEvent } from '@mantine-tests/core';
 import { datesTests } from '@mantine-tests/dates';
 import { YearLevelGroup, YearLevelGroupProps, YearLevelGroupStylesNames } from './YearLevelGroup';
 
@@ -86,5 +87,20 @@ describe('@mantine/dates/YearLevelGroup', () => {
     expect(container.querySelector('table button')).toHaveClass(
       'mantine-Calendar-monthsListControl'
     );
+  });
+
+  it('mirrors ArrowLeft and ArrowRight in rtl direction', async () => {
+    render(
+      <DirectionProvider initialDirection="rtl" detectDirection={false}>
+        <YearLevelGroup {...defaultProps} />
+      </DirectionProvider>
+    );
+    screen.getByText('May').focus();
+
+    await userEvent.keyboard('{ArrowRight}');
+    expect(screen.getByText('Apr')).toHaveFocus();
+
+    await userEvent.keyboard('{ArrowLeft}{ArrowLeft}');
+    expect(screen.getByText('Jun')).toHaveFocus();
   });
 });

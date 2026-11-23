@@ -22,8 +22,8 @@ export function useTimeout(
     (...args: any[]) => {
       if (!timeoutRef.current) {
         timeoutRef.current = window.setTimeout(() => {
-          handleCallback(...args);
           timeoutRef.current = null;
+          handleCallback(...args);
         }, delay);
       }
     },
@@ -40,10 +40,13 @@ export function useTimeout(
   useEffect(() => {
     if (options.autoInvoke) {
       start();
+      return clear;
     }
 
-    return clear;
+    return undefined;
   }, [clear, start]);
+
+  useEffect(() => clear, [clear]);
 
   return { start, clear };
 }

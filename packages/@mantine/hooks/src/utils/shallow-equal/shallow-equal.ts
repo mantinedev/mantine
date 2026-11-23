@@ -21,7 +21,7 @@ export function shallowEqual(a: any, b: any) {
   for (let i = 0; i < length; i += 1) {
     const key = keys[i];
 
-    if (!(key in b)) {
+    if (!Object.hasOwn(b, key)) {
       return false;
     }
 

@@ -16,7 +16,7 @@ export type RichTextEditorControlStylesNames = 'control';
 
 export interface RichTextEditorControlProps
   extends BoxProps, CompoundStylesApiProps<RichTextEditorControlFactory>, ElementProps<'button'> {
-  /** Determines whether the control should have active state @default false */
+  /** Determines whether the control should have active state. When defined, the control is treated as a toggle button and exposes `aria-pressed` in both states. */
   active?: boolean;
 
   /** Determines whether the control can be interacted with, set `false` to make the control to act as a label */
@@ -52,6 +52,7 @@ export const RichTextEditorControl = factory<RichTextEditorControlFactory>((_pro
 
   return (
     <UnstyledButton
+      aria-pressed={interactive && active !== undefined ? active : undefined}
       {...others}
       {...ctx.getStyles('control', { className, style, classNames, styles })}
       disabled={disabled}
@@ -60,7 +61,6 @@ export const RichTextEditorControl = factory<RichTextEditorControlFactory>((_pro
       data-interactive={interactive || undefined}
       data-disabled={disabled || undefined}
       data-active={active || undefined}
-      aria-pressed={(active && interactive) || undefined}
       aria-hidden={!interactive || undefined}
       unstyled={ctx.unstyled}
       variant={ctx.variant || 'default'}
@@ -98,9 +98,15 @@ RichTextEditorControlBase.displayName = '@mantine/tiptap/RichTextEditorControlBa
 export interface CreateControlProps {
   label: keyof RichTextEditorLabels;
   icon: React.FC<{ style: React.CSSProperties }>;
-  isActive?: { name: string; attributes?: Record<string, any> | string };
+  isActive?: { name?: string; attributes?: Record<string, any> | string };
   isDisabled?: (editor: any) => boolean;
   operation: { name: string; attributes?: Record<string, any> | string };
+}
+
+function isControlActive(editor: any, isActive: NonNullable<CreateControlProps['isActive']>) {
+  return isActive.name
+    ? editor.isActive(isActive.name, isActive.attributes)
+    : editor.isActive(isActive.attributes);
 }
 
 export function createControl({
@@ -126,10 +132,7 @@ export function createControl({
         // throw, taking down the surrounding tree.
         const safeEditor = editor && !editor.isDestroyed ? editor : null;
         return {
-          active:
-            safeEditor && isActive?.name
-              ? safeEditor.isActive(isActive.name, isActive.attributes)
-              : false,
+          active: safeEditor && isActive ? isControlActive(safeEditor, isActive) : false,
           // Without a usable editor the operation cannot run, so the control must
           // appear disabled regardless of whether a user-provided `isDisabled` exists.
           disabled: safeEditor ? (isDisabled?.(safeEditor) ?? false) : true,
@@ -138,7 +141,7 @@ export function createControl({
     });
 
     const { disabled: disabledProp, ...restProps } = props;
-    const active = editorState?.active ?? false;
+    const active = isActive ? (editorState?.active ?? false) : undefined;
     const disabled = (editorState?.disabled ?? true) || !!disabledProp;
 
     return (

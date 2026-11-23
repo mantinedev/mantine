@@ -198,7 +198,7 @@ export function MenubarTarget(props: MenubarTargetProps) {
         role="menuitem"
         tabIndex={isActive || isUnresolvedTabStop ? 0 : -1}
         disabled={disabled}
-        aria-disabled={dataDisabled || undefined}
+        aria-disabled={others['aria-disabled'] ?? (dataDisabled || undefined)}
         data-menubar-target
         data-menubar-id={menuCtx.id}
         data-disabled={dataDisabled || undefined}

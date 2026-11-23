@@ -986,6 +986,19 @@ export const MDX_CORE_DATA: Record<string, Frontmatter> = {
     searchTags: 'menu bar, application menu, desktop menu, top menu, menubar, file edit view',
   },
 
+  Mentions: {
+    title: 'Mentions',
+    package: '@mantine/core',
+    slug: '/core/mentions',
+    props: ['Mentions', 'Mention'],
+    styles: ['Mentions'],
+    componentPrefix: 'Mentions',
+    description: 'Capture @-mentions in a textarea with a markup value and suggestions dropdown',
+    source: '@mantine/core/src/components/Mentions/Mentions.tsx',
+    docs: 'core/mentions.mdx',
+    searchTags: 'mention, mentions, tag people, at mention, autocomplete, suggestions, combobox',
+  },
+
   Progress: {
     title: 'Progress',
     package: '@mantine/core',
@@ -1130,6 +1143,17 @@ export const MDX_CORE_DATA: Record<string, Frontmatter> = {
     source: '@mantine/core/src/components/PasswordInput/PasswordInput.tsx',
     docs: 'core/password-input.mdx',
     searchTags: 'password field, secret input, hidden input, passcode input, reveal password',
+  },
+
+  PhoneInput: {
+    title: 'PhoneInput',
+    package: '@mantine/core',
+    slug: '/core/phone-input',
+    props: ['PhoneInput'],
+    styles: ['PhoneInput'],
+    description: 'International phone number input with country selector',
+    source: '@mantine/core/src/components/PhoneInput/PhoneInput.tsx',
+    docs: 'core/phone-input.mdx',
   },
 
   FileInput: {

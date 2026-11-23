@@ -8,6 +8,7 @@ const withMDX = createMDX({
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  agentRules: false,
   reactStrictMode: true,
   output: 'export',
   pageExtensions: ['ts', 'tsx', 'mdx'],

@@ -59,4 +59,13 @@ describe('@mantine/core/MenuSubItem', () => {
     render(<TestContainer />);
     expect(screen.getByRole('menuitem')).not.toHaveAttribute('aria-disabled');
   });
+
+  it('keeps explicit aria-disabled prop', () => {
+    const { rerender } = render(<TestContainer aria-disabled />);
+    expect(screen.getByRole('menuitem')).toHaveAttribute('aria-disabled', 'true');
+    expect(screen.getByRole('menuitem')).not.toHaveAttribute('data-disabled');
+
+    rerender(<TestContainer aria-disabled={false} />);
+    expect(screen.getByRole('menuitem')).toHaveAttribute('aria-disabled', 'false');
+  });
 });

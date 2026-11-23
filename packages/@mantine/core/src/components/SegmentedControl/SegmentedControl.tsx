@@ -49,13 +49,17 @@ export interface SegmentedControlItem<Value = string> {
   disabled?: boolean;
 }
 
+type SegmentedControlData<Value extends Primitive = string> =
+  | Array<Value | SegmentedControlItem<Value>>
+  | ReadonlyArray<Value | SegmentedControlItem<Value>>;
+
 export interface SegmentedControlProps<Value extends Primitive = string>
   extends
     BoxProps,
     StylesApiProps<SegmentedControlFactory>,
     ElementProps<'div', 'onChange' | 'value' | 'defaultValue'> {
   /** Data based on which controls are rendered */
-  data: (Value | SegmentedControlItem<Value>)[];
+  data: SegmentedControlData<Value>;
 
   /** Controlled component value */
   value?: Value;

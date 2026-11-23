@@ -10,16 +10,16 @@ interface DayPosition {
   dayIndex: number;
 }
 
-function getDirection(key: KeyboardEvent['key']): Direction | null {
+function getDirection(key: KeyboardEvent['key'], dir: 'ltr' | 'rtl'): Direction | null {
   switch (key) {
     case 'ArrowDown':
       return 'down';
     case 'ArrowUp':
       return 'up';
     case 'ArrowRight':
-      return 'right';
+      return dir === 'rtl' ? 'left' : 'right';
     case 'ArrowLeft':
-      return 'left';
+      return dir === 'rtl' ? 'right' : 'left';
     default:
       return null;
   }
@@ -172,6 +172,7 @@ export interface HandleMonthViewKeyDownInput {
   weekIndex: number;
   dayIndex: number;
   event: React.KeyboardEvent<HTMLButtonElement>;
+  dir?: 'ltr' | 'rtl';
 }
 
 export function handleMonthViewKeyDown({
@@ -179,8 +180,9 @@ export function handleMonthViewKeyDown({
   weekIndex,
   dayIndex,
   event,
+  dir = 'ltr',
 }: HandleMonthViewKeyDownInput): void {
-  const direction = getDirection(event.key);
+  const direction = getDirection(event.key, dir);
 
   if (direction) {
     event.preventDefault();

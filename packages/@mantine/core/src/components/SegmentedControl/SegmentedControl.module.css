@@ -74,7 +74,7 @@
   font-size: var(--sc-font-size);
   padding: var(--sc-padding);
   transition: color var(--sc-transition-duration) var(--sc-transition-timing-function);
-  cursor: pointer;
+  cursor: var(--mantine-cursor-type);
 
   /* outline is controlled by .input */
   outline: var(--segmented-control-outline, none);

@@ -12,6 +12,7 @@ import {
 import { useUncontrolled } from '@mantine/hooks';
 import { ScheduleLabelsOverride } from '../../labels';
 import {
+  DateLabelFormat,
   DateStringValue,
   DateTimeStringValue,
   PreventEventOverlap,
@@ -71,6 +72,7 @@ type ScheduleCommonProps =
   | 'onViewChange'
   | 'mode'
   | 'withAgenda'
+  | 'eventTimeFormat'
   | 'onExternalEventDrop'
   | 'withEventResize'
   | 'onEventResize'
@@ -231,6 +233,9 @@ export interface ScheduleProps
 
   /** If set, displays an Agenda button in the header of DayView, WeekView and MonthView @default false */
   withAgenda?: boolean;
+
+  /** Format of event start and end time in the agenda of DayView, WeekView and MonthView and in the events list of MobileMonthView @default 'HH:mm' */
+  eventTimeFormat?: DateLabelFormat;
 }
 
 export type ScheduleFactory = Factory<{
@@ -295,6 +300,7 @@ export const Schedule = factory<ScheduleFactory>((_props) => {
     yearViewProps,
     mobileMonthViewProps,
     withAgenda,
+    eventTimeFormat,
     __staticSelector,
     mod,
     ...others
@@ -387,6 +393,7 @@ export const Schedule = factory<ScheduleFactory>((_props) => {
             withInteractiveBackgroundEvents={
               mode === 'static' ? false : withInteractiveBackgroundEvents
             }
+            eventTimeFormat={eventTimeFormat}
             {...dayViewProps}
           />
         );
@@ -398,6 +405,7 @@ export const Schedule = factory<ScheduleFactory>((_props) => {
             withInteractiveBackgroundEvents={
               mode === 'static' ? false : withInteractiveBackgroundEvents
             }
+            eventTimeFormat={eventTimeFormat}
             {...weekViewProps}
           />
         );
@@ -409,6 +417,7 @@ export const Schedule = factory<ScheduleFactory>((_props) => {
             withInteractiveBackgroundEvents={
               mode === 'static' ? false : withInteractiveBackgroundEvents
             }
+            eventTimeFormat={eventTimeFormat}
             {...monthViewProps}
           />
         );
@@ -438,6 +447,7 @@ export const Schedule = factory<ScheduleFactory>((_props) => {
             onEventClick={onEventClick}
             weekendDays={monthViewProps?.weekendDays}
             withWeekendDays={monthViewProps?.withWeekendDays}
+            eventTimeFormat={eventTimeFormat}
             {...mobileMonthViewProps}
           />
         );

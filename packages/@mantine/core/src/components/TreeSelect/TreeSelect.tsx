@@ -8,6 +8,7 @@ import {
   genericFactory,
   MantineColor,
   StylesApiProps,
+  useDirection,
   useProps,
   useResolvedStylesApi,
   useStyles,
@@ -341,6 +342,9 @@ export const TreeSelect = genericFactory<TreeSelectFactory>((_props) => {
     success,
     withErrorStyles,
     withSuccessStyles,
+    loading,
+    loadingPosition,
+    loaderProps,
     name,
     form,
     id,
@@ -354,6 +358,7 @@ export const TreeSelect = genericFactory<TreeSelectFactory>((_props) => {
   const isMulti = mode === 'multiple' || mode === 'checkbox';
   const isCheckbox = mode === 'checkbox';
   const _id = useId(id);
+  const { dir } = useDirection();
 
   const combobox = useCombobox({
     opened: dropdownOpened,
@@ -602,6 +607,9 @@ export const TreeSelect = genericFactory<TreeSelectFactory>((_props) => {
     }
   };
 
+  const expandKey = dir === 'rtl' ? 'ArrowLeft' : 'ArrowRight';
+  const collapseKey = dir === 'rtl' ? 'ArrowRight' : 'ArrowLeft';
+
   const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
     onKeyDown?.(event);
 
@@ -610,7 +618,13 @@ export const TreeSelect = genericFactory<TreeSelectFactory>((_props) => {
       combobox.toggleDropdown();
     }
 
-    if (event.key === 'Backspace' && _searchValue.length === 0 && isMulti && !readOnly) {
+    if (
+      event.key === 'Backspace' &&
+      _searchValue.length === 0 &&
+      isMulti &&
+      !event.nativeEvent.isComposing &&
+      !readOnly
+    ) {
       const arr = (_value as string[]) || [];
       if (arr.length > 0) {
         const removed = arr[arr.length - 1];
@@ -630,14 +644,14 @@ export const TreeSelect = genericFactory<TreeSelectFactory>((_props) => {
 
     const currentNode = flatNodesRef.current[index];
 
-    if (event.key === 'ArrowRight') {
+    if (event.key === expandKey) {
       if (currentNode.hasChildren && !currentNode.expanded) {
         event.preventDefault();
         toggleExpand(currentNode.node.value);
       }
     }
 
-    if (event.key === 'ArrowLeft') {
+    if (event.key === collapseKey) {
       if (currentNode.hasChildren && currentNode.expanded) {
         event.preventDefault();
         toggleExpand(currentNode.node.value);
@@ -894,6 +908,9 @@ export const TreeSelect = genericFactory<TreeSelectFactory>((_props) => {
               leftSectionWidth={leftSectionWidth}
               leftSectionPointerEvents={leftSectionPointerEvents}
               leftSectionProps={leftSectionProps}
+              loading={loading}
+              loadingPosition={loadingPosition}
+              loaderProps={loaderProps}
               inputContainer={inputContainer}
               inputWrapperOrder={inputWrapperOrder}
               withAsterisk={withAsterisk}
@@ -1060,6 +1077,9 @@ export const TreeSelect = genericFactory<TreeSelectFactory>((_props) => {
             leftSectionPointerEvents={leftSectionPointerEvents}
             leftSectionProps={leftSectionProps}
             rightSectionWidth={rightSectionWidth}
+            loading={loading}
+            loadingPosition={loadingPosition}
+            loaderProps={loaderProps}
             rightSectionProps={rightSectionProps}
             inputContainer={inputContainer}
             inputWrapperOrder={inputWrapperOrder}
