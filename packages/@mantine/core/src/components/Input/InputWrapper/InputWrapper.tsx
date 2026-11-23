@@ -63,7 +63,7 @@ export interface __InputWrapperProps {
   /** Contents of `Input.Description` component. If not set, description is not displayed. */
   description?: React.ReactNode;
 
-  /** Contents of `Input.Error` component. If not set, error is not displayed. */
+  /** Contents of `Input.Error` component. If not set, the message is not displayed. The error element stays mounted and visually hidden so validation changes can be announced. */
   error?: React.ReactNode;
 
   /** Contents of `Input.Success` component. If not set, success is not displayed. */
@@ -207,8 +207,9 @@ export const InputWrapper = factory<InputWrapperFactory>((_props) => {
   const hasError = !!error && typeof error !== 'boolean';
   const hasSuccess = !!success && typeof success !== 'boolean' && !error;
   const hasDescription = !!description;
-  const errorRendered = hasError && inputWrapperOrder.includes('error');
-  const successRendered = hasSuccess && inputWrapperOrder.includes('error');
+  const errorInOrder = inputWrapperOrder.includes('error');
+  const errorRendered = hasError && errorInOrder;
+  const successRendered = hasSuccess && errorInOrder;
   const descriptionRendered = hasDescription && inputWrapperOrder.includes('description');
   const _describedBy = `${errorRendered ? errorId : ''} ${successRendered ? successId : ''} ${descriptionRendered ? descriptionId : ''}`;
   const describedBy = _describedBy.trim().length > 0 ? _describedBy.trim() : undefined;
@@ -242,15 +243,18 @@ export const InputWrapper = factory<InputWrapperFactory>((_props) => {
 
   const _input = <Fragment key="input">{inputContainer(children)}</Fragment>;
 
-  const _error = hasError && (
+  const _error = errorInOrder && (
     <InputError
+      aria-live="polite"
+      aria-atomic="true"
       {...errorProps}
       {...sharedProps}
       size={errorProps?.size || sharedProps.size}
       key="error"
       id={errorProps?.id || errorId}
+      data-empty={!hasError || undefined}
     >
-      {error}
+      {hasError ? error : null}
     </InputError>
   );
 
@@ -275,7 +279,12 @@ export const InputWrapper = factory<InputWrapperFactory>((_props) => {
       case 'description':
         return _description;
       case 'error':
-        return _error || _success;
+        return (
+          <Fragment key="error">
+            {_error}
+            {_success}
+          </Fragment>
+        );
       default:
         return null;
     }
