@@ -80,6 +80,15 @@ export interface __ColorPickerProps {
 
   /** If set, the component takes 100% width of its container @default false */
   fullWidth?: boolean;
+
+  /** Saturation slider `aria-label` */
+  saturationLabel?: string;
+
+  /** Hue slider `aria-label` */
+  hueLabel?: string;
+
+  /** Alpha slider `aria-label` */
+  alphaLabel?: string;
 }
 
 export interface ColorPickerProps
@@ -92,15 +101,6 @@ export interface ColorPickerProps
 
   /** If set, interactive elements (sliders thumbs and swatches) are focusable with keyboard @default true */
   focusable?: boolean;
-
-  /** Saturation slider `aria-label` */
-  saturationLabel?: string;
-
-  /** Hue slider `aria-label` */
-  hueLabel?: string;
-
-  /** Alpha slider `aria-label` */
-  alphaLabel?: string;
 
   /** Called when one of the color swatches is clicked */
   onColorSwatchClick?: (color: string) => void;
