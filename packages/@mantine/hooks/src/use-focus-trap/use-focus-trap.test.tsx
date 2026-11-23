@@ -1,4 +1,4 @@
-import { render } from '@testing-library/react';
+import { act, render } from '@testing-library/react';
 import { useFocusTrap } from './use-focus-trap';
 
 function Trap({
@@ -30,6 +30,37 @@ const pressTab = (target: Element, init: KeyboardEventInit = {}) => {
 };
 
 describe('@mantine/hooks/use-focus-trap', () => {
+  it('does not focus a trap after it becomes inactive before the scheduled focus', () => {
+    jest.useFakeTimers();
+    const { rerender } = render(
+      <>
+        <input id="outside" />
+        <Trap id="trap" active>
+          <button type="button" id="inside">
+            inside
+          </button>
+        </Trap>
+      </>
+    );
+
+    const outside = document.getElementById('outside')!;
+    outside.focus();
+    rerender(
+      <>
+        <input id="outside" />
+        <Trap id="trap" active={false}>
+          <button type="button" id="inside">
+            inside
+          </button>
+        </Trap>
+      </>
+    );
+
+    act(() => jest.runOnlyPendingTimers());
+    expect(outside).toHaveFocus();
+    jest.useRealTimers();
+  });
+
   it('moves focus between tabbable elements on Tab', () => {
     render(
       <Trap id="trap">

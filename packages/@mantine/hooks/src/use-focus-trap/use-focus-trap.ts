@@ -28,6 +28,14 @@ function hasNestedActiveTrap(ref: React.RefObject<HTMLElement | null>, node: HTM
 
 export function useFocusTrap(active = true): React.RefCallback<HTMLElement | null> {
   const ref = useRef<HTMLElement>(null);
+  const focusTimeout = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  const clearFocusTimeout = useCallback(() => {
+    if (focusTimeout.current !== null) {
+      clearTimeout(focusTimeout.current);
+      focusTimeout.current = null;
+    }
+  }, []);
 
   const focusNode = (node: HTMLElement) => {
     let focusElement: HTMLElement | null = node.querySelector('[data-autofocus]');
@@ -53,6 +61,8 @@ export function useFocusTrap(active = true): React.RefCallback<HTMLElement | nul
 
   const setRef = useCallback(
     (node: HTMLElement | null) => {
+      clearFocusTimeout();
+
       if (!active) {
         return;
       }
@@ -67,8 +77,13 @@ export function useFocusTrap(active = true): React.RefCallback<HTMLElement | nul
       }
 
       // Delay processing the HTML node by a frame. This ensures focus is assigned correctly.
-      setTimeout(() => {
-        if (node.getRootNode()) {
+      focusTimeout.current = setTimeout(() => {
+        focusTimeout.current = null;
+        if (ref.current !== node) {
+          return;
+        }
+
+        if (node.isConnected) {
           focusNode(node);
         } else if (process.env.NODE_ENV === 'development') {
           // oxlint-disable-next-line no-console
@@ -78,7 +93,7 @@ export function useFocusTrap(active = true): React.RefCallback<HTMLElement | nul
 
       ref.current = node;
     },
-    [active]
+    [active, clearFocusTimeout]
   );
 
   useEffect(() => {
@@ -87,9 +102,12 @@ export function useFocusTrap(active = true): React.RefCallback<HTMLElement | nul
     }
 
     if (ref.current) {
-      setTimeout(() => {
-        if (ref.current) {
-          focusNode(ref.current);
+      const node = ref.current;
+      clearFocusTimeout();
+      focusTimeout.current = setTimeout(() => {
+        focusTimeout.current = null;
+        if (ref.current === node && node.isConnected) {
+          focusNode(node);
         }
       });
     }
@@ -110,10 +128,11 @@ export function useFocusTrap(active = true): React.RefCallback<HTMLElement | nul
     activeTraps.add(ref);
     document.addEventListener('keydown', handleKeyDown);
     return () => {
+      clearFocusTimeout();
       activeTraps.delete(ref);
       document.removeEventListener('keydown', handleKeyDown);
     };
-  }, [active]);
+  }, [active, clearFocusTimeout]);
 
   return setRef;
 }
