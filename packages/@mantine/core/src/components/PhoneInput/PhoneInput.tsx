@@ -546,7 +546,7 @@ export const PhoneInput = factory<PhoneInputFactory>((_props) => {
       }
     }
 
-    const newRaw = detectNow ? fullRaw : clampToMask(fullRaw, country);
+    const newRaw = clampToMask(fullRaw, country);
     if (international && !hasInternationalPrefix && fullRaw === `+${typedRaw}`) {
       userEnteredDialCodeRef.current = true;
     }

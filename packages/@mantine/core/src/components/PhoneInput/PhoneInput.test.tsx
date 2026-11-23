@@ -196,6 +196,63 @@ describe('@mantine/core/PhoneInput', () => {
     expect(onChange).toHaveBeenLastCalledWith('+78793123456', expect.anything());
   });
 
+  it.each([false, true])(
+    'clamps raw value to mask length when typing after clearing national digits (withCountryAutoDetect=%s)',
+    async (withCountryAutoDetect) => {
+      const onChange = jest.fn();
+
+      function Controlled() {
+        const [value, setValue] = useState('+79022134012');
+        return (
+          <PhoneInput
+            value={value}
+            onChange={(rawValue, details) => {
+              setValue(rawValue);
+              onChange(rawValue, details);
+            }}
+            defaultCountry="ru"
+            withCountryAutoDetect={withCountryAutoDetect}
+          />
+        );
+      }
+
+      render(<Controlled />);
+      const input = screen.getByRole('textbox') as HTMLInputElement;
+      fireEvent.change(input, { target: { value: '+7 ' } });
+      await userEvent.type(input, '89991234567');
+
+      expect(input).toHaveValue('+7 (899) 912-34-56');
+      expect(onChange).toHaveBeenLastCalledWith('+78999123456', expect.anything());
+    }
+  );
+
+  it('keeps a 10-digit number starting with 8 when typed after clearing national digits', async () => {
+    const onChange = jest.fn();
+
+    function Controlled() {
+      const [value, setValue] = useState('+79022134012');
+      return (
+        <PhoneInput
+          value={value}
+          onChange={(rawValue, details) => {
+            setValue(rawValue);
+            onChange(rawValue, details);
+          }}
+          defaultCountry="ru"
+          withCountryAutoDetect
+        />
+      );
+    }
+
+    render(<Controlled />);
+    const input = screen.getByRole('textbox') as HTMLInputElement;
+    fireEvent.change(input, { target: { value: '+7 ' } });
+    await userEvent.type(input, '8121234567');
+
+    expect(input).toHaveValue('+7 (812) 123-45-67');
+    expect(onChange).toHaveBeenLastCalledWith('+78121234567', expect.anything());
+  });
+
   it('normalizes a national number pasted after the displayed dial code', () => {
     const onChange = jest.fn();
     render(<PhoneInput defaultCountry="ru" onChange={onChange} />);
