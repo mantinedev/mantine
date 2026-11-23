@@ -91,4 +91,13 @@ describe('@mantine/core/to-rgba', () => {
     expect(toRgba('hsla(240, 100%, 50%, 0.5)')).toStrictEqual({ r: 0, g: 0, b: 255, a: 0.5 });
     expect(toRgba('hsla(300, 50%, 25%, 0.75)')).toStrictEqual({ r: 96, g: 32, b: 96, a: 0.75 });
   });
+
+  it('returns the correct rgba values when given a space-separated hsl string', () => {
+    expect(toRgba('hsl(120 100% 50%)')).toStrictEqual({ r: 0, g: 255, b: 0, a: 1 });
+    expect(toRgba('hsl(480 100% 50%)')).toStrictEqual({ r: 0, g: 255, b: 0, a: 1 });
+    expect(toRgba('hsl(30.5 100% 50%)')).toStrictEqual({ r: 255, g: 130, b: 0, a: 1 });
+    expect(toRgba('hsla(240 100% 50% / 0.5)')).toStrictEqual({ r: 0, g: 0, b: 255, a: 0.5 });
+    expect(toRgba('hsla(0 100% 50% / 50%)')).toStrictEqual({ r: 255, g: 0, b: 0, a: 0.5 });
+    expect(toRgba('hsla(0 100% 50%/.5)')).toStrictEqual({ r: 255, g: 0, b: 0, a: 0.5 });
+  });
 });
