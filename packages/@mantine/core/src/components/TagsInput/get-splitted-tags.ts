@@ -3,8 +3,8 @@ function splitTags(splitChars: string[] | undefined, value: string) {
     return [value];
   }
 
-  return value
-    .split(new RegExp(`[${splitChars.join('')}]`))
+  return splitChars
+    .reduce((parts, char) => parts.flatMap((part) => part.split(char)), [value])
     .map((tag) => tag.trim())
     .filter((tag) => tag !== '');
 }
