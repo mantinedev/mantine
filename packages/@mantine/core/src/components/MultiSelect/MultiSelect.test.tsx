@@ -285,6 +285,26 @@ describe('@mantine/core/MultiSelect', () => {
     expect(pill1?.querySelector('button')).toBeNull();
   });
 
+  it('does not remove a disabled option with backspace', async () => {
+    const onRemove = jest.fn();
+    render(
+      <MultiSelect
+        {...defaultProps}
+        data={['test-1', { value: 'test-2', label: 'test-2', disabled: true }]}
+        defaultValue={['test-1', 'test-2']}
+        onRemove={onRemove}
+        searchable
+      />
+    );
+
+    await userEvent.click(screen.getByRole('combobox'));
+    await userEvent.keyboard('{Backspace}');
+
+    expect(screen.getByText('test-1', { selector: '.mantine-Pill-label' })).toBeInTheDocument();
+    expect(screen.getByText('test-2', { selector: '.mantine-Pill-label' })).toBeInTheDocument();
+    expect(onRemove).not.toHaveBeenCalled();
+  });
+
   it('supports custom hidden input divider', () => {
     render(
       <MultiSelect
