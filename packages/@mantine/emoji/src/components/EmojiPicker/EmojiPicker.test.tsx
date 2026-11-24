@@ -174,6 +174,23 @@ describe('@mantine/emoji/EmojiPicker', () => {
     expect(getActiveEmoji(container)).toBe('a3');
   });
 
+  it('mirrors ArrowLeft and ArrowRight in the emoji grid in RTL', () => {
+    const { container } = render(
+      <DirectionProvider initialDirection="rtl" detectDirection={false}>
+        <EmojiPicker data={boundaryData} columns={3} />
+      </DirectionProvider>
+    );
+    const grid = getGrid(container);
+    press(grid, 'ArrowLeft');
+    expect(getActiveEmoji(container)).toBe('a0');
+    press(grid, 'ArrowLeft', 2);
+    expect(getActiveEmoji(container)).toBe('a2');
+    press(grid, 'ArrowRight');
+    expect(getActiveEmoji(container)).toBe('a1');
+    press(grid, 'ArrowDown');
+    expect(getActiveEmoji(container)).toBe('a3');
+  });
+
   it('continues keyboard navigation from the hovered emoji', () => {
     const { container, getByLabelText } = render(<EmojiPicker data={boundaryData} columns={3} />);
     const grid = getGrid(container);

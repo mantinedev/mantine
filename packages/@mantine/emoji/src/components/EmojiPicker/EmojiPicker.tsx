@@ -11,6 +11,7 @@ import {
   rem,
   ScrollAreaProps,
   StylesApiProps,
+  useDirection,
   useProps,
   useStyles,
 } from '@mantine/core';
@@ -274,6 +275,7 @@ export const EmojiPicker = factory<EmojiPickerFactory>((_props) => {
     onChange: onSkinToneChange,
   });
 
+  const { dir } = useDirection();
   const cols = Math.max(columns ?? 9, 1);
   const baseId = useId();
   const idPrefix = `${baseId}-emoji`;
@@ -371,6 +373,7 @@ export const EmojiPicker = factory<EmojiPickerFactory>((_props) => {
     items: flattenedItems,
     resetKey: query,
     skinTone,
+    dir,
     onEmojiSelect: handleEmojiSelect,
     scrollToItem,
   });
