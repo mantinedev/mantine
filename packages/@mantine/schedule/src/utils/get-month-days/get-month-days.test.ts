@@ -78,4 +78,31 @@ describe('@mantine/schedule/get-month-days', () => {
       '2021-03-14 00:00:00'
     );
   });
+
+  it('supports startFromPreviousMonthDay option', () => {
+    // 2026-11-01 is a Sunday, firstDayOfWeek is 0 (Sunday)
+    const withOption = getMonthDays({
+      month: '2026-11-15',
+      firstDayOfWeek: 0,
+      consistentWeeks: true,
+      startFromPreviousMonthDay: true,
+    });
+    expect(withOption).toHaveLength(6);
+    expect(withOption[0][0]).toStrictEqual('2026-10-25 00:00:00');
+    expect(withOption[withOption.length - 1][withOption[0].length - 1]).toStrictEqual(
+      '2026-12-05 00:00:00'
+    );
+
+    const withoutOption = getMonthDays({
+      month: '2026-11-15',
+      firstDayOfWeek: 0,
+      consistentWeeks: true,
+      startFromPreviousMonthDay: false,
+    });
+    expect(withoutOption).toHaveLength(6);
+    expect(withoutOption[0][0]).toStrictEqual('2026-11-01 00:00:00');
+    expect(withoutOption[withoutOption.length - 1][withoutOption[0].length - 1]).toStrictEqual(
+      '2026-12-12 00:00:00'
+    );
+  });
 });

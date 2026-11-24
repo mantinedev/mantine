@@ -64,4 +64,27 @@ describe('@mantine/schedule/get-month-range', () => {
       })
     ).toStrictEqual({ start: '2024-02-01 00:00:00', end: '2024-03-13 00:00:00' });
   });
+
+  it('supports startFromPreviousMonthDay option', () => {
+    // 2026-11-01 is a Sunday, firstDayOfWeek is 0 (Sunday)
+    expect(
+      getMonthRange({
+        month: '2026-11-15',
+        withOutsideDays: true,
+        consistentWeeks: true,
+        firstDayOfWeek: 0,
+        startFromPreviousMonthDay: true,
+      })
+    ).toStrictEqual({ start: '2026-10-25 00:00:00', end: '2026-12-05 00:00:00' });
+
+    expect(
+      getMonthRange({
+        month: '2026-11-15',
+        withOutsideDays: true,
+        consistentWeeks: true,
+        firstDayOfWeek: 0,
+        startFromPreviousMonthDay: false,
+      })
+    ).toStrictEqual({ start: '2026-11-01 00:00:00', end: '2026-12-12 00:00:00' });
+  });
 });

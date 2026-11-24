@@ -18,6 +18,9 @@ interface UseMonthViewEventsInput {
 
   /** If true, month will show events for consistent number of weeks (6) */
   consistentWeeks?: boolean;
+
+  /** If true and withOutsideDays is true, grid starts on the week that holds the last day of the previous month */
+  startFromPreviousMonthDay?: boolean;
 }
 
 export function getMonthViewEvents({
@@ -26,6 +29,7 @@ export function getMonthViewEvents({
   firstDayOfWeek = 1,
   withOutsideDays,
   consistentWeeks,
+  startFromPreviousMonthDay,
 }: UseMonthViewEventsInput): GroupedMonthEvents {
   if (events === undefined) {
     return { groupedByDay: {}, groupedByWeek: {}, backgroundByWeek: {} };
@@ -34,7 +38,13 @@ export function getMonthViewEvents({
   const ids = new Set<string | number>();
   const filteredEvents: ScheduleEventData[] = [];
 
-  const range = getMonthRange({ month: date, withOutsideDays, consistentWeeks, firstDayOfWeek });
+  const range = getMonthRange({
+    month: date,
+    withOutsideDays,
+    consistentWeeks,
+    firstDayOfWeek,
+    startFromPreviousMonthDay,
+  });
 
   for (const event of events) {
     if (

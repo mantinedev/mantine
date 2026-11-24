@@ -136,6 +136,9 @@ export interface MonthViewProps
   /** If set, days from the previous and next months are displayed to fill the weeks @default true */
   withOutsideDays?: boolean;
 
+  /** If set and `withOutsideDays` is true, grid starts on the week that holds the last day of the previous month @default false */
+  startFromPreviousMonthDay?: boolean;
+
   /** If set, the header is displayed @default true */
   withHeader?: boolean;
 
@@ -268,6 +271,7 @@ const defaultProps = {
   withDragSlotSelect: false,
   mode: 'default',
   withInteractiveBackgroundEvents: false,
+  startFromPreviousMonthDay: false,
 } satisfies Partial<MonthViewProps>;
 
 export const MonthView = factory<MonthViewFactory>((_props) => {
@@ -299,6 +303,7 @@ export const MonthView = factory<MonthViewFactory>((_props) => {
     highlightToday,
     radius,
     withOutsideDays,
+    startFromPreviousMonthDay,
     withHeader,
     monthYearSelectProps,
     onViewChange,
@@ -385,6 +390,7 @@ export const MonthView = factory<MonthViewFactory>((_props) => {
     withOutsideDays,
     consistentWeeks,
     firstDayOfWeek: ctx.getFirstDayOfWeek(firstDayOfWeek),
+    startFromPreviousMonthDay: startFromPreviousMonthDay && withOutsideDays,
   });
 
   const expandedEvents = expandRecurringEvents({
@@ -400,6 +406,7 @@ export const MonthView = factory<MonthViewFactory>((_props) => {
     firstDayOfWeek: ctx.getFirstDayOfWeek(firstDayOfWeek),
     withOutsideDays,
     consistentWeeks,
+    startFromPreviousMonthDay: startFromPreviousMonthDay && withOutsideDays,
   });
 
   const getExternalDropDateTime = useCallback(
@@ -466,6 +473,7 @@ export const MonthView = factory<MonthViewFactory>((_props) => {
     month: dayjs(date).format('YYYY-MM-DD 00:00:00'),
     firstDayOfWeek: ctx.getFirstDayOfWeek(firstDayOfWeek),
     consistentWeeks: consistentWeeks && withOutsideDays,
+    startFromPreviousMonthDay: startFromPreviousMonthDay && withOutsideDays,
   });
 
   const firstDayIndex = (() => {
