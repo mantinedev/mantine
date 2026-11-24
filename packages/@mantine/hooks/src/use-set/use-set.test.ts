@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import { act, renderHook } from '@testing-library/react';
 import { useSet } from './use-set';
 
@@ -120,5 +121,56 @@ describe('@mantine/hooks/use-set', () => {
     expect(hook.result.current.has(1)).toBe(true);
     expect(hook.result.current.has(2)).toBe(true);
     expect(hook.result.current.has(3)).toBe(true);
+  });
+
+  it('does not trigger a re-render when the set is not changed', () => {
+    let renders = 0;
+    const hook = renderHook(() => {
+      renders += 1;
+      return useSet([1]);
+    });
+
+    const initial = hook.result.current;
+    act(() => hook.result.current.add(1));
+    act(() => hook.result.current.delete(2));
+    expect(renders).toBe(1);
+    expect(hook.result.current).toBe(initial);
+
+    act(() => hook.result.current.clear());
+    const afterClear = hook.result.current;
+    act(() => hook.result.current.clear());
+    expect(renders).toBe(2);
+    expect(hook.result.current).toBe(afterClear);
+  });
+
+  it('does not re-run effects that depend on the set when it is not changed', () => {
+    const effect = jest.fn();
+    const hook = renderHook(() => {
+      const set = useSet(['a']);
+      useEffect(() => effect(set.size), [set]);
+      return set;
+    });
+
+    act(() => hook.result.current.add('a'));
+    act(() => hook.result.current.delete('b'));
+    expect(effect).toHaveBeenCalledTimes(1);
+
+    act(() => hook.result.current.add('b'));
+    expect(effect).toHaveBeenCalledTimes(2);
+    expect(effect).toHaveBeenLastCalledWith(2);
+  });
+
+  it('returns correct values from no-op operations', () => {
+    const hook = renderHook(() => useSet([1]));
+    let addResult: Set<number> | undefined;
+    let deleteResult: boolean | undefined;
+
+    act(() => {
+      addResult = hook.result.current.add(1);
+      deleteResult = hook.result.current.delete(2);
+    });
+
+    expect(addResult?.has(1)).toBe(true);
+    expect(deleteResult).toBe(false);
   });
 });
