@@ -25,4 +25,14 @@ You can provide a custom `copied` reset `timeout`:
 
 <Demo data={CopyButtonDemos.timeout} />
 
+## Rich content
+
+To copy formatted text, pass an object with `html` and `text` properties to `value`.
+`value` also accepts a function, it is called when the button is clicked.
+Use it to read the content from the DOM at the moment of copying:
+
+<Demo data={CopyButtonDemos.richContent} />
+
+See [use-clipboard](/hooks/use-clipboard/#rich-content) documentation to learn more.
+
 <ServerComponentsIncompatible component="CopyButton" />

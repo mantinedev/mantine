@@ -12,22 +12,80 @@ It uses the [navigator.clipboard.writeText](https://caniuse.com/mdn-api_clipboar
 
 <Demo data={UseClipboardDemos.usage} />
 
+## Rich content
+
+To copy formatted text, pass an object with `html` and `text` properties to the `copy` function.
+Applications that support rich text (Google Docs, Gmail, Slack) paste `html`, other applications paste `text`:
+
+<Demo data={UseClipboardDemos.richContent} />
+
+If the browser does not support [navigator.clipboard.write](https://caniuse.com/mdn-api_clipboard_write),
+only `text` is copied.
+
+## Copy value on click
+
+`copy` also accepts a function. The function is called at the moment of copying,
+it is useful when the value is computed from the DOM:
+
+```tsx
+import { useRef } from 'react';
+import { useClipboard } from '@mantine/hooks';
+
+function Demo() {
+  const ref = useRef<HTMLDivElement>(null);
+  const clipboard = useClipboard();
+
+  return (
+    <>
+      <div ref={ref}>
+        <strong>Formatted</strong> content
+      </div>
+
+      <button
+        type="button"
+        onClick={() =>
+          clipboard.copy(() => ({
+            html: ref.current!.innerHTML,
+            text: ref.current!.innerText,
+          }))
+        }
+      >
+        Copy
+      </button>
+    </>
+  );
+}
+```
+
 ## Limitations
 
 Due to security reasons, the `use-clipboard` hook will not work in iframes and may not work with local files opened with the `file://` protocol
 (the hook will work fine with local websites that are using the `http://` protocol). You can learn more about `navigator.clipboard` [here](https://web.dev/async-clipboard/).
 
+In Safari, `copy` must be called directly in the event handler. If it is called after `await`,
+Safari rejects the clipboard write and `error` is set.
+
 ## Definition
 
 ```tsx
+interface ClipboardRichValue {
+  /** Plain text value, copied as `text/plain` */
+  text: string;
+
+  /** HTML value, copied as `text/html` */
+  html?: string;
+}
+
+type ClipboardValue = string | ClipboardRichValue;
+
 interface UseClipboardOptions {
   /** Time in ms after which the copied state will reset, `2000` by default */
   timeout?: number;
 }
 
 interface UseClipboardReturnValue {
-  /** Function to copy value to clipboard */
-  copy: (value: any) => void;
+  /** Function to copy value to clipboard, accepts a string, an object with `html` and `text` properties or a function that returns one of them */
+  copy: (value: ClipboardValue | (() => ClipboardValue)) => void;
 
   /** Function to reset copied state and error */
   reset: () => void;
@@ -44,9 +102,14 @@ function useClipboard(options?: UseClipboardOptions): UseClipboardReturnValue
 
 ## Exported types
 
-The `UseClipboardOptions` and `UseClipboardReturnValue` types are exported from the `@mantine/hooks` package;
+The `UseClipboardOptions`, `UseClipboardReturnValue`, `ClipboardValue` and `ClipboardRichValue` types are exported from the `@mantine/hooks` package;
 you can import them in your application:
 
 ```tsx
-import type { UseClipboardOptions, UseClipboardReturnValue } from '@mantine/hooks';
+import type {
+  ClipboardRichValue,
+  ClipboardValue,
+  UseClipboardOptions,
+  UseClipboardReturnValue,
+} from '@mantine/hooks';
 ```
