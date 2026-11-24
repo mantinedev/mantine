@@ -1,6 +1,11 @@
 import { render, screen, tests, userEvent } from '@mantine-tests/core';
 import { Checkbox } from '../Checkbox';
-import { CheckboxGroup, CheckboxGroupProps, CheckboxGroupStylesNames } from './CheckboxGroup';
+import {
+  CheckboxGroup,
+  CheckboxGroupContextValue,
+  CheckboxGroupProps,
+  CheckboxGroupStylesNames,
+} from './CheckboxGroup';
 
 const defaultProps: CheckboxGroupProps = {
   label: 'test-label',
@@ -90,5 +95,16 @@ describe('@mantine/core/CheckboxGroup', () => {
       </>
     );
     expect(screen.getByRole('group')).not.toHaveAttribute('aria-labelledby');
+  });
+
+  it('types CheckboxGroupContextValue onChange parameter using generic Value', () => {
+    const numberOnChange = jest.fn();
+    const numericContext: CheckboxGroupContextValue<number> = {
+      value: [1],
+      onChange: numberOnChange,
+      size: 'sm',
+    };
+    numericContext.onChange(2);
+    expect(numberOnChange).toHaveBeenCalledWith(2);
   });
 });
