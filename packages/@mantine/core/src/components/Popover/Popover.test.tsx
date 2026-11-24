@@ -114,6 +114,93 @@ describe('@mantine/core/Popover', () => {
     expect(spy).toHaveBeenCalled();
   });
 
+  it('does not close or return focus when Escape is pressed in a nested stop-propagation layer', async () => {
+    const onClose = jest.fn();
+    const onDismiss = jest.fn();
+    render(
+      <Popover
+        withinPortal={false}
+        transitionProps={{ duration: 0 }}
+        returnFocus
+        onClose={onClose}
+        onDismiss={onDismiss}
+      >
+        <Popover.Target>
+          <button type="button">test-target</button>
+        </Popover.Target>
+        <Popover.Dropdown>
+          <div data-mantine-stop-propagation="true">
+            <button type="button">nested-target</button>
+          </div>
+        </Popover.Dropdown>
+      </Popover>
+    );
+
+    await userEvent.click(screen.getByRole('button', { name: 'test-target' }));
+    const nestedTarget = screen.getByRole('button', { name: 'nested-target' });
+    await userEvent.click(nestedTarget);
+    expect(nestedTarget).toHaveFocus();
+
+    await userEvent.keyboard('{Escape}');
+
+    expect(screen.getByRole('dialog')).toBeInTheDocument();
+    expect(nestedTarget).toHaveFocus();
+    expect(onClose).not.toHaveBeenCalled();
+    expect(onDismiss).not.toHaveBeenCalled();
+  });
+
+  it('closes its own dropdown when the marked layer handles Escape', async () => {
+    const onClose = jest.fn();
+    render(
+      <Popover
+        defaultOpened
+        withinPortal={false}
+        transitionProps={{ duration: 0 }}
+        onClose={onClose}
+      >
+        <Popover.Target>
+          <button type="button">test-target</button>
+        </Popover.Target>
+        <Popover.Dropdown data-mantine-stop-propagation="true">
+          <button type="button">nested-target</button>
+        </Popover.Dropdown>
+      </Popover>
+    );
+
+    await userEvent.click(screen.getByRole('button', { name: 'nested-target' }));
+    await userEvent.keyboard('{Escape}');
+
+    expect(screen.queryByRole('dialog')).not.toBeInTheDocument();
+    expect(onClose).toHaveBeenCalledTimes(1);
+  });
+
+  it('closes an unmarked dropdown nested inside a marked ancestor', async () => {
+    const onClose = jest.fn();
+    render(
+      <div data-mantine-stop-propagation="true">
+        <Popover
+          defaultOpened
+          withinPortal={false}
+          transitionProps={{ duration: 0 }}
+          onClose={onClose}
+        >
+          <Popover.Target>
+            <button type="button">test-target</button>
+          </Popover.Target>
+          <Popover.Dropdown>
+            <button type="button">nested-target</button>
+          </Popover.Dropdown>
+        </Popover>
+      </div>
+    );
+
+    await userEvent.click(screen.getByRole('button', { name: 'nested-target' }));
+    await userEvent.keyboard('{Escape}');
+
+    expect(screen.queryByRole('dialog')).not.toBeInTheDocument();
+    expect(onClose).toHaveBeenCalledTimes(1);
+  });
+
   it('does not close when outside element stops propagation', async () => {
     const spy = jest.fn();
     render(

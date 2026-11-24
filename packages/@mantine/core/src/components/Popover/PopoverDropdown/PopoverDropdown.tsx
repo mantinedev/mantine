@@ -67,6 +67,17 @@ export const PopoverDropdown = factory<PopoverDropdownFactory>((_props) => {
     : {};
 
   const mergedRef = useMergedRef(ref, ctx.floating);
+  const handleKeyDownCapture = closeOnEscape(
+    () => {
+      ctx.onClose?.();
+      ctx.onDismiss?.();
+    },
+    {
+      active: ctx.closeOnEscape,
+      onTrigger: returnFocus,
+      onKeyDown: onKeyDownCapture,
+    }
+  );
 
   if (ctx.disabled) {
     return null;
@@ -93,17 +104,21 @@ export const PopoverDropdown = factory<PopoverDropdownFactory>((_props) => {
               {...accessibleProps}
               {...others}
               variant={variant}
-              onKeyDownCapture={closeOnEscape(
-                () => {
-                  ctx.onClose?.();
-                  ctx.onDismiss?.();
-                },
-                {
-                  active: ctx.closeOnEscape,
-                  onTrigger: returnFocus,
-                  onKeyDown: onKeyDownCapture,
+              onKeyDownCapture={(event) => {
+                if (ctx.closeOnEscape && event.key === 'Escape') {
+                  const stopPropagation = (event.target as HTMLElement)?.closest?.(
+                    '[data-mantine-stop-propagation="true"]'
+                  );
+                  if (
+                    stopPropagation &&
+                    stopPropagation !== event.currentTarget &&
+                    event.currentTarget.contains(stopPropagation)
+                  ) {
+                    return;
+                  }
                 }
-              )}
+                handleKeyDownCapture(event);
+              }}
               data-position={ctx.placement}
               data-fixed={ctx.floatingStrategy === 'fixed' || undefined}
               {...ctx.getStyles('dropdown', {

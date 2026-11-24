@@ -191,24 +191,59 @@ describe('@mantine/emoji/EmojiPickerPopover', () => {
     expect(container.querySelector('[aria-label="Grinning Face"]')).toHaveTextContent('😀5');
   });
 
-  it('closes only the skin tone dropdown on Escape and keeps the picker open', async () => {
-    const { getByText, container, queryByRole } = render(
-      <EmojiPickerPopover data={testData} popoverProps={popoverProps}>
+  it.each([undefined, true])(
+    'closes only the skin tone dropdown on Escape and keeps the picker open (closeOnEscape: %s)',
+    async (closeOnEscape) => {
+      const { getByText, container, queryByRole } = render(
+        <EmojiPickerPopover data={testData} popoverProps={{ ...popoverProps, closeOnEscape }}>
+          <button type="button">Open</button>
+        </EmojiPickerPopover>
+      );
+      await userEvent.click(getByText('Open'));
+      expect(queryByRole('grid')).toBeInTheDocument();
+
+      const skinToneButton = container.querySelector('[aria-label="Skin tone"]')!;
+      await userEvent.click(skinToneButton);
+      const selectedSkinTone = container.querySelector('[data-autofocus]')!;
+      await waitFor(() => {
+        expect(container.querySelector('[aria-label="Dark skin tone"]')).toBeInTheDocument();
+        expect(selectedSkinTone).toHaveFocus();
+      });
+
+      await userEvent.keyboard('{Escape}');
+      await waitFor(() =>
+        expect(container.querySelector('[aria-label="Dark skin tone"]')).not.toBeInTheDocument()
+      );
+      expect(queryByRole('grid')).toBeInTheDocument();
+      expect(skinToneButton).toHaveFocus();
+      expect(getByText('Open')).not.toHaveFocus();
+
+      await userEvent.keyboard('{Escape}');
+      expect(queryByRole('grid')).not.toBeInTheDocument();
+    }
+  );
+
+  it('does not close on Escape when popoverProps.closeOnEscape is false', async () => {
+    const { getByText, queryByRole } = render(
+      <EmojiPickerPopover data={testData} popoverProps={{ ...popoverProps, closeOnEscape: false }}>
         <button type="button">Open</button>
       </EmojiPickerPopover>
     );
     await userEvent.click(getByText('Open'));
-    expect(queryByRole('grid')).toBeInTheDocument();
-
-    await userEvent.click(container.querySelector('[aria-label="Skin tone"]')!);
-    await waitFor(() =>
-      expect(container.querySelector('[aria-label="Dark skin tone"]')).toBeInTheDocument()
-    );
-
     await userEvent.keyboard('{Escape}');
-    await waitFor(() =>
-      expect(container.querySelector('[aria-label="Dark skin tone"]')).not.toBeInTheDocument()
-    );
     expect(queryByRole('grid')).toBeInTheDocument();
+  });
+
+  it('calls popoverProps.onDismiss when closed with Escape', async () => {
+    const onDismiss = jest.fn();
+    const { getByText, queryByRole } = render(
+      <EmojiPickerPopover data={testData} popoverProps={{ ...popoverProps, onDismiss }}>
+        <button type="button">Open</button>
+      </EmojiPickerPopover>
+    );
+    await userEvent.click(getByText('Open'));
+    await userEvent.keyboard('{Escape}');
+    expect(queryByRole('grid')).not.toBeInTheDocument();
+    expect(onDismiss).toHaveBeenCalledTimes(1);
   });
 });

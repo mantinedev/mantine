@@ -285,15 +285,6 @@ export const EmojiPickerInput = factory<EmojiPickerInputFactory>((_props) => {
     id: _id,
   };
 
-  const handleDropdownKeyDown = (event: React.KeyboardEvent<any>) => {
-    if (
-      event.key === 'Escape' &&
-      !(event.target as HTMLElement)?.closest?.('[data-mantine-stop-propagation]')
-    ) {
-      setOpened(false);
-    }
-  };
-
   return (
     <Input.Wrapper {...wrapperProps}>
       <Popover
@@ -302,7 +293,6 @@ export const EmojiPickerInput = factory<EmojiPickerInputFactory>((_props) => {
         offset={5}
         trapFocus
         returnFocus
-        closeOnEscape={false}
         {...popoverProps}
         id={_id}
         opened={opened}
@@ -338,7 +328,7 @@ export const EmojiPickerInput = factory<EmojiPickerInputFactory>((_props) => {
           </Input>
         </Popover.Target>
 
-        <Popover.Dropdown {...getStyles('dropdown')} onKeyDownCapture={handleDropdownKeyDown}>
+        <Popover.Dropdown {...getStyles('dropdown')}>
           <EmojiPicker
             {...pickerProps}
             skinTone={skinTone}
