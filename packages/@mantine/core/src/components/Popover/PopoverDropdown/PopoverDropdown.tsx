@@ -107,7 +107,7 @@ export const PopoverDropdown = factory<PopoverDropdownFactory>((_props) => {
               onKeyDownCapture={(event) => {
                 if (ctx.closeOnEscape && event.key === 'Escape') {
                   const stopPropagation = (event.target as HTMLElement)?.closest?.(
-                    '[data-mantine-stop-propagation="true"]'
+                    '[data-mantine-stop-propagation="true"][data-popover-dropdown]'
                   );
                   if (
                     stopPropagation &&
@@ -120,6 +120,7 @@ export const PopoverDropdown = factory<PopoverDropdownFactory>((_props) => {
                 handleKeyDownCapture(event);
               }}
               data-position={ctx.placement}
+              data-popover-dropdown
               data-fixed={ctx.floatingStrategy === 'fixed' || undefined}
               {...ctx.getStyles('dropdown', {
                 className,
