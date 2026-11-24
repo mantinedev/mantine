@@ -91,4 +91,48 @@ describe('@mantine/hooks/use-local-storage', () => {
     });
     expect(result.current[0]).toBe('original');
   });
+
+  it('resets to defaultValue when another document clears storage', () => {
+    localStorage.setItem('test', JSON.stringify('stored'));
+    const { result } = renderHook(() =>
+      useLocalStorage({
+        key: 'test',
+        defaultValue: 'default',
+        deserialize: (value) => JSON.parse(value!),
+      })
+    );
+    expect(result.current[0]).toBe('stored');
+
+    act(() => {
+      localStorage.clear();
+      window.dispatchEvent(new StorageEvent('storage', { storageArea: localStorage, key: null }));
+    });
+
+    expect(result.current[0]).toBe('default');
+    expect(localStorage.getItem('test')).toBeNull();
+  });
+
+  it('ignores clear events from a different storage area', () => {
+    localStorage.setItem('test', JSON.stringify('stored'));
+    const { result } = renderHook(() => useLocalStorage({ key: 'test', defaultValue: 'default' }));
+
+    act(() => {
+      window.dispatchEvent(new StorageEvent('storage', { storageArea: sessionStorage, key: null }));
+    });
+
+    expect(result.current[0]).toBe('stored');
+  });
+
+  it('ignores clear events when sync is disabled', () => {
+    localStorage.setItem('test', JSON.stringify('stored'));
+    const { result } = renderHook(() =>
+      useLocalStorage({ key: 'test', defaultValue: 'default', sync: false })
+    );
+
+    act(() => {
+      window.dispatchEvent(new StorageEvent('storage', { storageArea: localStorage, key: null }));
+    });
+
+    expect(result.current[0]).toBe('stored');
+  });
 });
