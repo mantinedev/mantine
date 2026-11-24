@@ -5,6 +5,17 @@ interface IsUrlOptions {
   allowLocalhost?: boolean;
 }
 
+function isLocalhost(hostname: string) {
+  const host = hostname.endsWith('.') ? hostname.slice(0, -1) : hostname;
+
+  return (
+    host === 'localhost' ||
+    host.endsWith('.localhost') ||
+    host === '[::1]' ||
+    /^127\.\d{1,3}\.\d{1,3}\.\d{1,3}$/.test(host)
+  );
+}
+
 export function isUrl(error?: SyncReactNode): (value: unknown) => SyncReactNode;
 export function isUrl(
   options: IsUrlOptions,
@@ -43,7 +54,7 @@ export function isUrl(optionsOrError?: IsUrlOptions | SyncReactNode, error?: Syn
         return _error;
       }
 
-      if (!allowLocalhost && url.hostname === 'localhost') {
+      if (!allowLocalhost && isLocalhost(url.hostname)) {
         return _error;
       }
 
