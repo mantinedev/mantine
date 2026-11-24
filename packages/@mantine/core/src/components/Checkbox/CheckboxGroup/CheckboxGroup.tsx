@@ -13,7 +13,7 @@ import { Input, InputWrapperProps, InputWrapperStylesNames } from '../../Input';
 
 export interface CheckboxGroupContextValue<Value extends Primitive = string> {
   value: Value[];
-  onChange: (event: React.ChangeEvent<HTMLInputElement> | string) => void;
+  onChange: (event: React.ChangeEvent<HTMLInputElement> | Value) => void;
   size: MantineSize | (string & {}) | undefined;
   isDisabled?: (value: Value) => boolean;
 }
