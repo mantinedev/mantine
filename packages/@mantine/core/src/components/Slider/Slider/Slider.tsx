@@ -229,10 +229,12 @@ export const Slider = factory<SliderFactory>((_props) => {
 
   const valueRef = useRef(_value);
   const onChangeEndRef = useRef(onChangeEnd);
+  const boundsRef = useRef({ min, max });
 
   useEffect(() => {
     onChangeEndRef.current = onChangeEnd;
-  }, [onChangeEnd]);
+    boundsRef.current = { min, max };
+  }, [onChangeEnd, min, max]);
 
   const root = useRef<HTMLDivElement>(null);
   const thumb = useRef<HTMLDivElement>(null);
@@ -283,7 +285,9 @@ export const Slider = factory<SliderFactory>((_props) => {
               marks.map((mark) => mark.value)
             )
           : valueRef.current;
-      onChangeEndRef.current(finalValue);
+      // The active scrub may have started before the bounds changed.
+      const bounds = boundsRef.current;
+      onChangeEndRef.current(clamp(finalValue, bounds.min, bounds.max));
     }
   }, [disabled, marks, restrictToMarks]);
 
