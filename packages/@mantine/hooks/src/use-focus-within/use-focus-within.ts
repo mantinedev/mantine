@@ -1,9 +1,34 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
+import { useIsomorphicEffect } from '../use-isomorphic-effect/use-isomorphic-effect';
 import { useCallbackRef } from '../utils';
 
 function containsRelatedTarget(event: FocusEvent) {
   if (event.currentTarget instanceof HTMLElement && event.relatedTarget instanceof Node) {
     return event.currentTarget.contains(event.relatedTarget);
+  }
+
+  return false;
+}
+
+function containsFocus(node: HTMLElement) {
+  let root = node.getRootNode() as Document | ShadowRoot;
+  while (!root.activeElement && 'host' in root) {
+    root = root.host.getRootNode() as Document | ShadowRoot;
+  }
+  let activeElement = root.activeElement;
+  if (activeElement === node.ownerDocument.body && !activeElement.matches(':focus')) {
+    return false;
+  }
+
+  while (activeElement) {
+    if (node.contains(activeElement)) {
+      return true;
+    }
+    activeElement =
+      activeElement.assignedSlot ||
+      activeElement.parentElement ||
+      (activeElement.getRootNode() as ShadowRoot).host ||
+      null;
   }
 
   return false;
@@ -26,6 +51,7 @@ export function useFocusWithin<T extends HTMLElement = any>({
   const [focused, setFocused] = useState(false);
   const focusedRef = useRef(false);
   const previousNode = useRef<T | null>(null);
+  const detachPending = useRef(false);
 
   const onFocusRef = useCallbackRef(onFocus);
   const onBlurRef = useCallbackRef(onBlur);
@@ -49,33 +75,42 @@ export function useFocusWithin<T extends HTMLElement = any>({
     }
   }, []);
 
+  const cleanup = useCallback(() => {
+    if (previousNode.current) {
+      previousNode.current.removeEventListener('focusin', handleFocusIn);
+      previousNode.current.removeEventListener('focusout', handleFocusOut);
+      previousNode.current = null;
+    }
+  }, [handleFocusIn, handleFocusOut]);
+
   const callbackRef: React.RefCallback<T | null> = useCallback(
     (node) => {
-      if (!node) {
+      detachPending.current = node === null;
+      if (!node || previousNode.current === node) {
         return;
       }
 
       if (previousNode.current) {
-        previousNode.current.removeEventListener('focusin', handleFocusIn);
-        previousNode.current.removeEventListener('focusout', handleFocusOut);
+        cleanup();
       }
+
+      _setFocused(containsFocus(node));
 
       node.addEventListener('focusin', handleFocusIn);
       node.addEventListener('focusout', handleFocusOut);
       previousNode.current = node;
     },
-    [handleFocusIn, handleFocusOut]
+    [cleanup, handleFocusIn, handleFocusOut]
   );
 
-  useEffect(
-    () => () => {
-      if (previousNode.current) {
-        previousNode.current.removeEventListener('focusin', handleFocusIn);
-        previousNode.current.removeEventListener('focusout', handleFocusOut);
-      }
-    },
-    []
-  );
+  useIsomorphicEffect(() => {
+    if (detachPending.current) {
+      cleanup();
+      _setFocused(false);
+    }
+  });
+
+  useEffect(() => cleanup, [cleanup]);
 
   return { ref: callbackRef, focused };
 }
