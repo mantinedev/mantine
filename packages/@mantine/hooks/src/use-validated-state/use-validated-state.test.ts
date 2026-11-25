@@ -2,6 +2,44 @@ import { act, renderHook } from '@testing-library/react';
 import { useValidatedState } from './use-validated-state';
 
 describe('@mantine/hooks/use-validated-state', () => {
+  it('stores a function as the initial value without invoking it', () => {
+    const formatter = jest.fn((value: string) => value.toUpperCase());
+    const { result } = renderHook(() => useValidatedState(formatter, () => true));
+
+    expect(result.current[0]).toEqual({
+      value: formatter,
+      lastValidValue: formatter,
+      valid: true,
+    });
+    expect(formatter).not.toHaveBeenCalled();
+  });
+
+  it('stores valid and invalid function values without treating them as updaters', () => {
+    const initialFormatter = jest.fn(() => 'initial');
+    const validFormatter = jest.fn(() => 'valid');
+    const invalidFormatter = jest.fn(() => 'invalid');
+    const { result } = renderHook(() =>
+      useValidatedState(initialFormatter, (value) => value !== invalidFormatter)
+    );
+
+    act(() => result.current[1](validFormatter));
+    expect(result.current[0]).toEqual({
+      value: validFormatter,
+      lastValidValue: validFormatter,
+      valid: true,
+    });
+
+    act(() => result.current[1](invalidFormatter));
+    expect(result.current[0]).toEqual({
+      value: invalidFormatter,
+      lastValidValue: validFormatter,
+      valid: false,
+    });
+    expect(initialFormatter).not.toHaveBeenCalled();
+    expect(validFormatter).not.toHaveBeenCalled();
+    expect(invalidFormatter).not.toHaveBeenCalled();
+  });
+
   it('returns initial value', () => {
     const hookValid = renderHook(() => useValidatedState('test', (val) => val === 'test'));
     expect(hookValid.result.current[0].lastValidValue).toBe('test');
