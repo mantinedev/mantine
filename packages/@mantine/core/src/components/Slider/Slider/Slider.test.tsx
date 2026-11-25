@@ -203,7 +203,11 @@ describe('@mantine/core/Slider', () => {
       await new Promise((resolve) => requestAnimationFrame(resolve));
       expect(changeSpy).toHaveBeenLastCalledWith(clientX);
 
-      rerender(<Slider value={clientX} min={min} max={max} onChangeEnd={endSpy} />);
+      rerender(
+        <>
+          <Slider value={clientX} min={min} max={max} onChange={changeSpy} onChangeEnd={endSpy} />
+        </>
+      );
       expect(screen.getByRole('slider')).toHaveAttribute('aria-valuenow', String(expected));
       expect(endSpy).not.toHaveBeenCalled();
 
