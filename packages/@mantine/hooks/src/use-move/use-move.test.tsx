@@ -70,4 +70,59 @@ describe('@mantine/hooks/use-move', () => {
     act(() => jest.runAllTimers());
     expect(onScrubEnd).not.toHaveBeenCalled();
   });
+  it('uses updated scrub handlers with a stable onChange callback', () => {
+    const onChange = jest.fn();
+    const previousStart = jest.fn();
+    const previousEnd = jest.fn();
+    const nextStart = jest.fn();
+    const nextEnd = jest.fn();
+    const { rerender } = render(
+      <TestComponent
+        onChange={onChange}
+        handlers={{ onScrubStart: previousStart, onScrubEnd: previousEnd }}
+      />
+    );
+
+    rerender(
+      <TestComponent
+        onChange={onChange}
+        handlers={{ onScrubStart: nextStart, onScrubEnd: nextEnd }}
+      />
+    );
+    fireEvent.mouseDown(screen.getByTestId('target'), { clientX: 25, clientY: 50 });
+    fireEvent.mouseUp(document);
+    act(() => jest.advanceTimersByTime(20));
+
+    expect(nextStart).toHaveBeenCalledTimes(1);
+    expect(nextEnd).toHaveBeenCalledTimes(1);
+    expect(previousStart).not.toHaveBeenCalled();
+    expect(previousEnd).not.toHaveBeenCalled();
+  });
+
+  it('uses the current onChange and scrub-end callbacks throughout an active drag', () => {
+    const previousChange = jest.fn();
+    const previousEnd = jest.fn();
+    const nextChange = jest.fn();
+    const nextEnd = jest.fn();
+    const { rerender } = render(
+      <TestComponent onChange={previousChange} handlers={{ onScrubEnd: previousEnd }} />
+    );
+    const target = screen.getByTestId('target');
+    jest.spyOn(target, 'getBoundingClientRect').mockReturnValue(new DOMRect(0, 0, 100, 100));
+    fireEvent.mouseDown(target, { clientX: 25, clientY: 50 });
+    act(() => jest.advanceTimersByTime(20));
+    expect(previousChange).toHaveBeenLastCalledWith({ x: 0.25, y: 0.5 });
+
+    rerender(<TestComponent onChange={nextChange} handlers={{ onScrubEnd: nextEnd }} />);
+    fireEvent.mouseMove(document, { clientX: 75, clientY: 25 });
+    act(() => jest.advanceTimersByTime(20));
+    fireEvent.mouseUp(document);
+    act(() => jest.advanceTimersByTime(20));
+
+    expect(nextChange).toHaveBeenLastCalledWith({ x: 0.75, y: 0.25 });
+    expect(previousChange).toHaveBeenCalledTimes(1);
+    expect(nextEnd).toHaveBeenCalledTimes(1);
+    expect(previousEnd).not.toHaveBeenCalled();
+    expect(target).toHaveAttribute('data-active', 'false');
+  });
 });
