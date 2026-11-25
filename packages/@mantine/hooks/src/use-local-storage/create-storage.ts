@@ -1,5 +1,6 @@
 /* oxlint-disable no-console */
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
+import { useIsomorphicEffect } from '../use-isomorphic-effect/use-isomorphic-effect';
 import { useWindowEvent } from '../use-window-event/use-window-event';
 
 export type StorageType = 'localStorage' | 'sessionStorage';
@@ -89,6 +90,10 @@ export function createStorage<T>(type: StorageType, hookName: string) {
     deserialize = deserializeJSON,
     serialize = (value: T) => serializeJSON(value, hookName),
   }: UseStorageOptions<T>): UseStorageReturnValue<T> {
+    const serializeRef = useMemo(() => ({ current: serialize }), [key]);
+    useIsomorphicEffect(() => {
+      serializeRef.current = serialize;
+    }, [serialize, serializeRef]);
     const readStorageValue = useCallback(
       (skipStorage?: boolean): T => {
         let storageBlockedOrSkipped;
@@ -110,17 +115,17 @@ export function createStorage<T>(type: StorageType, hookName: string) {
         const storageValue = getItem(key);
         return storageValue !== null ? deserialize(storageValue) : (defaultValue as T);
       },
-      [key, defaultValue]
+      [key, defaultValue, deserialize]
     );
 
-    const [value, setValue] = useState<T>(readStorageValue(getInitialValueInEffect));
+    const [value, setValue] = useState<T>(() => readStorageValue(getInitialValueInEffect));
 
     const setStorageValue = useCallback(
       (val: T | ((prevState: T) => T)) => {
         if (val instanceof Function) {
           setValue((current) => {
             const result = val(current);
-            setItem(key, serialize(result));
+            setItem(key, serializeRef.current(result));
             // Defer dispatching this event to avoid the handler being called during render.
             queueMicrotask(() => {
               window.dispatchEvent(new CustomEvent(eventName, { detail: { key, value: result } }));
@@ -128,7 +133,7 @@ export function createStorage<T>(type: StorageType, hookName: string) {
             return result;
           });
         } else {
-          setItem(key, serialize(val));
+          setItem(key, serializeRef.current(val));
           window.dispatchEvent(new CustomEvent(eventName, { detail: { key, value: val } }));
           setValue(val);
         }
