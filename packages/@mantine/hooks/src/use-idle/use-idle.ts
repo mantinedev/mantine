@@ -1,4 +1,5 @@
-import { useEffect, useRef, useState } from 'react';
+import { useRef, useState } from 'react';
+import { useShallowEffect } from '../use-shallow-effect/use-shallow-effect';
 
 export interface UseIdleOptions {
   events?: (keyof DocumentEventMap)[];
@@ -15,7 +16,7 @@ export function useIdle(timeout: number, options?: UseIdleOptions) {
   const [idle, setIdle] = useState(initialState);
   const timer = useRef(-1);
 
-  useEffect(() => {
+  useShallowEffect(() => {
     const handleEvents = () => {
       setIdle(false);
 
@@ -40,7 +41,7 @@ export function useIdle(timeout: number, options?: UseIdleOptions) {
       window.clearTimeout(timer.current);
       timer.current = -1;
     };
-  }, [timeout]);
+  }, [timeout, events]);
 
   return idle;
 }
