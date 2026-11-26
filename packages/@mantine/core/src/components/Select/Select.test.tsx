@@ -599,4 +599,25 @@ describe('@mantine/core/Select', () => {
     expect(screen.getByRole('listbox')).not.toHaveAttribute('aria-labelledby');
     expect(screen.getByRole('listbox')).toHaveAccessibleName('Test aria-label');
   });
+
+  it('clears aria-activedescendant when the dropdown is closed and opened again', async () => {
+    render(<Select label="Pick" data={['One', 'Two']} />);
+    const input = screen.getByRole('combobox', { name: 'Pick' });
+
+    await userEvent.click(input);
+    expect(screen.getByRole('listbox')).toBeVisible();
+
+    await userEvent.keyboard('{ArrowDown}');
+    expect(input).toHaveAttribute('aria-activedescendant');
+    expect(screen.getByRole('option', { name: 'One' })).toHaveAttribute('data-combobox-selected');
+
+    await userEvent.keyboard('{Escape}');
+    expect(screen.queryByRole('listbox')).toBeNull();
+    expect(input).not.toHaveAttribute('aria-activedescendant');
+
+    await userEvent.click(input);
+    expect(screen.getByRole('listbox')).toBeVisible();
+    expect(input).not.toHaveAttribute('aria-activedescendant');
+    expect(screen.queryByRole('option', { selected: true })).toBeNull();
+  });
 });
