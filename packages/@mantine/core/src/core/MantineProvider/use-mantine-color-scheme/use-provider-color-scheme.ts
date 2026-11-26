@@ -54,7 +54,7 @@ export function useProviderColorScheme({
   }, [manager.clear, defaultColorScheme]);
 
   useEffect(() => {
-    manager.subscribe(setColorScheme);
+    manager.subscribe(setValue);
     return manager.unsubscribe;
   }, [manager.subscribe, manager.unsubscribe]);
 
