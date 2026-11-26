@@ -1,4 +1,5 @@
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { useIsomorphicEffect } from '../use-isomorphic-effect/use-isomorphic-effect';
 
 export interface UseFetchOptions extends RequestInit {
   autoInvoke?: boolean;
@@ -20,6 +21,11 @@ export function useFetch<T>(
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<Error | null>(null);
   const controller = useRef<AbortController | null>(null);
+  const optionsRef = useMemo(() => ({ current: options }), [url, JSON.stringify(options)]);
+
+  useIsomorphicEffect(() => {
+    optionsRef.current = options;
+  });
 
   const refetch = useCallback(() => {
     if (controller.current) {
@@ -31,7 +37,7 @@ export function useFetch<T>(
 
     setLoading(true);
 
-    return fetch(url, { ...options, signal: requestController.signal })
+    return fetch(url, { ...optionsRef.current, signal: requestController.signal })
       .then((res) => {
         if (!res.ok) {
           throw new Error(`Request failed with status ${res.status}`);
@@ -57,7 +63,7 @@ export function useFetch<T>(
 
         return err;
       });
-  }, [url, JSON.stringify(options)]);
+  }, [url, optionsRef]);
 
   const abort = useCallback(() => {
     if (controller.current) {
