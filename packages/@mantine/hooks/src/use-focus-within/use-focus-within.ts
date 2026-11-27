@@ -83,10 +83,22 @@ export function useFocusWithin<T extends HTMLElement = any>({
     }
   }, [handleFocusIn, handleFocusOut]);
 
+  const finishDetach = useCallback(() => {
+    if (detachPending.current && previousNode.current) {
+      cleanup();
+      _setFocused(false);
+    }
+  }, [cleanup, _setFocused]);
+
   const callbackRef: React.RefCallback<T | null> = useCallback(
     (node) => {
       detachPending.current = node === null;
-      if (!node || previousNode.current === node) {
+      if (!node) {
+        queueMicrotask(finishDetach);
+        return;
+      }
+
+      if (previousNode.current === node) {
         return;
       }
 
@@ -100,15 +112,10 @@ export function useFocusWithin<T extends HTMLElement = any>({
       node.addEventListener('focusout', handleFocusOut);
       previousNode.current = node;
     },
-    [cleanup, handleFocusIn, handleFocusOut]
+    [cleanup, finishDetach, handleFocusIn, handleFocusOut]
   );
 
-  useIsomorphicEffect(() => {
-    if (detachPending.current) {
-      cleanup();
-      _setFocused(false);
-    }
-  });
+  useIsomorphicEffect(finishDetach);
 
   useEffect(() => cleanup, [cleanup]);
 

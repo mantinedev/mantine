@@ -136,6 +136,38 @@ function DetachableTarget({ visible, onFocus }: { visible: boolean; onFocus: () 
 }
 
 describe('detached focus-within targets', () => {
+  it('clears focus when only the child that owns the target ref rerenders', async () => {
+    function Child({ targetRef }: { targetRef: React.RefCallback<HTMLDivElement> }) {
+      const [enabled, setEnabled] = useState(true);
+      return (
+        <>
+          <button type="button" onClick={() => setEnabled(false)}>
+            Detach
+          </button>
+          <div ref={enabled ? targetRef : undefined}>
+            <input />
+          </div>
+        </>
+      );
+    }
+
+    function Parent() {
+      const { ref, focused } = useFocusWithin<HTMLDivElement>();
+      return (
+        <>
+          <Child targetRef={ref} />
+          <output>{String(focused)}</output>
+        </>
+      );
+    }
+
+    render(<Parent />);
+    act(() => screen.getByRole('textbox').focus());
+    expect(screen.getByRole('status')).toHaveTextContent('true');
+    await act(async () => screen.getByRole('button').click());
+    expect(screen.getByRole('status')).toHaveTextContent('false');
+  });
+
   it('clears focus when a focused target is removed and can focus a replacement', () => {
     const onFocus = jest.fn();
     const { rerender } = render(<DetachableTarget visible onFocus={onFocus} />);
