@@ -33,7 +33,7 @@ const defaultOptions: UseFileDialogOptions = {
 };
 
 function getInitialFilesList(files: UseFileDialogOptions['initialFiles']): FileList | null {
-  if (!files) {
+  if (!files || typeof FileList === 'undefined') {
     return null;
   }
 
