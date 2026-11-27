@@ -351,7 +351,8 @@ export const MultiSelect = genericFactory<MultiSelectFactory>((_props) => {
       _searchValue.length === 0 &&
       _value.length > 0 &&
       !event.nativeEvent.isComposing &&
-      !readOnly
+      !readOnly &&
+      !optionsLockup[`${_value[_value.length - 1]}`]?.disabled
     ) {
       onRemove?.(_value[_value.length - 1]);
       setValue(_value.slice(0, _value.length - 1));
