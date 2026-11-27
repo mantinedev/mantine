@@ -27,4 +27,37 @@ describe('@mantine/hooks/use-clipboard', () => {
     expect(hook.result.current.copied).toBe(false);
     expect(hook.result.current.error).toBe(error);
   });
+
+  it('keeps the reset state when a pending write completes', async () => {
+    let finish!: () => void;
+    writeText.mockImplementationOnce(
+      () =>
+        new Promise<void>((resolve) => {
+          finish = resolve;
+        })
+    );
+    const { result } = renderHook(() => useClipboard());
+    act(() => result.current.copy('draft'));
+    act(() => result.current.reset());
+    await act(async () => finish());
+    expect(result.current.copied).toBe(false);
+    expect(result.current.error).toBeNull();
+  });
+
+  it('keeps the latest copy result when an older write rejects', async () => {
+    let fail!: (error: Error) => void;
+    writeText.mockImplementationOnce(
+      () =>
+        new Promise<void>((_, reject) => {
+          fail = reject;
+        })
+    );
+    writeText.mockResolvedValueOnce(undefined);
+    const { result } = renderHook(() => useClipboard());
+    act(() => result.current.copy('first'));
+    await act(async () => result.current.copy('second'));
+    await act(async () => fail(new Error('first write failed')));
+    expect(result.current.copied).toBe(true);
+    expect(result.current.error).toBeNull();
+  });
 });
