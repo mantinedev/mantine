@@ -1,5 +1,4 @@
-import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import { useIsomorphicEffect } from '../use-isomorphic-effect/use-isomorphic-effect';
+import { useCallback, useEffect, useInsertionEffect, useMemo, useRef, useState } from 'react';
 
 export interface UseFetchOptions extends RequestInit {
   autoInvoke?: boolean;
@@ -23,7 +22,7 @@ export function useFetch<T>(
   const controller = useRef<AbortController | null>(null);
   const optionsRef = useMemo(() => ({ current: options }), [url, JSON.stringify(options)]);
 
-  useIsomorphicEffect(() => {
+  useInsertionEffect(() => {
     optionsRef.current = options;
   });
 

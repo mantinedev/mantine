@@ -109,11 +109,10 @@ describe('@mantine/hooks/use-fetch', () => {
     });
 
     const [, init] = jest.mocked(global.fetch).mock.calls[0];
-    if (updatedOptions.headers) {
-      expect(new Headers(init?.headers).get('X-Request-Value')).toBe('updated');
-    } else {
-      expect((init?.body as FormData | URLSearchParams).get('value')).toBe('updated');
-    }
+    const value = updatedOptions.headers
+      ? new Headers(init?.headers).get('X-Request-Value')
+      : (init?.body as FormData | URLSearchParams).get('value');
+    expect(value).toBe('updated');
 
     await act(async () => requests[0].respond({ success: true }));
     expect(result.current.data).toStrictEqual({ success: true });
@@ -135,23 +134,33 @@ describe('@mantine/hooks/use-fetch', () => {
     expect(result.current.error).toBe(null);
   });
 
-  it.each(['effect', 'layout effect'])('uses current options in a child %s', async (effect) => {
+  it.each([
+    ['effect', 'plain headers'],
+    ['layout effect', 'plain headers'],
+    ['layout effect', 'Headers'],
+  ])('uses current options in a child %s with %s', async (effect, kind) => {
     const requests = mockFetch();
     const useEffect = effect === 'effect' ? React.useEffect : React.useLayoutEffect;
 
-    function FetchChild({ refetch }: { refetch: () => Promise<any> }) {
+    function FetchChild({ refetch, value }: { refetch: () => Promise<any>; value?: string }) {
       useEffect(() => {
         refetch();
-      }, [refetch]);
+      }, [refetch, value]);
       return null;
     }
 
     function FetchParent({ value }: { value: string }) {
       const { refetch } = useFetch('/api', {
         autoInvoke: false,
-        headers: { 'X-Request-Value': value },
+        headers:
+          kind === 'Headers'
+            ? new Headers({ 'X-Request-Value': value })
+            : { 'X-Request-Value': value },
       });
-      return React.createElement(FetchChild, { refetch });
+      return React.createElement(FetchChild, {
+        refetch,
+        value: kind === 'Headers' ? value : undefined,
+      });
     }
 
     const { rerender } = render(React.createElement(FetchParent, { value: 'initial' }));
