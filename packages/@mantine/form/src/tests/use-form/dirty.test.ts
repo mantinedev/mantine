@@ -60,6 +60,48 @@ function tests(mode: FormMode) {
     expect(hook.result.current.isDirty('a.2')).toBe(false);
     expect(hook.result.current.isDirty('a')).toBe(false);
   });
+
+  it('keeps list changes dirty when an unrelated field is restored', () => {
+    const hook = renderHook(() => useForm({ mode, initialValues: { rows: [1, 2], name: 'x' } }));
+    const form = hook.result.current;
+
+    act(() => form.insertListItem('rows', 3));
+    act(() => form.setFieldValue('name', 'changed'));
+    act(() => form.setFieldValue('name', 'x'));
+    expect(form.isDirty()).toBe(true);
+    act(() => form.removeListItem('rows', 2));
+    expect(form.isDirty()).toBe(false);
+
+    act(() => form.removeListItem('rows', 0));
+    expect(form.isDirty()).toBe(true);
+    act(() => form.insertListItem('rows', 1, 0));
+    expect(form.isDirty()).toBe(false);
+
+    act(() => form.reorderListItem('rows', { from: 0, to: 1 }));
+    expect(form.isDirty()).toBe(true);
+    act(() => form.reorderListItem('rows', { from: 1, to: 0 }));
+    expect(form.isDirty()).toBe(false);
+  });
+
+  it('recalculates list dirty state when individual rows are restored', () => {
+    const rows = [{ name: 'one' }, { name: 'two' }];
+    const hook = renderHook(() => useForm({ mode, initialValues: { rows, name: 'x' } }));
+    const form = hook.result.current;
+
+    act(() => form.setFieldValue('name', 'x'));
+    act(() => form.replaceListItem('rows', 0, { name: 'changed' }));
+    act(() => form.replaceListItem('rows', 1, { name: 'changed' }));
+    expect(form.isDirty()).toBe(true);
+    act(() => form.setFieldValue('rows.0', rows[0]));
+    expect(form.isDirty('rows')).toBe(true);
+    act(() => form.setFieldValue('rows.1.name', 'two'));
+    expect(form.isDirty('rows')).toBe(false);
+    expect(form.isDirty()).toBe(false);
+
+    act(() => form.replaceListItem('rows', 0, { name: 'changed' }));
+    act(() => form.resetField('rows.0'));
+    expect(form.isDirty()).toBe(false);
+  });
 }
 
 describe('@mantine/form/dirty-controlled', () => {

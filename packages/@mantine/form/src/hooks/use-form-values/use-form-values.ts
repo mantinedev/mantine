@@ -16,6 +16,7 @@ export interface $FormValues<out Values extends Record<PropertyKey, any>> {
   getValuesSnapshot: () => Values;
   resetField: <TValues extends Values>(
     path: PropertyKey,
+    onValuesResolved: (values: TValues) => void,
     subscribers?: (SetFieldValueSubscriber<TValues> | null | undefined)[]
   ) => void;
 }
@@ -40,6 +41,7 @@ export type SetFieldValueSubscriber<out Values> = <TValues extends Values>(
 export interface SetFieldValueInput<Values> {
   path: PropertyKey;
   value: any;
+  onValuesResolved?: (values: Values) => void;
   updateState?: boolean;
   subscribers?: (SetFieldValueSubscriber<Values> | null | undefined)[];
 }
@@ -93,9 +95,14 @@ export function useFormValues<Values extends Record<PropertyKey, any>>({
       const updatedValue =
         payload.value instanceof Function ? payload.value(currentValue) : payload.value;
 
+      const previousValues = refValues.current;
+      const updatedValues =
+        currentValue === updatedValue
+          ? previousValues
+          : setPath(payload.path, updatedValue, previousValues);
+      payload.onValuesResolved?.(updatedValues);
+
       if (currentValue !== updatedValue) {
-        const previousValues = refValues.current;
-        const updatedValues = setPath(payload.path, updatedValue, refValues.current);
         setValues({ values: updatedValues, updateState: payload.updateState });
 
         payload.subscribers
@@ -136,14 +143,20 @@ export function useFormValues<Values extends Record<PropertyKey, any>>({
   const getValuesSnapshot = useCallback(() => valuesSnapshot.current, [valuesSnapshot.current]);
 
   const resetField = useCallback(
-    (path: PropertyKey, subscribers?: (SetFieldValueSubscriber<Values> | null | undefined)[]) => {
+    (
+      path: PropertyKey,
+      onValuesResolved: (values: Values) => void,
+      subscribers?: (SetFieldValueSubscriber<Values> | null | undefined)[]
+    ) => {
       const snapshotValue = getPath(path, valuesSnapshot.current);
       if (typeof snapshotValue === 'undefined') {
+        onValuesResolved(refValues.current);
         return;
       }
       setFieldValue({
         path,
         value: snapshotValue,
+        onValuesResolved,
         updateState: mode === 'controlled',
         subscribers,
       });

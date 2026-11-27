@@ -126,6 +126,7 @@ function tests(mode: FormMode) {
       'billing.items.0.name': 'nested-error',
     });
     expect(hook.result.current.getDirty()).toStrictEqual({
+      items: true,
       'lineitems.0.name': true,
       'billing.items.0.name': true,
     });

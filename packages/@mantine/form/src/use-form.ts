@@ -173,16 +173,13 @@ export function useForm<
   const setFieldValue: SetFieldValue<Values> = useCallback(
     (path, value, options) => {
       const shouldValidate = shouldValidateOnChange(path, validateInputOnChange);
-      const resolvedValue =
-        value instanceof Function ? value(getPath(path, $values.refValues.current) as any) : value;
-
-      $status.setCalculatedFieldDirty(path, resolvedValue);
       touchTrigger === 'change' && $status.setFieldTouched(path, true);
       !shouldValidate && clearInputErrorOnChange && $errors.clearFieldError(path);
 
       $values.setFieldValue({
         path,
         value,
+        onValuesResolved: (values) => $status.updateFieldDirty(path, values),
         updateState: mode === 'controlled',
         subscribers: [
           ...$watch.getFieldSubscribers(path),
@@ -205,7 +202,7 @@ export function useForm<
       const previousValues = $values.refValues.current;
       const resolvedValues = typeof values === 'function' ? values(previousValues) : values;
       Object.keys(resolvedValues).forEach((key) => {
-        $status.setCalculatedFieldDirty(key, (resolvedValues as Record<string, any>)[key]);
+        $status.updateFieldDirty(key, resolvedValues);
       });
       $values.setValues({ values: resolvedValues, updateState: mode === 'controlled' });
       handleValuesChanges(previousValues);
@@ -417,8 +414,7 @@ export function useForm<
 
   const resetField = useCallback(
     (path: PropertyKey) => {
-      $status.clearFieldDirty(String(path));
-      $values.resetField(path, [
+      $values.resetField(path, (values) => $status.updateFieldDirty(path, values, true), [
         ...$watch.getFieldSubscribers(path as LooseKeys<Values>),
         mode !== 'controlled'
           ? () =>

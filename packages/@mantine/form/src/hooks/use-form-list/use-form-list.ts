@@ -20,47 +20,30 @@ export function useFormList<Values extends Record<string, any>>({
   $status,
   $watch,
 }: UseFormListInput<Values>) {
-  const reorderListItem: ReorderListItem<Values> = useCallback((path, payload) => {
+  const setListValues = (path: PropertyKey, values: Values) => {
     const previousValues = $values.refValues.current;
-    $status.clearFieldDirty(path);
-    $errors.setErrors((errs) => reorderErrors(path, payload, errs));
-    $values.setValues({
-      values: reorderPath(path, payload, $values.refValues.current),
-      updateState: true,
-    });
+    $status.updateFieldDirty(path, values);
+    $values.setValues({ values, updateState: true });
     $watch.notifyWatchSubscribers(previousValues);
+  };
+
+  const reorderListItem: ReorderListItem<Values> = useCallback((path, payload) => {
+    $errors.setErrors((errs) => reorderErrors(path, payload, errs));
+    setListValues(path, reorderPath(path, payload, $values.refValues.current));
   }, []);
 
   const removeListItem: RemoveListItem<Values> = useCallback((path, index) => {
-    const previousValues = $values.refValues.current;
-    $status.clearFieldDirty(path);
     $errors.setErrors((errs) => changeErrorIndices(path, index, errs, -1));
-    $values.setValues({
-      values: removePath(path, index, $values.refValues.current),
-      updateState: true,
-    });
-    $watch.notifyWatchSubscribers(previousValues);
+    setListValues(path, removePath(path, index, $values.refValues.current));
   }, []);
 
   const insertListItem: InsertListItem<Values> = useCallback((path, item, index) => {
-    const previousValues = $values.refValues.current;
-    $status.clearFieldDirty(path);
     $errors.setErrors((errs) => changeErrorIndices(path, index, errs, 1));
-    $values.setValues({
-      values: insertPath(path, item, index, $values.refValues.current),
-      updateState: true,
-    });
-    $watch.notifyWatchSubscribers(previousValues);
+    setListValues(path, insertPath(path, item, index, $values.refValues.current));
   }, []);
 
   const replaceListItem: ReplaceListItem<Values> = useCallback((path, index, item) => {
-    const previousValues = $values.refValues.current;
-    $status.clearFieldDirty(path);
-    $values.setValues({
-      values: replacePath(path, item, index, $values.refValues.current),
-      updateState: true,
-    });
-    $watch.notifyWatchSubscribers(previousValues);
+    setListValues(path, replacePath(path, item, index, $values.refValues.current));
   }, []);
 
   return { reorderListItem, removeListItem, insertListItem, replaceListItem };
