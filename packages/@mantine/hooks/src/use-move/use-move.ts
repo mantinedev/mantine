@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
-import { clamp } from '../utils';
+import { clamp, useCallbackRef } from '../utils';
 
 export interface UseMovePosition {
   x: number;
@@ -33,6 +33,9 @@ export function useMove<T extends HTMLElement = any>(
   const frame = useRef(0);
   const cleanupRef = useRef<(() => void) | null>(null);
   const [active, setActive] = useState(false);
+  const handleChange = useCallbackRef(onChange);
+  const handleScrubStart = useCallbackRef(handlers?.onScrubStart);
+  const handleScrubEnd = useCallbackRef(handlers?.onScrubEnd);
 
   useEffect(() => {
     mounted.current = true;
@@ -53,7 +56,7 @@ export function useMove<T extends HTMLElement = any>(
 
             if (rect.width && rect.height) {
               const _x = clamp((x - rect.left) / rect.width, 0, 1);
-              onChange({
+              handleChange({
                 x: dir === 'ltr' ? _x : 1 - _x,
                 y: clamp((y - rect.top) / rect.height, 0, 1),
               });
@@ -81,7 +84,7 @@ export function useMove<T extends HTMLElement = any>(
       const startScrubbing = () => {
         if (!isSliding.current && mounted.current) {
           isSliding.current = true;
-          typeof handlers?.onScrubStart === 'function' && handlers.onScrubStart();
+          handleScrubStart?.();
           setActive(true);
           bindEvents();
         }
@@ -93,7 +96,7 @@ export function useMove<T extends HTMLElement = any>(
           setActive(false);
           unbindEvents();
           setTimeout(() => {
-            typeof handlers?.onScrubEnd === 'function' && handlers.onScrubEnd();
+            handleScrubEnd?.();
           }, 0);
         }
       };
@@ -138,7 +141,7 @@ export function useMove<T extends HTMLElement = any>(
         }
       };
     },
-    [dir, onChange]
+    [dir, handleChange, handleScrubStart, handleScrubEnd]
   );
 
   return { ref: refCallback, active };
