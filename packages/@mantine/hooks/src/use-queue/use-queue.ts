@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 
 export interface UseQueueOptions<T> {
   /** Initial values to be added to the queue */
@@ -29,36 +29,18 @@ export function useQueue<T>({
   initialValues = [],
   limit,
 }: UseQueueOptions<T>): UseQueueReturnValue<T> {
-  const [state, setState] = useState({
-    state: initialValues.slice(0, limit),
-    queue: initialValues.slice(limit),
-  });
+  const [items, setItems] = useState<T[]>(() => [...initialValues]);
+  const [state, queue] = useMemo(() => [items.slice(0, limit), items.slice(limit)], [items, limit]);
 
-  const add = (...items: T[]) =>
-    setState((current) => {
-      const results = [...current.state, ...current.queue, ...items];
+  const add = (...newItems: T[]) => setItems((current) => [...current, ...newItems]);
 
-      return {
-        state: results.slice(0, limit),
-        queue: results.slice(limit),
-      };
-    });
+  const update = (fn: (values: T[]) => T[]) => setItems((current) => [...fn([...current])]);
 
-  const update = (fn: (state: T[]) => T[]) =>
-    setState((current) => {
-      const results = fn([...current.state, ...current.queue]);
-
-      return {
-        state: results.slice(0, limit),
-        queue: results.slice(limit),
-      };
-    });
-
-  const cleanQueue = () => setState((current) => ({ state: current.state, queue: [] }));
+  const cleanQueue = () => setItems((current) => current.slice(0, limit));
 
   return {
-    state: state.state,
-    queue: state.queue,
+    state,
+    queue,
     add,
     update,
     cleanQueue,

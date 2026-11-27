@@ -57,4 +57,23 @@ describe('@mantine/hooks/use-queue', () => {
     expect(hook.result.current.state).toStrictEqual([1, 2]);
     expect(hook.result.current.queue).toStrictEqual([]);
   });
+
+  it('moves items between state and queue when the limit changes', () => {
+    const { result, rerender } = renderHook(
+      ({ limit }) => useQueue({ initialValues: ['a', 'b', 'c', 'd'], limit }),
+      { initialProps: { limit: 3 } }
+    );
+
+    rerender({ limit: 1 });
+    expect(result.current.state).toEqual(['a']);
+    expect(result.current.queue).toEqual(['b', 'c', 'd']);
+
+    rerender({ limit: 2 });
+    expect(result.current.state).toEqual(['a', 'b']);
+    expect(result.current.queue).toEqual(['c', 'd']);
+    act(() => result.current.cleanQueue());
+    rerender({ limit: 4 });
+    expect(result.current.state).toEqual(['a', 'b']);
+    expect(result.current.queue).toEqual([]);
+  });
 });
