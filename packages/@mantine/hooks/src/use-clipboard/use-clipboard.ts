@@ -25,8 +25,11 @@ export function useClipboard(options: UseClipboardInput = {}): UseClipboardRetur
   const [copied, setCopied] = useState(false);
   const timeoutRef = useRef<number | null>(null);
 
+  const copyId = useRef(0);
+
   useEffect(
     () => () => {
+      copyId.current += 1;
       window.clearTimeout(timeoutRef.current!);
     },
     []
@@ -39,14 +42,21 @@ export function useClipboard(options: UseClipboardInput = {}): UseClipboardRetur
   };
 
   const copy = (value: any) => {
+    const id = ++copyId.current;
     if ('clipboard' in navigator) {
       navigator.clipboard
         .writeText(value)
         .then(() => {
+          if (id !== copyId.current) {
+            return;
+          }
           setError(null);
           handleCopyResult(true);
         })
         .catch((err) => {
+          if (id !== copyId.current) {
+            return;
+          }
           setError(err);
           setCopied(false);
         });
@@ -56,6 +66,7 @@ export function useClipboard(options: UseClipboardInput = {}): UseClipboardRetur
   };
 
   const reset = () => {
+    copyId.current += 1;
     setCopied(false);
     setError(null);
     window.clearTimeout(timeoutRef.current!);
