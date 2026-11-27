@@ -257,6 +257,8 @@ export const RangeSlider = factory<RangeSliderFactory>((_props) => {
   const root = useRef<HTMLDivElement>(null);
   const thumbIndex = useRef<number | undefined>(undefined);
   const [domainMin, domainMax] = domain || [min!, max!];
+  const minValue = Math.max(min!, domainMin);
+  const maxValue = Math.min(max!, domainMax);
   const positions = [
     getPosition({ value: _value[0], min: domainMin, max: domainMax }),
     getPosition({ value: _value[1], min: domainMin, max: domainMax }),
@@ -310,25 +312,25 @@ export const RangeSlider = factory<RangeSliderFactory>((_props) => {
         }
       }
     } else {
-      const clampedVal = clamp(val, min!, max!);
+      const clampedVal = clamp(val, minValue, maxValue);
       clone[index] = clampedVal;
 
       if (index === 0) {
         if (clampedVal > clone[1] - (minRange - 0.000000001)) {
           if (pushOnOverlap) {
-            clone[1] = Math.min(val + minRange, max);
+            clone[1] = Math.min(clampedVal + minRange, maxValue);
           } else {
             clone[index] = valueRef.current[index];
           }
         }
 
-        if (clampedVal > (max - (minRange - 0.000000001) || min)) {
+        if (clampedVal > (maxValue - (minRange - 0.000000001) || minValue)) {
           clone[index] = valueRef.current[index];
         }
 
-        if (clone[1] - val > maxRange) {
+        if (clone[1] - clampedVal > maxRange) {
           if (pushOnOverlap) {
-            clone[1] = val + maxRange;
+            clone[1] = clampedVal + maxRange;
           } else {
             clone[index] = valueRef.current[index];
           }
@@ -338,7 +340,7 @@ export const RangeSlider = factory<RangeSliderFactory>((_props) => {
       if (index === 1) {
         if (clampedVal < clone[0] + minRange) {
           if (pushOnOverlap) {
-            clone[0] = Math.max(val - minRange, min);
+            clone[0] = Math.max(clampedVal - minRange, minValue);
           } else {
             clone[index] = valueRef.current[index];
           }
@@ -350,7 +352,7 @@ export const RangeSlider = factory<RangeSliderFactory>((_props) => {
 
         if (clampedVal - clone[0] > maxRange) {
           if (pushOnOverlap) {
-            clone[0] = val - maxRange;
+            clone[0] = clampedVal - maxRange;
           } else {
             clone[index] = valueRef.current[index];
           }
@@ -456,7 +458,7 @@ export const RangeSlider = factory<RangeSliderFactory>((_props) => {
           const nextValue =
             restrictToMarks && marks
               ? getNextMarkValue(valueRef.current[focusedIndex], marks)
-              : Math.min(Math.max(valueRef.current[focusedIndex] + step, domainMin), domainMax);
+              : Math.min(Math.max(valueRef.current[focusedIndex] + step, minValue), maxValue);
           setRangedValue(getFloatingValue(nextValue, precision), focusedIndex, true);
           break;
         }
@@ -477,9 +479,9 @@ export const RangeSlider = factory<RangeSliderFactory>((_props) => {
                     dir === 'rtl'
                       ? valueRef.current[focusedIndex] - step
                       : valueRef.current[focusedIndex] + step,
-                    domainMin
+                    minValue
                   ),
-                  domainMax
+                  maxValue
                 );
 
           setRangedValue(getFloatingValue(nextValue, precision), focusedIndex, true);
@@ -493,7 +495,7 @@ export const RangeSlider = factory<RangeSliderFactory>((_props) => {
           const nextValue =
             restrictToMarks && marks
               ? getPreviousMarkValue(valueRef.current[focusedIndex], marks)
-              : Math.min(Math.max(valueRef.current[focusedIndex] - step, domainMin), domainMax);
+              : Math.min(Math.max(valueRef.current[focusedIndex] - step, minValue), maxValue);
           setRangedValue(getFloatingValue(nextValue, precision), focusedIndex, true);
           break;
         }
@@ -514,9 +516,9 @@ export const RangeSlider = factory<RangeSliderFactory>((_props) => {
                     dir === 'rtl'
                       ? valueRef.current[focusedIndex] + step
                       : valueRef.current[focusedIndex] - step,
-                    domainMin
+                    minValue
                   ),
-                  domainMax
+                  maxValue
                 );
 
           setRangedValue(getFloatingValue(nextValue, precision), focusedIndex, true);
