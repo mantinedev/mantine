@@ -22,6 +22,75 @@ const testProps: PhoneInputProps = {
 };
 
 describe('@mantine/core/PhoneInput', () => {
+  it('clears a formatted dial code with consecutive Backspace presses', async () => {
+    const onChange = jest.fn();
+    render(<PhoneInput defaultCountry="by" defaultValue="+3755" onChange={onChange} />);
+    const input = screen.getByRole('textbox') as HTMLInputElement;
+    await userEvent.click(input);
+    input.setSelectionRange(input.value.length, input.value.length);
+
+    for (let index = 0; index < 5; index++) {
+      await userEvent.keyboard('{Backspace}');
+      await act(async () => {
+        await new Promise((resolve) => setTimeout(resolve, 30));
+      });
+    }
+
+    expect(input.value).toBe('');
+    expect(onChange).toHaveBeenLastCalledWith('', expect.anything());
+  });
+
+  it.each([0, 4, 5])('deletes the next digit at caret position %s', async (position) => {
+    render(<PhoneInput defaultCountry="by" defaultValue="+3755" />);
+    const input = screen.getByRole('textbox') as HTMLInputElement;
+    await userEvent.click(input);
+    input.setSelectionRange(position, position);
+
+    await userEvent.keyboard('{Delete}');
+    await act(async () => {
+      await new Promise((resolve) => setTimeout(resolve, 30));
+    });
+
+    expect(input.value).toBe(position === 0 ? '+7 (55' : '+375 ');
+    expect(input.selectionStart).toBe(position === 0 ? 1 : 4);
+  });
+
+  it('keeps the caret after + when deleting consecutive dial code digits', async () => {
+    render(<PhoneInput defaultCountry="by" defaultValue="+375" />);
+    const input = screen.getByRole('textbox') as HTMLInputElement;
+    await userEvent.click(input);
+    input.setSelectionRange(1, 1);
+
+    for (const expected of ['+7 (5', '+5']) {
+      await userEvent.keyboard('{Delete}');
+      await act(async () => {
+        await new Promise((resolve) => setTimeout(resolve, 30));
+      });
+      expect(input.value).toBe(expected);
+      expect(input.selectionStart).toBe(1);
+    }
+  });
+
+  it('respects deletion prevented by onKeyDown', async () => {
+    const onChange = jest.fn();
+    render(
+      <PhoneInput
+        defaultCountry="by"
+        defaultValue="+3755"
+        onChange={onChange}
+        onKeyDown={(event) => event.preventDefault()}
+      />
+    );
+    const input = screen.getByRole('textbox') as HTMLInputElement;
+    await userEvent.click(input);
+    input.setSelectionRange(4, 4);
+    await userEvent.keyboard('{Delete}');
+    expect(input.value).toBe('+375 (5');
+    expect(input.selectionStart).toBe(4);
+    expect(input.selectionEnd).toBe(4);
+    expect(onChange).not.toHaveBeenCalled();
+  });
+
   tests.axe([
     <PhoneInput aria-label="test-phone" key="1" />,
     <PhoneInput label="Phone number" key="2" />,
