@@ -186,7 +186,6 @@ export const ColorPicker = factory<ColorPickerFactory>((_props) => {
   });
 
   const formatRef = useRef(format || 'hex');
-  const valueRef = useRef<string>('');
   const scrubTimeoutRef = useRef<number>(-1);
   const isScrubbingRef = useRef(false);
   const withAlpha = format === 'hexa' || format === 'rgba' || format === 'hsla';
@@ -199,6 +198,12 @@ export const ColorPicker = factory<ColorPickerFactory>((_props) => {
   });
 
   const [parsed, setParsed] = useState<HsvaColor>(parseColor(_value));
+  const parsedRef = useRef(parsed);
+
+  const updateParsed = (color: HsvaColor) => {
+    parsedRef.current = color;
+    setParsed(color);
+  };
 
   const startScrubbing = () => {
     window.clearTimeout(scrubTimeoutRef.current);
@@ -213,18 +218,14 @@ export const ColorPicker = factory<ColorPickerFactory>((_props) => {
   };
 
   const handleChange = (color: Partial<HsvaColor>) => {
-    setParsed((current) => {
-      const next = { ...current, ...color };
-      valueRef.current = convertHsvaTo(formatRef.current, next);
-      return next;
-    });
-
-    setValue(valueRef.current);
+    const next = { ...parsedRef.current, ...color };
+    updateParsed(next);
+    setValue(convertHsvaTo(formatRef.current, next));
   };
 
   useDidUpdate(() => {
     if (typeof value === 'string' && isColorValid(value) && !isScrubbingRef.current) {
-      setParsed(parseColor(value));
+      updateParsed(parseColor(value));
     }
   }, [value]);
 
@@ -315,7 +316,7 @@ export const ColorPicker = factory<ColorPickerFactory>((_props) => {
               onColorSwatchClick?.(convertedColor);
               onChangeEnd?.(convertedColor);
               if (!controlled) {
-                setParsed(parseColor(color));
+                updateParsed(parseColor(color));
               }
             }}
           />
