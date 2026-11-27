@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useRef } from 'react';
+import { useCallback, useEffect, useMemo, useRef } from 'react';
 import { scopeTab } from './scope-tab';
 import { FOCUS_SELECTOR, focusable, tabbable } from './tabbable';
 
@@ -26,59 +26,67 @@ function hasNestedActiveTrap(ref: React.RefObject<HTMLElement | null>, node: HTM
   return false;
 }
 
+function focusNode(node: HTMLElement) {
+  let focusElement: HTMLElement | null = node.querySelector('[data-autofocus]');
+
+  if (!focusElement) {
+    const children = Array.from<HTMLElement>(node.querySelectorAll(FOCUS_SELECTOR));
+    focusElement = children.find(tabbable) || children.find(focusable) || null;
+    if (!focusElement && focusable(node)) {
+      focusElement = node;
+    }
+  }
+
+  if (focusElement) {
+    focusElement.focus({ preventScroll: true });
+  } else if (process.env.NODE_ENV === 'development') {
+    // oxlint-disable-next-line no-console
+    console.warn(
+      '[@mantine/hooks/use-focus-trap] Failed to find focusable element within provided node',
+      node
+    );
+  }
+}
+
 export function useFocusTrap(active = true): React.RefCallback<HTMLElement | null> {
   const ref = useRef<HTMLElement>(null);
 
-  const focusNode = (node: HTMLElement) => {
-    let focusElement: HTMLElement | null = node.querySelector('[data-autofocus]');
+  const { scheduleFocus, cancelPendingFocus } = useMemo(() => {
+    const timeouts = new Set<ReturnType<typeof setTimeout>>();
 
-    if (!focusElement) {
-      const children = Array.from<HTMLElement>(node.querySelectorAll(FOCUS_SELECTOR));
-      focusElement = children.find(tabbable) || children.find(focusable) || null;
-      if (!focusElement && focusable(node)) {
-        focusElement = node;
-      }
-    }
+    return {
+      scheduleFocus(node: HTMLElement) {
+        const timeout = setTimeout(() => {
+          timeouts.delete(timeout);
+          if (ref.current === node && node.isConnected) {
+            focusNode(node);
+          }
+        });
 
-    if (focusElement) {
-      focusElement.focus({ preventScroll: true });
-    } else if (process.env.NODE_ENV === 'development') {
-      // oxlint-disable-next-line no-console
-      console.warn(
-        '[@mantine/hooks/use-focus-trap] Failed to find focusable element within provided node',
-        node
-      );
-    }
-  };
+        timeouts.add(timeout);
+      },
+
+      cancelPendingFocus() {
+        timeouts.forEach((timeout) => clearTimeout(timeout));
+        timeouts.clear();
+      },
+    };
+  }, [active]);
 
   const setRef = useCallback(
     (node: HTMLElement | null) => {
-      if (!active) {
+      if (!active || ref.current === node) {
         return;
       }
 
-      if (node === null) {
-        ref.current = null;
-        return;
-      }
-
-      if (ref.current === node) {
-        return;
-      }
-
-      // Delay processing the HTML node by a frame. This ensures focus is assigned correctly.
-      setTimeout(() => {
-        if (node.getRootNode()) {
-          focusNode(node);
-        } else if (process.env.NODE_ENV === 'development') {
-          // oxlint-disable-next-line no-console
-          console.warn('[@mantine/hooks/use-focus-trap] Ref node is not part of the dom', node);
-        }
-      });
-
+      cancelPendingFocus();
       ref.current = node;
+
+      if (node) {
+        scheduleFocus(node);
+      }
     },
-    [active]
+    [active, cancelPendingFocus, scheduleFocus]
   );
 
   useEffect(() => {
@@ -87,11 +95,7 @@ export function useFocusTrap(active = true): React.RefCallback<HTMLElement | nul
     }
 
     if (ref.current) {
-      setTimeout(() => {
-        if (ref.current) {
-          focusNode(ref.current);
-        }
-      });
+      scheduleFocus(ref.current);
     }
 
     const handleKeyDown = (event: KeyboardEvent) => {
@@ -110,10 +114,11 @@ export function useFocusTrap(active = true): React.RefCallback<HTMLElement | nul
     activeTraps.add(ref);
     document.addEventListener('keydown', handleKeyDown);
     return () => {
+      cancelPendingFocus();
       activeTraps.delete(ref);
       document.removeEventListener('keydown', handleKeyDown);
     };
-  }, [active]);
+  }, [active, cancelPendingFocus, scheduleFocus]);
 
   return setRef;
 }
