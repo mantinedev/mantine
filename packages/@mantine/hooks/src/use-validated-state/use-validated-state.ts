@@ -23,8 +23,8 @@ export function useValidatedState<T>(
   validate: (value: T) => boolean,
   initialValidationState?: boolean
 ): UseValidatedStateReturnValue<T> {
-  const [value, setValue] = useState<T>(initialValue);
-  const [lastValidValue, setLastValidValue] = useState<T | undefined>(
+  const [value, setValue] = useState<T>(() => initialValue);
+  const [lastValidValue, setLastValidValue] = useState<T | undefined>(() =>
     validate(initialValue) ? initialValue : undefined
   );
   const [valid, setValid] = useState<boolean>(
@@ -33,13 +33,13 @@ export function useValidatedState<T>(
 
   const onChange = (val: T) => {
     if (validate(val)) {
-      setLastValidValue(val);
+      setLastValidValue(() => val);
       setValid(true);
     } else {
       setValid(false);
     }
 
-    setValue(val);
+    setValue(() => val);
   };
 
   return [{ value, lastValidValue, valid }, onChange] as const;
