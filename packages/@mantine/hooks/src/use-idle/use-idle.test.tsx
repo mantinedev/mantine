@@ -11,6 +11,38 @@ describe('@mantine/hooks/use-idle', () => {
     expect(hook.result.current).toBe(true);
   });
 
+  it('Listens to updated events', () => {
+    const hook = renderHook(({ events }) => useIdle(1000, { events }), {
+      initialProps: { events: ['click'] as (keyof DocumentEventMap)[] },
+    });
+
+    hook.rerender({ events: ['keydown'] });
+    act(() => document.dispatchEvent(new KeyboardEvent('keydown')));
+    expect(hook.result.current).toBe(false);
+
+    act(() => jest.advanceTimersByTime(1000));
+    expect(hook.result.current).toBe(true);
+  });
+
+  it('Removes listeners for events that are no longer configured', () => {
+    const hook = renderHook(({ events }) => useIdle(1000, { events }), {
+      initialProps: { events: ['click'] as (keyof DocumentEventMap)[] },
+    });
+
+    hook.rerender({ events: [] });
+    act(() => document.dispatchEvent(new MouseEvent('click')));
+    expect(hook.result.current).toBe(true);
+  });
+
+  it('Preserves the idle deadline when an inline events array is unchanged', () => {
+    const hook = renderHook(() => useIdle(1000, { initialState: false, events: ['click'] }));
+
+    act(() => jest.advanceTimersByTime(750));
+    hook.rerender();
+    act(() => jest.advanceTimersByTime(250));
+    expect(hook.result.current).toBe(true);
+  });
+
   it('Starts the timer immediately instead of waiting for the first event to happen', () => {
     const spy = jest.spyOn(window, 'setTimeout');
     expect(spy).not.toHaveBeenCalled();
