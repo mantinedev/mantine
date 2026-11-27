@@ -127,6 +127,26 @@ describe('@mantine/core/TagsInput', () => {
     expect(screen.getByText('Vue')).toBeInTheDocument();
   });
 
+  it('treats split chars literally, including characters that are special in a regex', async () => {
+    render(<TagsInput splitChars={[' ', '-', ',']} />);
+    const input = screen.getByRole('combobox');
+
+    await userEvent.click(input);
+    await userEvent.paste('C++ AT&T-C#');
+
+    expect(screen.getByText('C++')).toBeInTheDocument();
+    expect(screen.getByText('AT&T')).toBeInTheDocument();
+    expect(screen.getByText('C#')).toBeInTheDocument();
+  });
+
+  it('does not throw when split chars form an out of order range', async () => {
+    render(<TagsInput splitChars={[',', '-', ' ']} />);
+    const input = screen.getByRole('combobox');
+
+    await userEvent.type(input, 'React-');
+    expect(screen.getByText('React')).toBeInTheDocument();
+  });
+
   it('handles paste with split chars', async () => {
     render(<TagsInput />);
     const input = screen.getByRole('combobox');
