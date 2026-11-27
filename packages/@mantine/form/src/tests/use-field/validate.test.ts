@@ -31,6 +31,63 @@ describe('@mantine/form/use-field/validate', () => {
     expect(hook.result.current.error).toBe(null);
   });
 
+  it.each(['manual', 'change', 'blur'])('uses updated validation for %s calls', async (trigger) => {
+    const hook = renderHook(
+      ({ message }) =>
+        useField({
+          initialValue: 'test',
+          validate: () => message,
+          validateOnChange: trigger === 'change',
+          validateOnBlur: trigger === 'blur',
+        }),
+      { initialProps: { message: 'old rule' } }
+    );
+
+    hook.rerender({ message: 'new rule' });
+    await act(async () => {
+      if (trigger === 'manual') {
+        await hook.result.current.validate();
+      } else if (trigger === 'change') {
+        hook.result.current.getInputProps().onChange('updated');
+      } else {
+        hook.result.current.getInputProps().onBlur();
+      }
+    });
+
+    expect(hook.result.current.error).toBe('new rule');
+  });
+
+  it('uses the updated resolver for a rejected validation', async () => {
+    const validate = () => Promise.reject(new Error('invalid'));
+    const hook = renderHook(
+      ({ prefix }) =>
+        useField({
+          initialValue: 'test',
+          validate,
+          resolveValidationError: (error) => `${prefix}: ${(error as Error).message}`,
+        }),
+      { initialProps: { prefix: 'old' } }
+    );
+
+    hook.rerender({ prefix: 'new' });
+    await act(() => hook.result.current.validate());
+
+    expect(hook.result.current.error).toBe('new: invalid');
+  });
+
+  it.each([false, true])('responds to validateOnChange changing from %s', async (initial) => {
+    const validate = jest.fn(() => null);
+    const hook = renderHook(
+      ({ validateOnChange }) => useField({ initialValue: 'test', validate, validateOnChange }),
+      { initialProps: { validateOnChange: initial } }
+    );
+
+    hook.rerender({ validateOnChange: !initial });
+    await act(() => hook.result.current.getInputProps().onChange('updated'));
+
+    expect(validate).toHaveBeenCalledTimes(initial ? 0 : 1);
+  });
+
   it('supports async validation', async () => {
     const hook = renderHook(() => useField({ initialValue: 'test', validate: validateAsync }));
     await act(() => {

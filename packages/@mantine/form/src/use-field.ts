@@ -155,6 +155,27 @@ export function useField<
     [resolveValidationError]
   );
 
+  const _validate = useCallback(async () => {
+    const validationResult = validate?.(valueRef.current);
+
+    if (validationResult instanceof Promise) {
+      setIsValidating(true);
+      try {
+        const result = await validationResult;
+        setIsValidating(false);
+        setError(result);
+      } catch (err) {
+        setIsValidating(false);
+        const resolvedError = errorResolver(err);
+        setError(resolvedError);
+        return resolvedError;
+      }
+    } else {
+      setError(validationResult);
+      return validationResult;
+    }
+  }, [validate, errorResolver]);
+
   const setTouched = useCallback((val: boolean, { updateState = mode === 'controlled' } = {}) => {
     touchedRef.current = val;
     updateState && setTouchedState(val);
@@ -192,7 +213,7 @@ export function useField<
         _validate();
       }
     },
-    [error, clearErrorOnChange, onValueChange]
+    [error, clearErrorOnChange, onValueChange, validateOnChange, _validate]
   );
 
   const reset = useCallback(() => {
@@ -209,27 +230,6 @@ export function useField<
     () => valueRef.current !== initialValue,
     [valueRef.current, initialValue]
   );
-
-  const _validate = useCallback(async () => {
-    const validationResult = validate?.(valueRef.current);
-
-    if (validationResult instanceof Promise) {
-      setIsValidating(true);
-      try {
-        const result = await validationResult;
-        setIsValidating(false);
-        setError(result);
-      } catch (err) {
-        setIsValidating(false);
-        const resolvedError = errorResolver(err);
-        setError(resolvedError);
-        return resolvedError;
-      }
-    } else {
-      setError(validationResult);
-      return validationResult;
-    }
-  }, []);
 
   const getInputProps = ({ withError = true, withFocus = true, ...otherOptions }: any = {}) => {
     const onChange = getInputOnChange<T>((val) => setValue(val as any, { updateKey: false }));
