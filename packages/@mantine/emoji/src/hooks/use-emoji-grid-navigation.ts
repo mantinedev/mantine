@@ -19,6 +19,7 @@ interface UseEmojiGridNavigationInput {
   items: FlattenedRowItem[];
   resetKey: string;
   skinTone: number;
+  dir?: 'ltr' | 'rtl';
   onEmojiSelect: (emoji: EmojiPickerEmoji) => void;
   scrollToItem?: (itemIndex: number) => void;
 }
@@ -32,10 +33,17 @@ const KEY_DIRECTIONS: Record<string, EmojiGridDirection> = {
   ArrowDown: 'down',
 };
 
+const RTL_KEY_DIRECTIONS: Record<string, EmojiGridDirection> = {
+  ...KEY_DIRECTIONS,
+  ArrowLeft: 'right',
+  ArrowRight: 'left',
+};
+
 export function useEmojiGridNavigation({
   items,
   resetKey,
   skinTone,
+  dir = 'ltr',
   onEmojiSelect,
   scrollToItem,
 }: UseEmojiGridNavigationInput) {
@@ -68,7 +76,7 @@ export function useEmojiGridNavigation({
         return;
       }
 
-      const direction = KEY_DIRECTIONS[event.key];
+      const direction = (dir === 'rtl' ? RTL_KEY_DIRECTIONS : KEY_DIRECTIONS)[event.key];
       if (direction) {
         event.preventDefault();
         const nextIndex =
@@ -83,7 +91,7 @@ export function useEmojiGridNavigation({
         onEmojiSelect(applySkinTone(model.emojis[activeIndex], skinTone));
       }
     },
-    [activeIndex, source, model, setActive, scrollToItem, onEmojiSelect, skinTone]
+    [activeIndex, source, model, dir, setActive, scrollToItem, onEmojiSelect, skinTone]
   );
 
   return {
