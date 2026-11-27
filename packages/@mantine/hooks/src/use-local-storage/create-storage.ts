@@ -1,6 +1,5 @@
 /* oxlint-disable no-console */
-import { useCallback, useEffect, useMemo, useState } from 'react';
-import { useIsomorphicEffect } from '../use-isomorphic-effect/use-isomorphic-effect';
+import { useCallback, useEffect, useInsertionEffect, useMemo, useState } from 'react';
 import { useWindowEvent } from '../use-window-event/use-window-event';
 
 export type StorageType = 'localStorage' | 'sessionStorage';
@@ -91,7 +90,7 @@ export function createStorage<T>(type: StorageType, hookName: string) {
     serialize = (value: T) => serializeJSON(value, hookName),
   }: UseStorageOptions<T>): UseStorageReturnValue<T> {
     const serializeRef = useMemo(() => ({ current: serialize }), [key]);
-    useIsomorphicEffect(() => {
+    useInsertionEffect(() => {
       serializeRef.current = serialize;
     }, [serialize, serializeRef]);
     const readStorageValue = useCallback(

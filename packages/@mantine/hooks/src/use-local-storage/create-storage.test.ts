@@ -1,5 +1,5 @@
 import { createElement, Suspense, useLayoutEffect } from 'react';
-import { act, renderHook } from '@testing-library/react';
+import { act, render, renderHook } from '@testing-library/react';
 import { createStorage } from './create-storage';
 
 describe.each(['localStorage', 'sessionStorage'] as const)('%s serializer updates', (type) => {
@@ -126,5 +126,27 @@ describe.each(['localStorage', 'sessionStorage'] as const)('%s serializer update
 
     expect(window[type].getItem('second')).toBe('second:saved');
     expect(result.current[0]).toBe('saved');
+  });
+
+  it('uses the current serializer when a child writes from a layout effect', () => {
+    function Child({ write, prefix }: { write: (value: string) => void; prefix: string }) {
+      useLayoutEffect(() => {
+        write('saved');
+      }, [prefix, write]);
+      return null;
+    }
+
+    function Parent({ prefix }: { prefix: string }) {
+      const [, write] = useStorage({
+        key: 'child',
+        serialize: (value) => `${prefix}:${value}`,
+        deserialize: (value) => value?.split(':')[1] ?? '',
+      });
+      return createElement(Child, { write, prefix });
+    }
+
+    const { rerender } = render(createElement(Parent, { prefix: 'v1' }));
+    rerender(createElement(Parent, { prefix: 'v2' }));
+    expect(window[type].getItem('child')).toBe('v2:saved');
   });
 });
