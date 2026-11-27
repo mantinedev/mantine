@@ -60,15 +60,6 @@ function validateRulesRecord<T>(
           pendingRecursions.push(recursionResult);
         }
       }
-
-      if (formRootRule in rule) {
-        const rootResult = (rule as any)[formRootRule](value, values, rulePath, signal);
-        if (rootResult instanceof Promise) {
-          asyncTasks.push({ rulePath, promise: rootResult });
-        } else {
-          errors[rulePath] = rootResult;
-        }
-      }
     }
 
     if (typeof rule === 'object' && typeof value === 'object' && value !== null) {
