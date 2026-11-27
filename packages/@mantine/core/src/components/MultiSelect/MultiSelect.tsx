@@ -334,6 +334,8 @@ export const MultiSelect = genericFactory<MultiSelectFactory>((_props) => {
     classNames,
   });
 
+  const canInteract = !readOnly && !disabled;
+
   const handleInputKeydown = (event: React.KeyboardEvent<HTMLInputElement>) => {
     onKeyDown?.(event);
 
@@ -343,7 +345,7 @@ export const MultiSelect = genericFactory<MultiSelectFactory>((_props) => {
 
     if (event.key === ' ' && !searchable) {
       event.preventDefault();
-      combobox.toggleDropdown();
+      canInteract && combobox.toggleDropdown();
     }
 
     if (
@@ -515,7 +517,11 @@ export const MultiSelect = genericFactory<MultiSelectFactory>((_props) => {
               multiline: true,
             }}
             pointer={!searchable}
-            onClick={() => (searchable ? combobox.openDropdown() : combobox.toggleDropdown())}
+            onClick={() => {
+              if (canInteract) {
+                searchable ? combobox.openDropdown() : combobox.toggleDropdown();
+              }
+            }}
             data-expanded={combobox.dropdownOpened || undefined}
             id={_id}
             required={required}
@@ -540,7 +546,7 @@ export const MultiSelect = genericFactory<MultiSelectFactory>((_props) => {
                   unstyled={unstyled}
                   onFocus={(event) => {
                     onFocus?.(event);
-                    openOnFocus && searchable && combobox.openDropdown();
+                    openOnFocus && searchable && canInteract && combobox.openDropdown();
                   }}
                   onBlur={(event) => {
                     onBlur?.(event);

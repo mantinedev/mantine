@@ -234,6 +234,14 @@ describe('@mantine/core/TagsInput', () => {
     expect(screen.queryByText('Angular')).not.toBeInTheDocument();
   });
 
+  it('does not open the dropdown when readOnly is set', async () => {
+    const onDropdownOpen = jest.fn();
+    render(<TagsInput {...defaultProps} readOnly onDropdownOpen={onDropdownOpen} />);
+    await userEvent.click(screen.getByRole('combobox'));
+    expect(screen.queryByRole('listbox')).not.toBeInTheDocument();
+    expect(onDropdownOpen).not.toHaveBeenCalled();
+  });
+
   it('prevents tag removal when readOnly is true', () => {
     const { container } = render(<TagsInput defaultValue={['React', 'Angular']} readOnly />);
 

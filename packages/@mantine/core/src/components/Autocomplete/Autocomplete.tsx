@@ -191,6 +191,8 @@ export const Autocomplete = factory<AutocompleteFactory>((_props) => {
     }
   }, [selectFirstOptionOnChange, _value]);
 
+  const canInteract = !readOnly && !disabled;
+
   const clearButton = (
     <Combobox.ClearButton
       {...clearButtonProps}
@@ -239,7 +241,7 @@ export const Autocomplete = factory<AutocompleteFactory>((_props) => {
             selectFirstOptionOnChange && combobox.selectFirstOption();
           }}
           onFocus={(event) => {
-            openOnFocus && combobox.openDropdown();
+            openOnFocus && canInteract && combobox.openDropdown();
             onFocus?.(event);
           }}
           onBlur={(event) => {
@@ -251,7 +253,7 @@ export const Autocomplete = factory<AutocompleteFactory>((_props) => {
             onBlur?.(event);
           }}
           onClick={(event) => {
-            combobox.openDropdown();
+            canInteract && combobox.openDropdown();
             onClick?.(event);
           }}
           classNames={resolvedClassNames}

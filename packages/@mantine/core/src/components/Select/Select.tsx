@@ -306,6 +306,7 @@ export const Select = genericFactory<SelectFactory>((_props) => {
   );
 
   const _clearable = clearable && _value != null && !disabled && !readOnly;
+  const canInteract = !readOnly && !disabled;
 
   return (
     <>
@@ -381,7 +382,7 @@ export const Select = genericFactory<SelectFactory>((_props) => {
               selectFirstOptionOnChange && combobox.selectFirstOption();
             }}
             onFocus={(event) => {
-              openOnFocus && !!searchable && combobox.openDropdown();
+              openOnFocus && !!searchable && canInteract && combobox.openDropdown();
               onFocus?.(event);
             }}
             onBlur={(event) => {
@@ -399,7 +400,9 @@ export const Select = genericFactory<SelectFactory>((_props) => {
               onBlur?.(event);
             }}
             onClick={(event) => {
-              searchable ? combobox.openDropdown() : combobox.toggleDropdown();
+              if (canInteract) {
+                searchable ? combobox.openDropdown() : combobox.toggleDropdown();
+              }
               onClick?.(event);
             }}
             classNames={resolvedClassNames}
