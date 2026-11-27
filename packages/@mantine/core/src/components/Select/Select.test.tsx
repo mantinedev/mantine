@@ -278,6 +278,14 @@ describe('@mantine/core/Select', () => {
     expect(screen.queryByRole('listbox')).toBe(null);
   });
 
+  it('does not open the dropdown when readOnly is set', async () => {
+    const onDropdownOpen = jest.fn();
+    render(<Select {...defaultProps} searchable readOnly onDropdownOpen={onDropdownOpen} />);
+    await userEvent.click(screen.getByRole('combobox'));
+    expect(screen.queryByRole('listbox')).toBe(null);
+    expect(onDropdownOpen).not.toHaveBeenCalled();
+  });
+
   it('selects highlighted option on blur when autoSelectOnBlur is true', async () => {
     render(<Select {...defaultProps} searchable autoSelectOnBlur />);
     const input = screen.getByRole('combobox');

@@ -339,6 +339,8 @@ export const TagsInput = factory<TagsInputFactory>((_props) => {
     }
   };
 
+  const canInteract = !readOnly && !disabled;
+
   const handleInputKeydown = (event: React.KeyboardEvent<HTMLInputElement>) => {
     onKeyDown?.(event);
 
@@ -567,7 +569,7 @@ export const TagsInput = factory<TagsInputFactory>((_props) => {
                   onKeyDown={handleInputKeydown}
                   onFocus={(event) => {
                     onFocus?.(event);
-                    openOnFocus && combobox.openDropdown();
+                    openOnFocus && canInteract && combobox.openDropdown();
                   }}
                   onBlur={(event) => {
                     onBlur?.(event);

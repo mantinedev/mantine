@@ -4,6 +4,7 @@ import {
   render,
   screen,
   tests,
+  userEvent,
 } from '@mantine-tests/core';
 import { Autocomplete, AutocompleteProps, AutocompleteStylesNames } from './Autocomplete';
 
@@ -83,5 +84,13 @@ describe('@mantine/core/Autocomplete', () => {
     );
     expect(screen.getByRole('listbox')).not.toHaveAttribute('aria-labelledby');
     expect(screen.getByRole('listbox')).toHaveAccessibleName('Test aria-label');
+  });
+
+  it('does not open the dropdown when readOnly is set', async () => {
+    const onDropdownOpen = jest.fn();
+    render(<Autocomplete {...defaultProps} readOnly onDropdownOpen={onDropdownOpen} />);
+    await userEvent.click(screen.getByRole('combobox'));
+    expect(screen.queryByRole('listbox')).toBe(null);
+    expect(onDropdownOpen).not.toHaveBeenCalled();
   });
 });

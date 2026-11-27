@@ -94,6 +94,14 @@ describe('@mantine/core/TreeSelect', () => {
     expect(screen.queryByRole('listbox')).toBe(null);
   });
 
+  it('does not open the dropdown when readOnly is set', async () => {
+    const onDropdownOpen = jest.fn();
+    render(<TreeSelect {...defaultProps} searchable readOnly onDropdownOpen={onDropdownOpen} />);
+    await userEvent.click(screen.getByRole('textbox'));
+    expect(screen.queryByRole('listbox')).toBe(null);
+    expect(onDropdownOpen).not.toHaveBeenCalled();
+  });
+
   it('allows controlling dropdown state with dropdownOpened prop', async () => {
     const { rerender } = render(<TreeSelect {...defaultProps} dropdownOpened />);
     expect(screen.getByRole('listbox')).toBeVisible();
@@ -273,6 +281,48 @@ describe('@mantine/core/TreeSelect', () => {
       fireEvent.keyDown(screen.getByRole('textbox'), { key: 'Backspace', isComposing: true });
       expect(screen.getByText('Apple', { selector: '.mantine-Pill-label' })).toBeInTheDocument();
       expect(screen.getByText('Milk', { selector: '.mantine-Pill-label' })).toBeInTheDocument();
+    });
+
+    it('does not open the dropdown when readOnly is set', async () => {
+      const onDropdownOpen = jest.fn();
+      render(
+        <TreeSelect
+          {...defaultProps}
+          mode="multiple"
+          searchable
+          readOnly
+          onDropdownOpen={onDropdownOpen}
+        />
+      );
+      await userEvent.click(screen.getByRole('textbox'));
+      expect(screen.queryByRole('listbox')).toBe(null);
+      expect(onDropdownOpen).not.toHaveBeenCalled();
+    });
+
+    it('does not toggle the dropdown with Space when readOnly is set', () => {
+      const onDropdownOpen = jest.fn();
+      render(
+        <TreeSelect
+          {...defaultProps}
+          mode="multiple"
+          placeholder="Pick"
+          readOnly
+          onDropdownOpen={onDropdownOpen}
+        />
+      );
+      fireEvent.keyDown(screen.getByRole('textbox'), { key: ' ' });
+      expect(screen.queryByRole('listbox')).toBe(null);
+      expect(onDropdownOpen).not.toHaveBeenCalled();
+    });
+
+    it('does not open the dropdown when disabled', async () => {
+      const onDropdownOpen = jest.fn();
+      const { container } = render(
+        <TreeSelect {...defaultProps} mode="multiple" disabled onDropdownOpen={onDropdownOpen} />
+      );
+      await userEvent.click(container.querySelector('.mantine-TreeSelect-input')!);
+      expect(screen.queryByRole('listbox')).toBe(null);
+      expect(onDropdownOpen).not.toHaveBeenCalled();
     });
 
     it('renders pills for selected values', () => {

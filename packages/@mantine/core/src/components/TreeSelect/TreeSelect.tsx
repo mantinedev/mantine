@@ -609,13 +609,14 @@ export const TreeSelect = genericFactory<TreeSelectFactory>((_props) => {
 
   const expandKey = dir === 'rtl' ? 'ArrowLeft' : 'ArrowRight';
   const collapseKey = dir === 'rtl' ? 'ArrowRight' : 'ArrowLeft';
+  const canInteract = !readOnly && !disabled;
 
   const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
     onKeyDown?.(event);
 
     if (event.key === ' ' && !searchable && isMulti) {
       event.preventDefault();
-      combobox.toggleDropdown();
+      canInteract && combobox.toggleDropdown();
     }
 
     if (
@@ -931,7 +932,11 @@ export const TreeSelect = genericFactory<TreeSelectFactory>((_props) => {
                 multiline: true,
               }}
               pointer={!searchable}
-              onClick={() => (searchable ? combobox.openDropdown() : combobox.toggleDropdown())}
+              onClick={() => {
+                if (canInteract) {
+                  searchable ? combobox.openDropdown() : combobox.toggleDropdown();
+                }
+              }}
               data-expanded={combobox.dropdownOpened || undefined}
               id={_id}
               required={required}
@@ -955,7 +960,7 @@ export const TreeSelect = genericFactory<TreeSelectFactory>((_props) => {
                     unstyled={unstyled}
                     onFocus={(event) => {
                       onFocus?.(event);
-                      if (openOnFocus && searchable) {
+                      if (openOnFocus && searchable && canInteract) {
                         combobox.openDropdown();
                       }
                     }}
@@ -1044,7 +1049,7 @@ export const TreeSelect = genericFactory<TreeSelectFactory>((_props) => {
               combobox.openDropdown();
             }}
             onFocus={(event) => {
-              if (openOnFocus && searchable) {
+              if (openOnFocus && searchable && canInteract) {
                 combobox.openDropdown();
               }
               onFocus?.(event);
@@ -1057,7 +1062,9 @@ export const TreeSelect = genericFactory<TreeSelectFactory>((_props) => {
               onBlur?.(event);
             }}
             onClick={(event) => {
-              searchable ? combobox.openDropdown() : combobox.toggleDropdown();
+              if (canInteract) {
+                searchable ? combobox.openDropdown() : combobox.toggleDropdown();
+              }
               onClick?.(event);
             }}
             onKeyDown={handleKeyDown}

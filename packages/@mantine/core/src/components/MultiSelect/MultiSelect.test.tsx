@@ -254,6 +254,32 @@ describe('@mantine/core/MultiSelect', () => {
     expect(screen.queryByRole('listbox')).not.toBeInTheDocument();
   });
 
+  it('does not open the dropdown when readOnly is set', async () => {
+    const onDropdownOpen = jest.fn();
+    render(<MultiSelect {...defaultProps} searchable readOnly onDropdownOpen={onDropdownOpen} />);
+    await userEvent.click(screen.getByRole('combobox'));
+    expect(screen.queryByRole('listbox')).not.toBeInTheDocument();
+    expect(onDropdownOpen).not.toHaveBeenCalled();
+  });
+
+  it('does not toggle the dropdown with Space when readOnly is set', () => {
+    const onDropdownOpen = jest.fn();
+    render(<MultiSelect {...defaultProps} readOnly onDropdownOpen={onDropdownOpen} />);
+    fireEvent.keyDown(screen.getByRole('combobox'), { key: ' ' });
+    expect(screen.queryByRole('listbox')).not.toBeInTheDocument();
+    expect(onDropdownOpen).not.toHaveBeenCalled();
+  });
+
+  it('does not open the dropdown when disabled', async () => {
+    const onDropdownOpen = jest.fn();
+    const { container } = render(
+      <MultiSelect {...defaultProps} disabled onDropdownOpen={onDropdownOpen} />
+    );
+    await userEvent.click(container.querySelector('.mantine-MultiSelect-input')!);
+    expect(screen.queryByRole('listbox')).not.toBeInTheDocument();
+    expect(onDropdownOpen).not.toHaveBeenCalled();
+  });
+
   it('hides picked options when hidePickedOptions is true', async () => {
     render(
       <MultiSelect
