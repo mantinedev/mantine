@@ -22,6 +22,9 @@ export function useComboboxTargetProps({
 }: UseComboboxTargetPropsInput) {
   const ctx = useComboboxContext();
   const [selectedOptionId, setSelectedOptionId] = useState<string | null>(null);
+  if (!ctx.store.dropdownOpened && selectedOptionId !== null) {
+    setSelectedOptionId(null);
+  }
 
   const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
     onKeyDown?.(event);
