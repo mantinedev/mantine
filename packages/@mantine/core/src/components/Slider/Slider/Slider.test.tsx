@@ -1,3 +1,4 @@
+import { fireEvent } from '@testing-library/react';
 import { render, screen, tests, userEvent } from '@mantine-tests/core';
 import { SliderStylesNames } from '../Slider.context';
 import { Slider, SliderProps } from './Slider';
@@ -171,6 +172,71 @@ describe('@mantine/core/Slider', () => {
       endSpy.mock.calls[endSpy.mock.calls.length - 1][0]
     );
   });
+
+  it.each([
+    { min: 0, max: 60, clientX: 85, expected: 60 },
+    { min: 40, max: 100, clientX: 15, expected: 40 },
+    { min: 0, max: 90, clientX: 85, expected: 85 },
+    { min: 0, max: 60, clientX: 80, markValues: [40, 80], expected: 40 },
+    { min: 0, max: 60, clientX: 80, markValues: [70, 80], expected: undefined },
+  ])(
+    'commits $expected within [$min, $max] when the bounds change mid-drag',
+    async ({ min, max, clientX, markValues, expected }) => {
+      const marks = markValues?.map((value) => ({ value }));
+      const startValue = marks?.[0].value ?? 50;
+      const changeSpy = jest.fn();
+      const endSpy = jest.fn();
+      const { container, rerender } = render(
+        <Slider
+          value={startValue}
+          marks={marks}
+          restrictToMarks={!!marks}
+          onChange={changeSpy}
+          onChangeEnd={endSpy}
+        />
+      );
+      const track = container.querySelector<HTMLDivElement>('.mantine-Slider-trackContainer')!;
+      jest.spyOn(track, 'getBoundingClientRect').mockReturnValue({
+        left: 0,
+        right: 100,
+        top: 0,
+        bottom: 20,
+        width: 100,
+        height: 20,
+        x: 0,
+        y: 0,
+        toJSON: () => ({}),
+      });
+
+      fireEvent.mouseDown(track, { clientX: startValue, clientY: 10 });
+      fireEvent.mouseMove(document, { clientX, clientY: 10 });
+      await new Promise((resolve) => requestAnimationFrame(resolve));
+      expect(changeSpy).toHaveBeenLastCalledWith(clientX);
+
+      rerender(
+        <>
+          <Slider
+            value={clientX}
+            min={min}
+            max={max}
+            marks={marks}
+            restrictToMarks={!!marks}
+            onChange={changeSpy}
+            onChangeEnd={endSpy}
+          />
+        </>
+      );
+      expect(screen.getByRole('slider')).toHaveAttribute(
+        'aria-valuenow',
+        String(Math.min(Math.max(clientX, min), max))
+      );
+      expect(endSpy).not.toHaveBeenCalled();
+
+      fireEvent.mouseUp(document);
+      await new Promise((resolve) => setTimeout(resolve, 0));
+      expect(endSpy.mock.calls).toEqual(expected === undefined ? [] : [[expected]]);
+    }
+  );
 
   it('supports restrictToMarks prop', async () => {
     const spy = jest.fn();

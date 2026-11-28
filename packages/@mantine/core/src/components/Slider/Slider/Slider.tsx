@@ -229,10 +229,12 @@ export const Slider = factory<SliderFactory>((_props) => {
 
   const valueRef = useRef(_value);
   const onChangeEndRef = useRef(onChangeEnd);
+  const commitOptionsRef = useRef({ min, max, marks, restrictToMarks });
 
   useEffect(() => {
     onChangeEndRef.current = onChangeEnd;
-  }, [onChangeEnd]);
+    commitOptionsRef.current = { min, max, marks, restrictToMarks };
+  }, [onChangeEnd, min, max, marks, restrictToMarks]);
 
   const root = useRef<HTMLDivElement>(null);
   const thumb = useRef<HTMLDivElement>(null);
@@ -278,16 +280,26 @@ export const Slider = factory<SliderFactory>((_props) => {
 
   const handleScrubEnd = useCallback(() => {
     if (!disabled && onChangeEndRef.current) {
-      const finalValue =
-        restrictToMarks && marks?.length
-          ? findClosestNumber(
-              valueRef.current,
-              marks.map((mark) => mark.value)
-            )
-          : valueRef.current;
-      onChangeEndRef.current(finalValue);
+      // The active scrub may have started before these props changed.
+      const options = commitOptionsRef.current;
+      const value = clamp(valueRef.current, options.min, options.max);
+
+      if (options.restrictToMarks && options.marks?.length) {
+        const allowedMarks = options.marks
+          .map((mark) => mark.value)
+          .filter((mark) => clamp(mark, options.min, options.max) === mark);
+
+        // Do not emit a commit when no mark can be selected.
+        if (allowedMarks.length) {
+          onChangeEndRef.current(findClosestNumber(value, allowedMarks));
+        }
+
+        return;
+      }
+
+      onChangeEndRef.current(value);
     }
-  }, [disabled, marks, restrictToMarks]);
+  }, [disabled]);
 
   const { ref: container, active } = useMove(
     ({ x, y }) => handleChange({ x: orientation === 'vertical' ? 1 - y : x }),
