@@ -27,6 +27,10 @@
     top: 0;
     inset-inline-end: 1px;
     transform: rotate(4deg) translateY(-4px);
+
+    @mixin where-rtl {
+      transform: rotate(-4deg) translateY(-4px);
+    }
     box-shadow:
       0 0 10px var(--progress-section-color),
       0 0 5px var(--progress-section-color);
