@@ -434,6 +434,80 @@ describe('@mantine/dates/MaskedDateInput', () => {
     expect(spy).toHaveBeenCalledWith('2024-06-15');
   });
 
+  const paste = (label: string, text: string) =>
+    fireEvent.paste(screen.getByLabelText(label), { clipboardData: { getData: () => text } });
+  const mdy: MaskedDateInputProps['fieldsOrder'] = ['month', 'day', 'year'];
+  const emptySplit = () => ({ day: null, month: null, year: null });
+  const time12h: Partial<MaskedDateInputProps> = { withTime: true, format: '12h' };
+  const withSeconds: Partial<MaskedDateInputProps> = { withTime: true, withSeconds: true };
+  const greek12h: Partial<MaskedDateInputProps> = {
+    ...time12h,
+    amPmLabels: { am: 'ΠΜ', pm: 'ΜΜ' },
+  };
+  const isoOrder12h: Partial<MaskedDateInputProps> = {
+    ...time12h,
+    fieldsOrder: ['year', 'month', 'day'],
+    dateSeparator: '-',
+  };
+
+  it.each<[Partial<MaskedDateInputProps>, string, string, string]>([
+    [{}, 'test-day', '05/01/2026', '2026-01-05'],
+    [{ fieldsOrder: mdy }, 'test-month', '01/05/2026', '2026-01-05'],
+    [{ dateSeparator: '|' }, 'test-year', '05|01|2026', '2026-01-05'],
+    [time12h, 'test-day', '05/01/2026 1:30 PM', '2026-01-05 13:30:00'],
+    [greek12h, 'test-day', '05/01/2026 1:30 μμ', '2026-01-05 13:30:00'],
+    [withSeconds, 'test-day', '05/01/2026 14:30:45', '2026-01-05 14:30:45'],
+    [{}, 'test-day', '05/01/2026 14:30', '2026-01-05'],
+    [{}, 'test-day', '2026-01-05T10:00:00Z', '2026-01-05'],
+    [{}, 'test-day', '+2026-01-05', '2026-01-05'],
+    [{ withTime: true }, 'test-day', '2026-01-05 10:00 AM', '2026-01-05 10:00:00'],
+    [withSeconds, 'test-day', '2026-01-05 10:30:45', '2026-01-05 10:30:45'],
+  ])('sets the value from a pasted date (%p, %s, %j)', (props, label, text, expected) => {
+    const spy = jest.fn();
+    render(<MaskedDateInput {...defaultProps} {...props} onChange={spy} />);
+
+    expect(paste(label, text)).toBe(false);
+    expect(spy).toHaveBeenCalledWith(expected);
+  });
+
+  it.each<[Partial<MaskedDateInputProps>, string]>([
+    [{}, '05/01/26'],
+    [{}, '31/02/2026'],
+    [{ minDate: '2026-02-01' }, '05/01/2026'],
+    [{ maxDate: '2025-12-31' }, '05/01/2026'],
+    [greek12h, '05/01/2026 1:30 PM'],
+  ])('ignores a pasted date that it cannot read (%p, %j)', (props, text) => {
+    const spy = jest.fn();
+    render(<MaskedDateInput {...defaultProps} {...props} onChange={spy} />);
+
+    expect(paste('test-day', text)).toBe(false);
+    expect(screen.getByLabelText('test-day')).toHaveValue('');
+    expect(screen.getByLabelText('test-month')).toHaveValue('');
+    expect(screen.getByLabelText('test-year')).toHaveValue('');
+    expect(spy).not.toHaveBeenCalled();
+  });
+
+  it.each<[Partial<MaskedDateInputProps>, string, string]>([
+    [{}, 'test-year', '2026\n'],
+    [{}, 'test-year', '1 2 3'],
+    [{}, 'test-day', '5.'],
+    [{}, 'test-day', '5/1'],
+    [{}, 'test-day', '05.01.2026'],
+    [{ withTime: true }, 'test-hours', '14:30'],
+    [withSeconds, 'test-hours', '14:30:45'],
+    [time12h, 'test-hours', '1:30:00 PM'],
+    [{ dateSeparator: '' }, 'test-day', '05/01/2026'],
+    [{ dateSeparator: ' ' }, 'test-day', '05 01 2026'],
+    [isoOrder12h, 'test-year', '  2026-01-05'],
+    [{ pasteSplit: emptySplit }, 'test-day', '05/01/2026'],
+  ])('leaves other pasted text to the browser (%p, %s, %j)', (props, label, text) => {
+    const spy = jest.fn();
+    render(<MaskedDateInput {...defaultProps} {...props} onChange={spy} />);
+
+    expect(paste(label, text)).toBe(true);
+    expect(spy).not.toHaveBeenCalled();
+  });
+
   it('ignores paste when readOnly is set', () => {
     const spy = jest.fn();
     render(<MaskedDateInput {...defaultProps} readOnly onChange={spy} />);

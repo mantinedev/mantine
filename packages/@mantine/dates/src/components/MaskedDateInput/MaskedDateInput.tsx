@@ -377,6 +377,7 @@ export const MaskedDateInput = factory<MaskedDateInputFactory>((_props) => {
     readOnly,
     disabled,
     fieldsOrder: fieldsOrder!,
+    dateSeparator: dateSeparator!,
     pasteSplit,
     minDate: calendarProps.minDate ? dayjs(calendarProps.minDate).format('YYYY-MM-DD') : undefined,
     maxDate: calendarProps.maxDate ? dayjs(calendarProps.maxDate).format('YYYY-MM-DD') : undefined,
