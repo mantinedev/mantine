@@ -81,7 +81,7 @@ export function SpinInput({
 
       emitChange(clampedValue);
 
-      if (maxDigits && clearValue.length >= maxDigits) {
+      if (/[^\p{L}\p{N}]/u.test(value) || (maxDigits && clearValue.length >= maxDigits)) {
         onNextInput?.();
       } else if (!disableAutoAdvance && (clampedValue > maxDigit || value.startsWith('00'))) {
         onNextInput?.();
